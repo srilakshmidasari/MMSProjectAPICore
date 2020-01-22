@@ -30,6 +30,7 @@
     "Orders": "Orders",
     "NotFound": "Not Found",
     "About": "About",
+    "Profile":"Profile",
     "Settings": "Settings",
     "Users": "User Management",
     "Roles": "Role Management"

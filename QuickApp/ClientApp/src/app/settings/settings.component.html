@@ -12,7 +12,7 @@
                     {{'settings.description.UserProfile' | translate}}
                     <mat-icon>account_circle</mat-icon>
                 </mat-panel-description>
-            </mat-expansion-panel-header>
+        </mat-expansion-panel-header>
 
             <user-editor #userProfile></user-editor>
 
@@ -24,7 +24,7 @@
 
         </mat-expansion-panel>
 
-        <mat-expansion-panel #preferences hideToggle="true" (opened)="navigateToFragment('preferences')">
+        <!-- <mat-expansion-panel #preferences hideToggle="true" (opened)="navigateToFragment('preferences')">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     {{'settings.tab.Preferences' | translate}}
@@ -49,7 +49,7 @@
                         color="accent">{{'commands.Reload' | translate}}</button>
             </mat-action-row>
 
-        </mat-expansion-panel>
+        </mat-expansion-panel> -->
 
     </mat-accordion>
 
