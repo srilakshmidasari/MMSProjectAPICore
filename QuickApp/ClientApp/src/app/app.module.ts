@@ -42,12 +42,8 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { HomeComponent } from './components/home/home.component';
-import { CustomersComponent } from './components/customers/customers.component';
-import { ProductsComponent } from './components/products/products.component';
-import { OrdersComponent } from './components/orders/orders.component';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-
 import { BannerDemoComponent } from './components/controls/banner-demo.component';
 import { TodoDemoComponent } from './components/controls/todo-demo.component';
 import { StatisticsDemoComponent } from './components/controls/statistics-demo.component';
@@ -82,9 +78,6 @@ import { AddTaskDialogComponent } from './components/controls/add-task-dialog.co
     RecoverPasswordComponent,
     ResetPasswordComponent,
     HomeComponent,
-    CustomersComponent,
-    ProductsComponent,
-    OrdersComponent,
     AboutComponent,
     NotFoundComponent,
     NotificationsViewerComponent,

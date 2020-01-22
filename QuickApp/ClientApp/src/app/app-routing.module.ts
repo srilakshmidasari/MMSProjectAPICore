@@ -12,9 +12,6 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
 import { RecoverPasswordComponent } from './components/recover-password/recover-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { HomeComponent } from './components/home/home.component';
-import { CustomersComponent } from './components/customers/customers.component';
-import { ProductsComponent } from './components/products/products.component';
-import { OrdersComponent } from './components/orders/orders.component';
 import { SettingsComponent } from './settings/settings.component';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
@@ -51,9 +48,6 @@ const routes: Routes = [
   { path: 'confirmemail', component: ConfirmEmailComponent, data: { title: 'Confirm Email' } },
   { path: 'recoverpassword', component: RecoverPasswordComponent, data: { title: 'Recover Password' } },
   { path: 'resetpassword', component: ResetPasswordComponent, data: { title: 'Reset Password' } },
-  { path: 'customers', component: CustomersComponent, canActivate: [AuthGuard], data: { title: 'Customers' } },
-  { path: 'products', component: ProductsComponent, canActivate: [AuthGuard], data: { title: 'Products' } },
-  { path: 'orders', component: OrdersComponent, canActivate: [AuthGuard], data: { title: 'Orders' } },
   { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], data: { title: 'Settings' } },
   { path: 'about', component: AboutComponent, data: { title: 'About Us' } },
   { path: 'home', redirectTo: '/', pathMatch: 'full' },
