@@ -14,6 +14,8 @@ namespace DAL
     public class AppSettings
     {
         public string DefaultUserRole { get; set; }
+
+        public string EmailEndUrl { get; set; }
         public SmtpConfig SmtpConfig { get; set; }
 
     }

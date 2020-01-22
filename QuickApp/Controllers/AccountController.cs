@@ -37,16 +37,17 @@ namespace MMS.Controllers
 		private readonly ILogger<AccountController> _logger;
         private const string GetUserByIdActionName = "GetUserById";
         private const string GetRoleByIdActionName = "GetRoleById";
-
-        public AccountController(IMapper mapper, IAccountManager accountManager, IAuthorizationService authorizationService, IEmailSender emailSender, IOptions<AppSettings> appSettings,
+        private readonly IOptions<AppSettings> _config;
+        public AccountController(IMapper mapper, IAccountManager accountManager, IAuthorizationService authorizationService, IEmailSender emailSender, IOptions<AppSettings> config,
             ILogger<AccountController> logger)
         {
             _mapper = mapper;
             _accountManager = accountManager;
             _authorizationService = authorizationService;
             _emailSender = emailSender;
-            _publicRoleName = appSettings.Value.DefaultUserRole;
+            _publicRoleName = config.Value.DefaultUserRole;
 			_logger = logger;
+            _config = config;
         }
 
 
@@ -396,8 +397,12 @@ namespace MMS.Controllers
                 }
 
                 string code = await _accountManager.GeneratePasswordResetTokenAsync(appUser);
-                string callbackUrl = $"{Request.Scheme}://{Request.Host}/ResetPassword?code={code}";
+                string callbackUrl = $"{_config.Value.EmailEndUrl}/ResetPassword?code={code}";
                 string message = EmailTemplates.GetResetPasswordEmail(appUser.UserName, appUser.Email, HtmlEncoder.Default.Encode(callbackUrl));
+
+                //string code = await _accountManager.GeneratePasswordResetTokenAsync(appUser);
+                //string callbackUrl = $"{Request.Scheme}://{Request.Host}/ResetPassword?code={code}";
+                //string message = EmailTemplates.GetResetPasswordEmail(appUser.UserName, appUser.Email, HtmlEncoder.Default.Encode(callbackUrl));
 
                 await _emailSender.SendEmailAsync(appUser.UserName, appUser.Email, "Reset Password", message);
 
