@@ -1,16 +1,20 @@
 {
+  "appTitle":"نظام إدارة الصيانة",
   "app": {
     "Welcome": "أهلا بك",
     "Notifications": "إعلام",
     "New": "جديد"
   },
   "mainMenu": {
+    "Home": "الصفحة الرئيسية",
     "Appointments": "المواعيد",
-    "Customers": "الزبائن",
-    "Products": "المنتجات",
-    "Orders": "الأوامر",
+    "Profile": "الملف الشخصي",
     "About": "حول منجز التطبيق",
-    "Logout": "الخروج"
+    "Login": "تسجيل الدخول",
+    "Account": "الحساب",
+    "Logout": "الخروج",
+    "User": "إدارةالمستخدم",
+    "Role": "إدارة الدور"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -19,7 +23,9 @@
     "Orders": "الأوامر",
     "NotFound": "لا يوجد",
     "About": "حول منجز التطبيق",
-    "Settings": "إعدادات"
+    "Settings": "إعدادات",
+    "Users": "إدارةالمستخدم",
+    "Roles": "إدارة الدور"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",

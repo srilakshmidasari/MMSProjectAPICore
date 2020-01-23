@@ -1,10 +1,10 @@
 <form #form="ngForm" [formGroup]="userProfileForm" novalidate (ngSubmit)="save()" fxLayout="column" [fxLayoutGap]="isEditMode ? '1em' : '0'" autocomplete="off">
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
-    <mat-form-field [floatLabel]="floatLabels" fxFlex>
+    <!-- <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.JobTitle' | translate}}</mat-label>
       <input matInput formControlName="jobTitle" [readonly]="!isEditMode" />
-    </mat-form-field>
+    </mat-form-field> -->
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.FullName' | translate}}</mat-label>

@@ -30,7 +30,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns = ['jobTitle', 'userName', 'fullName', 'email'];
+  //displayedColumns = ['jobTitle', 'userName', 'fullName', 'email'];
+  displayedColumns = [ 'userName', 'fullName', 'email'];
   dataSource: MatTableDataSource<User>;
   sourceUser: User;
   loadingIndicator: boolean;

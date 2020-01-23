@@ -21,6 +21,8 @@ import { ConfigurationService } from './services/configuration.service';
 import { Permission } from './models/permission.model';
 import { LoginDialogComponent } from './components/login/login-dialog.component';
 import { AppDialogComponent } from './shared/app-dialog/app-dialog.component';
+import { LanguagePreference } from './settings/user-preferences/user-preferences.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -36,12 +38,12 @@ export class AppComponent implements OnInit {
   isAdminExpanded = false;
   removePrebootScreen: boolean;
   newNotificationCount = 0;
-  appTitle = ' Maintenance Management System';
+  appTitle = 'Maintenance Management System';
   appLogo = require('./assets/images/logo-white.png');
-
+ 
   mobileQuery: MediaQueryList;
   stickyToasties: number[] = [];
-
+  language: string = 'English';
   dataLoadingConsecutiveFailures = 0;
   notificationsLoadingSubscription: any;
 
@@ -57,6 +59,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     storageManager: LocalStoreManager,
+    private translate: TranslateService,
     private toastaService: ToastaService,
     private toastaConfig: ToastaConfig,
     private accountService: AccountService,
@@ -85,6 +88,18 @@ export class AppComponent implements OnInit {
 
     this.appTitleService.appName = this.appTitle;
   }
+
+    //on language change click
+    changeLang(language: string) {
+      if (language == 'en') {
+        this.language = 'English';
+      }
+      else if (language == 'ar') {
+        this.language = 'Arabic';
+      }
+      this.translate.use(language);
+      localStorage.setItem('language', language);
+    }
 
   ngOnInit() {
     this.isUserLoggedIn = this.authService.isLoggedIn;
