@@ -15,6 +15,7 @@ import { EditRoleDialogComponent } from './edit-role-dialog/edit-role-dialog.com
 import { RoleEditorComponent } from './role-editor/role-editor.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
+import { SiteListComponent } from './site-list/site-list.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.com
     EditRoleDialogComponent,
     RoleEditorComponent,
     UserListComponent,
-    EditUserDialogComponent
+    EditUserDialogComponent,
+    SiteListComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

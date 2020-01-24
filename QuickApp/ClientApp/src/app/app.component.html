@@ -1,4 +1,4 @@
-<div id="app_container" [class.is-mobile]="mobileQuery.matches" class="nav-container">
+<div id="app_container" [dir]="textDir" [class.is-mobile]="mobileQuery.matches" class="nav-container">
 
   <mat-toolbar ngPreserveWhitespaces color="primary" class="app-toolbar">
     <button mat-icon-button (click)="mainNav.toggle()">

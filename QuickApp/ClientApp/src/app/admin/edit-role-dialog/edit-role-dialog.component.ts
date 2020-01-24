@@ -20,6 +20,7 @@ import { RoleEditorComponent } from '../role-editor/role-editor.component';
 export class EditRoleDialogComponent {
     @ViewChild(RoleEditorComponent, { static: true })
     roleEditor: RoleEditorComponent;
+    textDir: string;
 
     get roleName(): any {
         return this.data.role ? { name: this.data.role.name } : null;
@@ -30,6 +31,7 @@ export class EditRoleDialogComponent {
         @Inject(MAT_DIALOG_DATA) public data: { role: Role, allPermissions: Permission[] },
         private accountService: AccountService
     ) {
+        this.textDir = localStorage.getItem('textdir')
     }
 
     ngAfterViewInit() {

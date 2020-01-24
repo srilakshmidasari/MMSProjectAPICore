@@ -48,6 +48,7 @@ export class AppComponent implements OnInit {
   notificationsLoadingSubscription: any;
 
   gT = (key: string | Array<string>, interpolateParams?: Object) => this.translationService.getTranslation(key, interpolateParams);
+  textDir: string;
 
   get notificationsTitle() {
     if (this.newNotificationCount) {
@@ -93,12 +94,14 @@ export class AppComponent implements OnInit {
     changeLang(language: string) {
       if (language == 'en') {
         this.language = 'English';
+        this.textDir = 'ltr';
       }
       else if (language == 'ar') {
         this.language = 'Arabic';
+        this.textDir = 'rtl';
       }
       this.translate.use(language);
-      localStorage.setItem('language', language);
+      localStorage.setItem('textdir',  this.textDir);
     }
 
   ngOnInit() {
