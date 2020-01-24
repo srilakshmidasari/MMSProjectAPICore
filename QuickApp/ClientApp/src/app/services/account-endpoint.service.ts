@@ -29,6 +29,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _rolesUrl: string = '/api/account/roles';
   private readonly _roleByRoleNameUrl: string = '/api/account/roles/name';
   private readonly _permissionsUrl: string = '/api/account/permissions';
+  private readonly _siteUrl: string = '/api/Site';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
@@ -43,6 +44,7 @@ export class AccountEndpoint extends EndpointBase {
   get rolesUrl() { return this.configurations.baseUrl + this._rolesUrl; }
   get roleByRoleNameUrl() { return this.configurations.baseUrl + this._roleByRoleNameUrl; }
   get permissionsUrl() { return this.configurations.baseUrl + this._permissionsUrl; }
+  get sitesUrl() { return this.configurations.baseUrl + this._siteUrl; }
 
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -256,6 +258,15 @@ debugger
     return this.http.get<T>(this.permissionsUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getPermissionsEndpoint());
+      }));
+  }
+
+  getSiteEndpoint<T>(): Observable<T> {
+    const endpointUrl = this.sitesUrl;
+
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getUserEndpoint());
       }));
   }
 }
