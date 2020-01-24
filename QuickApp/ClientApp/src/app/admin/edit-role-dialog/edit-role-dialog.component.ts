@@ -32,6 +32,7 @@ export class EditRoleDialogComponent {
         private accountService: AccountService
     ) {
         this.textDir = localStorage.getItem('textdir')
+       
     }
 
     ngAfterViewInit() {
