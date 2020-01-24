@@ -88,6 +88,7 @@ export class AppComponent implements OnInit {
     this.toastaConfig.showDuration = false;
 
     this.appTitleService.appName = this.appTitle;
+    localStorage.setItem('textdir', 'ltr')
   }
 
     //on language change click
