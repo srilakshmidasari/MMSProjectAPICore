@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DAL.RequestResponseModels.RequestResponseModels;
 
 namespace DAL.RequestResponseModels
 {
@@ -91,6 +92,9 @@ namespace DAL.RequestResponseModels
             CreateMap<IdentityRoleClaim<string>, PermissionViewModel>()
                 .ConvertUsing(s => (PermissionViewModel)ApplicationPermissions.GetPermissionByValue(s.ClaimValue));
 
+
+            CreateMap<UpsertSite, Site>();
+              
         }
     }
 }

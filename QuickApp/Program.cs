@@ -32,8 +32,8 @@ namespace MMS
 
                 try
                 {
-                    var databaseInitializer = services.GetRequiredService<IDatabaseInitializer>();
-                    databaseInitializer.SeedAsync().Wait();
+                    //var databaseInitializer = services.GetRequiredService<IDatabaseInitializer>();
+                    //databaseInitializer.SeedAsync().Wait();
                 }
                 catch (Exception ex)
                 {

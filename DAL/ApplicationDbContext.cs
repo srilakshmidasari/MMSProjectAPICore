@@ -19,11 +19,8 @@ namespace DAL
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public string CurrentUserId { get; set; }
-        //public DbSet<Customer> Customers { get; set; }
-        //public DbSet<ProductCategory> ProductCategories { get; set; }
-        //public DbSet<Product> Products { get; set; }
-        //public DbSet<Order> Orders { get; set; }
-        //public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<Site> Sites { get; set; }
+        
 
 
 
@@ -53,22 +50,19 @@ namespace DAL
             //builder.Entity<ProductCategory>().Property(p => p.Description).HasMaxLength(500);
             //builder.Entity<ProductCategory>().ToTable($"App{nameof(this.ProductCategories)}");
 
-            //builder.Entity<Product>().Property(p => p.Name).IsRequired().HasMaxLength(100);
-            //builder.Entity<Product>().HasIndex(p => p.Name);
-            //builder.Entity<Product>().Property(p => p.Description).HasMaxLength(500);
-            //builder.Entity<Product>().Property(p => p.Icon).IsUnicode(false).HasMaxLength(256);
-            //builder.Entity<Product>().HasOne(p => p.Parent).WithMany(p => p.Children).OnDelete(DeleteBehavior.Restrict);
-            //builder.Entity<Product>().ToTable($"App{nameof(this.Products)}");
-            //builder.Entity<Product>().Property(p => p.BuyingPrice).HasColumnType(priceDecimalType);
-            //builder.Entity<Product>().Property(p => p.SellingPrice).HasColumnType(priceDecimalType);
+            builder.Entity<Site>().ToTable("Site");
 
-            //builder.Entity<Order>().Property(o => o.Comments).HasMaxLength(500);
-            //builder.Entity<Order>().ToTable($"App{nameof(this.Orders)}");
-            //builder.Entity<Order>().Property(p => p.Discount).HasColumnType(priceDecimalType);
+            builder.Entity<Site>().HasOne(d => d.CreatedUser)
+           .WithMany(p => p.App_Site_CreatedUser)
+           .HasForeignKey(d => d.CreatedBy)
+           .OnDelete(DeleteBehavior.ClientSetNull)
+           .HasConstraintName("FK_Site_CreatedUser");
 
-            //builder.Entity<OrderDetail>().ToTable($"App{nameof(this.OrderDetails)}");
-            //builder.Entity<OrderDetail>().Property(p => p.UnitPrice).HasColumnType(priceDecimalType);
-            //builder.Entity<OrderDetail>().Property(p => p.Discount).HasColumnType(priceDecimalType);
+            builder.Entity<Site>().HasOne(d => d.UpdatedUser)
+                  .WithMany(p => p.App_Site_UpdatedUser)
+                  .HasForeignKey(d => d.UpdatedBy)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_Site_UpdatedUser");
         }
 
         public override int SaveChanges()

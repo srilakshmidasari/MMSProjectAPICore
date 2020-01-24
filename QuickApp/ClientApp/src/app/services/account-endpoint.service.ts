@@ -72,7 +72,7 @@ export class AccountEndpoint extends EndpointBase {
 
   getUsersEndpoint<T>(page?: number, pageSize?: number): Observable<T> {
     const endpointUrl = page && pageSize ? `${this.usersUrl}/${page}/${pageSize}` : this.usersUrl;
-
+    debugger
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getUsersEndpoint(page, pageSize));
@@ -217,7 +217,7 @@ export class AccountEndpoint extends EndpointBase {
 
   getRolesEndpoint<T>(page?: number, pageSize?: number): Observable<T> {
     const endpointUrl = page && pageSize ? `${this.rolesUrl}/${page}/${pageSize}` : this.rolesUrl;
-
+debugger
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getRolesEndpoint(page, pageSize));

@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using DAL.Repositories;
 using DAL.Repositories.Interfaces;
 using Microsoft.Extensions.Options;
@@ -18,26 +19,28 @@ namespace DAL
     {
         readonly ApplicationDbContext _context;
         readonly IOptions<AppSettings> _configuration;
-        //ICustomerRepository _customers;
+        IMapper _mapper;
+        ISiteRepository _sites;
 
-        public UnitOfWork(ApplicationDbContext context, IOptions<AppSettings> configuration)
+        public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
             _context = context;
             _configuration = configuration;
+            _mapper = mapper;
         }
 
 
 
-        //public ICustomerRepository Customers
-        //{
-        //    get
-        //    {
-        //        if (_customers == null)
-        //            _customers = new CustomerRepository(_context);
+        public ISiteRepository Sites
+        {
+            get
+            {
+                if (_sites == null)
+                    _sites = new SiteRepository(_context, _mapper, _configuration);
 
-        //        return _customers;
-        //    }
-        //}
+                return _sites;
+            }
+        }
 
         public int SaveChanges()
         {

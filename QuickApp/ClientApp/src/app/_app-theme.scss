@@ -1,7 +1,7 @@
 @import '../../node_modules/@angular/material/theming';
 
-@import './shared/footer/footer.component-theme.scss';
-@import './admin/role-editor/role-editor.component-theme.scss';
+ @import './shared/footer/footer.component-theme.scss';
+// @import './admin/role-editor/role-editor.component-theme.scss';
 
 
 @mixin clearfix() {
@@ -38,5 +38,5 @@
   }
 
   @include footer-theme($theme);
-  @include role-editor-theme($theme);
+ // @include role-editor-theme($theme);
 }

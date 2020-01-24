@@ -14,7 +14,7 @@ namespace DAL
 {
     public interface IUnitOfWork
     {
-        
+         ISiteRepository Sites { get; }
 
         int SaveChanges();
     }

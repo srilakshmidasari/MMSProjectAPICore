@@ -28,6 +28,7 @@ using System.Reflection;
 using AppPermissions = DAL.Core.ApplicationPermissions;
 using MMS;
 using DAL.Helpers;
+using Newtonsoft.Json;
 
 namespace MMS
 {
@@ -130,6 +131,7 @@ namespace MMS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
+                var endURL = "http://localhost:5050/connect/token";
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
@@ -137,7 +139,8 @@ namespace MMS
                     {
                         Password = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri("/connect/token", UriKind.Relative),
+                            // TokenUrl = new Uri("/connect/token", UriKind.Relative),
+                            TokenUrl = new Uri(endURL),
                             Scopes = new Dictionary<string, string>()
                             {
                                 { IdentityServerConfig.ApiName, IdentityServerConfig.ApiFriendlyName }
@@ -162,6 +165,9 @@ namespace MMS
             services.AddScoped<IUnitOfWork, HttpUnitOfWork>();
             services.AddScoped<IAccountManager, AccountManager>();
 
+            services.AddMvc().AddNewtonsoftJson(options =>
+            options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+          );
             // Auth Handlers
             services.AddSingleton<IAuthorizationHandler, ViewUserAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, ManageUserAuthorizationHandler>();
