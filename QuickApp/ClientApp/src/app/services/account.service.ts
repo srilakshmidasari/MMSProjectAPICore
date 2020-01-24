@@ -191,4 +191,7 @@ export class AccountService {
   get currentUser() {
     return this.authService.currentUser;
   }
+  getSiteData(){
+    return this.accountEndpoint.getSiteEndpoint();
+  }
 }

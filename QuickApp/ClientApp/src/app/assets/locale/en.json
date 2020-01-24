@@ -24,7 +24,8 @@
     "Settings": "Settings",
     "Theme": "Select a theme",
     "User":"Users",
-    "Role":"Roles"
+    "Role":"Roles",
+    "Site":"Site"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -35,7 +36,8 @@
     "About": "About",
     "Settings": "Settings",
     "Users": "User Management",
-    "Roles": "Role Management"
+    "Roles": "Role Management",
+    "Site":"Site Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -197,5 +199,12 @@
     "Cancel": "Cancel",
     "Reset": "Reset",
     "Reload": "Reload"
+  },
+  "site":{
+    "management":{
+      "Search": "Search for Site...",
+      "siteRef":"siteRef"
+    }
+
   }
 }
