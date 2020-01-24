@@ -22,13 +22,16 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" >
+                    <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()" >
                         <mat-icon class="mat-button-icon">add</mat-icon>Add Site
                     </button>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" >
+                    <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)">
                         <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Delete"(click)="onEditSite(row)" >
+                        <mat-icon color="warn">cancel</mat-icon>
                     </button>
                 </mat-cell>
             </ng-container>

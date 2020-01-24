@@ -16,6 +16,8 @@ import { RoleEditorComponent } from './role-editor/role-editor.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 import { SiteListComponent } from './site-list/site-list.component';
+import { SiteEditorComponent } from './site-editor/site-editor.component';
+import { SiteDialogComponent } from './site-dialog/site-dialog.component';
 
 @NgModule({
   imports: [
@@ -29,7 +31,9 @@ import { SiteListComponent } from './site-list/site-list.component';
     RoleEditorComponent,
     UserListComponent,
     EditUserDialogComponent,
-    SiteListComponent
+    SiteListComponent,
+    SiteEditorComponent,
+    SiteDialogComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
