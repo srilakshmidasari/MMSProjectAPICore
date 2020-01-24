@@ -1,17 +1,34 @@
-<div id="app_container" [class.is-mobile]="mobileQuery.matches" class="nav-container">
+<div id="app_container" [dir]="textDir" [class.is-mobile]="mobileQuery.matches" class="nav-container">
 
   <mat-toolbar ngPreserveWhitespaces color="primary" class="app-toolbar">
-    <button mat-icon-button (click)="mainNav.toggle()"><mat-icon>menu</mat-icon></button>
-    <h1 class="app-name"><a routerLink="/" class="appTitle">{{appTitle}}</a></h1>
+    <button mat-icon-button (click)="mainNav.toggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+
+    <h1 class="app-name"><a routerLink="/" class="appTitle">{{'appTitle' | translate}}</a></h1>
     <span class="app-toolbar-spacer"></span>
+    <button mat-button [matMenuTriggerFor]="languageMenu" 
+      matTooltip="{{'Choose Language'|translate}}">
+      <mat-icon>language</mat-icon>
+    </button>
+    <mat-menu #languageMenu="matMenu">
+      <button mat-menu-item  (click)="changeLang('en')">
+        <span>{{'English' | translate}}</span>
+      </button>      
+      <button mat-menu-item (click)="changeLang('ar')">
+        <span>{{'Arabic' | translate}}</span>
+      </button>
+    </mat-menu>
     <app-theme-picker tooltip="{{'mainMenu.Theme' | translate}}"></app-theme-picker>
+
 
     <button *ngIf="!isUserLoggedIn" mat-button (click)="router.navigateByUrl('/login')">
       <mat-icon>lock_open</mat-icon>
       <span>{{'mainMenu.Login' | translate}}</span>
     </button>
 
-    <button *ngIf="isUserLoggedIn" class="side-button" mat-button [matMenuTriggerFor]="accountMenu" matTooltip="{{'mainMenu.UserAccount' | translate}}">
+    <button *ngIf="isUserLoggedIn" class="side-button" mat-button [matMenuTriggerFor]="accountMenu"
+      matTooltip="{{'mainMenu.UserAccount' | translate}}">
       <mat-icon class="menu-button">account_circle</mat-icon>
       <span fxHide.lt-sm>{{'mainMenu.Account' | translate}}</span>
     </button>
@@ -29,12 +46,13 @@
 
   </mat-toolbar>
 
-  <mat-sidenav-container class="app-sidenav-container"
-                         [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
+  <mat-sidenav-container class="app-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 56 : 0">
     <mat-sidenav #mainNav class="app-sidenav-nav mat-elevation-z6" [mode]="mobileQuery.matches ? 'over' : 'side'"
-                 [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="!mobileQuery.matches">
+      [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="!mobileQuery.matches">
       <mat-nav-list *ngIf="isUserLoggedIn">
-         <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink=""><mat-icon>dashboard</mat-icon>{{'mainMenu.Home' | translate}}</a>
+        <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">
+          <mat-icon>dashboard</mat-icon>{{'mainMenu.Home' | translate}}
+        </a>
         <!--<a mat-list-item routerLinkActive="active" *ngIf="canViewCustomers" routerLink="/customers"><mat-icon>contacts</mat-icon>{{'mainMenu.Customers' | translate}}</a>
         <a mat-list-item routerLinkActive="active" *ngIf="canViewProducts" routerLink="/products"><mat-icon>local_shipping</mat-icon>{{'mainMenu.Products' | translate}}</a>
         <a mat-list-item routerLinkActive="active" *ngIf="canViewOrders" routerLink="/orders"><mat-icon>shopping_cart</mat-icon>{{'mainMenu.Orders' | translate}}</a> -->
@@ -44,8 +62,12 @@
               <mat-icon>security</mat-icon>Admin
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLinkActive="active" *ngIf="canViewUsers" routerLink="/admin/users"><mat-icon>people</mat-icon>Users</a>
-          <a mat-list-item routerLinkActive="active" *ngIf="canViewRoles" routerLink="/admin/roles"><mat-icon>assignment_ind</mat-icon>Roles</a>
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewUsers" routerLink="/admin/users">
+            <mat-icon>people</mat-icon>{{'mainMenu.User' | translate}}
+          </a>
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewRoles" routerLink="/admin/roles">
+            <mat-icon>assignment_ind</mat-icon>{{'mainMenu.Role'| translate}}
+          </a>
         </mat-expansion-panel>
       </mat-nav-list>
       <!-- <mat-nav-list>

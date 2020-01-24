@@ -11,10 +11,10 @@
     <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
     <mat-table [dataSource]="dataSource" matSort>
 
-      <ng-container matColumnDef="jobTitle">
+      <!-- <ng-container matColumnDef="jobTitle">
         <mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header> {{'users.management.Title' | translate}} </mat-header-cell>
         <mat-cell fxFlex="15%" *matCellDef="let row"> {{row.jobTitle}} </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="userName">
         <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.management.UserName' | translate}} </mat-header-cell>

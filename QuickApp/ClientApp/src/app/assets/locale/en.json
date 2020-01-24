@@ -1,4 +1,5 @@
 {
+  "appTitle":"Maintenance Management System",
   "app": {
     "Welcome": "Welcome",
     "Notifications": "Notifications",
@@ -21,7 +22,9 @@
     "UserAccount": "User Account",
     "Profile": "Profile",
     "Settings": "Settings",
-    "Theme": "Select a theme"
+    "Theme": "Select a theme",
+    "User":"Users",
+    "Role":"Roles"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
