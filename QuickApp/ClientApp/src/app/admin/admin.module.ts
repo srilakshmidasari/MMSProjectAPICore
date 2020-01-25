@@ -37,7 +37,8 @@ import { SiteDialogComponent } from './site-dialog/site-dialog.component';
   ],
   entryComponents: [
     EditUserDialogComponent,
-    EditRoleDialogComponent
+    EditRoleDialogComponent,
+    SiteDialogComponent
   ]
 })
 export class AdminModule {

@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
 import { AccountService } from '../../services/account.service';
 import { MatDialog } from '@angular/material/dialog';
+import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
 
 @Component({
   selector: 'app-site-list',
@@ -15,7 +16,7 @@ export class SiteListComponent implements OnInit {
   siteInfo: any = [];
   sourceSite:any;
 
-  displayedColumns = ['siteRef', 'name1', 'name2', 'Actions'];
+  displayedColumns = ['siteReference', 'name1', 'name2', 'Actions'];
   siteData: any = [
     { siteRef: 'Hyd', name1: 'Hyderadad', name2: 'Jntu' }
   ];
@@ -37,22 +38,22 @@ export class SiteListComponent implements OnInit {
     this.accountService.getSiteData().subscribe(result => {
       console.log('result data', result);
       this.siteInfo = result;
-      //this.dataSource.data=this.siteInfo.listResult;
-      this.siteData = result;
+      this.dataSource.data=this.siteInfo.listResult;
+     // this.siteData = result;
     })
   }
-  public editRole(site?) {
+  public onEditSite(site?) {
     this.sourceSite = site;
 
-    // const dialogRef = this.dialog.open(EditRoleDialogComponent,
-    //   {
-    //     panelClass: 'mat-dialog-md',
-    //     data: { site }
-    //   });
-    // dialogRef.afterClosed().subscribe(role => {
-    //   if (role && this.canManageRoles) {
-    //     this.updateRoles(role);
-    //   }
-    // });
+    const dialogRef = this.dialog.open(SiteDialogComponent,
+      {
+        panelClass: 'mat-dialog-md',
+        data: { site }
+      });
+    dialogRef.afterClosed().subscribe(role => {
+      // if (role && this.canManageRoles) {
+      //   this.updateRoles(role);
+      // }
+    });
   }
 }

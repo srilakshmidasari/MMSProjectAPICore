@@ -269,4 +269,11 @@ debugger
         return this.handleError(error, () => this.getUserEndpoint());
       }));
   }
+  getNewSiteEndpoint<T>(siteObject: any): Observable<T> {
+    const endpointUrl = this.sitesUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(siteObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getNewRoleEndpoint(siteObject));
+      }));
+  }
 }
