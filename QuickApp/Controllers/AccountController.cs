@@ -40,9 +40,9 @@ namespace MMS.Controllers
         private const string GetRoleByIdActionName = "GetRoleById";
         private readonly IOptions<AppSettings> _config;
         private readonly ApplicationDbContext _appcontext;
-
+        
         public AccountController(IMapper mapper, IAccountManager accountManager, IAuthorizationService authorizationService, IEmailSender emailSender, IOptions<AppSettings> config,
-            ILogger<AccountController> logger, ApplicationDbContext context)
+            ILogger<AccountController> logger, ApplicationDbContext context )
         {
             _mapper = mapper;
             _accountManager = accountManager;
@@ -127,6 +127,19 @@ namespace MMS.Controllers
             }
 
             return Ok(usersVM);
+        }
+
+        [HttpGet("GetFilesByUserId/{UserId}")]
+        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
+        public async Task<IActionResult> GetFilesByUserId(string UserId)
+        {
+            var result = _appcontext.FileRepositories.Where(x => x.UserId == UserId).ToList();
+
+            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+
+            result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+
+            return Ok(result);
         }
 
 
@@ -332,10 +345,9 @@ namespace MMS.Controllers
                                 file.UpdatedBy = req.UpdatedBy;
                                 file.UpdatedDate = DateTime.Now;
                             }
-                            _appcontext.FileRepositories.Add(file);
                         }
                     }
-                    _appcontext.SaveChanges();
+                     _appcontext.SaveChanges();
                     await SendVerificationEmail(appUser);
                     UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
                     return CreatedAtAction(GetUserByIdActionName, new { id = userVM.Id }, userVM);
