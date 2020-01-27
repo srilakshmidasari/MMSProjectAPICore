@@ -3,7 +3,7 @@
 // www.ebenmonney.com/templates
 // =============================
 
-import { Component, OnDestroy, ViewChild, Input, OnChanges, NgZone } from '@angular/core';
+import { Component, OnDestroy, ViewChild, Input, OnChanges, NgZone, ElementRef } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
 
@@ -18,6 +18,7 @@ import { UserEdit } from '../../models/user-edit.model';
 import { Role } from '../../models/role.model';
 import { Permission } from '../../models/permission.model';
 import { EqualValidator } from '../../shared/validators/equal.validator';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'user-editor',
@@ -35,16 +36,22 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   public isSendingEmail = false;
   private passwordWatcher: Subscription;
   private onUserSaved = new Subject<User>();
-  roleData:any[]=[];
+  roleData: any[] = [];
   @Input() user: User = new User();
   @Input() roles: Role[] = [];
- isEditMode :boolean;
-  userDoc:any[]=[
-    {name:'User Image', id:1},
-    {name:'User Documents',id:2}
+  isEditMode: boolean;
+  BASE64_MARKER: string = ';base64,';
+  fileExtension: any;
+  @Input() allowedVideoExtension: string = "jpeg , jpg , png , pdf , docx , doc";
+  @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
+  @Input() maxSize: number = 2300;//1150;
+  userDoc: any[] = [
+    { name: 'User Image', id: 1 },
+    { name: 'User Documents', id: 2 }
   ];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
+  fileRepositories: any[] = [];
 
   get confirmedEmailChanged() {
     return this.emailConfirmed && this.email.value != this.user.email;
@@ -104,10 +111,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private accountService: AccountService,
     private localStorage: LocalStoreManager,
     private formBuilder: FormBuilder,
+    private authService: AuthService,
     private ngZone: NgZone
   ) {
     this.buildForm();
-   
+
   }
 
   ngOnChanges() {
@@ -151,9 +159,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   private buildForm() {
     this.userProfileForm = this.formBuilder.group({
-      empId:['',Validators.required],
-      name1:['',Validators.required],
-      name2:['',Validators.required],
+      empId: ['', Validators.required],
+      name1: ['', Validators.required],
+      name2: ['', Validators.required],
       jobTitle: '',
       userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -164,9 +172,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       }),
       roles: ['', Validators.required],
       fullName: '',
-      phoneNumber: ['',[Validators.required,Validators.minLength(10), Validators.maxLength(12)]],
+      phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
       isEnabled: '',
-      file:''
+      file: ''
     });
 
     this.passwordWatcher = this.newPassword.valueChanges.subscribe(() => this.confirmPassword.updateValueAndValidity());
@@ -186,7 +194,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.isChangePassword = true;
       this.addNewPasswordValidators();
     } else {
-      
+
       this.isChangePassword = false;
       this.newPassword.clearValidators();
       this.confirmPassword.clearValidators();
@@ -220,12 +228,43 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
+  uploadFile(doc, event) {
+    debugger
+    let reader = new FileReader();
+    let file = event.target.files[0];
+    if (event.target.files && event.target.files[0]) {
+      reader.onload = (e: any) => {
+        var doc = e.target.result;
+        var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
+        this.fileExtension = '.' + file.name.split('.').pop();
+        this.fileRepositories.push(
+          {
+            "repositoryId": 0,
+            "userId": null,
+            "fileName": e.target.result.substring(base64Index),
+            "fileLocation": null,
+            "fileExtention": this.fileExtension,
+            "createdBy": this.currentUser.id,
+            "updatedBy": this.currentUser.id,
+            "updatedDate": new Date(),
+            "createdDate": new Date()
+          })
+      }
+      reader.readAsDataURL(file);
+    }
+  }
+
   public beginEdit() {
     this.isEditMode = true;
     this.isChangePassword = false;
   }
 
+  get currentUser() {
+    return this.authService.currentUser;
+  }
+
   public save() {
+    debugger
     if (!this.form.submitted) {
       // Causes validation to update.
       this.form.onSubmit(null);
@@ -241,8 +280,31 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.alertService.startLoadingMessage('Saving changes...');
 
     const editedUser = this.getEditedUser();
+    const formModel = this.userProfileForm.value;
+
 
     if (this.isNewUser) {
+      // var req = {
+      //   "currentPassword": formModel.password.confirmPassword,
+      //   "newPassword": this.isChangePassword ? formModel.password.newPassword : null,
+      //   "roles": [
+      //     formModel.roles,
+      //   ],
+      //   "id": null,
+      //   "userName": formModel.userName,
+      //   "fullName": formModel.fullName,
+      //   "email": formModel.email,
+      //   "jobTitle": null,
+      //   "phoneNumber": formModel.phoneNumber,
+      //   "configuration": null,
+      //   "isEnabled": true,
+      //   "employeeId": formModel.empId,
+      //   "name1": formModel.name1,
+      //   "name2": formModel.name2,
+      //   "fileRepositories": this.fileRepositories
+      // }
+
+
       this.accountService.newUser(editedUser).subscribe(
         user => this.saveCompleted(user),
         error => this.saveFailed(error));
@@ -253,16 +315,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-  public cancel() {
-    this.resetForm();
-    this.isEditMode = false;
 
-    this.alertService.resetStickyMessage();
-  }
-
-  private getEditedUser(): UserEdit {
+  private getEditedUser(): any {
     const formModel = this.userProfileForm.value;
-
     return {
       id: this.user.id,
       jobTitle: formModel.jobTitle,
@@ -277,9 +332,21 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       newPassword: this.isChangePassword ? formModel.password.newPassword : null,
       confirmPassword: this.isChangePassword ? formModel.password.confirmPassword : null,
       isEnabled: formModel.isEnabled,
-      isLockedOut: this.user.isLockedOut
+      isLockedOut: this.user.isLockedOut,
+      employeeId: formModel.empId,
+      name1: formModel.name1,
+      name2: formModel.name2,
+      fileRepositories: this.fileRepositories
     };
   }
+  public cancel() {
+    this.resetForm();
+    this.isEditMode = false;
+
+    this.alertService.resetStickyMessage();
+  }
+
+
 
   private saveCompleted(user?: User) {
     if (user) {
@@ -382,6 +449,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       event.preventDefault();
     }
   }
-  
- 
+
+
 }

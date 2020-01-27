@@ -60,14 +60,15 @@ export class AccountService {
     } else {
       return this.accountEndpoint.getUserByUserNameEndpoint<User>(user.userName).pipe(
         mergeMap(foundUser => {
+          
           user.id = foundUser.id;
           return this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
         }));
     }
   }
 
-  newUser(user: UserEdit, isPublicRegistration?: boolean) {
-    return this.accountEndpoint.getNewUserEndpoint<User>(user, isPublicRegistration);
+  newUser(user: any, isPublicRegistration?: boolean) {
+    return this.accountEndpoint.getNewUserEndpoint<any>(user, isPublicRegistration);
   }
 
   getUserPreferences() {

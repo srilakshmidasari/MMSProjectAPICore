@@ -39,8 +39,10 @@ namespace MMS.Controllers
         private const string GetUserByIdActionName = "GetUserById";
         private const string GetRoleByIdActionName = "GetRoleById";
         private readonly IOptions<AppSettings> _config;
+        private readonly ApplicationDbContext _appcontext;
+        
         public AccountController(IMapper mapper, IAccountManager accountManager, IAuthorizationService authorizationService, IEmailSender emailSender, IOptions<AppSettings> config,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger, ApplicationDbContext context )
         {
             _mapper = mapper;
             _accountManager = accountManager;
@@ -49,6 +51,7 @@ namespace MMS.Controllers
             _publicRoleName = config.Value.DefaultUserRole;
             _logger = logger;
             _config = config;
+            _appcontext = context;
         }
 
 
@@ -278,7 +281,7 @@ namespace MMS.Controllers
         [ProducesResponseType(201, Type = typeof(UserViewModel))]
         [ProducesResponseType(400)]
         [ProducesResponseType(403)]
-        public async Task<IActionResult> Register([FromBody] UserEditViewModel user)
+        public async Task<IActionResult> Register([FromBody] UserFileViewModel user)
         {
             if (!(await _authorizationService.AuthorizeAsync(this.User, (user.Roles, new string[] { }), Authorization.Policies.AssignAllowedRolesPolicy)).Succeeded)
                 return new ChallengeResult();
@@ -331,6 +334,7 @@ namespace MMS.Controllers
                             }
                         }
                     }
+                    await _appcontext.SaveChangesAsync();
                     await SendVerificationEmail(appUser);
                     UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
                     return CreatedAtAction(GetUserByIdActionName, new { id = userVM.Id }, userVM);

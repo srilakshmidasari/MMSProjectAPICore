@@ -98,7 +98,7 @@
   </div>
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em"
     *ngIf="(isEditMode && !isNewUser && (userName.value != user.userName || confirmedEmailChanged)) || (isChangePassword && isEditingSelf)">
-    <mat-form-field   [floatLabel]="floatLabels" formGroupName="password" fxFlex>
+    <mat-form-field [floatLabel]="floatLabels" formGroupName="password" fxFlex>
       <mat-label>{{'users.editor.CurrentPassword' | translate}}</mat-label>
       <input matInput type="password" formControlName="currentPassword" required />
       <mat-error *ngIf="currentPassword.hasError('required')">
@@ -107,7 +107,7 @@
     </mat-form-field>
   </div>
 
-  <div *ngIf="!isNewUser">
+  <div >
 
     <button mat-raised-button (click)="changePassword()" *ngIf="!(isChangePassword || isNewUser)"
       color="primary">{{'users.editor.ChangePassword' | translate}}</button>
@@ -143,8 +143,8 @@
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
     <div class="form-group " fxFlex *ngFor="let doc of userDoc">
-      <label for="file">Upload  {{doc.name}}</label>
-      <input type="file" class="form-control" id="file" formControlName="file">
+      <label for="file">Upload {{doc.name}}</label>
+      <input type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile(doc, $event)">
     </div>
   </div>
 
