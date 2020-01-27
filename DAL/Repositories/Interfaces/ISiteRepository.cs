@@ -10,6 +10,6 @@ namespace DAL.Repositories.Interfaces
     {
         ListDataResponse<Site> GetAllSite();
 
-        ValueDataResponse<Site> InsertEvent(Site sites);
+        ValueDataResponse<Site> InsertSite(Site sites);
     }
 }
