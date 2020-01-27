@@ -92,6 +92,9 @@ namespace MMS.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("EmployeeId")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("FullName")
                         .HasColumnType("nvarchar(max)");
 
@@ -106,6 +109,12 @@ namespace MMS.Migrations
 
                     b.Property<DateTimeOffset?>("LockoutEnd")
                         .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name2")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NormalizedEmail")
                         .HasColumnType("nvarchar(256)")
@@ -151,6 +160,53 @@ namespace MMS.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("DAL.Models.FileRepository", b =>
+                {
+                    b.Property<int>("RepositoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileExtention")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FileLocation")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("RepositoryId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("FileRepository");
                 });
 
             modelBuilder.Entity("DAL.Models.Site", b =>
@@ -313,6 +369,21 @@ namespace MMS.Migrations
                     b.HasKey("UserId", "LoginProvider", "Name");
 
                     b.ToTable("AspNetUserTokens");
+                });
+
+            modelBuilder.Entity("DAL.Models.FileRepository", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_Repository_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_FileRepository_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_Repository_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_FileRepository_UpdatedUser")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("DAL.Models.Site", b =>

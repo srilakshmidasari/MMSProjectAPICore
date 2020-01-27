@@ -34,6 +34,9 @@ namespace DAL.Models
         public string Configuration { get; set; }
         public bool IsEnabled { get; set; }
         public bool IsLockedOut => this.LockoutEnabled && this.LockoutEnd >= DateTimeOffset.UtcNow;
+        public string EmployeeId { get; set; }
+        public string Name1 { get; set; }
+        public string Name2 { get; set; }
 
         public string CreatedBy { get; set; }
         public string UpdatedBy { get; set; }
@@ -59,5 +62,9 @@ namespace DAL.Models
 
         public ICollection<Site> App_Site_CreatedUser { get; set; }
         public ICollection<Site> App_Site_UpdatedUser { get; set; }
+
+        public ICollection<FileRepository> App_Repository_CreatedUser { get; set; }
+        public ICollection<FileRepository> App_Repository_UpdatedUser { get; set; }
+
     }
 }

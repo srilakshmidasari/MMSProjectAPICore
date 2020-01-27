@@ -20,7 +20,10 @@ namespace DAL
     {
         public string CurrentUserId { get; set; }
         public DbSet<Site> Sites { get; set; }
-        
+
+        public DbSet<FileRepository> FileRepositories { get; set; }
+
+
 
 
 
@@ -51,6 +54,7 @@ namespace DAL
             //builder.Entity<ProductCategory>().ToTable($"App{nameof(this.ProductCategories)}");
 
             builder.Entity<Site>().ToTable("Site");
+            builder.Entity<FileRepository>().ToTable("FileRepository");
 
             builder.Entity<Site>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_Site_CreatedUser)
@@ -63,6 +67,19 @@ namespace DAL
                   .HasForeignKey(d => d.UpdatedBy)
                   .OnDelete(DeleteBehavior.ClientSetNull)
                   .HasConstraintName("FK_Site_UpdatedUser");
+
+            builder.Entity<FileRepository>().HasOne(d => d.CreatedUser)
+         .WithMany(p => p.App_Repository_CreatedUser)
+         .HasForeignKey(d => d.CreatedBy)
+         .OnDelete(DeleteBehavior.ClientSetNull)
+         .HasConstraintName("FK_FileRepository_CreatedUser");
+
+            builder.Entity<FileRepository>().HasOne(d => d.UpdatedUser)
+                  .WithMany(p => p.App_Repository_UpdatedUser)
+                  .HasForeignKey(d => d.UpdatedBy)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_FileRepository_UpdatedUser");
+
         }
 
         public override int SaveChanges()

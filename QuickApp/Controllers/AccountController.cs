@@ -22,6 +22,7 @@ using DAL.Helpers;
 using DAL.RequestResponseModels;
 using MMS.Authorization;
 using DAL;
+using System.IO;
 
 namespace MMS.Controllers
 {
@@ -294,7 +295,49 @@ namespace MMS.Controllers
         var result = await _accountManager.CreateUserAsync(appUser, user.Roles, user.NewPassword);
         if (result.Succeeded)
         {
-          await SendVerificationEmail(appUser);
+                    foreach (var req in user.FileRepositories)
+                    {
+                        if (req.FileName != null)
+                        {
+                            string ModuleName = "Users";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
+
+                            FileUploadService repo = new FileUploadService();
+
+                            //string FolderLocation = ConfigurationManager.GetSection("FileRepositoryFolder").ToString();
+                            //string ServerRootPath = ConfigurationManager.GetSection("ServerRootPath").ToString();
+
+                            string FolderLocation = _config.Value.FileRepositoryFolder;
+                            string ServerRootPath = _config.Value.ServerRootPath;
+
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName; 
+
+                            byte[] FileBytes = Convert.FromBase64String(req.FileName);
+
+                            req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
+
+                            req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                            FileRepository file = new FileRepository();
+                            {
+                                file.UserId = appUser.Id;
+                                file.FileName = req.FileName;
+                                file.FileLocation = req.FileLocation;
+                                file.FileExtention = req.FileExtention;
+                                //file.DocumentType = req.DocumentType;
+                                file.CreatedBy = req.CreatedBy;
+                                file.CreatedDate = DateTime.Now;
+                                file.UpdatedBy = req.UpdatedBy;
+                                file.UpdatedDate = DateTime.Now;
+                            }
+                        }
+
+                    }
+
+                    await SendVerificationEmail(appUser);
 
           UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
           return CreatedAtAction(GetUserByIdActionName, new { id = userVM.Id }, userVM);

@@ -1,1 +1,8 @@
-<p>site-dialog works!</p>
+<h1  mat-dialog-title>{{isSite}}</h1>
+<div mat-dialog-content>   
+    <app-site-editor #siteEditor [site]="data.site"></app-site-editor>
+</div>
+<div mat-dialog-actions>
+    <button  mat-raised-button  (click)="siteEditor.save();"  color="primary">Save</button>
+    <button  mat-raised-button  (click)="cancel()" color="warn">Cancel</button>   
+</div>

@@ -194,4 +194,7 @@ export class AccountService {
   getSiteData(){
     return this.accountEndpoint.getSiteEndpoint();
   }
+  AddSite(site){
+    return this.accountEndpoint.getNewSiteEndpoint(site);
+  }
 }

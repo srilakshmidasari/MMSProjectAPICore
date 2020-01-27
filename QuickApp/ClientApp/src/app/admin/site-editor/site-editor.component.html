@@ -1,1 +1,49 @@
-<p>site-editor works!</p>
+
+ <form #form="ngForm" [formGroup]="siteForm">`
+     <div class="row">         
+        <mat-form-field class="col-md-4" >
+            <mat-label>Site Ref</mat-label>
+            <input matInput formControlName="siteref"  required/>
+            <mat-error *ngIf="!siteForm.controls['siteref'].valid">               
+               Site is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-4" >
+            <mat-label>Name1</mat-label>
+            <input matInput formControlName="sname1"  required/>
+            <mat-error *ngIf="!siteForm.controls['sname1'].valid">               
+               Name 1 is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-4" >
+            <mat-label> Name2</mat-label>
+            <input matInput formControlName="sname2"  required/>
+            <mat-error *ngIf="!siteForm.controls['sname2'].valid">               
+                Name 2 is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row">
+          <mat-form-field class="col-md-4" >
+            <mat-label> Address 1</mat-label>
+            <input matInput formControlName="add1"  required/>
+            <mat-error *ngIf="!siteForm.controls['add1'].valid">               
+                Address 1 is required
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="col-md-4" >
+            <mat-label> Address 2</mat-label>
+            <input matInput formControlName="add2"  required/>
+            <mat-error *ngIf="!siteForm.controls['add2'].valid">               
+                Address 2 is required
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="row" *ngIf="isNewSite">
+          <div class="form-group col-md-4" *ngFor="let doc of SiteDoc;let index=i">
+            <label for="file">Upload  of {{doc.name}}</label>
+            <input  type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event,doc)" >
+          </div>      
+        </div>       
+
+    </form>

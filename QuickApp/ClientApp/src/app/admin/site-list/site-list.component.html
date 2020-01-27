@@ -8,16 +8,16 @@
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="siteRef">
+            <ng-container matColumnDef="siteReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>site</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.siteRef}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.siteReference}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>site</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>site</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
@@ -30,7 +30,7 @@
                     <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Delete"(click)="onEditSite(row)" >
+                    <button mat-icon-button matTooltip="Delete"(click)="onDeleteSite(row)" >
                         <mat-icon color="warn">cancel</mat-icon>
                     </button>
                 </mat-cell>
