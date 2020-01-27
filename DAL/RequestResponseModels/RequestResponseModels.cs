@@ -12,19 +12,23 @@ namespace DAL.RequestResponseModels
         {
     
             public int Id { get; set; }
-
-            
             public string SiteReference { get; set; }
-
-
             public string Name1 { get; set; }
-
-            
             public string Name2 { get; set; }
             public string FileName { get; set; }
             public string FileLocation { get; set; }
            
             public string FileExtention { get; set; }
+        }
+
+        public class UpsertRepository : AuditableEntity
+        {
+            public int RepositoryId { get; set; }
+            public string UserId { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public string FileExtention { get; set; }
+          
         }
 
     }

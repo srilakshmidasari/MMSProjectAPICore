@@ -10,7 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-
+using static DAL.RequestResponseModels.RequestResponseModels;
 
 namespace DAL.RequestResponseModels
 {
@@ -35,7 +35,7 @@ namespace DAL.RequestResponseModels
         [MinimumCount(1, ErrorMessage = "Roles cannot be empty")]
         public string[] Roles { get; set; }
 
-        public List<FileRepository> FileRepositories { get; set; }
+      
     }
 
 
@@ -101,12 +101,13 @@ namespace DAL.RequestResponseModels
         public string Email { get; set; }
 
         public string JobTitle { get; set; }
-
         public string PhoneNumber { get; set; }
-
         public string Configuration { get; set; }
-
         public bool IsEnabled { get; set; }
+        public string EmployeeId { get; set; }
+        public string Name1 { get; set; }
+        public string Name2 { get; set; }
+        public List<UpsertRepository> FileRepositories { get; set; }
     }
 
 
