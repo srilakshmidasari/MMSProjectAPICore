@@ -17,7 +17,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.FullName' | translate}}</mat-label>
-      <input matInput formControlName="fullName" />
+      <input matInput formControlName="fullName"   maxlength="50" (keypress)="alphabetsOnly($event)" />
     </mat-form-field>
   </div>
 
@@ -25,7 +25,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Name1' | translate}}</mat-label>
-      <input matInput formControlName="name1" required />
+      <input matInput formControlName="name1" required maxlength="50" />
       <mat-error *ngIf="!userProfileForm.controls['name1'].valid">
         {{'users.editor.Name1Required' | translate}}
       </mat-error>
@@ -33,7 +33,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Name2' | translate}}</mat-label>
-      <input matInput formControlName="name2" required />
+      <input matInput formControlName="name2" required  maxlength="50"/>
       <mat-error *ngIf="!userProfileForm.controls['name2'].valid">
         {{'users.editor.Name2Required' | translate}}
       </mat-error>
@@ -44,7 +44,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Email' | translate}}</mat-label>
-      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" [readonly]="!isNewUser"
+      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" maxlength="50" [readonly]="!isNewUser"
         required />
       <button *ngIf="emailConfirmed === false" type="button" (click)="sendVerificationEmail()"
         [disabled]="isSendingEmail" class="send-confirm-email" mat-button color="primary">
@@ -75,7 +75,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
-      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off" required />
+      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off"  maxlength="30"required />
       <mat-error *ngIf="userName.hasError('required')">
         {{'users.editor.UserNameRequired' | translate}}
       </mat-error>
@@ -141,11 +141,14 @@
 
   </div>
 
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+  <div fxLayout="row"  *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
     <div class="form-group " fxFlex *ngFor="let doc of userDoc">
       <label for="file">Upload {{doc.name}}</label>
-      <input type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile(doc, $event)">
+      <input #fileInput  type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile(doc, $event)">
     </div>
+  </div>
+  <div fxLayout="row"  *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
+
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">

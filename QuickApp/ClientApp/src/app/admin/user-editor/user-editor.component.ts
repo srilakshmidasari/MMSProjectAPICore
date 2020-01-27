@@ -42,12 +42,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   isEditMode: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
-  @Input() allowedVideoExtension: string = "jpeg , jpg , png , pdf , docx , doc";
+  @Input() allowedImageExtension: string = "jpeg , jpg , png";
+  @Input() allowedDocsExtension: string = "pdf , docx , doc";
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
+
+
   @Input() maxSize: number = 2300;//1150;
   userDoc: any[] = [
     { name: 'User Image', id: 1 },
     { name: 'User Documents', id: 2 }
+    
   ];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
@@ -229,6 +233,61 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
   uploadFile(doc, event) {
+    if(doc.id==1)
+    {
+      var files = event.target.files;
+      var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
+      for (let file of files) {
+        this.fileExtension = '.' + file.name.split('.').pop();
+        // Get file extension
+        var ext = file.name.toUpperCase().split('.').pop() || file.name;
+        // Check the extension exists
+        var exists = extensions.includes(ext);
+        if (!exists) {
+          this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
+          this.myInputVariable.nativeElement.value = '';
+          //this.validfile = false;
+        }
+        if (file != undefined) {
+          var fileSizeinMB = file.size / (1024 * 1000);
+          var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
+          if (size > this.maxSize) {
+            this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
+            //this.validfile = false;
+            this.myInputVariable.nativeElement.value = '';
+          } else {
+            
+          }
+      }     
+
+    }
+  }
+    else if(doc.id==2){
+      var files = event.target.files;
+      var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
+      for (let file of files) {
+        this.fileExtension = '.' + file.name.split('.').pop();
+        // Get file extension
+        var ext = file.name.toUpperCase().split('.').pop() || file.name;
+        // Check the extension exists
+        var exists = extensions.includes(ext);
+        if (!exists) {
+          this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocsExtension + " only.", null, MessageSeverity.error);
+          this.myInputVariable.nativeElement.value = '';
+          //this.validfile = false;
+          if (file != undefined) {
+            var fileSizeinMB = file.size / (1024 * 1000);
+            var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
+            if (size > this.maxSize) {
+              this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
+              //this.validfile = false;
+              this.myInputVariable.nativeElement.value = '';
+            } else {
+              
+            }
+        }
+      } 
+    }     
     debugger
     let reader = new FileReader();
     let file = event.target.files[0];
@@ -253,6 +312,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       reader.readAsDataURL(file);
     }
   }
+}
 
   public beginEdit() {
     this.isEditMode = true;
@@ -449,6 +509,15 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       event.preventDefault();
     }
   }
+  alphabetsOnly(event: any) {
+    const alphabetspattern = /^[a-zA-Z ]*$/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+  
 
+ 
 
 }
