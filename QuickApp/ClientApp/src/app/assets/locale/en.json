@@ -146,7 +146,8 @@
       "Name2":"Name 2",
       "Name1Required":"Name 1 is required",
       "Name2Required":"Name 2 is required",
-      "PhoneNumberRequired":"Phone Number is required"
+      "PhoneNumberRequired":"Phone Number is required",
+      "PhoneNumberMinLength":"Enter 10 digits for Phone Number"
     }
   },
   "roles": {

@@ -1,4 +1,5 @@
-<form #form="ngForm" [formGroup]="userProfileForm" novalidate (ngSubmit)="save()" fxLayout="column" [fxLayoutGap]="isEditMode ? '1em' : '0'" autocomplete="off">
+<form #form="ngForm" [formGroup]="userProfileForm" novalidate (ngSubmit)="save()" fxLayout="column"
+  [fxLayoutGap]="isEditMode ? '1em' : '0'" autocomplete="off">
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
     <!-- <mat-form-field [floatLabel]="floatLabels" fxFlex>
@@ -8,7 +9,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.EmpId' | translate}}</mat-label>
-      <input matInput formControlName="empId" [readonly]="!isNewUser" maxlength="15" required />      
+      <input matInput formControlName="empId" [readonly]="!isNewUser" maxlength="15" required />
       <mat-error *ngIf="!userProfileForm.controls['empId'].valid">
         {{'users.editor.EmployeeIdRequired' | translate}}
       </mat-error>
@@ -16,7 +17,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.FullName' | translate}}</mat-label>
-      <input matInput formControlName="fullName"  />
+      <input matInput formControlName="fullName" />
     </mat-form-field>
   </div>
 
@@ -24,18 +25,18 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Name1' | translate}}</mat-label>
-      <input matInput formControlName="name1" required />      
+      <input matInput formControlName="name1" required />
       <mat-error *ngIf="!userProfileForm.controls['name1'].valid">
         {{'users.editor.Name1Required' | translate}}
-    </mat-error>
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Name2' | translate}}</mat-label>
-      <input matInput formControlName="name2"  required />      
+      <input matInput formControlName="name2" required />
       <mat-error *ngIf="!userProfileForm.controls['name2'].valid">
         {{'users.editor.Name2Required' | translate}}
-    </mat-error>
+      </mat-error>
     </mat-form-field>
   </div>
 
@@ -43,8 +44,10 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Email' | translate}}</mat-label>
-      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" [readonly]="!isNewUser"  required  />
-      <button *ngIf="emailConfirmed === false" type="button" (click)="sendVerificationEmail()" [disabled]="isSendingEmail" class="send-confirm-email" mat-button color="primary">
+      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" [readonly]="!isNewUser"
+        required />
+      <button *ngIf="emailConfirmed === false" type="button" (click)="sendVerificationEmail()"
+        [disabled]="isSendingEmail" class="send-confirm-email" mat-button color="primary">
         [{{'users.editor.SendVerificationEmail' | translate}}]
       </button>
       <mat-error *ngIf="email.hasError('required')">
@@ -57,12 +60,13 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.PhoneNumber' | translate}}</mat-label>
-      <input matInput formControlName="phoneNumber" [readonly]="!isNewUser" maxlength="12" minlength="10" (keypress)="numberOnly($event)" required />   
-      <mat-error *ngIf="!userProfileForm.controls['phoneNumber'].valid">
+      <input matInput formControlName="phoneNumber" [readonly]="!isNewUser" maxlength="12" minlength="10"
+        (keypress)="numberOnly($event)" required />
+      <mat-error *ngIf="userProfileForm.controls['phoneNumber'].hasError('required')">
         {{'users.editor.PhoneNumberRequired' | translate}}
       </mat-error>
-      <mat-error *ngIf="!userProfileForm.controls['phoneNumber'].minlength ">
-       Enter 10 digits for Phone Number
+      <mat-error *ngIf="userProfileForm.controls['phoneNumber'].hasError('minlength')">
+        {{'users.editor.PhoneNumberMinLength' | translate}}
       </mat-error>
     </mat-form-field>
   </div>
@@ -71,7 +75,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
-      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off"  required/>
+      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off" required />
       <mat-error *ngIf="userName.hasError('required')">
         {{'users.editor.UserNameRequired' | translate}}
       </mat-error>
@@ -89,22 +93,27 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field *ngIf="(isEditMode && !isNewUser && (userName.value != user.userName || confirmedEmailChanged)) || (isChangePassword && isEditingSelf)"
-                    [floatLabel]="floatLabels" formGroupName="password" fxFlex>
+
+
+  </div>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em"
+    *ngIf="(isEditMode && !isNewUser && (userName.value != user.userName || confirmedEmailChanged)) || (isChangePassword && isEditingSelf)">
+    <mat-form-field   [floatLabel]="floatLabels" formGroupName="password" fxFlex>
       <mat-label>{{'users.editor.CurrentPassword' | translate}}</mat-label>
       <input matInput type="password" formControlName="currentPassword" required />
       <mat-error *ngIf="currentPassword.hasError('required')">
         {{'users.editor.CurrentPasswordRequired' | translate}}
       </mat-error>
     </mat-form-field>
-
   </div>
 
-  <div *ngIf="isEditMode">
+  <div *ngIf="!isNewUser">
 
-    <button mat-raised-button (click)="changePassword()" *ngIf="!(isChangePassword || isNewUser)" color="primary">{{'users.editor.ChangePassword' | translate}}</button>
+    <button mat-raised-button (click)="changePassword()" *ngIf="!(isChangePassword || isNewUser)"
+      color="primary">{{'users.editor.ChangePassword' | translate}}</button>
 
-    <div *ngIf="isChangePassword || isNewUser" formGroupName="password" fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+    <div *ngIf="isChangePassword || isNewUser" formGroupName="password" fxLayout="row" fxLayout.lt-md="column"
+      fxLayoutGap="1em">
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
         <mat-label>{{'users.editor.NewPassword' | translate}}</mat-label>
@@ -132,21 +141,23 @@
 
   </div>
 
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">    
-    <div  class="form-group "  fxFlex  *ngFor="let doc of userDoc">
-      <label for="file">Upload  of {{doc.name}}</label>
-      <input  type="file" class="form-control" id="file" formControlName="file"  >
-    </div> 
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+    <div class="form-group " fxFlex *ngFor="let doc of userDoc">
+      <label for="file">Upload  {{doc.name}}</label>
+      <input type="file" class="form-control" id="file" formControlName="file">
+    </div>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
 
-    <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)" >
+    <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-checkbox *ngIf="isEditMode" formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
     </div>
 
     <div>
-      <button mat-button *ngIf="user.isLockedOut" (click)="unlockUser()" [disabled]="isSaving" color="accent"><mat-icon class="mat-button-icon">lock_open</mat-icon>{{'users.editor.Unblock' | translate}}</button>
+      <button mat-button *ngIf="user.isLockedOut" (click)="unlockUser()" [disabled]="isSaving" color="accent">
+        <mat-icon class="mat-button-icon">lock_open</mat-icon>{{'users.editor.Unblock' | translate}}
+      </button>
     </div>
 
   </div>

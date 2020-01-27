@@ -164,7 +164,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       }),
       roles: ['', Validators.required],
       fullName: '',
-      phoneNumber: ['',Validators.required,Validators.minLength(10), Validators.maxLength(12)],
+      phoneNumber: ['',[Validators.required,Validators.minLength(10), Validators.maxLength(12)]],
       isEnabled: '',
       file:''
     });
