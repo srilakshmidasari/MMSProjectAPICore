@@ -132,8 +132,9 @@ namespace DAL.RequestResponseModels
         public string PhoneNumber { get; set; }
         public string Configuration { get; set; }
         public bool IsEnabled { get; set; }
-
-        
+        public string EmployeeId { get; set; }
+        public string Name1 { get; set; }
+        public string Name2 { get; set; }
     }
 
 

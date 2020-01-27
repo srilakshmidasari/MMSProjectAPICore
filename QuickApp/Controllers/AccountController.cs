@@ -129,6 +129,19 @@ namespace MMS.Controllers
             return Ok(usersVM);
         }
 
+        [HttpGet("GetFilesByUserId/{UserId}")]
+        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
+        public async Task<IActionResult> GetFilesByUserId(string UserId)
+        {
+            var result = _appcontext.FileRepositories.Where(x => x.UserId == UserId).ToList();
+
+            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+
+            result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+
+            return Ok(result);
+        }
+
 
         [HttpPut("users/me")]
         [ProducesResponseType(204)]
@@ -334,7 +347,7 @@ namespace MMS.Controllers
                             }
                         }
                     }
-                    await _appcontext.SaveChangesAsync();
+                     _appcontext.SaveChanges();
                     await SendVerificationEmail(appUser);
                     UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
                     return CreatedAtAction(GetUserByIdActionName, new { id = userVM.Id }, userVM);
