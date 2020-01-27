@@ -23,7 +23,7 @@ namespace DAL.RequestResponseModels
         public string Description { get; set; }
 
         public string ParentRoleId { get; set; }
-
+        public string ParentRoleName { get; set; }
         public int UsersCount { get; set; }
 
         public PermissionViewModel[] Permissions { get; set; }

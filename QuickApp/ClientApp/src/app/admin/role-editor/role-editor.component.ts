@@ -7,6 +7,7 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
+import { Utilities } from '../../services/utilities';
 
 import { AlertService, MessageSeverity } from '../../services/alert.service';
 import { AccountService } from '../../services/account.service';
@@ -25,8 +26,9 @@ export class RoleEditorComponent {
   public selectedPermissions: SelectionModel<Permission>;
   public isNewRole = false;
   private onRoleSaved = new Subject<Role>();
+  roleData:any[]=[];
 
-  @Input() role: Role = new Role();
+  @Input() role: any = new Role();
   @Input() allPermissions: Permission[] = [];
 
   roleForm: FormGroup;
@@ -42,6 +44,7 @@ export class RoleEditorComponent {
     private formBuilder: FormBuilder
   ) {
     this.buildForm();
+    this.getRoles();
     this.selectedPermissions = new SelectionModel<Permission>(true, []);
   }
 
@@ -83,13 +86,14 @@ export class RoleEditorComponent {
     }
   }
 
-  private getEditedRole(): Role {
+  private getEditedRole() {
     const formModel = this.roleForm.value;
 
     return {
       id: this.role.id,
       name: formModel.name,
       description: formModel.description,
+      parentRoleId:formModel.repRole,
       permissions: this.selectedPermissions.selected,
       usersCount: 0
     };
@@ -160,14 +164,16 @@ export class RoleEditorComponent {
   private buildForm() {
     this.roleForm = this.formBuilder.group({
       name: ['', Validators.required],
-      description: ''
+      description: '',
+      repRole:['']
     });
   }
 
   private resetForm(replace = false) {
     this.roleForm.reset({
       name: this.role.name || '',
-      description: this.role.description || ''
+      description: this.role.description || '',
+      repRole: this.role.parentRoleId || ''
     });
 
     const selectePermissions = this.role.permissions
@@ -179,5 +185,18 @@ export class RoleEditorComponent {
 
   get canManageRoles() {
     return this.accountService.userHasPermission(Permission.manageRolesPermission);
+  }
+  private getRoles() {
+    
+    this.accountService.getRolesAndPermissions()
+      .subscribe(results => {    
+               this.roleData = results[0];       
+      },
+        error => {
+          this.alertService.stopLoadingMessage();       
+
+          this.alertService.showStickyMessage('Load Error', `Unable to retrieve roles from the server.\r\nErrors: "${Utilities.getHttpResponseMessages(error)}"`,
+            MessageSeverity.error, error);
+        });
   }
 }

@@ -7,15 +7,43 @@
     </mat-form-field> -->
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
+      <mat-label>{{'users.editor.EmpId' | translate}}</mat-label>
+      <input matInput formControlName="empId" [readonly]="!isNewUser" maxlength="15" required />      
+      <mat-error *ngIf="!userProfileForm.controls['empId'].valid">
+        {{'users.editor.EmployeeIdRequired' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.FullName' | translate}}</mat-label>
-      <input matInput formControlName="fullName" [readonly]="!isEditMode" />
+      <input matInput formControlName="fullName"  />
     </mat-form-field>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+
+    <mat-form-field [floatLabel]="floatLabels" fxFlex>
+      <mat-label>{{'users.editor.Name1' | translate}}</mat-label>
+      <input matInput formControlName="name1" required />      
+      <mat-error *ngIf="!userProfileForm.controls['name1'].valid">
+        {{'users.editor.Name1Required' | translate}}
+    </mat-error>
+    </mat-form-field>
+
+    <mat-form-field [floatLabel]="floatLabels" fxFlex>
+      <mat-label>{{'users.editor.Name2' | translate}}</mat-label>
+      <input matInput formControlName="name2"  required />      
+      <mat-error *ngIf="!userProfileForm.controls['name2'].valid">
+        {{'users.editor.Name2Required' | translate}}
+    </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Email' | translate}}</mat-label>
-      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" [readonly]="!isEditMode" />
+      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" [readonly]="!isNewUser"  required  />
       <button *ngIf="emailConfirmed === false" type="button" (click)="sendVerificationEmail()" [disabled]="isSendingEmail" class="send-confirm-email" mat-button color="primary">
         [{{'users.editor.SendVerificationEmail' | translate}}]
       </button>
@@ -29,23 +57,42 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.PhoneNumber' | translate}}</mat-label>
-      <input matInput formControlName="phoneNumber" [readonly]="!isEditMode" />
+      <input matInput formControlName="phoneNumber" [readonly]="!isNewUser" maxlength="12" minlength="10" (keypress)="numberOnly($event)" required />   
+      <mat-error *ngIf="!userProfileForm.controls['phoneNumber'].valid">
+        {{'users.editor.PhoneNumberRequired' | translate}}
+      </mat-error>
+      <mat-error *ngIf="!userProfileForm.controls['phoneNumber'].minlength ">
+       Enter 10 digits for Phone Number
+      </mat-error>
     </mat-form-field>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
+
     <mat-form-field [floatLabel]="floatLabels" fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
-      <input matInput formControlName="userName" [readonly]="!isEditMode" autocomplete="off" />
+      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off"  required/>
       <mat-error *ngIf="userName.hasError('required')">
         {{'users.editor.UserNameRequired' | translate}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
+      <mat-label>{{'users.editor.Roles' | translate}}</mat-label>
+      <mat-select formControlName="roles" multiple [disabled]="isEditMode || !canAssignRoles" required>
+        <mat-option *ngFor="let role of assignableRoles" [value]="role.name">
+          <span matTooltip="{{role.description}}">{{role.name}}</span>
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="assignedRoles.hasError('required')">
+        {{'users.editor.RoleRequired' | translate}}
       </mat-error>
     </mat-form-field>
 
     <mat-form-field *ngIf="(isEditMode && !isNewUser && (userName.value != user.userName || confirmedEmailChanged)) || (isChangePassword && isEditingSelf)"
                     [floatLabel]="floatLabels" formGroupName="password" fxFlex>
       <mat-label>{{'users.editor.CurrentPassword' | translate}}</mat-label>
-      <input matInput type="password" formControlName="currentPassword" />
+      <input matInput type="password" formControlName="currentPassword" required />
       <mat-error *ngIf="currentPassword.hasError('required')">
         {{'users.editor.CurrentPasswordRequired' | translate}}
       </mat-error>
@@ -61,7 +108,7 @@
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
         <mat-label>{{'users.editor.NewPassword' | translate}}</mat-label>
-        <input matInput type="password" formControlName="newPassword" autocomplete="off" />
+        <input matInput type="password" formControlName="newPassword" autocomplete="off" required />
         <mat-error *ngIf="newPassword.hasError('required')">
           {{'users.editor.NewPasswordRequired' | translate}}
         </mat-error>
@@ -72,7 +119,7 @@
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
         <mat-label>{{'users.editor.ConfirmPassword' | translate}}</mat-label>
-        <input matInput type="password" formControlName="confirmPassword" />
+        <input matInput type="password" formControlName="confirmPassword" required />
         <mat-error *ngIf="confirmPassword.hasError('required')">
           {{'users.editor.ConfirmationPasswordRequired' | translate}}
         </mat-error>
@@ -85,24 +132,16 @@
 
   </div>
 
-  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
-
-    <mat-form-field fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
-      <mat-label>{{'users.editor.Roles' | translate}}</mat-label>
-      <mat-select formControlName="roles" multiple [disabled]="!isEditMode || !canAssignRoles">
-        <mat-option *ngFor="let role of assignableRoles" [value]="role.name">
-          <span matTooltip="{{role.description}}">{{role.name}}</span>
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="assignedRoles.hasError('required')">
-        {{'users.editor.RoleRequired' | translate}}
-      </mat-error>
-    </mat-form-field>
+  <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">    
+    <div  class="form-group "  fxFlex  *ngFor="let doc of userDoc">
+      <label for="file">Upload  of {{doc.name}}</label>
+      <input  type="file" class="form-control" id="file" formControlName="file"  >
+    </div> 
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
 
-    <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
+    <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)" >
       <mat-checkbox *ngIf="isEditMode" formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
     </div>
 
