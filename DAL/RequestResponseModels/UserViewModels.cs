@@ -5,6 +5,7 @@
 
 
 using DAL.Helpers;
+using DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,6 +34,8 @@ namespace DAL.RequestResponseModels
 
         [MinimumCount(1, ErrorMessage = "Roles cannot be empty")]
         public string[] Roles { get; set; }
+
+        public List<FileRepository> FileRepositories { get; set; }
     }
 
 
