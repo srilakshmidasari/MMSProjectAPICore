@@ -35,11 +35,14 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   public isSendingEmail = false;
   private passwordWatcher: Subscription;
   private onUserSaved = new Subject<User>();
-
+  roleData:any[]=[];
   @Input() user: User = new User();
   @Input() roles: Role[] = [];
-  @Input() isEditMode = false;
-
+ isEditMode :boolean;
+  userDoc:any[]=[
+    {name:'User Image', id:1},
+    {name:'User Documents',id:2}
+  ];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
 
@@ -104,6 +107,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
+   
   }
 
   ngOnChanges() {
@@ -147,6 +151,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   private buildForm() {
     this.userProfileForm = this.formBuilder.group({
+      empId:['',Validators.required],
+      name1:['',Validators.required],
+      name2:['',Validators.required],
       jobTitle: '',
       userName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -157,8 +164,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       }),
       roles: ['', Validators.required],
       fullName: '',
-      phoneNumber: '',
-      isEnabled: ''
+      phoneNumber: ['',Validators.required,Validators.minLength(10), Validators.maxLength(12)],
+      isEnabled: '',
+      file:''
     });
 
     this.passwordWatcher = this.newPassword.valueChanges.subscribe(() => this.confirmPassword.updateValueAndValidity());
@@ -178,6 +186,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.isChangePassword = true;
       this.addNewPasswordValidators();
     } else {
+      
       this.isChangePassword = false;
       this.newPassword.clearValidators();
       this.confirmPassword.clearValidators();
@@ -366,4 +375,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           this.alertService.showStickyMessage(error, null, MessageSeverity.error);
         });
   }
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+  
+ 
 }

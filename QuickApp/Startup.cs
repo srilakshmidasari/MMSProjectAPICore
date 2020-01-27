@@ -131,7 +131,7 @@ namespace MMS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
-                var endURL = "http://localhost:5050/connect/token";
+                var endURL = "http://localhost:44350/connect/token";
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,

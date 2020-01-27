@@ -40,8 +40,8 @@
           </mat-form-field>
         </div>
         <div class="row" *ngIf="isNewSite">
-          <div class="form-group col-md-4" *ngFor="let doc of SiteDoc;let index=i">
-            <label for="file">Upload  of {{doc.name}}</label>
+          <div class="form-group col-md-4" *ngFor="let doc of SiteDoc">
+            <label for="file">Upload  {{doc.name}}</label>
             <input  type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event,doc)" >
           </div>      
         </div>       

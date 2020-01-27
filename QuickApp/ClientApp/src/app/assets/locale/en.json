@@ -139,7 +139,14 @@
       "Edit": "Edit",
       "Cancel": "Cancel",
       "Save": "Save",
-      "Saving": "Saving..."
+      "Saving": "Saving...",
+      "EmpId":" Employee Id",
+      "EmployeeIdRequired":" Employee Id  is required (maximum of 15 characters) ",
+      "Name1": "Name 1",
+      "Name2":"Name 2",
+      "Name1Required":"Name 1 is required",
+      "Name2Required":"Name 2 is required",
+      "PhoneNumberRequired":"Phone Number is required"
     }
   },
   "roles": {
