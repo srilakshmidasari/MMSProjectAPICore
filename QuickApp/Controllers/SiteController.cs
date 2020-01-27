@@ -34,7 +34,7 @@ namespace MMS.Controllers
         public ValueDataResponse<Site> Insert(UpsertSite sites)
         {
             Site siteInfo = _mapper.Map<Site>(sites);
-            return _unitOfWork.Sites.InsertEvent(siteInfo);
+            return _unitOfWork.Sites.InsertSite(siteInfo);
         }
     }
 }

@@ -51,9 +51,7 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ValueDataResponse<Site> InsertEvent(Site sites)
-        
-        
+        public ValueDataResponse<Site> InsertSite(Site sites)
         {
             ValueDataResponse<Site> response = new ValueDataResponse<Site>();
 
@@ -62,7 +60,7 @@ namespace DAL.Repositories
                 var result = _appContext.Sites.Add(sites);
                 if (sites.FileName != null)
                 {
-                    string ModuleName = "Entity";
+                    string ModuleName = "Site";
                     var now = DateTime.Now;
                     var yearName = now.ToString("yyyy");
                     var monthName = now.Month.ToString("d2");
