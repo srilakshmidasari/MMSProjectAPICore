@@ -261,6 +261,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           }
         }
       }
+      this.isImageFile=true;
     } else {
       var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       if (file != undefined) {
@@ -283,12 +284,18 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           }
         }
       }
+      this.isDocFile=true;
     }
     let reader = new FileReader();
     reader.onload = (e: any) => {
       var doc = e.target.result;
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
+      if(this.isDocFile || this.isImageFile){
+        this.fileRepositories.forEach((item1) => {
+          if (item1.fileExtention == this.fileExtension ) this.fileRepositories.splice(item1, 1); 
+        });
+      }
       this.fileRepositories.push(
         {
           "repositoryId": 0,
