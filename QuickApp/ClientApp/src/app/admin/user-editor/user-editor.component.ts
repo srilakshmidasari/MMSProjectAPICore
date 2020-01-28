@@ -237,10 +237,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   //  File  Change Event
   uploadFile(doc, event) {
+    debugger
+    var file = event.target.files[0];
     if (doc.id == 1) {
-      var files = event.target.files;
       var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
-      for (let file of files) {
+      if (file != undefined) {
         this.fileExtension = '.' + file.name.split('.').pop();
         // Get file extension
         var ext = file.name.toUpperCase().split('.').pop() || file.name;
@@ -249,9 +250,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
-
-        }
-        if (file != undefined) {
+        } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
@@ -261,14 +260,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
           }
         }
-
       }
-    }
-
-    else if (doc.id == 2) {
-      var files = event.target.files;
+    } else {
       var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
-      for (let file of files) {
+      if (file != undefined) {
         this.fileExtension = '.' + file.name.split('.').pop();
         // Get file extension
         var ext = file.name.toUpperCase().split('.').pop() || file.name;
@@ -277,45 +272,37 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocsExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
-          //this.validfile = false;
-          if (file != undefined) {
-            var fileSizeinMB = file.size / (1024 * 1000);
-            var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
-            if (size > this.maxSize) {
-              this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
-              //this.validfile = false;
-              this.myInputVariable.nativeElement.value = '';
-            } else {
+        } else {
+          var fileSizeinMB = file.size / (1024 * 1000);
+          var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
+          if (size > this.maxSize) {
+            this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
+            this.myInputVariable.nativeElement.value = '';
+          } else {
 
-            }
           }
         }
       }
     }
-    debugger
     let reader = new FileReader();
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.onload = (e: any) => {
-        var doc = e.target.result;
-        var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
-        this.fileExtension = '.' + file.name.split('.').pop();
-        this.fileRepositories.push(
-          {
-            "repositoryId": 0,
-            "userId": null,
-            "fileName": e.target.result.substring(base64Index),
-            "fileLocation": null,
-            "fileExtention": this.fileExtension,
-            "createdBy": this.currentUser.id,
-            "updatedBy": this.currentUser.id,
-            "updatedDate": new Date(),
-            "createdDate": new Date()
-          })
-      }
-      reader.readAsDataURL(file);
+    reader.onload = (e: any) => {
+      var doc = e.target.result;
+      var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
+      this.fileExtension = '.' + file.name.split('.').pop();
+      this.fileRepositories.push(
+        {
+          "repositoryId": 0,
+          "userId": null,
+          "fileName": e.target.result.substring(base64Index),
+          "fileLocation": null,
+          "fileExtention": this.fileExtension,
+          "createdBy": this.currentUser.id,
+          "updatedBy": this.currentUser.id,
+          "updatedDate": new Date(),
+          "createdDate": new Date()
+        })
     }
-
+    reader.readAsDataURL(file);
   }
 
 
@@ -421,6 +408,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user = user;
     }
     this.fileRepositories = [];
+    this.isImageFile=false;
+    this.isDocFile=false;
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
 
