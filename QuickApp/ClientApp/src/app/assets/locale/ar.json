@@ -132,7 +132,15 @@
       "Edit": "تصحيح",
       "Cancel": "إلغاء",
       "Save": "حفظ",
-      "Saving": "جار الحفظ..."
+      "Saving": "جار الحفظ...",
+      "EmpId":"هوية الموظف",
+      "EmployeeIdRequired":"هوية الموظف مطلوبة (بحد أقصى 15 حرفًا)",
+      "Name1":"1اسم",
+      "Name2":"2 اسم",
+      "Name1Required":"الاسم 1 مطلوب",
+      "Name2Required":"الاسم 2 مطلوب",
+      "PhoneNumberRequired":"رقم الهاتف مطلوب",
+      "PhoneNumberMinLength":"أدخل 10 أرقام لرقم الهاتف"
     }
   },
   "roles": {

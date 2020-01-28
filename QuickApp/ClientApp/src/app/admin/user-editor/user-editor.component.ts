@@ -46,12 +46,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   @Input() allowedDocsExtension: string = "pdf , docx , doc";
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
 
-
+  isImageFile: boolean;
+  isDocFile: boolean;
   @Input() maxSize: number = 2300;//1150;
   userDoc: any[] = [
     { name: 'User Image', id: 1 },
     { name: 'User Documents', id: 2 }
-    
+
   ];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
@@ -161,7 +162,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.ngOnChanges();
   }
 
-// Building userProfileForm 
+  // Building userProfileForm 
   private buildForm() {
     this.userProfileForm = this.formBuilder.group({
       empId: ['', Validators.required],
@@ -185,7 +186,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.passwordWatcher = this.newPassword.valueChanges.subscribe(() => this.confirmPassword.updateValueAndValidity());
   }
 
- //  Restting  userProfileForm
+  //  Restting  userProfileForm
   public resetForm(stopEditing: boolean = false) {
     if (stopEditing) {
       this.isEditMode = false;
@@ -234,10 +235,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
- //  File  Change Event
+  //  File  Change Event
   uploadFile(doc, event) {
-    if(doc.id==1)
-    {
+    if (doc.id == 1) {
       var files = event.target.files;
       var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       for (let file of files) {
@@ -249,22 +249,23 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
-          
+
         }
         if (file != undefined) {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
-            this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);            
+            this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
           } else {
-            
-          }
-      }     
 
+          }
+        }
+
+      }
     }
-  }
-    else if(doc.id==2){
+
+    else if (doc.id == 2) {
       var files = event.target.files;
       var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       for (let file of files) {
@@ -285,12 +286,12 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
               //this.validfile = false;
               this.myInputVariable.nativeElement.value = '';
             } else {
-              
+
             }
+          }
         }
-      } 
-    } 
-  }    
+      }
+    }
     debugger
     let reader = new FileReader();
     let file = event.target.files[0];
@@ -314,19 +315,20 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       }
       reader.readAsDataURL(file);
     }
-  
-}
+
+  }
+
 
   public beginEdit() {
     this.isEditMode = true;
     this.isChangePassword = false;
   }
 
-// Current User Details
+  // Current User Details
   get currentUser() {
     return this.authService.currentUser;
   }
-  
+
   // On save Click
   public save() {
     debugger
@@ -380,7 +382,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-// Request Object For Adding User
+  // Request Object For Adding User
   private getEditedUser(): any {
     const formModel = this.userProfileForm.value;
     return {
@@ -412,13 +414,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
 
-// Save Comleted
+  // Save Comleted
   private saveCompleted(user?: User) {
     if (user) {
       this.raiseEventIfRolesModified(this.user, user);
       this.user = user;
     }
-    this.fileRepositories=[];
+    this.fileRepositories = [];
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
 
@@ -427,7 +429,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.onUserSaved.next(this.user);
   }
 
-//  Save Failed
+  //  Save Failed
   private saveFailed(error: any) {
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
@@ -446,7 +448,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-// Email Sending
+  // Email Sending
   sendVerificationEmail() {
     this.ngZone.run(() => {
       this.isSendingEmail = true;
@@ -473,19 +475,19 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     return `verification_email_sent:${userId}`;
   }
 
-// On Change Password Click
+  // On Change Password Click
   public changePassword() {
     this.isChangePassword = true;
     this.addCurrentPasswordValidators();
     this.addNewPasswordValidators();
   }
 
- //Validation For  Current Password
+  //Validation For  Current Password
   private addCurrentPasswordValidators() {
     this.currentPassword.setValidators(Validators.required);
   }
 
-// Validations For New Password And Confirm Password
+  // Validations For New Password And Confirm Password
   private addNewPasswordValidators() {
     this.newPassword.setValidators([Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}/)]);
     this.confirmPassword.setValidators([Validators.required, EqualValidator('newPassword')]);
@@ -532,19 +534,19 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
   // Current User Files
-  public getCurrentUserFiles(){
-    this.accountService.getUserFileData(this.currentUser.id).subscribe(res=>{
-       var UserFileData = res;
-       //this.userFileData=UserFileData.listResult;
+  public getCurrentUserFiles() {
+    this.accountService.getUserFileData(this.currentUser.id).subscribe(res => {
+      var UserFileData = res;
+      //this.userFileData=UserFileData.listResult;
     })
   }
 
   //  On Delete File
-  onDeleteFile(file){
+  onDeleteFile(file) {
 
-  }  
+  }
 
 
- 
+
 
 }

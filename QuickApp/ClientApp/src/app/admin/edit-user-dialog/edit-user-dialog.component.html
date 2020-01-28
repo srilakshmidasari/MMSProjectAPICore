@@ -3,6 +3,6 @@
     <user-editor [user]="data.user" [roles]="data.roles" isEditMode="true"></user-editor>
 </div>
 <div mat-dialog-actions>
-    <button [dir]="textDir" mat-raised-button (click)="editUser.save();" color="primary">Save</button>
-    <button [dir]="textDir" mat-raised-button (click)="cancel()" color="warn">Cancel</button>
+    <button [dir]="textDir" mat-raised-button (click)="editUser.save();" color="primary">{{'users.editor.Save'|translate}}</button>
+    <button [dir]="textDir" mat-raised-button (click)="cancel()" color="warn">{{'users.editor.Cancel'| translate}}</button>
 </div>
