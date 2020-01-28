@@ -28,7 +28,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserEditorComponent implements OnChanges, OnDestroy {
   @ViewChild('form', { static: true })
   private form: NgForm;
-
+  userFileInfo: any = [];
   isNewUser = false;
   isChangePassword = false;
   emailConfirmed: boolean;
@@ -39,15 +39,22 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   roleData: any[] = [];
   @Input() user: User = new User();
   @Input() roles: Role[] = [];
+  userFileData:any[]=[];
   isEditMode: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
-  @Input() allowedVideoExtension: string = "jpeg , jpg , png , pdf , docx , doc";
+  editUserFilesList:any[]=[];
+  @Input() allowedImageExtension: string = "jpeg , jpg , png";
+  @Input() allowedDocsExtension: string = "pdf , docx , doc";
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
+
+  isImageFile: boolean;
+  isDocFile: boolean;
   @Input() maxSize: number = 2300;//1150;
   userDoc: any[] = [
     { name: 'User Image', id: 1 },
     { name: 'User Documents', id: 2 }
+
   ];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
@@ -115,6 +122,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
+    
 
   }
 
@@ -140,8 +148,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
 
     this.setRoles();
-
+   
     this.resetForm();
+
+    this.getCurrentUserFiles();
   }
 
   ngOnDestroy() {
@@ -157,6 +167,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.ngOnChanges();
   }
 
+  // Building userProfileForm 
   private buildForm() {
     this.userProfileForm = this.formBuilder.group({
       empId: ['', Validators.required],
@@ -180,6 +191,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.passwordWatcher = this.newPassword.valueChanges.subscribe(() => this.confirmPassword.updateValueAndValidity());
   }
 
+  //  Restting  userProfileForm
   public resetForm(stopEditing: boolean = false) {
     if (stopEditing) {
       this.isEditMode = false;
@@ -228,41 +240,95 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
+  //  File  Change Event
   uploadFile(doc, event) {
     debugger
-    let reader = new FileReader();
-    let file = event.target.files[0];
-    if (event.target.files && event.target.files[0]) {
-      reader.onload = (e: any) => {
-        var doc = e.target.result;
-        var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
+    var file = event.target.files[0];
+    if (doc.id == 1) {
+      var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
+      if (file != undefined) {
         this.fileExtension = '.' + file.name.split('.').pop();
-        this.fileRepositories.push(
-          {
-            "repositoryId": 0,
-            "userId": null,
-            "fileName": e.target.result.substring(base64Index),
-            "fileLocation": null,
-            "fileExtention": this.fileExtension,
-            "createdBy": this.currentUser.id,
-            "updatedBy": this.currentUser.id,
-            "updatedDate": new Date(),
-            "createdDate": new Date()
-          })
+        // Get file extension
+        var ext = file.name.toUpperCase().split('.').pop() || file.name;
+        // Check the extension exists
+        var exists = extensions.includes(ext);
+        if (!exists) {
+          this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
+          this.myInputVariable.nativeElement.value = '';
+        } else {
+          var fileSizeinMB = file.size / (1024 * 1000);
+          var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
+          if (size > this.maxSize) {
+            this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
+            this.myInputVariable.nativeElement.value = '';
+          } else {
+
+          }
+        }
       }
-      reader.readAsDataURL(file);
+      this.isImageFile=true;
+    } else {
+      var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
+      if (file != undefined) {
+        this.fileExtension = '.' + file.name.split('.').pop();
+        // Get file extension
+        var ext = file.name.toUpperCase().split('.').pop() || file.name;
+        // Check the extension exists
+        var exists = extensions.includes(ext);
+        if (!exists) {
+          this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocsExtension + " only.", null, MessageSeverity.error);
+          this.myInputVariable.nativeElement.value = '';
+        } else {
+          var fileSizeinMB = file.size / (1024 * 1000);
+          var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
+          if (size > this.maxSize) {
+            this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
+            this.myInputVariable.nativeElement.value = '';
+          } else {
+
+          }
+        }
+      }
+      this.isDocFile=true;
     }
+    let reader = new FileReader();
+    reader.onload = (e: any) => {
+      var doc = e.target.result;
+      var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
+      this.fileExtension = '.' + file.name.split('.').pop();
+      if(this.isDocFile || this.isImageFile){
+        this.fileRepositories.forEach((item1) => {
+          if (item1.fileExtention == this.fileExtension ) this.fileRepositories.splice(item1, 1); 
+        });
+      }
+      this.fileRepositories.push(
+        {
+          "repositoryId": 0,
+          "userId": null,
+          "fileName": e.target.result.substring(base64Index),
+          "fileLocation": null,
+          "fileExtention": this.fileExtension,
+          "createdBy": this.currentUser.id,
+          "updatedBy": this.currentUser.id,
+          "updatedDate": new Date(),
+          "createdDate": new Date()
+        })
+    }
+    reader.readAsDataURL(file);
   }
+
 
   public beginEdit() {
     this.isEditMode = true;
     this.isChangePassword = false;
   }
 
+  // Current User Details
   get currentUser() {
     return this.authService.currentUser;
   }
 
+  // On save Click
   public save() {
     debugger
     if (!this.form.submitted) {
@@ -315,7 +381,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-
+  // Request Object For Add User
   private getEditedUser(): any {
     const formModel = this.userProfileForm.value;
     return {
@@ -339,7 +405,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       fileRepositories: this.fileRepositories
     };
   }
+  // On Cancel Click
   public cancel() {
+    this.fileRepositories=[];
     this.resetForm();
     this.isEditMode = false;
 
@@ -347,13 +415,15 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
 
-
+  // Save Comleted
   private saveCompleted(user?: User) {
     if (user) {
       this.raiseEventIfRolesModified(this.user, user);
       this.user = user;
     }
-
+    this.fileRepositories = [];
+    this.isImageFile=false;
+    this.isDocFile=false;
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
 
@@ -362,6 +432,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.onUserSaved.next(this.user);
   }
 
+  //  Save Failed
   private saveFailed(error: any) {
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
@@ -380,6 +451,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
+  // Email Sending
   sendVerificationEmail() {
     this.ngZone.run(() => {
       this.isSendingEmail = true;
@@ -406,16 +478,19 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     return `verification_email_sent:${userId}`;
   }
 
+  // On Change Password Click
   public changePassword() {
     this.isChangePassword = true;
     this.addCurrentPasswordValidators();
     this.addNewPasswordValidators();
   }
 
+  //Validation For  Current Password
   private addCurrentPasswordValidators() {
     this.currentPassword.setValidators(Validators.required);
   }
 
+  // Validations For New Password And Confirm Password
   private addNewPasswordValidators() {
     this.newPassword.setValidators([Validators.required, Validators.pattern(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W]).{8,}/)]);
     this.confirmPassword.setValidators([Validators.required, EqualValidator('newPassword')]);
@@ -442,6 +517,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           this.alertService.showStickyMessage(error, null, MessageSeverity.error);
         });
   }
+
+  // Accepting Only Numbers
   numberOnly(event: any) {
     const numberpattern = /[0-9\+\-.\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
@@ -449,6 +526,36 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       event.preventDefault();
     }
   }
+
+  //  Accepting Only Alphabets
+  alphabetsOnly(event: any) {
+    const alphabetspattern = /^[a-zA-Z ]*$/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  // Current User Files
+  getCurrentUserFiles() {
+    this.editUserFilesList=this.userDoc;  
+    this.accountService.getUserFileData(this.user.id).subscribe(res => {
+      this.userFileInfo=res;
+      this.userFileData=this.userFileInfo;
+      this.userDoc.forEach((item) => {
+        this.userFileData.forEach((item1) => {
+          if (item.id === item1.id) this.editUserFilesList.splice(item, 1); 
+        });
+      });
+    })
+  }
+
+  //  On Delete File
+  onDeleteFile(file) {
+
+  }
+
+
 
 
 }

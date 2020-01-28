@@ -345,6 +345,7 @@ namespace MMS.Controllers
                                 file.UpdatedBy = req.UpdatedBy;
                                 file.UpdatedDate = DateTime.Now;
                             }
+                            _appcontext.FileRepositories.Add(file);
                         }
                     }
                      _appcontext.SaveChanges();

@@ -198,4 +198,7 @@ export class AccountService {
   AddSite(site){
     return this.accountEndpoint.getNewSiteEndpoint(site);
   }
+  getUserFileData(userid){
+    return this.accountEndpoint.getUserFileEndpoint(userid);
+  }
 }
