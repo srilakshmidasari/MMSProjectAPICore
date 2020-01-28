@@ -162,6 +162,50 @@ namespace MMS.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("DAL.Models.ClassType", b =>
+                {
+                    b.Property<int>("ClassTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ClassTypeId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("ClassType");
+                });
+
             modelBuilder.Entity("DAL.Models.FileRepository", b =>
                 {
                     b.Property<int>("RepositoryId")
@@ -175,6 +219,9 @@ namespace MMS.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<int?>("DocumentType")
+                        .HasColumnType("int");
 
                     b.Property<string>("FileExtention")
                         .IsRequired()
@@ -204,17 +251,24 @@ namespace MMS.Migrations
 
                     b.HasIndex("CreatedBy");
 
+                    b.HasIndex("DocumentType");
+
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("FileRepository");
                 });
 
-            modelBuilder.Entity("DAL.Models.Site", b =>
+            modelBuilder.Entity("DAL.Models.SiteInfo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -235,6 +289,12 @@ namespace MMS.Migrations
                     b.Property<string>("FileName")
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
 
                     b.Property<string>("Name1")
                         .IsRequired()
@@ -264,7 +324,70 @@ namespace MMS.Migrations
 
                     b.HasIndex("UpdatedBy");
 
-                    b.ToTable("Site");
+                    b.ToTable("SiteInfo");
+                });
+
+            modelBuilder.Entity("DAL.Models.TypeCdDmt", b =>
+                {
+                    b.Property<int>("TypeCdDmtId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ClassTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ColumnName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TableName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("TypeCdDmtId");
+
+                    b.HasIndex("ClassTypeId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("TypeCdDmt");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -371,6 +494,21 @@ namespace MMS.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DAL.Models.ClassType", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_ClassType_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_ClassType_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_ClassType_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_ClassType_UpdatedUser")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Models.FileRepository", b =>
                 {
                     b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
@@ -379,6 +517,11 @@ namespace MMS.Migrations
                         .HasConstraintName("FK_FileRepository_CreatedUser")
                         .IsRequired();
 
+                    b.HasOne("DAL.Models.TypeCdDmt", "File_TypeCdDmt")
+                        .WithMany("FileRepository_DocumentTypeId")
+                        .HasForeignKey("DocumentType")
+                        .HasConstraintName("FK_FileRepository_DocumentTypeId");
+
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_Repository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
@@ -386,18 +529,39 @@ namespace MMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.Site", b =>
+            modelBuilder.Entity("DAL.Models.SiteInfo", b =>
                 {
                     b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
-                        .WithMany("App_Site_CreatedUser")
+                        .WithMany("App_SiteInfo_CreatedUser")
                         .HasForeignKey("CreatedBy")
-                        .HasConstraintName("FK_Site_CreatedUser")
+                        .HasConstraintName("FK_SiteInfo_CreatedUser")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
-                        .WithMany("App_Site_UpdatedUser")
+                        .WithMany("App_SiteInfo_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
-                        .HasConstraintName("FK_Site_UpdatedUser")
+                        .HasConstraintName("FK_SiteInfo_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.TypeCdDmt", b =>
+                {
+                    b.HasOne("DAL.Models.ClassType", "ClassType")
+                        .WithMany("TypeCdDmt_ClassTypes")
+                        .HasForeignKey("ClassTypeId")
+                        .HasConstraintName("FK_TypeCdDmt_ClassTypes")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_TypeCdDmt_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_App_TypeCdDmt_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_TypeCdDmt_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_TypeCdDmt_UpdatedUser")
                         .IsRequired();
                 });
 

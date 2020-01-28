@@ -20,15 +20,15 @@ namespace MMS.Controllers
         }
 
         [HttpGet]
-        public ListDataResponse<Site> Get()
+        public ListDataResponse<SiteInfo> Get()
         {
             return _unitOfWork.Sites.GetAllSite();
         }
 
         [HttpPost]
-        public ValueDataResponse<Site> Insert(UpsertSite sites)
+        public ValueDataResponse<SiteInfo> Insert(UpsertSite sites)
         {
-            Site siteInfo = _mapper.Map<Site>(sites);
+            SiteInfo siteInfo = _mapper.Map<SiteInfo>(sites);
             return _unitOfWork.Sites.InsertSite(siteInfo);
         }
     }

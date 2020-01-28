@@ -1,45 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-    public class Site
+    public class TypeCdDmt
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int TypeCdDmtId { get; set; }
 
         [Required]
-        [Display(Name = "SiteReference")]
         [StringLength(50)]
-        public string SiteReference { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
 
         [Required]
-        [Display(Name = "Name1")]
         [StringLength(100)]
-        public string Name1 { get; set; }
-        
+        [Display(Name = "Description")]
+        public string Description { get; set; }
+
         [Required]
-        [Display(Name = "Name2")]
+        [Display(Name = "Sort Order")]
+        public int SortOrder { get; set; }
+
+        [Required]
+        [Display(Name = "Class TypeId")]
+        public int ClassTypeId { get; set; }
+
+        [Required]
         [StringLength(100)]
-        public string Name2 { get; set; }
-
-        [Display(Name = "File Name")]
-        [StringLength(50)]
-        public string FileName { get; set; }
-      
-        [Display(Name = "File Location")]
-        [StringLength(250)]
-        public string FileLocation { get; set; }
+        [Display(Name = "Table Name")]
+        public string TableName { get; set; }
 
         [Required]
-        [Display(Name = "File Extention")]
-        [StringLength(10)]
-        public string FileExtention { get; set; }
+        [StringLength(100)]
+        [Display(Name = "Column Name")]
+        public string ColumnName { get; set; }
+
+        [Required]
+        //[DefaultValue(true)]
+        [Display(Name = "IsActive")]
+        public bool IsActive { get; set; }
 
         [Required]
         [Display(Name = "Created By")]
@@ -58,8 +61,13 @@ namespace DAL.Models
         public DateTime UpdatedDate { get; set; }
 
         [JsonIgnore]
+        public ClassType ClassType { get; set; }
+
+        [JsonIgnore]
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
+        //[JsonIgnore]
+        public ICollection<FileRepository> FileRepository_DocumentTypeId { get; set; }
     }
 }

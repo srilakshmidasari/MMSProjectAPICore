@@ -17,8 +17,10 @@ namespace DAL.RequestResponseModels
             public string Name2 { get; set; }
             public string FileName { get; set; }
             public string FileLocation { get; set; }
-           
             public string FileExtention { get; set; }
+            public string Address { get; set; }
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
         }
 
         public class UpsertRepository : AuditableEntity
@@ -29,6 +31,13 @@ namespace DAL.RequestResponseModels
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
           
+
+        }
+
+        public class coordinates
+        {
+            public double Latitude { get; set; }
+            public double Longitude { get; set; }
         }
 
     }

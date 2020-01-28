@@ -8,10 +8,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.IO;
+using static DAL.RequestResponseModels.RequestResponseModels;
+using GoogleMaps.LocationServices;
 
 namespace DAL.Repositories
 {
-    public class SiteRepository : Repository<Site>, ISiteRepository
+    public class SiteRepository : Repository<dynamic>, ISiteRepository
     {
         public readonly IOptions<AppSettings> _config;
         public SiteRepository(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration) : base(context, mapper, configuration)
@@ -20,12 +22,12 @@ namespace DAL.Repositories
         }
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
 
-        public ListDataResponse<Site> GetAllSite()
-        {
-            ListDataResponse<Site> response = new ListDataResponse<Site>();
+        public ListDataResponse<SiteInfo> GetAllSite()
+        { 
+            ListDataResponse<SiteInfo> response = new ListDataResponse<SiteInfo>();
             try
             {
-                var result = _appContext.Sites.ToList();
+                var result = _appContext.SiteInfos.ToList();
                 if (result != null)
                 {
                     response.ListResult = result;
@@ -51,13 +53,23 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ValueDataResponse<Site> InsertSite(Site sites)
+        public ValueDataResponse<SiteInfo> InsertSite(SiteInfo sites)
         {
-            ValueDataResponse<Site> response = new ValueDataResponse<Site>();
+            ValueDataResponse<SiteInfo> response = new ValueDataResponse<SiteInfo>();
 
             try
             {
-                var result = _appContext.Sites.Add(sites);
+                if (sites.Address != null)
+                {
+                    coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
+                    if (LatLong != null)
+                    {
+                        sites.Latitude = (float)(LatLong.Latitude);
+                        sites.Longitude = (float)LatLong.Longitude;
+                    }
+                }
+                var result = _appContext.SiteInfos.Add(sites);
+
                 if (sites.FileName != null)
                 {
                     string ModuleName = "Site";
@@ -71,7 +83,7 @@ namespace DAL.Repositories
                     string FolderLocation = _config.Value.FileRepositoryFolder;
                     string ServerRootPath = _config.Value.ServerRootPath;
 
-                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName; 
+                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
                     byte[] FileBytes = Convert.FromBase64String(sites.FileName);
 
@@ -106,5 +118,34 @@ namespace DAL.Repositories
 
             return response;
         }
+        public coordinates GetLatLngByAddress(string address)
+        {
+            try
+            {
+                var googleAPIKey = _config.Value.GoogleAPIKey;
+                var locationService = new GoogleLocationService(apikey: googleAPIKey);
+                MapPoint point = locationService.GetLatLongFromAddress(address);
+                if (point == null)
+                {
+                    return null;
+                }
+                else
+                {
+                    var response = new coordinates
+                    {
+                        Latitude = point.Latitude,
+                        Longitude = point.Longitude
+                    };
+                    return response;
+                }
+            }
+            catch (Exception ex)
+            {
+                //return string.Format("Google Maps API Error {0}", ex.Message);
+                return null;
+            }
+
+        }
+
     }
 }

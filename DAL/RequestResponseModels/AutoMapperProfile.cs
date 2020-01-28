@@ -63,7 +63,7 @@ namespace DAL.RequestResponseModels
                 .ConvertUsing(s => (PermissionViewModel)ApplicationPermissions.GetPermissionByValue(s.ClaimValue));
 
 
-            CreateMap<UpsertSite, Site>();
+            CreateMap<UpsertSite, SiteInfo>();
               
         }
     }

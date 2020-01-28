@@ -1,38 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-   public class FileRepository
+    public class ClassType
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RepositoryId { get; set; }
+        public int ClassTypeId { get; set; }
 
         [Required]
-        [Display(Name = "User Id")]
-        public string UserId { get; set; }
-       
-        [Display(Name = "File Name")]
         [StringLength(50)]
-        public string FileName { get; set; }
-      
-        [Display(Name = "File Location")]
-        [StringLength(250)]
-        public string FileLocation { get; set; }
+        [Display(Name = "Name")]
+        public string Name { get; set; }
+
+        [StringLength(100)]
+        [Display(Name = "Description")]
+        public string Description { get; set; }
 
         [Required]
-        [Display(Name = "File Extention")]
-        [StringLength(10)]
-        public string FileExtention { get; set; }
-
-        // [Required]
-        [Display(Name = "Document Type")]
-        public int? DocumentType { get; set; }
+        //[DefaultValue(true)]
+        [Display(Name = "Is Active")]
+        public bool IsActive { get; set; }
 
         [Required]
         [Display(Name = "Created By")]
@@ -41,6 +32,7 @@ namespace DAL.Models
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDate { get; set; }
+
 
         [Required]
         [Display(Name = "Updated By")]
@@ -55,8 +47,7 @@ namespace DAL.Models
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
 
-        [JsonIgnore]
-        public TypeCdDmt File_TypeCdDmt { get; set; }
 
+        public ICollection<TypeCdDmt> TypeCdDmt_ClassTypes { get; set; }
     }
 }

@@ -7,20 +7,31 @@ using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-   public class FileRepository
+   public class SiteInfo
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RepositoryId { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [Display(Name = "User Id")]
-        public string UserId { get; set; }
-       
+        [Display(Name = "SiteReference")]
+        [StringLength(50)]
+        public string SiteReference { get; set; }
+
+        [Required]
+        [Display(Name = "Name1")]
+        [StringLength(100)]
+        public string Name1 { get; set; }
+
+        [Required]
+        [Display(Name = "Name2")]
+        [StringLength(100)]
+        public string Name2 { get; set; }
+
         [Display(Name = "File Name")]
         [StringLength(50)]
         public string FileName { get; set; }
-      
+
         [Display(Name = "File Location")]
         [StringLength(250)]
         public string FileLocation { get; set; }
@@ -30,9 +41,16 @@ namespace DAL.Models
         [StringLength(10)]
         public string FileExtention { get; set; }
 
-        // [Required]
-        [Display(Name = "Document Type")]
-        public int? DocumentType { get; set; }
+        [Required]
+        [Display(Name = "Address")]
+        [StringLength(500)]
+        public string Address { get; set; }
+
+        [Display(Name = "Latitude")]
+        public double Latitude { get; set; }
+
+        [Display(Name = "Longitude")]
+        public double Longitude { get; set; }
 
         [Required]
         [Display(Name = "Created By")]
@@ -54,9 +72,5 @@ namespace DAL.Models
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
-
-        [JsonIgnore]
-        public TypeCdDmt File_TypeCdDmt { get; set; }
-
     }
 }

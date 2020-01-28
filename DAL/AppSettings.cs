@@ -18,6 +18,7 @@ namespace DAL
         public string FileRepositoryFolder { get; set; }
         public string ServerRootPath { get; set; }
         public string EmailEndUrl { get; set; }
+        public string GoogleAPIKey { get; set; }
         public SmtpConfig SmtpConfig { get; set; }
 
     }

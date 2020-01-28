@@ -19,13 +19,10 @@ namespace DAL
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public string CurrentUserId { get; set; }
-        public DbSet<Site> Sites { get; set; }
-
+        public DbSet<SiteInfo> SiteInfos { get; set; }
         public DbSet<FileRepository> FileRepositories { get; set; }
-
-
-
-
+        public DbSet<ClassType> ClassTypes { get; set; }
+        public DbSet<TypeCdDmt> TypeCdDmts { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -42,31 +39,27 @@ namespace DAL
             builder.Entity<ApplicationRole>().HasMany(r => r.Claims).WithOne().HasForeignKey(c => c.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
             builder.Entity<ApplicationRole>().HasMany(r => r.Users).WithOne().HasForeignKey(r => r.RoleId).IsRequired().OnDelete(DeleteBehavior.Cascade);
 
-            //builder.Entity<Customer>().Property(c => c.Name).IsRequired().HasMaxLength(100);
-            //builder.Entity<Customer>().HasIndex(c => c.Name);
-            //builder.Entity<Customer>().Property(c => c.Email).HasMaxLength(100);
-            //builder.Entity<Customer>().Property(c => c.PhoneNumber).IsUnicode(false).HasMaxLength(30);
-            //builder.Entity<Customer>().Property(c => c.City).HasMaxLength(50);
-            //builder.Entity<Customer>().ToTable($"App{nameof(this.Customers)}");
 
-            //builder.Entity<ProductCategory>().Property(p => p.Name).IsRequired().HasMaxLength(100);
-            //builder.Entity<ProductCategory>().Property(p => p.Description).HasMaxLength(500);
-            //builder.Entity<ProductCategory>().ToTable($"App{nameof(this.ProductCategories)}");
 
-            builder.Entity<Site>().ToTable("Site");
+            builder.Entity<SiteInfo>().ToTable("SiteInfo");
+
             builder.Entity<FileRepository>().ToTable("FileRepository");
+            builder.Entity<ClassType>().ToTable("ClassType");
+            builder.Entity<ClassType>().Property(p => p.IsActive).HasDefaultValue(true);
+            builder.Entity<TypeCdDmt>().ToTable("TypeCdDmt");
+            builder.Entity<TypeCdDmt>().Property(p => p.IsActive).HasDefaultValue(true);
 
-            builder.Entity<Site>().HasOne(d => d.CreatedUser)
-           .WithMany(p => p.App_Site_CreatedUser)
+            builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
+           .WithMany(p => p.App_SiteInfo_CreatedUser)
            .HasForeignKey(d => d.CreatedBy)
            .OnDelete(DeleteBehavior.ClientSetNull)
-           .HasConstraintName("FK_Site_CreatedUser");
+           .HasConstraintName("FK_SiteInfo_CreatedUser");
 
-            builder.Entity<Site>().HasOne(d => d.UpdatedUser)
-                  .WithMany(p => p.App_Site_UpdatedUser)
+            builder.Entity<SiteInfo>().HasOne(d => d.UpdatedUser)
+                  .WithMany(p => p.App_SiteInfo_UpdatedUser)
                   .HasForeignKey(d => d.UpdatedBy)
                   .OnDelete(DeleteBehavior.ClientSetNull)
-                  .HasConstraintName("FK_Site_UpdatedUser");
+                  .HasConstraintName("FK_SiteInfo_UpdatedUser");
 
             builder.Entity<FileRepository>().HasOne(d => d.CreatedUser)
          .WithMany(p => p.App_Repository_CreatedUser)
@@ -80,6 +73,43 @@ namespace DAL
                   .OnDelete(DeleteBehavior.ClientSetNull)
                   .HasConstraintName("FK_FileRepository_UpdatedUser");
 
+
+
+            builder.Entity<FileRepository>().HasOne(d => d.File_TypeCdDmt)
+                  .WithMany(p => p.FileRepository_DocumentTypeId)
+                  .HasForeignKey(d => d.DocumentType)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_FileRepository_DocumentTypeId");
+
+            builder.Entity<TypeCdDmt>().HasOne(d => d.ClassType)
+         .WithMany(p => p.TypeCdDmt_ClassTypes)
+         .HasForeignKey(d => d.ClassTypeId)
+         .OnDelete(DeleteBehavior.ClientSetNull)
+         .HasConstraintName("FK_TypeCdDmt_ClassTypes");
+
+            builder.Entity<TypeCdDmt>().HasOne(d => d.CreatedUser)
+             .WithMany(p => p.App_TypeCdDmt_CreatedUser)
+             .HasForeignKey(d => d.CreatedBy)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_TypeCdDmt_CreatedUser");
+
+            builder.Entity<TypeCdDmt>().HasOne(d => d.UpdatedUser)
+           .WithMany(p => p.App_TypeCdDmt_UpdatedUser)
+           .HasForeignKey(d => d.UpdatedBy)
+           .OnDelete(DeleteBehavior.ClientSetNull)
+           .HasConstraintName("FK_App_TypeCdDmt_UpdatedUser");
+
+            builder.Entity<ClassType>().HasOne(d => d.CreatedUser)
+         .WithMany(p => p.App_ClassType_CreatedUser)
+         .HasForeignKey(d => d.CreatedBy)
+         .OnDelete(DeleteBehavior.ClientSetNull)
+         .HasConstraintName("FK_ClassType_CreatedUser");
+
+            builder.Entity<ClassType>().HasOne(d => d.UpdatedUser)
+             .WithMany(p => p.App_ClassType_UpdatedUser)
+             .HasForeignKey(d => d.UpdatedBy)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_ClassType_UpdatedUser");
         }
 
         public override int SaveChanges()

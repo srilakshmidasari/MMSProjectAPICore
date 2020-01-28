@@ -60,11 +60,17 @@ namespace DAL.Models
         /// </summary>
         // public ICollection<Order> Orders { get; set; }
 
-        public ICollection<Site> App_Site_CreatedUser { get; set; }
-        public ICollection<Site> App_Site_UpdatedUser { get; set; }
+        public ICollection<SiteInfo> App_SiteInfo_CreatedUser { get; set; }
+        public ICollection<SiteInfo> App_SiteInfo_UpdatedUser { get; set; }
 
         public ICollection<FileRepository> App_Repository_CreatedUser { get; set; }
         public ICollection<FileRepository> App_Repository_UpdatedUser { get; set; }
+        public ICollection<TypeCdDmt> App_TypeCdDmt_CreatedUser { get; set; }
+        public ICollection<TypeCdDmt> App_TypeCdDmt_UpdatedUser { get; set; }
+      
+        public ICollection<ClassType> App_ClassType_CreatedUser { get; set; }
+        public ICollection<ClassType> App_ClassType_UpdatedUser { get; set; }
+
 
     }
 }
