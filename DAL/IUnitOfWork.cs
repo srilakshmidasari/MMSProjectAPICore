@@ -16,6 +16,8 @@ namespace DAL
     {
          ISiteRepository Sites { get; }
 
+        IMasterRepository Masters { get; }
+
         int SaveChanges();
     }
 }

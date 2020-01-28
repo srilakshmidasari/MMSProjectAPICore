@@ -21,6 +21,7 @@ namespace DAL
         readonly IOptions<AppSettings> _configuration;
         IMapper _mapper;
         ISiteRepository _sites;
+        IMasterRepository _Masters;
 
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
@@ -39,6 +40,17 @@ namespace DAL
                     _sites = new SiteRepository(_context, _mapper, _configuration);
 
                 return _sites;
+            }
+        }
+
+        public IMasterRepository Masters
+        {
+            get
+            {
+                if (_Masters == null)
+                    _Masters = new MasterRepository(_context, _mapper, _configuration);
+
+                return _Masters;
             }
         }
 
