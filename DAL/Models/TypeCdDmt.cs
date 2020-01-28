@@ -12,22 +12,13 @@ namespace DAL.Models
         public int TypeCdDmtId { get; set; }
 
         [Required]
-        [StringLength(50)]
-        [Display(Name = "Name")]
-        public string Name { get; set; }
+        [Display(Name = "Class TypeId")]
+        public int ClassTypeId { get; set; }
 
         [Required]
         [StringLength(100)]
         [Display(Name = "Description")]
         public string Description { get; set; }
-
-        [Required]
-        [Display(Name = "Sort Order")]
-        public int SortOrder { get; set; }
-
-        [Required]
-        [Display(Name = "Class TypeId")]
-        public int ClassTypeId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -38,6 +29,10 @@ namespace DAL.Models
         [StringLength(100)]
         [Display(Name = "Column Name")]
         public string ColumnName { get; set; }
+
+        [Required]
+        [Display(Name = "Sort Order")]
+        public int SortOrder { get; set; }
 
         [Required]
         //[DefaultValue(true)]
@@ -69,5 +64,7 @@ namespace DAL.Models
         public ApplicationUser UpdatedUser { get; set; }
         //[JsonIgnore]
         public ICollection<FileRepository> FileRepository_DocumentTypeId { get; set; }
+
+     
     }
 }

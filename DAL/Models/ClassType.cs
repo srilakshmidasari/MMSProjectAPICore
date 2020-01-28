@@ -16,10 +16,6 @@ namespace DAL.Models
         [Display(Name = "Name")]
         public string Name { get; set; }
 
-        [StringLength(100)]
-        [Display(Name = "Description")]
-        public string Description { get; set; }
-
         [Required]
         //[DefaultValue(true)]
         [Display(Name = "Is Active")]
