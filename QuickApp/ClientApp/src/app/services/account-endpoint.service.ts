@@ -30,6 +30,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _roleByRoleNameUrl: string = '/api/account/roles/name';
   private readonly _permissionsUrl: string = '/api/account/permissions';
   private readonly _siteUrl: string = '/api/Site';
+  private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId'
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
@@ -45,6 +46,8 @@ export class AccountEndpoint extends EndpointBase {
   get roleByRoleNameUrl() { return this.configurations.baseUrl + this._roleByRoleNameUrl; }
   get permissionsUrl() { return this.configurations.baseUrl + this._permissionsUrl; }
   get sitesUrl() { return this.configurations.baseUrl + this._siteUrl; }
+  get UserFilesUrl() { return this.configurations.baseUrl + this._getUserFilesUrl; }
+
 
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -274,6 +277,14 @@ debugger
     return this.http.post<T>(endpointUrl, JSON.stringify(siteObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getNewRoleEndpoint(siteObject));
+      }));
+  }
+
+  getUserFileEndpoint<T>(userId: any): Observable<T> {
+    const endpointUrl = this.UserFilesUrl+'/'+userId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getUserFileEndpoint(userId));
       }));
   }
 }
