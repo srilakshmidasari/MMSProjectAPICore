@@ -11,6 +11,9 @@ namespace DAL.Repositories.Interfaces
     {
         ListDataResponse<SiteInfo> GetAllSite();
         ValueDataResponse<SiteInfo> InsertSite(SiteInfo sites);
+
+        ValueDataResponse<SiteInfo> UpdateSite(SiteInfo sites);
+
         coordinates GetLatLngByAddress(string address);
     }
 }

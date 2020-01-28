@@ -31,5 +31,12 @@ namespace MMS.Controllers
             SiteInfo siteInfo = _mapper.Map<SiteInfo>(sites);
             return _unitOfWork.Sites.InsertSite(siteInfo);
         }
+
+        [HttpPut]
+        public ValueDataResponse<SiteInfo> Update(UpsertSite sites)
+        {
+            SiteInfo siteInfo = _mapper.Map<SiteInfo>(sites);
+            return _unitOfWork.Sites.UpdateSite(siteInfo);
+        }
     }
 }

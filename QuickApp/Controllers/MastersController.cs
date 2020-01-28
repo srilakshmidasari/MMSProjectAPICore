@@ -29,6 +29,13 @@ namespace MMS.Controllers
             return _unitOfWork.Masters.GetAllTypeCddmtdetails(ClassTypeId);
         }
 
+        [HttpDelete]
+        [Route("DeleteFileRepository")]
+        public ValueDataResponse<FileRepository> DeleteFileRepository(int FileRepositoryId)
+        {
+            return _unitOfWork.Masters.DeleteFileRepository(FileRepositoryId);
+        }
+
 
     }
 }
