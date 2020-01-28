@@ -28,7 +28,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class UserEditorComponent implements OnChanges, OnDestroy {
   @ViewChild('form', { static: true })
   private form: NgForm;
-
+  userFileInfo: any = [];
   isNewUser = false;
   isChangePassword = false;
   emailConfirmed: boolean;
@@ -39,9 +39,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   roleData: any[] = [];
   @Input() user: User = new User();
   @Input() roles: Role[] = [];
+  userFileData:any[]=[];
   isEditMode: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
+  editUserFilesList:any[]=[];
   @Input() allowedImageExtension: string = "jpeg , jpg , png";
   @Input() allowedDocsExtension: string = "pdf , docx , doc";
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
@@ -120,6 +122,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
+    
 
   }
 
@@ -145,8 +148,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
 
     this.setRoles();
-
+   
     this.resetForm();
+
+    this.getCurrentUserFiles();
   }
 
   ngOnDestroy() {
@@ -376,7 +381,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-  // Request Object For Adding User
+  // Request Object For Add User
   private getEditedUser(): any {
     const formModel = this.userProfileForm.value;
     return {
@@ -400,7 +405,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       fileRepositories: this.fileRepositories
     };
   }
+  // On Cancel Click
   public cancel() {
+    this.fileRepositories=[];
     this.resetForm();
     this.isEditMode = false;
 
@@ -530,10 +537,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
   // Current User Files
-  public getCurrentUserFiles() {
-    this.accountService.getUserFileData(this.currentUser.id).subscribe(res => {
-      var UserFileData = res;
-      //this.userFileData=UserFileData.listResult;
+  getCurrentUserFiles() {
+    this.editUserFilesList=this.userDoc;  
+    this.accountService.getUserFileData(this.user.id).subscribe(res => {
+      this.userFileInfo=res;
+      this.userFileData=this.userFileInfo;
+      this.userDoc.forEach((item) => {
+        this.userFileData.forEach((item1) => {
+          if (item.id === item1.id) this.editUserFilesList.splice(item, 1); 
+        });
+      });
     })
   }
 

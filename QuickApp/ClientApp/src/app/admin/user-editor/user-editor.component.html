@@ -107,7 +107,7 @@
     </mat-form-field>
   </div>
 
-  <div >
+  <div>
 
     <button mat-raised-button (click)="changePassword()" *ngIf="!(isChangePassword || isNewUser)"
       color="primary">{{'users.editor.ChangePassword' | translate}}</button>
@@ -141,23 +141,33 @@
 
   </div>
 
+  <div class="clearfix space20"></div>
   <div fxLayout="row"  *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
     <div class="form-group " fxFlex *ngFor="let doc of userDoc">
       <label for="file">Upload {{doc.name}}</label>
       <input #fileInput  type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile(doc, $event)">
-    </div>
+    </div>    
   </div>
 
-  <div fxLayout="row"  *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
+  <div fxLayout="row"  *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">    
     <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileData">
-      <div>Proof of {{file.documentTypeName}}</div>
+      <div>Proof of {{file.documentTypeName}}</div>     
       <div class="clearfix space20"></div>
-      <a href="{{file.fileLocation}}" target="_blank">
+      <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.repositoryId==2" download>
           <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;</a>
-      <a class="close1 color-red" (click)="onDeleteFile(file)">
+          <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.repositoryId==1">
+           <img src="{{file.fileLocation}}"/> &nbsp;&nbsp;&nbsp;</a>
+      <a class="close2 color-red" *ngIf="file.repositoryId==1" (click)="onDeleteFile(file)">
           <mat-icon>cancel</mat-icon>
       </a>
+      <a class="close1 color-red" *ngIf="file.repositoryId==2" (click)="onDeleteFile(file)">
+        <mat-icon>cancel</mat-icon>
+    </a>
   </div>
+  <div class="form-group col-md-4" *ngFor="let doc of editUserFilesList">
+    <label for="file">Upload Proof of {{doc.name}} </label>
+    <input #fileInput type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile($event,doc)">
+</div>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
