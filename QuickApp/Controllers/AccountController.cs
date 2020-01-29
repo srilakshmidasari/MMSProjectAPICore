@@ -223,6 +223,130 @@ namespace MMS.Controllers
             return BadRequest(ModelState);
         }
 
+        [HttpPut("updateuser/{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(403)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdateUsers(string id, [FromBody] UserFileViewModel user)
+        {
+            ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
+            string[] currentRoles = appUser != null ? (await _accountManager.GetUserRolesAsync(appUser)).ToArray() : null;
+
+            var manageUsersPolicy = _authorizationService.AuthorizeAsync(this.User, id, AccountManagementOperations.Update);
+            var assignRolePolicy = _authorizationService.AuthorizeAsync(this.User, (user.Roles, currentRoles), Authorization.Policies.AssignAllowedRolesPolicy);
+
+
+            if ((await Task.WhenAll(manageUsersPolicy, assignRolePolicy)).Any(r => !r.Succeeded))
+                return new ChallengeResult();
+
+
+            if (ModelState.IsValid)
+            {
+                if (user == null)
+                    return BadRequest($"{nameof(user)} cannot be null");
+
+                if (!string.IsNullOrWhiteSpace(user.Id) && id != user.Id)
+                    return BadRequest("Conflicting user id in parameter and model data");
+
+                if (appUser == null)
+                    return NotFound(id);
+
+                bool isPasswordChanged = !string.IsNullOrWhiteSpace(user.NewPassword);
+                bool isUserNameChanged = !appUser.UserName.Equals(user.UserName, StringComparison.OrdinalIgnoreCase);
+                bool isConfirmedEmailChanged = !appUser.Email.Equals(user.Email, StringComparison.OrdinalIgnoreCase) && appUser.EmailConfirmed;
+
+                if (Utilities.GetUserId(this.User) == id)
+                {
+                    if (string.IsNullOrWhiteSpace(user.CurrentPassword))
+                    {
+                        if (isPasswordChanged)
+                            AddError("Current password is required when changing your own password", "Password");
+
+                        if (isUserNameChanged)
+                            AddError("Current password is required when changing your own username", "Username");
+
+                        if (isConfirmedEmailChanged)
+                            AddError("Current password is required when changing your own email address", "Email");
+                    }
+                    else if (isPasswordChanged || isUserNameChanged || isConfirmedEmailChanged)
+                    {
+                        if (!await _accountManager.CheckPasswordAsync(appUser, user.CurrentPassword))
+                            AddError("The username/password couple is invalid.");
+                    }
+                }
+
+                if (ModelState.IsValid)
+                {
+                    _mapper.Map<UserFileViewModel, ApplicationUser>(user, appUser);
+                    appUser.EmailConfirmed = isConfirmedEmailChanged ? false : appUser.EmailConfirmed;
+
+                    var result = await _accountManager.UpdateUserAsync(appUser, user.Roles);
+                    if (result.Succeeded)
+                    {
+                        foreach (var req in user.FileRepositories)
+                        {
+                            if (req.FileName != null)
+                            {
+                                string ModuleName = "Users";
+                                var now = DateTime.Now;
+                                var yearName = now.ToString("yyyy");
+                                var monthName = now.Month.ToString("d2");
+                                var dayName = now.ToString("dd");
+
+                                FileUploadService repo = new FileUploadService();
+
+                                string FolderLocation = _config.Value.FileRepositoryFolder;
+                                string ServerRootPath = _config.Value.ServerRootPath;
+
+                                string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                                byte[] FileBytes = Convert.FromBase64String(req.FileName);
+
+                                req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
+
+                                req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                                FileRepository file = new FileRepository();
+                                {
+                                    file.UserId = appUser.Id;
+                                    file.FileName = req.FileName;
+                                    file.FileLocation = req.FileLocation;
+                                    file.FileExtention = req.FileExtention;
+                                    file.DocumentType = req.DocumentTypeId;
+                                    file.CreatedBy = req.CreatedBy;
+                                    file.CreatedDate = DateTime.Now;
+                                    file.UpdatedBy = req.UpdatedBy;
+                                    file.UpdatedDate = DateTime.Now;
+                                }
+                                _appcontext.FileRepositories.Add(file);
+                            }
+                        }
+                        _appcontext.SaveChanges();
+                        if (isConfirmedEmailChanged)
+                            await SendVerificationEmail(appUser);
+
+                        if (isPasswordChanged)
+                        {
+                            if (!string.IsNullOrWhiteSpace(user.CurrentPassword))
+                                result = await _accountManager.UpdatePasswordAsync(appUser, user.CurrentPassword, user.NewPassword);
+                            else
+                                result = await _accountManager.ResetPasswordAsync(appUser, user.NewPassword);
+                        }
+
+                        if (result.Succeeded)
+                            return NoContent();
+                    }
+
+                    AddError(result.Errors);
+
+                }
+            }
+
+            return BadRequest(ModelState);
+        }
+
+
 
         [HttpPatch("users/me")]
         [ProducesResponseType(204)]
