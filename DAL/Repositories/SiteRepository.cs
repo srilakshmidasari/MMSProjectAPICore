@@ -28,7 +28,7 @@ namespace DAL.Repositories
             try
             {
                 var result = _appContext.SiteInfos.ToList();
-                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
 
                 result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
                
@@ -136,6 +136,7 @@ namespace DAL.Repositories
                     result.Name1 = sites.Name1;
                     result.Name2 = sites.Name2;
                     result.Address = sites.Address;
+                    result.FileExtention = sites.FileExtention;
                     result.Latitude = sites.Latitude;
                     result.Longitude = sites.Longitude;
                     result.CreatedBy = sites.CreatedBy;
