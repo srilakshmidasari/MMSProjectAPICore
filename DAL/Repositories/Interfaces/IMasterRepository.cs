@@ -9,5 +9,7 @@ namespace DAL.Repositories.Interfaces
     public interface IMasterRepository
     {
         ListDataResponse<TypeCdDmt> GetAllTypeCddmtdetails(int ClassTypeId);
+
+        ValueDataResponse<FileRepository> DeleteFileRepository(int FileRepositoryId);
     }
 }

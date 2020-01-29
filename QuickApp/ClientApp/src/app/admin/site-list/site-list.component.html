@@ -7,7 +7,7 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc" matSortDisableClear>
             <ng-container matColumnDef="siteReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>site</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteReference}} </mat-cell>
@@ -20,6 +20,14 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="address">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="updatedDate ">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Updated Date</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()" >
@@ -30,9 +38,9 @@
                     <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Delete"(click)="onDeleteSite(row)" >
+                    <!-- <button mat-icon-button matTooltip="Delete"(click)="onDeleteSite(row)" >
                         <mat-icon color="warn">cancel</mat-icon>
-                    </button>
+                    </button> -->
                 </mat-cell>
             </ng-container>
 
@@ -41,6 +49,12 @@
             <mat-row *matRowDef="let row; columns: displayedColumns;">
             </mat-row>
         </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>No Records Found</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>No Search Results Found</p>
+        </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>

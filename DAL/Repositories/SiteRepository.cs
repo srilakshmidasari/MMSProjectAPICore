@@ -118,6 +118,59 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ValueDataResponse<SiteInfo> UpdateSite(SiteInfo sites)
+        {
+            ValueDataResponse<SiteInfo> response = new ValueDataResponse<SiteInfo>();
+
+            try
+            {
+                var result = _appContext.SiteInfos.Where(x => x.Id == sites.Id).FirstOrDefault();
+                if (result != null)
+                {
+                    result.SiteReference = sites.SiteReference;
+                    result.Name1 = sites.Name1;
+                    result.Name2 = sites.Name2;
+                    result.Address = sites.Address;
+                    result.Latitude = sites.Latitude;
+                    result.Longitude = sites.Longitude;
+                    result.CreatedBy = sites.CreatedBy;
+                    result.CreatedDate = sites.CreatedDate;
+                    result.UpdatedBy = sites.UpdatedBy;
+                    result.UpdatedDate = sites.UpdatedDate;
+                    if (!string.IsNullOrEmpty(sites.Address))
+                    {
+                        coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
+                        if (LatLong != null)
+                        {
+                            result.Latitude = (float)(LatLong.Latitude);
+                            result.Longitude = (float)LatLong.Longitude;
+                        }
+                    }
+
+                    _appContext.SaveChanges();
+                    response.Result = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Site Updated Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Site Updation Failed";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+
+            }
+            return response;
+        }
         public coordinates GetLatLngByAddress(string address)
         {
             try

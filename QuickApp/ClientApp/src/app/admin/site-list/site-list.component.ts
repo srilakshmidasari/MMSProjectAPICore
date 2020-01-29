@@ -5,6 +5,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { AccountService } from '../../services/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertService } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-site-list',
@@ -14,34 +16,62 @@ import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
 export class SiteListComponent implements OnInit {
   loadingIndicator: boolean;
   siteInfo: any = [];
-  sourceSite:any;
+  sourceSite: any;
+  siteList: any[] = []
+  displayedColumns = ['siteReference', 'name1', 'name2', 'address', 'updatedDate', 'Actions'];
 
-  displayedColumns = ['siteReference', 'name1', 'name2', 'Actions'];
-  siteData: any = [
-    { siteRef: 'Hyd', name1: 'Hyderadad', name2: 'Jntu' }
-  ];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private accountService: AccountService,
+  displayNoRecords: boolean;
+  constructor(private accountService: AccountService, private snackBar: MatSnackBar, private alertService: AlertService,
     private dialog: MatDialog) { }
 
   ngOnInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.data = this.siteData;
-    this.dataSource.sort = this.sort;
+
     this.getSites();
   }
 
-  getSites() {
-    debugger
-    this.accountService.getSiteData().subscribe(result => {
-      console.log('result data', result);
-      this.siteInfo = result;
-      this.dataSource.data=this.siteInfo.listResult;
-     // this.siteData = result;
-    })
+
+
+  private getSites() {
+    this.alertService.startLoadingMessage();
+    this.loadingIndicator = true;
+    this.accountService.getSiteData()
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+        this.dataSource.data = this.siteList;
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.loadingIndicator = false;
+        });
   }
+
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
+    }
+  }
+
+  private refresh() {
+    // Causes the filter to refresh there by updating with recently added data.
+    this.applyFilter(this.dataSource.filter);
+  }
+
+
+
   public onEditSite(site?) {
     this.sourceSite = site;
 
@@ -51,9 +81,7 @@ export class SiteListComponent implements OnInit {
         data: { site }
       });
     dialogRef.afterClosed().subscribe(role => {
-      // if (role && this.canManageRoles) {
-      //   this.updateRoles(role);
-      // }
+
     });
   }
 }
