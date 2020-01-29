@@ -220,7 +220,8 @@ namespace MMS
                 c.DocumentTitle = "Swagger UI - MMS";
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{IdentityServerConfig.ApiFriendlyName} V1");
                 c.OAuthClientId(IdentityServerConfig.SwaggerClientID);
-                c.OAuthClientSecret("no_password"); //Leaving it blank doesn't work
+                c.OAuthClientSecret("no_password");//Leaving it blank doesn't work
+                c.DefaultModelsExpandDepth(-1);
             });
 
 

@@ -484,7 +484,6 @@ namespace MMS.Controllers
                 if (user == null)
                     return BadRequest($"{nameof(user)} cannot be null");
 
-
                 ApplicationUser appUser = _mapper.Map<ApplicationUser>(user);
 
                 var result = await _accountManager.CreateUserAsync(appUser, new string[] { _publicRoleName }, user.NewPassword);

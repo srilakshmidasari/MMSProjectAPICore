@@ -27,9 +27,20 @@
       Address is required
     </mat-error>
   </mat-form-field>
-  <div class="form-group col-md-12">
+  <div class="form-group col-md-12" *ngIf="isNewSite">
     <label for="file">Upload Document</label>
     <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
   </div>
-  <!-- <div class="clearfix space20"></div> -->
+ 
+    <div class="image-upload col-md-12" *ngIf="!isNewSite">
+      <label for="file-input">
+        <img [src]="site.fileLocation" style="height: 80px;" />
+      </label>
+      <input id="file-input" type="file" formControlName="file" (change)="onSelectFiles($event)"/>
+    </div>
+  <!-- <div class="form-group col-md-12" *ngIf ="!isNewSite">
+      <label for="file">Upload Document</label>
+      <input type="file"  class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
+    </div> -->
+   <div class="clearfix space20"></div> 
 </form>

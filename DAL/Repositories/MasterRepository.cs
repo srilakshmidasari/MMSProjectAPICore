@@ -56,6 +56,7 @@ namespace DAL.Repositories
             try
             {
                 var fileRepository = _appContext.FileRepositories.Where(x => x.RepositoryId == FileRepositoryId).FirstOrDefault();
+
                 if (fileRepository != null)
                 {
                     _appContext.SaveChanges();

@@ -91,6 +91,7 @@ export class SiteListComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe(siteresponse => {
       if (siteresponse) {
+        debugger
         this.updateSite(siteresponse);
      }
     });
