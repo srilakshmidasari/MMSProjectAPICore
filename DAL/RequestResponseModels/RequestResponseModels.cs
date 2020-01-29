@@ -10,7 +10,7 @@ namespace DAL.RequestResponseModels
     {
         public class UpsertSite : AuditableEntity
         {
-    
+
             public int Id { get; set; }
             public string SiteReference { get; set; }
             public string Name1 { get; set; }
@@ -40,5 +40,17 @@ namespace DAL.RequestResponseModels
             public double Latitude { get; set; }
             public double Longitude { get; set; }
 
+        }
+
+        public class FileRepositoryResposnse 
+        {
+            public int RepositoryId { get; set; }
+            public string UserId { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public string FileExtention { get; set; }
+            public int? DocumentType { get; set; }
+            public string FileTypeName { get; set; }
+        }
     }
 }

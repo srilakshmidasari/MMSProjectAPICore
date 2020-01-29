@@ -23,6 +23,7 @@ using DAL.RequestResponseModels;
 using MMS.Authorization;
 using DAL;
 using System.IO;
+using static DAL.RequestResponseModels.RequestResponseModels;
 
 namespace MMS.Controllers
 {
@@ -128,20 +129,6 @@ namespace MMS.Controllers
 
             return Ok(usersVM);
         }
-
-        [HttpGet("GetFilesByUserId/{UserId}")]
-        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
-        public async Task<IActionResult> GetFilesByUserId(string UserId)
-        {
-            var   result = _appcontext.FileRepositories.Where(x => x.UserId == UserId).ToList();
-
-            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
-
-            result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
-
-            return  Ok(result);
-        }
-
 
         [HttpPut("users/me")]
         [ProducesResponseType(204)]
@@ -748,7 +735,31 @@ namespace MMS.Controllers
             return Ok(_mapper.Map<List<PermissionViewModel>>(ApplicationPermissions.AllPermissions));
         }
 
+        [HttpGet("GetFilesByUserId/{UserId}")]
+        [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
+        public async Task<IActionResult> GetFilesByUserId(string UserId)
+        {
+            // var result = _appcontext.FileRepositories.Where(x => x.UserId == UserId).ToList();
+            var result = (from e in _appcontext.FileRepositories
+                          join t in _appcontext.TypeCdDmts
+                           on e.DocumentType equals t.TypeCdDmtId
+                          select new FileRepositoryResposnse
+                          {
+                              RepositoryId = e.RepositoryId,
+                              UserId =e.UserId,
+                              FileName=e.FileName,
+                              FileLocation = e.FileLocation,
+                              FileExtention =e.FileExtention,
+                              DocumentType = e.DocumentType,
+                              FileTypeName =t.Description
+                          }).ToList();
 
+            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+
+            result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+
+            return Ok(result);
+        }
 
         private async Task<UserViewModel> GetUserViewModelHelper(string userId)
         {
