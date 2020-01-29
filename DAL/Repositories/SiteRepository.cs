@@ -152,6 +152,29 @@ namespace DAL.Repositories
                         }
                     }
 
+                    if (sites.FileName != null)
+                    {
+                        string ModuleName = "Site";
+                        var now = DateTime.Now;
+                        var yearName = now.ToString("yyyy");
+                        var monthName = now.Month.ToString("d2");
+                        var dayName = now.ToString("dd");
+
+                        FileUploadService repo = new FileUploadService();
+
+
+                        string FolderLocation = _config.Value.FileRepositoryFolder;
+                        string ServerRootPath = _config.Value.ServerRootPath;
+
+                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                        byte[] FileBytes = Convert.FromBase64String(sites.FileName);
+
+                        result.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
+
+                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                    }
+
                     _appContext.SaveChanges();
                     response.Result = result;
                     response.IsSuccess = true;
