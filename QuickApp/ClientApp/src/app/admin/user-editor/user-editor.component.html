@@ -151,10 +151,11 @@
 
   <div fxLayout="row"  *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">    
     <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileData">
-      <div>Proof of {{file.description}}</div>     
+      <div>Proof of {{file.fileTypeName}}</div>     
       <div class="clearfix space20"></div>
       <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
           <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;</a>
+
           <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
            <!-- <img src="{{file.fileLocation}}" alt =""/> &nbsp;&nbsp;&nbsp;</a> -->
            <img src="assets\images\arkaan-logo-blue.png" > &nbsp;&nbsp;&nbsp;</a>
