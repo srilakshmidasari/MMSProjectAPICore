@@ -15,11 +15,26 @@
         <mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header> {{'users.management.Title' | translate}} </mat-header-cell>
         <mat-cell fxFlex="15%" *matCellDef="let row"> {{row.jobTitle}} </mat-cell>
       </ng-container> -->
+      <ng-container matColumnDef="employeeId">
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.editor.EmpId' | translate}} </mat-header-cell>
+        <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.employeeId}} </mat-cell>
+      </ng-container>
 
       <ng-container matColumnDef="userName">
         <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.management.UserName' | translate}} </mat-header-cell>
         <mat-cell fxFlex="25%" *matCellDef="let row"> {{row.userName}} </mat-cell>
       </ng-container>
+
+      <ng-container matColumnDef="name1">
+        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.editor.Name1' | translate}} </mat-header-cell>
+        <mat-cell fxFlex="25%" *matCellDef="let row"> {{row.name1}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name2">
+        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.editor.Name2' | translate}} </mat-header-cell>
+        <mat-cell fxFlex="25%" *matCellDef="let row"> {{row.name2}} </mat-cell>
+      </ng-container>
+
 
       <ng-container matColumnDef="fullName">
         <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.FullName' | translate}} </mat-header-cell>
@@ -30,6 +45,7 @@
         <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.Email' | translate}} </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.email}} </mat-cell>
       </ng-container>
+
 
       <ng-container *ngIf="canManageUsers" matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef fxFlex="170px">

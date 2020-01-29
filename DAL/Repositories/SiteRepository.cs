@@ -28,6 +28,10 @@ namespace DAL.Repositories
             try
             {
                 var result = _appContext.SiteInfos.ToList();
+                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+
+                result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+               
                 if (result != null)
                 {
                     response.ListResult = result;

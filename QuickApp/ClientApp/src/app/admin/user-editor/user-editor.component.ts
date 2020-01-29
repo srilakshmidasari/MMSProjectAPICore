@@ -42,7 +42,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   @Input() user: any = new User();
   @Input() roles: Role[] = [];
   userFileData: any[] = [];
-  editUserDocs:any[]=[];
+  editUserDocs: any[] = [];
   isEditMode: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
@@ -121,6 +121,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
+  
 
 
   }
@@ -145,13 +146,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user = new User();
       this.user.isEnabled = true;
     }
-
-    this.setRoles();
-
-    this.resetForm();
     this.docData();
-    this.getCurrentUserFiles();
+    this.setRoles();
+    this.resetForm();
    
+
   }
 
   ngOnDestroy() {
@@ -169,12 +168,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   // Get Documents List
   private docData() {
-    this.accountService.getCddmtData(1).subscribe(res => {
+    var classTypeId = 1
+    this.accountService.getCddmtData(classTypeId).subscribe(res => {
       this.pDocdata = res;
       this.userDoc = this.pDocdata.listResult;
-      this.editUserDocs =JSON.parse(JSON.stringify(this.userDoc))
-
-     // this.editUserDocs=this.userDoc;
+      //console.log(this.userDoc);
+      this.editUserDocs = JSON.parse(JSON.stringify(this.userDoc))
+      this.getCurrentUserFiles();
     })
   }
 
@@ -257,7 +257,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   //  File  Change Event
   uploadFile(doc, event) {
     debugger
-    var doc1=doc;
+    var doc1 = doc;
     var file = event.target.files[0];
     if (doc.typeCdDmtId == DataFactory.TypeOfFile.Image) {
       var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
@@ -323,12 +323,12 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           "fileName": e.target.result.substring(base64Index),
           "fileLocation": null,
           "fileExtention": this.fileExtension,
-          "documentTypeId":doc1.typeCdDmtId,
+          "documentTypeId": doc1.typeCdDmtId,
           "createdBy": this.currentUser.id,
           "updatedBy": this.currentUser.id,
           "updatedDate": new Date(),
           "createdDate": new Date(),
-          
+
         })
     }
     reader.readAsDataURL(file);
@@ -367,7 +367,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
 
     if (this.isNewUser) {
-   
+
       this.accountService.newUser(editedUser).subscribe(
         user => this.saveCompleted(user),
         error => this.saveFailed(error));
@@ -535,17 +535,24 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   // Current User Files
   getCurrentUserFiles() {
-    debugger
-    this.editUserFilesList = this.editUserDocs;
+    this.editUserFilesList = [];
     this.accountService.getUserFileData(this.user.id).subscribe(res => {
+      this.editUserFilesList = JSON.parse(JSON.stringify(this.editUserDocs));
       this.userFileInfo = res;
-      this.userFileData = this.userFileInfo;
       this.editUserFilesList.forEach((item) => {
-        this.userFileData.forEach((item1) => {
-          if (item.typeCdDmtId === item1.documentType) this.editUserFilesList.splice(item, 1);
+        this.userFileInfo.forEach((item1) => {
+          if (item.typeCdDmtId == item1.documentType){
+            const index: number = this.editUserFilesList.indexOf(item);
+            if (index !== -1) {
+              this.editUserFilesList.splice(index, 1);
+            }
+           
+            console.log(this.editUserFilesList)
+          } 
         });
       });
     })
+
   }
 
   //  On Delete File

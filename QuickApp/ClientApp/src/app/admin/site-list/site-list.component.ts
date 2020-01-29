@@ -6,7 +6,7 @@ import { AccountService } from '../../services/account.service';
 import { MatDialog } from '@angular/material/dialog';
 import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 
 @Component({
   selector: 'app-site-list',
@@ -71,18 +71,28 @@ export class SiteListComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
-
+  private updateSite(response: any) {
+    if (this.sourceSite) {
+        this.getSites();
+        this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+        this.sourceSite = null;
+    } else {
+        this.getSites();
+        this.alertService.showMessage('Success',  response.endUserMessage, MessageSeverity.success)
+    }
+}
 
   public onEditSite(site?) {
     this.sourceSite = site;
-
     const dialogRef = this.dialog.open(SiteDialogComponent,
       {
         panelClass: 'mat-dialog-md',
         data: { site }
       });
-    dialogRef.afterClosed().subscribe(role => {
-
+    dialogRef.afterClosed().subscribe(siteresponse => {
+      if (siteresponse) {
+        this.updateSite(siteresponse);
+     }
     });
   }
 }
