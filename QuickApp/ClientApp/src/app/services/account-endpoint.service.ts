@@ -30,7 +30,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _roleByRoleNameUrl: string = '/api/account/roles/name';
   private readonly _permissionsUrl: string = '/api/account/permissions';
   private readonly _siteUrl: string = '/api/Site';
-  private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId'
+  private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId';  
+  private readonly _getTypecddmtDetails: string = '/api/Masters/GetTypecddmtDetails';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
@@ -47,6 +48,7 @@ export class AccountEndpoint extends EndpointBase {
   get permissionsUrl() { return this.configurations.baseUrl + this._permissionsUrl; }
   get sitesUrl() { return this.configurations.baseUrl + this._siteUrl; }
   get UserFilesUrl() { return this.configurations.baseUrl + this._getUserFilesUrl; }
+  get typeCddmtData() { return this.configurations.baseUrl + this._getTypecddmtDetails; }
 
 
 
@@ -285,6 +287,14 @@ debugger
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getUserFileEndpoint(userId));
+      }));
+  }
+
+  getTypeCddmtDataEndpoint<T>(classTypeId: any): Observable<T> {
+    const endpointUrl = this.typeCddmtData+'/'+classTypeId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getTypeCddmtDataEndpoint(classTypeId));
       }));
   }
 }

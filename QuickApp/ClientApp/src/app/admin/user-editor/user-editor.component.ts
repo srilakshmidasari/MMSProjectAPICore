@@ -19,6 +19,7 @@ import { Role } from '../../models/role.model';
 import { Permission } from '../../models/permission.model';
 import { EqualValidator } from '../../shared/validators/equal.validator';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataFactory } from 'src/app/shared/dataFactory';
 
 @Component({
   selector: 'user-editor',
@@ -33,17 +34,19 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   isChangePassword = false;
   emailConfirmed: boolean;
   public isSaving = false;
+  pDocdata: any = [];
   public isSendingEmail = false;
   private passwordWatcher: Subscription;
   private onUserSaved = new Subject<User>();
   roleData: any[] = [];
-  @Input() user: User = new User();
+  @Input() user: any = new User();
   @Input() roles: Role[] = [];
-  userFileData:any[]=[];
+  userFileData: any[] = [];
+  editUserDocs:any[]=[];
   isEditMode: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
-  editUserFilesList:any[]=[];
+  editUserFilesList: any[] = [];
   @Input() allowedImageExtension: string = "jpeg , jpg , png";
   @Input() allowedDocsExtension: string = "pdf , docx , doc";
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
@@ -51,11 +54,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   isImageFile: boolean;
   isDocFile: boolean;
   @Input() maxSize: number = 2300;//1150;
-  userDoc: any[] = [
-    { name: 'User Image', id: 1 },
-    { name: 'User Documents', id: 2 }
-
-  ];
+  userDoc: any[] = [];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
   fileRepositories: any[] = [];
@@ -122,7 +121,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
-    
+
 
   }
 
@@ -148,10 +147,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
 
     this.setRoles();
-   
-    this.resetForm();
 
+    this.resetForm();
+    this.docData();
     this.getCurrentUserFiles();
+   
   }
 
   ngOnDestroy() {
@@ -165,6 +165,17 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
 
     this.ngOnChanges();
+  }
+
+  // Get Documents List
+  private docData() {
+    this.accountService.getCddmtData(1).subscribe(res => {
+      this.pDocdata = res;
+      this.userDoc = this.pDocdata.listResult;
+      this.editUserDocs =JSON.parse(JSON.stringify(this.userDoc))
+
+     // this.editUserDocs=this.userDoc;
+    })
   }
 
   // Building userProfileForm 
@@ -218,6 +229,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       jobTitle: this.user.jobTitle || '',
       userName: this.user.userName || '',
       email: this.user.email || '',
+      name1: this.user.name1 || '',
+      name2: this.user.name2 || '',
+      empId: this.user.employeeId || '',
       password: {
         currentPassword: '',
         newPassword: '',
@@ -243,8 +257,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   //  File  Change Event
   uploadFile(doc, event) {
     debugger
+    var doc1=doc;
     var file = event.target.files[0];
-    if (doc.id == 1) {
+    if (doc.typeCdDmtId == DataFactory.TypeOfFile.Image) {
       var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       if (file != undefined) {
         this.fileExtension = '.' + file.name.split('.').pop();
@@ -266,7 +281,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           }
         }
       }
-      this.isImageFile=true;
+      this.isImageFile = true;
     } else {
       var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       if (file != undefined) {
@@ -289,16 +304,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           }
         }
       }
-      this.isDocFile=true;
+      this.isDocFile = true;
     }
     let reader = new FileReader();
     reader.onload = (e: any) => {
       var doc = e.target.result;
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
-      if(this.isDocFile || this.isImageFile){
+      if (this.isDocFile || this.isImageFile) {
         this.fileRepositories.forEach((item1) => {
-          if (item1.fileExtention == this.fileExtension ) this.fileRepositories.splice(item1, 1); 
+          if (item1.fileExtention == this.fileExtension) this.fileRepositories.splice(item1, 1);
         });
       }
       this.fileRepositories.push(
@@ -308,10 +323,12 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           "fileName": e.target.result.substring(base64Index),
           "fileLocation": null,
           "fileExtention": this.fileExtension,
+          "documentTypeId":doc1.typeCdDmtId,
           "createdBy": this.currentUser.id,
           "updatedBy": this.currentUser.id,
           "updatedDate": new Date(),
-          "createdDate": new Date()
+          "createdDate": new Date(),
+          
         })
     }
     reader.readAsDataURL(file);
@@ -350,27 +367,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
 
     if (this.isNewUser) {
-      // var req = {
-      //   "currentPassword": formModel.password.confirmPassword,
-      //   "newPassword": this.isChangePassword ? formModel.password.newPassword : null,
-      //   "roles": [
-      //     formModel.roles,
-      //   ],
-      //   "id": null,
-      //   "userName": formModel.userName,
-      //   "fullName": formModel.fullName,
-      //   "email": formModel.email,
-      //   "jobTitle": null,
-      //   "phoneNumber": formModel.phoneNumber,
-      //   "configuration": null,
-      //   "isEnabled": true,
-      //   "employeeId": formModel.empId,
-      //   "name1": formModel.name1,
-      //   "name2": formModel.name2,
-      //   "fileRepositories": this.fileRepositories
-      // }
-
-
+   
       this.accountService.newUser(editedUser).subscribe(
         user => this.saveCompleted(user),
         error => this.saveFailed(error));
@@ -407,7 +404,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
   // On Cancel Click
   public cancel() {
-    this.fileRepositories=[];
+    this.fileRepositories = [];
     this.resetForm();
     this.isEditMode = false;
 
@@ -422,8 +419,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user = user;
     }
     this.fileRepositories = [];
-    this.isImageFile=false;
-    this.isDocFile=false;
+    this.isImageFile = false;
+    this.isDocFile = false;
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
 
@@ -538,13 +535,14 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   // Current User Files
   getCurrentUserFiles() {
-    this.editUserFilesList=this.userDoc;  
+    debugger
+    this.editUserFilesList = this.editUserDocs;
     this.accountService.getUserFileData(this.user.id).subscribe(res => {
-      this.userFileInfo=res;
-      this.userFileData=this.userFileInfo;
-      this.userDoc.forEach((item) => {
+      this.userFileInfo = res;
+      this.userFileData = this.userFileInfo;
+      this.editUserFilesList.forEach((item) => {
         this.userFileData.forEach((item1) => {
-          if (item.id === item1.id) this.editUserFilesList.splice(item, 1); 
+          if (item.typeCdDmtId === item1.documentType) this.editUserFilesList.splice(item, 1);
         });
       });
     })

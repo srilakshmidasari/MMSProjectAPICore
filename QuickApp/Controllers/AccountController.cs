@@ -133,13 +133,13 @@ namespace MMS.Controllers
         [Authorize(Authorization.Policies.ViewAllUsersPolicy)]
         public async Task<IActionResult> GetFilesByUserId(string UserId)
         {
-            var result = _appcontext.FileRepositories.Where(x => x.UserId == UserId).ToList();
+            var   result = _appcontext.FileRepositories.Where(x => x.UserId == UserId).ToList();
 
             var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
 
             result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
 
-            return Ok(result);
+            return  Ok(result);
         }
 
 
@@ -340,6 +340,7 @@ namespace MMS.Controllers
                                 file.FileName = req.FileName;
                                 file.FileLocation = req.FileLocation;
                                 file.FileExtention = req.FileExtention;
+                                file.DocumentType = req.DocumentTypeId;
                                 file.CreatedBy = req.CreatedBy;
                                 file.CreatedDate = DateTime.Now;
                                 file.UpdatedBy = req.UpdatedBy;
