@@ -17,7 +17,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.FullName' | translate}}</mat-label>
-      <input matInput formControlName="fullName"   maxlength="50" (keypress)="alphabetsOnly($event)" />
+      <input matInput formControlName="fullName" maxlength="50" (keypress)="alphabetsOnly($event)" />
     </mat-form-field>
   </div>
 
@@ -33,7 +33,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Name2' | translate}}</mat-label>
-      <input matInput formControlName="name2" required  maxlength="50"/>
+      <input matInput formControlName="name2" required maxlength="50" />
       <mat-error *ngIf="!userProfileForm.controls['name2'].valid">
         {{'users.editor.Name2Required' | translate}}
       </mat-error>
@@ -44,8 +44,8 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Email' | translate}}</mat-label>
-      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" maxlength="50" [readonly]="!isNewUser"
-        required />
+      <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" maxlength="50"
+        [readonly]="!isNewUser" required />
       <button *ngIf="emailConfirmed === false" type="button" (click)="sendVerificationEmail()"
         [disabled]="isSendingEmail" class="send-confirm-email" mat-button color="primary">
         [{{'users.editor.SendVerificationEmail' | translate}}]
@@ -75,7 +75,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
-      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off"  maxlength="30"required />
+      <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off" maxlength="30" required />
       <mat-error *ngIf="userName.hasError('required')">
         {{'users.editor.UserNameRequired' | translate}}
       </mat-error>
@@ -142,35 +142,36 @@
   </div>
 
   <div class="clearfix space20"></div>
-  <div fxLayout="row"  *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
+  <div fxLayout="row" *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
     <div class="form-group " fxFlex *ngFor="let doc of userDoc">
-      <label for="file">Upload  User {{doc.description}}</label>
-      <input #fileInput  type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile(doc, $event)">
-    </div>    
+      <label for="file">Upload User {{doc.description}}</label>
+      <input #fileInput type="file" class="form-control" id="file" formControlName="file"
+        (change)="uploadFile(doc, $event)">
+    </div>
   </div>
 
-  <div fxLayout="row"  *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">    
-    <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileData">
-      <div>Proof of {{file.fileTypeName}}</div>     
+  <div fxLayout="row" *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
+    <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileInfo">
+      <div>Proof of {{file.fileTypeName}}</div>
       <div class="clearfix space20"></div>
       <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
-          <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;</a>
-
-          <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
-           <!-- <img src="{{file.fileLocation}}" alt =""/> &nbsp;&nbsp;&nbsp;</a> -->
-           <img src="assets\images\arkaan-logo-blue.png" > &nbsp;&nbsp;&nbsp;</a>
+        <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+      </a>
+      <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
+        <img src="assets\images\arkaan-logo-blue.png"> &nbsp;&nbsp;&nbsp;</a>
 
       <a class="close2 color-red" *ngIf="file.documentType==1" (click)="onDeleteFile(file)">
-          <mat-icon>cancel</mat-icon>
+        <mat-icon>cancel</mat-icon>
       </a>
       <a class="close1 color-red" *ngIf="file.documentType==2" (click)="onDeleteFile(file)">
         <mat-icon>cancel</mat-icon>
-    </a>
-  </div>
-  <div class="form-group col-md-4" *ngFor="let doc of editUserFilesList">
-    <label for="file">Upload Proof of {{doc.description}} </label>
-    <input #fileInput type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile($event,doc)">
-</div>
+      </a>
+    </div>
+    <div class="form-group col-md-4" *ngFor="let doc of editUserFilesList">
+      <label for="file">Upload Proof of {{doc.description}} </label>
+      <input #fileInput type="file" class="form-control" id="file" formControlName="file"
+        (change)="uploadFile(doc, $event)">
+    </div>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">

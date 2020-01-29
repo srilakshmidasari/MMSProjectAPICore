@@ -121,7 +121,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
-    this.docData();
+  
 
 
   }
@@ -146,10 +146,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user = new User();
       this.user.isEnabled = true;
     }
-
+    this.docData();
     this.setRoles();
     this.resetForm();
-    this.getCurrentUserFiles();
+   
 
   }
 
@@ -168,13 +168,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   // Get Documents List
   private docData() {
-    this.accountService.getCddmtData(1).subscribe(res => {
+    var classTypeId = 1
+    this.accountService.getCddmtData(classTypeId).subscribe(res => {
       this.pDocdata = res;
       this.userDoc = this.pDocdata.listResult;
       //console.log(this.userDoc);
       this.editUserDocs = JSON.parse(JSON.stringify(this.userDoc))
-
-      // this.editUserDocs=this.userDoc;
+      this.getCurrentUserFiles();
     })
   }
 
@@ -536,14 +536,19 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   // Current User Files
   getCurrentUserFiles() {
     this.editUserFilesList = [];
-    console.log(this.editUserDocs)
     this.accountService.getUserFileData(this.user.id).subscribe(res => {
-      this.editUserFilesList = JSON.parse(JSON.stringify(this.userDoc));
+      this.editUserFilesList = JSON.parse(JSON.stringify(this.editUserDocs));
       this.userFileInfo = res;
-      this.userFileData = this.userFileInfo;
       this.editUserFilesList.forEach((item) => {
-        this.userFileData.forEach((item1) => {
-          if (item.typeCdDmtId === item1.documentType) this.editUserFilesList.splice(item, 1);
+        this.userFileInfo.forEach((item1) => {
+          if (item.typeCdDmtId == item1.documentType){
+            const index: number = this.editUserFilesList.indexOf(item);
+            if (index !== -1) {
+              this.editUserFilesList.splice(index, 1);
+            }
+           
+            console.log(this.editUserFilesList)
+          } 
         });
       });
     })

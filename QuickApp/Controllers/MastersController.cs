@@ -30,7 +30,7 @@ namespace MMS.Controllers
         }
 
         [HttpDelete]
-        [Route("DeleteFileRepository")]
+        [Route("DeleteFileRepository/{FileRepositoryId}")]
         public ValueDataResponse<FileRepository> DeleteFileRepository(int FileRepositoryId)
         {
             return _unitOfWork.Masters.DeleteFileRepository(FileRepositoryId);
