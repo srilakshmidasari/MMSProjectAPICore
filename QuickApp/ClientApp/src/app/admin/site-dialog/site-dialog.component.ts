@@ -9,23 +9,23 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class SiteDialogComponent implements OnInit {
   isSite: string = '';
- 
   @ViewChild(SiteEditorComponent, { static: true })
   siteEditor: SiteEditorComponent;
-  constructor(
-    public dialogRef: MatDialogRef<SiteDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { site }
-  ) { }
+
+  constructor(public dialogRef: MatDialogRef<SiteDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: { site }) {
+
+  }
 
   ngOnInit() {
     this.isSite = this.data.site == null ? 'New Site' : 'Edit Site';
-    //this.buldForm();
   }
-  cancel(){
+
+  cancel() {
     this.dialogRef.close();
   }
+
   ngAfterViewInit() {
-    this.siteEditor.siteSaved$.subscribe(role => this.dialogRef.close(role));
-}
+    this.siteEditor.siteSaved$.subscribe(site => this.dialogRef.close(site));
+  }
 }
 

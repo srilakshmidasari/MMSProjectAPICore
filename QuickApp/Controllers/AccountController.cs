@@ -743,6 +743,7 @@ namespace MMS.Controllers
             var result = (from e in _appcontext.FileRepositories
                           join t in _appcontext.TypeCdDmts
                            on e.DocumentType equals t.TypeCdDmtId
+                          
                           select new FileRepositoryResposnse
                           {
                               RepositoryId = e.RepositoryId,
@@ -752,7 +753,7 @@ namespace MMS.Controllers
                               FileExtention =e.FileExtention,
                               DocumentType = e.DocumentType,
                               FileTypeName =t.Description
-                          }).ToList();
+                          }).Where(x => x.UserId == UserId).ToList();
 
             var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
 
