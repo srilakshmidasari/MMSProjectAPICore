@@ -1,44 +1,35 @@
-<form #form="ngForm" [formGroup]="siteForm">`
-  <div class="row">
-    <mat-form-field class="col-md-6">
-      <mat-label>Site Reference</mat-label>
-      <input matInput formControlName="siteref" required />
-      <mat-error *ngIf="!siteForm.controls['siteref'].valid">
-        Site Reference is required
-      </mat-error>
-    </mat-form-field>
-    <mat-form-field class="col-md-6">
-      <mat-label>Name1</mat-label>
-      <input matInput formControlName="sname1" required />
-      <mat-error *ngIf="!siteForm.controls['sname1'].valid">
-        Name 1 is required
-      </mat-error>
-    </mat-form-field>
-
-  </div>
-  <div class="row">
-    <mat-form-field class="col-md-6">
-      <mat-label> Name2</mat-label>
-      <input matInput formControlName="sname2" required />
-      <mat-error *ngIf="!siteForm.controls['sname2'].valid">
-        Name 2 is required
-      </mat-error>
-    </mat-form-field>
-    <div class="form-group col-md-4">
-      <label for="file">Upload Document</label>
-      <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
-    </div>
-
+<form #form="ngForm" [formGroup]="siteForm">
+  <mat-form-field class="col-md-12">
+    <mat-label>Site Reference</mat-label>
+    <input matInput formControlName="siteref" required />
+    <mat-error *ngIf="!siteForm.controls['siteref'].valid">
+      Site Reference is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-md-12">
+    <mat-label>Name1</mat-label>
+    <input matInput formControlName="sname1" required />
+    <mat-error *ngIf="!siteForm.controls['sname1'].valid">
+      Name 1 is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-md-12">
+    <mat-label> Name2</mat-label>
+    <input matInput formControlName="sname2" required />
+    <mat-error *ngIf="!siteForm.controls['sname2'].valid">
+      Name 2 is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-md-12">
+    <mat-label> Address </mat-label>
+    <input matInput formControlName="address" required />
+    <mat-error *ngIf="!siteForm.controls['address'].valid">
+      Address is required
+    </mat-error>
+  </mat-form-field>
+  <div class="form-group col-md-12">
+    <label for="file">Upload Document</label>
+    <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
   </div>
   <!-- <div class="clearfix space20"></div> -->
-  <div class="row">
-    <mat-form-field class="col-md-12">
-      <mat-label> Address </mat-label>
-      <input matInput formControlName="address" required />
-      <mat-error *ngIf="!siteForm.controls['address'].valid">
-        Address is required
-      </mat-error>
-    </mat-form-field>
-  </div>
-
 </form>
