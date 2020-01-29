@@ -40,6 +40,7 @@ export class SiteListComponent implements OnInit {
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
+        console.log( this.siteList)
         this.dataSource.data = this.siteList;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
