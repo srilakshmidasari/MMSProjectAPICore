@@ -201,4 +201,8 @@ export class AccountService {
   getUserFileData(userid){
     return this.accountEndpoint.getUserFileEndpoint(userid);
   }
+  getCddmtData(classTypeId){
+    return this.accountEndpoint.getTypeCddmtDataEndpoint(classTypeId);
+  }
+
 }

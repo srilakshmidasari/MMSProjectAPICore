@@ -30,7 +30,8 @@ namespace DAL.RequestResponseModels
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
-          
+            public int DocumentTypeId { get; set; }
+
 
         }
 
