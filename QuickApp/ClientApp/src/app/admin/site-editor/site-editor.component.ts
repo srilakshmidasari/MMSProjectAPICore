@@ -34,6 +34,7 @@ export class SiteEditorComponent implements OnInit {
       sname1: ['', Validators.required],
       sname2: ['', Validators.required],
       address: ['', Validators.required],
+      siteManager:['',Validators.required],
       file: ['']
     })
   }

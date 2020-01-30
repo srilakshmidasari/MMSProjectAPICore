@@ -21,6 +21,13 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
+    <mat-label>Site Manager</mat-label>
+    <input matInput formControlName="siteManager" required maxlength="30" />
+    <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
+      Site Manager is required
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field class="col-md-12">
     <mat-label> Address </mat-label>
     <input matInput formControlName="address" required maxlength="250" />
     <mat-error *ngIf="!siteForm.controls['address'].valid">
