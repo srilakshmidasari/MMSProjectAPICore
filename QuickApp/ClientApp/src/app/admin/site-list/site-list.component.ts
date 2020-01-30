@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { SiteLocationComponent } from '../site-location/site-location.component';
 
 @Component({
   selector: 'app-site-list',
@@ -95,4 +96,16 @@ export class SiteListComponent implements OnInit {
      }
     });
   }
+  onSiteLocaction(site){
+    this.sourceSite = site;
+    const dialogRef = this.dialog.open(SiteLocationComponent,
+      {
+        panelClass: 'mat-dialog-md',
+        data: { site }
+      });
+    dialogRef.afterClosed().subscribe(siteresponse => {
+      
+    });
+  } 
+
 }

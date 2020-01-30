@@ -84,7 +84,8 @@ namespace DAL.Repositories
 
                     FileUploadService repo = new FileUploadService();
 
-                    string FolderLocation = _config.Value.FileRepositoryFolder;
+                    //string FolderLocation = _config.Value.FileRepositoryFolder;
+                    string FolderLocation = "FileRepository";
                     string ServerRootPath = _config.Value.ServerRootPath;
 
                     string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;

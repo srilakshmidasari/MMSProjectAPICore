@@ -97,3 +97,6 @@ body {
   display: inline-block;
   overflow: auto;
 }
+.leaflet-control-attribution.leaflet-control{
+  display: none;
+}

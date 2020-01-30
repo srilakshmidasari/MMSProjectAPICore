@@ -29,12 +29,13 @@ export class RoleListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns = ['roleName', 'description', 'users', 'actions'];
+  displayedColumns = ['name', 'description', 'usersCount', 'actions'];
   dataSource: MatTableDataSource<Role>;
   allPermissions: Permission[] = [];
   sourceRole: Role;
   editingRoleName: { name: string };
   loadingIndicator: boolean;
+  displayNoRecords: boolean;
 
   constructor(
     private alertService: AlertService,
@@ -61,6 +62,11 @@ export class RoleListComponent implements OnInit, AfterViewInit {
 
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
+    }
   }
 
   private refresh() {

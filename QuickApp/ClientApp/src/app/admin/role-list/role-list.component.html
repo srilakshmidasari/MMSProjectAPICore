@@ -11,7 +11,7 @@
     <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
     <mat-table [dataSource]="dataSource" matSort>
 
-      <ng-container matColumnDef="roleName">
+      <ng-container matColumnDef="name">
         <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'roles.management.Name' | translate}} </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let role"> {{role.name}} </mat-cell>
       </ng-container>
@@ -21,7 +21,7 @@
         <mat-cell *matCellDef="let role"> {{role.description}} </mat-cell>
       </ng-container>
 
-      <ng-container matColumnDef="users">
+      <ng-container matColumnDef="usersCount">
         <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="70px"> {{'roles.management.Users' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let role" fxFlex="70px"> {{role.usersCount}} </mat-cell>
       </ng-container>
@@ -49,6 +49,12 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;">
       </mat-row>
     </mat-table>
+    <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+      <p>No Records Found</p>
+    </div>
+    <div style="text-align: center;" *ngIf="displayNoRecords">
+      <p>No Search Results Found</p>
+    </div>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>

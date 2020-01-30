@@ -49,6 +49,7 @@ import { TodoDemoComponent } from './components/controls/todo-demo.component';
 import { StatisticsDemoComponent } from './components/controls/statistics-demo.component';
 import { NotificationsViewerComponent } from './components/controls/notifications-viewer.component';
 import { AddTaskDialogComponent } from './components/controls/add-task-dialog.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
 
@@ -69,6 +70,7 @@ import { AddTaskDialogComponent } from './components/controls/add-task-dialog.co
     }),
     OAuthModule.forRoot(),
     ToastaModule.forRoot(),
+    LeafletModule.forRoot(),
     ChartsModule,
     NguCarouselModule
   ],

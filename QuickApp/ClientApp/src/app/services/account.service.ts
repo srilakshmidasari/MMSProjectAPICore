@@ -58,7 +58,7 @@ export class AccountService {
     if (user.id) {
       return this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
     } else {
-      return this.accountEndpoint.getUserByUserNameEndpoint<User>(user.userName).pipe(
+      return this.accountEndpoint.getUserByUserNameEndpoint<any>(user.userName).pipe(
         mergeMap(foundUser => {
           
           user.id = foundUser.id;
@@ -66,7 +66,21 @@ export class AccountService {
         }));
     }
   }
+  
+  UpdateUser(user :any){
+    if (user.id) {
+      return this.accountEndpoint.updateUserEndpoint(user, user.id);
+    } else {
+      return this.accountEndpoint.getUserByUserNameEndpoint<any>(user.userName).pipe(
+        mergeMap(foundUser => {
+          user.id = foundUser.id;
+          return this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
+        }));
+    }
+  }
+  
 
+ 
   newUser(user: any, isPublicRegistration?: boolean) {
     return this.accountEndpoint.getNewUserEndpoint<any>(user, isPublicRegistration);
   }
@@ -203,6 +217,9 @@ export class AccountService {
   }
   getCddmtData(classTypeId){
     return this.accountEndpoint.getTypeCddmtDataEndpoint(classTypeId);
+  }
+  deleteUserFile(repositotyId){
+    return this.accountEndpoint.deleteUserFileEndpoint(repositotyId);
   }
 
 }

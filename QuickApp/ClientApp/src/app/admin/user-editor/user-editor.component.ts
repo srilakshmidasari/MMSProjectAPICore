@@ -54,7 +54,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   isImageFile: boolean;
   isDocFile: boolean;
   @Input() maxSize: number = 2300;//1150;
-  userDoc: any[] = [];
+  documentList: any[] = [];
   userProfileForm: FormGroup;
   userSaved$ = this.onUserSaved.asObservable();
   fileRepositories: any[] = [];
@@ -121,7 +121,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private ngZone: NgZone
   ) {
     this.buildForm();
-  
+
 
 
   }
@@ -146,10 +146,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user = new User();
       this.user.isEnabled = true;
     }
-    this.docData();
+    this.getDocuments();
     this.setRoles();
     this.resetForm();
-   
+
 
   }
 
@@ -167,13 +167,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
   // Get Documents List
-  private docData() {
+  private getDocuments() {
     var classTypeId = 1
-    this.accountService.getCddmtData(classTypeId).subscribe(res => {
-      this.pDocdata = res;
-      this.userDoc = this.pDocdata.listResult;
-      //console.log(this.userDoc);
-      this.editUserDocs = JSON.parse(JSON.stringify(this.userDoc))
+    this.accountService.getCddmtData(classTypeId).subscribe((response: any) => {
+      this.documentList = response.listResult;
+      this.editUserDocs = JSON.parse(JSON.stringify(this.documentList))
       this.getCurrentUserFiles();
     })
   }
@@ -353,26 +351,21 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.form.onSubmit(null);
       return;
     }
-
     if (!this.userProfileForm.valid) {
       this.alertService.showValidationError();
       return;
     }
-
     this.isSaving = true;
     this.alertService.startLoadingMessage('Saving changes...');
 
     const editedUser = this.getEditedUser();
     const formModel = this.userProfileForm.value;
-
-
     if (this.isNewUser) {
-
       this.accountService.newUser(editedUser).subscribe(
         user => this.saveCompleted(user),
         error => this.saveFailed(error));
     } else {
-      this.accountService.updateUser(editedUser).subscribe(
+      this.accountService.UpdateUser(editedUser).subscribe(
         () => this.saveCompleted(editedUser),
         error => this.saveFailed(error));
     }
@@ -532,6 +525,14 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       event.preventDefault();
     }
   }
+  
+  alphaNumaricsOnly(event: any) {
+    const alphabetspattern = /^[a-z0-9]+$/i;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
 
   // Current User Files
   getCurrentUserFiles() {
@@ -539,16 +540,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.accountService.getUserFileData(this.user.id).subscribe(res => {
       this.editUserFilesList = JSON.parse(JSON.stringify(this.editUserDocs));
       this.userFileInfo = res;
-      this.editUserFilesList.forEach((item) => {
-        this.userFileInfo.forEach((item1) => {
-          if (item.typeCdDmtId == item1.documentType){
-            const index: number = this.editUserFilesList.indexOf(item);
+      console.log(this.userFileInfo )
+      this.userFileInfo.forEach((item) => {
+        this.editUserFilesList.forEach((item1) => {
+          if (item.documentType == item1.typeCdDmtId) {
+            const index: number = this.editUserFilesList.indexOf(item1);
             if (index !== -1) {
               this.editUserFilesList.splice(index, 1);
             }
-           
             console.log(this.editUserFilesList)
-          } 
+          }
         });
       });
     })
@@ -557,10 +558,38 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   //  On Delete File
   onDeleteFile(file) {
-
+    this.accountService.deleteUserFile(file.repositoryId)
+      .subscribe((results: any) => {
+        this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
+        this.getfileRepositoryDelete(this.user.id, file);
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+            MessageSeverity.error, error);
+        });
   }
 
+  getfileRepositoryDelete(UserId, file) {
+    if (this.editUserFilesList.length > 0) {
+    } else {
+      this.editUserFilesList = [];
+    }
 
-
-
+    this.accountService.getUserFileData(this.user.id).subscribe((response: any) => {
+      this.userFileInfo = response;
+      this.documentList.forEach((item, index) => {
+        if (item.typeCdDmtId === file.documentType) {
+          this.editUserFilesList.push(item);
+        }
+      });
+    },
+      error => {
+      });
+  }
 }
+
+
+
+
+

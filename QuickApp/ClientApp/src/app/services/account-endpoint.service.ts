@@ -17,6 +17,7 @@ import { ConfigurationService } from './configuration.service';
 export class AccountEndpoint extends EndpointBase {
 
   private readonly _usersUrl: string = '/api/account/users';
+  private readonly _updateUsersUrl: string = '/api/Account/updateuser';
   private readonly _usersPublicUrl: string = '/api/account/public/users';
   private readonly _userByUserNameUrl: string = '/api/account/users/username';
   private readonly _currentUserUrl: string = '/api/account/users/me';
@@ -32,8 +33,10 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _siteUrl: string = '/api/Site';
   private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId';  
   private readonly _getTypecddmtDetails: string = '/api/Masters/GetTypecddmtDetails';
+  private readonly _deleteUserFile: string = '/api/Masters/DeleteFileRepository';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
+  get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
   get userByUserNameUrl() { return this.configurations.baseUrl + this._userByUserNameUrl; }
   get currentUserUrl() { return this.configurations.baseUrl + this._currentUserUrl; }
@@ -49,6 +52,7 @@ export class AccountEndpoint extends EndpointBase {
   get sitesUrl() { return this.configurations.baseUrl + this._siteUrl; }
   get UserFilesUrl() { return this.configurations.baseUrl + this._getUserFilesUrl; }
   get typeCddmtData() { return this.configurations.baseUrl + this._getTypecddmtDetails; }
+  get deleteUserFileData() { return this.configurations.baseUrl + this._deleteUserFile; }
 
 
 
@@ -98,6 +102,15 @@ export class AccountEndpoint extends EndpointBase {
 
   getUpdateUserEndpoint<T>(userObject: any, userId?: string): Observable<T> {
     const endpointUrl = userId ? `${this.usersUrl}/${userId}` : this.currentUserUrl;
+
+    return this.http.put<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getUpdateUserEndpoint(userObject, userId));
+      }));
+  }
+
+  updateUserEndpoint<T>(userObject: any, userId?: string): Observable<T> {
+    const endpointUrl = userId ? `${this.updateUserUrl}/${userId}` : this.currentUserUrl;
 
     return this.http.put<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
       catchError(error => {
@@ -295,6 +308,14 @@ debugger
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getTypeCddmtDataEndpoint(classTypeId));
+      }));
+  }
+  deleteUserFileEndpoint<T>(fileRepositoryId: string): Observable<T> {
+    const endpointUrl = this.deleteUserFileData+'/'+fileRepositoryId;
+
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteUserFileEndpoint(fileRepositoryId));
       }));
   }
 }

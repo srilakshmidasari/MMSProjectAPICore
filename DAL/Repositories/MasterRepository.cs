@@ -58,6 +58,8 @@ namespace DAL.Repositories
                 var fileRepository = _appContext.FileRepositories.Where(x => x.RepositoryId == FileRepositoryId).FirstOrDefault();
                 if (fileRepository != null)
                 {
+                    _appContext.FileRepositories.Remove(fileRepository);
+
                     _appContext.SaveChanges();
                 }
 

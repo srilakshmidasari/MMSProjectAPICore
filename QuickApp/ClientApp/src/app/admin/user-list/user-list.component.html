@@ -3,7 +3,8 @@
 
   <div class="search-box">
     <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'users.management.Search' | translate}}">
+      <input matInput (keyup)="applyFilter($event.target.value)"
+        placeholder="{{'users.management.Search' | translate}}">
     </mat-form-field>
   </div>
 
@@ -16,40 +17,53 @@
         <mat-cell fxFlex="15%" *matCellDef="let row"> {{row.jobTitle}} </mat-cell>
       </ng-container> -->
       <ng-container matColumnDef="employeeId">
-        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.editor.EmpId' | translate}} </mat-header-cell>
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.editor.EmpId' | translate}}
+        </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.employeeId}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="userName">
-        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.management.UserName' | translate}} </mat-header-cell>
+        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.management.UserName' | translate}}
+        </mat-header-cell>
         <mat-cell fxFlex="25%" *matCellDef="let row"> {{row.userName}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name1">
-        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.editor.Name1' | translate}} </mat-header-cell>
+        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.editor.Name1' | translate}}
+        </mat-header-cell>
         <mat-cell fxFlex="25%" *matCellDef="let row"> {{row.name1}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="name2">
-        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.editor.Name2' | translate}} </mat-header-cell>
+        <mat-header-cell fxFlex="25%" *matHeaderCellDef mat-sort-header> {{'users.editor.Name2' | translate}}
+        </mat-header-cell>
         <mat-cell fxFlex="25%" *matCellDef="let row"> {{row.name2}} </mat-cell>
       </ng-container>
 
 
       <ng-container matColumnDef="fullName">
-        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.FullName' | translate}} </mat-header-cell>
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.FullName' | translate}}
+        </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.fullName}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="email">
-        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.Email' | translate}} </mat-header-cell>
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.Email' | translate}}
+        </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.email}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="phoneNumber">
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.PhoneNumber' | translate}}
+        </mat-header-cell>
+        <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.phoneNumber}} </mat-cell>
       </ng-container>
 
 
       <ng-container *ngIf="canManageUsers" matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef fxFlex="170px">
-          <button *ngIf="canAssignRoles" mat-button color="primary" matTooltip="{{'users.management.NewUser' | translate}}" (click)="editUser()">
+          <button *ngIf="canAssignRoles" mat-button color="primary"
+            matTooltip="{{'users.management.NewUser' | translate}}" (click)="editUser()">
             <mat-icon class="mat-button-icon">person_add</mat-icon>{{'users.management.NewUser' | translate}}
           </button>
         </mat-header-cell>
@@ -67,6 +81,12 @@
       <mat-row *matRowDef="let row; columns: displayedColumns;">
       </mat-row>
     </mat-table>
+    <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+      <p>No Records Found</p>
+    </div>
+    <div style="text-align: center;" *ngIf="displayNoRecords">
+      <p>No Search Results Found</p>
+    </div>
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>

@@ -31,11 +31,12 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   //displayedColumns = ['jobTitle', 'userName', 'fullName', 'email'];
-  displayedColumns = ['employeeId', 'userName', 'name1','name2','fullName', 'email'];
+  displayedColumns = ['employeeId', 'userName', 'name1', 'name2', 'fullName', 'email', 'phoneNumber'];
   dataSource: MatTableDataSource<User>;
   sourceUser: User;
   loadingIndicator: boolean;
   allRoles: Role[] = [];
+  displayNoRecords: boolean;
 
   constructor(
     private alertService: AlertService,
@@ -62,8 +63,14 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
+
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
+    }
   }
 
   private refresh() {

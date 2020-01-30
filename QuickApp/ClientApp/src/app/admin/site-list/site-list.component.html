@@ -32,11 +32,14 @@
                 <mat-header-cell *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()" >
                         <mat-icon class="mat-button-icon">add</mat-icon>Add Site
-                    </button>
+                    </button>                   
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row">
                     <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)">
                         <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                    <button mat-button color="primary" matTooltip="Site Location" (click)="onSiteLocaction(row)" >
+                        <mat-icon class="mat-button-icon">add_location</mat-icon>
                     </button>
                     <!-- <button mat-icon-button matTooltip="Delete"(click)="onDeleteSite(row)" >
                         <mat-icon color="warn">cancel</mat-icon>

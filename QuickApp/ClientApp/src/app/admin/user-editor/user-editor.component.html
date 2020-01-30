@@ -9,7 +9,7 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.EmpId' | translate}}</mat-label>
-      <input matInput formControlName="empId" [readonly]="!isNewUser" maxlength="15" required />
+      <input matInput formControlName="empId" [readonly]="!isNewUser"  (keypress)="alphaNumaricsOnly($event)" maxlength="15" required />
       <mat-error *ngIf="!userProfileForm.controls['empId'].valid">
         {{'users.editor.EmployeeIdRequired' | translate}}
       </mat-error>
@@ -143,7 +143,7 @@
 
   <div class="clearfix space20"></div>
   <div fxLayout="row" *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
-    <div class="form-group " fxFlex *ngFor="let doc of userDoc">
+    <div class="form-group " fxFlex *ngFor="let doc of documentList">
       <label for="file">Upload User {{doc.description}}</label>
       <input #fileInput type="file" class="form-control" id="file" formControlName="file"
         (change)="uploadFile(doc, $event)">
@@ -152,13 +152,13 @@
 
   <div fxLayout="row" *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
     <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileInfo">
-      <div>Proof of {{file.fileTypeName}}</div>
+      <div>  User {{file.fileTypeName}}</div>
       <div class="clearfix space20"></div>
       <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
         <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
       </a>
       <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
-        <img src="assets\images\arkaan-logo-blue.png"> &nbsp;&nbsp;&nbsp;</a>
+        <img src="{{file.fileLocation}}"> &nbsp;&nbsp;&nbsp;</a>
 
       <a class="close2 color-red" *ngIf="file.documentType==1" (click)="onDeleteFile(file)">
         <mat-icon>cancel</mat-icon>
@@ -168,7 +168,7 @@
       </a>
     </div>
     <div class="form-group col-md-4" *ngFor="let doc of editUserFilesList">
-      <label for="file">Upload Proof of {{doc.description}} </label>
+      <label for="file">Upload User {{doc.description}} </label>
       <input #fileInput type="file" class="form-control" id="file" formControlName="file"
         (change)="uploadFile(doc, $event)">
     </div>
@@ -179,15 +179,11 @@
     <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-checkbox *ngIf="isEditMode" formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
     </div>
-
     <div>
       <button mat-button *ngIf="user.isLockedOut" (click)="unlockUser()" [disabled]="isSaving" color="accent">
         <mat-icon class="mat-button-icon">lock_open</mat-icon>{{'users.editor.Unblock' | translate}}
       </button>
     </div>
-
   </div>
-
-  <!-- https://github.com/angular/material2/issues/8798 -->
   <div>&nbsp;</div>
 </form>

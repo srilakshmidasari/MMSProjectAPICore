@@ -18,11 +18,14 @@ import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.com
 import { SiteListComponent } from './site-list/site-list.component';
 import { SiteEditorComponent } from './site-editor/site-editor.component';
 import { SiteDialogComponent } from './site-dialog/site-dialog.component';
+import { SiteLocationComponent } from './site-location/site-location.component';
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 @NgModule({
   imports: [
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    LeafletModule.forRoot()
   ],
   declarations: [
     AdminComponent,
@@ -33,12 +36,14 @@ import { SiteDialogComponent } from './site-dialog/site-dialog.component';
     EditUserDialogComponent,
     SiteListComponent,
     SiteEditorComponent,
-    SiteDialogComponent
+    SiteDialogComponent,
+    SiteLocationComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
     EditRoleDialogComponent,
-    SiteDialogComponent
+    SiteDialogComponent,
+    SiteLocationComponent
   ]
 })
 export class AdminModule {
