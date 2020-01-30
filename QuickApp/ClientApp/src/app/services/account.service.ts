@@ -217,7 +217,7 @@ export class AccountService {
     return this.accountEndpoint.updateSiteEndpoint(site);
   }
 
-  deleteSite(site: any): Observable<User> {
+  deleteSite(site: any): Observable<any> {
     return this.accountEndpoint.getDeleteSiteEndpoint<any>(site.id);
   }
 

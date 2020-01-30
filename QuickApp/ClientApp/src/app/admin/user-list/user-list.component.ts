@@ -31,7 +31,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   //displayedColumns = ['jobTitle', 'userName', 'fullName', 'email'];
-  displayedColumns = ['employeeId', 'userName', 'name1', 'name2', 'fullName', 'email', 'phoneNumber'];
+  displayedColumns = ['employeeId', 'userName', 'name1', 'name2', 'fullName', 'email', 'phoneNumber','isEnabled'];
   dataSource: MatTableDataSource<User>;
   sourceUser: User;
   loadingIndicator: boolean;
@@ -44,8 +44,6 @@ export class UserListComponent implements OnInit, AfterViewInit {
     private accountService: AccountService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog) {
-
-
     if (this.canManageUsers) {
       this.displayedColumns.push('actions');
     }
@@ -55,6 +53,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    debugger
     this.loadData();
   }
 

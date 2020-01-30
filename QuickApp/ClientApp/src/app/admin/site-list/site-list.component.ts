@@ -111,7 +111,7 @@ export class SiteListComponent implements OnInit {
   }
 
   public confirmDelete(site: any) {
-    this.snackBar.open(`Delete ${site.name}?`, 'DELETE', { duration: 5000 })
+    this.snackBar.open(`Delete ${site.name1}?`, 'DELETE', { duration: 5000 })
       .onAction().subscribe(() => {
         this.alertService.startLoadingMessage('Deleting...');
         this.loadingIndicator = true;

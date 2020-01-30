@@ -177,7 +177,7 @@
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
 
     <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
-      <mat-checkbox *ngIf="isEditMode" formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
+      <mat-checkbox  formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
     </div>
     <div>
       <button mat-button *ngIf="user.isLockedOut" (click)="unlockUser()" [disabled]="isSaving" color="accent">

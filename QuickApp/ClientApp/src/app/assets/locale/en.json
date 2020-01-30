@@ -108,7 +108,8 @@
       "FullName": "Full Name",
       "Email": "Email",
       "Roles": "Roles",
-      "PhoneNumber": "Phone Number"
+      "PhoneNumber": "Phone Number",
+      "IsEnabled":"Is Enabled"
     },
     "editor": {
       "JobTitle": "Job Title",
