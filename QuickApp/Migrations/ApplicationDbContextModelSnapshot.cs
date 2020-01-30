@@ -307,6 +307,11 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
+                    b.Property<string>("SiteManager")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
                     b.Property<string>("SiteReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")

@@ -52,6 +52,11 @@ namespace DAL.Models
         [Display(Name = "Longitude")]
         public double Longitude { get; set; }
 
+        [Required]
+        [Display(Name = "SiteManager")]
+        [StringLength(30)]
+        public string SiteManager { get; set; }
+
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
