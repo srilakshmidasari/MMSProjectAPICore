@@ -1,35 +1,50 @@
 <form #form="ngForm" [formGroup]="siteForm">
   <mat-form-field class="col-md-12">
     <mat-label>Site Reference</mat-label>
-    <input matInput formControlName="siteref" required />
+    <input matInput formControlName="siteref" required maxlength="16" />
     <mat-error *ngIf="!siteForm.controls['siteref'].valid">
       Site Reference is required
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>Name1</mat-label>
-    <input matInput formControlName="sname1" required />
+    <input matInput formControlName="sname1" required maxlength="50" />
     <mat-error *ngIf="!siteForm.controls['sname1'].valid">
       Name 1 is required
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label> Name2</mat-label>
-    <input matInput formControlName="sname2" required />
+    <input matInput formControlName="sname2" required maxlength="50" />
     <mat-error *ngIf="!siteForm.controls['sname2'].valid">
       Name 2 is required
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label> Address </mat-label>
-    <input matInput formControlName="address" required />
+    <input matInput formControlName="address" required maxlength="250" />
     <mat-error *ngIf="!siteForm.controls['address'].valid">
       Address is required
     </mat-error>
   </mat-form-field>
-  <div class="form-group col-md-12">
-    <label for="file">Upload Document</label>
-    <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
+  <div class="row">
+    <div class="form-group col-md-8">
+      <label for="file">Upload Document</label>
+      <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
+      <!-- <img [src]="site.fileLocation" style="height: 80px;"  alt="" /> -->
+    </div>
+  
+    <div class="image-upload col-md-4" *ngIf="!isNewSite">
+        <div> Site Document </div>
+      <label> 
+        <!-- <img [src]="site.fileLocation" style="height: 80px;" alt="" /> -->
+        <a href="{{site.fileLocation}}" style="height: 80px;" target="_blank" download>
+          <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+        </a>
+      </label>
+      <!-- <input id="file-input" type="file" formControlName="file" (change)="onSelectFiles($event)" /> -->
+    </div>
   </div>
-  <!-- <div class="clearfix space20"></div> -->
+
+  <div class="clearfix space20"></div>
 </form>

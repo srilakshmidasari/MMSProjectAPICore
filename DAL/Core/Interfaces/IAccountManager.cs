@@ -4,6 +4,7 @@
 // =============================
 
 using DAL.Models;
+using DAL.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -44,5 +45,6 @@ namespace DAL.Core.Interfaces
         Task<string> GenerateEmailConfirmationTokenAsync(ApplicationUser user);
         Task<(bool Succeeded, string[] Errors)> ConfirmEmailAsync(ApplicationUser user, string token);
         Task<bool> IsEmailConfirmedAsync(ApplicationUser user);
+        Task<ValueDataResponse<ApplicationUser>> DeleteUser(ApplicationUser user);
     }
 }

@@ -61,7 +61,7 @@ export class SiteEditorComponent implements OnInit {
     });
 
   }
-  
+
   get currentUser() {
     return this.authService.currentUser;
   }
@@ -70,7 +70,6 @@ export class SiteEditorComponent implements OnInit {
       this.form.onSubmit(null);
       return;
     }
-
     if (!this.siteForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -90,10 +89,22 @@ export class SiteEditorComponent implements OnInit {
           this.alertService.stopLoadingMessage();
           this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
         });
-
+    }else{
+      this.accountService.updateSite(editedSite).subscribe(
+        (result: any) => {
+          if (result.isSuccess) {
+            this.saveCompleted(result)
+          } else {
+            this.saveFailed(result);
+          }
+        }, error => {
+          this.isSaving = false;
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
+        });
     }
-
   }
+
   private getEditedSite(): any {
     const formModel = this.siteForm.value;
     return {
@@ -102,7 +113,7 @@ export class SiteEditorComponent implements OnInit {
       "name1": formModel.sname1,
       "name2": formModel.sname2,
       "address": formModel.address,
-      "fileName":  this.base64string,
+      "fileName": this.base64string,
       "fileLocation": null,
       "fileExtention": this.fileExtension,
       "createdBy": this.currentUser.id,
@@ -130,18 +141,18 @@ export class SiteEditorComponent implements OnInit {
 
   // To convert filr to base64 string
   onSelectFiles(event) {
-     var file = event.target.files[0];
-     this.fileExtension = '.' + file.name.split('.').pop();
-     if (file) {
-         let reader = new FileReader();
-         reader.onload = (e: any) => {
-           var image = e.target.result
+    var file = event.target.files[0];
+    this.fileExtension = '.' + file.name.split('.').pop();
+    if (file) {
+      let reader = new FileReader();
+      reader.onload = (e: any) => {
+        var image = e.target.result
+        this.site.fileLocation = image;
+        var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
+        this.base64string = e.target.result.substring(base64Index);
+      }
+      reader.readAsDataURL(file);
+    }
 
-           var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
-           this.base64string = e.target.result.substring(base64Index);
-         }
-         reader.readAsDataURL(file);
-       }
-     
-   }
+  }
 }

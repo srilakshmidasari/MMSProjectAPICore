@@ -28,7 +28,7 @@ namespace DAL.Repositories
             try
             {
                 var result = _appContext.SiteInfos.ToList();
-                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
 
                 result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
                
@@ -137,6 +137,7 @@ namespace DAL.Repositories
                     result.Name1 = sites.Name1;
                     result.Name2 = sites.Name2;
                     result.Address = sites.Address;
+                    result.FileExtention = sites.FileExtention;
                     result.Latitude = sites.Latitude;
                     result.Longitude = sites.Longitude;
                     result.CreatedBy = sites.CreatedBy;
@@ -151,6 +152,29 @@ namespace DAL.Repositories
                             result.Latitude = (float)(LatLong.Latitude);
                             result.Longitude = (float)LatLong.Longitude;
                         }
+                    }
+
+                    if (sites.FileName != null)
+                    {
+                        string ModuleName = "Site";
+                        var now = DateTime.Now;
+                        var yearName = now.ToString("yyyy");
+                        var monthName = now.Month.ToString("d2");
+                        var dayName = now.ToString("dd");
+
+                        FileUploadService repo = new FileUploadService();
+
+
+                        string FolderLocation = _config.Value.FileRepositoryFolder;
+                        string ServerRootPath = _config.Value.ServerRootPath;
+
+                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                        byte[] FileBytes = Convert.FromBase64String(sites.FileName);
+
+                        result.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
+
+                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
                     }
 
                     _appContext.SaveChanges();
@@ -204,6 +228,47 @@ namespace DAL.Repositories
             }
 
         }
+
+
+        public ValueDataResponse<SiteInfo> DeleteSiteInfo(int SiteId)
+        {
+            ValueDataResponse<SiteInfo> response = new ValueDataResponse<SiteInfo>();
+            try
+            {
+                var SiteInfoData = _appContext.SiteInfos.Where(x => x.Id == SiteId && x.IsActive == true).FirstOrDefault();
+                if (SiteInfoData != null)
+                {
+                    SiteInfoData.IsActive = false;
+                    //entityInfo.UpdatedBy = entity.UpdatedBy;
+                    SiteInfoData.UpdatedDate = DateTime.Now;
+                    _appContext.SaveChanges();
+                }
+
+                if (SiteInfoData != null)
+                {
+                    response.Result = SiteInfoData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "SiteInfo Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No SiteInfo Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
 
     }
 }

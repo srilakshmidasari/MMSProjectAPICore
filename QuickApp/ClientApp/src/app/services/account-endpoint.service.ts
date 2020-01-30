@@ -295,6 +295,15 @@ debugger
       }));
   }
 
+  updateSiteEndpoint<T>(siteObject: any): Observable<T> {
+    const endpointUrl = this.sitesUrl;
+    return this.http.put<T>(endpointUrl, JSON.stringify(siteObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getNewRoleEndpoint(siteObject));
+      }));
+  }
+
+
   getUserFileEndpoint<T>(userId: any): Observable<T> {
     const endpointUrl = this.UserFilesUrl+'/'+userId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
