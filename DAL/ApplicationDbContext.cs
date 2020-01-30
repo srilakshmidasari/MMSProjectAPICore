@@ -42,7 +42,7 @@ namespace DAL
 
 
             builder.Entity<SiteInfo>().ToTable("SiteInfo");
-
+            builder.Entity<SiteInfo>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<FileRepository>().ToTable("FileRepository");
             builder.Entity<ClassType>().ToTable("ClassType");
             builder.Entity<ClassType>().Property(p => p.IsActive).HasDefaultValue(true);

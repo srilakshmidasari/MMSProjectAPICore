@@ -52,6 +52,9 @@ namespace DAL.Models
         [Display(Name = "Longitude")]
         public double Longitude { get; set; }
 
+        [Display(Name = "Is Active")]
+        public bool IsActive { get; set; }
+
         [Required]
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
