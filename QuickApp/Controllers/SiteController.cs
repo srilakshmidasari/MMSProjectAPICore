@@ -38,5 +38,12 @@ namespace MMS.Controllers
             SiteInfo siteInfo = _mapper.Map<SiteInfo>(sites);
             return _unitOfWork.Sites.UpdateSite(siteInfo);
         }
+
+        [HttpDelete]
+        public ValueDataResponse<SiteInfo> Delete(int SiteId)
+        {
+            //Entity entityInfo = _mapper.Map<SiteInfo>(sites);
+            return _unitOfWork.Sites.DeleteSiteInfo(SiteId);
+        }
     }
 }
