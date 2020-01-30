@@ -26,7 +26,9 @@ export class SiteEditorComponent implements OnInit {
     private accountService: AccountService) { }
 
   ngOnInit() {
-    //this.buildForm();
+    if(this.isNewSite){
+      this.buildForm();
+    }
   }
   private buildForm() {
     this.siteForm = this.fb.group({
@@ -34,7 +36,8 @@ export class SiteEditorComponent implements OnInit {
       sname1: ['', Validators.required],
       sname2: ['', Validators.required],
       address: ['', Validators.required],
-      siteManager:['',Validators.required],
+      siteManager: ['', Validators.required],
+      isActive: [true],
       file: ['']
     })
   }
@@ -44,6 +47,8 @@ export class SiteEditorComponent implements OnInit {
     } else {
       this.isNewSite = true;
       this.site = {};
+      this.site.isActive = true;
+    
 
     }
     this.resetForm();
@@ -59,6 +64,8 @@ export class SiteEditorComponent implements OnInit {
       sname1: this.site.name1 || '',
       sname2: this.site.name2 || '',
       address: this.site.address || '',
+      siteManager: this.site.siteManager || '',
+      isActive: this.site.isActive,
     });
 
   }
@@ -90,7 +97,7 @@ export class SiteEditorComponent implements OnInit {
           this.alertService.stopLoadingMessage();
           this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
         });
-    }else{
+    } else {
       this.accountService.updateSite(editedSite).subscribe(
         (result: any) => {
           if (result.isSuccess) {
@@ -117,6 +124,8 @@ export class SiteEditorComponent implements OnInit {
       "fileName": this.base64string,
       "fileLocation": null,
       "fileExtention": this.fileExtension,
+      "isActive": formModel.isActive,
+      "siteManager": formModel.siteManager,
       "createdBy": this.currentUser.id,
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date(),

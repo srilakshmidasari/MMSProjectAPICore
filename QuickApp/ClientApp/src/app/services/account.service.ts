@@ -216,6 +216,11 @@ export class AccountService {
   updateSite(site){
     return this.accountEndpoint.updateSiteEndpoint(site);
   }
+
+  deleteSite(site: any): Observable<User> {
+    return this.accountEndpoint.getDeleteSiteEndpoint<any>(site.id);
+  }
+
   getUserFileData(userid){
     return this.accountEndpoint.getUserFileEndpoint(userid);
   }

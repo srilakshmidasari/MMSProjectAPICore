@@ -137,9 +137,10 @@ namespace DAL.Repositories
                     result.Name1 = sites.Name1;
                     result.Name2 = sites.Name2;
                     result.Address = sites.Address;
-                    result.FileExtention = sites.FileExtention;
                     result.Latitude = sites.Latitude;
                     result.Longitude = sites.Longitude;
+                    result.SiteManager = sites.SiteManager;
+                    result.IsActive = sites.IsActive;
                     result.CreatedBy = sites.CreatedBy;
                     result.CreatedDate = sites.CreatedDate;
                     result.UpdatedBy = sites.UpdatedBy;
@@ -175,6 +176,7 @@ namespace DAL.Repositories
                         result.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
 
                         result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                        result.FileExtention = sites.FileExtention;
                     }
 
                     _appContext.SaveChanges();

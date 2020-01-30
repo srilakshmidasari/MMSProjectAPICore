@@ -7,7 +7,8 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc" matSortDisableClear>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
+            matSortDisableClear>
             <ng-container matColumnDef="siteReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Site Reference</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteReference}} </mat-cell>
@@ -28,22 +29,29 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Updated Date</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="isActive">
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="Actions">
-                <mat-header-cell *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()" >
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                    <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()">
                         <mat-icon class="mat-button-icon">add</mat-icon>Add Site
-                    </button>                   
+                    </button>
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row">
+                <mat-cell class="just-cont-center" *matCellDef="let row">
                     <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-button color="primary" matTooltip="Site Location" (click)="onSiteLocaction(row)" >
+                    <button mat-button color="primary"   class="slocation"  matTooltip="Site Location" (click)="onSiteLocaction(row)">
                         <mat-icon class="mat-button-icon">add_location</mat-icon>
                     </button>
-                    <!-- <button mat-icon-button matTooltip="Delete"(click)="onDeleteSite(row)" >
-                        <mat-icon color="warn">cancel</mat-icon>
-                    </button> -->
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
                 </mat-cell>
             </ng-container>
 

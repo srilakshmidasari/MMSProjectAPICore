@@ -142,12 +142,12 @@ export class UserListComponent implements OnInit, AfterViewInit {
       .onAction().subscribe(() => {
         this.alertService.startLoadingMessage('Deleting...');
         this.loadingIndicator = true;
-
         this.accountService.deleteUser(user)
           .subscribe(results => {
             this.alertService.stopLoadingMessage();
             this.loadingIndicator = false;
-            this.dataSource.data = this.dataSource.data.filter(item => item !== user);
+            this.loadData();
+           // this.dataSource.data = this.dataSource.data.filter(item => item !== user);
           },
             error => {
               this.alertService.stopLoadingMessage();

@@ -327,4 +327,12 @@ debugger
         return this.handleError(error, () => this.deleteUserFileEndpoint(fileRepositoryId));
       }));
   }
+
+  getDeleteSiteEndpoint<T>(siteId: string): Observable<T> {
+    const endpointUrl = this.sitesUrl + '?Id=' + siteId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getDeleteSiteEndpoint(siteId));
+      }));
+  }
 }

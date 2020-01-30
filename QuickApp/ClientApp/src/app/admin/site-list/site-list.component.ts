@@ -8,6 +8,7 @@ import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { SiteLocationComponent } from '../site-location/site-location.component';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-site-list',
@@ -19,7 +20,7 @@ export class SiteListComponent implements OnInit {
   siteInfo: any = [];
   sourceSite: any;
   siteList: any[] = []
-  displayedColumns = ['siteReference', 'name1', 'name2', 'address', 'updatedDate', 'Actions'];
+  displayedColumns = ['siteReference', 'name1', 'name2', 'address', 'updatedDate', 'isActive', 'Actions'];
 
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -41,7 +42,7 @@ export class SiteListComponent implements OnInit {
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
-        console.log( this.siteList)
+        console.log(this.siteList)
         this.dataSource.data = this.siteList;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
@@ -74,14 +75,14 @@ export class SiteListComponent implements OnInit {
 
   private updateSite(response: any) {
     if (this.sourceSite) {
-        this.getSites();
-        this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-        this.sourceSite = null;
+      this.getSites();
+      this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+      this.sourceSite = null;
     } else {
-        this.getSites();
-        this.alertService.showMessage('Success',  response.endUserMessage, MessageSeverity.success)
+      this.getSites();
+      this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
     }
-}
+  }
 
   public onEditSite(site?) {
     this.sourceSite = site;
@@ -94,10 +95,10 @@ export class SiteListComponent implements OnInit {
       if (siteresponse) {
         debugger
         this.updateSite(siteresponse);
-     }
+      }
     });
   }
-  onSiteLocaction(site){
+  onSiteLocaction(site) {
     this.sourceSite = site;
     const dialogRef = this.dialog.open(SiteLocationComponent,
       {
@@ -105,8 +106,30 @@ export class SiteListComponent implements OnInit {
         data: { site }
       });
     dialogRef.afterClosed().subscribe(siteresponse => {
-      
+
     });
-  } 
+  }
+
+  public confirmDelete(site: any) {
+    this.snackBar.open(`Delete ${site.name}?`, 'DELETE', { duration: 5000 })
+      .onAction().subscribe(() => {
+        this.alertService.startLoadingMessage('Deleting...');
+        this.loadingIndicator = true;
+        this.accountService.deleteSite(site)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            if (results.isSuccess) {
+              this.getSites();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      });
+  }
 
 }

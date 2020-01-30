@@ -35,15 +35,14 @@
     </mat-error>
   </mat-form-field>
   <div class="row">
-    <div class="form-group col-md-8">
+    <div class="form-group col-md-7">
       <label for="file">Upload Document</label>
       <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
       <!-- <img [src]="site.fileLocation" style="height: 80px;"  alt="" /> -->
     </div>
-  
-    <div class="image-upload col-md-4" *ngIf="!isNewSite">
-        <div> Site Document </div>
-      <label> 
+    <div class="image-upload col-md-3" *ngIf="!isNewSite">
+      <div> Site Document </div>
+      <label>
         <!-- <img [src]="site.fileLocation" style="height: 80px;" alt="" /> -->
         <a href="{{site.fileLocation}}" style="height: 80px;" target="_blank" download>
           <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
@@ -52,6 +51,8 @@
       <!-- <input id="file-input" type="file" formControlName="file" (change)="onSelectFiles($event)" /> -->
     </div>
   </div>
-
+  <div class="col-md-12">
+    <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+  </div>
   <div class="clearfix space20"></div>
 </form>
