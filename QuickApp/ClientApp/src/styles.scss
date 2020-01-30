@@ -97,3 +97,36 @@ body {
   display: inline-block;
   overflow: auto;
 }
+
+/* mat header styles */
+
+mat-header-row {
+  -webkit-box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+  box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+  border: solid 1px #414e96;
+  border-radius: 0px;
+  background-color: #414e96;
+  border-bottom: 1px solid #e3e6f0;
+  border-top: 1px solid #e3e6f0;
+}
+
+.mat-header-cell {
+  color: #fff;
+  font-size: 1rem;
+  margin-left: 4px;
+  border-right: 1px solid #414e96;
+}
+
+.mat-paginator,
+.mat-paginator-page-size .mat-select-trigger {
+  background-color: #eaf1f7;
+  border-top: 1px solid #e3e6f0;
+  color: #414e96;
+  font-size: 0.9rem;
+}
+
+.mat-button.mat-primary,
+.mat-icon-button.mat-primary,
+.mat-stroked-button.mat-primary {
+    color: #fff;
+}

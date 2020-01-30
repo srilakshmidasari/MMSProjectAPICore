@@ -610,11 +610,42 @@ namespace MMS.Controllers
                     return BadRequest($"Resetting password failed for user \"{appUser.UserName}\". Errors: {string.Join(", ", result.Errors)}");
 
                 return NoContent();
+
             }
 
             return BadRequest(ModelState);
         }
 
+
+        //[HttpDelete("users/{id}")]
+        //[ProducesResponseType(200, Type = typeof(UserViewModel))]
+        //[ProducesResponseType(400)]
+        //[ProducesResponseType(403)]
+        //[ProducesResponseType(404)]
+        //public async Task<IActionResult> DeleteUser(string id)
+        //{
+        //    if (!(await _authorizationService.AuthorizeAsync(this.User, id, AccountManagementOperations.Delete)).Succeeded)
+        //        return new ChallengeResult();
+
+
+        //    ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
+
+        //    if (appUser == null)
+        //        return NotFound(id);
+
+        //    if (!await _accountManager.TestCanDeleteUserAsync(id))
+        //        return BadRequest("User cannot be deleted. Delete all orders associated with this user and try again");
+
+
+        //    UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
+
+        //    var result = await _accountManager.DeleteUserAsync(appUser);
+        //    if (!result.Succeeded)
+        //        throw new Exception("The following errors occurred whilst deleting user: " + string.Join(", ", result.Errors));
+
+
+        //    return Ok(userVM);
+        //}
 
         [HttpDelete("users/{id}")]
         [ProducesResponseType(200, Type = typeof(UserViewModel))]
@@ -638,10 +669,7 @@ namespace MMS.Controllers
 
             UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
 
-            var result = await _accountManager.DeleteUserAsync(appUser);
-            if (!result.Succeeded)
-                throw new Exception("The following errors occurred whilst deleting user: " + string.Join(", ", result.Errors));
-
+            var result = await _accountManager.DeleteUser(appUser);
 
             return Ok(userVM);
         }

@@ -5,6 +5,7 @@
 
 using DAL.Core.Interfaces;
 using DAL.Models;
+using DAL.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -417,6 +418,41 @@ namespace DAL.Core
         public async Task<bool> IsEmailConfirmedAsync(ApplicationUser user)
         {
             return await _userManager.IsEmailConfirmedAsync(user);
+        }
+
+        public async Task<ValueDataResponse<ApplicationUser>> DeleteUser(ApplicationUser user)
+        {
+            ValueDataResponse<ApplicationUser> response = new ValueDataResponse<ApplicationUser>();
+            try
+            {
+                var result = _context.Users.Where(x => x.Id == user.Id).FirstOrDefault();
+                if (result != null)
+                {
+                    result.IsEnabled = false;
+                    result.UpdatedDate = DateTime.UtcNow;
+                    await _context.SaveChangesAsync();
+                    response.Result = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "User Deleted Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "User Not Found";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+               
+            }
+            return response;
         }
     }
 }
