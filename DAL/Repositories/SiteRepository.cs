@@ -228,5 +228,46 @@ namespace DAL.Repositories
 
         }
 
+
+        public ValueDataResponse<SiteInfo> DeleteSiteInfo(int SiteId)
+        {
+            ValueDataResponse<SiteInfo> response = new ValueDataResponse<SiteInfo>();
+            try
+            {
+                var SiteInfoData = _appContext.SiteInfos.Where(x => x.Id == SiteId && x.IsActive == true).FirstOrDefault();
+                if (SiteInfoData != null)
+                {
+                    SiteInfoData.IsActive = false;
+                    //entityInfo.UpdatedBy = entity.UpdatedBy;
+                    SiteInfoData.UpdatedDate = DateTime.Now;
+                    _appContext.SaveChanges();
+                }
+
+                if (SiteInfoData != null)
+                {
+                    response.Result = SiteInfoData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "SiteInfo Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No SiteInfo Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
     }
 }
