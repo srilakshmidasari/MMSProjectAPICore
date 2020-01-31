@@ -152,7 +152,23 @@ namespace DAL.RequestResponseModels
 
     }
 
-
+    public class UserResViewModel : AuditableEntity
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string JobTitle { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Configuration { get; set; }
+        public string[] Roles { get; set; }
+        public bool IsEnabled { get; set; }
+        public string EmployeeId { get; set; }
+        public string Name1 { get; set; }
+        public string Name2 { get; set; }
+        public List<FileRepository> FileRepositories { get; set; }
+      
+    }
 
 
     //public class UserViewModelValidator : AbstractValidator<UserViewModel>

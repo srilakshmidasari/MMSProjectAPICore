@@ -900,6 +900,18 @@ namespace MMS.Controllers
             return Ok(result);
         }
 
+        [HttpGet]
+        [Route("users/GetUserById")]
+        [ProducesResponseType(200, Type = typeof(UserResViewModel))]
+        public async Task<UserResViewModel> GetUsersById(string userId)
+        {
+            var userInfo = await _accountManager.GetUserById(userId);
+            userInfo.FileRepositories = _appcontext.FileRepositories.Where(x => x.UserId == userId).ToList();
+            //userInfo.FileRepositories = await GetFilesByUserId(userId);
+
+            return userInfo;
+        }
+
         private async Task<UserViewModel> GetUserViewModelHelper(string userId)
         {
             var userAndRoles = await _accountManager.GetUserAndRolesAsync(userId);

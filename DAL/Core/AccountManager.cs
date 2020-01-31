@@ -3,8 +3,10 @@
 // www.ebenmonney.com/templates
 // =============================
 
+using AutoMapper;
 using DAL.Core.Interfaces;
 using DAL.Models;
+using DAL.RequestResponseModels;
 using DAL.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,18 +25,19 @@ namespace DAL.Core
         private readonly ApplicationDbContext _context;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<ApplicationRole> _roleManager;
-
+        private readonly IMapper _mapper;
 
         public AccountManager(
             ApplicationDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<ApplicationRole> roleManager,
-            IHttpContextAccessor httpAccessor)
+            IHttpContextAccessor httpAccessor, IMapper mapper)
         {
             _context = context;
             _context.CurrentUserId = httpAccessor.HttpContext?.User.FindFirst(ClaimConstants.Subject)?.Value?.Trim();
             _userManager = userManager;
             _roleManager = roleManager;
+            _mapper = mapper;
 
         }
 
@@ -453,39 +456,18 @@ namespace DAL.Core
             return response;
         }
 
+        public async Task<UserResViewModel> GetUserById(string userId)
+        {
 
-        //public async Task<ValueDataResponse<ApplicationUser>> GetAllUserById(string UserId)
-        //{
-        //    ValueDataResponse<ApplicationUser> response = new ValueDataResponse<ApplicationUser>();
-        //    try
-        //    {
-        //        var result = _context.Users.Where(x => x.Id == UserId).FirstOrDefault();
-        //        if (result != null)
-        //        {
-                    
-        //            response.Result = result;
-        //            response.IsSuccess = true;
-        //            response.AffectedRecords = 1;
-        //            response.EndUserMessage = "User Deleted Successfully";
-        //        }
-        //        else
-        //        {
-        //            response.IsSuccess = true;
-        //            response.AffectedRecords = 0;
-        //            response.EndUserMessage = "User Not Found";
-        //        }
+            var user =  _context.Users.Where(u => u.Id == userId).FirstOrDefault();
+            if (user == null)
+                return null;
+            var userVM = _mapper.Map<UserResViewModel>(user);
 
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        response.IsSuccess = false;
-        //        response.AffectedRecords = 0;
-        //        response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
-        //        response.Exception = ex;
+           
+            return (userVM);
 
-        //    }
-        //    return response;
-        //}
+        }
 
     }
 }

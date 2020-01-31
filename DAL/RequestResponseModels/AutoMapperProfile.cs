@@ -33,9 +33,13 @@ namespace DAL.RequestResponseModels
             CreateMap<ApplicationUser, UserFileViewModel>()
                 .ForMember(d => d.Roles, map => map.Ignore());
 
+
             CreateMap<UserFileViewModel, ApplicationUser>()
                 .ForMember(d => d.Roles, map => map.Ignore())
                 .ForMember(d => d.Id, map => map.Condition(src => src.Id != null));
+
+            CreateMap<ApplicationUser, UserResViewModel>();
+            
 
             CreateMap<UserEditViewModel, ApplicationUser>()
                 .ForMember(d => d.Roles, map => map.Ignore())
