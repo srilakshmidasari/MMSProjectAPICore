@@ -21,6 +21,11 @@
         <mat-cell *matCellDef="let role"> {{role.description}} </mat-cell>
       </ng-container>
 
+      <ng-container matColumnDef="parentRoleName">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> {{'roles.management.ReportnigRole' | translate}} </mat-header-cell>
+        <mat-cell *matCellDef="let role"> {{role.parentRoleName}} </mat-cell>
+      </ng-container>
+
       <ng-container matColumnDef="usersCount">
         <mat-header-cell *matHeaderCellDef mat-sort-header fxFlex="70px"> {{'roles.management.Users' | translate}} </mat-header-cell>
         <mat-cell *matCellDef="let role" fxFlex="70px"> {{role.usersCount}} </mat-cell>

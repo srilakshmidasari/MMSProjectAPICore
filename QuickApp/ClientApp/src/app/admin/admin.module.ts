@@ -20,6 +20,7 @@ import { SiteEditorComponent } from './site-editor/site-editor.component';
 import { SiteDialogComponent } from './site-dialog/site-dialog.component';
 import { SiteLocationComponent } from './site-location/site-location.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   imports: [
@@ -37,7 +38,8 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     SiteListComponent,
     SiteEditorComponent,
     SiteDialogComponent,
-    SiteLocationComponent
+    SiteLocationComponent,
+    ProfileComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

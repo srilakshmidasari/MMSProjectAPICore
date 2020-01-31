@@ -29,7 +29,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  displayedColumns = ['name', 'description', 'usersCount', 'actions'];
+  displayedColumns = ['name', 'description', 'parentRoleName','usersCount', 'actions'];
   dataSource: MatTableDataSource<Role>;
   allPermissions: Permission[] = [];
   sourceRole: Role;

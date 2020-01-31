@@ -41,11 +41,11 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="fullName">
+      <!-- <ng-container matColumnDef="fullName">
         <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.FullName' | translate}}
         </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.fullName}} </mat-cell>
-      </ng-container>
+      </ng-container> -->
 
       <ng-container matColumnDef="email">
         <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.Email' | translate}}
@@ -60,7 +60,7 @@
       </ng-container>
 
       <ng-container matColumnDef="isEnabled">
-        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.IsEnabled' | translate}}
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.IsActive' | translate}}
         </mat-header-cell>
         <mat-cell fxFlex="40%" *matCellDef="let row">
           <mat-checkbox [(ngModel)]="row.isEnabled" disabled="true"> </mat-checkbox>

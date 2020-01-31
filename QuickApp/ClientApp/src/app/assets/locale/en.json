@@ -109,7 +109,7 @@
       "Email": "Email",
       "Roles": "Roles",
       "PhoneNumber": "Phone Number",
-      "IsEnabled":"Is Enabled"
+      "IsActive":"Is Active"
     },
     "editor": {
       "JobTitle": "Job Title",
@@ -162,7 +162,8 @@
       "EditRole": "Edit Role \"{{name}}\"",
       "Name": "Name",
       "Description": "Description",
-      "Users": "Users"
+      "Users": "Users",
+      "ReportnigRole":"Reportnig Role"
     },
     "editor": {
       "Name": "Name:",
