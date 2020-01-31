@@ -12,7 +12,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from '../services/auth-guard.service';
 import { SiteListComponent } from './site-list/site-list.component';
-
+import { ProfileComponent } from './profile/profile.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -20,7 +20,8 @@ const adminRoutes: Routes = [
     children: [
       { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Users' } },
       { path: 'roles', component: RoleListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Roles' } },
-      { path: 'site', component: SiteListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Site' } }
+      { path: 'site', component: SiteListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Site' } },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { title: 'Admin | Profile' } }
     ]
   }
 ];

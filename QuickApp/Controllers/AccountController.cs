@@ -893,7 +893,7 @@ namespace MMS.Controllers
                               FileTypeName =t.Description
                           }).Where(x => x.UserId == UserId).ToList();
 
-            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl + _config.Value.FileRepositoryFolder;
+            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
 
             result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
 
@@ -927,7 +927,7 @@ namespace MMS.Controllers
         {
             string code = await _accountManager.GenerateEmailConfirmationTokenAsync(appUser);
             string callbackUrl = $"{_config.Value.EmailEndUrl}/ConfirmEmail?userId={appUser.Id}&code={code}";
-            string message = EmailTemplates.GetConfirmAccountEmail(appUser.UserName, HtmlEncoder.Default.Encode(callbackUrl));
+            string message = EmailTemplates.GetConfirmAccountEmail(appUser.UserName, appUser.Email, HtmlEncoder.Default.Encode(callbackUrl));
 
             //For background tasks such as sending emails, its good practice to use job runners such as hangfire https://www.hangfire.io
             await _emailSender.SendEmailAsync(appUser.UserName, appUser.Email, "Confirm your email", message);

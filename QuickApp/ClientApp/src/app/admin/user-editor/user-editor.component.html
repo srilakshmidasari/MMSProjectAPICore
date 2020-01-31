@@ -15,10 +15,10 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field [floatLabel]="floatLabels" fxFlex>
+    <!-- <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.FullName' | translate}}</mat-label>
       <input matInput formControlName="fullName" maxlength="50" (keypress)="alphabetsOnly($event)" />
-    </mat-form-field>
+    </mat-form-field> -->
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
@@ -100,7 +100,7 @@
     *ngIf="(isEditMode && !isNewUser && (userName.value != user.userName || confirmedEmailChanged)) || (isChangePassword && isEditingSelf)">
     <mat-form-field [floatLabel]="floatLabels" formGroupName="password" fxFlex>
       <mat-label>{{'users.editor.CurrentPassword' | translate}}</mat-label>
-      <input matInput type="password" formControlName="currentPassword" required />
+      <input matInput type="password" formControlName="currentPassword" maxlength="30" required />
       <mat-error *ngIf="currentPassword.hasError('required')">
         {{'users.editor.CurrentPasswordRequired' | translate}}
       </mat-error>
@@ -112,7 +112,7 @@
     <button mat-raised-button (click)="changePassword()" *ngIf="!(isChangePassword || isNewUser)"
       color="primary">{{'users.editor.ChangePassword' | translate}}</button>
 
-    <div *ngIf="isChangePassword || isNewUser" formGroupName="password" fxLayout="row" fxLayout.lt-md="column"
+    <div *ngIf="isChangePassword || isNewUser" formGroupName="password"  maxlength="30" fxLayout="row" fxLayout.lt-md="column"
       fxLayoutGap="1em">
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
@@ -128,7 +128,7 @@
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
         <mat-label>{{'users.editor.ConfirmPassword' | translate}}</mat-label>
-        <input matInput type="password" formControlName="confirmPassword" required />
+        <input matInput type="password" formControlName="confirmPassword" maxlength="30" required />
         <mat-error *ngIf="confirmPassword.hasError('required')">
           {{'users.editor.ConfirmationPasswordRequired' | translate}}
         </mat-error>
@@ -158,7 +158,7 @@
         <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
       </a>
       <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
-        <img src="{{file.fileLocation}}"> &nbsp;&nbsp;&nbsp;</a>
+        <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121"> &nbsp;&nbsp;&nbsp;</a>
 
       <a class="close2 color-red" *ngIf="file.documentType==1" (click)="onDeleteFile(file)">
         <mat-icon>cancel</mat-icon>

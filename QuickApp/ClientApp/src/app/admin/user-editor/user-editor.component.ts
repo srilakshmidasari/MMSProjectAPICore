@@ -191,7 +191,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         confirmPassword: ['', [Validators.required, EqualValidator('newPassword')]],
       }),
       roles: ['', Validators.required],
-      fullName: '',
+      //fullName: '',
       phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
       isEnabled: ['true'],
       file: ''
@@ -236,7 +236,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         confirmPassword: ''
       },
       roles: this.user.roles || [],
-      fullName: this.user.fullName || '',
+      //fullName: this.user.fullName || '',
       phoneNumber: this.user.phoneNumber || '',
       isEnabled: this.user.isEnabled
     });
@@ -378,7 +378,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       id: this.user.id,
       jobTitle: formModel.jobTitle,
       userName: formModel.userName,
-      fullName: formModel.fullName,
+     // fullName: formModel.fullName,
+     fullName: ''     ,
       friendlyName: formModel.friendlyName,
       email: formModel.email,
       emailConfirmed: this.user.emailConfirmed,

@@ -151,18 +151,26 @@ export class SiteEditorComponent implements OnInit {
 
   // To convert filr to base64 string
   onSelectFiles(event) {
+    this.fileExtension='';
     var file = event.target.files[0];
     this.fileExtension = '.' + file.name.split('.').pop();
     if (file) {
       let reader = new FileReader();
       reader.onload = (e: any) => {
         var image = e.target.result
-        this.site.fileLocation = image;
+        //this.site.fileLocation = image;
         var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
         this.base64string = e.target.result.substring(base64Index);
       }
       reader.readAsDataURL(file);
     }
 
+  }
+  alphaNumaricsOnly(event: any) {
+    const alphabetspattern = /^[a-z0-9]+$/i;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 }

@@ -22,7 +22,7 @@
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>Site Manager</mat-label>
-    <input matInput formControlName="siteManager" required maxlength="30" />
+    <input matInput formControlName="siteManager" (keypress)="alphaNumaricsOnly($event)"required maxlength="30" />
     <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
       Site Manager is required
     </mat-error>
@@ -41,11 +41,15 @@
       <!-- <img [src]="site.fileLocation" style="height: 80px;"  alt="" /> -->
     </div>
     <div class="image-upload col-md-3" *ngIf="!isNewSite">
-      <div> Site Document </div>
+      <div *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))"> Site Document </div>
+      <div *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')"> Site Image </div>
       <label>
         <!-- <img [src]="site.fileLocation" style="height: 80px;" alt="" /> -->
-        <a href="{{site.fileLocation}}" style="height: 80px;" target="_blank" download>
+        <a href="{{site.fileLocation}}" target="_blank" *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))" style="height: 80px;" target="_blank" download >
           <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+        </a>
+        <a href="{{site.fileLocation}}" style="height: 80px;" target="_blank" *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')" >
+            <img src="{{site.fileLocation}}" class="img-fluid" width="161" height="121"/> &nbsp;&nbsp;&nbsp;            
         </a>
       </label>
       <!-- <input id="file-input" type="file" formControlName="file" (change)="onSelectFiles($event)" /> -->

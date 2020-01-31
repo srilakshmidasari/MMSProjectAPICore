@@ -53,7 +53,7 @@ namespace DAL.Helpers
 
             return emailMessage;
         }
-        public static string GetConfirmAccountEmail(string recepientName, string callbackUrl)
+        public static string GetConfirmAccountEmail(string recepientName, string Email, string callbackUrl)
         {
              
             if (confirmAccountEmailTemplate == null)
@@ -61,6 +61,7 @@ namespace DAL.Helpers
 
             string emailMessage = confirmAccountEmailTemplate
                  .Replace("{user}", recepientName)
+                 .Replace("{email}", Email)
                  .Replace("{year}", currentYear)
                  .Replace("{url}", callbackUrl);
 
