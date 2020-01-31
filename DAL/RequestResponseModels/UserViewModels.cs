@@ -137,6 +137,21 @@ namespace DAL.RequestResponseModels
         public string Name2 { get; set; }
     }
 
+    public class UserResponseModel
+    {
+        public string Id { get; set; }
+        public string UserName { get; set; }
+        public string FullName { get; set; }
+        public string Email { get; set; }
+        public string PhoneNumber { get; set; }  
+        public bool IsEnabled { get; set; }
+        public string EmployeeId { get; set; }
+        public string Name1 { get; set; }
+        public string Name2 { get; set; }
+        public List<UpsertRepository> FileRepositories { get; set; }
+
+    }
+
 
 
 

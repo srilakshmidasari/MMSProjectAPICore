@@ -619,37 +619,6 @@ namespace MMS.Controllers
             return BadRequest(ModelState);
         }
 
-
-        //[HttpDelete("users/{id}")]
-        //[ProducesResponseType(200, Type = typeof(UserViewModel))]
-        //[ProducesResponseType(400)]
-        //[ProducesResponseType(403)]
-        //[ProducesResponseType(404)]
-        //public async Task<IActionResult> DeleteUser(string id)
-        //{
-        //    if (!(await _authorizationService.AuthorizeAsync(this.User, id, AccountManagementOperations.Delete)).Succeeded)
-        //        return new ChallengeResult();
-
-
-        //    ApplicationUser appUser = await _accountManager.GetUserByIdAsync(id);
-
-        //    if (appUser == null)
-        //        return NotFound(id);
-
-        //    if (!await _accountManager.TestCanDeleteUserAsync(id))
-        //        return BadRequest("User cannot be deleted. Delete all orders associated with this user and try again");
-
-
-        //    UserViewModel userVM = await GetUserViewModelHelper(appUser.Id);
-
-        //    var result = await _accountManager.DeleteUserAsync(appUser);
-        //    if (!result.Succeeded)
-        //        throw new Exception("The following errors occurred whilst deleting user: " + string.Join(", ", result.Errors));
-
-
-        //    return Ok(userVM);
-        //}
-
         [HttpDelete("users/{id}")]
         [ProducesResponseType(200, Type = typeof(UserViewModel))]
         [ProducesResponseType(400)]
@@ -676,6 +645,25 @@ namespace MMS.Controllers
 
             return Ok(userVM);
         }
+       
+        //[HttpGet("users/GetAllUserById")]
+        //[ProducesResponseType(200, Type = typeof(UserViewModel))]
+        //[ProducesResponseType(400)]
+        //[ProducesResponseType(403)]
+        //[ProducesResponseType(404)]
+        //public async Task<IActionResult> GetAllUserById(string UserId)
+        //{
+
+        //    // UserViewModel userVM = await GetAllUsersById(UserId);
+
+        //    ApplicationUser appUser = await _accountManager.GetAllUsersById(UserId);
+
+        //    if (appUser != null)
+        //        return Ok(appUser);
+        //    else
+        //        return NotFound(UserId);
+        //}
+
 
 
         [HttpPut("users/unblock/{id}")]
@@ -725,10 +713,6 @@ namespace MMS.Controllers
 
             return NoContent();
         }
-
-
-
-
 
         [HttpGet("roles/{id}", Name = GetRoleByIdActionName)]
         [ProducesResponseType(200, Type = typeof(RoleViewModel))]

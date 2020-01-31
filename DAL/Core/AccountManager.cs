@@ -81,8 +81,6 @@ namespace DAL.Core
 
             return (user, roles);
         }
-
-
         public async Task<List<(ApplicationUser User, string[] Roles)>> GetUsersAndRolesAsync(int page, int pageSize)
         {
             IQueryable<ApplicationUser> usersQuery = _context.Users
@@ -454,5 +452,40 @@ namespace DAL.Core
             }
             return response;
         }
+
+
+        //public async Task<ValueDataResponse<ApplicationUser>> GetAllUserById(string UserId)
+        //{
+        //    ValueDataResponse<ApplicationUser> response = new ValueDataResponse<ApplicationUser>();
+        //    try
+        //    {
+        //        var result = _context.Users.Where(x => x.Id == UserId).FirstOrDefault();
+        //        if (result != null)
+        //        {
+                    
+        //            response.Result = result;
+        //            response.IsSuccess = true;
+        //            response.AffectedRecords = 1;
+        //            response.EndUserMessage = "User Deleted Successfully";
+        //        }
+        //        else
+        //        {
+        //            response.IsSuccess = true;
+        //            response.AffectedRecords = 0;
+        //            response.EndUserMessage = "User Not Found";
+        //        }
+
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.IsSuccess = false;
+        //        response.AffectedRecords = 0;
+        //        response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+        //        response.Exception = ex;
+
+        //    }
+        //    return response;
+        //}
+
     }
 }

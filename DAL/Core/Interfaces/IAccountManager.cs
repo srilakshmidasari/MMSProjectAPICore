@@ -46,5 +46,6 @@ namespace DAL.Core.Interfaces
         Task<(bool Succeeded, string[] Errors)> ConfirmEmailAsync(ApplicationUser user, string token);
         Task<bool> IsEmailConfirmedAsync(ApplicationUser user);
         Task<ValueDataResponse<ApplicationUser>> DeleteUser(ApplicationUser user);
+        //Task<ValueDataResponse<ApplicationUser>> GetAllUsersById(string UserId);
     }
 }
