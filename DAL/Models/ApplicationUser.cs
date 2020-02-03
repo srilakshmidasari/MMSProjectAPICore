@@ -71,6 +71,7 @@ namespace DAL.Models
         public ICollection<ClassType> App_ClassType_CreatedUser { get; set; }
         public ICollection<ClassType> App_ClassType_UpdatedUser { get; set; }
 
-
+        public ICollection<Project> App_Project_CreatedUser { get; set; }
+        public ICollection<Project> App_Project_UpdatedUser { get; set; }
     }
 }

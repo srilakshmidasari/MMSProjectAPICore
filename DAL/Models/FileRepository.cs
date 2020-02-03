@@ -13,10 +13,13 @@ namespace DAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RepositoryId { get; set; }
 
-        [Required]
+       
         [Display(Name = "User Id")]
         public string UserId { get; set; }
-       
+
+        [Display(Name = "Project Id")]
+        public int? ProjectId { get; set; }
+
         [Display(Name = "File Name")]
         [StringLength(50)]
         public string FileName { get; set; }
@@ -58,5 +61,8 @@ namespace DAL.Models
         [JsonIgnore]
         public TypeCdDmt File_TypeCdDmt { get; set; }
 
-    }
+        [JsonIgnore]
+        public Project Project_Id { get; set; }
+
+      }
 }

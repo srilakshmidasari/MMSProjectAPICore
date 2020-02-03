@@ -232,6 +232,9 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -240,7 +243,6 @@ namespace MMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RepositoryId");
@@ -249,9 +251,71 @@ namespace MMS.Migrations
 
                     b.HasIndex("DocumentType");
 
+                    b.HasIndex("ProjectId");
+
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("FileRepository");
+                });
+
+            modelBuilder.Entity("DAL.Models.Project", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Name1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("ProjectDetails")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("ProjectReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("SiteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("SiteId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("Project");
                 });
 
             modelBuilder.Entity("DAL.Models.SiteInfo", b =>
@@ -523,10 +587,36 @@ namespace MMS.Migrations
                         .HasForeignKey("DocumentType")
                         .HasConstraintName("FK_FileRepository_DocumentTypeId");
 
+                    b.HasOne("DAL.Models.Project", "Project_Id")
+                        .WithMany("App_FileRepository_ProjectId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_App_FileRepository_ProjectId");
+
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_Repository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_FileRepository_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.Project", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_Project_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_Project_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.SiteInfo", "SiteInfo_Id")
+                        .WithMany("App_Project_SiteId")
+                        .HasForeignKey("SiteId")
+                        .HasConstraintName("FK_App_Project_SiteId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_Project_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_Project_UpdatedUser")
                         .IsRequired();
                 });
 

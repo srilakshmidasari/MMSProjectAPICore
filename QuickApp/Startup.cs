@@ -131,7 +131,8 @@ namespace MMS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
-               // var endURL = "http://localhost:44350/connect/token";
+                // var endURL = "http://localhost:44350/connect/token";
+               // var endURL = "http://183.82.111.111/MMSAPI/connect/token";
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,
@@ -198,11 +199,11 @@ namespace MMS
                 app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
             {
-                app.UseSpaStaticFiles();
+                //app.UseSpaStaticFiles();
             }
 
             app.UseRouting();
@@ -218,7 +219,8 @@ namespace MMS
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "Swagger UI - MMS";
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{IdentityServerConfig.ApiFriendlyName} V1");
+                // c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{IdentityServerConfig.ApiFriendlyName} V1");
+                c.SwaggerEndpoint(Configuration["SwaggerUrl"].ToString() + "/swagger/v1/swagger.json", $"{IdentityServerConfig.ApiFriendlyName} V1");
                 c.OAuthClientId(IdentityServerConfig.SwaggerClientID);
                 c.OAuthClientSecret("no_password");//Leaving it blank doesn't work
                 c.DefaultModelsExpandDepth(-1);

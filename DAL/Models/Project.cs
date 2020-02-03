@@ -7,16 +7,20 @@ using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-   public class SiteInfo
+    public class Project
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "SiteReference")]
+        [Display(Name = "Site Id")]
+        public int SiteId { get; set; }
+
+        [Required]
+        [Display(Name = "Project Reference")]
         [StringLength(50)]
-        public string SiteReference { get; set; }
+        public string ProjectReference { get; set; }
 
         [Required]
         [Display(Name = "Name1")]
@@ -28,34 +32,10 @@ namespace DAL.Models
         [StringLength(100)]
         public string Name2 { get; set; }
 
-        [Display(Name = "File Name")]
-        [StringLength(50)]
-        public string FileName { get; set; }
-
-        [Display(Name = "File Location")]
-        [StringLength(250)]
-        public string FileLocation { get; set; }
-
         [Required]
-        [Display(Name = "File Extention")]
-        [StringLength(10)]
-        public string FileExtention { get; set; }
-
-        [Required]
-        [Display(Name = "Address")]
+        [Display(Name = "ProjectDetails")]
         [StringLength(500)]
-        public string Address { get; set; }
-
-        [Display(Name = "Latitude")]
-        public double Latitude { get; set; }
-
-        [Display(Name = "Longitude")]
-        public double Longitude { get; set; }
-
-        [Required]
-        [Display(Name = "SiteManager")]
-        [StringLength(30)]
-        public string SiteManager { get; set; }
+        public string ProjectDetails { get; set; }
 
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
@@ -81,7 +61,9 @@ namespace DAL.Models
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
 
-        public ICollection<Project> App_Project_SiteId { get; set; }
+        [JsonIgnore]
+        public SiteInfo SiteInfo_Id { get; set; }
 
+        public ICollection<FileRepository> App_FileRepository_ProjectId { get; set; }
     }
 }
