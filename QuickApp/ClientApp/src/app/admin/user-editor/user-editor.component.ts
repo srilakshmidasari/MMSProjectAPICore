@@ -47,6 +47,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   userFileData: any[] = [];
   editUserDocs: any[] = [];
   isEditMode: boolean;
+  isAllow: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
   editUserFilesList: any[] = [];
@@ -272,14 +273,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
+          this.isAllow = false;
         } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
             this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
+            this.isAllow = false;
           } else {
-
+            this.isAllow = true;
           }
         }
       }
@@ -295,29 +298,41 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocsExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
+          this.isAllow = false;
         } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
             this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
+            this.isAllow = false;
           } else {
-
+            this.isAllow = true;
           }
         }
       }
       this.isDocFile = true;
     }
     let reader = new FileReader();
-    reader.onload = (e: any) => { 
-      this.userFileInfo.push({
-        "fileLocation":e.target.result,
-        "fileTypeName":doc.typeCdDmtId==1?'Image':'Document'
-      })
-
-      this.editUserFilesList.forEach((item1) => {
-        if (item1.typeCdDmtId == doc.typeCdDmtId) this.editUserFilesList.splice(item1, 1);
-      });
+    reader.onload = (e: any) => {
+      if (this.isAllow) {
+        this.userFileInfo.push({
+          "fileLocation": e.target.result,
+          "fileTypeName": doc.typeCdDmtId == 1 ? 'Image' : 'Document',
+          "documentType": doc.typeCdDmtId
+        })
+      
+      if (!this.isNewUser) {
+        this.editUserFilesList.forEach((item1) => {
+          if (item1.typeCdDmtId == doc.typeCdDmtId) this.editUserFilesList.splice(item1, 1);
+        });
+      }
+      else if (this.isNewUser) {
+        this.documentList.forEach((item1) => {
+          if (item1.typeCdDmtId == doc.typeCdDmtId) this.documentList.splice(item1, 1);
+        });
+      }
+   
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
       if (this.isDocFile || this.isImageFile) {
@@ -340,6 +355,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
         })
     }
+  }
     reader.readAsDataURL(file);
   }
 
@@ -590,13 +606,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     //       });
 
     // });
-    
-    const dialogRef=this.dialog.open(DeleteFileComponent,{
+
+    const dialogRef = this.dialog.open(DeleteFileComponent, {
       panelClass: 'mat-dialog-sm',
-      data:file
+      data: file
     });
-    dialogRef.afterClosed().subscribe(res=>{
-this.getCurrentUserFiles();
+    dialogRef.afterClosed().subscribe(res => {
+      this.getCurrentUserFiles();
     })
 
   }
