@@ -140,4 +140,6 @@ mat-header-row {
 .page-content {
   padding: 0 2em;
 }
-
+.mat-card-content, .mat-card-header .mat-card-title, .mat-expansion-panel-content {
+  font-size: 16px;
+}

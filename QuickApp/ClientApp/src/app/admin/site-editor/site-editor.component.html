@@ -1,48 +1,48 @@
 <form #form="ngForm" [formGroup]="siteForm">
   <mat-form-field class="col-md-12">
-    <mat-label>Site Reference</mat-label>
+    <mat-label>{{'site.management.siteRef' | translate}}</mat-label>
     <input matInput formControlName="siteref" required maxlength="16" />
     <mat-error *ngIf="!siteForm.controls['siteref'].valid">
-      Site Reference is required
+      {{'site.management.SiteReferenceisrequired' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label>Name1</mat-label>
+    <mat-label>{{'site.management.Name1' | translate}}</mat-label>
     <input matInput formControlName="sname1" required maxlength="50" />
     <mat-error *ngIf="!siteForm.controls['sname1'].valid">
-      Name 1 is required
+      {{'site.management.Name1isrequired' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label> Name2</mat-label>
+    <mat-label> {{'site.management.Name2' | translate}}</mat-label>
     <input matInput formControlName="sname2" required maxlength="50" />
     <mat-error *ngIf="!siteForm.controls['sname2'].valid">
-      Name 2 is required
+      {{'site.management.Name2isrequired' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label>Site Manager</mat-label>
+    <mat-label>{{'site.management.SiteManager' | translate}}</mat-label>
     <input matInput formControlName="siteManager" (keypress)="alphaNumaricsOnly($event)"required maxlength="30" />
     <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
-      Site Manager is required
+      {{'site.management.SiteManagerRequired' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label> Address </mat-label>
+    <mat-label>{{'site.management.Address' | translate}} </mat-label>
     <input matInput formControlName="address" required maxlength="250" />
     <mat-error *ngIf="!siteForm.controls['address'].valid">
-      Address is required
+      {{'site.management.SiteAddressRequired' | translate}}
     </mat-error>
   </mat-form-field>
   <div class="row">
     <div class="form-group col-md-7">
-      <label for="file">Upload Document</label>
+      <label for="file">{{'site.management.Upload Document'|translate}}</label>
       <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
       <!-- <img [src]="site.fileLocation" style="height: 80px;"  alt="" /> -->
     </div>
     <div class="image-upload col-md-3" *ngIf="!isNewSite">
-      <div *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))"> Site Document </div>
-      <div *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')"> Site Image </div>
+      <div *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))"> {{'site.management.Site Document'|translate}}  </div>
+      <div *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')"> {{'site.management.Site Image'|translate}} </div>
       <label>
         <!-- <img [src]="site.fileLocation" style="height: 80px;" alt="" /> -->
         <a href="{{site.fileLocation}}" target="_blank" *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))" style="height: 80px;" target="_blank" download >
@@ -56,7 +56,7 @@
     </div>
   </div>
   <div class="col-md-12">
-    <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+    <mat-checkbox formControlName="isActive">{{'site.management.IsActive' | translate}}</mat-checkbox>
   </div>
   <div class="clearfix space20"></div>
 </form>

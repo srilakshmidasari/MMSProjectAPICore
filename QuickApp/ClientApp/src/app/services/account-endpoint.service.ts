@@ -34,6 +34,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId';  
   private readonly _getTypecddmtDetails: string = '/api/Masters/GetTypecddmtDetails';
   private readonly _deleteUserFile: string = '/api/Masters/DeleteFileRepository';
+  private readonly _getUserById: string = '/api/Account/users/GetUserById';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -53,6 +54,7 @@ export class AccountEndpoint extends EndpointBase {
   get UserFilesUrl() { return this.configurations.baseUrl + this._getUserFilesUrl; }
   get typeCddmtData() { return this.configurations.baseUrl + this._getTypecddmtDetails; }
   get deleteUserFileData() { return this.configurations.baseUrl + this._deleteUserFile; }
+  get userDataById() { return this.configurations.baseUrl + this._getUserById; }
 
 
 
@@ -212,7 +214,14 @@ export class AccountEndpoint extends EndpointBase {
 
 
 
+  getRoleData<T>(): Observable<T> {
+    const endpointUrl = this.rolesUrl;
 
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getRoleData());
+      }));
+  }
 
   getRoleEndpoint<T>(roleId: string): Observable<T> {
     const endpointUrl = `${this.rolesUrl}/${roleId}`;
@@ -333,6 +342,15 @@ debugger
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getDeleteSiteEndpoint(siteId));
+      }));
+  }
+
+  getUserDataById<T>(userId:string): Observable<T> {
+    const endpointUrl = this.userDataById + '?userId=' + userId;
+
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getUserDataById(userId));
       }));
   }
 }

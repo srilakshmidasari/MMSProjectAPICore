@@ -11,13 +11,14 @@ export class SiteDialogComponent implements OnInit {
   isSite: string = '';
   @ViewChild(SiteEditorComponent, { static: true })
   siteEditor: SiteEditorComponent;
+  textDir: string;
 
   constructor(public dialogRef: MatDialogRef<SiteDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: { site }) {
-
+    this.textDir = localStorage.getItem('textdir')
   }
 
   ngOnInit() {
-    this.isSite = this.data.site == null ? 'New Site' : 'Edit Site';
+    this.isSite = this.data.site == null ? 'Add Site' : 'Edit Site';
   }
 
   cancel() {

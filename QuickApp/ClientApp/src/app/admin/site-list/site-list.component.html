@@ -10,27 +10,27 @@
         <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
             matSortDisableClear>
             <ng-container matColumnDef="siteReference">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Site Reference</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.siteRef' | translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteReference}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.Name1' | translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.Name2' | translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="address">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Address</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.Address' | translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="updatedDate">
-                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>Updated Date</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>{{'site.management.UpdatedDate' | translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="isActive">
-                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'site.management.IsActive' | translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>
@@ -39,7 +39,7 @@
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>Add Site
+                        <mat-icon class="mat-button-icon">add</mat-icon>{{'site.management.AddSite' | translate}} 
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
