@@ -26,7 +26,8 @@
     "About": "حول منجز التطبيق",
     "Settings": "إعدادات",
     "Users": "إدارةالمستخدم",
-    "Roles": "إدارة الدور"
+    "Roles": "إدارة الدور",
+    "Site":"إدارة الموقع"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -192,6 +193,28 @@
       "Description": "وصف",
       "Important": "وضع علامة لإظهار الأهمية",
       "AddTask": "إضافة مهمة"
+    }
+  },
+
+  "site": {
+    "management": {
+      "Search": "البحث عن الموقع",
+      "siteRef": "مرجع الموقع",
+      "Name1": "اسم",
+      "Name2": "اسم",
+      "Address": "لقب",
+      "UpdatedDate": "تاريخ التحديث",
+      "IsActive": "نشط",
+      "AddSite": "نشط",
+      "SiteManager": "مدير الموقع",
+      "SiteReferenceisrequired": "مرجع الموقع مطلوب",
+      "Name1isrequired": "الاسم 1 مطلوب",
+      "Name2isrequired": "الاسم 2 مطلوب",
+      "SiteManagerRequired": "مدير الموقع مطلوب",
+      "SiteAddressRequired": "العنوان مطلوب",
+      "Upload Document": "تحميل المستند",
+      "Site Document": "وثيقة الموقع",
+      "Site Image": "صورة الموقع"
     }
   }
 }

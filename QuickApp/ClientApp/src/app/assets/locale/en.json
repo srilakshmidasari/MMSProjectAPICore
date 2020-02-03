@@ -1,5 +1,5 @@
 {
-  "appTitle":"Maintenance Management System",
+  "appTitle": "Maintenance Management System",
   "app": {
     "Welcome": "Welcome",
     "Notifications": "Notifications",
@@ -23,9 +23,9 @@
     "Profile": "Profile",
     "Settings": "Settings",
     "Theme": "Select a theme",
-    "User":"Users",
-    "Role":"Roles",
-    "Site":"Site"
+    "User": "Users",
+    "Role": "Roles",
+    "Site": "Site"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -37,7 +37,7 @@
     "Settings": "Settings",
     "Users": "User Management",
     "Roles": "Role Management",
-    "Site":"Site Management"
+    "Site": "Site Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -109,7 +109,7 @@
       "Email": "Email",
       "Roles": "Roles",
       "PhoneNumber": "Phone Number",
-      "IsActive":"Is Active"
+      "IsActive": "Is Active"
     },
     "editor": {
       "JobTitle": "Job Title",
@@ -141,14 +141,14 @@
       "Cancel": "Cancel",
       "Save": "Save",
       "Saving": "Saving...",
-      "EmpId":"Employee Id",
-      "EmployeeIdRequired":" Employee Id  is required (maximum of 15 characters) ",
+      "EmpId": "Employee Id",
+      "EmployeeIdRequired": " Employee Id  is required (maximum of 15 characters) ",
       "Name1": "Name 1",
-      "Name2":"Name 2",
-      "Name1Required":"Name 1 is required",
-      "Name2Required":"Name 2 is required",
-      "PhoneNumberRequired":"Phone Number is required",
-      "PhoneNumberMinLength":"Enter 10 digits for Phone Number"
+      "Name2": "Name 2",
+      "Name1Required": "Name 1 is required",
+      "Name2Required": "Name 2 is required",
+      "PhoneNumberRequired": "Phone Number is required",
+      "PhoneNumberMinLength": "Enter 10 digits for Phone Number"
     }
   },
   "roles": {
@@ -163,7 +163,7 @@
       "Name": "Name",
       "Description": "Description",
       "Users": "Users",
-      "ReportnigRole":"Reportnig Role"
+      "ReportnigRole": "Reportnig Role"
     },
     "editor": {
       "Name": "Name:",
@@ -210,11 +210,25 @@
     "Reset": "Reset",
     "Reload": "Reload"
   },
-  "site":{
-    "management":{
+  "site": {
+    "management": {
       "Search": "Search for Site...",
-      "siteRef":"siteRef"
+      "siteRef": "Site Reference",
+      "Name1": "Name 1",
+      "Name2": "Name 2",
+      "Address": "Address",
+      "UpdatedDate": "Updated Date",
+      "IsActive": "Is Active",
+      "AddSite": "Add Site",
+      "SiteManager": "Site Manager",
+      "Upload Document": "Upload Document",
+      "Site Document": "Site Document",
+      "Site Image": "Site Image",
+      "SiteReferenceisrequired": " Site Reference is required Site",
+      "Name1isrequired": "Name 1 is required",
+      "Name2isrequired": "Name 2 is required",
+      "SiteManagerRequired": "Site Manager is  Required",
+      "SiteAddressRequired": " Address is Required"
     }
-
   }
 }

@@ -231,4 +231,12 @@ export class AccountService {
     return this.accountEndpoint.deleteUserFileEndpoint(repositotyId);
   }
 
+  getRolesData(){
+    return this.accountEndpoint.getRoleData()
+  }
+
+  gettUserDataBYId(userId){
+    return this.accountEndpoint.getUserDataById(userId)
+  }
+
 }
