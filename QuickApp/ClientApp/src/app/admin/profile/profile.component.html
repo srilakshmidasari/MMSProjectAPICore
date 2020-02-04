@@ -1,3 +1,4 @@
+<app-page-header title="Profile" icon="person"></app-page-header>
 <div class="page-content">
     <mat-card>
         <mat-card-header>
@@ -18,7 +19,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.Name1' | translate}}</mat-label>
-                        <input matInput formControlName="name1" maxlength="50" required />
+                        <input matInput formControlName="name1" maxlength="50" required (keypress)="alphabetsOnly($event)" />
                         <mat-error *ngIf="!profileForm.controls['name1'].valid">
                             {{'users.editor.Name1Required' | translate}}
                         </mat-error>

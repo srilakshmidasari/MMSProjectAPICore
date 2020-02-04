@@ -38,7 +38,8 @@
     "Settings": "Settings",
     "Users": "User Management",
     "Roles": "Role Management",
-    "Site": "Site Management"
+    "Site": "Site Management",
+    "Profile": "Profile"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
