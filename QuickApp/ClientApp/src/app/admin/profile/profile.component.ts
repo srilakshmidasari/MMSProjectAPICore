@@ -21,11 +21,10 @@ export class ProfileComponent implements OnInit {
     private authService: AuthService, ) { }
 
   ngOnInit() {
-    this.buildForm();
+    debugger;
+    this.buildForm();    
     this.UserData();
-  
-
-
+    this.resetForm();
   }
 
   // Form Bulding
@@ -64,23 +63,34 @@ export class ProfileComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+// Current  User Details
   UserData() {
     this.accountService.gettUserDataBYId(this.currentUser.id).subscribe((res: any) => {
       this.currentUserData = res;
     })
   }
-  // private resetForm(){
-  //   this.profileForm.reset({
-  //     empId:this.currentUserData,
-  //empId:this.currentUserData,
-  //name1:this.currentUserData,
-  //name2:this.currentUserData,
-  //userName:this.currentUserData,
-  //email:this.currentUserData,
-  //phoneNumber:this.currentUserData,
-  //roles:this.currentUserData,
 
-  //   })
-  // }
+   //  Accepting Only Alphabets
+   alphabetsOnly(event: any) {
+    const alphabetspattern = /^[a-zA-Z ]*$/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  private resetForm(){
+    this.profileForm.reset({    
+  empId:this.currentUserData.employeeId ||'',
+  name1:this.currentUserData.name1 || '',
+  name2:this.currentUserData.name2 || '',
+  userName:this.currentUserData.userName || '',
+  email:this.currentUserData.email || '',
+  phoneNumber:this.currentUserData.phoneNumber || '',
+ // roles:this.currentUserData,
+ //isEnabled:this.currentUserData.isEnabled,
+
+    })
+  }
 
 }
