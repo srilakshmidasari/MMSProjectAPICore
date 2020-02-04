@@ -209,6 +209,8 @@ export class AccountService {
   getSiteData(){
     return this.accountEndpoint.getSiteEndpoint();
   }
+
+
   AddSite(site){
     return this.accountEndpoint.getNewSiteEndpoint(site);
   }
@@ -237,6 +239,12 @@ export class AccountService {
 
   gettUserDataBYId(userId){
     return this.accountEndpoint.getUserDataById(userId)
+  }
+
+  // Project
+
+  getProject(){
+    return this.accountEndpoint.getProjectEndpoint();
   }
 
 }

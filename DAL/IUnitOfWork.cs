@@ -18,6 +18,8 @@ namespace DAL
 
         IMasterRepository Masters { get; }
 
+        IProjectRepository Projects { get; }
+
         int SaveChanges();
     }
 }

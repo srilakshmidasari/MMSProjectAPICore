@@ -26,7 +26,8 @@
     "Theme": "Select a theme",
     "User": "Users",
     "Role": "Roles",
-    "Site": "Site"
+    "Site": "Site",
+    "Project" :"Project"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -39,6 +40,7 @@
     "Users": "User Management",
     "Roles": "Role Management",
     "Site": "Site Management",
+    "Project": "Project Management",
     "Profile": "Profile"
   },
   "home": {
@@ -231,6 +233,22 @@
       "Name2isrequired": "Name 2 is required",
       "SiteManagerRequired": "Site Manager is  Required",
       "SiteAddressRequired": " Address is Required"
+    }
+  },
+
+  "project": {
+    "management": {
+      "Search": "Search for Project...",
+      "ProjectRef": "Project Reference",
+      "Name1": "Name 1",
+      "Name2": "Name 2",
+      "projectDetails" : "Project Details",
+      "SiteName1" :"Site Name",
+      "StoreName1" :"Store Name",
+      "UpdatedDate": "Updated Date",
+      "IsActive": "Is Active",
+      "AddProject": "Add Project"
+     
     }
   }
 }
