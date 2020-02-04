@@ -321,7 +321,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           "fileTypeName": doc.typeCdDmtId == 1 ? 'Image' : 'Document',
           "documentType": doc.typeCdDmtId
         })
-      
       if (!this.isNewUser) {
         this.editUserFilesList.forEach((item1) => {
           if (item1.typeCdDmtId == doc.typeCdDmtId) this.editUserFilesList.splice(item1, 1);
@@ -332,7 +331,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
           if (item1.typeCdDmtId == doc.typeCdDmtId) this.documentList.splice(item1, 1);
         });
       }
-   
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
       if (this.isDocFile || this.isImageFile) {
