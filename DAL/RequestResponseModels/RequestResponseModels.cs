@@ -102,5 +102,20 @@ namespace DAL.RequestResponseModels
             public bool IsActive { get; set; }
             public List<UpsertProjectRepository> ProjectRepositories { get; set; }
         }
+
+        public class AddLookUp: AuditableEntity
+        {
+            public int Id { get; set; }
+            public int LookUpTypeId { get; set; }
+            public string Name1 { get; set; }
+           
+            public string Name2 { get; set; }
+            public string Remarks { get; set; }
+            public bool IsActive { get; set; }
+            public string CreatedBy { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public string UpdatedBy { get; set; }
+            public DateTime UpdatedDate { get; set; }
+        }
     }
 }
