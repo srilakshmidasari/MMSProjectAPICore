@@ -7,26 +7,15 @@ using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-   public class SiteInfo
+    public class ProjectRepository
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
+        public int ProjectRepositoryId { get; set; }
 
         [Required]
-        [Display(Name = "SiteReference")]
-        [StringLength(50)]
-        public string SiteReference { get; set; }
-
-        [Required]
-        [Display(Name = "Name1")]
-        [StringLength(100)]
-        public string Name1 { get; set; }
-
-        [Required]
-        [Display(Name = "Name2")]
-        [StringLength(100)]
-        public string Name2 { get; set; }
+        [Display(Name = "Project Id")]
+        public int ProjectId { get; set; }
 
         [Display(Name = "File Name")]
         [StringLength(50)]
@@ -41,24 +30,9 @@ namespace DAL.Models
         [StringLength(10)]
         public string FileExtention { get; set; }
 
-        [Required]
-        [Display(Name = "Address")]
-        [StringLength(500)]
-        public string Address { get; set; }
 
-        [Display(Name = "Latitude")]
-        public double Latitude { get; set; }
-
-        [Display(Name = "Longitude")]
-        public double Longitude { get; set; }
-
-        [Required]
-        [Display(Name = "SiteManager")]
-        [StringLength(30)]
-        public string SiteManager { get; set; }
-
-        [Display(Name = "Is Active")]
-        public bool IsActive { get; set; }
+        [Display(Name = "Document Type")]
+        public int? DocumentType { get; set; }
 
         [Required]
         [Display(Name = "Created By")]
@@ -81,7 +55,8 @@ namespace DAL.Models
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
 
-        public ICollection<Project> App_Project_SiteId { get; set; }
+        [JsonIgnore]
+        public TypeCdDmt Project_TypeCdDmt { get; set; }
 
     }
 }

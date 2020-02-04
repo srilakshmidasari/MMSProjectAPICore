@@ -126,10 +126,11 @@ export class AuthService {
   }
 
   private configureOauthService(rememberMe?: boolean) {
-    this.oauthService.issuer = this.baseUrl;
+    this.oauthService.issuer = 'http://183.82.111.111/mmsapi', //this.baseUrl;
       this.oauthService.clientId = 'mms_spa';
       this.oauthService.scope = 'openid email phone profile offline_access roles mms_api';
     this.oauthService.skipSubjectCheck = true;
+    this.oauthService.requireHttps = false;
     this.oauthService.dummyClientSecret = 'not_used';
 
     AuthStorage.RememberMe = rememberMe;

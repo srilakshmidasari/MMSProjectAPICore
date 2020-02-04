@@ -20,6 +20,9 @@ import { Permission } from '../../models/permission.model';
 import { EqualValidator } from '../../shared/validators/equal.validator';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { AppDialogComponent } from 'src/app/shared/app-dialog/app-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteFileComponent } from '../delete-file/delete-file.component';
 
 @Component({
   selector: 'user-editor',
@@ -44,6 +47,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   userFileData: any[] = [];
   editUserDocs: any[] = [];
   isEditMode: boolean;
+  isAllow: boolean;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
   editUserFilesList: any[] = [];
@@ -118,7 +122,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private localStorage: LocalStoreManager,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private dialog: MatDialog
   ) {
     this.buildForm();
 
@@ -268,14 +273,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
+          this.isAllow = false;
         } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
             this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
+            this.isAllow = false;
           } else {
-
+            this.isAllow = true;
           }
         }
       }
@@ -291,14 +298,16 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocsExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
+          this.isAllow = false;
         } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
             this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
+            this.isAllow = false;
           } else {
-
+            this.isAllow = true;
           }
         }
       }
@@ -306,7 +315,24 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
     let reader = new FileReader();
     reader.onload = (e: any) => {
-      var doc = e.target.result;
+      if (this.isAllow) {
+        this.userFileInfo.push({
+          "fileLocation": e.target.result,
+          "fileTypeName": doc.typeCdDmtId == 1 ? 'Image' : 'Document',
+          "documentType": doc.typeCdDmtId
+        })
+      
+      if (!this.isNewUser) {
+        this.editUserFilesList.forEach((item1) => {
+          if (item1.typeCdDmtId == doc.typeCdDmtId) this.editUserFilesList.splice(item1, 1);
+        });
+      }
+      else if (this.isNewUser) {
+        this.documentList.forEach((item1) => {
+          if (item1.typeCdDmtId == doc.typeCdDmtId) this.documentList.splice(item1, 1);
+        });
+      }
+   
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
       if (this.isDocFile || this.isImageFile) {
@@ -329,6 +355,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
         })
     }
+  }
     reader.readAsDataURL(file);
   }
 
@@ -378,8 +405,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       id: this.user.id,
       jobTitle: formModel.jobTitle,
       userName: formModel.userName,
-     // fullName: formModel.fullName,
-     fullName: ''     ,
+      // fullName: formModel.fullName,
+      fullName: '',
       friendlyName: formModel.friendlyName,
       email: formModel.email,
       emailConfirmed: this.user.emailConfirmed,
@@ -526,7 +553,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       event.preventDefault();
     }
   }
-  
+
   alphaNumaricsOnly(event: any) {
     const alphabetspattern = /^[a-z0-9]+$/i;
     let inputChar = String.fromCharCode(event.charCode);
@@ -541,7 +568,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.accountService.getUserFileData(this.user.id).subscribe(res => {
       this.editUserFilesList = JSON.parse(JSON.stringify(this.editUserDocs));
       this.userFileInfo = res;
-      console.log(this.userFileInfo )
+      console.log(this.userFileInfo)
       this.userFileInfo.forEach((item) => {
         this.editUserFilesList.forEach((item1) => {
           if (item.documentType == item1.typeCdDmtId) {
@@ -559,16 +586,35 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   //  On Delete File
   onDeleteFile(file) {
-    this.accountService.deleteUserFile(file.repositoryId)
-      .subscribe((results: any) => {
-        this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
-        this.getfileRepositoryDelete(this.user.id, file);
-      },
-        error => {
-          this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-            MessageSeverity.error, error);
-        });
+    // const dialogRef = this.dialog.open(AppDialogComponent, {
+    //   panelClass: 'mat-dialog-sm',
+    //   data: {
+    //     title: 'Confirmation Dialog Box', message: 'Are You Sure Want To Delete File !',
+    //     okLabel: 'Delete', cancelLabel: 'Cancel', type: 'false'
+    //   }
+    // });
+    // dialogRef.afterClosed().subscribe(res => {
+    //   this.accountService.deleteUserFile(file.repositoryId)
+    //     .subscribe((results: any) => {
+    //       this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
+    //       this.getfileRepositoryDelete(this.user.id, file);
+    //     },
+    //       error => {
+    //         this.alertService.stopLoadingMessage();
+    //         this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+    //           MessageSeverity.error, error);
+    //       });
+
+    // });
+
+    const dialogRef = this.dialog.open(DeleteFileComponent, {
+      panelClass: 'mat-dialog-sm',
+      data: file
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      this.getCurrentUserFiles();
+    })
+
   }
 
   getfileRepositoryDelete(UserId, file) {

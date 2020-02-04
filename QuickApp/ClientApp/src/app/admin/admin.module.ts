@@ -21,6 +21,7 @@ import { SiteDialogComponent } from './site-dialog/site-dialog.component';
 import { SiteLocationComponent } from './site-location/site-location.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ProfileComponent } from './profile/profile.component';
+import { DeleteFileComponent } from './delete-file/delete-file.component';
 
 @NgModule({
   imports: [
@@ -39,13 +40,15 @@ import { ProfileComponent } from './profile/profile.component';
     SiteEditorComponent,
     SiteDialogComponent,
     SiteLocationComponent,
-    ProfileComponent
+    ProfileComponent,
+    DeleteFileComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
     EditRoleDialogComponent,
     SiteDialogComponent,
-    SiteLocationComponent
+    SiteLocationComponent,
+    DeleteFileComponent
   ]
 })
 export class AdminModule {

@@ -8,6 +8,7 @@
   "mainMenu": {
     "Home": "الصفحة الرئيسية",
     "Admin":"مشرف",
+    "Security":"الأمان",
     "Appointments": "المواعيد",
     "Profile": "الملف الشخصي",
     "About": "حول منجز التطبيق",
@@ -15,7 +16,8 @@
     "Account": "الحساب",
     "Logout": "الخروج",
     "User": "إدارةالمستخدم",
-    "Role": "إدارة الدور"
+    "Role": "إدارة الدور",
+    "Site":"موقع"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -104,7 +106,8 @@
       "FullName": "الإسم الكامل",
       "Email": "البريد الإلكتروني",
       "Roles": "الأدوار",
-      "PhoneNumber": "رقم الهاتف"
+      "PhoneNumber": "رقم الهاتف",
+      "IsActive": "نشط"
     },
     "editor": {
       "JobTitle": "المسمى الوظيفي: ",

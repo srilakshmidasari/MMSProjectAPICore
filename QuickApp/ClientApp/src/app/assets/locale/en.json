@@ -11,6 +11,7 @@
   },
   "mainMenu": {
     "Home": "Home",
+    "Security":"Security",
     "Appointments": "Appointments",
     "Customers": "Customers",
     "Products": "Products",
