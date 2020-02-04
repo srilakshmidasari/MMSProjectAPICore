@@ -27,8 +27,7 @@
     "User": "Users",
     "Role": "Roles",
     "Site": "Site",
-    "Project" :"Project"
-   
+    "Project" :"Project",   
     "LookUp":"LookUp"
   },
   "pageHeader": {
@@ -43,8 +42,7 @@
     "Roles": "Role Management",
     "Site": "Site Management",
     "Project": "Project Management",
-    "Profile": "Profile"
-   
+    "Profile": "Profile",   
     "LookUp":"LookUp Management"
   },
   "home": {

@@ -46,8 +46,7 @@ import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
     SiteLocationComponent,
     ProfileComponent,
     DeleteFileComponent,
-    ProjectComponent,
-    
+    ProjectComponent,    
     LookupListComponent,
     LookupDialogComponent,
     LookupEditorComponent
