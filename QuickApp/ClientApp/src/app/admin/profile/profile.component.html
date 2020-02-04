@@ -6,12 +6,12 @@
         </mat-card-header>
         <br>
         <mat-card-content>
-            <form [formGroup]="profileForm">
+            <form  #form="ngForm" [formGroup]="profileForm">
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.EmpId' | translate}}</mat-label>
                         <input matInput formControlName="empId" maxlength="15" (keypress)="alphaNumaricsOnly($event)"
-                            required />
+                            required  readonly/>
                         <mat-error *ngIf="!profileForm.controls['empId'].valid">
                             {{'users.editor.EmployeeIdRequired' | translate}}
                         </mat-error>
@@ -19,7 +19,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.Name1' | translate}}</mat-label>
-                        <input matInput formControlName="name1" maxlength="50" required (keypress)="alphabetsOnly($event)" />
+                        <input matInput formControlName="name1" maxlength="50" required (keypress)="alphabetsOnly($event)" [readonly]="!isEditing" />
                         <mat-error *ngIf="!profileForm.controls['name1'].valid">
                             {{'users.editor.Name1Required' | translate}}
                         </mat-error>
@@ -27,7 +27,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.Name2' | translate}}</mat-label>
-                        <input matInput formControlName="name2" maxlength="50" required />
+                        <input matInput formControlName="name2" maxlength="50" required [readonly]="!isEditing" />
                         <mat-error *ngIf="!profileForm.controls['name2'].valid">
                             {{'users.editor.Name2Required' | translate}}
                         </mat-error>
@@ -36,14 +36,14 @@
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
-                        <input matInput formControlName="userName" maxlength="30" required />
+                        <input matInput formControlName="userName" maxlength="30" required readonly />
                         <mat-error *ngIf="!profileForm.controls['userName'].valid">
                             {{'users.editor.UserNameRequired' | translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.Email' | translate}}</mat-label>
-                        <input matInput formControlName="email" maxlength="50" required />
+                        <input matInput formControlName="email" maxlength="50" required readonly />
                         <mat-error *ngIf="profileForm.controls['email'].hasError('required')">
                             {{'users.editor.EmailRequired' | translate}}
                         </mat-error>
@@ -54,7 +54,7 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.PhoneNumber' | translate}}</mat-label>
                         <input matInput formControlName="phoneNumber" maxlength="12" minlength="10"
-                            (keypress)="numberOnly($event)" required />
+                            (keypress)="numberOnly($event)" required [readonly]="!isEditing" />
                         <mat-error *ngIf="profileForm.controls['phoneNumber'].hasError('required')">
                             {{'users.editor.PhoneNumberRequired' | translate}}
                         </mat-error>
@@ -66,9 +66,9 @@
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.Roles' | translate }}</mat-label>
-                        <mat-select formControlName="roles" multiple  required>
-                            <mat-option *ngFor="let role of rolesData" [value]="role.name">
-                              <span matTooltip="{{role.description}}">{{role.name}}</span>
+                        <mat-select formControlName="roles" multiple  required readonly>
+                            <mat-option *ngFor="let role of rolesData" [value]="role.id">
+                              <span matTooltip="{{role.name}}">{{role.description}}</span>
                             </mat-option>
                           </mat-select>
                     <mat-error *ngIf="profileForm.controls['roles'].hasError('required')">
@@ -77,13 +77,25 @@
                   
                     </mat-form-field>
                 </div>
+                <div class="row">
+                    <div class="form-group col-md-4 " *ngFor="let doc of documentList">
+                        <label for="file">Upload User {{doc.description}}</label>
+                        <input #fileInput type="file" class="form-control" id="file" formControlName="file"
+                          (change)="uploadFile(doc, $event)">
+                      </div>
+                </div>
                 
             </form>
         </mat-card-content>
         <mat-card-actions>
-            <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary">Edit</button>
+            <div  *ngIf="!isEditing"class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"  (click)="onEditProfile()">Edit</button>
+            </div>
+            <div  *ngIf="isEditing"class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"  (click)="onUpdateProfile()">Update</button>
+                <button mat-raised-button color="warn"  (click)="onCancelProfile()">Cancel</button>
             </div>
         </mat-card-actions>
+        <div class="clearfix"></div>
     </mat-card>
 </div>
