@@ -27,6 +27,8 @@ namespace DAL
 
         public DbSet<ProjectRepository> ProjectRepositories { get; set; }
 
+        public DbSet<LookUp> LookUps { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -54,6 +56,8 @@ namespace DAL
             builder.Entity<Project>().ToTable("Project");
             builder.Entity<Project>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<ProjectRepository>().ToTable("ProjectRepository");
+            builder.Entity<LookUp>().ToTable("LookUP");
+
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
@@ -150,6 +154,24 @@ namespace DAL
                 .HasForeignKey(d => d.DocumentType)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ProjectRepository_DocumentTypeId");
+
+            builder.Entity<LookUp>().HasOne(d => d.CreatedUser)
+           .WithMany(p => p.App_LookUp_CreatedUser)
+           .HasForeignKey(d => d.CreatedBy)
+           .OnDelete(DeleteBehavior.ClientSetNull)
+           .HasConstraintName("FK_LookUp_CreatedUser");
+
+            builder.Entity<LookUp>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_LookUp_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_LookUp_UpdatedUser");
+
+            builder.Entity<LookUp>().HasOne(d => d.TypecdId)
+                .WithMany(p => p.LookUP_TypeId)
+                .HasForeignKey(d => d.LookUpTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_LookUp_TypeId");
         }
 
         public override int SaveChanges()

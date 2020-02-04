@@ -258,6 +258,58 @@ namespace MMS.Migrations
                     b.ToTable("FileRepository");
                 });
 
+            modelBuilder.Entity("DAL.Models.LookUp", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LookUpTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("LookUpTypeId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("LookUP");
+                });
+
             modelBuilder.Entity("DAL.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -646,6 +698,27 @@ namespace MMS.Migrations
                         .WithMany("App_Repository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_FileRepository_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.LookUp", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_LookUp_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_LookUp_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "TypecdId")
+                        .WithMany("LookUP_TypeId")
+                        .HasForeignKey("LookUpTypeId")
+                        .HasConstraintName("FK_App_LookUp_TypeId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_LookUp_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_LookUp_UpdatedUser")
                         .IsRequired();
                 });
 
