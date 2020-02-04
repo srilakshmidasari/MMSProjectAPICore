@@ -1,0 +1,79 @@
+<app-page-header title="Project" icon="assignment_ind"></app-page-header>
+<div class="page-content">
+    <div class="search-box">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'project.management.Search' | translate}}">
+        </mat-form-field>
+    </div>
+   <div class="example-container mat-elevation-z8">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
+            matSortDisableClear>
+            <ng-container matColumnDef="projectReference">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.ProjectRef' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectReference}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name1' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name2' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="projectDetails">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.projectDetails' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectDetails}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="siteName1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="storeName1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.StoreName1' | translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.storeName1}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="updatedDate">
+                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>{{'project.management.UpdatedDate' | translate}}</mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="isActive">
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'project.management.IsActive' | translate}} </mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                    <button mat-button color="primary" matTooltip="Add" >
+                        <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}} 
+                    </button>
+                </mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row">
+                    <button mat-icon-button matTooltip="Edit" >
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                  
+                    <!-- <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button> -->
+                </mat-cell>
+            </ng-container>
+
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>No Records Found</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>No Search Results Found</p>
+        </div>
+        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+    </div>
+</div>

@@ -22,6 +22,7 @@ namespace DAL
         IMapper _mapper;
         ISiteRepository _sites;
         IMasterRepository _Masters;
+        IProjectRepository _Projects;
 
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
@@ -51,6 +52,17 @@ namespace DAL
                     _Masters = new MasterRepository(_context, _mapper, _configuration);
 
                 return _Masters;
+            }
+        }
+
+        public IProjectRepository Projects
+        {
+            get
+            {
+                if (_Projects == null)
+                    _Projects = new ProjectsRepository(_context, _mapper, _configuration);
+
+                return _Projects;
             }
         }
 

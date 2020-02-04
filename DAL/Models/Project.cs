@@ -71,6 +71,7 @@ namespace DAL.Models
         [JsonIgnore]
         public LookUp LookUp_Id { get; set; }
 
-        public ICollection<FileRepository> App_FileRepository_ProjectId { get; set; }
+        [JsonIgnore]
+        public ICollection<ProjectRepository> App_ProjectRepository_ProjectId { get; set; }
     }
 }
