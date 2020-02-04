@@ -232,9 +232,6 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
-                    b.Property<int?>("ProjectId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -250,8 +247,6 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("DocumentType");
-
-                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UpdatedBy");
 
@@ -420,6 +415,8 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("DocumentType");
+
+                    b.HasIndex("ProjectId");
 
                     b.HasIndex("UpdatedBy");
 
@@ -695,10 +692,6 @@ namespace MMS.Migrations
                         .HasForeignKey("DocumentType")
                         .HasConstraintName("FK_FileRepository_DocumentTypeId");
 
-                    b.HasOne("DAL.Models.Project", null)
-                        .WithMany("App_FileRepository_ProjectId")
-                        .HasForeignKey("ProjectId");
-
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_Repository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
@@ -766,6 +759,12 @@ namespace MMS.Migrations
                         .WithMany("ProjectRepository_DocumentTypeId")
                         .HasForeignKey("DocumentType")
                         .HasConstraintName("FK_ProjectRepository_DocumentTypeId");
+
+                    b.HasOne("DAL.Models.Project", "Project_Id")
+                        .WithMany("App_ProjectRepository_ProjectId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_App_ProjectRepository_ProjectId")
+                        .IsRequired();
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_ProjectRepository_UpdatedUser")

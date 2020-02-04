@@ -13,6 +13,7 @@ import { AuthService } from '../services/auth.service';
 import { AuthGuard } from '../services/auth-guard.service';
 import { SiteListComponent } from './site-list/site-list.component';
 import { ProfileComponent } from './profile/profile.component';
+import { ProjectComponent } from './project/project.component';
 import { LookupListComponent } from './lookup-list/lookup-list.component';
 const adminRoutes: Routes = [
   {
@@ -22,7 +23,8 @@ const adminRoutes: Routes = [
       { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Users' } },
       { path: 'roles', component: RoleListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Roles' } },
       { path: 'site', component: SiteListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Site' } },
-      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { title: 'Admin | Profile' } },
+      { path: 'project', component: ProjectComponent, canActivate: [AuthGuard], data: { title: 'Admin | Project' } },
+      { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { title: 'Admin | Profile' } },      
       { path: 'LookUp', component: LookupListComponent, canActivate: [AuthGuard], data: { title: 'Admin | LookUp' } }
       
     ]

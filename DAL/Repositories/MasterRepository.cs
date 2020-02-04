@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static DAL.RequestResponseModels.RequestResponseModels;
 
 namespace DAL.Repositories
 {
@@ -88,6 +89,74 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ListDataResponse<LookUp> GetAllLookUpDetails()
+        {
+            ListDataResponse<LookUp> response = new ListDataResponse<LookUp>();
+            try
+            {
+                var result = _appContext.LookUps.ToList();
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All LookUp Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No LookUp Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+        public ValueDataResponse<LookUp> AddLookUpData(LookUp lookup)
+        {
+            ValueDataResponse<LookUp> response = new ValueDataResponse<LookUp>();
+
+            try
+            {
+                
+                var result = _appContext.LookUps.Add(lookup);
+                _appContext.SaveChanges();
+
+                if (result != null)
+                {
+                    response.Result = lookup;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "LookUp Added Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "LookUp Added Failed";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
 
     }
 }

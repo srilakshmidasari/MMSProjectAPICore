@@ -241,4 +241,11 @@ export class AccountService {
   getLookUPData() {
     return this.accountEndpoint.getLookUpData()
   }
+
+  // Project
+
+  getProject(){
+    return this.accountEndpoint.getProjectEndpoint();
+  }
+
 }

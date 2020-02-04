@@ -37,6 +37,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getUserById: string = '/api/Account/users/GetUserById';
   private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
 
+  private readonly _projectUrl: string = '/api/Project';
+
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
@@ -56,6 +58,7 @@ export class AccountEndpoint extends EndpointBase {
   get typeCddmtData() { return this.configurations.baseUrl + this._getTypecddmtDetails; }
   get deleteUserFileData() { return this.configurations.baseUrl + this._deleteUserFile; }
   get userDataById() { return this.configurations.baseUrl + this._getUserById; }
+  get projectUrl() { return this.configurations.baseUrl + this._projectUrl; }
   get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
 
 
@@ -353,6 +356,16 @@ debugger
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getUserDataById(userId));
+      }));
+  }
+
+  // Proiect API
+  getProjectEndpoint<T>(): Observable<T> {
+    const endpointUrl = this.projectUrl;
+
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getProjectEndpoint());
       }));
   }
 

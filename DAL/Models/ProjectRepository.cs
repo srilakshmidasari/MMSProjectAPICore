@@ -58,5 +58,7 @@ namespace DAL.Models
         [JsonIgnore]
         public TypeCdDmt Project_TypeCdDmt { get; set; }
 
+        [JsonIgnore]
+        public Project Project_Id { get; set; }
     }
 }

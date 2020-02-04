@@ -22,6 +22,7 @@ import { SiteLocationComponent } from './site-location/site-location.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ProfileComponent } from './profile/profile.component';
 import { DeleteFileComponent } from './delete-file/delete-file.component';
+import { ProjectComponent } from './project/project.component';
 import { LookupListComponent } from './lookup-list/lookup-list.component';
 import { LookupDialogComponent } from './lookup-dialog/lookup-dialog.component';
 import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
@@ -45,6 +46,8 @@ import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
     SiteLocationComponent,
     ProfileComponent,
     DeleteFileComponent,
+    ProjectComponent,
+    
     LookupListComponent,
     LookupDialogComponent,
     LookupEditorComponent

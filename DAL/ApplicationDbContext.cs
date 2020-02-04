@@ -155,6 +155,12 @@ namespace DAL
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_ProjectRepository_DocumentTypeId");
 
+            builder.Entity<ProjectRepository>().HasOne(d => d.Project_Id)
+               .WithMany(p => p.App_ProjectRepository_ProjectId)
+               .HasForeignKey(d => d.ProjectId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_ProjectRepository_ProjectId");
+
             builder.Entity<LookUp>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_LookUp_CreatedUser)
            .HasForeignKey(d => d.CreatedBy)

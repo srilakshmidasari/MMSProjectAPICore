@@ -66,9 +66,17 @@ namespace DAL.RequestResponseModels
             CreateMap<IdentityRoleClaim<string>, PermissionViewModel>()
                 .ConvertUsing(s => (PermissionViewModel)ApplicationPermissions.GetPermissionByValue(s.ClaimValue));
 
-
             CreateMap<UpsertSite, SiteInfo>();
-              
+
+            CreateMap<UpsertProject, Project>();
+
+         //   CreateMap<UpsertSite, SiteInfo>();
+
+
+            CreateMap<AddLookUp, LookUp>();
+
+            CreateMap<UpsertProjectRepository, ProjectRepository>();
+
         }
     }
 }
