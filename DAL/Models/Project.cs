@@ -18,7 +18,11 @@ namespace DAL.Models
         public int SiteId { get; set; }
 
         [Required]
-        [Display(Name = "Project Reference")]
+        [Display(Name = "Store Id")]
+        public int StoreId { get; set; }
+
+        [Required]
+        [Display(Name = "Project  ")]
         [StringLength(50)]
         public string ProjectReference { get; set; }
 
@@ -63,6 +67,9 @@ namespace DAL.Models
 
         [JsonIgnore]
         public SiteInfo SiteInfo_Id { get; set; }
+
+        [JsonIgnore]
+        public LookUp LookUp_Id { get; set; }
 
         public ICollection<FileRepository> App_FileRepository_ProjectId { get; set; }
     }

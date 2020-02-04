@@ -172,6 +172,12 @@ namespace DAL
                 .HasForeignKey(d => d.LookUpTypeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_App_LookUp_TypeId");
+
+            builder.Entity<Project>().HasOne(d => d.LookUp_Id)
+             .WithMany(p => p.App_Project_StoreId)
+             .HasForeignKey(d => d.StoreId)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_Project_StoreId");
         }
 
         public override int SaveChanges()

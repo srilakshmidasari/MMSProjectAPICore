@@ -352,6 +352,9 @@ namespace MMS.Migrations
                     b.Property<int>("SiteId")
                         .HasColumnType("int");
 
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -364,6 +367,8 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("SiteId");
+
+                    b.HasIndex("StoreId");
 
                     b.HasIndex("UpdatedBy");
 
@@ -734,6 +739,12 @@ namespace MMS.Migrations
                         .WithMany("App_Project_SiteId")
                         .HasForeignKey("SiteId")
                         .HasConstraintName("FK_App_Project_SiteId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "LookUp_Id")
+                        .WithMany("App_Project_StoreId")
+                        .HasForeignKey("StoreId")
+                        .HasConstraintName("FK_App_Project_StoreId")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
