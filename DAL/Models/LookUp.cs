@@ -6,36 +6,29 @@ using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-    public class TypeCdDmt
+    public class LookUp
     {
         [Key]
-        public int TypeCdDmtId { get; set; }
+        public int Id { get; set; }
 
         [Required]
-        [Display(Name = "Class TypeId")]
-        public int ClassTypeId { get; set; }
-
-        [Required]
-        [StringLength(100)]
-        [Display(Name = "Description")]
-        public string Description { get; set; }
+        [Display(Name = "LookUp TypeId")]
+        public int LookUpTypeId { get; set; }
 
         [Required]
         [StringLength(100)]
-        [Display(Name = "Table Name")]
-        public string TableName { get; set; }
+        [Display(Name = "Name1")]
+        public string Name1 { get; set; }
 
         [Required]
         [StringLength(100)]
-        [Display(Name = "Column Name")]
-        public string ColumnName { get; set; }
+        [Display(Name = "Name2")]
+        public string Name2 { get; set; }
 
-        [Required]
-        [Display(Name = "Sort Order")]
-        public int SortOrder { get; set; }
+        [StringLength(500)]
+        [Display(Name = "Remarks")]
+        public string Remarks { get; set; }
 
-        [Required]
-        //[DefaultValue(true)]
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }
 
@@ -56,18 +49,12 @@ namespace DAL.Models
         public DateTime UpdatedDate { get; set; }
 
         [JsonIgnore]
-        public ClassType ClassType { get; set; }
-
-        [JsonIgnore]
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
-        //[JsonIgnore]
-        public ICollection<FileRepository> FileRepository_DocumentTypeId { get; set; }
 
-        public ICollection<ProjectRepository> ProjectRepository_DocumentTypeId { get; set; }
-
-        public ICollection<LookUp> LookUP_TypeId { get; set; }
-
+        [JsonIgnore]
+        public TypeCdDmt TypecdId { get; set; }
     }
 }
+ 
