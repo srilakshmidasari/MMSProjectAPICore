@@ -70,7 +70,7 @@ namespace DAL.RequestResponseModels
 
             CreateMap<UpsertProject, Project>();
 
-            CreateMap<UpsertSite, SiteInfo>();
+         //   CreateMap<UpsertSite, SiteInfo>();
 
 
             CreateMap<AddLookUp, LookUp>();
