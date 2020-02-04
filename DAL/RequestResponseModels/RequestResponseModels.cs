@@ -117,5 +117,27 @@ namespace DAL.RequestResponseModels
             public string UpdatedBy { get; set; }
             public DateTime UpdatedDate { get; set; }
         }
+
+       public class LookupDataResponse
+        {
+            public int Id { get; set; }
+            public int LookUpTypeId { get; set; }
+            public string Name1 { get; set; }
+
+            public string Name2 { get; set; }
+            public string Remarks { get; set; }
+            public bool IsActive { get; set; }
+            public string CreatedBy { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public string UpdatedBy { get; set; }
+            public DateTime UpdatedDate { get; set; }
+
+            public string Description { get; set; }
+
+            public string CreatedByUser { get; set; }
+
+            public string UpdatedByUser { get; set; }
+         
+        }
     }
 }
