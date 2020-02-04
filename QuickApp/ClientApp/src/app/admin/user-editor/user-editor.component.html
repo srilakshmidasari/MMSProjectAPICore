@@ -148,6 +148,22 @@
       <input #fileInput type="file" class="form-control" id="file" formControlName="file"
         (change)="uploadFile(doc, $event)">
     </div>
+    <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileInfo">
+      <div>  User {{file.fileTypeName}}</div>
+      <div class="clearfix space20"></div>
+      <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
+        <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+      </a>
+      <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
+        <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121"> &nbsp;&nbsp;&nbsp;</a>
+
+      <a class="close2 color-red" *ngIf="file.documentType==1" (click)="onDeleteFile(file)">
+        <mat-icon>cancel</mat-icon>
+      </a>
+      <a class="close1 color-red" *ngIf="file.documentType==2" (click)="onDeleteFile(file)">
+        <mat-icon>cancel</mat-icon>
+      </a>
+    </div>
   </div>
 
   <div fxLayout="row" *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
