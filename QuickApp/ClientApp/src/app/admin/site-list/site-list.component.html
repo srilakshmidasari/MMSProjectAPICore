@@ -5,7 +5,7 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'site.management.Search' | translate}}">
         </mat-form-field>
     </div>
-    <div class="example-container mat-elevation-z8">
+   <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
             matSortDisableClear>
