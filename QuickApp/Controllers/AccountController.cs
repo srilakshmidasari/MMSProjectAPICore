@@ -765,8 +765,27 @@ namespace MMS.Controllers
         [ProducesResponseType(200, Type = typeof(List<RoleViewModel>))]
         public async Task<IActionResult> GetRoles(int pageNumber, int pageSize)
         {
+            List<RoleViewModel> roleViewModels = new List<RoleViewModel>();
             var roles = await _accountManager.GetRolesLoadRelatedAsync(pageNumber, pageSize);
-            return Ok(_mapper.Map<List<RoleViewModel>>(roles));
+            var result = _mapper.Map<List<RoleViewModel>>(roles);
+
+            foreach (var res in result)
+            {
+                var parentRoleDetails = _appcontext.Roles.Where(x => x.Id == res.ParentRoleId).FirstOrDefault();
+                var responce = new RoleViewModel
+                {
+                    Id = res.Id,
+                    Name = res.Name,
+                    ParentRoleId = res.ParentRoleId == null ? null : res.ParentRoleId,
+                    ParentRoleName = res.ParentRoleId == null ? null : parentRoleDetails.Name,
+                    Description = res.Description,
+                    Permissions = res.Permissions
+                };
+
+                roleViewModels.Add(responce);
+            }
+
+            return Ok(roleViewModels);
         }
 
 

@@ -62,7 +62,7 @@
         <mat-expansion-panel *ngIf="canViewUsers || canViewRoles" #admin [class.mat-elevation-z0]="!admin.expanded">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <mat-icon>security</mat-icon>Security
+              <mat-icon>security</mat-icon>{{'mainMenu.Security' | translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLinkActive="active" *ngIf="canViewUsers" routerLink="/admin/users">
