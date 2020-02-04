@@ -35,6 +35,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getTypecddmtDetails: string = '/api/Masters/GetTypecddmtDetails';
   private readonly _deleteUserFile: string = '/api/Masters/DeleteFileRepository';
   private readonly _getUserById: string = '/api/Account/users/GetUserById';
+  private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -55,6 +56,7 @@ export class AccountEndpoint extends EndpointBase {
   get typeCddmtData() { return this.configurations.baseUrl + this._getTypecddmtDetails; }
   get deleteUserFileData() { return this.configurations.baseUrl + this._deleteUserFile; }
   get userDataById() { return this.configurations.baseUrl + this._getUserById; }
+  get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
 
 
 
@@ -353,4 +355,15 @@ debugger
         return this.handleError(error, () => this.getUserDataById(userId));
       }));
   }
+
+  
+  getLookUpData<T>(): Observable<T> {
+    const endpointUrl = this.lookUpData;
+
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getLookUpData());
+      }));
+  }
+
 }

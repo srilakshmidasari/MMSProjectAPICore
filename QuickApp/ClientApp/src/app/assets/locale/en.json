@@ -26,7 +26,8 @@
     "Theme": "Select a theme",
     "User": "Users",
     "Role": "Roles",
-    "Site": "Site"
+    "Site": "Site",
+    "LookUp":"LookUp"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -39,7 +40,8 @@
     "Users": "User Management",
     "Roles": "Role Management",
     "Site": "Site Management",
-    "Profile": "Profile"
+    "Profile": "Profile",
+    "LookUp":"LookUp Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -231,6 +233,11 @@
       "Name2isrequired": "Name 2 is required",
       "SiteManagerRequired": "Site Manager is  Required",
       "SiteAddressRequired": " Address is Required"
+    }
+  },
+  "LookUp":{
+    "management":{
+      "Search": "Search for LookUp..."
     }
   }
 }
