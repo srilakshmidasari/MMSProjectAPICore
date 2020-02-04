@@ -43,7 +43,7 @@ namespace MMS.Controllers
             return _unitOfWork.Masters.GetAllLookUpDetails();
         }
 
-        [HttpPost("AddUpLookUpData")]
+        [HttpPost("AddLookUpData")]
         public ValueDataResponse<LookUp> AddLookUpData(AddLookUp lookup)
         {
             LookUp LookupDetails = _mapper.Map<LookUp>(lookup);
