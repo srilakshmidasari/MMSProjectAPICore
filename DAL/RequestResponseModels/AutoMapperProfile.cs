@@ -68,7 +68,10 @@ namespace DAL.RequestResponseModels
 
 
             CreateMap<UpsertSite, SiteInfo>();
-              
+
+
+            CreateMap<AddLookUp, LookUp>();
+
         }
     }
 }
