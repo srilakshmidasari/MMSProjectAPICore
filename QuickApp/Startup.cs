@@ -131,7 +131,7 @@ namespace MMS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
-                // var endURL = "http://localhost:44350/connect/token";
+                 var endURL = "http://localhost:5050/connect/token";
                 //var endURL = "http://183.82.111.111/MMSAPI/connect/token";
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -140,8 +140,8 @@ namespace MMS
                     {
                         Password = new OpenApiOAuthFlow
                         {
-                            TokenUrl = new Uri("/connect/token", UriKind.Relative),
-                           // TokenUrl = new Uri(endURL),
+                           // TokenUrl = new Uri("/connect/token", UriKind.Relative),
+                            TokenUrl = new Uri(endURL),
                             Scopes = new Dictionary<string, string>()
                             {
                                 { IdentityServerConfig.ApiName, IdentityServerConfig.ApiFriendlyName }

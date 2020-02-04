@@ -63,6 +63,20 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'users.editor.Roles' | translate }}</mat-label>
+                        <mat-select formControlName="roles" multiple  required>
+                            <mat-option *ngFor="let role of rolesData" [value]="role.name">
+                              <span matTooltip="{{role.description}}">{{role.name}}</span>
+                            </mat-option>
+                          </mat-select>
+                    <mat-error *ngIf="profileForm.controls['roles'].hasError('required')">
+                        {{'users.editor.PhoneNumberRequired' | translate}}
+                    </mat-error>
+                  
+                    </mat-form-field>
+                </div>
                 
             </form>
         </mat-card-content>
