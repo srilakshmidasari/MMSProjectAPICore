@@ -8,7 +8,7 @@ namespace DAL.Repositories.Interfaces
 {
     public interface IProjectRepository
     {
-        //ListDataResponse<Project> GetAllProject();
-        //ValueDataResponse<Project> InsertProject(Project project);
+       // ListDataResponse<Project> GetAllProject();
+       // ValueDataResponse<Project> InsertProject(Project project);
     }
 }
