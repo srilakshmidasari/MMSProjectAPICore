@@ -65,6 +65,8 @@ namespace DAL.Models
         //[JsonIgnore]
         public ICollection<FileRepository> FileRepository_DocumentTypeId { get; set; }
 
-     
+        public ICollection<ProjectRepository> ProjectRepository_DocumentTypeId { get; set; }
+
+
     }
 }

@@ -318,6 +318,57 @@ namespace MMS.Migrations
                     b.ToTable("Project");
                 });
 
+            modelBuilder.Entity("DAL.Models.ProjectRepository", b =>
+                {
+                    b.Property<int>("ProjectRepositoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DocumentType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FileExtention")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FileLocation")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("ProjectRepositoryId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DocumentType");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("ProjectRepository");
+                });
+
             modelBuilder.Entity("DAL.Models.SiteInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -587,10 +638,9 @@ namespace MMS.Migrations
                         .HasForeignKey("DocumentType")
                         .HasConstraintName("FK_FileRepository_DocumentTypeId");
 
-                    b.HasOne("DAL.Models.Project", "Project_Id")
+                    b.HasOne("DAL.Models.Project", null)
                         .WithMany("App_FileRepository_ProjectId")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("FK_App_FileRepository_ProjectId");
+                        .HasForeignKey("ProjectId");
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_Repository_UpdatedUser")
@@ -617,6 +667,26 @@ namespace MMS.Migrations
                         .WithMany("App_Project_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_App_Project_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.ProjectRepository", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_ProjectRepository_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_ProjectRepository_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "Project_TypeCdDmt")
+                        .WithMany("ProjectRepository_DocumentTypeId")
+                        .HasForeignKey("DocumentType")
+                        .HasConstraintName("FK_ProjectRepository_DocumentTypeId");
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_ProjectRepository_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_ProjectRepository_UpdatedUser")
                         .IsRequired();
                 });
 

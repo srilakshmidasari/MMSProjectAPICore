@@ -73,5 +73,7 @@ namespace DAL.Models
 
         public ICollection<Project> App_Project_CreatedUser { get; set; }
         public ICollection<Project> App_Project_UpdatedUser { get; set; }
+        public ICollection<ProjectRepository> App_ProjectRepository_CreatedUser { get; set; }
+        public ICollection<ProjectRepository> App_ProjectRepository_UpdatedUser { get; set; }
     }
 }
