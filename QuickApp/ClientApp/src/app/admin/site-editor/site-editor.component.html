@@ -1,4 +1,4 @@
-<form #form="ngForm" [formGroup]="siteForm">
+<form #form="ngForm" [formGroup]="siteForm" (ngSubmit)="save()">
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.siteRef' | translate}}</mat-label>
     <input matInput formControlName="siteref" required maxlength="16" />
