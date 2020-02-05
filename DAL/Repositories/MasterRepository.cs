@@ -189,7 +189,8 @@ namespace DAL.Repositories
                 var result = _appContext.LookUps.Where(x => x.Id == lookup.Id).FirstOrDefault();
                 if (result != null)
                 {
-                    
+                    result.Id = lookup.Id;
+                    result.LookUpTypeId = lookup.LookUpTypeId;
                     result.Name1 = lookup.Name1;
                     result.Name2 = lookup.Name2;
                     result.Remarks = lookup.Remarks;
@@ -222,6 +223,44 @@ namespace DAL.Repositories
             }
             return response;
         }
+
+
+        public ListDataResponse<LookUp> GetLookUpDetilas(int TypeId)
+        {
+            ListDataResponse<LookUp> response = new ListDataResponse<LookUp>();
+            try
+            {
+                 var result =_appContext.LookUps.Where(x => x.LookUpTypeId == TypeId).ToList();
+
+            
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Typecddmt Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Typecddmt Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
     }
+
+
+
 }
 
