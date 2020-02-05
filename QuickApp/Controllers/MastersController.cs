@@ -64,5 +64,12 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Masters.GetLookUpDetilas(TypeId);
         }
+
+        [HttpDelete]
+        [Route("DeleteLooKUp/{LookupId}")]
+        public ValueDataResponse<LookUp> DeleteLooKUp(int LookupId)
+        {
+            return _unitOfWork.Masters.DeleteLooKUp(LookupId);
+        }
     }
 }
