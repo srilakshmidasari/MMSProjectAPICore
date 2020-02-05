@@ -305,6 +305,28 @@ namespace MMS.Migrations
                     b.ToTable("LookUP");
                 });
 
+            modelBuilder.Entity("DAL.Models.LookUpProjectXref", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("StoreId");
+
+                    b.ToTable("LookUpProjectXref");
+                });
+
             modelBuilder.Entity("DAL.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -347,9 +369,6 @@ namespace MMS.Migrations
                     b.Property<int>("SiteId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StoreId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -362,8 +381,6 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("SiteId");
-
-                    b.HasIndex("StoreId");
 
                     b.HasIndex("UpdatedBy");
 
@@ -720,6 +737,21 @@ namespace MMS.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DAL.Models.LookUpProjectXref", b =>
+                {
+                    b.HasOne("DAL.Models.Project", "Project_Id")
+                        .WithMany("ProjectxrefId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_ProjectxrefId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "LookUp_Id")
+                        .WithMany("StorexrefId")
+                        .HasForeignKey("StoreId")
+                        .HasConstraintName("FK_StorexrefId")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Models.Project", b =>
                 {
                     b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
@@ -732,12 +764,6 @@ namespace MMS.Migrations
                         .WithMany("App_Project_SiteId")
                         .HasForeignKey("SiteId")
                         .HasConstraintName("FK_App_Project_SiteId")
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.LookUp", "LookUp_Id")
-                        .WithMany("App_Project_StoreId")
-                        .HasForeignKey("StoreId")
-                        .HasConstraintName("FK_App_Project_StoreId")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")

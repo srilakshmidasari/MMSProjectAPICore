@@ -262,7 +262,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     debugger
     var doc1 = doc;
     var file = event.target.files[0];
-    if (doc.typeCdDmtId == DataFactory.TypeOfFile.Image) {
+    if (doc.typeCdDmtId == DataFactory.docType.Image) {
       var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       if (file != undefined) {
         this.fileExtension = '.' + file.name.split('.').pop();

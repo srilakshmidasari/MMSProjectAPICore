@@ -366,4 +366,12 @@ debugger
         return this.handleError(error, () => this.getProjectEndpoint());
       }));
   }
+
+  newProjectEndpoint<T>(projectObject: any): Observable<T> {
+    const endpointUrl = this.projectUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(projectObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.newProjectEndpoint(projectObject));
+      }));
+  }
 }
