@@ -30,7 +30,8 @@ namespace DAL.Repositories
 
                 var result = (from p in _appContext.Projects
                               join s in _appContext.SiteInfos on p.SiteId equals s.Id
-                              join l in _appContext.LookUps on p.StoreId equals l.Id
+                              join lp in _appContext.LookUpProjectXrefs on p.Id equals lp.ProjectId
+                              join l in _appContext.LookUps on lp.StoreId equals l.Id
                               select new GetProjectResponse
                               {
                                   Id = p.Id,
@@ -139,7 +140,6 @@ namespace DAL.Repositories
                         response.EndUserMessage = "Project Added Failed";
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -148,7 +148,6 @@ namespace DAL.Repositories
                 response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
                 response.Exception = ex;
             }
-
             return response;
         }
     }

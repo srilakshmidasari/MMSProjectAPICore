@@ -56,7 +56,9 @@ namespace DAL.Models
         [JsonIgnore]
         public TypeCdDmt TypecdId { get; set; }
 
-        public ICollection<Project> App_Project_StoreId { get; set; }
+        public ICollection<LookUpProjectXref> StorexrefId { get; set; }
+
+       // public ICollection<Project> App_Project_StoreId { get; set; }
     }
 }
  
