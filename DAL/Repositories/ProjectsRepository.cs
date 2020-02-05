@@ -50,7 +50,6 @@ namespace DAL.Repositories
                                   CreatedDate = p.CreatedDate,
                                   UpdatedBy = p.UpdatedBy,
                                   UpdatedDate = p.UpdatedDate,
-
                               }).ToList();
 
                 if (result != null)
@@ -78,6 +77,51 @@ namespace DAL.Repositories
             return response;
         }
 
+        public ListDataResponse<GetLoopUpResponse> GetStoresByProjectId(int ProjectId)
+        {
+            ListDataResponse<GetLoopUpResponse> response = new ListDataResponse<GetLoopUpResponse>();
+            try
+            {
+                var result = (from lp in _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList()
+                              join l in _appContext.LookUps on lp.StoreId equals l.Id
+                              select new GetLoopUpResponse
+                              {
+                                  Id = l.Id,
+                                  Name2 = l.Name1,
+                                  Name1 = l.Name1,
+                                  LookUpTypeId = l.LookUpTypeId,
+                                  IsActive = l.IsActive,
+                                  CreatedBy = l.CreatedBy,
+                                  CreatedDate = l.CreatedDate,
+                                  UpdatedBy = l.UpdatedBy,
+                                  UpdatedDate = l.UpdatedDate,
+                              }).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Store Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Store Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
         public ValueDataResponse<Project> InsertProject(UpsertProject project)
         {
             ValueDataResponse<Project> response = new ValueDataResponse<Project>();
@@ -85,9 +129,13 @@ namespace DAL.Repositories
             try
             {
                 Project pro = _mapper.Map<Project>(project);
-                 
                 var result = _appContext.Projects.Add(pro);
                 _appContext.SaveChanges();
+                foreach (var sId in project.StoreIds)
+                {
+                    _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
+                }
+
                 foreach (var req in project.ProjectRepositories)
                 {
                     if (req.FileName != null)

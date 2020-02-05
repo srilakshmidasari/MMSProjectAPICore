@@ -19,17 +19,21 @@ export class ProjectComponent implements OnInit {
   loadingIndicator: boolean;
   sourceProject: any;
   ProjectsList: any[] = []
-  displayedColumns = ['projectReference', 'name1', 'name2', 'projectDetails', 'siteName1', 'storeName1', 'updatedDate', 'isActive', 'Actions'];
-
+  displayedColumns = ['projectReference', 'name1', 'name2', 'projectDetails', 'siteName1', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
 
-  projectForm: FormGroup;
+  storeDataSource = new MatTableDataSource<any>();
+  @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) storeSort: MatSort;
+  storeColumns = ['storeName1', 'storeName2', 'remarks', 'isActive', 'updatedDate'];
 
+  projectForm: FormGroup;
   isAddingProject: boolean = false;
   isNewProject: boolean = false;
+  isViewStore :boolean = false;
   siteList: any;
   projectData: any = {};
   documentList: any[] = [];
@@ -45,7 +49,6 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit() {
     this.getProjects();
-
     this.getDocuments();
     if (this.isNewProject) {
       this.buildForm();
@@ -76,7 +79,6 @@ export class ProjectComponent implements OnInit {
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
-
         this.alertService.stopLoadingMessage();
       },
         error => {
@@ -288,4 +290,11 @@ export class ProjectComponent implements OnInit {
     this.isAddingProject = false;
   }
 
+  onViewClick(row){
+    this.isViewStore = true
+  }
+
+  onCancelViewStore(){
+    this.isViewStore = false;
+  }
 }

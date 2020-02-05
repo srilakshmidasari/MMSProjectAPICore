@@ -7,5 +7,10 @@ export const DataFactory={
     docType: {
         Image: 1,
         Document: 2,        
+    },
+
+    LookUp:{
+     Store :3,
+     Group :4
     }
 }

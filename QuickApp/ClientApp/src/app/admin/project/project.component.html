@@ -1,5 +1,5 @@
 <app-page-header title="Project" icon="assignment_ind"></app-page-header>
-<div class="page-content" [hidden]="isAddingProject">
+<div class="page-content" [hidden]="isAddingProject || isViewStore">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -35,11 +35,11 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="storeName1">
+            <!-- <ng-container matColumnDef="storeName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.StoreName1' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.storeName1}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="updatedDate">
                 <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>
                     {{'project.management.UpdatedDate' | translate}}</mat-header-cell>
@@ -61,16 +61,17 @@
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit">
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-
-                    <!-- <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="View Store" (click)="onViewClick(row)">
+                        <mat-icon color="accent">visibility icon</mat-icon>
+                    </button>
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive">
                         <mat-icon color="warn">delete</mat-icon>
-                    </button> -->
+                    </button>
                 </mat-cell>
             </ng-container>
-
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;">
@@ -152,7 +153,8 @@
                 <div class="row">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
                         <label for="file">Upload Project of {{doc.description}} <span>*</span></label>
-                        <input #fileInput type="file" class="form-control" id="file" formControlName="file" (change)="uploadFile(doc, $event)">
+                        <input #fileInput type="file" class="form-control" id="file" formControlName="file"
+                            (change)="uploadFile(doc, $event)">
                     </div>
                     <!-- <div class="form-group col-md-6" fxFlex *ngFor="let doc of documentList">
                         <label for="file">Upload User {{doc.description}}</label>
@@ -170,6 +172,63 @@
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
-        
+
     </mat-card>
+</div>
+
+<div class="page-content" *ngIf="isViewStore">
+    <div class="example-container mat-elevation-z8">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title >View Store</mat-card-title>
+            </mat-card-header>
+            <br>
+            <div class="table-responsive tab-responsive">
+                <mat-table [dataSource]="storeDataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
+                    matSortDisableClear>
+
+                    <ng-container matColumnDef="storeName1">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
+                        <!-- <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell> -->
+                    </ng-container>
+                    <ng-container matColumnDef="storeName2">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
+                        <!-- <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell> -->
+                    </ng-container>
+                    <ng-container matColumnDef="remarks">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Note</mat-header-cell>
+                        <!-- <mat-cell *matCellDef="let row"> {{row.commets}} </mat-cell> -->
+                    </ng-container>
+                    <ng-container matColumnDef="updatedDate">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>Updated Date</mat-header-cell>
+
+                        <!-- <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy h:mm a'}} </mat-cell> -->
+                    </ng-container>
+                    <ng-container matColumnDef="isActive">
+                        <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                            Is Active</mat-header-cell>
+                        <!-- <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                            <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                        </mat-cell> -->
+                    </ng-container>
+                    <mat-header-row *matHeaderRowDef="storeColumns"></mat-header-row>
+                    <mat-row *matRowDef="let row; columns: storeColumns;">
+                    </mat-row>
+                </mat-table>
+                <!-- <div style="text-align: center;" [hidden]="!(storeDataSource.data.length==0)">
+                    <p>No Records Found</p>
+                </div>
+                <mat-paginator [length]="storeDataSource.data.length" [pageSize]="10"
+                    [pageSizeOptions]="[5, 10, 25, 100]">
+                </mat-paginator> -->
+            </div>
+            <mat-card-actions>
+                <div class="float-right" style="padding-top: 12px;padding-right: 15px;">
+                    <button mat-raised-button color="warn" (click)= "onCancelViewStore()">Close</button>
+                </div>
+
+            </mat-card-actions>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
 </div>
