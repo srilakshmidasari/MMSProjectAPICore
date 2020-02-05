@@ -33,7 +33,7 @@ export class ProjectComponent implements OnInit {
   projectForm: FormGroup;
   isAddingProject: boolean = false;
   isNewProject: boolean = false;
-  isViewStore :boolean = false;
+  isViewStore: boolean = false;
   siteList: any;
   projectData: any = {};
   documentList: any[] = [];
@@ -44,6 +44,8 @@ export class ProjectComponent implements OnInit {
   @Input() maxSize: number = 2300;//1150;
   projectRepositories: any[] = [];
   fileExtension: string;
+  stores: any[] = [];
+  storesList: any[] = [];
   constructor(private accountService: AccountService, private authService: AuthService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private alertService: AlertService,
     private dialog: MatDialog) { }
 
@@ -80,6 +82,7 @@ export class ProjectComponent implements OnInit {
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
         this.alertService.stopLoadingMessage();
+        this.getLookUpDetailsByTypeId();
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -91,7 +94,22 @@ export class ProjectComponent implements OnInit {
     var classTypeId = 1
     this.accountService.getCddmtData(classTypeId).subscribe((response: any) => {
       this.documentList = response.listResult;
-    })
+    }, error => {
+      this.alertService.stopLoadingMessage();
+    });
+  }
+
+
+  private getLookUpDetailsByTypeId() {
+    this.alertService.startLoadingMessage();
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Store)
+      .subscribe((results: any) => {
+        this.stores = results.listResult == null ? [] : results.listResult;
+        this.alertService.stopLoadingMessage();
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+        });
   }
 
   private buildForm() {
@@ -246,7 +264,7 @@ export class ProjectComponent implements OnInit {
     const editedProject = this.getEditedProjet();
     if (this.isNewProject) {
       this.accountService.NewProject(editedProject).subscribe(
-        (result:any) => {
+        (result: any) => {
           this.alertService.stopLoadingMessage();
           if (result.isSuccess) {
             this.getProjects();
@@ -263,7 +281,7 @@ export class ProjectComponent implements OnInit {
         }
       );
     } else {
-      
+
     }
   }
 
@@ -272,7 +290,7 @@ export class ProjectComponent implements OnInit {
     return {
       "id": this.isNewProject ? 0 : this.projectData.id,
       "siteId": formModel.siteId,
-      "storeId": parseInt(formModel.storeId),
+      "storeIds": formModel.storeId,
       "projectReference": formModel.projectReference,
       "name1": formModel.name1,
       "name2": formModel.name2,
@@ -286,15 +304,27 @@ export class ProjectComponent implements OnInit {
     };
   }
 
-  onCancelClick(){
+  onCancelClick() {
     this.isAddingProject = false;
   }
 
-  onViewClick(row){
+  onViewClick(row) {
+    debugger
     this.isViewStore = true
+    this.alertService.startLoadingMessage();
+    this.accountService.getStoresByProjectId(row.id)
+      .subscribe((results: any) => {
+        this.alertService.stopLoadingMessage();
+        this.storesList = results.listResult == null ? [] : results.listResult;
+        this.storeDataSource.data = this.storesList;
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+        });
   }
 
-  onCancelViewStore(){
+  onCancelViewStore() {
     this.isViewStore = false;
+    
   }
 }

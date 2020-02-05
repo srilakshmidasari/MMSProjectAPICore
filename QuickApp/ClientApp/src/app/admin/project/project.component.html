@@ -67,6 +67,7 @@
                     <button mat-icon-button matTooltip="View Store" (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
+
                     <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
@@ -144,11 +145,20 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>Store</mat-label>
-                        <input matInput formControlName="storeId" required maxlength="50" />
+                        <mat-select formControlName="storeId" multiple>
+                            <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name1}}</mat-option>
+                        </mat-select>
                         <mat-error *ngIf="!projectForm.controls['storeId'].valid">
                             Please Select Store
                         </mat-error>
                     </mat-form-field>
+                    <!-- <mat-form-field class="col-md-6">
+                        <mat-label>Store</mat-label>
+                        <input matInput formControlName="storeId" required maxlength="50" />
+                        <mat-error *ngIf="!projectForm.controls['storeId'].valid">
+                            Please Select Store
+                        </mat-error>
+                    </mat-form-field> -->
                 </div>
                 <div class="row">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
@@ -180,53 +190,53 @@
     <div class="example-container mat-elevation-z8">
         <mat-card>
             <mat-card-header>
-                <mat-card-title >View Store</mat-card-title>
+                <mat-card-title>View Store</mat-card-title>
             </mat-card-header>
             <br>
-            <div class="table-responsive tab-responsive">
+            <div >
+                <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
                 <mat-table [dataSource]="storeDataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
                     matSortDisableClear>
 
                     <ng-container matColumnDef="storeName1">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
-                        <!-- <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell> -->
+                        <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="storeName2">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
-                        <!-- <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell> -->
+                        <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="remarks">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Note</mat-header-cell>
-                        <!-- <mat-cell *matCellDef="let row"> {{row.commets}} </mat-cell> -->
+                        <mat-cell *matCellDef="let row"> {{row.commets}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="updatedDate">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>Updated Date</mat-header-cell>
 
-                        <!-- <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy h:mm a'}} </mat-cell> -->
+                        <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy h:mm a'}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isActive">
                         <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                             Is Active</mat-header-cell>
-                        <!-- <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                        <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                             <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
-                        </mat-cell> -->
+                        </mat-cell>
                     </ng-container>
                     <mat-header-row *matHeaderRowDef="storeColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: storeColumns;">
                     </mat-row>
                 </mat-table>
-                <!-- <div style="text-align: center;" [hidden]="!(storeDataSource.data.length==0)">
+                <div style="text-align: center;" [hidden]="!(storeDataSource.data.length==0)">
                     <p>No Records Found</p>
                 </div>
                 <mat-paginator [length]="storeDataSource.data.length" [pageSize]="10"
                     [pageSizeOptions]="[5, 10, 25, 100]">
-                </mat-paginator> -->
+                </mat-paginator>
             </div>
             <mat-card-actions>
                 <div class="float-right" style="padding-top: 12px;padding-right: 15px;">
-                    <button mat-raised-button color="warn" (click)= "onCancelViewStore()">Close</button>
+                    <button mat-raised-button color="warn" (click)="onCancelViewStore()">Close</button>
                 </div>
-
             </mat-card-actions>
             <div class="clearfix"></div>
         </mat-card>

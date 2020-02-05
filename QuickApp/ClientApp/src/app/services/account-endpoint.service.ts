@@ -38,6 +38,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
 
   private readonly _projectUrl: string = '/api/Project';
+  private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
+  private readonly _getLookUpDetailsByTypeIdUrl: string = '/api/Masters/GetLookUpDetilas';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -60,8 +62,11 @@ export class AccountEndpoint extends EndpointBase {
   get userDataById() { return this.configurations.baseUrl + this._getUserById; }
   get projectUrl() { return this.configurations.baseUrl + this._projectUrl; }
   get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
+  get getStoresByProjectIdUrl() { return this.configurations.baseUrl + this._getStoresByProjectIdUrl; }
+  get getLookUpDetailsByTypeIdUrl() { return this.configurations.baseUrl + this._getLookUpDetailsByTypeIdUrl; }
 
-
+ 
+  
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -387,4 +392,22 @@ debugger
         return this.handleError(error, () => this.newProjectEndpoint(projectObject));
       }));
   }
+
+  getStoresByProjectId<T>(ProjectId: any): Observable<T> {
+    const endpointUrl = this.getStoresByProjectIdUrl+'/'+ProjectId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getStoresByProjectId(ProjectId));
+      }));
+  }
+
+
+  getLookUpDetailsByTypeId<T>(TypeId: any): Observable<T> {
+    const endpointUrl = this.getLookUpDetailsByTypeIdUrl+'/'+TypeId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getLookUpDetailsByTypeId(TypeId));
+      }));
+  }
+  
 }

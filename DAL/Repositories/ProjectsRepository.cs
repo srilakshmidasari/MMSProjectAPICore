@@ -41,7 +41,7 @@ namespace DAL.Repositories
                                   SiteId = s.Id,
                                   SiteName1 = s.Name1,
                                   SiteName2 = s.Name2,
-                                  StoreId = l.Id,
+                                  StoreId = _appContext.LookUpProjectXrefs.Where(S=>S.ProjectId == p.Id).ToList(),
                                   StoreName1 = l.Name1,
                                   StoreName2 = l.Name2,
                                   ProjectDetails = p.ProjectDetails,
@@ -174,19 +174,20 @@ namespace DAL.Repositories
                         _appContext.ProjectRepositories.Add(pros);
                     }
                     _appContext.SaveChanges();
-                    if (result != null)
-                    {
-                        response.Result = pro;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "Project Added Successfully";
-                    }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "Project Added Failed";
-                    }
+                }
+
+                if (pro != null)
+                {
+                    response.Result = pro;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Project Added Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Project Added Failed";
                 }
             }
             catch (Exception ex)
