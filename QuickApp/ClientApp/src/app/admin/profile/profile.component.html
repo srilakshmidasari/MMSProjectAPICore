@@ -122,11 +122,11 @@
         </mat-card-content>
         <mat-card-actions>
             <div  *ngIf="!isEditing"class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary"  (click)="onEditProfile()">Edit</button>
+                <button mat-raised-button color="primary"  (click)="onEditProfile()">{{'users.editor.Edit' | translate}}</button>
             </div>
             <div  *ngIf="isEditing"class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary"  (click)="onUpdateProfile()">Update</button>
-                <button mat-raised-button color="warn"  (click)="onCancelProfile()">Cancel</button>
+                <button mat-raised-button color="primary"  (click)="onUpdateProfile()">{{'users.editor.Update' | translate}}</button>
+                <button mat-raised-button color="warn"  (click)="onCancelProfile()">{{'users.editor.Cancel' | translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
