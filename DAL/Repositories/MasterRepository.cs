@@ -189,7 +189,8 @@ namespace DAL.Repositories
                 var result = _appContext.LookUps.Where(x => x.Id == lookup.Id).FirstOrDefault();
                 if (result != null)
                 {
-                    
+                    result.Id = lookup.Id;
+                    result.LookUpTypeId = lookup.LookUpTypeId;
                     result.Name1 = lookup.Name1;
                     result.Name2 = lookup.Name2;
                     result.Remarks = lookup.Remarks;

@@ -54,7 +54,7 @@ namespace MMS.Controllers
         public ValueDataResponse<LookUp> UpdateLookUpData(AddLookUp lookup)
         {
             LookUp LookupResult = _mapper.Map<LookUp>(lookup);
-            return _unitOfWork.Masters.AddLookUpData(LookupResult);
+            return _unitOfWork.Masters.UpdateLookUpData(LookupResult);
         }
 
     }
