@@ -6,11 +6,11 @@
         </mat-card-header>
         <br>
         <mat-card-content>
-            <form  #form="ngForm" [formGroup]="profileForm">
+            <form  #form="ngForm" [formGroup]="profileForm" (ngSubmit)="onUpdateProfile()">
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.EmpId' | translate}}</mat-label>
-                        <input matInput formControlName="empId" maxlength="15" (keypress)="alphaNumaricsOnly($event)"
+                        <input matInput formControlName="empId" 
                             required  readonly/>
                         <mat-error *ngIf="!profileForm.controls['empId'].valid">
                             {{'users.editor.EmployeeIdRequired' | translate}}
@@ -66,23 +66,56 @@
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'users.editor.Roles' | translate }}</mat-label>
-                        <mat-select formControlName="roles" multiple  required readonly>
-                            <mat-option *ngFor="let role of rolesData" [value]="role.id">
-                              <span matTooltip="{{role.name}}">{{role.description}}</span>
-                            </mat-option>
-                          </mat-select>
+                        <input matInput formControlName="roles" readonly required />
                     <mat-error *ngIf="profileForm.controls['roles'].hasError('required')">
-                        {{'users.editor.PhoneNumberRequired' | translate}}
-                    </mat-error>
-                  
-                    </mat-form-field>
+                        {{'users.editor.RoleRequired' | translate}}
+                    </mat-error>                  
+                    </mat-form-field>              
                 </div>
-                <div class="row">
-                    <div class="form-group col-md-4 " *ngFor="let doc of documentList">
+               
+                <div class="row" *ngIf="!isEditing" >                
+                    <div class="form-group col-md-4 file-icon " *ngFor="let file of currentUserFiles">
+                        <div>  User {{file.fileTypeName}}</div>
+                        <div class="clearfix space20"></div>
+                        <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
+                            <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+                          </a>
+                          <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
+                            <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121"> &nbsp;&nbsp;&nbsp;</a>                   
+                        
+                      </div>                 
+                   
+                </div>
+                <div class="row" *ngIf="isEditing" >                                  
+                    <div class="form-group col-md-4 file-icon " *ngFor="let file of currentUserFiles">
+                        <div>  User {{file.fileTypeName}}</div>
+                        <div class="clearfix space20"></div>
+                        <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
+                            <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+                          </a>
+                          <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
+                            <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121"> &nbsp;&nbsp;&nbsp;</a>
+                    
+                          <a class="close2 color-red" *ngIf="file.documentType==1" (click)="onDeleteFile(file)" >
+                            <mat-icon>cancel</mat-icon>
+                          </a>
+                          <a class="close1 color-red" *ngIf="file.documentType==2" (click)="onDeleteFile(file)" >
+                            <mat-icon >cancel</mat-icon>
+                          </a>
+                      </div> 
+                      <div class="form-group  col-md-4 "  *ngFor="let doc of editUserFilesList">
                         <label for="file">Upload User {{doc.description}}</label>
                         <input #fileInput type="file" class="form-control" id="file" formControlName="file"
                           (change)="uploadFile(doc, $event)">
-                      </div>
+                      </div>                 
+                   
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <mat-checkbox  formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
+                    </div>
+                   
                 </div>
                 
             </form>

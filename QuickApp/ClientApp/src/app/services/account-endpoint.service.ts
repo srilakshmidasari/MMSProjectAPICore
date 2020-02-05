@@ -121,7 +121,7 @@ export class AccountEndpoint extends EndpointBase {
 
     return this.http.put<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.getUpdateUserEndpoint(userObject, userId));
+        return this.handleError(error, () => this.updateUserEndpoint(userObject, userId));
       }));
   }
 
