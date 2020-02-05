@@ -17,5 +17,7 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<LookUp> AddLookUpData (LookUp lookup);
         ValueDataResponse<LookUp> UpdateLookUpData(LookUp lookup);
+
+        ListDataResponse<LookUp> GetLookUpDetilas(int TypeId);
     }
 }

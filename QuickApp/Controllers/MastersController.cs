@@ -57,5 +57,12 @@ namespace MMS.Controllers
             return _unitOfWork.Masters.UpdateLookUpData(LookupResult);
         }
 
+
+
+        [HttpGet("GetLookUpDetilas/{TypeId}")]
+        public ListDataResponse<LookUp> GetLookUpDetilas(int TypeId)
+        {
+            return _unitOfWork.Masters.GetLookUpDetilas(TypeId);
+        }
     }
 }
