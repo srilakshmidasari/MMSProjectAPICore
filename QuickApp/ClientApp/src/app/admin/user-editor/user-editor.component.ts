@@ -126,9 +126,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     private dialog: MatDialog
   ) {
     this.buildForm();
-
-
-
   }
 
   ngOnChanges() {
@@ -154,8 +151,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.getDocuments();
     this.setRoles();
     this.resetForm();
-
-
   }
 
   ngOnDestroy() {
@@ -283,10 +278,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
             this.isAllow = false;
           } else {
             this.isAllow = true;
+            this.isImageFile = true;
           }
         }
       }
-      this.isImageFile = true;
+    
     } else {
       var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
       if (file != undefined) {
@@ -308,10 +304,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
             this.isAllow = false;
           } else {
             this.isAllow = true;
+            this.isDocFile = true;
           }
         }
-      }
-      this.isDocFile = true;
+      }      
     }
     let reader = new FileReader();
     reader.onload = (e: any) => {
@@ -583,28 +579,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
   //  On Delete File
-  onDeleteFile(file) {
-    // const dialogRef = this.dialog.open(AppDialogComponent, {
-    //   panelClass: 'mat-dialog-sm',
-    //   data: {
-    //     title: 'Confirmation Dialog Box', message: 'Are You Sure Want To Delete File !',
-    //     okLabel: 'Delete', cancelLabel: 'Cancel', type: 'false'
-    //   }
-    // });
-    // dialogRef.afterClosed().subscribe(res => {
-    //   this.accountService.deleteUserFile(file.repositoryId)
-    //     .subscribe((results: any) => {
-    //       this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
-    //       this.getfileRepositoryDelete(this.user.id, file);
-    //     },
-    //       error => {
-    //         this.alertService.stopLoadingMessage();
-    //         this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-    //           MessageSeverity.error, error);
-    //       });
-
-    // });
-
+  onDeleteFile(file) { 
     const dialogRef = this.dialog.open(DeleteFileComponent, {
       panelClass: 'mat-dialog-sm',
       data: file

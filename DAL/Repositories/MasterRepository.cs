@@ -258,9 +258,50 @@ namespace DAL.Repositories
             return response;
         }
 
+
+        public ValueDataResponse<LookUp> DeleteLooKUp(int LookUpId)
+        {
+            ValueDataResponse<LookUp> response = new ValueDataResponse<LookUp>();
+            try
+            {
+                var Lookupdetials = _appContext.LookUps.Where(x => x.Id == LookUpId).FirstOrDefault();
+
+                if (Lookupdetials != null)
+                {
+                    Lookupdetials.IsActive = false;
+                    Lookupdetials.UpdatedDate = DateTime.Now;
+
+                    _appContext.SaveChanges();
+                }
+
+                if (Lookupdetials != null)
+                {
+                    response.Result = Lookupdetials;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "LookUp Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No LookUp Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
+
     }
-
-
 
 }
 
