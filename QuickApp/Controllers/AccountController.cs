@@ -926,6 +926,13 @@ namespace MMS.Controllers
         {
             var userInfo = await _accountManager.GetUserById(userId);
             userInfo.FileRepositories = _appcontext.FileRepositories.Where(x => x.UserId == userId).ToList();
+            var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
+
+            userInfo.FileRepositories.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+
+
+
+
             //userInfo.FileRepositories = await GetFilesByUserId(userId);
 
             return userInfo;

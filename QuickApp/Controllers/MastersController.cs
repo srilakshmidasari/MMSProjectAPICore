@@ -38,7 +38,7 @@ namespace MMS.Controllers
         }
 
         [HttpGet("GetAllLookUpDetails")]
-        public ListDataResponse<LookUp> GetAllLookUpDetails()
+        public ListDataResponse<LookupDataResponse> GetAllLookUpDetails()
         {
             return _unitOfWork.Masters.GetAllLookUpDetails();
         }
@@ -50,6 +50,26 @@ namespace MMS.Controllers
             return _unitOfWork.Masters.AddLookUpData(LookupDetails);
         }
 
+        [HttpPost("UpdateLookUpData")]
+        public ValueDataResponse<LookUp> UpdateLookUpData(AddLookUp lookup)
+        {
+            LookUp LookupResult = _mapper.Map<LookUp>(lookup);
+            return _unitOfWork.Masters.UpdateLookUpData(LookupResult);
+        }
 
+
+
+        [HttpGet("GetLookUpDetilas/{TypeId}")]
+        public ListDataResponse<LookUp> GetLookUpDetilas(int TypeId)
+        {
+            return _unitOfWork.Masters.GetLookUpDetilas(TypeId);
+        }
+
+        [HttpDelete]
+        [Route("DeleteLooKUp/{LookupId}")]
+        public ValueDataResponse<LookUp> DeleteLooKUp(int LookupId)
+        {
+            return _unitOfWork.Masters.DeleteLooKUp(LookupId);
+        }
     }
 }

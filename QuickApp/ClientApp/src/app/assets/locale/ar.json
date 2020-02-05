@@ -216,6 +216,7 @@
       "SiteManagerRequired": "مدير الموقع مطلوب",
       "SiteAddressRequired": "العنوان مطلوب",
       "Upload Document": "تحميل المستند",
+      "UploadLocationMapImage": "تحميل صورة خريطة الموقع",
       "Site Document": "وثيقة الموقع",
       "Site Image": "صورة الموقع"
     }

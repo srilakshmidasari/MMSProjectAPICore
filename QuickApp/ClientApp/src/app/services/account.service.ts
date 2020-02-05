@@ -248,4 +248,8 @@ export class AccountService {
     return this.accountEndpoint.getProjectEndpoint();
   }
 
+  NewProject(project :any){
+    return this.accountEndpoint.newProjectEndpoint(project);
+  }
+
 }

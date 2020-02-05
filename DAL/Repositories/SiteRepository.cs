@@ -63,15 +63,15 @@ namespace DAL.Repositories
 
             try
             {
-                if (sites.Address != null)
-                {
-                    coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
-                    if (LatLong != null)
-                    {
-                        sites.Latitude = (float)(LatLong.Latitude);
-                        sites.Longitude = (float)LatLong.Longitude;
-                    }
-                }
+            //    if (sites.Address != null)
+            //    {
+            //        coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
+            //        if (LatLong != null)
+            //        {
+            //            sites.Latitude = (float)(LatLong.Latitude);
+            //            sites.Longitude = (float)LatLong.Longitude;
+            //        }
+            //    }
                 var result = _appContext.SiteInfos.Add(sites);
 
                 if (sites.FileName != null)
@@ -145,15 +145,15 @@ namespace DAL.Repositories
                     result.CreatedDate = sites.CreatedDate;
                     result.UpdatedBy = sites.UpdatedBy;
                     result.UpdatedDate = sites.UpdatedDate;
-                    if (!string.IsNullOrEmpty(sites.Address))
-                    {
-                        coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
-                        if (LatLong != null)
-                        {
-                            result.Latitude = (float)(LatLong.Latitude);
-                            result.Longitude = (float)LatLong.Longitude;
-                        }
-                    }
+                    //if (!string.IsNullOrEmpty(sites.Address))
+                    //{
+                    //    coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
+                    //    if (LatLong != null)
+                    //    {
+                    //        result.Latitude = (float)(LatLong.Latitude);
+                    //        result.Longitude = (float)LatLong.Longitude;
+                    //    }
+                    //}
 
                     if (sites.FileName != null)
                     {

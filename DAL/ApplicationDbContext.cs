@@ -29,6 +29,9 @@ namespace DAL
 
         public DbSet<LookUp> LookUps { get; set; }
 
+        public DbSet<LookUpProjectXref> LookUpProjectXrefs { get; set; }
+        
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -57,6 +60,7 @@ namespace DAL
             builder.Entity<Project>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<ProjectRepository>().ToTable("ProjectRepository");
             builder.Entity<LookUp>().ToTable("LookUP");
+            builder.Entity<LookUpProjectXref>().ToTable("LookUpProjectXref");
 
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
@@ -179,11 +183,23 @@ namespace DAL
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_App_LookUp_TypeId");
 
-            builder.Entity<Project>().HasOne(d => d.LookUp_Id)
-             .WithMany(p => p.App_Project_StoreId)
-             .HasForeignKey(d => d.StoreId)
-             .OnDelete(DeleteBehavior.ClientSetNull)
-             .HasConstraintName("FK_App_Project_StoreId");
+            //builder.Entity<Project>().HasOne(d => d.LookUp_Id)
+            // .WithMany(p => p.App_Project_StoreId)
+            // .HasForeignKey(d => d.StoreId)
+            // .OnDelete(DeleteBehavior.ClientSetNull)
+            // .HasConstraintName("FK_App_Project_StoreId");
+
+            builder.Entity<LookUpProjectXref>().HasOne(d => d.LookUp_Id)
+                 .WithMany(p => p.StorexrefId)
+                 .HasForeignKey(d => d.StoreId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_StorexrefId");
+
+            builder.Entity<LookUpProjectXref>().HasOne(d => d.Project_Id)
+                 .WithMany(p => p.ProjectxrefId)
+                 .HasForeignKey(d => d.ProjectId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_ProjectxrefId");
         }
 
         public override int SaveChanges()
