@@ -13,8 +13,9 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<FileRepository> DeleteFileRepository(int FileRepositoryId);
 
-        ListDataResponse<LookUp> GetAllLookUpDetails();
+        ListDataResponse<LookupDataResponse> GetAllLookUpDetails();
 
         ValueDataResponse<LookUp> AddLookUpData (LookUp lookup);
+        ValueDataResponse<LookUp> UpdateLookUpData(LookUp lookup);
     }
 }

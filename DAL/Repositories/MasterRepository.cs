@@ -90,12 +90,34 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ListDataResponse<LookUp> GetAllLookUpDetails()
+        public ListDataResponse<LookupDataResponse> GetAllLookUpDetails()
         {
-            ListDataResponse<LookUp> response = new ListDataResponse<LookUp>();
+            ListDataResponse<LookupDataResponse> response = new ListDataResponse<LookupDataResponse>();
             try
             {
-                var result = _appContext.LookUps.ToList();
+                //var result = _appContext.LookUps.ToList();
+
+                var result = (from e in _appContext.LookUps
+                              join t in _appContext.TypeCdDmts
+                               on e.LookUpTypeId equals t.TypeCdDmtId
+                               join u in _appContext.Users
+                               on e.CreatedBy equals u.Id
+                              select new LookupDataResponse
+                              {
+                                  Id=e.Id,
+                                  LookUpTypeId = e.LookUpTypeId,
+                                  Name1 = e.Name1,
+                                  Name2 = e.Name2,
+                                  Remarks = e.Remarks,
+                                  Description = t.Description,
+                                  CreatedBy = e.CreatedBy,
+                                  CreatedDate = e.CreatedDate,
+                                  UpdatedBy = e.UpdatedBy,
+                                  UpdatedDate = e.UpdatedDate,
+                                  IsActive = e.IsActive,
+                                  CreatedByUser=u.UserName,
+                                  UpdatedByUser=u.UserName
+                              }).ToList();
                 if (result != null)
                 {
                     response.ListResult = result;
@@ -158,6 +180,48 @@ namespace DAL.Repositories
         }
 
 
+        public ValueDataResponse<LookUp> UpdateLookUpData(LookUp lookup)
+        {
+            ValueDataResponse<LookUp> response = new ValueDataResponse<LookUp>();
+
+            try
+            {
+                var result = _appContext.LookUps.Where(x => x.Id == lookup.Id).FirstOrDefault();
+                if (result != null)
+                {
+                    
+                    result.Name1 = lookup.Name1;
+                    result.Name2 = lookup.Name2;
+                    result.Remarks = lookup.Remarks;
+                    result.IsActive = lookup.IsActive;
+                    result.CreatedBy = lookup.CreatedBy;
+                    result.CreatedDate = lookup.CreatedDate;
+                    result.UpdatedBy = lookup.UpdatedBy;
+                    result.UpdatedDate = lookup.UpdatedDate;
+
+                    _appContext.SaveChanges();
+                    response.Result = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "LookUp Updated Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "LookUp Updation Failed";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+
+            }
+            return response;
+        }
     }
 }
 

@@ -27,7 +27,8 @@
     "User": "Users",
     "Role": "Roles",
     "Site": "Site",
-    "Project" :"Project"
+    "Project" :"Project",   
+    "LookUp":"LookUp"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -41,7 +42,8 @@
     "Roles": "Role Management",
     "Site": "Site Management",
     "Project": "Project Management",
-    "Profile": "Profile"
+    "Profile": "Profile",   
+    "LookUp":"LookUp Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -250,6 +252,11 @@
       "IsActive": "Is Active",
       "AddProject": "Add Project"
      
+    }
+  },
+  "LookUp":{
+    "management":{
+      "Search": "Search for LookUp..."
     }
   }
 }

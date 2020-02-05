@@ -43,7 +43,7 @@ export class AccountService {
   }
 
   getUsers(page?: number, pageSize?: number) {
-   debugger
+    debugger
     return this.accountEndpoint.getUsersEndpoint<User[]>(page, pageSize);
   }
 
@@ -60,14 +60,14 @@ export class AccountService {
     } else {
       return this.accountEndpoint.getUserByUserNameEndpoint<any>(user.userName).pipe(
         mergeMap(foundUser => {
-          
+
           user.id = foundUser.id;
           return this.accountEndpoint.getUpdateUserEndpoint(user, user.id);
         }));
     }
   }
-  
-  UpdateUser(user :any){
+
+  UpdateUser(user: any) {
     if (user.id) {
       return this.accountEndpoint.updateUserEndpoint(user, user.id);
     } else {
@@ -78,9 +78,9 @@ export class AccountService {
         }));
     }
   }
-  
 
- 
+
+
   newUser(user: any, isPublicRegistration?: boolean) {
     return this.accountEndpoint.getNewUserEndpoint<any>(user, isPublicRegistration);
   }
@@ -206,16 +206,14 @@ export class AccountService {
   get currentUser() {
     return this.authService.currentUser;
   }
-  getSiteData(){
+  getSiteData() {
     return this.accountEndpoint.getSiteEndpoint();
   }
-
-
-  AddSite(site){
+  AddSite(site) {
     return this.accountEndpoint.getNewSiteEndpoint(site);
   }
 
-  updateSite(site){
+  updateSite(site) {
     return this.accountEndpoint.updateSiteEndpoint(site);
   }
 
@@ -223,22 +221,25 @@ export class AccountService {
     return this.accountEndpoint.getDeleteSiteEndpoint<any>(site.id);
   }
 
-  getUserFileData(userid){
+  getUserFileData(userid) {
     return this.accountEndpoint.getUserFileEndpoint(userid);
   }
-  getCddmtData(classTypeId){
+  getCddmtData(classTypeId) {
     return this.accountEndpoint.getTypeCddmtDataEndpoint(classTypeId);
   }
-  deleteUserFile(repositotyId){
+  deleteUserFile(repositotyId) {
     return this.accountEndpoint.deleteUserFileEndpoint(repositotyId);
   }
 
-  getRolesData(){
+  getRolesData() {
     return this.accountEndpoint.getRoleData()
   }
 
-  gettUserDataBYId(userId){
+  gettUserDataBYId(userId) {
     return this.accountEndpoint.getUserDataById(userId)
+  }
+  getLookUPData() {
+    return this.accountEndpoint.getLookUpData()
   }
 
   // Project
