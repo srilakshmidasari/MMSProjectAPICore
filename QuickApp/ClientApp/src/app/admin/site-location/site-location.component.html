@@ -1,7 +1,11 @@
 <h1 mat-dialog-title> Site Location</h1>
-<div mat-dialog-content >
+<!-- <div mat-dialog-content >
     <div  style="height: 350px;" leaflet (leafletMapReady)="onMapReady($event)"  [leafletOptions]="options" [leafletLayersControl]="layersControl">
     </div>
+</div> -->
+<div>
+        <img [src]="image" style="height: 550px;"  alt="" /> 
+
 </div>
 <div mat-dialog-actions class="pull-right">
     <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>

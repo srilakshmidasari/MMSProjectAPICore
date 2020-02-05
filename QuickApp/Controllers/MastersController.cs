@@ -54,8 +54,22 @@ namespace MMS.Controllers
         public ValueDataResponse<LookUp> UpdateLookUpData(AddLookUp lookup)
         {
             LookUp LookupResult = _mapper.Map<LookUp>(lookup);
-            return _unitOfWork.Masters.AddLookUpData(LookupResult);
+            return _unitOfWork.Masters.UpdateLookUpData(LookupResult);
         }
 
+
+
+        [HttpGet("GetLookUpDetilas/{TypeId}")]
+        public ListDataResponse<LookUp> GetLookUpDetilas(int TypeId)
+        {
+            return _unitOfWork.Masters.GetLookUpDetilas(TypeId);
+        }
+
+        [HttpDelete]
+        [Route("DeleteLooKUp/{LookupId}")]
+        public ValueDataResponse<LookUp> DeleteLooKUp(int LookupId)
+        {
+            return _unitOfWork.Masters.DeleteLooKUp(LookupId);
+        }
     }
 }

@@ -40,6 +40,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _UpdateLookUpData: string = ' api/Masters/UpdateLookUpData';
  
   private readonly _projectUrl: string = '/api/Project';
+  private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
+  private readonly _getLookUpDetailsByTypeIdUrl: string = '/api/Masters/GetLookUpDetilas';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -62,10 +64,13 @@ export class AccountEndpoint extends EndpointBase {
   get userDataById() { return this.configurations.baseUrl + this._getUserById; }
   get projectUrl() { return this.configurations.baseUrl + this._projectUrl; }
   get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
+  get getStoresByProjectIdUrl() { return this.configurations.baseUrl + this._getStoresByProjectIdUrl; }
+  get getLookUpDetailsByTypeIdUrl() { return this.configurations.baseUrl + this._getLookUpDetailsByTypeIdUrl; }
   get AddlookUpData() { return this.configurations.baseUrl + this._AddLookUpData; }
   get UpdateLookUpData() { return this.configurations.baseUrl + this._UpdateLookUpData; }
 
-
+ 
+  
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -125,7 +130,7 @@ export class AccountEndpoint extends EndpointBase {
 
     return this.http.put<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.getUpdateUserEndpoint(userObject, userId));
+        return this.handleError(error, () => this.updateUserEndpoint(userObject, userId));
       }));
   }
 
@@ -382,6 +387,32 @@ debugger
       }));
   }
 
+
+  newProjectEndpoint<T>(projectObject: any): Observable<T> {
+    const endpointUrl = this.projectUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(projectObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.newProjectEndpoint(projectObject));
+      }));
+  }
+
+  getStoresByProjectId<T>(ProjectId: any): Observable<T> {
+    const endpointUrl = this.getStoresByProjectIdUrl+'/'+ProjectId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getStoresByProjectId(ProjectId));
+      }));
+  }
+
+
+  getLookUpDetailsByTypeId<T>(TypeId: any): Observable<T> {
+    const endpointUrl = this.getLookUpDetailsByTypeIdUrl+'/'+TypeId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getLookUpDetailsByTypeId(TypeId));
+      }));
+  }
+  
   AddLookUpEndpoint<T>(lookUpObject: any): Observable<T> {
     const endpointUrl = this.AddlookUpData;
     return this.http.post<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(

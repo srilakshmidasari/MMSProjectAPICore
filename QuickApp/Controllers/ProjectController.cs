@@ -30,6 +30,13 @@ namespace MMS.Controllers
             return _unitOfWork.Projects.GetAllProject();
         }
 
+        [HttpGet("GetStoresByProjectId/{ProjectId}")]
+        public ListDataResponse<GetLoopUpResponse> GetStoresByProjectId(int ProjectId)
+        {
+            return _unitOfWork.Projects.GetStoresByProjectId(ProjectId);
+        }
+
+
         [HttpPost]
         public ValueDataResponse<Project> Insert(UpsertProject project)
         {

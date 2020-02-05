@@ -13,6 +13,7 @@ declare let L;
 export class SiteLocationComponent implements OnInit {
   markers: any[];
   map: L.Map;
+  image: any;
   
   constructor(public dialogRef: MatDialogRef<SiteLocationComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -34,6 +35,7 @@ export class SiteLocationComponent implements OnInit {
     };
 
   ngOnInit() {
+    this.image =this.data.site.fileLocation
   }
 
   onMapReady(map) {

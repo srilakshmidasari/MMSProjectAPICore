@@ -10,6 +10,9 @@ namespace DAL.Repositories.Interfaces
     public interface IProjectRepository
     {
         ListDataResponse<GetProjectResponse> GetAllProject();
+        ListDataResponse<GetLoopUpResponse> GetStoresByProjectId(int ProjectId);
         ValueDataResponse<Project> InsertProject(UpsertProject project);
+
+        //ListDataResponse<> GetStoresByProjectId(int ProjectId);
     }
 }

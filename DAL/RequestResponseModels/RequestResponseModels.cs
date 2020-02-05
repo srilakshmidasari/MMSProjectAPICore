@@ -72,7 +72,7 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int SiteId { get; set; }
-            public int StoreId { get; set; }
+            public List<LookUpProjectXref> StoreId { get; set; }
             public string ProjectReference { get; set; }
             public string StoreName1 { get; set; }
 
@@ -94,7 +94,7 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int SiteId { get; set; }
-            public int StoreId { get; set; }
+            public int[] StoreIds { get; set; }
             public string ProjectReference { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
@@ -118,7 +118,18 @@ namespace DAL.RequestResponseModels
             public DateTime UpdatedDate { get; set; }
         }
 
-       public class LookupDataResponse
+        public class GetLoopUpResponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int LookUpTypeId { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public string Remarks { get; set; }
+            public bool IsActive { get; set; }
+           
+        }
+
+        public class LookupDataResponse
         {
             public int Id { get; set; }
             public int LookUpTypeId { get; set; }

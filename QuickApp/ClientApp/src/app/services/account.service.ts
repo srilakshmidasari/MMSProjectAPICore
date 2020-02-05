@@ -257,4 +257,15 @@ export class AccountService {
     return this.accountEndpoint.updateLookUpEndpoint(LookUp);
   }
 
+  getStoresByProjectId(ProjectId){
+    return this.accountEndpoint.getStoresByProjectId(ProjectId);
+  }
+  getLookUpDetailsByTypeId(TypeId){
+    return this.accountEndpoint.getLookUpDetailsByTypeId(TypeId);
+  }
+
+  NewProject(project :any){
+    return this.accountEndpoint.newProjectEndpoint(project);
+  }
+
 }
