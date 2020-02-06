@@ -79,8 +79,8 @@ export class SiteListComponent implements OnInit {
       this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
       this.sourceSite = null;
     } else {
-      this.getSites();
       this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+      this.getSites();     
     }
   }
 

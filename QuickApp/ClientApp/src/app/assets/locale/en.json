@@ -28,7 +28,8 @@
     "Role": "Roles",
     "Site": "Site",
     "Project" :"Project",   
-    "LookUp":"LookUp"
+    "LookUp":"LookUp",
+    "Location":"Location"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -43,7 +44,8 @@
     "Site": "Site Management",
     "Project": "Project Management",
     "Profile": "Profile",   
-    "LookUp":"LookUp Management"
+    "LookUp":"LookUp Management",
+    "Location":"Location Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -270,5 +272,11 @@
       "editor":{
       "AddLookUp":"Add LookUp"
       }
+  },
+  "Location":{
+    "Management":{
+      "Search": "Search for Location ..."
+    }
+    
   }
 }

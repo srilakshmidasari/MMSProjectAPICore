@@ -22,7 +22,7 @@
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.SiteManager' | translate}}</mat-label>
-    <input matInput formControlName="siteManager" (keypress)="alphaNumaricsOnly($event)"required maxlength="30" />
+    <input matInput formControlName="siteManager" required maxlength="30" />
     <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
       {{'site.management.SiteManagerRequired' | translate}}
     </mat-error>

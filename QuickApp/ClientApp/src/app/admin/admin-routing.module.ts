@@ -15,6 +15,7 @@ import { SiteListComponent } from './site-list/site-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectComponent } from './project/project.component';
 import { LookupListComponent } from './lookup-list/lookup-list.component';
+import { LocationComponent } from './location/location.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -25,7 +26,8 @@ const adminRoutes: Routes = [
       { path: 'site', component: SiteListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Site' } },
       { path: 'project', component: ProjectComponent, canActivate: [AuthGuard], data: { title: 'Admin | Project' } },
       { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { title: 'Admin | Profile' } },      
-      { path: 'LookUp', component: LookupListComponent, canActivate: [AuthGuard], data: { title: 'Admin | LookUp' } }
+      { path: 'lookup', component: LookupListComponent, canActivate: [AuthGuard], data: { title: 'Admin | LookUp' } },
+      { path: 'location', component: LocationComponent, canActivate: [AuthGuard], data: { title: 'Admin | Location' } },
       
     ]
   }
