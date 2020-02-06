@@ -1,5 +1,5 @@
 {
-  "appTitle":"نظام إدارة الصيانة",
+  "appTitle": "نظام إدارة الصيانة",
   "app": {
     "Welcome": "أهلا بك",
     "Notifications": "إعلام",
@@ -7,8 +7,8 @@
   },
   "mainMenu": {
     "Home": "الصفحة الرئيسية",
-    "Admin":"مشرف",
-    "Security":"الأمان",
+    "Admin": "مشرف",
+    "Security": "الأمان",
     "Appointments": "المواعيد",
     "Profile": "الملف الشخصي",
     "About": "حول منجز التطبيق",
@@ -17,7 +17,7 @@
     "Logout": "الخروج",
     "User": "إدارةالمستخدم",
     "Role": "إدارة الدور",
-    "Site":"موقع"
+    "Site": "موقع"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -29,7 +29,7 @@
     "Settings": "إعدادات",
     "Users": "إدارةالمستخدم",
     "Roles": "إدارة الدور",
-    "Site":"إدارة الموقع"
+    "Site": "إدارة الموقع"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -122,6 +122,7 @@
       "ChangePassword": "غير كلمة المرور",
       "CurrentPassword": "كلمة المرور الحالية:",
       "NewPassword": "كلمة مرور جديدة:",
+      "NewPasswordRules": "يجب أن يحتوي على كلمة المرور الجديدة على الأقل: واحد الأحرف الكبيرة إلكتروني، رسالة صغيرة واحدة، رقم واحد، والحد الأدنى 8 أحرف وأي حرف خاص",
       "NewPasswordRequired": "الحد الأدنى من 6 أحرف) مطلوب كلمة مرور)",
       "ConfirmPassword": "تأكيد كلمة المرور:",
       "ConfirmationPasswordRequired": "مطلوب كلمة مرور التأكيد",
@@ -137,14 +138,14 @@
       "Cancel": "إلغاء",
       "Save": "حفظ",
       "Saving": "جار الحفظ...",
-      "EmpId":"هوية الموظف",
-      "EmployeeIdRequired":"هوية الموظف مطلوبة (بحد أقصى 15 حرفًا)",
-      "Name1":"1اسم",
-      "Name2":"2 اسم",
-      "Name1Required":"الاسم 1 مطلوب",
-      "Name2Required":"الاسم 2 مطلوب",
-      "PhoneNumberRequired":"رقم الهاتف مطلوب",
-      "PhoneNumberMinLength":"أدخل 10 أرقام لرقم الهاتف",
+      "EmpId": "هوية الموظف",
+      "EmployeeIdRequired": "هوية الموظف مطلوبة (بحد أقصى 15 حرفًا)",
+      "Name1": "1اسم",
+      "Name2": "2 اسم",
+      "Name1Required": "الاسم 1 مطلوب",
+      "Name2Required": "الاسم 2 مطلوب",
+      "PhoneNumberRequired": "رقم الهاتف مطلوب",
+      "PhoneNumberMinLength": "أدخل 10 أرقام لرقم الهاتف",
       "Update": "تحديث"
     }
   },
@@ -189,7 +190,6 @@
       "Task": "مهمة",
       "Description": "وصف"
     },
-
     "editor": {
       "NewTask": "مهمة جديدة",
       "Name": "اسم",
@@ -199,7 +199,6 @@
       "AddTask": "إضافة مهمة"
     }
   },
-
   "site": {
     "management": {
       "Search": "البحث عن الموقع",
