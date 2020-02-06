@@ -160,16 +160,59 @@
                         </mat-error>
                     </mat-form-field> -->
                 </div>
-                <div class="row">
+                <div class="row" *ngIf="isNewProject">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
-                        <label for="file">Upload Project of {{doc.description}} <span>*</span></label>
+                        <label for="file">Upload Project {{doc.description}} <span>*</span></label>
                         <input #fileInput type="file" class="form-control" id="file" formControlName="file"
                             (change)="uploadFile(doc, $event)">
                     </div>
-                    <!-- <div class="form-group col-md-6" fxFlex *ngFor="let doc of documentList">
-                        <label for="file">Upload User {{doc.description}}</label>
+                    <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
+                        <div class="clearfix space20"></div>
+                        <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"
+                            *ngIf="info.documentTypeId==isDocument" download>
+                            <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="{{'data:image/jpg;base64,'+ info.fileName}}" target="_blank"
+                            *ngIf="info.documentTypeId==isImage">
+                            <img src="{{'data:image/jpg;base64,'+ info.fileName}}" class="img-fluid" width="161"
+                                height="121">
+                            &nbsp;&nbsp;&nbsp;</a>
+                    </div>
+                </div>
+                <div class="row" *ngIf="!isNewProject">
+                    <div class="form-group col-md-6 file-icon" *ngFor="let file of ProjectFileList;let index=i">
+                        <div> Project {{file.fileTypeName}}</div>
+                        <div class="clearfix space20"></div>
+                        <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==isDocument" download>
+                            <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==isImage">
+                            <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121">
+                            &nbsp;&nbsp;&nbsp;</a>
+
+                        <a class="close2 color-red" *ngIf="file.documentType==isImage" (click)="onDeleteFile(file)">
+                            <mat-icon>cancel</mat-icon>
+                        </a>
+                        <a class="close1 color-red" *ngIf="file.documentType==isDocument" (click)="onDeleteFile(file)">
+                            <mat-icon>cancel</mat-icon>
+                        </a>
+                    </div>
+                    <div class="form-group col-md-4" *ngFor="let doc of editDocumentsList">
+                        <label for="file">Upload Project {{doc.description}} </label>
                         <input #fileInput type="file" class="form-control" id="file" formControlName="file"
                             (change)="uploadFile(doc, $event)">
+                    </div>
+                    <!-- <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
+                        <div class="clearfix space20"></div>
+                        <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"
+                            *ngIf="info.documentTypeId==isDocument" download>
+                            <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+                        </a>
+                        <a href="{{'data:image/jpg;base64,'+ info.fileName}}" target="_blank"
+                            *ngIf="info.documentTypeId==isImage">
+                            <img src="{{'data:image/jpg;base64,'+ info.fileName}}" class="img-fluid" width="161"
+                                height="121">
+                            &nbsp;&nbsp;&nbsp;</a>
                     </div> -->
                 </div>
                 <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
@@ -193,7 +236,7 @@
                 <mat-card-title>View Store</mat-card-title>
             </mat-card-header>
             <br>
-            <div >
+            <div>
                 <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
                 <mat-table [dataSource]="storeDataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
                     matSortDisableClear>

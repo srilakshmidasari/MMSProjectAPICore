@@ -9,33 +9,34 @@
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort>
-            <ng-container matColumnDef="Category">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Category</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Category}} </mat-cell>
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Category'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+            </ng-container>  
+            <ng-container matColumnDef="name1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Name1'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="Name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name1</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Name1}} </mat-cell>
+            <ng-container matColumnDef="name2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Name2'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="Name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name2</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Name2}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="Remarks">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Remarks</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Remarks}} </mat-cell>
+            <ng-container matColumnDef="remarks">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Remarks'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.remarks}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="UpdatedDate">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>UpdatedDate</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.UpdatedDate}} </mat-cell>
+            <ng-container matColumnDef="updatedDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.UpdatedDate'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.updatedDate | date:'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="UpdatedBy">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>UpdatedBy</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.UpdatedBy}} </mat-cell>
+            <ng-container matColumnDef="updatedByUser">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.updatedByUser'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.updatedByUser}} </mat-cell>
             </ng-container>
+           
             <ng-container matColumnDef="isActive">
-                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>IsActive
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'LookUp.management.IsActive'|translate}}
                 </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
@@ -45,7 +46,7 @@
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="editlookup()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>AddLookup
+                        <mat-icon class="mat-button-icon">add</mat-icon>Add LookUp
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
@@ -57,12 +58,19 @@
                     </button>
                 </mat-cell>
             </ng-container>
-
-
             <mat-header-row *matHeaderRowDef="displayedColumn"></mat-header-row>
             <mat-row *matRowDef="let row; columns:displayedColumn;">
             </mat-row>
         </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>No Records Found</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>No Search Results Found</p>
+        </div>
+        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
     </div>
 
 </div>

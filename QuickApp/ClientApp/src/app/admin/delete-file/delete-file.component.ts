@@ -11,8 +11,8 @@ import { Utilities } from '../../services/utilities';
 export class DeleteFileComponent implements OnInit {
 
   constructor(public dialogRef: MatDialogRef<DeleteFileComponent>,
-     @Inject(MAT_DIALOG_DATA) public data, private accountService:AccountService,
-     private alertService:AlertService) { }
+    @Inject(MAT_DIALOG_DATA) public data, private accountService: AccountService,
+    private alertService: AlertService) { }
 
   ngOnInit() {
   }
@@ -22,18 +22,39 @@ export class DeleteFileComponent implements OnInit {
     this.dialogRef.close();
   }
 
+  onDeleteClick(){
+    if(this.data.userId){
+      this.onDeleteFile();
+    }else{
+      this.onDeleteProjectFile();
+    }
+  }
   // On  Delete Click
-  onDeleteFile(){
+  onDeleteFile() {
     this.accountService.deleteUserFile(this.data.repositoryId)
-        .subscribe((results: any) => {
-          if(results.IsSuccesss)
+      .subscribe((results: any) => {
+        if (results.IsSuccesss)
           this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
-         this.dialogRef.close();
-        },
-          error => {
-            this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-              MessageSeverity.error, error);
-          });
+        this.dialogRef.close();
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+            MessageSeverity.error, error);
+        });
+  }
+
+  onDeleteProjectFile() {
+    this.accountService.deleteProjectFile(this.data.repositoryId)
+      .subscribe((results: any) => {
+        if (results.IsSuccesss)
+          this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
+        this.dialogRef.close();
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+            MessageSeverity.error, error);
+        });
   }
 }
