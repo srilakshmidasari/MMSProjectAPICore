@@ -220,5 +220,20 @@
       "Site Document": "وثيقة الموقع",
       "Site Image": "صورة الموقع"
     }
+  },
+  "LookUp":{
+    "management":{
+      "Search": "البحث عنابحث عن",
+      "Category":"الفئة",
+      "Name1":"اسم",
+      "Name2":"اسم",
+      "Remarks":"ملاحظات",
+      "UpdatedDate":"تاريخ التحديث",
+      "updatedByUser":"تحديث بواسطة المستخدم",
+      "IsActive":"نشط"
+    },
+      "editor":{
+      "AddLookUp":"إضافة بحث"
+    }
   }
 }

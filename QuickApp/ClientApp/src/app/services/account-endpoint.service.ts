@@ -31,17 +31,19 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _roleByRoleNameUrl: string = '/api/account/roles/name';
   private readonly _permissionsUrl: string = '/api/account/permissions';
   private readonly _siteUrl: string = '/api/Site';
-  private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId';  
+  private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId';
   private readonly _getTypecddmtDetails: string = '/api/Masters/GetTypecddmtDetails';
   private readonly _deleteUserFile: string = '/api/Masters/DeleteFileRepository';
   private readonly _getUserById: string = '/api/Account/users/GetUserById';
   private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
   private readonly _AddLookUpData: string = '/api/Masters/AddLookUpData';
-  private readonly _UpdateLookUpData: string = ' api/Masters/UpdateLookUpData';
+  private readonly _UpdateLookUpData: string = '/api/Masters/UpdateLookUpData';
  
   private readonly _projectUrl: string = '/api/Project';
   private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
   private readonly _getLookUpDetailsByTypeIdUrl: string = '/api/Masters/GetLookUpDetilas';
+  private readonly _getRepositoryByProjectUrl: string = '/api/Project/GetRepositoryByProject';
+  private readonly _deleteProjectFileUrl: string = '/api/Project/DeleteProjectRepository';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -69,9 +71,11 @@ export class AccountEndpoint extends EndpointBase {
   get AddlookUpData() { return this.configurations.baseUrl + this._AddLookUpData; }
   get UpdateLookUpData() { return this.configurations.baseUrl + this._UpdateLookUpData; }
 
- 
-  
+  get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
 
+  get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
+
+  
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -260,7 +264,7 @@ export class AccountEndpoint extends EndpointBase {
 
   getRolesEndpoint<T>(page?: number, pageSize?: number): Observable<T> {
     const endpointUrl = page && pageSize ? `${this.rolesUrl}/${page}/${pageSize}` : this.rolesUrl;
-debugger
+    debugger
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getRolesEndpoint(page, pageSize));
@@ -328,7 +332,7 @@ debugger
 
 
   getUserFileEndpoint<T>(userId: any): Observable<T> {
-    const endpointUrl = this.UserFilesUrl+'/'+userId;
+    const endpointUrl = this.UserFilesUrl + '/' + userId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getUserFileEndpoint(userId));
@@ -336,14 +340,14 @@ debugger
   }
 
   getTypeCddmtDataEndpoint<T>(classTypeId: any): Observable<T> {
-    const endpointUrl = this.typeCddmtData+'/'+classTypeId;
+    const endpointUrl = this.typeCddmtData + '/' + classTypeId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getTypeCddmtDataEndpoint(classTypeId));
       }));
   }
   deleteUserFileEndpoint<T>(fileRepositoryId: string): Observable<T> {
-    const endpointUrl = this.deleteUserFileData+'/'+fileRepositoryId;
+    const endpointUrl = this.deleteUserFileData + '/' + fileRepositoryId;
 
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
@@ -351,7 +355,7 @@ debugger
       }));
   }
 
-  getDeleteSiteEndpoint<T>(siteId: string): Observable<T> {   
+  getDeleteSiteEndpoint<T>(siteId: string): Observable<T> {
     const endpointUrl = this.sitesUrl + '?SiteId=' + siteId;
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
@@ -359,7 +363,7 @@ debugger
       }));
   }
 
-  getUserDataById<T>(userId:string): Observable<T> {
+  getUserDataById<T>(userId: string): Observable<T> {
     const endpointUrl = this.userDataById + '?userId=' + userId;
 
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
@@ -378,7 +382,7 @@ debugger
       }));
   }
 
-  
+
   getLookUpData<T>(): Observable<T> {
     const endpointUrl = this.lookUpData;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
@@ -397,7 +401,7 @@ debugger
   }
 
   getStoresByProjectId<T>(ProjectId: any): Observable<T> {
-    const endpointUrl = this.getStoresByProjectIdUrl+'/'+ProjectId;
+    const endpointUrl = this.getStoresByProjectIdUrl + '/' + ProjectId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getStoresByProjectId(ProjectId));
@@ -406,12 +410,31 @@ debugger
 
 
   getLookUpDetailsByTypeId<T>(TypeId: any): Observable<T> {
-    const endpointUrl = this.getLookUpDetailsByTypeIdUrl+'/'+TypeId;
+    const endpointUrl = this.getLookUpDetailsByTypeIdUrl + '/' + TypeId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getLookUpDetailsByTypeId(TypeId));
       }));
   }
+
+
+  getRepositoryByProjectEndpoint<T>(ProjectId: any): Observable<T> {
+    const endpointUrl = this.getRepositoryByProjectUrl + '/' + ProjectId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getRepositoryByProjectEndpoint(ProjectId));
+      }));
+  }
+
+  deleteProjectFileEndpoint<T>(repositoryId: any): Observable<T> {
+    const endpointUrl = this.deleteProjectFileUrl + '/' + repositoryId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteProjectFileEndpoint(repositoryId));
+      }));
+  }
+
+  
   
   AddLookUpEndpoint<T>(lookUpObject: any): Observable<T> {
     const endpointUrl = this.AddlookUpData;
@@ -425,7 +448,7 @@ debugger
     const endpointUrl = this.UpdateLookUpData;
     return this.http.put<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.AddLookUpEndpoint(lookUpObject));
+        return this.handleError(error, () => this.updateLookUpEndpoint(lookUpObject));
       }));
   }
 

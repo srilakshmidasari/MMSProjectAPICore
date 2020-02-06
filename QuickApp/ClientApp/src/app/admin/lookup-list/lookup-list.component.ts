@@ -57,7 +57,12 @@ export class LookupListComponent implements OnInit {
     }
   }
 
-  updateLookUp(response:any){
+  private refresh() {
+    // Causes the filter to refresh there by updating with recently added data.
+    this.applyFilter(this.dataSource.filter);
+  }
+
+  private updateLookUp(response:any){
    if(this.sourcelookup){
      this.getLookUp();
      this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
@@ -68,7 +73,7 @@ export class LookupListComponent implements OnInit {
       }
   }
 
-  editlookup(lookUp?:any){
+   editlookup(lookUp?:any){
     this.sourcelookup=lookUp;
     const dialogRef = this.dialog.open(LookupDialogComponent,
       {

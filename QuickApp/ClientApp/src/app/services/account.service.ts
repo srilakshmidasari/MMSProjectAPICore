@@ -267,5 +267,10 @@ export class AccountService {
   NewProject(project :any){
     return this.accountEndpoint.newProjectEndpoint(project);
   }
-
+  getRepositoryByProject(ProjectId){
+    return this.accountEndpoint.getRepositoryByProjectEndpoint(ProjectId);
+  }
+  deleteProjectFile(ProjectId){
+    return this.accountEndpoint.deleteProjectFileEndpoint(ProjectId);
+  }
 }
