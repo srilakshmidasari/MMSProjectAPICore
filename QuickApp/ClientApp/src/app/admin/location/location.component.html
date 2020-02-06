@@ -1,5 +1,5 @@
 <app-page-header title="Location" icon="assignment_ind"></app-page-header>
-<div class="page-content"  *ngIf="!isAdding">
+<div class="page-content" *ngIf="!isAdding">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -11,41 +11,41 @@
         <mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="siteName">
-                <mat-header-cell *matHeaderCellDef  mat-sort-header>Site Name</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Site Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteName}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="projectName">
-                <mat-header-cell *matHeaderCellDef  mat-sort-header>Project Name</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="locationRef">
-                <mat-header-cell *matHeaderCellDef  mat-sort-header>Location Refarance</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Refarance</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.locationRef}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="lname1">
-                <mat-header-cell *matHeaderCellDef  mat-sort-header>location Name 1</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>location Name 1</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.lname1}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="lname2">
-                <mat-header-cell *matHeaderCellDef  mat-sort-header>Location Name 2</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name 2</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.lname2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditLocation()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>Add location 
+                        <mat-icon class="mat-button-icon">add</mat-icon>Add location
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
                     <button mat-icon-button matTooltip="Edit" (click)="onEditLocation(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    
-                    <button mat-icon-button matTooltip="Delete"  (click)="confirmDelete(row)">
+
+                    <button mat-icon-button matTooltip="Delete" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -54,14 +54,14 @@
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;">
             </mat-row>
-            </mat-table>
-            <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-                <p>No Records Found</p>
-            </div>
-            <div style="text-align: center;" *ngIf="displayNoRecords">
-                <p>No Search Results Found</p>
-            </div>
-            <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>No Records Found</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>No Search Results Found</p>
+        </div>
+        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </div>
@@ -78,43 +78,47 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>Site Name</mat-label>
-                        <input matInput formControlName="siteName" />                        
-                      </mat-form-field>
-                      <mat-form-field class="col-md-6">
+                        <mat-select formControlName="siteName">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id">
+                                {{site.name1}}
+                            </mat-option>
+                        </mat-select>                        
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
                         <mat-label>Poject Name</mat-label>
-                        <input matInput formControlName="projectName" />                        
-                      </mat-form-field>
+                        <mat-select formControlName="projectName">
+                            <mat-option *ngFor="let project of projectsList" [value]="project.id">
+                                {{project.name1}}
+                            </mat-option>
+                        </mat-select>                       
+                    </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>Location Refarance</mat-label>
-                        <input matInput formControlName="locationRef" />                        
-                      </mat-form-field>
-                      <mat-form-field class="col-md-6">
+                        <input matInput formControlName="locationRef" />
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
                         <mat-label> Name 1</mat-label>
-                        <input matInput formControlName="lName1" />                        
-                      </mat-form-field>
+                        <input matInput formControlName="lName1" />
+                    </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label> Name 2</mat-label>
-                        <input matInput formControlName="lname2" />                        
-                      </mat-form-field>
+                        <input matInput formControlName="lname2" />
+                    </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-checkbox class="col-md-6" formControlName="isActive"> Is isActive</mat-checkbox>
                 </div>
-
-            </form>            
-                
+            </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-
                 <button mat-raised-button (click)="onLocationSave()" color="primary">Save</button>
                 <button mat-raised-button (click)="onLocationCancel()" color="warn">Cancel</button>
             </div>
-
         </mat-card-actions>
         <div class="clearfix"></div>
     </mat-card>
