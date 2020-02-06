@@ -1,10 +1,10 @@
 
 <h1  mat-dialog-title> {{lookUpHeading}}</h1> 
-<div mat-dialog-content [dir]="textDir">   
+<div mat-dialog-content>   
     <app-lookup-editor #lookupeditor [lookUp]="data.lookUp" ></app-lookup-editor>
 </div>
 <div mat-dialog-actions>
-    <button  mat-raised-button [dir]="textDir"  (click)="lookupeditor.save()"  color="primary">Save</button>
-    <button  mat-raised-button  [dir]="textDir" (click)="cancel()" color="warn">Cancel</button>   
+    <button  mat-raised-button  (click)="lookupeditor.save()"  color="primary">Save</button>
+    <button  mat-raised-button   (click)="cancel()" color="warn">Cancel</button>   
 </div>
 <div class="clearfix space20"></div>
