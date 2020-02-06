@@ -239,7 +239,8 @@
       "Name1isrequired": "Name 1 is required",
       "Name2isrequired": "Name 2 is required",
       "SiteManagerRequired": "Site Manager is  Required",
-      "SiteAddressRequired": " Address is Required"
+      "SiteAddressRequired": " Address is Required",
+      "SiteImageRequired":"Site Image is Required"
     }
   },
 

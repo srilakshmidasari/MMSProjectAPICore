@@ -37,8 +37,11 @@
   <div class="row">
     <div class="form-group col-md-7">
       <label for="file">{{'site.management.UploadLocationMapImage'|translate}}</label>
-      <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)">
+      <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)" required>
       <!-- <img [src]="site.fileLocation" style="height: 80px;"  alt="" /> -->
+      <mat-error *ngIf="!siteForm.controls['file'].valid">
+        {{'site.management.SiteImageRequired' | translate}}       
+      </mat-error>
     </div>
     <div class="image-upload col-md-3" *ngIf="!isNewSite">
       <div *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))"> {{'site.management.Site Document'|translate}}  </div>

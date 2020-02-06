@@ -38,7 +38,7 @@ export class SiteEditorComponent implements OnInit {
       address: ['', Validators.required],
       siteManager: ['', Validators.required],
       isActive: [true],
-      file: ['']
+      file: ['',Validators.required]
     })
   }
   ngOnChanges() {
@@ -47,8 +47,7 @@ export class SiteEditorComponent implements OnInit {
     } else {
       this.isNewSite = true;
       this.site = {};
-      this.site.isActive = true;
-    
+      this.site.isActive = true; 
 
     }
     this.resetForm();
