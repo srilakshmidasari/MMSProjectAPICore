@@ -36,7 +36,9 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _deleteUserFile: string = '/api/Masters/DeleteFileRepository';
   private readonly _getUserById: string = '/api/Account/users/GetUserById';
   private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
-
+  private readonly _AddLookUpData: string = '/api/Masters/AddLookUpData';
+  private readonly _UpdateLookUpData: string = ' api/Masters/UpdateLookUpData';
+ 
   private readonly _projectUrl: string = '/api/Project';
   private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
   private readonly _getLookUpDetailsByTypeIdUrl: string = '/api/Masters/GetLookUpDetilas';
@@ -66,6 +68,8 @@ export class AccountEndpoint extends EndpointBase {
   get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
   get getStoresByProjectIdUrl() { return this.configurations.baseUrl + this._getStoresByProjectIdUrl; }
   get getLookUpDetailsByTypeIdUrl() { return this.configurations.baseUrl + this._getLookUpDetailsByTypeIdUrl; }
+  get AddlookUpData() { return this.configurations.baseUrl + this._AddLookUpData; }
+  get UpdateLookUpData() { return this.configurations.baseUrl + this._UpdateLookUpData; }
 
   get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
 
@@ -381,7 +385,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getLookUpData<T>(): Observable<T> {
     const endpointUrl = this.lookUpData;
-
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getLookUpData());
@@ -433,4 +436,20 @@ export class AccountEndpoint extends EndpointBase {
 
   
   
+  AddLookUpEndpoint<T>(lookUpObject: any): Observable<T> {
+    const endpointUrl = this.AddlookUpData;
+    return this.http.post<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddLookUpEndpoint(lookUpObject));
+      }));
+  }
+
+  updateLookUpEndpoint<T>(lookUpObject: any): Observable<T> {
+    const endpointUrl = this.UpdateLookUpData;
+    return this.http.put<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddLookUpEndpoint(lookUpObject));
+      }));
+  }
+
 }

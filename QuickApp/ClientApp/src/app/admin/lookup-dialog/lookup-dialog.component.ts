@@ -8,12 +8,24 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./lookup-dialog.component.scss']
 })
 export class LookupDialogComponent implements OnInit {
-  
+
   @ViewChild(LookupEditorComponent, { static: true })
-  lookupeditor:LookupEditorComponent
-  constructor(public dialogRef: MatDialogRef<LookupDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {  }) { }
+  lookupeditor: LookupEditorComponent
+  lookUpHeading:string;
+  constructor(public dialogRef: MatDialogRef<LookupDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {
+   
+   }
 
   ngOnInit() {
+    debugger
+    this.lookUpHeading=(this.data.lookUp==undefined)?'Add LookUp':'Update LookUp'
+  }
+  cancel() {
+    this.dialogRef.close();
+  }
+
+  ngAfterViewInit() {
+    this.lookupeditor.LookUpSaved$.subscribe(lookup => this.dialogRef.close(lookup));
   }
 
 }

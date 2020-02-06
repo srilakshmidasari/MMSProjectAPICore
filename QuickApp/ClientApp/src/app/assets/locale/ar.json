@@ -144,7 +144,8 @@
       "Name1Required":"الاسم 1 مطلوب",
       "Name2Required":"الاسم 2 مطلوب",
       "PhoneNumberRequired":"رقم الهاتف مطلوب",
-      "PhoneNumberMinLength":"أدخل 10 أرقام لرقم الهاتف"
+      "PhoneNumberMinLength":"أدخل 10 أرقام لرقم الهاتف",
+      "Update": "تحديث"
     }
   },
   "roles": {

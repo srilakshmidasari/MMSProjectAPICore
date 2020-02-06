@@ -238,14 +238,23 @@ export class AccountService {
   gettUserDataBYId(userId) {
     return this.accountEndpoint.getUserDataById(userId)
   }
-  getLookUPData() {
-    return this.accountEndpoint.getLookUpData()
-  }
 
   // Project
 
   getProject(){
     return this.accountEndpoint.getProjectEndpoint();
+  }
+  getLookUPData() {
+    return this.accountEndpoint.getLookUpData();
+  }
+
+  
+  AddLookUp(LookUp) {
+    return this.accountEndpoint.AddLookUpEndpoint(LookUp);
+  }
+
+  updateLookUp(LookUp) {
+    return this.accountEndpoint.updateLookUpEndpoint(LookUp);
   }
 
   getStoresByProjectId(ProjectId){
