@@ -5,11 +5,17 @@
 
 export type PermissionNames =
     'View Users' | 'Manage Users' |
-    'View Roles' | 'Manage Roles' | 'Assign Roles';
+    'View Roles' | 'Manage Roles' | 'Assign Roles'|
+    'View Sites' | 'Manage  Sites' |
+    'View Projects' | 'Manage Projects' |
+    'View Stores' | 'Manage Stores';
 
 export type PermissionValues =
     'users.view' | 'users.manage' |
-    'roles.view' | 'roles.manage' | 'roles.assign';
+    'roles.view' | 'roles.manage' | 'roles.assign' |
+    'sites.view' | 'sites.manage' |
+    'projects.view' | 'projects.manage' |
+    'stores.view' | 'stores.manage';
 
 export class Permission {
 
@@ -19,6 +25,15 @@ export class Permission {
     public static readonly viewRolesPermission: PermissionValues = 'roles.view';
     public static readonly manageRolesPermission: PermissionValues = 'roles.manage';
     public static readonly assignRolesPermission: PermissionValues = 'roles.assign';
+
+    public static readonly viewSitesPermission: PermissionValues = 'sites.view';
+    public static readonly manageSitesPermission: PermissionValues = 'sites.manage';
+
+    public static readonly viewProjectsPermission: PermissionValues = 'projects.view';
+    public static readonly manageProjectsPermission: PermissionValues = 'projects.manage';
+
+    public static readonly viewStoresPermission: PermissionValues = 'stores.view';
+    public static readonly manageStoresPermission: PermissionValues = 'stores.manage';
 
     constructor(name?: PermissionNames, value?: PermissionValues, groupName?: string, description?: string) {
         this.name = name;

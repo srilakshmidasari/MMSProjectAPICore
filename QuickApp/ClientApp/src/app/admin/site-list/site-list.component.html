@@ -38,18 +38,18 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()">
+                    <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()" *ngIf="canManageSites">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'site.management.AddSite' | translate}} 
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)">
+                    <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)" *ngIf="canManageSites">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
                     <button mat-button color="primary"   class="slocation"  matTooltip="Site Location" (click)="onSiteLocaction(row)">
                         <mat-icon class="mat-button-icon">add_location</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" *ngIf="canManageSites" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>

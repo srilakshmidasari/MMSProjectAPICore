@@ -56,20 +56,20 @@
             </ng-container>
 
             <ng-container matColumnDef="Actions">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick(row)">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef >
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick(row)" *ngIf="canManageProjects" >
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canManageProjects" >
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="View Store" (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)" *ngIf="canManageProjects" >
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>

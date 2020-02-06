@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { DeleteFileComponent } from '../delete-file/delete-file.component';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-project',
@@ -440,6 +441,8 @@ export class ProjectComponent implements OnInit {
       });
   }
 
-  
+  get canManageProjects() {
+    return this.accountService.userHasPermission(Permission.manageProjectsPermission);
+  }
 
 }
