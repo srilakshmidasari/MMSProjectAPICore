@@ -218,7 +218,8 @@
       "Upload Document": "تحميل المستند",
       "UploadLocationMapImage": "تحميل صورة خريطة الموقع",
       "Site Document": "وثيقة الموقع",
-      "Site Image": "صورة الموقع"
+      "Site Image": "صورة الموقع",
+      "SiteImageRequired":"صورة الموقع مطلوبة"
     }
   },
   "LookUp":{

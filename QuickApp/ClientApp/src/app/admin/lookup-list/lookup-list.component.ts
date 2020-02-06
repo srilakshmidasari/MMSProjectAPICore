@@ -83,8 +83,7 @@ export class LookupListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(LookUPresponse => {   
       if(LookUPresponse){ 
         this.updateLookUp(LookUPresponse);
-      }
-     
+      }     
     });
   }
 

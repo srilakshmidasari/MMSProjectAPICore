@@ -26,6 +26,7 @@ import { ProjectComponent } from './project/project.component';
 import { LookupListComponent } from './lookup-list/lookup-list.component';
 import { LookupDialogComponent } from './lookup-dialog/lookup-dialog.component';
 import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
+import { LocationComponent } from './location/location.component';
 
 @NgModule({
   imports: [
@@ -49,7 +50,8 @@ import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
     ProjectComponent,    
     LookupListComponent,
     LookupDialogComponent,
-    LookupEditorComponent
+    LookupEditorComponent,
+    LocationComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

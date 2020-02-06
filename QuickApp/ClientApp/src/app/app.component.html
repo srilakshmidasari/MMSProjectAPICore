@@ -85,8 +85,14 @@
         </mat-nav-list>
       
         <mat-nav-list>
-          <a mat-list-item routerLinkActive="active" *ngIf="canViewStores" routerLink="/admin/LookUp">
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/LookUp">
             <mat-icon>assignment_ind</mat-icon>{{'mainMenu.LookUp'| translate}}
+          </a>
+        </mat-nav-list>
+
+        <mat-nav-list>
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/location">
+            <mat-icon>assignment_ind</mat-icon>{{'mainMenu.Location'| translate}}
           </a>
         </mat-nav-list>
       
