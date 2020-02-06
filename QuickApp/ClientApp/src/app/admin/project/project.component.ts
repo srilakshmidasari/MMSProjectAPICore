@@ -19,7 +19,7 @@ import { DeleteFileComponent } from '../delete-file/delete-file.component';
 export class ProjectComponent implements OnInit {
   loadingIndicator: boolean;
   sourceProject: any;
-  fileData :any={};
+  fileData: any = {};
   ProjectsList: any[] = []
   displayedColumns = ['projectReference', 'name1', 'name2', 'projectDetails', 'siteName1', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
@@ -61,7 +61,6 @@ export class ProjectComponent implements OnInit {
 
   ngOnInit() {
     this.getProjects();
-    this.getDocuments();
     if (this.isNewProject) {
       this.buildForm();
     }
@@ -160,8 +159,10 @@ export class ProjectComponent implements OnInit {
   editClick(project?: any) {
     debugger
     this.storeIds = [];
+    this.projectRepositories =[];
     this.isAddingProject = true;
     this.sourceProject = project;
+    this.getDocuments();
     this.projectData = project;
     if (this.projectData) {
       this.isNewProject = false;
@@ -381,9 +382,9 @@ export class ProjectComponent implements OnInit {
         });
   }
 
-  
+
   //  On Delete File
-  onDeleteFile(file) { 
+  onDeleteFile(file) {
     const dialogRef = this.dialog.open(DeleteFileComponent, {
       panelClass: 'mat-dialog-sm',
       data: file

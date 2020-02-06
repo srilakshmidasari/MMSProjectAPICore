@@ -197,23 +197,22 @@
                             <mat-icon>cancel</mat-icon>
                         </a>
                     </div>
-                    <div class="form-group col-md-4" *ngFor="let doc of editDocumentsList">
+                    <div class="form-group col-md-6" *ngFor="let doc of editDocumentsList">
                         <label for="file">Upload Project {{doc.description}} </label>
                         <input #fileInput type="file" class="form-control" id="file" formControlName="file"
                             (change)="uploadFile(doc, $event)">
                     </div>
-                    <!-- <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
+                    <div class="form-group col-md-6 file-icon" *ngFor="let info of projectRepositories">
                         <div class="clearfix space20"></div>
                         <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"
                             *ngIf="info.documentTypeId==isDocument" download>
                             <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
                         </a>
-                        <a href="{{'data:image/jpg;base64,'+ info.fileName}}" target="_blank"
-                            *ngIf="info.documentTypeId==isImage">
+                        <a target="_blank" *ngIf="info.documentTypeId==isImage">
                             <img src="{{'data:image/jpg;base64,'+ info.fileName}}" class="img-fluid" width="161"
                                 height="121">
                             &nbsp;&nbsp;&nbsp;</a>
-                    </div> -->
+                    </div>
                 </div>
                 <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
             </form>

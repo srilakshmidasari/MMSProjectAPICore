@@ -248,7 +248,6 @@ namespace DAL.Repositories
                 response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
                 response.Exception = ex;
             }
-
             return response;
         }
 
