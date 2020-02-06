@@ -6,6 +6,7 @@
                 placeholder="{{'project.management.Search' | translate}}">
         </mat-form-field>
     </div>
+
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
@@ -25,15 +26,15 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="projectDetails">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.projectDetails' | translate}}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.projectDetails}} </mat-cell>
-            </ng-container>
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="projectDetails">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.projectDetails' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectDetails}} </mat-cell>
             </ng-container>
             <!-- <ng-container matColumnDef="storeName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.StoreName1' | translate}}
@@ -55,20 +56,20 @@
             </ng-container>
 
             <ng-container matColumnDef="Actions">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick(row)">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef >
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick(row)" *ngIf="canManageProjects" >
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'project.management.Edit'|translate}}" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canManageProjects" >
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}" (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="{{'project.management.Delete'|translate}}" [hidden]="!row.isActive">
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)" *ngIf="canManageProjects" >
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -197,23 +198,22 @@
                             <mat-icon>cancel</mat-icon>
                         </a>
                     </div>
-                    <div class="form-group col-md-4" *ngFor="let doc of editDocumentsList">
-                        <label for="file">{{'project.management.Upload Project'|translate}}{{doc.description}} </label>
+                    <div class="form-group col-md-6" *ngFor="let doc of editDocumentsList">
+                        <label for="file">Upload Project {{doc.description}} </label>
                         <input #fileInput type="file" class="form-control" id="file" formControlName="file"
                             (change)="uploadFile(doc, $event)">
                     </div>
-                    <!-- <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
+                    <div class="form-group col-md-6 file-icon" *ngFor="let info of projectRepositories">
                         <div class="clearfix space20"></div>
                         <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"
                             *ngIf="info.documentTypeId==isDocument" download>
                             <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
                         </a>
-                        <a href="{{'data:image/jpg;base64,'+ info.fileName}}" target="_blank"
-                            *ngIf="info.documentTypeId==isImage">
+                        <a target="_blank" *ngIf="info.documentTypeId==isImage">
                             <img src="{{'data:image/jpg;base64,'+ info.fileName}}" class="img-fluid" width="161"
                                 height="121">
                             &nbsp;&nbsp;&nbsp;</a>
-                    </div> -->
+                    </div>
                 </div>
                 <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
             </form>

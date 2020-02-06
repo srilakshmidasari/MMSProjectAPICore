@@ -85,9 +85,9 @@ namespace DAL.RequestResponseModels
             public int SiteId { get; set; }
             public List<LookUpProjectXref> StoreId { get; set; }
             public string ProjectReference { get; set; }
-            public string StoreName1 { get; set; }
+            //public string StoreName1 { get; set; }
 
-            public string StoreName2 { get; set; }
+            //public string StoreName2 { get; set; }
             public string SiteName1 { get; set; }
             public string SiteName2 { get; set; }
             public string Name1 { get; set; }

@@ -27,11 +27,13 @@ namespace DAL.Repositories
             try
             {
                 var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
+                List<GetProjectResponse> finalResilt = new List<GetProjectResponse>();
 
                 var result = (from p in _appContext.Projects
                               join s in _appContext.SiteInfos on p.SiteId equals s.Id
-                              join lp in _appContext.LookUpProjectXrefs on p.Id equals lp.ProjectId
-                              join l in _appContext.LookUps on lp.StoreId equals l.Id
+                              join lp in _appContext.LookUpProjectXrefs on p.Id equals lp.ProjectId into pl
+                              from pdata in pl.DefaultIfEmpty()
+                              join l in _appContext.LookUps on pdata.StoreId equals l.Id
                               select new GetProjectResponse
                               {
                                   Id = p.Id,
@@ -42,8 +44,8 @@ namespace DAL.Repositories
                                   SiteName1 = s.Name1,
                                   SiteName2 = s.Name2,
                                   StoreId = _appContext.LookUpProjectXrefs.Where(S=>S.ProjectId == p.Id).ToList(),
-                                  StoreName1 = l.Name1,
-                                  StoreName2 = l.Name2,
+                                  //StoreName1 = l.Name1,
+                                  //StoreName2 = l.Name2,
                                   ProjectDetails = p.ProjectDetails,
                                   IsActive = p.IsActive,
                                   CreatedBy = p.CreatedBy,
@@ -51,12 +53,22 @@ namespace DAL.Repositories
                                   UpdatedBy = p.UpdatedBy,
                                   UpdatedDate = p.UpdatedDate,
                               }).ToList();
-
-                if (result != null)
+                foreach (var item in result)
                 {
-                    response.ListResult = result;
+                    var responce = finalResilt.Where(s => s.Id == item.Id).FirstOrDefault();
+                    if (responce == null)
+                    {
+                        finalResilt.Add(item);
+                    }
+
+                }
+
+                if (finalResilt != null)
+
+                {
+                    response.ListResult = finalResilt;
                     response.IsSuccess = true;
-                    response.AffectedRecords = 1;
+                    response.AffectedRecords = finalResilt.Count();
                     response.EndUserMessage = "Get All Project Details Successfull";
                 }
                 else
@@ -200,6 +212,142 @@ namespace DAL.Repositories
             return response;
         }
 
+        public ValueDataResponse<Project> UpdateProject(UpsertProject project)
+        {
+            ValueDataResponse<Project> response = new ValueDataResponse<Project>();
+
+            try
+            {
+                Project pro = _mapper.Map<Project>(project);
+                var result = _appContext.Projects.Where(x => x.Id == project.Id).FirstOrDefault();
+                var projectList = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == project.Id).ToList();
+                _appContext.LookUpProjectXrefs.RemoveRange(projectList);
+                _appContext.SaveChanges();
+                foreach (var sId in project.StoreIds)
+                {
+                    _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
+                }
+
+                if (result != null)
+                {
+                    
+                    result.SiteId = project.SiteId;
+                    result.ProjectReference = project.ProjectReference;
+                    result.Name1 = project.Name1;
+                    result.Name2 = project.Name2;
+                    result.ProjectDetails = project.ProjectDetails;
+                    result.IsActive = project.IsActive;
+                    result.CreatedBy = project.CreatedBy;
+                    result.CreatedDate = project.CreatedDate;
+                    result.UpdatedBy = project.UpdatedBy;
+                    result.UpdatedDate = project.UpdatedDate;
+                   
+                   
+
+                    foreach (var req in project.ProjectRepositories)
+                    {
+                        if (req.FileName != null)
+                        {
+                            string ModuleName = "Project";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
+                            
+                            FileUploadService repo = new FileUploadService();
+
+                            string FolderLocation = "FileRepository";
+                            string ServerRootPath = _config.Value.ServerRootPath;
+
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                            byte[] FileBytes = Convert.FromBase64String(req.FileName);
+
+                            req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
+
+                            req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                            ProjectRepository pros = new ProjectRepository();
+                            {
+                                pros.ProjectId = pro.Id;
+                                pros.FileName = req.FileName;
+                                pros.FileLocation = req.FileLocation;
+                                pros.FileExtention = req.FileExtention;
+                                pros.DocumentType = req.DocumentTypeId;
+                                pros.CreatedBy = req.CreatedBy;
+                                pros.CreatedDate = DateTime.Now;
+                                pros.UpdatedBy = req.UpdatedBy;
+                                pros.UpdatedDate = DateTime.Now;
+                            }
+                            _appContext.ProjectRepositories.Add(pros);
+                        }
+                    }
+                    _appContext.SaveChanges();
+                    if (pro != null)
+                    {
+                        response.Result = pro;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Project Updated Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Project Update Failed";
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+            return response;
+        }
+
+        public ValueDataResponse<Project> DeleteProject(int ProjectId)
+        {
+            ValueDataResponse<Project> response = new ValueDataResponse<Project>();
+            try
+            {
+                var Projectdetials = _appContext.Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
+
+                if (Projectdetials != null)
+                {
+                    Projectdetials.IsActive = false;
+                    Projectdetials.UpdatedDate = DateTime.Now;
+
+                    _appContext.SaveChanges();
+                }
+
+                if (Projectdetials != null)
+                {
+                    response.Result = Projectdetials;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Project Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Project Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
         public ListDataResponse<ProjectRepositoryResposnse> GetRepositoryByProject(int ProjectId)
         {
             ListDataResponse<ProjectRepositoryResposnse> response = new ListDataResponse<ProjectRepositoryResposnse>();
@@ -248,7 +396,6 @@ namespace DAL.Repositories
                 response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
                 response.Exception = ex;
             }
-
             return response;
         }
 

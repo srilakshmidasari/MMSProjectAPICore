@@ -26,7 +26,17 @@ namespace DAL.Core
         public static ApplicationPermission ManageRoles = new ApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
         public static ApplicationPermission AssignRoles = new ApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
 
+        public const string SitesPermissionGroupName = "Site Permissions";
+        public static ApplicationPermission ViewSites = new ApplicationPermission("View Sites", "sites.view", SitesPermissionGroupName, "Permission to view other sites details");
+        public static ApplicationPermission ManageSites = new ApplicationPermission("Manage Sites", "sites.manage", SitesPermissionGroupName, "Permission to create, delete and modify other sites details");
 
+        public const string ProjectsPermissionGroupName = "Project Permissions";
+        public static ApplicationPermission ViewProjects = new ApplicationPermission("View Projects", "projects.view", ProjectsPermissionGroupName, "Permission to view other projects details");
+        public static ApplicationPermission ManageProjects = new ApplicationPermission("Manage Projects", "projects.manage", ProjectsPermissionGroupName, "Permission to create, delete and modify other projects details");
+
+        public const string StoresPermissionGroupName = "Store Permissions";
+        public static ApplicationPermission ViewStores = new ApplicationPermission("View Stores", "stores.view", StoresPermissionGroupName, "Permission to view other stores details");
+        public static ApplicationPermission ManageStores = new ApplicationPermission("Manage Stores", "stores.manage", StoresPermissionGroupName, "Permission to create, delete and modify other stores details");
         static ApplicationPermissions()
         {
             List<ApplicationPermission> allPermissions = new List<ApplicationPermission>()
@@ -36,7 +46,16 @@ namespace DAL.Core
 
                 ViewRoles,
                 ManageRoles,
-                AssignRoles
+                AssignRoles,
+
+                ViewSites,
+                ManageSites,
+
+                ViewProjects,
+                ManageProjects,
+
+                ViewStores,
+                ManageStores
             };
 
             AllPermissions = allPermissions.AsReadOnly();

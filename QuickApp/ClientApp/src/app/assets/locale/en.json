@@ -28,7 +28,8 @@
     "Role": "Roles",
     "Site": "Site",
     "Project" :"Project",   
-    "LookUp":"LookUp"
+    "LookUp":"LookUp",
+    "Location":"Location"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -43,7 +44,8 @@
     "Site": "Site Management",
     "Project": "Project Management",
     "Profile": "Profile",   
-    "LookUp":"LookUp Management"
+    "LookUp":"LookUp Management",
+    "Location":"Location Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -132,7 +134,7 @@
       "CurrentPassword": "Current Password",
       "NewPassword": "New Password",
       "NewPasswordRequired": "New password is required",
-      "NewPasswordRules": "The new password must contain at least: one uppercase letter, one lowercase letter, one digit, and any special character",
+      "NewPasswordRules": "The new password must contain at least: one uppercase letter, one lowercase letter, one digit, minimum 8 characters and any special character",
       "ConfirmPassword": "Confirm Password",
       "ConfirmationPasswordRequired": "Confirmation password is required",
       "PasswordMismatch": "New password and confirmation password do not match",
@@ -148,7 +150,7 @@
       "Save": "Save",
       "Saving": "Saving...",
       "EmpId": "Employee Id",
-      "EmployeeIdRequired": " Employee Id  is required (maximum of 15 characters) ",
+      "EmployeeIdRequired": "Employee Id  is required (maximum of 15 characters) ",
       "Name1": "Name 1",
       "Name2": "Name 2",
       "Name1Required": "Name 1 is required",
@@ -237,7 +239,8 @@
       "Name1isrequired": "Name 1 is required",
       "Name2isrequired": "Name 2 is required",
       "SiteManagerRequired": "Site Manager is  Required",
-      "SiteAddressRequired": " Address is Required"
+      "SiteAddressRequired": " Address is Required",
+      "SiteImageRequired":"Site Image is Required"
     }
   },
 
@@ -306,5 +309,11 @@
        "Remarks":"Remarks",
        "isActive":"isActive"
       }
+  },
+  "Location":{
+    "Management":{
+      "Search": "Search for Location ..."
+    }
+    
   }
 }

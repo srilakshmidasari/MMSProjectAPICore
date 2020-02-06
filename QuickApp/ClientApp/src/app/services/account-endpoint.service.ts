@@ -76,7 +76,7 @@ export class AccountEndpoint extends EndpointBase {
 
   get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
 
-  
+
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -401,6 +401,14 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  updateProjectEndpoint<T>(projectObject: any): Observable<T> {
+    const endpointUrl = this.projectUrl;
+    return this.http.put<T>(endpointUrl, JSON.stringify(projectObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.updateProjectEndpoint(projectObject));
+      }));
+  }
+
   getStoresByProjectId<T>(ProjectId: any): Observable<T> {
     const endpointUrl = this.getStoresByProjectIdUrl + '/' + ProjectId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
@@ -435,8 +443,8 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
-  
-  
+
+
   AddLookUpEndpoint<T>(lookUpObject: any): Observable<T> {
     const endpointUrl = this.AddlookUpData;
     return this.http.post<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(
@@ -459,5 +467,14 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.getDeleteLookUpEndpoint(LookUpId));
       }));
   }
+
+  deleteProjectEndpoint<T>(ProjectId: any): Observable<T> {
+    const endpointUrl = this.projectUrl + '?ProjectId=' + ProjectId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteProjectEndpoint(ProjectId));
+      }));
+  }
+
 
 }

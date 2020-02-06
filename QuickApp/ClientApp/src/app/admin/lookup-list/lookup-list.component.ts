@@ -19,31 +19,31 @@ export class LookupListComponent implements OnInit {
   displayedColumn = ['description','name1', 'name2', 'remarks', 'updatedDate','updatedByUser', 'isActive','Actions'];
   dataSource = new MatTableDataSource<any>();
   lookUpData: any[] = [];
-  sourcelookup:any;
+  sourcelookup: any;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
-  
+
   constructor(private authService: AuthService, private alertService: AlertService,
     private accountService: AccountService,
     private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     debugger
-    this.getLookUp();   
+    this.getLookUp();
   }
 
   // Look Up Data
   getLookUp() {
     this.accountService.getLookUPData().subscribe((result: any) => {
       this.lookUpData = result.listResult;
-      this.dataSource.data= this.lookUpData;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+      this.dataSource.data = this.lookUpData;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     })
-    
+
   }
- 
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -64,29 +64,29 @@ export class LookupListComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
-  private updateLookUp(response:any){
-   if(this.sourcelookup){
-     this.getLookUp();
-     this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-     this.sourcelookup = null;
-     } else {
-    this.getLookUp();
-    this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-      }
+  private updateLookUp(response: any) {
+    if (this.sourcelookup) {
+      this.getLookUp();
+      this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+      this.sourcelookup = null;
+    } else {
+      this.getLookUp();
+      this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+    }
   }
 
-   editlookup(lookUp?:any){
-    this.sourcelookup=lookUp;
+  editlookup(lookUp?: any) {
+    this.sourcelookup = lookUp;
     const dialogRef = this.dialog.open(LookupDialogComponent,
       {
         panelClass: 'mat-dialog-md',
-        data: {lookUp}
+        data: { lookUp }
       });
-      dialogRef.afterClosed().subscribe(LookUPresponse => {
-        if (LookUPresponse) {
-          this.updateLookUp(LookUPresponse);
-        }
-      });
+    dialogRef.afterClosed().subscribe(LookUPresponse => {   
+      if(LookUPresponse){ 
+        this.updateLookUp(LookUPresponse);
+      }     
+    });
   }
  public confirmDelete(lookUp:any){
    debugger;

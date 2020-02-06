@@ -310,4 +310,14 @@ export class AppComponent implements OnInit {
   get canViewRoles() {
     return this.accountService.userHasPermission(Permission.viewRolesPermission);
   }
+
+  get canViewSites() {
+    return this.accountService.userHasPermission(Permission.viewSitesPermission);
+  }
+  get canViewProjects() {
+    return this.accountService.userHasPermission(Permission.viewProjectsPermission);
+  }
+  get canViewStores() {
+    return this.accountService.userHasPermission(Permission.viewStoresPermission);
+  }
 }
