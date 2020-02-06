@@ -45,15 +45,15 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editlookup()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>Add LookUp
+                    <button mat-button color="primary" matTooltip="{{'LookUp.management.Add'|translate}}" (click)="editlookup()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>{{'LookUp.management.Add LookUp'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editlookup(row)">
+                    <button mat-icon-button matTooltip="{{'LookUp.management.Edit'|translate}}" (click)="editlookup(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'LookUp.management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -63,10 +63,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>No Records Found</p>
+            <p>{{'LookUp.editor.No Records Found'|translate}} </p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>No Search Results Found</p>
+            <p> {{'LookUp.editor.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">

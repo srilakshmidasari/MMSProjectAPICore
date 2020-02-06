@@ -256,6 +256,11 @@ export class AccountService {
   updateLookUp(LookUp) {
     return this.accountEndpoint.updateLookUpEndpoint(LookUp);
   }
+  
+  deleteLookUp(LookUp: any): Observable<any> {
+    return this.accountEndpoint.getDeleteLookUpEndpoint<any>(LookUp.id);
+  }
+
 
   getStoresByProjectId(ProjectId){
     return this.accountEndpoint.getStoresByProjectId(ProjectId);
