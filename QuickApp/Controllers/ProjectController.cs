@@ -44,5 +44,18 @@ namespace MMS.Controllers
             return _unitOfWork.Projects.InsertProject(project);
         }
 
+        [HttpPut]
+        public ValueDataResponse<Project> Update(UpsertProject project)
+        {
+            // Project pro = _mapper.Map<Project>(project);
+
+            return _unitOfWork.Projects.UpdateProject(project);
+        }
+
+        [HttpDelete]
+        public ValueDataResponse<Project> DeleteProject(int ProjectId)
+        {
+            return _unitOfWork.Projects.DeleteProject (ProjectId);
+        }
     }
 }

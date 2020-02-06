@@ -13,6 +13,10 @@ namespace DAL.Repositories.Interfaces
         ListDataResponse<GetLoopUpResponse> GetStoresByProjectId(int ProjectId);
         ValueDataResponse<Project> InsertProject(UpsertProject project);
 
+        ValueDataResponse<Project> UpdateProject(UpsertProject project);
+
+        ValueDataResponse<Project> DeleteProject(int  projectId);
+
         //ListDataResponse<> GetStoresByProjectId(int ProjectId);
     }
 }
