@@ -6,6 +6,7 @@
                 placeholder="{{'project.management.Search' | translate}}">
         </mat-form-field>
     </div>
+
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
@@ -25,15 +26,15 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="projectDetails">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.projectDetails' | translate}}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.projectDetails}} </mat-cell>
-            </ng-container>
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="projectDetails">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.projectDetails' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectDetails}} </mat-cell>
             </ng-container>
             <!-- <ng-container matColumnDef="storeName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.StoreName1' | translate}}
@@ -68,7 +69,7 @@
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive">
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>

@@ -23,7 +23,7 @@ namespace DAL.Repositories
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
 
         public ListDataResponse<SiteInfo> GetAllSite()
-        { 
+        {
             ListDataResponse<SiteInfo> response = new ListDataResponse<SiteInfo>();
             try
             {
@@ -31,7 +31,7 @@ namespace DAL.Repositories
                 var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
 
                 result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
-               
+
                 if (result != null)
                 {
                     response.ListResult = result;
@@ -63,55 +63,65 @@ namespace DAL.Repositories
 
             try
             {
-            //    if (sites.Address != null)
-            //    {
-            //        coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
-            //        if (LatLong != null)
-            //        {
-            //            sites.Latitude = (float)(LatLong.Latitude);
-            //            sites.Longitude = (float)LatLong.Longitude;
-            //        }
-            //    }
-                var result = _appContext.SiteInfos.Add(sites);
-
-                if (sites.FileName != null)
+                var siteExists = _appContext.SiteInfos.Where(x => x.SiteReference == sites.SiteReference).FirstOrDefault();
+                if (siteExists == null)
                 {
-                    string ModuleName = "Site";
-                    var now = DateTime.Now;
-                    var yearName = now.ToString("yyyy");
-                    var monthName = now.Month.ToString("d2");
-                    var dayName = now.ToString("dd");
 
-                    FileUploadService repo = new FileUploadService();
+                    //    if (sites.Address != null)
+                    //    {
+                    //        coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
+                    //        if (LatLong != null)
+                    //        {
+                    //            sites.Latitude = (float)(LatLong.Latitude);
+                    //            sites.Longitude = (float)LatLong.Longitude;
+                    //        }
+                    //    }
+                    var result = _appContext.SiteInfos.Add(sites);
 
-                    //string FolderLocation = _config.Value.FileRepositoryFolder;
-                    string FolderLocation = "FileRepository";
-                    string ServerRootPath = _config.Value.ServerRootPath;
+                    if (sites.FileName != null)
+                    {
+                        string ModuleName = "Site";
+                        var now = DateTime.Now;
+                        var yearName = now.ToString("yyyy");
+                        var monthName = now.Month.ToString("d2");
+                        var dayName = now.ToString("dd");
 
-                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                        FileUploadService repo = new FileUploadService();
 
-                    byte[] FileBytes = Convert.FromBase64String(sites.FileName);
+                        //string FolderLocation = _config.Value.FileRepositoryFolder;
+                        string FolderLocation = "FileRepository";
+                        string ServerRootPath = _config.Value.ServerRootPath;
 
-                    sites.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
+                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                    sites.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                }
-                _appContext.SaveChanges();
+                        byte[] FileBytes = Convert.FromBase64String(sites.FileName);
 
-                if (result != null)
-                {
-                    response.Result = sites;
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "Site Added Successfully";
+                        sites.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
+
+                        sites.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                    }
+                    _appContext.SaveChanges();
+
+                    if (result != null)
+                    {
+                        response.Result = sites;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Site Added Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Site Added Failed";
+                    }
                 }
                 else
                 {
-                    response.IsSuccess = true;
+                    response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "Site Added Failed";
+                    response.EndUserMessage = "Site Reference Already Exists";
                 }
-
             }
             catch (Exception ex)
             {
@@ -130,67 +140,78 @@ namespace DAL.Repositories
 
             try
             {
-                var result = _appContext.SiteInfos.Where(x => x.Id == sites.Id).FirstOrDefault();
-                if (result != null)
+                var siteExists = _appContext.SiteInfos.Where(x => x.Id != sites.Id && x.SiteReference == sites.SiteReference).FirstOrDefault();
+                if (siteExists == null)
                 {
-                    result.SiteReference = sites.SiteReference;
-                    result.Name1 = sites.Name1;
-                    result.Name2 = sites.Name2;
-                    result.Address = sites.Address;
-                    result.Latitude = sites.Latitude;
-                    result.Longitude = sites.Longitude;
-                    result.SiteManager = sites.SiteManager;
-                    result.IsActive = sites.IsActive;
-                    result.CreatedBy = sites.CreatedBy;
-                    result.CreatedDate = sites.CreatedDate;
-                    result.UpdatedBy = sites.UpdatedBy;
-                    result.UpdatedDate = sites.UpdatedDate;
-                    //if (!string.IsNullOrEmpty(sites.Address))
-                    //{
-                    //    coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
-                    //    if (LatLong != null)
-                    //    {
-                    //        result.Latitude = (float)(LatLong.Latitude);
-                    //        result.Longitude = (float)LatLong.Longitude;
-                    //    }
-                    //}
-
-                    if (sites.FileName != null)
+                    var result = _appContext.SiteInfos.Where(x => x.Id == sites.Id).FirstOrDefault();
+                    if(result  != null)
                     {
-                        string ModuleName = "Site";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
+                        result.SiteReference = sites.SiteReference;
+                        result.Name1 = sites.Name1;
+                        result.Name2 = sites.Name2;
+                        result.Address = sites.Address;
+                        result.Latitude = sites.Latitude;
+                        result.Longitude = sites.Longitude;
+                        result.SiteManager = sites.SiteManager;
+                        result.IsActive = sites.IsActive;
+                        result.CreatedBy = sites.CreatedBy;
+                        result.CreatedDate = sites.CreatedDate;
+                        result.UpdatedBy = sites.UpdatedBy;
+                        result.UpdatedDate = sites.UpdatedDate;
+                        //if (!string.IsNullOrEmpty(sites.Address))
+                        //{
+                        //    coordinates LatLong = GetLatLngByAddress(sites.Address.ToString());
+                        //    if (LatLong != null)
+                        //    {
+                        //        result.Latitude = (float)(LatLong.Latitude);
+                        //        result.Longitude = (float)LatLong.Longitude;
+                        //    }
+                        //}
 
-                        FileUploadService repo = new FileUploadService();
+                        if (sites.FileName != null)
+                        {
+                            string ModuleName = "Site";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
+
+                            FileUploadService repo = new FileUploadService();
 
 
-                        string FolderLocation = _config.Value.FileRepositoryFolder;
-                        string ServerRootPath = _config.Value.ServerRootPath;
+                            string FolderLocation = _config.Value.FileRepositoryFolder;
+                            string ServerRootPath = _config.Value.ServerRootPath;
 
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                        byte[] FileBytes = Convert.FromBase64String(sites.FileName);
+                            byte[] FileBytes = Convert.FromBase64String(sites.FileName);
 
-                        result.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
+                            result.FileName = repo.UploadFile(FileBytes, sites.FileExtention, Location);
 
-                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                        result.FileExtention = sites.FileExtention;
+                            result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                            result.FileExtention = sites.FileExtention;
+                        }
+
+                        _appContext.SaveChanges();
+                        response.Result = result;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Site Updated Successfully";
                     }
-
-                    _appContext.SaveChanges();
-                    response.Result = result;
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "Site Updated Successfully";
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Site Updation Failed";
+                    }
                 }
                 else
                 {
-                    response.IsSuccess = true;
+                    response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "Site Updation Failed";
+                    response.EndUserMessage = "Site Reference Already Exists";
                 }
+
             }
             catch (Exception ex)
             {

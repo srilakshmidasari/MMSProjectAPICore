@@ -27,11 +27,13 @@ namespace DAL.Repositories
             try
             {
                 var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
+                List<GetProjectResponse> finalResilt = new List<GetProjectResponse>();
 
                 var result = (from p in _appContext.Projects
                               join s in _appContext.SiteInfos on p.SiteId equals s.Id
-                              join lp in _appContext.LookUpProjectXrefs on p.Id equals lp.ProjectId
-                              join l in _appContext.LookUps on lp.StoreId equals l.Id
+                              join lp in _appContext.LookUpProjectXrefs on p.Id equals lp.ProjectId into pl
+                              from pdata in pl.DefaultIfEmpty()
+                              join l in _appContext.LookUps on pdata.StoreId equals l.Id
                               select new GetProjectResponse
                               {
                                   Id = p.Id,
@@ -42,8 +44,8 @@ namespace DAL.Repositories
                                   SiteName1 = s.Name1,
                                   SiteName2 = s.Name2,
                                   StoreId = _appContext.LookUpProjectXrefs.Where(S=>S.ProjectId == p.Id).ToList(),
-                                  StoreName1 = l.Name1,
-                                  StoreName2 = l.Name2,
+                                  //StoreName1 = l.Name1,
+                                  //StoreName2 = l.Name2,
                                   ProjectDetails = p.ProjectDetails,
                                   IsActive = p.IsActive,
                                   CreatedBy = p.CreatedBy,
@@ -51,12 +53,22 @@ namespace DAL.Repositories
                                   UpdatedBy = p.UpdatedBy,
                                   UpdatedDate = p.UpdatedDate,
                               }).ToList();
-
-                if (result != null)
+                foreach (var item in result)
                 {
-                    response.ListResult = result;
+                    var responce = finalResilt.Where(s => s.Id == item.Id).FirstOrDefault();
+                    if (responce == null)
+                    {
+                        finalResilt.Add(item);
+                    }
+
+                }
+
+                if (finalResilt != null)
+
+                {
+                    response.ListResult = finalResilt;
                     response.IsSuccess = true;
-                    response.AffectedRecords = 1;
+                    response.AffectedRecords = finalResilt.Count();
                     response.EndUserMessage = "Get All Project Details Successfull";
                 }
                 else
@@ -208,7 +220,7 @@ namespace DAL.Repositories
             {
                 Project pro = _mapper.Map<Project>(project);
                 var result = _appContext.Projects.Where(x => x.Id == project.Id).FirstOrDefault();
-                var projectList = _appContext.LookUpProjectXrefs.Where(x => x.Id == project.Id).ToList();
+                var projectList = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == project.Id).ToList();
                 _appContext.LookUpProjectXrefs.RemoveRange(projectList);
                 _appContext.SaveChanges();
                 foreach (var sId in project.StoreIds)
@@ -241,7 +253,7 @@ namespace DAL.Repositories
                             var yearName = now.ToString("yyyy");
                             var monthName = now.Month.ToString("d2");
                             var dayName = now.ToString("dd");
-
+                            
                             FileUploadService repo = new FileUploadService();
 
                             string FolderLocation = "FileRepository";
@@ -269,10 +281,8 @@ namespace DAL.Repositories
                             }
                             _appContext.ProjectRepositories.Add(pros);
                         }
-                      
-                        _appContext.SaveChanges();
                     }
-
+                    _appContext.SaveChanges();
                     if (pro != null)
                     {
                         response.Result = pro;
