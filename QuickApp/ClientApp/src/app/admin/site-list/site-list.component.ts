@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { SiteLocationComponent } from '../site-location/site-location.component';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-site-list',
@@ -130,6 +131,10 @@ export class SiteListComponent implements OnInit {
                 MessageSeverity.error, error);
             });
       });
+  }
+
+  get canManageSites() {
+    return this.accountService.userHasPermission(Permission.manageSitesPermission);
   }
 
 }

@@ -777,8 +777,9 @@ namespace MMS.Controllers
                     Id = res.Id,
                     Name = res.Name,
                     ParentRoleId = res.ParentRoleId == null ? null : res.ParentRoleId,
-                    ParentRoleName = res.ParentRoleId == null ? null : parentRoleDetails.Name,
+                    ParentRoleName =  string.IsNullOrEmpty(res.ParentRoleId) ? null : parentRoleDetails.Name,
                     Description = res.Description,
+                    UsersCount = res.UsersCount,
                     Permissions = res.Permissions
                 };
 
