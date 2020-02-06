@@ -36,22 +36,26 @@
   </mat-form-field>
   <div class="row">
     <div class="form-group col-md-7">
-      <label for="file">{{'site.management.UploadLocationMapImage'|translate}}</label>
+      <label for="file">{{'site.management.UploadLocationMapImage'|translate}} *</label>
       <input type="file" class="form-control" id="file" formControlName="file" (change)="onSelectFiles($event)" required>
-      <!-- <img [src]="site.fileLocation" style="height: 80px;"  alt="" /> -->
-      <mat-error *ngIf="!siteForm.controls['file'].valid">
+      <!-- <mat-error *ngIf="!siteForm.controls['file'].valid">
         {{'site.management.SiteImageRequired' | translate}}       
-      </mat-error>
+      </mat-error> -->
     </div>
-    <div class="image-upload col-md-3" *ngIf="!isNewSite">
-      <div *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))"> {{'site.management.Site Document'|translate}}  </div>
-      <div *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')"> {{'site.management.Site Image'|translate}} </div>
+    <div  class="col-md-5" *ngIf="isNewSite">
+        <img [src]="image" style="height: 80px;"  alt="" />
+    </div>
+    <div class="image-upload col-md-5" *ngIf="!isNewSite">
+      <div>{{'site.management.Site Image'|translate}} </div>
+
+      <!-- <div *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))"> {{'site.management.Site Document'|translate}}  </div>
+      <div *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')"> {{'site.management.Site Image'|translate}} </div> -->
       <label>
         <!-- <img [src]="site.fileLocation" style="height: 80px;" alt="" /> -->
-        <a href="{{site.fileLocation}}" target="_blank" *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))" style="height: 80px;" target="_blank" download >
+        <!-- <a href="{{site.fileLocation}}" target="_blank" *ngIf="((site.fileExtention=='.pdf')||(site.fileExtention=='.docx')||(site.fileExtention=='.doc'))" style="height: 80px;" target="_blank" download >
           <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
-        </a>
-        <a href="{{site.fileLocation}}" style="height: 80px;" target="_blank" *ngIf="(site.fileExtention=='.jpg')||(site.fileExtention=='.jpeg')||(site.fileExtention=='.png')" >
+        </a> -->
+        <a href="{{site.fileLocation}}" style="height: 80px;" target="_blank"  >
             <img src="{{site.fileLocation}}" class="img-fluid" width="161" height="121"/> &nbsp;&nbsp;&nbsp;            
         </a>
       </label>

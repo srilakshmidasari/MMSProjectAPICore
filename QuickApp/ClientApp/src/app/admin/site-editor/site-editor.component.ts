@@ -21,6 +21,7 @@ export class SiteEditorComponent implements OnInit {
   base64string: string;
   private onSiteSaved = new Subject<any>();
   siteSaved$ = this.onSiteSaved.asObservable();
+  image: any;
   constructor(private fb: FormBuilder,
     private authService: AuthService, private alertService: AlertService,
     private accountService: AccountService) { }
@@ -157,8 +158,12 @@ export class SiteEditorComponent implements OnInit {
     if (file) {
       let reader = new FileReader();
       reader.onload = (e: any) => {
-        var image = e.target.result
-        //this.site.fileLocation = image;
+       // this.site.fileLocation = image;
+       if(this.isNewSite){
+        this.image = e.target.result
+       }else{
+        this.image = e.target.result
+       }
         var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
         this.base64string = e.target.result.substring(base64Index);
       }
