@@ -10,6 +10,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { DeleteFileComponent } from '../delete-file/delete-file.component';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-project',
@@ -19,9 +20,9 @@ import { DeleteFileComponent } from '../delete-file/delete-file.component';
 export class ProjectComponent implements OnInit {
   loadingIndicator: boolean;
   sourceProject: any;
-  fileData :any={};
+  fileData: any = {};
   ProjectsList: any[] = []
-  displayedColumns = ['projectReference', 'name1', 'name2', 'projectDetails', 'siteName1', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['projectReference', 'name1', 'name2', 'siteName1', 'projectDetails',  'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -105,7 +106,6 @@ export class ProjectComponent implements OnInit {
     this.accountService.getCddmtData(classTypeId).subscribe((response: any) => {
       this.documentList = response.listResult;
       this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
-      console.log(this.editDocumentsList)
     }, error => {
       this.alertService.stopLoadingMessage();
     });
@@ -160,14 +160,19 @@ export class ProjectComponent implements OnInit {
   editClick(project?: any) {
     debugger
     this.storeIds = [];
+    this.projectRepositories =[];
+    this.editDocumentsList=[];
+    this.ProjectFileList =[];
     this.isAddingProject = true;
     this.sourceProject = project;
+    this.getDocuments();
     this.projectData = project;
     if (this.projectData) {
       this.isNewProject = false;
       this.projectData.storeId.forEach(element => {
         this.storeIds.push(element.storeId)
       });
+      
       this.getRepositoryByProject()
     } else {
       this.projectData = {};
@@ -307,7 +312,23 @@ export class ProjectComponent implements OnInit {
         }
       );
     } else {
-
+      this.accountService.UpdateProject(editedProject).subscribe(
+        (result: any) => {
+          this.alertService.stopLoadingMessage();
+          if (result.isSuccess) {
+            this.getProjects();
+            this.isAddingProject = false;
+            this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
+            this.resetForm();
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
     }
   }
 
@@ -371,7 +392,7 @@ export class ProjectComponent implements OnInit {
               if (index !== -1) {
                 this.editDocumentsList.splice(index, 1);
               }
-              console.log(this.editDocumentsList)
+            
             }
           });
         });
@@ -381,9 +402,9 @@ export class ProjectComponent implements OnInit {
         });
   }
 
-  
+
   //  On Delete File
-  onDeleteFile(file) { 
+  onDeleteFile(file) {
     const dialogRef = this.dialog.open(DeleteFileComponent, {
       panelClass: 'mat-dialog-sm',
       data: file
@@ -397,5 +418,28 @@ export class ProjectComponent implements OnInit {
 
   }
 
+  public confirmDelete(project: any) {
+    this.snackBar.open(`Delete ${project.name1}?`, 'DELETE', { duration: 5000 })
+      .onAction().subscribe(() => {
+        this.alertService.startLoadingMessage('Deleting...');
+        this.loadingIndicator = true;
+        this.accountService.deleteProject(project.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            if (results.isSuccess) {
+              this.getProjects();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      });
+  }
+
+  
 
 }
