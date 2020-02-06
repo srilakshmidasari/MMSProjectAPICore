@@ -132,7 +132,7 @@
       "CurrentPassword": "Current Password",
       "NewPassword": "New Password",
       "NewPasswordRequired": "New password is required",
-      "NewPasswordRules": "The new password must contain at least: one uppercase letter, one lowercase letter, one digit, and any special character",
+      "NewPasswordRules": "The new password must contain at least: one uppercase letter, one lowercase letter, one digit, minimum 8 characters and any special character",
       "ConfirmPassword": "Confirm Password",
       "ConfirmationPasswordRequired": "Confirmation password is required",
       "PasswordMismatch": "New password and confirmation password do not match",
@@ -148,7 +148,7 @@
       "Save": "Save",
       "Saving": "Saving...",
       "EmpId": "Employee Id",
-      "EmployeeIdRequired": " Employee Id  is required (maximum of 15 characters) ",
+      "EmployeeIdRequired": "Employee Id  is required (maximum of 15 characters) ",
       "Name1": "Name 1",
       "Name2": "Name 2",
       "Name1Required": "Name 1 is required",
@@ -258,7 +258,17 @@
   },
   "LookUp":{
     "management":{
-      "Search": "Search for LookUp..."
-    }
+      "Search": "Search for LookUp...",
+      "Category":"Category",
+      "Name1":"Name1",
+      "Name2":"Name2",
+      "Remarks":"Remarks",
+      "UpdatedDate":"UpdatedDate",
+      "updatedByUser":"updatedByUser",
+      "IsActive":"IsActive"
+      },
+      "editor":{
+      "AddLookUp":"Add LookUp"
+      }
   }
 }

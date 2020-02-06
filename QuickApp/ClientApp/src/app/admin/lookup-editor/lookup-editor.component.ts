@@ -27,12 +27,8 @@ export class LookupEditorComponent implements OnInit {
      
      }
 
-  ngOnInit() {
-    debugger;
-    if(this.isLookUp){
-      this.buildForm();
-    }   
-    this.getlookUpData();
+  ngOnInit() {  
+       this.getlookUpData();
   }
 
 
@@ -108,7 +104,7 @@ export class LookupEditorComponent implements OnInit {
     console.log(this.currentUser)
     const FormModel = this.LookUpForm.value;
     return {
-      "id":(this.isLookUp=true)?0:this.lookUp.id ,
+      "id":(this.isLookUp==true)?0:this.lookUp.id ,
       "lookUpTypeId": FormModel.selectCategory,
       "name1": FormModel.name1,
       "name2": FormModel.name2,
@@ -127,8 +123,9 @@ export class LookupEditorComponent implements OnInit {
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
     this.resetForm(true);
-    this.onLookUpSaved.next(res);
     this.alertService.showStickyMessage('Success',res.endUserMessage, null, MessageSeverity.success);
+    this.onLookUpSaved.next(res);
+   
   }
 
   private saveFailed(error: any) {
@@ -146,21 +143,15 @@ export class LookupEditorComponent implements OnInit {
       this.lookUp = {};
       this.lookUp.isActive = true;
     }
+    this.buildForm();
     this.resetForm();
   }
-  public resetForm(stopEditing: boolean = false) {
-    debugger;
-    if (!this.lookUp) {
-      this.isLookUp = true;
-    }
-    else {
-      this.buildForm();
-    }
-    this.LookUpForm.reset({
+  public resetForm(stopEditing: boolean = false) { 
+     this.LookUpForm.reset({
       name1: this.lookUp.name1 || '',
       name2: this.lookUp.name2 || '',
       remarks: this.lookUp.remarks || '',
-      selectCategory: this.lookUp.selectCategory || '',
+      selectCategory: this.lookUp.lookUpTypeId || '',
       isActive: this.lookUp.isActive
     })
   }

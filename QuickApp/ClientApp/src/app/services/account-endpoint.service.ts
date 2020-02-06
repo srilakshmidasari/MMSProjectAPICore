@@ -37,7 +37,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getUserById: string = '/api/Account/users/GetUserById';
   private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
   private readonly _AddLookUpData: string = '/api/Masters/AddLookUpData';
-  private readonly _UpdateLookUpData: string = ' api/Masters/UpdateLookUpData';
+  private readonly _UpdateLookUpData: string = '/api/Masters/UpdateLookUpData';
  
   private readonly _projectUrl: string = '/api/Project';
   private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
@@ -448,7 +448,7 @@ export class AccountEndpoint extends EndpointBase {
     const endpointUrl = this.UpdateLookUpData;
     return this.http.put<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.AddLookUpEndpoint(lookUpObject));
+        return this.handleError(error, () => this.updateLookUpEndpoint(lookUpObject));
       }));
   }
 

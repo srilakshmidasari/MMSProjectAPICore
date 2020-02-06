@@ -300,6 +300,45 @@ namespace DAL.Repositories
         }
 
 
+        public ValueDataResponse<Project> Deleteproject(int ProjectId)
+        {
+            ValueDataResponse<Project> response = new ValueDataResponse<Project>();
+            try
+            {
+                var Projectdetials = _appContext.Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
+
+                if (Projectdetials != null)
+                {
+                    Projectdetials.IsActive = false;
+                    Projectdetials.UpdatedDate = DateTime.Now;
+
+                    _appContext.SaveChanges();
+                }
+
+                if (Projectdetials != null)
+                {
+                    response.Result = Projectdetials;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Project Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No ProjectId Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
 
     }
 
