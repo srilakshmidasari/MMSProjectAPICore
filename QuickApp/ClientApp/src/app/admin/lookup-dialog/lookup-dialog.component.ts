@@ -12,7 +12,7 @@ export class LookupDialogComponent implements OnInit {
   @ViewChild(LookupEditorComponent, { static: true })
   lookupeditor: LookupEditorComponent
   lookUpHeading:string;
-  constructor(public dialogRef: MatDialogRef<LookupDialogComponent>, @Inject(MAT_DIALOG_DATA) public data) {
+  constructor(public dialogRef:MatDialogRef<LookupEditorComponent>, @Inject(MAT_DIALOG_DATA) public data:{lookUp}) {
    
    }
 
@@ -25,7 +25,7 @@ export class LookupDialogComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.lookupeditor.LookUpSaved$.subscribe(lookup => this.dialogRef.close(lookup));
+    this.lookupeditor.LookUpSaved$.subscribe(lookUp => this.dialogRef.close(lookUp));
   }
 
 }

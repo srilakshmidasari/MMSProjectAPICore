@@ -12,7 +12,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class LookupEditorComponent implements OnInit {
   LookUpForm: any;
   @ViewChild('form', { static: true })
-  private form: NgForm;
+  private form: NgForm; 
   private onLookUpSaved = new Subject<any>();
   LookUpSaved$ = this.onLookUpSaved.asObservable();
   lookUplist: any[] = [];
@@ -69,7 +69,7 @@ export class LookupEditorComponent implements OnInit {
     if (this.isLookUp) {
       this.accountService.AddLookUp(AddLookUpData).subscribe(
         (result: any) => {
-          if (result.issucess) {
+          if (result.isSuccess) {
             this.saveCompleted(result);
           }
           else {
@@ -83,7 +83,7 @@ export class LookupEditorComponent implements OnInit {
     } else {
       this.accountService.updateLookUp(AddLookUpData).subscribe(
         (result: any) => {
-          if (result.issucess) {
+          if (result.isSuccess) {
             this.saveCompleted(result);
           }
           else {
@@ -116,14 +116,10 @@ export class LookupEditorComponent implements OnInit {
       "updatedDate": new Date(),
     }
   }
-  private saveCompleted(res) {
-    if (res) {
-      this.lookUp = res.result;
-    }
+  private saveCompleted(res) {    
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
-    this.resetForm(true);
-    this.alertService.showStickyMessage('Success',res.endUserMessage, null, MessageSeverity.success);
+    this.resetForm(true);   
     this.onLookUpSaved.next(res);
    
   }
