@@ -138,7 +138,7 @@
       "PasswordMismatch": "New password and confirmation password do not match",
       "Roles": "Roles",
       "FullName": " Full Name",
-      "RoleRequired": " Role is required",
+      "RoleRequired": "Role is required",
       "PhoneNumber": "Phone Number",
       "Enabled": "Enabled",
       "Unblock": "Unblock",

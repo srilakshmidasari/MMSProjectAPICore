@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { DeleteFileComponent } from '../delete-file/delete-file.component';
 
 @Component({
   selector: 'app-project',
@@ -18,6 +19,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class ProjectComponent implements OnInit {
   loadingIndicator: boolean;
   sourceProject: any;
+  fileData :any={};
   ProjectsList: any[] = []
   displayedColumns = ['projectReference', 'name1', 'name2', 'projectDetails', 'siteName1', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
@@ -29,7 +31,7 @@ export class ProjectComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeSort: MatSort;
   storeColumns = ['storeName1', 'storeName2', 'remarks', 'isActive', 'updatedDate'];
-
+  baseIndex: 'data:image/jpg;base64'
   projectForm: FormGroup;
   isAddingProject: boolean = false;
   isNewProject: boolean = false;
@@ -46,8 +48,16 @@ export class ProjectComponent implements OnInit {
   fileExtension: string;
   stores: any[] = [];
   storesList: any[] = [];
+  ProjectFileList: any[] = [];
+  storeIds: any[] = [];
+  isImage: any;
+  isDocument: any;
+  editDocumentsList: any[] = [];
   constructor(private accountService: AccountService, private authService: AuthService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private alertService: AlertService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) {
+    this.isImage = DataFactory.docType.Image;
+    this.isDocument = DataFactory.docType.Document;
+  }
 
   ngOnInit() {
     this.getProjects();
@@ -94,6 +104,8 @@ export class ProjectComponent implements OnInit {
     var classTypeId = 1
     this.accountService.getCddmtData(classTypeId).subscribe((response: any) => {
       this.documentList = response.listResult;
+      this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
+      console.log(this.editDocumentsList)
     }, error => {
       this.alertService.stopLoadingMessage();
     });
@@ -126,21 +138,6 @@ export class ProjectComponent implements OnInit {
     })
   }
 
-  editClick(project?: any) {
-    debugger
-    this.isAddingProject = true;
-    this.sourceProject = project;
-    this.projectData = project;
-    if (this.projectData) {
-      this.isNewProject = false;
-    } else {
-      this.projectData = {};
-      this.isNewProject = true;
-      this.projectData.isActive = true;
-    }
-    this.resetForm();
-  }
-
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -160,6 +157,25 @@ export class ProjectComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
+  editClick(project?: any) {
+    debugger
+    this.storeIds = [];
+    this.isAddingProject = true;
+    this.sourceProject = project;
+    this.projectData = project;
+    if (this.projectData) {
+      this.isNewProject = false;
+      this.projectData.storeId.forEach(element => {
+        this.storeIds.push(element.storeId)
+      });
+      this.getRepositoryByProject()
+    } else {
+      this.projectData = {};
+      this.isNewProject = true;
+      this.projectData.isActive = true;
+    }
+    this.resetForm();
+  }
 
   //  File  Change Event
   uploadFile(doc, event) {
@@ -212,6 +228,16 @@ export class ProjectComponent implements OnInit {
     reader.onload = (e: any) => {
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
+      if (!this.isNewProject) {
+        this.editDocumentsList.forEach((item1) => {
+          if (item1.typeCdDmtId == doc.typeCdDmtId) this.editDocumentsList.splice(item1, 1);
+        });
+      }
+      else if (this.isNewProject) {
+        this.projectRepositories.forEach((item1) => {
+          if (item1.documentTypeId == doc.typeCdDmtId) this.projectRepositories.splice(item1, 1);
+        });
+      }
       this.projectRepositories.push(
         {
           "projectRepositoryId": 0,
@@ -231,17 +257,15 @@ export class ProjectComponent implements OnInit {
 
 
   public resetForm(stopEditing: boolean = false) {
-    debugger
     if (!this.projectData) {
       this.isNewProject = true;
-
     } else {
       this.buildForm();
     }
     this.projectForm.reset({
       projectReference: this.projectData.projectReference || '',
       siteId: this.projectData.siteId || '',
-      storeId: this.projectData.storeId || '',
+      storeId: this.isNewProject ? this.projectData.storeId : this.storeIds || '',
       name1: this.projectData.name1 || '',
       name2: this.projectData.name2 || '',
       projectDetails: this.projectData.projectDetails || '',
@@ -254,6 +278,8 @@ export class ProjectComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+
+  // on Save Click 
   saveProject() {
     debugger
     if (!this.projectForm.valid) {
@@ -285,6 +311,8 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+
+  // forming Request Object
   private getEditedProjet(): any {
     const formModel = this.projectForm.value;
     return {
@@ -308,8 +336,9 @@ export class ProjectComponent implements OnInit {
     this.isAddingProject = false;
   }
 
+
+  // on View Stores
   onViewClick(row) {
-    debugger
     this.isViewStore = true
     this.alertService.startLoadingMessage();
     this.accountService.getStoresByProjectId(row.id)
@@ -325,6 +354,48 @@ export class ProjectComponent implements OnInit {
 
   onCancelViewStore() {
     this.isViewStore = false;
-    
   }
+
+  // Based on projectId  to Get  Files
+  getRepositoryByProject() {
+    debugger
+    this.alertService.startLoadingMessage();
+    this.accountService.getRepositoryByProject(this.projectData.id)
+      .subscribe((results: any) => {
+        this.alertService.stopLoadingMessage();
+        this.ProjectFileList = results.listResult == null ? [] : results.listResult;
+        this.ProjectFileList.forEach((item) => {
+          this.editDocumentsList.forEach((item1) => {
+            if (item.documentType == item1.typeCdDmtId) {
+              const index: number = this.editDocumentsList.indexOf(item1);
+              if (index !== -1) {
+                this.editDocumentsList.splice(index, 1);
+              }
+              console.log(this.editDocumentsList)
+            }
+          });
+        });
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+        });
+  }
+
+  
+  //  On Delete File
+  onDeleteFile(file) { 
+    const dialogRef = this.dialog.open(DeleteFileComponent, {
+      panelClass: 'mat-dialog-sm',
+      data: file
+    });
+    dialogRef.afterClosed().subscribe(res => {
+      this.getRepositoryByProject();
+      this.documentList.forEach((item, index) => {
+        if (item.typeCdDmtId === file.documentType) this.editDocumentsList.push(item);
+      });
+    })
+
+  }
+
+
 }

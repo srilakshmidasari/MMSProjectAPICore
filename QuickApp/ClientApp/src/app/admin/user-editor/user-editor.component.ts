@@ -562,7 +562,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.accountService.getUserFileData(this.user.id).subscribe(res => {
       this.editUserFilesList = JSON.parse(JSON.stringify(this.editUserDocs));
       this.userFileInfo = res;
-      console.log(this.userFileInfo)
       this.userFileInfo.forEach((item) => {
         this.editUserFilesList.forEach((item1) => {
           if (item.documentType == item1.typeCdDmtId) {
@@ -585,7 +584,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       data: file
     });
     dialogRef.afterClosed().subscribe(res => {
-      this.getCurrentUserFiles();
+     // this.getCurrentUserFiles();
     })
 
   }
