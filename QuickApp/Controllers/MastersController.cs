@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -50,7 +50,7 @@ namespace MMS.Controllers
             return _unitOfWork.Masters.AddLookUpData(LookupDetails);
         }
 
-        [HttpPost("UpdateLookUpData")]
+        [HttpPut("UpdateLookUpData")]
         public ValueDataResponse<LookUp> UpdateLookUpData(AddLookUp lookup)
         {
             LookUp LookupResult = _mapper.Map<LookUp>(lookup);
