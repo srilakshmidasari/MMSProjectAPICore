@@ -73,6 +73,7 @@ export class SiteEditorComponent implements OnInit {
   get currentUser() {
     return this.authService.currentUser;
   }
+  
   save() {
     if (!this.form.submitted) {
       this.form.onSubmit(null);

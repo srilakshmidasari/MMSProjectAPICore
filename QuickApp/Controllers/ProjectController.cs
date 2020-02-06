@@ -44,5 +44,18 @@ namespace MMS.Controllers
             return _unitOfWork.Projects.InsertProject(project);
         }
 
+        [HttpGet("GetRepositoryByProject/{ProjectId}")]
+        public ListDataResponse<ProjectRepositoryResposnse> GetRepositoryByProject(int ProjectId)
+        {
+            return _unitOfWork.Projects.GetRepositoryByProject(ProjectId);
+        }
+
+        [HttpDelete]
+        [Route("DeleteProjectRepository/{ProjectRepositoryId}")]
+        public ValueDataResponse<ProjectRepository> DeleteFileRepository(int ProjectRepositoryId)
+        {
+            return _unitOfWork.Projects.DeleteFileRepository(ProjectRepositoryId);
+        }
+
     }
 }

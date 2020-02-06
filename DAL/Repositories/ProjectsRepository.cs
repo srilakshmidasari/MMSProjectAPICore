@@ -199,5 +199,97 @@ namespace DAL.Repositories
             }
             return response;
         }
+
+        public ListDataResponse<ProjectRepositoryResposnse> GetRepositoryByProject(int ProjectId)
+        {
+            ListDataResponse<ProjectRepositoryResposnse> response = new ListDataResponse<ProjectRepositoryResposnse>();
+            try
+            {
+                
+                var result = (from p in _appContext.ProjectRepositories
+                              join t in _appContext.TypeCdDmts
+                               on p.DocumentType equals t.TypeCdDmtId
+
+                              select new ProjectRepositoryResposnse
+                              {
+                                  RepositoryId = p.ProjectRepositoryId,
+                                  ProjectId = p.ProjectId,
+                                  FileName = p.FileName,
+                                  FileLocation = p.FileLocation,
+                                  FileExtention = p.FileExtention,
+                                  DocumentType = p.DocumentType,
+                                  FileTypeName = t.Description
+                              }).Where(x => x.ProjectId == ProjectId).ToList();
+
+                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
+
+                result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+
+               
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Repositories Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Repositories Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
+        public ValueDataResponse<ProjectRepository> DeleteFileRepository(int RepositoryId)
+        {
+            ValueDataResponse<ProjectRepository> response = new ValueDataResponse<ProjectRepository>();
+            try
+            {
+                var projectRepository = _appContext.ProjectRepositories.Where(x =>x.ProjectRepositoryId  == RepositoryId).FirstOrDefault();
+
+                if (projectRepository != null)
+                {
+                    _appContext.ProjectRepositories.Remove(projectRepository);
+
+                    _appContext.SaveChanges();
+                }
+
+                if (projectRepository != null)
+                {
+                    response.Result = projectRepository;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "File Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No File Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }
