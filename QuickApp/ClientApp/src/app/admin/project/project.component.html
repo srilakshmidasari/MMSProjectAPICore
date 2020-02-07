@@ -56,16 +56,18 @@
             </ng-container>
 
             <ng-container matColumnDef="Actions">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef >
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canManageProjects" >
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()"  *ngIf="canManageProjects">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
-                </mat-header-cell>
+                    <button mat-button color="primary" matTooltip="Actions"  *ngIf="!canManageProjects" >{{'project.management.Actions' | translate}}
+                    </button>
+                </mat-header-cell>                
                 <mat-cell class="just-cont-center" *matCellDef="let row">
                     <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canManageProjects" >
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}" (click)="onViewClick(row)">
+                    <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"   (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
@@ -94,22 +96,22 @@
 <div class="page-content" *ngIf="isAddingProject">
     <mat-card>
         <mat-card-header>
-            <mat-card-title *ngIf="isNewProject">"{{'project.management.Add Project'|translate}}"</mat-card-title>
-            <mat-card-title *ngIf="!isNewProject">"{{'project.management.Edit Project'|translate}}"</mat-card-title>
+            <mat-card-title *ngIf="isNewProject">{{'project.management.Add Project'|translate}}</mat-card-title>
+            <mat-card-title *ngIf="!isNewProject">{{'project.management.Edit Project'|translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
             <form [formGroup]="projectForm">
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>"{{'project.management.Project Refrerence'|translate}}"</mat-label>
+                        <mat-label>{{'project.management.Project Refrerence'|translate}}</mat-label>
                         <input matInput formControlName="projectReference" required maxlength="50" />
                         <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
                             {{'project.management.Project Reference is Required'|translate}}  
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <mat-label>Site *</mat-label>
+                        <mat-label>Select Site *</mat-label>
                         <mat-select formControlName="siteId">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}
@@ -145,7 +147,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Store'|translate}}</mat-label>
+                        <mat-label>{{'project.management.Store'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="storeId" multiple>
                             <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name1}}</mat-option>
                         </mat-select>
@@ -163,7 +165,7 @@
                 </div>
                 <div class="row" *ngIf="isNewProject">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
-                        <label for="file">{{'project.management.Upload Project'|translate}} {{doc.description}} <span>*</span></label>
+                        <label for="file">{{'project.management.Upload Project'|translate}} {{doc.description}} <span></span></label>
                         <input #fileInput type="file" class="form-control" id="file" 
                             (change)="uploadFile(doc, $event)">
                     </div>

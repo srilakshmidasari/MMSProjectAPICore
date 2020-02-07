@@ -84,16 +84,16 @@
         </mat-nav-list>
 
         <mat-nav-list>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/lookup">
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewStores"  routerLink="/admin/lookup">
             <mat-icon>find_replace</mat-icon>{{'mainMenu.LookUp'| translate}}
           </a>
         </mat-nav-list>
 
-        <mat-nav-list>
+        <!-- <mat-nav-list>
           <a mat-list-item routerLinkActive="active" routerLink="/admin/location">
             <mat-icon>place</mat-icon>{{'mainMenu.Location'| translate}}
           </a>
-        </mat-nav-list>
+        </mat-nav-list> -->
 
       </mat-nav-list>
       <!-- <mat-nav-list>

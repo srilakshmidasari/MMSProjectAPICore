@@ -580,7 +580,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   //  On Delete File
   onDeleteFile(file) { 
     const dialogRef = this.dialog.open(DeleteFileComponent, {
-      panelClass: 'mat-dialog-sm',
+      // panelClass: 'mat-dialog-sm',
       data: file
     });
     dialogRef.afterClosed().subscribe(res => {

@@ -137,8 +137,7 @@ export class ProjectComponent implements OnInit {
       name2: ['', Validators.required],
       projectDetails: [Validators.required],
       isActive: [true],
-       //file: ['' ]  
-
+      //file: ['' ]  
     })
   }
 
@@ -162,7 +161,6 @@ export class ProjectComponent implements OnInit {
   }
 
   editClick(project?: any) {
-    debugger
     this.storeIds = [];
     this.isAllow = false;
     this.projectRepositories = [];
@@ -177,7 +175,6 @@ export class ProjectComponent implements OnInit {
       this.projectData.storeId.forEach(element => {
         this.storeIds.push(element.storeId)
       });
-
       this.getRepositoryByProject()
     } else {
       this.projectData = {};
@@ -189,7 +186,6 @@ export class ProjectComponent implements OnInit {
 
   //  File  Change Event
   uploadFile(doc, event) {
-    debugger
     this.isAllow = false;
     var file = event.target.files[0];
     if (doc.typeCdDmtId == DataFactory.docType.Image) {
@@ -273,7 +269,6 @@ export class ProjectComponent implements OnInit {
       } else {
         this.projectRepositories = [];
       }
-
     }
     reader.readAsDataURL(file);
   }
@@ -304,7 +299,6 @@ export class ProjectComponent implements OnInit {
 
   // on Save Click 
   saveProject() {
-    debugger
     if (!this.projectForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -375,7 +369,6 @@ export class ProjectComponent implements OnInit {
     this.isAddingProject = false;
   }
 
-
   // on View Stores
   onViewClick(row) {
     this.isViewStore = true
@@ -398,32 +391,22 @@ export class ProjectComponent implements OnInit {
 
   // Based on projectId  to Get  Files
   getRepositoryByProject() {
-    debugger
-   // this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
+    // this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
     this.alertService.startLoadingMessage();
     this.accountService.getRepositoryByProject(this.projectData.id)
       .subscribe((results: any) => {
         this.alertService.stopLoadingMessage();
         this.ProjectFileList = results.listResult == null ? [] : results.listResult;
-        //if (this.ProjectFileList.length >= 1) {
-          this.ProjectFileList.forEach((item) => {
-            this.editDocumentsList.forEach((item1) => {
-              if (item.documentType == item1.typeCdDmtId) {
-                const index: number = this.editDocumentsList.indexOf(item1);
-                if (index !== -1) {
-                  this.editDocumentsList.splice(index, 1);
-                }
+        this.ProjectFileList.forEach((item) => {
+          this.editDocumentsList.forEach((item1) => {
+            if (item.documentType == item1.typeCdDmtId) {
+              const index: number = this.editDocumentsList.indexOf(item1);
+              if (index !== -1) {
+                this.editDocumentsList.splice(index, 1);
               }
-            });
+            }
           });
-
-        // } else if (this.ProjectFileList.length == 0) {
-        //   this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
-        // } else {
-        //   // this.documentList.forEach((item) => {
-        //   //   if (item.typeCdDmtId === this.fileData.documentType) this.editDocumentsList.push(item);
-        //   // });
-        // }
+        });
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -434,7 +417,7 @@ export class ProjectComponent implements OnInit {
   //  On Delete File
   onDeleteFile(file) {
     const dialogRef = this.dialog.open(DeleteFileComponent, {
-      panelClass: 'mat-dialog-sm',
+      // panelClass: 'mat-dialog-sm',
       data: file
     });
     dialogRef.afterClosed().subscribe(res => {

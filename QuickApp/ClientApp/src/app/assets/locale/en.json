@@ -173,7 +173,7 @@
       "Name": "Name",
       "Description": "Description",
       "Users": "Users",
-      "ReportnigRole": "Reportnig Role"
+      "Reporting Role": "Reportnig Role"
     },
     "editor": {
       "Name": "Name:",
@@ -230,6 +230,7 @@
       "UpdatedDate": "Updated Date",
       "IsActive": "Is Active",
       "AddSite": "Add Site",
+      "Actions":"Actions",
       "SiteManager": "Site Manager",
       "Upload Document": "Upload Document",
       "UploadLocationMapImage": "Upload Site Address Map Image",
@@ -265,7 +266,8 @@
       "No Search Results Found":"No Search Results Found",
       "Add Project":"Add Project",
       "Edit Project":"Edit Project",
-      "Project Refrerence":"Project Refrerence",
+      "Select Site" :"Select Site",
+      "Project Refrerence":"Project Reference",
       "Project Reference is Required":"Project Reference is Required",
       "Please Select Site":"Please Select Site",
       "Name 1 is Required":" Name 1 is Required",
@@ -279,6 +281,7 @@
       "Note":"Note",
       "Updated Date":"Updated Date",
        "Close":"Close"
+      
     }
   },
   "LookUp":{
@@ -296,12 +299,14 @@
       "Add LookUp":"Add LookUp",
       "Edit":"Edit",
       "edit":"edit",
-      "Delete":"Delete"
+      "Delete":"Delete",
+      "Actions":"Actions"
       },
       "editor":{
       "No Records Found":"No Records Found",
       "No Search Results Found":"No Search Results Found",
-       "SelectCategory":"SelectCategory",
+       "SelectCategory":"Select Category",
+       "PleaseSelectCategory" : "Please Select Category",
        "Name1":"Name 1",
        "Name1 is required":"Name1 is required",
        "Name2":"Name 2",

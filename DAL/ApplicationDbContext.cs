@@ -222,14 +222,15 @@ namespace DAL
                  .HasConstraintName("FK_App_Location_UpdatedUser");
 
 
-            builder.Entity<Location>().HasOne(d => d.Project_Id)
-               .WithMany(p => p.App_Location_ProjectId)
+            builder.Entity<Location>().HasOne(d => d.Project)
+               .WithMany(p => p.Location_ProjectId)
                .HasForeignKey(d => d.ProjectId)
                .OnDelete(DeleteBehavior.ClientSetNull)
-               .HasConstraintName("FK_App_Location_ProjectId");
+               .HasConstraintName("FK_Location_ProjectId");
 
             builder.Entity<Location>().HasOne(d => d.SiteInfo_Id)
                  .WithMany(p => p.App_Location_SiteId)
+
                  .HasForeignKey(d => d.SiteId)
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_App_Location_SiteId");
