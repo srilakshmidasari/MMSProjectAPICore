@@ -235,9 +235,9 @@ export class ProjectComponent implements OnInit {
       var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
       this.fileExtension = '.' + file.name.split('.').pop();
       if (!this.isNewProject) {
-        this.editDocumentsList.forEach((item1) => {
-          if (item1.typeCdDmtId == doc.typeCdDmtId) this.editDocumentsList.splice(item1, 1);
-        });
+        // this.editDocumentsList.forEach((item1) => {
+        //   if (item1.typeCdDmtId == doc.typeCdDmtId) this.editDocumentsList.splice(item1, 1);
+        // });
         this.projectRepositories.forEach((item1) => {
           if (item1.documentTypeId == doc.typeCdDmtId) this.projectRepositories.splice(item1, 1);
         });

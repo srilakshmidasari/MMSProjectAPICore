@@ -302,12 +302,12 @@
       "No Records Found":"No Records Found",
       "No Search Results Found":"No Search Results Found",
        "SelectCategory":"SelectCategory",
-       "Name1":"Name1",
-       " Name1 is required":"Name1 is required",
-       "Name2":"Name2",
-       " Name2 is required":"Name2 is required",
+       "Name1":"Name 1",
+       "Name1 is required":"Name1 is required",
+       "Name2":"Name 2",
+       "Name2 is required":"Name2 is required",
        "Remarks":"Remarks",
-       "isActive":"isActive"
+       "isActive":"Is Active"
       }
   },
   "Location":{
