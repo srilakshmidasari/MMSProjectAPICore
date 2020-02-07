@@ -16,7 +16,7 @@
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
-      <mat-label>Reporting Role</mat-label>
+      <mat-label>{{'roles.management.Reporting Role'|translate}}</mat-label>
       <mat-select formControlName="repRole">
         <mat-option *ngFor="let role of roleData" [value]="role.id">
           {{role.name}}

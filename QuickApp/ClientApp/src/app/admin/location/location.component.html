@@ -34,18 +34,25 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name 2</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.lname2}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="isActive">
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                    {{'site.management.IsActive' | translate}} </mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add">
+                    <button mat-button color="primary" matTooltip="Add" (click)="onEditLocation()">
                         <mat-icon class="mat-button-icon">add</mat-icon>Add location
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" >
+                    <button mat-icon-button matTooltip="Edit" (click)="onEditLocation(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" >
+                    <button mat-icon-button matTooltip="Delete" (click)="onDeleteLocation(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -82,7 +89,7 @@
                             <mat-option *ngFor="let site of siteList" [value]="site.id">
                                 {{site.name1}}
                             </mat-option>
-                        </mat-select>                        
+                        </mat-select>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>Poject Name</mat-label>
@@ -90,7 +97,7 @@
                             <mat-option *ngFor="let project of projectsList" [value]="project.id">
                                 {{project.name1}}
                             </mat-option>
-                        </mat-select>                       
+                        </mat-select>
                     </mat-form-field>
                 </div>
                 <div class="row">
@@ -116,8 +123,8 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button  color="primary">Save</button>
-                <button mat-raised-button  color="warn">Cancel</button>
+                <button mat-raised-button color="primary">Save</button>
+                <button mat-raised-button color="warn" (click)="onLocationCancel()">Cancel</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
