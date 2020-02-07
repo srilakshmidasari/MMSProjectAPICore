@@ -75,5 +75,7 @@ namespace DAL.Models
         public ICollection<ProjectRepository> App_ProjectRepository_ProjectId { get; set; }
 
         public ICollection<LookUpProjectXref> ProjectxrefId { get; set; }
+
+        public ICollection<Location> App_Location_ProjectId { get; set; }
     }
 }

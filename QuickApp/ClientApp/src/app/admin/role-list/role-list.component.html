@@ -9,7 +9,7 @@
 
   <div class="example-container mat-elevation-z8">
     <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-    <mat-table [dataSource]="dataSource" matSort>
+    <mat-table [dataSource]="dataSource" matSort matSortActive="name" matSortDirection="asc">
 
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header> {{'roles.management.Name' | translate}} </mat-header-cell>

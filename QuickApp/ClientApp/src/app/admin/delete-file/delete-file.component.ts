@@ -33,7 +33,7 @@ export class DeleteFileComponent implements OnInit {
   onDeleteFile() {
     this.accountService.deleteUserFile(this.data.repositoryId)
       .subscribe((results: any) => {
-        if (results.IsSuccesss)
+        if (results.isSuccess)
           this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
         this.dialogRef.close();
       },
@@ -47,7 +47,7 @@ export class DeleteFileComponent implements OnInit {
   onDeleteProjectFile() {
     this.accountService.deleteProjectFile(this.data.repositoryId)
       .subscribe((results: any) => {
-        if (results.IsSuccesss)
+        if (results.isSuccess)
           this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
         this.dialogRef.close();
       },

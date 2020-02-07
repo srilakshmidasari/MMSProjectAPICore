@@ -30,7 +30,10 @@ namespace DAL
         public DbSet<LookUp> LookUps { get; set; }
 
         public DbSet<LookUpProjectXref> LookUpProjectXrefs { get; set; }
-        
+
+        public DbSet<Location> Locations { get; set; }
+
+
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -61,6 +64,8 @@ namespace DAL
             builder.Entity<ProjectRepository>().ToTable("ProjectRepository");
             builder.Entity<LookUp>().ToTable("LookUP");
             builder.Entity<LookUpProjectXref>().ToTable("LookUpProjectXref");
+            builder.Entity<Location>().ToTable("Location");
+
 
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
@@ -200,6 +205,36 @@ namespace DAL
                  .HasForeignKey(d => d.ProjectId)
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_ProjectxrefId");
+
+
+
+
+            builder.Entity<Location>().HasOne(d => d.CreatedUser)
+               .WithMany(p => p.App_Location_CreatedUser)
+               .HasForeignKey(d => d.CreatedBy)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_Location_CreatedUser");
+
+            builder.Entity<Location>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_Location_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_Location_UpdatedUser");
+
+
+            builder.Entity<Location>().HasOne(d => d.Project_Id)
+               .WithMany(p => p.App_Location_ProjectId)
+               .HasForeignKey(d => d.ProjectId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_Location_ProjectId");
+
+            builder.Entity<Location>().HasOne(d => d.SiteInfo_Id)
+                 .WithMany(p => p.App_Location_SiteId)
+                 .HasForeignKey(d => d.SiteId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_Location_SiteId");
+
+
         }
 
         public override int SaveChanges()
