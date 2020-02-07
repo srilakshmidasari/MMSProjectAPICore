@@ -95,5 +95,101 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ValueDataResponse<Location> UpdateLocation(Location location)
+        {
+            ValueDataResponse<Location> response = new ValueDataResponse<Location>();
+
+            try
+            {
+                var locationExists = _appContext.Locations.Where(x => x.LocationReference == location.LocationReference).FirstOrDefault();
+                if (locationExists == null)
+                {
+                    //var result = _appContext.Locations.Add(location);
+
+                    var result = _appContext.Locations.Where(x => x.Id == location.Id).FirstOrDefault();
+                    if (result != null)
+                    {
+                        result.SiteId = location.SiteId;
+                        result.ProjectId = location.ProjectId;
+                        result.LocationReference = location.LocationReference;
+                        result.Name1 = location.Name1;
+                        result.Name2 = location.Name2;
+                        result.IsActive = location.IsActive;
+                        result.CreatedBy = location.CreatedBy;
+                        result.CreatedDate = location.CreatedDate;
+                        result.UpdatedBy = location.UpdatedBy;
+                        result.UpdatedDate = location.UpdatedDate;
+
+                        _appContext.SaveChanges();
+                            response.Result = location;
+                            response.IsSuccess = true;
+                            response.AffectedRecords = 1;
+                            response.EndUserMessage = "Location Updated Successfully";
+                        }
+                        else
+                        {
+                            response.IsSuccess = true;
+                            response.AffectedRecords = 0;
+                            response.EndUserMessage = "Location Updated Failed";
+                        }
+                    }
+                    else
+                    {
+                        response.IsSuccess = false;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Location Reference Already Exists";
+                    }
+                
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+        public ValueDataResponse<Location> DeleteLocation(int LocationId)
+        {
+            ValueDataResponse<Location> response = new ValueDataResponse<Location>();
+            try
+            {
+                var LocationData = _appContext.Locations.Where(x => x.Id == LocationId && x.IsActive == true).FirstOrDefault();
+                if (LocationData != null)
+                {
+                    LocationData.IsActive = false;
+                    //entityInfo.UpdatedBy = entity.UpdatedBy;
+                    LocationData.UpdatedDate = DateTime.Now;
+                    _appContext.SaveChanges();
+                }
+
+                if (LocationData != null)
+                {
+                    response.Result = LocationData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Location Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Location Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

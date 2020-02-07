@@ -36,5 +36,18 @@ namespace MMS.Controllers
             Location LocationInfo = _mapper.Map<Location>(location);
             return _unitOfWork.Locations.InsertLocation(LocationInfo);
         }
+
+        [HttpPut]
+        public ValueDataResponse<Location> Update(AddLocation location)
+        {
+            Location LocationInfo = _mapper.Map<Location>(location);
+            return _unitOfWork.Locations.UpdateLocation(LocationInfo);
+        }
+
+        [HttpDelete]
+        public ValueDataResponse<Location> Delete(int LocationId)
+        {
+            return _unitOfWork.Locations.DeleteLocation(LocationId);
+        }
     }
 }

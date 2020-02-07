@@ -12,5 +12,9 @@ namespace DAL.Repositories.Interfaces
         ListDataResponse<Location> GetLocationDetails(); 
 
         ValueDataResponse<Location> InsertLocation(Location location);
+
+        ValueDataResponse<Location> UpdateLocation(Location location);
+
+        ValueDataResponse<Location> DeleteLocation(int LocationId);
     }
 }
