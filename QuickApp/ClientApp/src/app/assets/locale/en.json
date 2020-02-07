@@ -254,9 +254,31 @@
       "SiteName1" :"Site Name",
       "StoreName1" :"Store Name",
       "UpdatedDate": "Updated Date",
-      "IsActive": "Is Active",
-      "AddProject": "Add Project"
-     
+      "Is Active": "Is Active",
+      "AddProject": "Add Project",
+      "updatedDate":"updatedDate",
+      "Actions":"Actions",
+      "Edit":"Edit",
+      "View Store":"View Store",
+      "Delete":"Delete",
+      "No Records Found":"No Records Found",
+      "No Search Results Found":"No Search Results Found",
+      "Add Project":"Add Project",
+      "Edit Project":"Edit Project",
+      "Project Refrerence":"Project Refrerence",
+      "Project Reference is Required":"Project Reference is Required",
+      "Please Select Site":"Please Select Site",
+      "Name 1 is Required":" Name 1 is Required",
+      "Name 2":"Name 2",
+      "Name 2 is Required":"Name 2 is Required",
+      "Project Details":"Project Details",
+      "Project Details is Required":"Project Details is Required",
+      "Store":"Store",
+      "Please Select Store":"Please Select Store",
+      "Upload Project":"Upload Project",
+      "Note":"Note",
+      "Updated Date":"Updated Date",
+       "Close":"Close"
     }
   },
   "LookUp":{
@@ -270,8 +292,26 @@
       "updatedByUser":"Last Updated By User",
       "IsActive":"Is Active"
       },
+      "UpdatedDate":"UpdatedDate",
+      "updatedByUser":"updatedByUser",
+      "IsActive":"IsActive",
+      "Add":"Add",
+      "add":"add",
+      "Add LookUp":"Add LookUp",
+      "Edit":"Edit",
+      "edit":"edit",
+      "Delete":"Delete"
+       },
       "editor":{
-      "AddLookUp":"Add LookUp"
+      "No Records Found":"No Records Found",
+      "No Search Results Found":"No Search Results Found",
+       "SelectCategory":"SelectCategory",
+       "Name1":"Name1",
+       " Name1 is required":"Name1 is required",
+       "Name2":"Name2",
+       " Name2 is required":"Name2 is required",
+       "Remarks":"Remarks",
+       "isActive":"isActive"
       }
   },
   "Location":{

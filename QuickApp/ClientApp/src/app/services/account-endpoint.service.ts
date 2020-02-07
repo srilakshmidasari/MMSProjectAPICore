@@ -38,6 +38,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getLookUpData: string = '/api/Masters/GetAllLookUpDetails';
   private readonly _AddLookUpData: string = '/api/Masters/AddLookUpData';
   private readonly _UpdateLookUpData: string = '/api/Masters/UpdateLookUpData';
+  private readonly _deleteLookUpData: string = '/api/Masters/DeleteLooKUp';
 
   private readonly _projectUrl: string = '/api/Project';
   private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
@@ -70,7 +71,7 @@ export class AccountEndpoint extends EndpointBase {
   get getLookUpDetailsByTypeIdUrl() { return this.configurations.baseUrl + this._getLookUpDetailsByTypeIdUrl; }
   get AddlookUpData() { return this.configurations.baseUrl + this._AddLookUpData; }
   get UpdateLookUpData() { return this.configurations.baseUrl + this._UpdateLookUpData; }
-
+  get deleteLookUpData() { return this.configurations.baseUrl + this._deleteLookUpData; }
   get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
 
   get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
@@ -457,6 +458,13 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.put<T>(endpointUrl, JSON.stringify(lookUpObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.updateLookUpEndpoint(lookUpObject));
+      }));
+  }
+  getDeleteLookUpEndpoint<T>(LookUpId: string): Observable<T> {
+    const endpointUrl = this.deleteLookUpData + '/' + LookUpId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getDeleteLookUpEndpoint(LookUpId));
       }));
   }
 

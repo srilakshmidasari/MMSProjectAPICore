@@ -7,14 +7,16 @@ import { MessageSeverity, AlertService } from 'src/app/services/alert.service';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { LookupDialogComponent } from '../lookup-dialog/lookup-dialog.component';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Utilities } from 'src/app/services/utilities';
 @Component({
   selector: 'app-lookup-list',
   templateUrl: './lookup-list.component.html',
   styleUrls: ['./lookup-list.component.scss']
 })
 export class LookupListComponent implements OnInit {
-  displayedColumn = ['description', 'name1', 'name2', 'remarks', 'updatedDate', 'updatedByUser', 'isActive', 'Actions'];
+  loadingIndicator: boolean;
+  displayedColumn = ['description','name1', 'name2', 'remarks', 'updatedDate','updatedByUser', 'isActive','Actions'];
   dataSource = new MatTableDataSource<any>();
   lookUpData: any[] = [];
   sourcelookup: any;
@@ -24,7 +26,7 @@ export class LookupListComponent implements OnInit {
 
   constructor(private authService: AuthService, private alertService: AlertService,
     private accountService: AccountService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     debugger
@@ -86,5 +88,26 @@ export class LookupListComponent implements OnInit {
       }     
     });
   }
-
+ public confirmDelete(lookUp:any){
+   debugger;
+  this.snackBar.open(`Delete ${lookUp.name1}?`, 'DELETE', { duration: 5000 })
+  .onAction().subscribe(() => {
+    this.alertService.startLoadingMessage('Deleting...');
+    this.loadingIndicator = true;
+    this.accountService.deleteLookUp(lookUp)
+    .subscribe((results: any) => {
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+      if (results.isSuccess) {
+        this.getLookUp();
+      }
+    },
+      error => {
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
+        this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+          MessageSeverity.error, error);
+      });
+});
+}
 }
