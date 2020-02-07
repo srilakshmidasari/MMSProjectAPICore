@@ -78,5 +78,8 @@ namespace DAL.Models
 
         public ICollection<LookUp> App_LookUp_CreatedUser { get; set; }
         public ICollection<LookUp> App_LookUp_UpdatedUser { get; set; }
+
+        public ICollection<Location> App_Location_CreatedUser { get; set; }
+        public ICollection<Location> App_Location_UpdatedUser { get; set; }
     }
 }
