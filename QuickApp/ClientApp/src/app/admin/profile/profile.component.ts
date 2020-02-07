@@ -279,6 +279,7 @@ export class ProfileComponent implements OnInit {
       this.isSaving = false;
       this.isEditing=false;
       this.alertService.showMessage('Success', 'Profile Updated Sucessfully', MessageSeverity.success);
+      this.fileRepositories=[];
       this.UserData();
 
     }
