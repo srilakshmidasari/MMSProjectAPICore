@@ -23,7 +23,7 @@ export class ProjectComponent implements OnInit {
   sourceProject: any;
   fileData: any = {};
   ProjectsList: any[] = []
-  displayedColumns = ['projectReference', 'name1', 'name2', 'siteName1', 'projectDetails',  'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['projectReference', 'name1', 'name2', 'siteName1', 'projectDetails', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -55,10 +55,13 @@ export class ProjectComponent implements OnInit {
   isImage: any;
   isDocument: any;
   editDocumentsList: any[] = [];
+  isAllow: boolean = false;
+  textDir: string;
   constructor(private accountService: AccountService, private authService: AuthService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private alertService: AlertService,
     private dialog: MatDialog) {
     this.isImage = DataFactory.docType.Image;
     this.isDocument = DataFactory.docType.Document;
+    //this.textDir = localStorage.getItem('textdir')
   }
 
   ngOnInit() {
@@ -134,7 +137,7 @@ export class ProjectComponent implements OnInit {
       name2: ['', Validators.required],
       projectDetails: [Validators.required],
       isActive: [true],
-      file: ''
+       //file: ['' ]  
 
     })
   }
@@ -161,9 +164,10 @@ export class ProjectComponent implements OnInit {
   editClick(project?: any) {
     debugger
     this.storeIds = [];
-    this.projectRepositories =[];
-    this.editDocumentsList=[];
-    this.ProjectFileList =[];
+    this.isAllow = false;
+    this.projectRepositories = [];
+    this.editDocumentsList = [];
+    this.ProjectFileList = [];
     this.isAddingProject = true;
     this.sourceProject = project;
     this.getDocuments();
@@ -173,7 +177,7 @@ export class ProjectComponent implements OnInit {
       this.projectData.storeId.forEach(element => {
         this.storeIds.push(element.storeId)
       });
-      
+
       this.getRepositoryByProject()
     } else {
       this.projectData = {};
@@ -186,6 +190,7 @@ export class ProjectComponent implements OnInit {
   //  File  Change Event
   uploadFile(doc, event) {
     debugger
+    this.isAllow = false;
     var file = event.target.files[0];
     if (doc.typeCdDmtId == DataFactory.docType.Image) {
       var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
@@ -198,12 +203,14 @@ export class ProjectComponent implements OnInit {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
+          this.isAllow = true;
         } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
             this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
+            this.isAllow = true;
           } else {
           }
         }
@@ -219,12 +226,14 @@ export class ProjectComponent implements OnInit {
         if (!exists) {
           this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocExtension + " only.", null, MessageSeverity.error);
           this.myInputVariable.nativeElement.value = '';
+          this.isAllow = true;
         } else {
           var fileSizeinMB = file.size / (1024 * 1000);
           var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
           if (size > this.maxSize) {
             this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
             this.myInputVariable.nativeElement.value = '';
+            this.isAllow = true;
           } else {
           }
         }
@@ -247,19 +256,24 @@ export class ProjectComponent implements OnInit {
           if (item1.documentTypeId == doc.typeCdDmtId) this.projectRepositories.splice(item1, 1);
         });
       }
-      this.projectRepositories.push(
-        {
-          "projectRepositoryId": 0,
-          "projectId": 0,
-          "fileName": e.target.result.substring(base64Index),
-          "fileLocation": null,
-          "fileExtention": this.fileExtension,
-          "documentTypeId": doc.typeCdDmtId,
-          "createdBy": this.currentUser.id,
-          "updatedBy": this.currentUser.id,
-          "updatedDate": new Date(),
-          "createdDate": new Date(),
-        })
+      if (!this.isAllow) {
+        this.projectRepositories.push(
+          {
+            "projectRepositoryId": 0,
+            "projectId": 0,
+            "fileName": e.target.result.substring(base64Index),
+            "fileLocation": null,
+            "fileExtention": this.fileExtension,
+            "documentTypeId": doc.typeCdDmtId,
+            "createdBy": this.currentUser.id,
+            "updatedBy": this.currentUser.id,
+            "updatedDate": new Date(),
+            "createdDate": new Date(),
+          })
+      } else {
+        this.projectRepositories = [];
+      }
+
     }
     reader.readAsDataURL(file);
   }
@@ -370,6 +384,7 @@ export class ProjectComponent implements OnInit {
       .subscribe((results: any) => {
         this.alertService.stopLoadingMessage();
         this.storesList = results.listResult == null ? [] : results.listResult;
+        console.log(this.storesList)
         this.storeDataSource.data = this.storesList;
       },
         error => {
@@ -384,22 +399,31 @@ export class ProjectComponent implements OnInit {
   // Based on projectId  to Get  Files
   getRepositoryByProject() {
     debugger
+   // this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
     this.alertService.startLoadingMessage();
     this.accountService.getRepositoryByProject(this.projectData.id)
       .subscribe((results: any) => {
         this.alertService.stopLoadingMessage();
         this.ProjectFileList = results.listResult == null ? [] : results.listResult;
-        this.ProjectFileList.forEach((item) => {
-          this.editDocumentsList.forEach((item1) => {
-            if (item.documentType == item1.typeCdDmtId) {
-              const index: number = this.editDocumentsList.indexOf(item1);
-              if (index !== -1) {
-                this.editDocumentsList.splice(index, 1);
+        //if (this.ProjectFileList.length >= 1) {
+          this.ProjectFileList.forEach((item) => {
+            this.editDocumentsList.forEach((item1) => {
+              if (item.documentType == item1.typeCdDmtId) {
+                const index: number = this.editDocumentsList.indexOf(item1);
+                if (index !== -1) {
+                  this.editDocumentsList.splice(index, 1);
+                }
               }
-            
-            }
+            });
           });
-        });
+
+        // } else if (this.ProjectFileList.length == 0) {
+        //   this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
+        // } else {
+        //   // this.documentList.forEach((item) => {
+        //   //   if (item.typeCdDmtId === this.fileData.documentType) this.editDocumentsList.push(item);
+        //   // });
+        // }
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -415,7 +439,8 @@ export class ProjectComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(res => {
       this.getRepositoryByProject();
-      this.documentList.forEach((item, index) => {
+      this.fileData = file;
+      this.documentList.forEach((item) => {
         if (item.typeCdDmtId === file.documentType) this.editDocumentsList.push(item);
       });
     })

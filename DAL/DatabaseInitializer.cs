@@ -55,16 +55,16 @@ namespace DAL
                 _logger.LogInformation("Generating inbuilt accounts");
 
                 const string adminRoleName = "SuperAdmin";
-                const string userRoleName = "user";
+               //const string userRoleName = "user";
 
                 await EnsureRoleAsync(adminRoleName, "Super administrator", ApplicationPermissions.GetAllPermissionValues());
-                await EnsureRoleAsync(userRoleName, "Default user", new string[] { });
+             //   await EnsureRoleAsync(userRoleName, "Default user", new string[] { });
 
-                if (!string.IsNullOrWhiteSpace(_defaultRoleName))
-                    await EnsureRoleAsync(_defaultRoleName, "Default public role", new string[] { });
+                //if (!string.IsNullOrWhiteSpace(_defaultRoleName))
+                //    await EnsureRoleAsync(_defaultRoleName, "Default public role", new string[] { });
 
                 await CreateUserAsync("superadmin", "Abcd@123", "Super Administrator", "superadmin@gmail.com", "7846745764", new string[] { adminRoleName });
-                await CreateUserAsync("user", "Abcd@123", "Inbuilt Standard User", "user@gmail.com", "9574574687", new string[] { userRoleName });
+              //  await CreateUserAsync("user", "Abcd@123", "Inbuilt Standard User", "user@gmail.com", "9574574687", new string[] { userRoleName });
 
               //  await _context.SaveChangesAsync();
 

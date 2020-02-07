@@ -49,7 +49,7 @@
             </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                   IsActive</mat-header-cell>
+                    {{'project.management.IsActive' | translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>
@@ -164,7 +164,7 @@
                 <div class="row" *ngIf="isNewProject">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
                         <label for="file">{{'project.management.Upload Project'|translate}} {{doc.description}} <span>*</span></label>
-                        <input #fileInput type="file" class="form-control" id="file" formControlName="file"
+                        <input #fileInput type="file" class="form-control" id="file" 
                             (change)="uploadFile(doc, $event)">
                     </div>
                     <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
@@ -200,11 +200,11 @@
                     </div>
                     <div class="form-group col-md-6" *ngFor="let doc of editDocumentsList">
                         <label for="file">Upload Project {{doc.description}} </label>
-                        <input #fileInput type="file" class="form-control" id="file" formControlName="file"
+                        <input #fileInput type="file" class="form-control" id="file" 
                             (change)="uploadFile(doc, $event)">
                     </div>
                   
-                    <div class="form-group col-md-6 file-icon" *ngFor="let info of projectRepositories">
+                    <div class="form-group col-md-3 file-icon" *ngFor="let info of projectRepositories">
                         <div class="clearfix space20"></div>
                         <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"
                             *ngIf="info.documentTypeId==isDocument" download>
@@ -243,7 +243,7 @@
                     matSortDisableClear>
 
                     <ng-container matColumnDef="storeName1">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name 1'|translate}}</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name1'|translate}}</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="storeName2">
@@ -252,14 +252,18 @@
                     </ng-container>
                     <ng-container matColumnDef="remarks">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Note'|translate}}</mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.commets}} </mat-cell>
+                        <mat-cell *matCellDef="let row"> {{row.remarks}} </mat-cell>
                     </ng-container>
+                    <!-- <ng-container matColumnDef="isActive">
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.IsActive' | translate}}</mat-header-cell>
+                        <mat-cell *matCellDef="let row"> {{row.isActive}} </mat-cell>
+                    </ng-container> -->
                     <ng-container matColumnDef="updatedDate">
                         <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Updated Date'|translate}}</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy h:mm a'}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isActive">
-                        <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                        <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'project.management.IsActive' | translate}}
                          </mat-header-cell>
                         <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                             <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>

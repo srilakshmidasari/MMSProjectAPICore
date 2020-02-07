@@ -254,7 +254,7 @@
       "SiteName1" :"Site Name",
       "StoreName1" :"Store Name",
       "UpdatedDate": "Updated Date",
-      "Is Active": "Is Active",
+      "IsActive": "Is Active",
       "AddProject": "Add Project",
       "updatedDate":"updatedDate",
       "Actions":"Actions",
