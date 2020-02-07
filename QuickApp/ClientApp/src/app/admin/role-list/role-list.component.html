@@ -38,9 +38,9 @@
           </button>
         </mat-header-cell>
         <mat-cell *matCellDef="let role">
-          <button *ngIf="!canManageRoles" mat-icon-button matTooltip="{{'roles.management.Details' | translate}}" (click)="editRole(role)">
+          <!-- <button *ngIf="!canManageRoles" mat-icon-button matTooltip="{{'roles.management.Details' | translate}}" (click)="editRole(role)">
             <mat-icon>more_vert</mat-icon>
-          </button>
+          </button> -->
           <button *ngIf="canManageRoles" mat-icon-button matTooltip="{{'roles.management.Edit' | translate}}" (click)="editRole(role)">
             <mat-icon>edit</mat-icon>
           </button>

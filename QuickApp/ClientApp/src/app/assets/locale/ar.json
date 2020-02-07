@@ -214,6 +214,7 @@
       "UpdatedDate": "تاريخ التحديث",
       "IsActive": "نشط",
       "AddSite": "نشط",
+      "Actions":"أجراءات",
       "SiteManager": "مدير الموقع",
       "SiteReferenceisrequired": "مرجع الموقع مطلوب",
       "Name1isrequired": "الاسم 1 مطلوب",
@@ -249,6 +250,7 @@
       "Add Project":"إضافة مشروع",
       "Edit Project":"تحرير المشروع",
       "Project Refrerence":"مرجع المشروع",
+      "Select Site" :"اختر الموقع",
       "Project Reference is Required":"مرجع المشروع مطلوب",
       "Please Select Site":"يرجى اختيار الموقع",
       "Name 1 is Required":"الاسم 1 مطلوب",
@@ -280,7 +282,8 @@
       "Add LookUp":"أضف نظرة لأعلى",
       "Edit":"تعديل",
       "edit":"تعديل",
-      "Delete":"حذف"
+      "Delete":"حذف",
+      "Actions":"أجراءات"
       
     },
       "editor":{

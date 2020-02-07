@@ -138,7 +138,6 @@ export class ProjectComponent implements OnInit {
       projectDetails: [Validators.required],
       isActive: [true],
       //file: ['' ]  
-
     })
   }
 
@@ -162,7 +161,6 @@ export class ProjectComponent implements OnInit {
   }
 
   editClick(project?: any) {
-    debugger
     this.storeIds = [];
     this.isAllow = false;
     this.projectRepositories = [];
@@ -177,7 +175,6 @@ export class ProjectComponent implements OnInit {
       this.projectData.storeId.forEach(element => {
         this.storeIds.push(element.storeId)
       });
-
       this.getRepositoryByProject()
     } else {
       this.projectData = {};
@@ -189,7 +186,6 @@ export class ProjectComponent implements OnInit {
 
   //  File  Change Event
   uploadFile(doc, event) {
-    debugger
     this.isAllow = false;
     var file = event.target.files[0];
     if (doc.typeCdDmtId == DataFactory.docType.Image) {
@@ -303,7 +299,6 @@ export class ProjectComponent implements OnInit {
 
   // on Save Click 
   saveProject() {
-    debugger
     if (!this.projectForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -396,7 +391,6 @@ export class ProjectComponent implements OnInit {
 
   // Based on projectId  to Get  Files
   getRepositoryByProject() {
-    debugger
     // this.editDocumentsList = JSON.parse(JSON.stringify(this.documentList))
     this.alertService.startLoadingMessage();
     this.accountService.getRepositoryByProject(this.projectData.id)

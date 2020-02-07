@@ -41,12 +41,14 @@
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditSite()" *ngIf="canManageSites">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'site.management.AddSite' | translate}} 
                     </button>
+                    <button mat-button color="primary" matTooltip="Actions"  *ngIf="!canManageSites" >{{'site.management.Actions' | translate}}
+                    </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
                     <button mat-icon-button matTooltip="Edit" (click)="onEditSite(row)" *ngIf="canManageSites">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-button color="primary"   class="slocation"  matTooltip="Site Location" (click)="onSiteLocaction(row)">
+                    <button mat-button color="primary" class="slocation"  matTooltip="Site Location" (click)="onSiteLocaction(row)">
                         <mat-icon class="mat-button-icon">add_location</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" *ngIf="canManageSites" (click)="confirmDelete(row)">
