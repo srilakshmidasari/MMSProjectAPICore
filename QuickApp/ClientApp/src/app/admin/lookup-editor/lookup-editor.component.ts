@@ -112,7 +112,7 @@ export class LookupEditorComponent implements OnInit {
       "isActive": true,
       "createdBy": this.currentUser.id,
       "createdDate":new Date(),
-      "updatedBy":  this.currentUser.id,
+      // "updatedBy":  this.currentUser.id,
       "updatedDate": new Date(),
     }
   }

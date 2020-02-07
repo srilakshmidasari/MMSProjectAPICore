@@ -16,7 +16,7 @@ import { Utilities } from 'src/app/services/utilities';
 })
 export class LookupListComponent implements OnInit {
   loadingIndicator: boolean;
-  displayedColumn = ['description','name1', 'name2', 'remarks', 'updatedDate','updatedByUser', 'isActive','Actions'];
+  displayedColumn = ['description','name1', 'name2', 'remarks', 'updatedDate','isActive','Actions'];
   dataSource = new MatTableDataSource<any>();
   lookUpData: any[] = [];
   sourcelookup: any;
