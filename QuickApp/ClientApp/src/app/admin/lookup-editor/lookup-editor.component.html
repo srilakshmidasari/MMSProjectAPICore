@@ -2,11 +2,14 @@
     <div class="row">
         <mat-form-field class="col-md-6">
             <mat-label>{{'LookUp.editor.SelectCategory'|translate}}</mat-label>
-            <mat-select formControlName="selectCategory">
+            <mat-select formControlName="selectCategory" required>
                 <mat-option *ngFor="let doc of lookUplist" [value]="doc.typeCdDmtId">
                     {{doc.description}}
                 </mat-option>
             </mat-select>
+            <mat-error *ngIf="!LookUpForm.controls['selectCategory'].valid">
+                {{'LookUp.editor.PleaseSelectCategory'|translate}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6">
             <mat-label>{{'LookUp.editor.Name1'|translate}}</mat-label>
@@ -26,7 +29,7 @@
         </mat-form-field>
         <mat-form-field class="col-md-6">
             <mat-label>{{'LookUp.editor.Remarks'|translate}}</mat-label>
-            <input matInput formControlName="remarks" required />
+            <input matInput formControlName="remarks"  />
             <mat-error *ngIf="!LookUpForm.controls['remarks'].valid">
             </mat-error>
         </mat-form-field>

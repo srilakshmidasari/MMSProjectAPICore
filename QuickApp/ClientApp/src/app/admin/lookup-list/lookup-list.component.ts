@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LookupDialogComponent } from '../lookup-dialog/lookup-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 @Component({
   selector: 'app-lookup-list',
   templateUrl: './lookup-list.component.html',
@@ -16,7 +17,7 @@ import { Utilities } from 'src/app/services/utilities';
 })
 export class LookupListComponent implements OnInit {
   loadingIndicator: boolean;
-  displayedColumn = ['description','name1', 'name2', 'remarks', 'updatedDate','updatedByUser', 'isActive','Actions'];
+  displayedColumn = ['description', 'name1', 'name2', 'remarks', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   lookUpData: any[] = [];
   sourcelookup: any;
@@ -59,6 +60,10 @@ export class LookupListComponent implements OnInit {
     }
   }
 
+  get canManageStores() {
+    return this.accountService.userHasPermission(Permission.manageStoresPermission);
+  }
+
   private refresh() {
     // Causes the filter to refresh there by updating with recently added data.
     this.applyFilter(this.dataSource.filter);
@@ -82,32 +87,32 @@ export class LookupListComponent implements OnInit {
         panelClass: 'mat-dialog-md',
         data: { lookUp }
       });
-    dialogRef.afterClosed().subscribe(LookUPresponse => {   
-      if(LookUPresponse){ 
+    dialogRef.afterClosed().subscribe(LookUPresponse => {
+      if (LookUPresponse) {
         this.updateLookUp(LookUPresponse);
-      }     
+      }
     });
   }
- public confirmDelete(lookUp:any){
-   debugger;
-  this.snackBar.open(`Delete ${lookUp.name1}?`, 'DELETE', { duration: 5000 })
-  .onAction().subscribe(() => {
-    this.alertService.startLoadingMessage('Deleting...');
-    this.loadingIndicator = true;
-    this.accountService.deleteLookUp(lookUp)
-    .subscribe((results: any) => {
-      this.alertService.stopLoadingMessage();
-      this.loadingIndicator = false;
-      if (results.isSuccess) {
-        this.getLookUp();
-      }
-    },
-      error => {
-        this.alertService.stopLoadingMessage();
-        this.loadingIndicator = false;
-        this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-          MessageSeverity.error, error);
+  public confirmDelete(lookUp: any) {
+    debugger;
+    this.snackBar.open(`Delete ${lookUp.name1}?`, 'DELETE', { duration: 5000 })
+      .onAction().subscribe(() => {
+        this.alertService.startLoadingMessage('Deleting...');
+        this.loadingIndicator = true;
+        this.accountService.deleteLookUp(lookUp)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            if (results.isSuccess) {
+              this.getLookUp();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
       });
-});
-}
+  }
 }

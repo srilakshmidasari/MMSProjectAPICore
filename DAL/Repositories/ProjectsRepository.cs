@@ -102,6 +102,7 @@ namespace DAL.Repositories
                                   Name2 = l.Name1,
                                   Name1 = l.Name1,
                                   LookUpTypeId = l.LookUpTypeId,
+                                  Remarks =l.Remarks,
                                   IsActive = l.IsActive,
                                   CreatedBy = l.CreatedBy,
                                   CreatedDate = l.CreatedDate,

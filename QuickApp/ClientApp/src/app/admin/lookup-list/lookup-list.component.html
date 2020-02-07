@@ -30,10 +30,10 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.UpdatedDate'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.updatedDate | date:'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="updatedByUser">
+            <!-- <ng-container matColumnDef="updatedByUser">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.updatedByUser'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.updatedByUser}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
            
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'LookUp.management.IsActive'|translate}}
@@ -45,15 +45,17 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="{{'LookUp.management.Add'|translate}}" (click)="editlookup()">
+                    <button mat-button color="primary" matTooltip="{{'LookUp.management.Add'|translate}}" (click)="editlookup()" *ngIf="canManageStores" >
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'LookUp.management.Add LookUp'|translate}}
+                    </button>
+                    <button mat-button color="primary" matTooltip="Actions"  *ngIf="!canManageStores" >{{'LookUp.management.Actions' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'LookUp.management.Edit'|translate}}" (click)="editlookup(row)">
+                    <button mat-icon-button matTooltip="{{'LookUp.management.Edit'|translate}}" (click)="editlookup(row)" *ngIf="canManageStores" >
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'LookUp.management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'LookUp.management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)" *ngIf="canManageStores" >
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
