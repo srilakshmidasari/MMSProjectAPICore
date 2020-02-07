@@ -7,7 +7,7 @@
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
-        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <!-- <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar> -->
         <mat-table [dataSource]="dataSource" matSort>
 
             <ng-container matColumnDef="siteName">
@@ -36,16 +36,16 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="onEditLocation()">
+                    <button mat-button color="primary" matTooltip="Add">
                         <mat-icon class="mat-button-icon">add</mat-icon>Add location
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="onEditLocation(row)">
+                    <button mat-icon-button matTooltip="Edit" >
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="Delete" >
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -116,8 +116,8 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button (click)="onLocationSave()" color="primary">Save</button>
-                <button mat-raised-button (click)="onLocationCancel()" color="warn">Cancel</button>
+                <button mat-raised-button  color="primary">Save</button>
+                <button mat-raised-button  color="warn">Cancel</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>

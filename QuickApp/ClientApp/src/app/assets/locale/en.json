@@ -263,12 +263,12 @@
     "management":{
       "Search": "Search for LookUp...",
       "Category":"Category",
-      "Name1":"Name1",
-      "Name2":"Name2",
+      "Name1":"Name 1",
+      "Name2":"Name 2",
       "Remarks":"Remarks",
-      "UpdatedDate":"UpdatedDate",
-      "updatedByUser":"updatedByUser",
-      "IsActive":"IsActive"
+      "UpdatedDate":"Updated Date",
+      "updatedByUser":"Last Updated By User",
+      "IsActive":"Is Active"
       },
       "editor":{
       "AddLookUp":"Add LookUp"

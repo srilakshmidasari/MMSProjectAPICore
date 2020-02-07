@@ -1,7 +1,7 @@
 <form #form="ngForm" [formGroup]="LookUpForm" (ngSubmit)="save()">
     <div class="row">
         <mat-form-field class="col-md-6">
-            <mat-label>SelectCategory</mat-label>
+            <mat-label>Select Category</mat-label>
             <mat-select formControlName="selectCategory">
                     <mat-option *ngFor="let doc of lookUplist" [value]="doc.typeCdDmtId">
                         {{doc.description}}
@@ -9,19 +9,19 @@
                 </mat-select>
         </mat-form-field>
         <mat-form-field class="col-md-6">
-            <mat-label>Name1</mat-label>
+            <mat-label>Name 1</mat-label>
             <input matInput formControlName="name1" required />
             <mat-error *ngIf="!LookUpForm.controls['name1'].valid">
-                Name1 is required
+                Name 1 is required
             </mat-error>
         </mat-form-field>
       </div>
     <div class="row">       
         <mat-form-field class="col-md-6">
-            <mat-label>Name2</mat-label>
+            <mat-label>Name 2</mat-label>
             <input matInput formControlName="name2" required />
             <mat-error *ngIf="!LookUpForm.controls['name2'].valid">
-                Name2 is required
+                Name 2 is required
             </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6">
@@ -32,7 +32,7 @@
             </mat-error>
         </mat-form-field>
       <div class="col-md-12">
-        <mat-checkbox formControlName="isActive">isActive</mat-checkbox>
+        <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
     </div>
     </div>
 

@@ -57,7 +57,7 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef >
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick(row)" *ngIf="canManageProjects" >
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canManageProjects" >
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
                 </mat-header-cell>
@@ -203,6 +203,7 @@
                         <input #fileInput type="file" class="form-control" id="file" formControlName="file"
                             (change)="uploadFile(doc, $event)">
                     </div>
+                  
                     <div class="form-group col-md-6 file-icon" *ngFor="let info of projectRepositories">
                         <div class="clearfix space20"></div>
                         <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"

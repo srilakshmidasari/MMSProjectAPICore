@@ -238,6 +238,9 @@ export class ProjectComponent implements OnInit {
         this.editDocumentsList.forEach((item1) => {
           if (item1.typeCdDmtId == doc.typeCdDmtId) this.editDocumentsList.splice(item1, 1);
         });
+        this.projectRepositories.forEach((item1) => {
+          if (item1.documentTypeId == doc.typeCdDmtId) this.projectRepositories.splice(item1, 1);
+        });
       }
       else if (this.isNewProject) {
         this.projectRepositories.forEach((item1) => {
