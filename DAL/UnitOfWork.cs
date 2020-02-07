@@ -23,6 +23,7 @@ namespace DAL
         ISiteRepository _sites;
         IMasterRepository _Masters;
         IProjectRepository _Projects;
+        ILocationRepository _Locations;
 
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
@@ -65,6 +66,18 @@ namespace DAL
                 return _Projects;
             }
         }
+
+        public ILocationRepository Locations
+        {
+            get
+            {
+                if (_Locations == null)
+                    _Locations = new LocationRepository(_context, _mapper, _configuration);
+
+                return _Locations;
+            }
+        }
+
 
         public int SaveChanges()
         {

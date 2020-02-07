@@ -77,6 +77,8 @@ namespace DAL.RequestResponseModels
 
             CreateMap<UpsertProjectRepository, ProjectRepository>();
 
+            CreateMap<AddLocation, Location>();
+
         }
     }
 }

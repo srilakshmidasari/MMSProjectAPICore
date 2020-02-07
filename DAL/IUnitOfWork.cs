@@ -20,6 +20,8 @@ namespace DAL
 
         IProjectRepository Projects { get; }
 
+        ILocationRepository Locations { get; }
+
         int SaveChanges();
     }
 }
