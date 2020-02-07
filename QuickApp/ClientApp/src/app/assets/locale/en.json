@@ -290,18 +290,14 @@
       "Remarks":"Remarks",
       "UpdatedDate":"Updated Date",
       "updatedByUser":"Last Updated By User",
-      "IsActive":"Is Active"
-      },
-      "UpdatedDate":"UpdatedDate",
-      "updatedByUser":"updatedByUser",
-      "IsActive":"IsActive",
+      "IsActive":"Is Active",
       "Add":"Add",
       "add":"add",
       "Add LookUp":"Add LookUp",
       "Edit":"Edit",
       "edit":"edit",
       "Delete":"Delete"
-       },
+      },
       "editor":{
       "No Records Found":"No Records Found",
       "No Search Results Found":"No Search Results Found",
