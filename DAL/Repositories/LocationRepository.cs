@@ -35,6 +35,7 @@ namespace DAL.Repositories
                               {
                                   Id = l.Id,
                                   SiteId = l.SiteId,
+                                  ProjectId=l.ProjectId,
                                   Name1 = l.Name1,
                                   Name2 = l.Name2,
                                   LocationReference = l.LocationReference,
