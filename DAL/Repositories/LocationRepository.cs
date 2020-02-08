@@ -20,12 +20,35 @@ namespace DAL.Repositories
         }
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
 
-        public ListDataResponse<Location> GetLocationDetails()
+        public ListDataResponse<LocationDataResponse> GetLocationDetails()
         {
-            ListDataResponse<Location> response = new ListDataResponse<Location>();
+            ListDataResponse<LocationDataResponse> response = new ListDataResponse<LocationDataResponse>();
             try
             {
-                var result = _appContext.Locations.ToList();
+                //var result = _appContext.Locations.ToList();
+                var result = (from l in _appContext.Locations
+                              join s in _appContext.SiteInfos
+                               on l.SiteId equals s.Id
+                              join p in _appContext.Projects
+                              on l.ProjectId equals p.Id
+                              select new LocationDataResponse
+                              {
+                                  Id = l.Id,
+                                  SiteId = l.SiteId,
+                                  Name1 = l.Name1,
+                                  Name2 = l.Name2,
+                                  LocationReference = l.LocationReference,
+                                  CreatedBy = l.CreatedBy,
+                                  CreatedDate = l.CreatedDate,
+                                  UpdatedBy = l.UpdatedBy,
+                                  UpdatedDate = l.UpdatedDate,
+                                  IsActive = l.IsActive,
+                                  SiteName1=s.Name1,
+                                  SiteName2=s.Name2,
+                                  ProjectName1=p.Name1,
+                                  ProjectName2=p.Name2
+
+                              }).ToList();
                 if (result != null)
                 {
                     response.ListResult = result;

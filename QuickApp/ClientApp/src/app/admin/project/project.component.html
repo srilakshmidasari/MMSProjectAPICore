@@ -57,21 +57,24 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()"  *ngIf="canManageProjects">
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canManageProjects">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
-                    <button mat-button color="primary" matTooltip="Actions"  *ngIf="!canManageProjects" >{{'project.management.Actions' | translate}}
+                    <button mat-button color="primary" matTooltip="Actions"
+                        *ngIf="!canManageProjects">{{'project.management.Actions' | translate}}
                     </button>
-                </mat-header-cell>                
+                </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canManageProjects" >
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canManageProjects">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"   (click)="onViewClick(row)">
+                    <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"
+                        (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)" *ngIf="canManageProjects" >
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)"
+                        *ngIf="canManageProjects">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -107,7 +110,7 @@
                         <mat-label>{{'project.management.Project Refrerence'|translate}}</mat-label>
                         <input matInput formControlName="projectReference" required maxlength="50" />
                         <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}  
+                            {{'project.management.Project Reference is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
@@ -117,7 +120,8 @@
                                 {{site.name1}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="!projectForm.controls['siteId'].valid">{{'project.management.Please Select Site'|translate}}  
+                        <mat-error *ngIf="!projectForm.controls['siteId'].valid">
+                            {{'project.management.Please Select Site'|translate}}
                         </mat-error>
                     </mat-form-field>
 
@@ -152,7 +156,7 @@
                             <mat-option *ngFor="let store of stores" [value]="store.id">{{store.name1}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="!projectForm.controls['storeId'].valid">
-                            {{'project.management.Please Select Store'|translate}} 
+                            {{'project.management.Please Select Store'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <!-- <mat-form-field class="col-md-6">
@@ -165,9 +169,9 @@
                 </div>
                 <div class="row" *ngIf="isNewProject">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
-                        <label for="file">{{'project.management.Upload Project'|translate}} {{doc.description}} <span></span></label>
-                        <input #fileInput type="file" class="form-control" id="file" 
-                            (change)="uploadFile(doc, $event)">
+                        <label for="file">{{'project.management.Upload Project'|translate}} {{doc.description}}
+                            <span></span></label>
+                        <input #fileInput type="file" class="form-control" id="file" (change)="uploadFile(doc, $event)">
                     </div>
                     <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
                         <div class="clearfix space20"></div>
@@ -202,11 +206,10 @@
                     </div>
                     <div class="form-group col-md-6" *ngFor="let doc of editDocumentsList">
                         <label for="file">Upload Project {{doc.description}} </label>
-                        <input #fileInput type="file" class="form-control" id="file" 
-                            (change)="uploadFile(doc, $event)">
+                        <input #fileInput type="file" class="form-control" id="file" (change)="uploadFile(doc, $event)">
                     </div>
-                  
-                    <div class="form-group col-md-3 file-icon" *ngFor="let info of projectRepositories">
+
+                    <div class="form-group col-md-4 file-icon" *ngFor="let info of projectRepositories">
                         <div class="clearfix space20"></div>
                         <a href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank"
                             *ngIf="info.documentTypeId==isDocument" download>
@@ -245,15 +248,18 @@
                     matSortDisableClear>
 
                     <ng-container matColumnDef="storeName1">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name1'|translate}}</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name1'|translate}}
+                        </mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="storeName2">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name 2'|translate}}</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name 2'|translate}}
+                        </mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="remarks">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Note'|translate}}</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Note'|translate}}
+                        </mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.remarks}} </mat-cell>
                     </ng-container>
                     <!-- <ng-container matColumnDef="isActive">
@@ -261,12 +267,14 @@
                         <mat-cell *matCellDef="let row"> {{row.isActive}} </mat-cell>
                     </ng-container> -->
                     <ng-container matColumnDef="updatedDate">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Updated Date'|translate}}</mat-header-cell>
+                        <mat-header-cell *matHeaderCellDef mat-sort-header>
+                            {{'project.management.Updated Date'|translate}}</mat-header-cell>
                         <mat-cell *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy h:mm a'}} </mat-cell>
                     </ng-container>
                     <ng-container matColumnDef="isActive">
-                        <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'project.management.IsActive' | translate}}
-                         </mat-header-cell>
+                        <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                            {{'project.management.IsActive' | translate}}
+                        </mat-header-cell>
                         <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                             <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                         </mat-cell>
@@ -284,7 +292,8 @@
             </div>
             <mat-card-actions>
                 <div class="float-right" style="padding-top: 12px;padding-right: 15px;">
-                    <button mat-raised-button color="warn" (click)="onCancelViewStore()">{{'project.management.Close'|translate}}</button>
+                    <button mat-raised-button color="warn"
+                        (click)="onCancelViewStore()">{{'project.management.Close'|translate}}</button>
                 </div>
             </mat-card-actions>
             <div class="clearfix"></div>

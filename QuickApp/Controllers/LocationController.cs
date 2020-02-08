@@ -25,7 +25,7 @@ namespace MMS.Controllers
         }
 
         [HttpGet]
-        public ListDataResponse<Location> Get()
+        public ListDataResponse<LocationDataResponse> Get()
         {
             return _unitOfWork.Locations.GetLocationDetails();
         }
