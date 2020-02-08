@@ -2,9 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, NgForm, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-location',
@@ -14,9 +17,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LocationComponent implements OnInit {
   isAdding: boolean;
   isNewLocation: boolean;
+  loadingIndicator: boolean = false;
   locationForm: FormGroup;
+  @ViewChild('form', { static: true })
+  private form: NgForm;
   siteList: any[] = [];
   projectsList: any[] = []
+  locationsData: any[] = [];
   locationRefData: any = {};
   displayedColumns = ['siteName', 'projectName', 'locationRef', 'lname1', 'lname2', 'isActive', 'Actions']
   locationData: any[] = [
@@ -31,11 +38,13 @@ export class LocationComponent implements OnInit {
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
     private snackBar: MatSnackBar,
+    private authService: AuthService, private alertService: AlertService,
   ) {
     this.buildForm();
   }
 
   ngOnInit() {
+    //this.getLocation();
     this.dataSource.data = this.locationData;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -61,14 +70,26 @@ export class LocationComponent implements OnInit {
         error => {
         });
   }
+  // Location Data
+  getLocation() {
+    this.accountService.getLocationData().subscribe((res: any) => {
+      this.locationsData = res.listResult;
+      // this.dataSource.data = this.locationsData;
+      // this.dataSource.paginator = this.paginator;
+      // this.dataSource.sort = this.sort;
+    },
+      error => {
+      }
+    )
+  }
   // Form Building
   private buildForm() {
     this.locationForm = this.fb.group({
-      siteName: [''],
-      projectName: [''],
-      locationRef: [''],
-      lName1: [''],
-      lname2: [''],
+      siteId: ['', Validators.required],
+      projectId: ['', Validators.required],
+      locationRef: ['', Validators.required],
+      lName1: ['', Validators.required],
+      lname2: ['', Validators.required],
       isActive: [true]
     })
   }
@@ -76,8 +97,8 @@ export class LocationComponent implements OnInit {
   //Reset Form
   private resetForm() {
     this.locationForm.reset({
-      siteName: this.locationRefData.siteName || '',
-      projectName: this.locationRefData.projectName || '',
+      siteId: this.locationRefData.siteName || '',
+      projectId: this.locationRefData.projectName || '',
       locationRef: this.locationRefData.locationRef || '',
       lName1: this.locationRefData.lname1 || '',
       lname2: this.locationRefData.lname2 || '',
@@ -106,8 +127,10 @@ export class LocationComponent implements OnInit {
       this.isAdding = true;
       this.isNewLocation = true;
       this.buildForm();
-
     }
+  }
+  get currentUser() {
+    return this.authService.currentUser;
   }
   // On Cancel Click
   onLocationCancel() {
@@ -115,15 +138,97 @@ export class LocationComponent implements OnInit {
   }
   //  On Delete Location
   onDeleteLocation(location) {
-    this.snackBar.open(`Delete ${location.lname1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(()=>{
-      alert('are You Sure Want to delete')
+    this.snackBar.open(`Delete ${location.lname1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
+      this.alertService.startLoadingMessage('Deleting...');
+      this.loadingIndicator = true;
+      alert('are You Sure Want to delete');
+      this.accountService.deleteLocation(location.id).subscribe((res: any) => {
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
+        if (res.isSuccess) {
+          this.alertService.showMessage('Success', res.endUserMessage, MessageSeverity.success);
+          this.getLocation();
+        }
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.loadingIndicator = false;
+          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the Location.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+            MessageSeverity.error, error);
+        },
+      )
     })
-   
+
   }
+  //Request Object  For Location
+  getLocationObject() {
+    const formModel = this.locationForm.value;
+    return {
+      "id": (this.isNewLocation == true) ? 0 : this.locationRefData.id,
+      "siteId": formModel.siteId,
+      "projectId": formModel.projectId,
+      "name1": formModel.lName1,
+      "name2": formModel.lname2,
+      "locationReference": formModel.locationRef,
+      "isActive": formModel.isActive,
+      "createdBy": this.currentUser.id,
+      "createdDate": new Date(),
+      "updatedBy": this.currentUser.id,
+      "updatedDate": new Date()
+    }
 
-
-
-
+  }
+  // On Location Save
+  onLocationSave() {
+    if (!this.form.submitted) {
+      this.form.onSubmit(null);
+      return;
+    }
+    if (!this.locationForm.valid) {
+      this.alertService.showValidationError();
+      return;
+    }
+    this.alertService.startLoadingMessage('Saving changes...');
+    const editedLocation = this.getLocationObject();
+    if (this.isNewLocation) {
+      this.accountService.addLocation(editedLocation).subscribe((res: any) => {
+        if (res.isSuccess) {
+          this.saveCompleted(res);
+        } else {
+          this.saveFailed(res);
+        }
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
+        })
+    }
+    else {
+      this.accountService.upDateLocation(editedLocation).subscribe((res: any) => {
+        if (res.isSuccess) {
+          this.saveCompleted(res);
+        } else {
+          this.saveFailed(res);
+        }
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
+        });
+    }
+  }
+  // On Save Completed
+  saveCompleted(result) {
+    this.alertService.stopLoadingMessage();
+    this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success);
+    this.isAdding = false;
+    this.getLocation();
+  }
+  // On save Failed
+  saveFailed(result) {
+    this.alertService.stopLoadingMessage();
+    this.alertService.showMessage('error', result.endUserMessage, MessageSeverity.error);
+  }
 
 }
 

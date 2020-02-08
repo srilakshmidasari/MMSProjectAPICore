@@ -45,6 +45,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getLookUpDetailsByTypeIdUrl: string = '/api/Masters/GetLookUpDetilas';
   private readonly _getRepositoryByProjectUrl: string = '/api/Project/GetRepositoryByProject';
   private readonly _deleteProjectFileUrl: string = '/api/Project/DeleteProjectRepository';
+  private readonly _locationUrl: string = '/api/Location';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -73,7 +74,7 @@ export class AccountEndpoint extends EndpointBase {
   get UpdateLookUpData() { return this.configurations.baseUrl + this._UpdateLookUpData; }
   get deleteLookUpData() { return this.configurations.baseUrl + this._deleteLookUpData; }
   get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
-
+  get locationUrlData() { return this.configurations.baseUrl + this._locationUrl; }
   get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
 
 
@@ -473,6 +474,39 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.deleteProjectEndpoint(ProjectId));
+      }));
+  }
+  getLocationEndpoint<T>(): Observable<T> {
+    const endpointUrl = this.locationUrlData;
+
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getLocationEndpoint());
+      }));
+  }
+  addLocationEndpoint<T>(locationObject: any): Observable<T> {
+    const endpointUrl = this.locationUrlData;
+
+    return this.http.post<T>(endpointUrl, JSON.stringify(locationObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.addLocationEndpoint(locationObject));
+      }));
+  }
+  upDateLocationEndpoint<T>(locationObject: any): Observable<T> {
+    const endpointUrl = this.locationUrlData;
+
+    return this.http.put<T>(endpointUrl, JSON.stringify(locationObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.upDateLocationEndpoint(locationObject));
+      }));
+  }
+
+  deleteLocationEndpoint<T>(locationId: any): Observable<T> {
+    const endpointUrl = this.locationUrlData + '?LocationId=' + locationId;
+
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteLocationEndpoint(locationId));
       }));
   }
 
