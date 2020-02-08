@@ -25,12 +25,7 @@ export class LocationComponent implements OnInit {
   projectsList: any[] = []
   locationsData: any[] = [];
   locationRefData: any = {};
-  displayedColumns = ['siteName', 'projectName', 'locationRef', 'lname1', 'lname2', 'isActive', 'Actions']
-  locationData: any[] = [
-    { siteName: 'Site 1', projectName: 'Save Blood', locationRef: 'locationRef12', lname1: 'Location Name1', lname2: 'Location Name1', isActive: true },
-    { siteName: 'Site 2', projectName: 'MMS', locationRef: 'locationRef45', lname1: 'Location Name 2', lname2: 'Location Name1', isActive: true },
-    { siteName: 'Site 3', projectName: 'Telugu Churches', locationRef: 'locationRef89', lname1: ' Location Name3', lname2: 'Location Name1', isActive: false },
-  ];
+  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'isActive', 'Actions'] 
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -44,10 +39,7 @@ export class LocationComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.getLocation();
-    this.dataSource.data = this.locationData;
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.getLocation();   
     this.getSites();
     this.getProjects();
   }
@@ -74,9 +66,9 @@ export class LocationComponent implements OnInit {
   getLocation() {
     this.accountService.getLocationData().subscribe((res: any) => {
       this.locationsData = res.listResult;
-      // this.dataSource.data = this.locationsData;
-      // this.dataSource.paginator = this.paginator;
-      // this.dataSource.sort = this.sort;
+      this.dataSource.data = this.locationsData;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
     },
       error => {
       }
@@ -97,11 +89,11 @@ export class LocationComponent implements OnInit {
   //Reset Form
   private resetForm() {
     this.locationForm.reset({
-      siteId: this.locationRefData.siteName || '',
-      projectId: this.locationRefData.projectName || '',
-      locationRef: this.locationRefData.locationRef || '',
-      lName1: this.locationRefData.lname1 || '',
-      lname2: this.locationRefData.lname2 || '',
+      siteId: this.locationRefData.siteId || '',
+      projectId: this.locationRefData.projectId || '',
+      locationRef: this.locationRefData.locationReference || '',
+      lName1: this.locationRefData.name1 || '',
+      lname2: this.locationRefData.name2 || '',
       isActive: this.locationRefData.isActive || ''
     });
   }
@@ -138,10 +130,9 @@ export class LocationComponent implements OnInit {
   }
   //  On Delete Location
   onDeleteLocation(location) {
-    this.snackBar.open(`Delete ${location.lname1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
+    this.snackBar.open(`Delete ${location.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
       this.alertService.startLoadingMessage('Deleting...');
-      this.loadingIndicator = true;
-      alert('are You Sure Want to delete');
+      this.loadingIndicator = true;     
       this.accountService.deleteLocation(location.id).subscribe((res: any) => {
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
@@ -179,11 +170,11 @@ export class LocationComponent implements OnInit {
 
   }
   // On Location Save
-  onLocationSave() {
-    if (!this.form.submitted) {
-      this.form.onSubmit(null);
-      return;
-    }
+  save() {
+    // if (!this.form.submitted) {
+    //   this.form.onSubmit(null);
+    //   return;
+    // }
     if (!this.locationForm.valid) {
       this.alertService.showValidationError();
       return;

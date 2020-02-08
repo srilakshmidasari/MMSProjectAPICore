@@ -125,7 +125,7 @@ namespace DAL.Repositories
 
             try
             {
-                var locationExists = _appContext.Locations.Where(x => x.LocationReference == location.LocationReference).FirstOrDefault();
+                var locationExists = _appContext.Locations.Where(x =>x.Id!=location.Id && x.LocationReference == location.LocationReference).FirstOrDefault();
                 if (locationExists == null)
                 {
                     //var result = _appContext.Locations.Add(location);
