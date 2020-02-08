@@ -9,7 +9,8 @@
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.EmpId' | translate}}</mat-label>
-      <input matInput formControlName="empId" [readonly]="!isNewUser"  (keypress)="alphaNumaricsOnly($event)" maxlength="15" required />
+      <input matInput formControlName="empId" [readonly]="!isNewUser" (keypress)="alphaNumaricsOnly($event)"
+        maxlength="15" required />
       <mat-error *ngIf="!userProfileForm.controls['empId'].valid">
         {{'users.editor.EmployeeIdRequired' | translate}}
       </mat-error>
@@ -112,8 +113,8 @@
     <button mat-raised-button (click)="changePassword()" *ngIf="!(isChangePassword || isNewUser)"
       color="primary">{{'users.editor.ChangePassword' | translate}}</button>
 
-    <div *ngIf="isChangePassword || isNewUser" formGroupName="password"  maxlength="30" fxLayout="row" fxLayout.lt-md="column"
-      fxLayoutGap="1em">
+    <div *ngIf="isChangePassword || isNewUser" formGroupName="password" maxlength="30" fxLayout="row"
+      fxLayout.lt-md="column" fxLayoutGap="1em">
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
         <mat-label>{{'users.editor.NewPassword' | translate}}</mat-label>
@@ -142,32 +143,14 @@
   </div>
 
   <div class="clearfix space20"></div>
-  <div fxLayout="row" *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
-    <div class="form-group " fxFlex *ngFor="let doc of documentList">
+  <div *ngIf="isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
+     <div class="row">
+    <div class="form-group col-6 pleft-10 pr-0 mr-0" fxFlex *ngFor="let doc of documentList">
       <label for="file">Upload User {{doc.description}}</label>
-      <input #fileInput type="file" class="form-control" id="file" formControlName="file"
-        (change)="uploadFile(doc, $event)">
-    </div>
-    <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileInfo">
-      <div>  User {{file.fileTypeName}}</div>
-      <div class="clearfix space20"></div>
-      <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
-        <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
-      </a>
-      <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==1">
-        <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121"> &nbsp;&nbsp;&nbsp;</a>
-
-      <a class="close2 color-red" *ngIf="file.documentType==1" (click)="onDeleteFile(file)">
-        <mat-icon>cancel</mat-icon>
-      </a>
-      <a class="close1 color-red" *ngIf="file.documentType==2" (click)="onDeleteFile(file)">
-        <mat-icon>cancel</mat-icon>
-      </a>
+      <input #fileInput type="file" class="form-control" id="file" (change)="uploadFile(doc, $event)">
     </div>
   </div>
-
-  <div fxLayout="row" *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
-    <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileInfo">
+    <!-- <div class="form-group col-md-4 file-icon" *ngFor="let file of userFileInfo">
       <div>  User {{file.fileTypeName}}</div>
       <div class="clearfix space20"></div>
       <a href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==2" download>
@@ -182,18 +165,58 @@
       <a class="close1 color-red" *ngIf="file.documentType==2" (click)="onDeleteFile(file)">
         <mat-icon>cancel</mat-icon>
       </a>
+    </div> -->
+    <div class="clearfix"></div>
+    <div class="row">
+    <div class="form-group file-icon col-6" *ngFor="let info of fileRepositories">
+      <div class="clearfix space20"></div>
+      <a class="col-4" href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank" *ngIf="info.documentTypeId==isDocument"
+        download>
+        <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+      </a>
+      <a class="col-4" href="{{'data:image/jpg;base64,'+ info.fileName}}" target="_blank" *ngIf="info.documentTypeId==isImage">
+        <img src="{{'data:image/jpg;base64,'+ info.fileName}}" class="img-fluid" width="161" height="121">
+        &nbsp;&nbsp;&nbsp;</a>
     </div>
-    <div class="form-group col-md-4" *ngFor="let doc of editUserFilesList">
+  </div>
+  </div>
+
+  <div class="row" *ngIf="!isNewUser" fxLayout.lt-md="column" fxLayoutGap="1em">
+    <div class="form-group col-6 pleft-0 pr-0 mr-0" *ngFor="let doc of editUserFilesList">
       <label for="file">Upload User {{doc.description}} </label>
-      <input #fileInput type="file" class="form-control" id="file" formControlName="file"
-        (change)="uploadFile(doc, $event)">
+      <input #fileInput type="file" class="form-control" id="file" (change)="uploadFile(doc, $event)">
+    </div>
+    <div class="form-group file-icon col-3" *ngFor="let file of userFileInfo">
+      <div> User {{file.fileTypeName}}</div>
+      <div class="clearfix space20"></div>
+      <a class="col-4" href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==isDocument" download>
+        <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+      </a>
+      <a class="col-4" href="{{file.fileLocation}}" target="_blank" *ngIf="file.documentType==isImage">
+        <img src="{{file.fileLocation}}" class="img-fluid" width="161" height="121"> &nbsp;&nbsp;&nbsp;</a>
+      <a class="close2 color-red" *ngIf="file.documentType==isImage" (click)="onDeleteFile(file)">
+        <mat-icon>cancel</mat-icon>
+      </a>
+      <a class="close1 color-red" *ngIf="file.documentType==isDocument" (click)="onDeleteFile(file)">
+        <mat-icon>cancel</mat-icon>
+      </a>
+    </div>
+    <div class="form-group file-icon col-2" *ngFor="let info of fileRepositories">
+      <div class="clearfix space20"></div>
+      <a href="{{'data:image/jpg;base64,' + info.fileName}}" class="col-3" target="_blank" *ngIf="info.documentTypeId==isDocument"
+        download>
+        <mat-icon class="font-62 color-blue">file_copy</mat-icon> &nbsp;&nbsp;&nbsp;
+      </a>
+      <a target="_blank" *ngIf="info.documentTypeId==isImage" class="col-2">
+        <img src="{{'data:image/jpg;base64,'+ info.fileName}}" class="img-fluid" width="161" height="121">
+        &nbsp;&nbsp;&nbsp;</a>
     </div>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
 
     <div fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
-      <mat-checkbox  formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
+      <mat-checkbox formControlName="isEnabled">{{'users.editor.Enabled' | translate}}</mat-checkbox>
     </div>
     <div>
       <button mat-button *ngIf="user.isLockedOut" (click)="unlockUser()" [disabled]="isSaving" color="accent">
