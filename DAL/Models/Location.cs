@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -9,6 +10,7 @@ namespace DAL.Models
    public class Location
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
@@ -57,7 +59,7 @@ namespace DAL.Models
         public SiteInfo SiteInfo_Id { get; set; }
 
         [JsonIgnore]
-        public Project Project_Id { get; set; }
+        public Project Project { get; set; }
 
         [JsonIgnore]
         public ApplicationUser CreatedUser { get; set; }
