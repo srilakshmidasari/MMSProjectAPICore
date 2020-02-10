@@ -168,7 +168,7 @@
     </div> -->
     <div class="clearfix"></div>
     <div class="row">
-    <div class="form-group file-icon col-6" *ngFor="let info of fileRepositories">
+    <div class="form-group file-icon col-3" *ngFor="let info of fileRepositories">
       <div class="clearfix space20"></div>
       <a class="col-4" href="{{'data:image/jpg;base64,' + info.fileName}}" target="_blank" *ngIf="info.documentTypeId==isDocument"
         download>

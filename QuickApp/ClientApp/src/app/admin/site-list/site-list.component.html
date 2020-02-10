@@ -62,10 +62,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>No Records Found</p>
+            <p>{{'project.management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>No Search Results Found</p>
+            <p>{{'project.management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">

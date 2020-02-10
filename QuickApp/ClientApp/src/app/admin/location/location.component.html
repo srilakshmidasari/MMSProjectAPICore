@@ -58,7 +58,7 @@
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" (click)="onDeleteLocation(row)">
+                    <button mat-icon-button matTooltip="Delete" (click)="onDeleteLocation(row)" *ngIf="row.isActive">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -69,10 +69,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>No Records Found</p>
+            <p>{{'project.management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>No Search Results Found</p>
+            <p>{{'project.management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
@@ -87,7 +87,7 @@
         </mat-card-header>
         <br>
         <mat-card-content>
-            <form  #form="ngForm" [formGroup]="locationForm" (ngSubmit)="save()" >
+            <form  [formGroup]="locationForm" >
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
@@ -140,13 +140,13 @@
                 <div class="row">
                     <mat-checkbox class="col-md-6" formControlName="isActive">
                         {{'site.management.IsActive' | translate}}</mat-checkbox>
-                </div>
+                </div>                
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="save()">Save</button>
-                <button mat-raised-button color="warn" (click)="onLocationCancel()">Cancel</button>
+                <button mat-raised-button color="primary" (click)="save()">{{'site.management.save' | translate}}</button>
+                <button mat-raised-button color="warn" (click)="onLocationCancel()">{{'site.management.cancel' | translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>

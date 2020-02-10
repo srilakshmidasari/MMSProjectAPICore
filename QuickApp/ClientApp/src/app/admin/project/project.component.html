@@ -85,10 +85,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>"{{'project.management.No Records Found'|translate}}"</p>
+            <p>{{'project.management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>"{{'project.management.No Search Results Found'|translate}}"</p>
+            <p>{{'project.management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
@@ -221,13 +221,13 @@
                             &nbsp;&nbsp;&nbsp;</a>
                     </div>
                 </div>
-                <mat-checkbox formControlName="isActive">Is Active</mat-checkbox>
+                <mat-checkbox formControlName="isActive">{{'site.management.IsActive' | translate}}</mat-checkbox>
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="saveProject()">Save</button>
-                <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+                <button mat-raised-button color="primary" (click)="saveProject()">{{'site.management.save' | translate}}</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">{{'site.management.cancel' | translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>

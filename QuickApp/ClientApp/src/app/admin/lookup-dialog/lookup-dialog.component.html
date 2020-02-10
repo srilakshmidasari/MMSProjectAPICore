@@ -4,7 +4,7 @@
     <app-lookup-editor #lookupeditor [lookUp]="data.lookUp" ></app-lookup-editor>
 </div>
 <div mat-dialog-actions>
-    <button  mat-raised-button  (click)="lookupeditor.save()"  color="primary">Save</button>
-    <button  mat-raised-button   (click)="cancel()" color="warn">Cancel</button>   
+    <button  mat-raised-button  (click)="lookupeditor.save()"  color="primary">{{'site.management.save' | translate}}</button>
+    <button  mat-raised-button   (click)="cancel()" color="warn">{{'site.management.cancel' | translate}}</button>   
 </div>
 <div class="clearfix space20"></div>

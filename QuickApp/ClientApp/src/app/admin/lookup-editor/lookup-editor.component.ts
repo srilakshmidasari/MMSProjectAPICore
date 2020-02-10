@@ -99,9 +99,7 @@ export class LookupEditorComponent implements OnInit {
 
   }
 
-  AddLookupData(): any {
-    debugger;
-    console.log(this.currentUser)
+  AddLookupData(): any {   
     const FormModel = this.LookUpForm.value;
     return {
       "id":(this.isLookUp==true)?0:this.lookUp.id ,
@@ -109,9 +107,9 @@ export class LookupEditorComponent implements OnInit {
       "name1": FormModel.name1,
       "name2": FormModel.name2,
       "remarks": FormModel.remarks,
-      "isActive": true,
-      "createdBy": this.currentUser.id,
-      "createdDate":new Date(),
+      "isActive":(FormModel.isActive=='')?false:FormModel.isActive ,
+      "createdBy":(this.lookUp.createdBy==undefined)?this.currentUser.id:this.lookUp.createdBy,
+      "createdDate":(this.lookUp.createdDate==undefined)?new Date():this.lookUp.createdDate,
       "updatedBy":  this.currentUser.id,
       "updatedDate": new Date(),
     }
