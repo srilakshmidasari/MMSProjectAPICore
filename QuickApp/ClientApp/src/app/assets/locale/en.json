@@ -334,7 +334,13 @@
   },
   "Asset":{
     "Management": {
-      "Search": "Search for Asset ..."
+      "Search": "Search for Asset ...",
+      "AssetGroupReference1":"Asset Group Reference 1",
+      "AssetGroupReference2":"Asset Group Reference 2",
+      "AssetGroupMake":"Asset Group Make",
+      "AssetGroupModel":"Asset Group Model",
+      "AssetGroupType":"Asset Group Type",
+      "AssetGroupCapacity":" AssetGroupCapacity"
 
     },
     "editor":{
