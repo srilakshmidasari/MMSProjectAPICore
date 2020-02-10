@@ -1,5 +1,5 @@
 <app-page-header title="Location" icon="assignment_ind"></app-page-header>
-<div class="page-content" *ngIf="!isAdding">
+<div class="page-content" [hidden]="isAdding">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -7,8 +7,8 @@
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
-        <!-- <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar> -->
-        <mat-table [dataSource]="dataSource" matSort matSort matSortActive="updatedDate" matSortDirection="desc" matSortDisableClear>
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc" matSortDisableClear>
 
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}

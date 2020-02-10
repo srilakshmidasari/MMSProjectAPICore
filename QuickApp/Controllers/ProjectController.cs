@@ -68,7 +68,7 @@ namespace MMS.Controllers
         [HttpDelete]
         public ValueDataResponse<Project> DeleteProject(int ProjectId)
         {
-            return _unitOfWork.Projects.DeleteProject (ProjectId);
-        }
+            return _unitOfWork.Projects.DeleteProject(ProjectId);
+        } 
     }
 }
