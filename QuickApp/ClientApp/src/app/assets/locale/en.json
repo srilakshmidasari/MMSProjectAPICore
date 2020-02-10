@@ -30,7 +30,8 @@
     "Project": "Project",
     "LookUp": "LookUp",
     "Location": "Location",
-    "Asset":"Asset"
+    "Asset":"Asset",
+    "Asset Group":"Asset Group"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -334,13 +335,14 @@
   },
   "Asset":{
     "Management": {
+      "Add Asset Group":"Add Asset Group",
       "Search": "Search for Asset ...",
       "AssetGroupReference1":"Asset Group Reference 1",
       "AssetGroupReference2":"Asset Group Reference 2",
       "AssetGroupMake":"Asset Group Make",
       "AssetGroupModel":"Asset Group Model",
       "AssetGroupType":"Asset Group Type",
-      "AssetGroupCapacity":" AssetGroupCapacity"
+      "AssetGroupCapacity":"AssetGroupCapacity"
 
     },
     "editor":{
@@ -352,5 +354,39 @@
       "assetGroupCapacityrequired":"Asset Group Capacity Required"
     }
 
+  },
+  "AssetLocation":{
+    "Management":{
+      "Site Name":"Site Name",
+      "Project Name":"Project Name",
+      "Location Name":"Location Name",
+      "Add Asset":"Add Asset",
+      "add":"add",
+      "Edit":"Edit",
+      "Delete":"Delete",
+      "No Records Found":"No Records Found",
+      "No Search Results Found":"No Search Results Found",
+      "Edit Asset":"Edit Asset",
+      "SiteName1":"SiteName1",
+      "SNameisrequired":"SNameisrequired",
+      "projectName":"projectName",
+      "pNameisrequired":"pNameisrequired",
+      "Location is Required":"Location is Required",
+      "Asset Reference":"Asset Reference",
+      "Asset Name 1":"Asset Name 1",
+      "Asset Name 2":"Asset Name 2",
+      "Asset Group":"Asset Group",
+      "Asset Type":"Asset Type",
+      "Asset Make":"Asset Make",
+      "Asset Model":"Asset Model",
+      "Asset Size":"Asset Size",
+      "Asset Reference 2":"Asset Reference 2",
+      "Asset Trade":"Asset Trade",
+      "Asset Conter":"Asset Conter",
+      "Asset Fixed Date":"Asset Fixed Date",
+      "save":"save",
+      "cancel":"cancel"
+  }
+ 
   }
 }
