@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, NgForm } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, NgForm, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { AlertService, MessageSeverity } from '../../services/alert.service';
 import { AccountService } from '../../services/account.service';
@@ -39,7 +39,7 @@ export class SiteEditorComponent implements OnInit {
       address: ['', Validators.required],
       siteManager: ['', Validators.required],
       isActive: [true],
-      file: ['',Validators.required]
+      file: ['']
     })
   }
   ngOnChanges() {
@@ -86,6 +86,8 @@ export class SiteEditorComponent implements OnInit {
     this.alertService.startLoadingMessage('Saving changes...');
     const editedSite = this.getEditedSite();
     if (this.isNewSite) {
+      this.siteForm.removeControl('file');
+      this.siteForm.addControl('file', new FormControl("", Validators.required));
       this.accountService.AddSite(editedSite).subscribe(
         (result: any) => {
           if (result.isSuccess) {
@@ -99,6 +101,8 @@ export class SiteEditorComponent implements OnInit {
           this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
         });
     } else {
+      this.siteForm.removeControl('file');
+      this.siteForm.addControl('file', new FormControl(""));
       this.accountService.updateSite(editedSite).subscribe(
         (result: any) => {
           if (result.isSuccess) {
@@ -124,13 +128,13 @@ export class SiteEditorComponent implements OnInit {
       "address": formModel.address,
       "fileName": this.base64string,
       "fileLocation": null,
-      "fileExtention": this.fileExtension,
-      "isActive": formModel.isActive,
+      "fileExtention": (this.fileExtension==null||this.fileExtension==undefined)?this.site.fileExtention:this.fileExtension,
+      "isActive": (formModel.isActive=='')?false:formModel.isActive,
       "siteManager": formModel.siteManager,
-      "createdBy": this.currentUser.id,
+      "createdBy": (this.site.createdBy==undefined)?this.currentUser.id:this.site.createdBy,
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date(),
-      "createdDate": new Date()
+      "createdDate": (this.site.createdDate==undefined)?new Date():this.site.createdDate
     };
   }
 

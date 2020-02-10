@@ -356,12 +356,12 @@ export class ProjectComponent implements OnInit {
       "name1": formModel.name1,
       "name2": formModel.name2,
       "projectDetails": formModel.projectDetails,
-      "isActive": formModel.isActive,
+      "isActive": (formModel.isActive=='' ||formModel.isActive==null)?false:formModel.isActive,
       "projectRepositories": this.projectRepositories,
-      "createdBy": this.currentUser.id,
+      "createdBy": (this.projectData.createdBy==undefined)?this.currentUser.id:this.projectData.createdBy,
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date(),
-      "createdDate": new Date()
+      "createdDate": (this.projectData.createdDate==undefined)?new Date():this.projectData.createdDate
     };
   }
 

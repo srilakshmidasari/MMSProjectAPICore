@@ -240,7 +240,9 @@
       "Name2isrequired": "Name 2 is required",
       "SiteManagerRequired": "Site Manager is  Required",
       "SiteAddressRequired": " Address is Required",
-      "SiteImageRequired": "Site Image is Required"
+      "SiteImageRequired": "Site Image is Required",
+      "save":"Save",
+      "cancel":"Cancel"      
     }
   },
   "project": {

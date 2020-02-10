@@ -3,7 +3,7 @@
     <app-site-editor #siteEditor [site]="data.site"></app-site-editor>
 </div>
 <div mat-dialog-actions>
-    <button  mat-raised-button [dir]="textDir"  (click)="siteEditor.save()"  color="primary">Save</button>
-    <button  mat-raised-button  [dir]="textDir" (click)="cancel()" color="warn">Cancel</button>   
+    <button  mat-raised-button [dir]="textDir"  (click)="siteEditor.save()"  color="primary">{{'site.management.save' | translate}}</button>
+    <button  mat-raised-button  [dir]="textDir" (click)="cancel()" color="warn">{{'site.management.cancel' | translate}}</button>   
 </div>
 <div class="clearfix space20"></div>

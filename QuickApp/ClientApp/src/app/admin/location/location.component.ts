@@ -161,20 +161,16 @@ export class LocationComponent implements OnInit {
       "name1": formModel.lName1,
       "name2": formModel.lname2,
       "locationReference": formModel.locationRef,
-      "isActive": formModel.isActive,
-      "createdBy": this.currentUser.id,
-      "createdDate": new Date(),
+      "isActive": (formModel.isActive=='') ?false:formModel.isActive,
+      "createdBy":(this.locationRefData.createdBy==undefined)?this.currentUser.id:this.locationRefData.createdBy,
+      "createdDate": (this.locationRefData.createdDate==undefined)?new Date():this.locationRefData.createdDate,
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date()
     }
 
   }
   // On Location Save
-  save() {
-    // if (!this.form.submitted) {
-    //   this.form.onSubmit(null);
-    //   return;
-    // }
+  save() {    
     if (!this.locationForm.valid) {
       this.alertService.showValidationError();
       return;

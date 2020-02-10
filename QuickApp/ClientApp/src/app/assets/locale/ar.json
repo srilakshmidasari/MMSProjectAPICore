@@ -19,7 +19,8 @@
     "Role": "إدارة الدور",
     "Site": "موقع",
     "Project": "مشروع",
-    "LookUp": "ابحث عن"
+    "LookUp": "ابحث عن",
+    "Location": "موقعك"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -226,7 +227,9 @@
       "UploadLocationMapImage": "تحميل صورة خريطة الموقع",
       "Site Document": "وثيقة الموقع",
       "Site Image": "صورة الموقع",
-      "SiteImageRequired": "صورة الموقع مطلوبة"
+      "SiteImageRequired": "صورة الموقع مطلوبة",
+      "save":"حفظ",
+      "cancel":"إلغاء"
     }
   },
   "project": {

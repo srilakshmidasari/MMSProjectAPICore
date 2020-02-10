@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort>
+        <mat-table [dataSource]="dataSource" matSort   matSortActive="updatedDate" matSortDirection="desc">
             <ng-container matColumnDef="description">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Category'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
