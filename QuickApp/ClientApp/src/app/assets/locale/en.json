@@ -46,7 +46,8 @@
     "Project": "Project Information",
     "Profile": "Profile",
     "LookUp": "LookUp Management",
-    "Location": "Location Management"
+    "Location": "Location Management",
+    "Asset": "Asset Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -330,5 +331,26 @@
       "pNameisrequired": "Project Name is Required",
       "locationRefisrequired": "Location Reference is Required"
     }
+  },
+  "Asset":{
+    "Management": {
+      "Search": "Search for Asset ...",
+      "AssetGroupReference1":"Asset Group Reference 1",
+      "AssetGroupReference2":"Asset Group Reference 2",
+      "AssetGroupMake":"Asset Group Make",
+      "AssetGroupModel":"Asset Group Model",
+      "AssetGroupType":"Asset Group Type",
+      "AssetGroupCapacity":" AssetGroupCapacity"
+
+    },
+    "editor":{
+      "assetGroupRef1Required":"Asset Group Reference 1 is Required",
+      "assetGroupRef2Required":"Asset Group Reference 2 is Required",
+      "assetGroupMakerequired":"Asset Group Make is Required",
+      "assetGroupModelrequired":"Asset Group Model is Required",
+      "assetGroupTyperequired":"Asset Group Type is Required",
+      "assetGroupCapacityrequired":"Asset Group Capacity Required"
+    }
+
   }
 }

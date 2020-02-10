@@ -36,7 +36,8 @@
     "Site": "إدارة الموقع",
     "Project": "معلومات المشروع",
     "LookUp": "بحث عن الإدارة",
-    "Location": "إدارة الموقع"
+    "Location": "إدارة الموقع",
+    "Asset": "إدارة الأصول"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -295,9 +296,9 @@
       "SelectCategory": "اختر الفئة",
       "PleaseSelectCategory": "يرجى اختيار الفئة",
       "Name1": "الاسم 1",
-      " Name1 is required": "الاسم 1 مطلوب",
+      "Name1 is required": "الاسم 1 مطلوب",
       "Name2": "الاسم 2",
-      " Name2 is required": "الاسم 2 مطلوب",
+      "Name2 is required": "الاسم 2 مطلوب",
       "Remarks": "ملاحظات",
       "isActive": "نشط"
     }
@@ -317,5 +318,11 @@
       "pNameisrequired": "اسم المشروع مطلوب",
       "locationRefisrequired": "مرجع الموقع مطلوب"
     }
+  },
+  "Asset":{
+    "Management": {
+      "Search": "البحث عن الأصول ..."
+    }
+
   }
 }
