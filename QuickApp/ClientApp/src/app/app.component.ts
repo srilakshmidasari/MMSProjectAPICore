@@ -40,7 +40,7 @@ export class AppComponent implements OnInit {
   newNotificationCount = 0;
   appTitle = 'Maintenance Management System';
   appLogo = require('./assets/images/logo-white.png');
- 
+
   mobileQuery: MediaQueryList;
   stickyToasties: number[] = [];
   language: string = 'English';
@@ -88,22 +88,39 @@ export class AppComponent implements OnInit {
     this.toastaConfig.showDuration = false;
 
     this.appTitleService.appName = this.appTitle;
-    localStorage.setItem('textdir', 'ltr')
+
+   
+    //language translate settings
+    //this.translate.setDefaultLang('en');
+    // var lang = localStorage.getItem('language');
+    // if (lang != 'undefined') {
+    //   if(lang == 'en'){
+    //     this.textDir = 'ltr';
+    //   }else{
+    //     this.textDir = 'rtl';
+    //   }
+    //   this.translate.use(localStorage.getItem('language')); 
+    // }
+    // else {
+    //   localStorage.setItem('textdir', 'ltr')
+    // }
+
   }
 
-    //on language change click
-    changeLang(language: string) {
-      if (language == 'en') {
-        this.language = 'English';
-        this.textDir = 'ltr';
-      }
-      else if (language == 'ar') {
-        this.language = 'Arabic';
-        this.textDir = 'rtl';
-      }
-      this.translate.use(language);
-      localStorage.setItem('textdir',  this.textDir);
+  //on language change click
+  changeLang(language: string) {
+    if (language == 'en') {
+      this.language = 'English';
+      this.textDir = 'ltr';
     }
+    else if (language == 'ar') {
+      this.language = 'Arabic';
+      this.textDir = 'rtl';
+    }
+    this.translate.use(language);
+    localStorage.setItem('language', language);
+    localStorage.setItem('textdir', this.textDir);
+  }
 
   ngOnInit() {
     this.isUserLoggedIn = this.authService.isLoggedIn;

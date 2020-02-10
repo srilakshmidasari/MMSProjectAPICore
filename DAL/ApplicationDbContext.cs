@@ -24,14 +24,12 @@ namespace DAL
         public DbSet<ClassType> ClassTypes { get; set; }
         public DbSet<TypeCdDmt> TypeCdDmts { get; set; }
         public DbSet<Project> Projects { get; set; }
-
         public DbSet<ProjectRepository> ProjectRepositories { get; set; }
-
         public DbSet<LookUp> LookUps { get; set; }
-
         public DbSet<LookUpProjectXref> LookUpProjectXrefs { get; set; }
-
         public DbSet<Location> Locations { get; set; }
+
+        public DbSet<AssetGroup> AssetGroups { get; set; }
 
 
 
@@ -65,6 +63,7 @@ namespace DAL
             builder.Entity<LookUp>().ToTable("LookUP");
             builder.Entity<LookUpProjectXref>().ToTable("LookUpProjectXref");
             builder.Entity<Location>().ToTable("Location");
+            builder.Entity<AssetGroup>().ToTable("AssetGroup");
 
 
 
@@ -206,9 +205,6 @@ namespace DAL
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_ProjectxrefId");
 
-
-
-
             builder.Entity<Location>().HasOne(d => d.CreatedUser)
                .WithMany(p => p.App_Location_CreatedUser)
                .HasForeignKey(d => d.CreatedBy)
@@ -230,11 +226,21 @@ namespace DAL
 
             builder.Entity<Location>().HasOne(d => d.SiteInfo_Id)
                  .WithMany(p => p.App_Location_SiteId)
-
                  .HasForeignKey(d => d.SiteId)
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_App_Location_SiteId");
 
+            builder.Entity<AssetGroup>().HasOne(d => d.CreatedUser)
+             .WithMany(p => p.App_AssetGroup_CreatedUser)
+             .HasForeignKey(d => d.CreatedBy)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_AssetGroup_CreatedUser");
+
+            builder.Entity<AssetGroup>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_AssetGroup_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_AssetGroup_UpdatedUser");
 
         }
 

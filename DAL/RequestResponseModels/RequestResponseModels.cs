@@ -177,6 +177,27 @@ namespace DAL.RequestResponseModels
             public DateTime UpdatedDate { get; set; }
 
         }
+
+        public class UpsertAssetGroup
+        {
+            public int Id { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public string AssetRef1 { get; set; }
+            public string AssetRef2 { get; set; }
+            public string AssetMake { get; set; }
+            public string AssetModel { get; set; }
+            public string AssetCapacity { get; set; }
+            public string AssetType { get; set; }
+            public string LocationReference { get; set; }
+            public bool IsActive { get; set; }
+            public string CreatedBy { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public string UpdatedBy { get; set; }
+            public DateTime UpdatedDate { get; set; }
+
+        }
+
         public class LocationDataResponse
         {
 

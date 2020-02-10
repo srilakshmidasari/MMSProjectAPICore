@@ -81,5 +81,8 @@ namespace DAL.Models
 
         public ICollection<Location> App_Location_CreatedUser { get; set; }
         public ICollection<Location> App_Location_UpdatedUser { get; set; }
+
+        public ICollection<AssetGroup> App_AssetGroup_CreatedUser { get; set; }
+        public ICollection<AssetGroup> App_AssetGroup_UpdatedUser { get; set; }
     }
 }
