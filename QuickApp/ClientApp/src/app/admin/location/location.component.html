@@ -10,29 +10,34 @@
         <!-- <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar> -->
         <mat-table [dataSource]="dataSource" matSort>
 
-            <ng-container matColumnDef="siteName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Site Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.siteName}} </mat-cell>
+            <ng-container matColumnDef="siteName1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="projectName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
+            <ng-container matColumnDef="projectName1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Location.Management.projectName' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectName1}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="locationRef">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Refarance</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.locationRef}} </mat-cell>
+            <ng-container matColumnDef="locationReference">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Location.Management.locationRef' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.locationReference}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="lname1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>location Name 1</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.lname1}} </mat-cell>
+            <ng-container matColumnDef="name1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Location.Management.lName1' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
 
-            <ng-container matColumnDef="lname2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name 2</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.lname2}} </mat-cell>
+            <ng-container matColumnDef="name2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Location.Management.lName2' | translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
@@ -44,7 +49,8 @@
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditLocation()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>Add location
+                        <mat-icon class="mat-button-icon">add</mat-icon>
+                        {{'Location.Management.addLocation' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
@@ -76,54 +82,70 @@
 <div class="page-content" *ngIf="isAdding">
     <mat-card>
         <mat-card-header>
-            <mat-card-title *ngIf="isNewLocation">Add Location</mat-card-title>
-            <mat-card-title *ngIf="!isNewLocation">Edit Location</mat-card-title>
+            <mat-card-title *ngIf="isNewLocation">{{'Location.Management.addLocation' | translate}}</mat-card-title>
+            <mat-card-title *ngIf="!isNewLocation">{{'Location.Management.editLocation' | translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
-            <form [formGroup]="locationForm">
+            <form  #form="ngForm" [formGroup]="locationForm" (ngSubmit)="save()" >
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>Site Name</mat-label>
-                        <mat-select formControlName="siteName">
-                            <mat-option *ngFor="let site of siteList" [value]="site.id">
+                        <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
+                        <mat-select formControlName="siteId">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="!locationForm.controls['siteId'].valid">
+                            {{'Location.editor.sNameisrequired' | translate}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <mat-label>Poject Name</mat-label>
-                        <mat-select formControlName="projectName">
-                            <mat-option *ngFor="let project of projectsList" [value]="project.id">
+                        <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
+                        <mat-select formControlName="projectId">
+                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
                                 {{project.name1}}
                             </mat-option>
                         </mat-select>
+                        <mat-error *ngIf="!locationForm.controls['projectId'].valid">
+                            {{'Location.editor.pNameisrequired' | translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>Location Refarance</mat-label>
-                        <input matInput formControlName="locationRef" />
+                        <mat-label>{{'Location.Management.locationRef' | translate}}</mat-label>
+                        <input matInput formControlName="locationRef" required />
+                        <mat-error *ngIf="!locationForm.controls['locationRef'].valid">
+                            {{'Location.editor.locationRefisrequired' | translate}}
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <mat-label> Name 1</mat-label>
-                        <input matInput formControlName="lName1" />
+                        <mat-label> {{'LookUp.management.Name1' | translate}}</mat-label>
+                        <input matInput formControlName="lName1" required />
+                        <mat-error *ngIf="!locationForm.controls['lName1'].valid">
+                            {{'site.management.Name1isrequired' | translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label> Name 2</mat-label>
-                        <input matInput formControlName="lname2" />
+                        <mat-label>{{'LookUp.management.Name2' | translate}}</mat-label>
+                        <input matInput formControlName="lname2" required />
+                        <mat-error *ngIf="!locationForm.controls['lname2'].valid">
+                            {{'site.management.Name2isrequired' | translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
-                    <mat-checkbox class="col-md-6" formControlName="isActive"> Is isActive</mat-checkbox>
+                    <mat-checkbox class="col-md-6" formControlName="isActive">
+                        {{'site.management.IsActive' | translate}}</mat-checkbox>
                 </div>
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary">Save</button>
+                <button mat-raised-button color="primary" (click)="save()">Save</button>
                 <button mat-raised-button color="warn" (click)="onLocationCancel()">Cancel</button>
             </div>
         </mat-card-actions>

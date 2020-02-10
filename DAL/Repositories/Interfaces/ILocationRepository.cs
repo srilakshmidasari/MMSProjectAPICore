@@ -9,7 +9,7 @@ namespace DAL.Repositories.Interfaces
 {
    public interface ILocationRepository
     {
-        ListDataResponse<Location> GetLocationDetails(); 
+        ListDataResponse<LocationDataResponse> GetLocationDetails(); 
 
         ValueDataResponse<Location> InsertLocation(Location location);
 

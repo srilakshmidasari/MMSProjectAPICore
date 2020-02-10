@@ -241,14 +241,14 @@ export class AccountService {
 
   // Project
 
-  getProject(){
+  getProject() {
     return this.accountEndpoint.getProjectEndpoint();
   }
   getLookUPData() {
     return this.accountEndpoint.getLookUpData();
   }
 
-  
+
   AddLookUp(LookUp) {
     return this.accountEndpoint.AddLookUpEndpoint(LookUp);
   }
@@ -256,35 +256,47 @@ export class AccountService {
   updateLookUp(LookUp) {
     return this.accountEndpoint.updateLookUpEndpoint(LookUp);
   }
-  
+
   deleteLookUp(LookUp: any): Observable<any> {
     return this.accountEndpoint.getDeleteLookUpEndpoint<any>(LookUp.id);
   }
 
 
-  getStoresByProjectId(ProjectId){
+  getStoresByProjectId(ProjectId) {
     return this.accountEndpoint.getStoresByProjectId(ProjectId);
   }
-  getLookUpDetailsByTypeId(TypeId){
+  getLookUpDetailsByTypeId(TypeId) {
     return this.accountEndpoint.getLookUpDetailsByTypeId(TypeId);
   }
 
-  NewProject(project :any){
+  NewProject(project: any) {
     return this.accountEndpoint.newProjectEndpoint(project);
   }
 
-  UpdateProject(project :any){
+  UpdateProject(project: any) {
     return this.accountEndpoint.updateProjectEndpoint(project);
   }
 
-  getRepositoryByProject(ProjectId){
+  getRepositoryByProject(ProjectId) {
     return this.accountEndpoint.getRepositoryByProjectEndpoint(ProjectId);
   }
-  deleteProjectFile(ProjectId){
+  deleteProjectFile(ProjectId) {
     return this.accountEndpoint.deleteProjectFileEndpoint(ProjectId);
   }
 
-  deleteProject(ProjectId){
+  deleteProject(ProjectId) {
     return this.accountEndpoint.deleteProjectEndpoint(ProjectId);
+  }
+  getLocationData() {
+    return this.accountEndpoint.getLocationEndpoint();
+  }
+  addLocation(locationObject: any) {
+    return this.accountEndpoint.addLocationEndpoint(locationObject);
+  }
+  upDateLocation(locationObject: any) {
+    return this.accountEndpoint.upDateLocationEndpoint(locationObject);
+  }
+  deleteLocation(locationId) {
+    return this.accountEndpoint.deleteLocationEndpoint(locationId);
   }
 }

@@ -11,7 +11,7 @@
   },
   "mainMenu": {
     "Home": "Home",
-    "Security":"Security",
+    "Security": "Security",
     "Appointments": "Appointments",
     "Customers": "Customers",
     "Products": "Products",
@@ -27,9 +27,9 @@
     "User": "Users",
     "Role": "Roles",
     "Site": "Site",
-    "Project" :"Project",   
-    "LookUp":"LookUp",
-    "Location":"Location"
+    "Project": "Project",
+    "LookUp": "LookUp",
+    "Location": "Location"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -43,9 +43,9 @@
     "Roles": "Role Management",
     "Site": "Site Management",
     "Project": "Project Management",
-    "Profile": "Profile",   
-    "LookUp":"LookUp Management",
-    "Location":"Location Management"
+    "Profile": "Profile",
+    "LookUp": "LookUp Management",
+    "Location": "Location Management"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -156,9 +156,8 @@
       "Name1Required": "Name 1 is required",
       "Name2Required": "Name 2 is required",
       "PhoneNumberRequired": "Phone Number is required",
-      "PhoneNumberMinLength": "Enter 10 digits for Phone Number" ,
-      "Update": "Update" 
-      
+      "PhoneNumberMinLength": "Enter 10 digits for Phone Number",
+      "Update": "Update"
     }
   },
   "roles": {
@@ -230,7 +229,7 @@
       "UpdatedDate": "Updated Date",
       "IsActive": "Is Active",
       "AddSite": "Add Site",
-      "Actions":"Actions",
+      "Actions": "Actions",
       "SiteManager": "Site Manager",
       "Upload Document": "Upload Document",
       "UploadLocationMapImage": "Upload Site Address Map Image",
@@ -241,84 +240,92 @@
       "Name2isrequired": "Name 2 is required",
       "SiteManagerRequired": "Site Manager is  Required",
       "SiteAddressRequired": " Address is Required",
-      "SiteImageRequired":"Site Image is Required"
+      "SiteImageRequired": "Site Image is Required"
     }
   },
-
   "project": {
     "management": {
       "Search": "Search for Project...",
       "ProjectRef": "Project Reference",
       "Name1": "Name 1",
       "Name2": "Name 2",
-      "projectDetails" : "Project Details",
-      "SiteName1" :"Site Name",
-      "StoreName1" :"Store Name",
+      "projectDetails": "Project Details",
+      "SiteName1": "Site Name",
+      "StoreName1": "Store Name",
       "UpdatedDate": "Updated Date",
       "IsActive": "Is Active",
       "AddProject": "Add Project",
-      "updatedDate":"updatedDate",
-      "Actions":"Actions",
-      "Edit":"Edit",
-      "View Store":"View Store",
-      "Delete":"Delete",
-      "No Records Found":"No Records Found",
-      "No Search Results Found":"No Search Results Found",
-      "Add Project":"Add Project",
-      "Edit Project":"Edit Project",
-      "Select Site" :"Select Site",
-      "Project Refrerence":"Project Reference",
-      "Project Reference is Required":"Project Reference is Required",
-      "Please Select Site":"Please Select Site",
-      "Name 1 is Required":" Name 1 is Required",
-      "Name 2":"Name 2",
-      "Name 2 is Required":"Name 2 is Required",
-      "Project Details":"Project Details",
-      "Project Details is Required":"Project Details is Required",
-      "Store":"Store",
-      "Please Select Store":"Please Select Store",
-      "Upload Project":"Upload Project",
-      "Note":"Note",
-      "Updated Date":"Updated Date",
-       "Close":"Close"
-      
+      "updatedDate": "updatedDate",
+      "Actions": "Actions",
+      "Edit": "Edit",
+      "View Store": "View Store",
+      "Delete": "Delete",
+      "No Records Found": "No Records Found",
+      "No Search Results Found": "No Search Results Found",
+      "Add Project": "Add Project",
+      "Edit Project": "Edit Project",
+      "Select Site": "Select Site",
+      "Project Refrerence": "Project Reference",
+      "Project Reference is Required": "Project Reference is Required",
+      "Please Select Site": "Please Select Site",
+      "Name 1 is Required": " Name 1 is Required",
+      "Name 2": "Name 2",
+      "Name 2 is Required": "Name 2 is Required",
+      "Project Details": "Project Details",
+      "Project Details is Required": "Project Details is Required",
+      "Store": "Store",
+      "Please Select Store": "Please Select Store",
+      "Upload Project": "Upload Project",
+      "Note": "Note",
+      "Updated Date": "Updated Date",
+      "Close": "Close"
     }
   },
-  "LookUp":{
-    "management":{
+  "LookUp": {
+    "management": {
       "Search": "Search for LookUp...",
-      "Category":"Category",
-      "Name1":"Name 1",
-      "Name2":"Name 2",
-      "Remarks":"Remarks",
-      "UpdatedDate":"Updated Date",
-      "updatedByUser":"Last Updated By User",
-      "IsActive":"Is Active",
-      "Add":"Add",
-      "add":"add",
-      "Add LookUp":"Add LookUp",
-      "Edit":"Edit",
-      "edit":"edit",
-      "Delete":"Delete",
-      "Actions":"Actions"
-      },
-      "editor":{
-      "No Records Found":"No Records Found",
-      "No Search Results Found":"No Search Results Found",
-       "SelectCategory":"Select Category",
-       "PleaseSelectCategory" : "Please Select Category",
-       "Name1":"Name 1",
-       "Name1 is required":"Name1 is required",
-       "Name2":"Name 2",
-       "Name2 is required":"Name2 is required",
-       "Remarks":"Remarks",
-       "isActive":"Is Active"
-      }
-  },
-  "Location":{
-    "Management":{
-      "Search": "Search for Location ..."
+      "Category": "Category",
+      "Name1": "Name 1",
+      "Name2": "Name 2",
+      "Remarks": "Remarks",
+      "UpdatedDate": "Updated Date",
+      "updatedByUser": "Last Updated By User",
+      "IsActive": "Is Active",
+      "Add": "Add",
+      "add": "add",
+      "Add LookUp": "Add LookUp",
+      "Edit": "Edit",
+      "edit": "edit",
+      "Delete": "Delete",
+      "Actions": "Actions"
+    },
+    "editor": {
+      "No Records Found": "No Records Found",
+      "No Search Results Found": "No Search Results Found",
+      "SelectCategory": "Select Category",
+      "PleaseSelectCategory": "Please Select Category",
+      "Name1": "Name 1",
+      "Name1 is required": "Name1 is required",
+      "Name2": "Name 2",
+      "Name2 is required": "Name2 is required",
+      "Remarks": "Remarks",
+      "isActive": "Is Active"
     }
-    
+  },
+  "Location": {
+    "Management": {
+      "Search": "Search for Location ...",
+      "projectName": "Project Name",
+      "locationRef": "Location Reference",
+      "lName1": "Location Name 1",
+      "lName2": "Location Name 2",
+      "addLocation": "Add Location",
+      "editLocation": "Edit Location"
+    },
+    "editor": {
+      "sNameisrequired": "Site Name is Required",
+      "pNameisrequired": "Project Name is Required",
+      "locationRefisrequired": "Location Reference is Required"
+    }
   }
 }
