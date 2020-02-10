@@ -31,7 +31,6 @@ export class SiteListComponent implements OnInit {
     private dialog: MatDialog) { }
 
   ngOnInit() {
-
     this.getSites();
   }
 

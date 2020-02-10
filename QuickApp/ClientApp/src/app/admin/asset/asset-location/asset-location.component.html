@@ -1,1 +1,167 @@
-<p>asset-location works!</p>
+<app-page-header title="Asset" icon="assignment_ind"></app-page-header>
+<div class="page-content" [hidden]="isAdding">
+    <div class="search-box">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)"
+                placeholder="{{'Asset.Management.Search' | translate}}">
+        </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <mat-table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="siteName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Site Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.siteName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="projectName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="locationName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                    <button mat-button color="primary" matTooltip="Add" (click)="onEditAsset()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>Add Asset
+                    </button>
+                </mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row">
+                    <button mat-icon-button matTooltip="Edit" (click)="onEditAsset(row)">
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
+
+                    <button mat-icon-button matTooltip="Delete" (click)="confirmDelete(row)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>{{'project.management.No Records Found'|translate}}</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>{{'project.management.No Search Results Found'|translate}}</p>
+        </div>
+        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+    </div>
+</div>
+<div class="page-content" [hidden]="!isAdding">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title *ngIf="isNewAsset"> Add Asset</mat-card-title>
+            <mat-card-title *ngIf="!isNewAsset">Edit Asset</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="assetForm">
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
+                        <mat-select formControlName="siteId">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
+                                {{site.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetForm.controls['siteId'].valid">
+                            {{'Location.editor.sNameisrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
+                        <mat-select formControlName="projectId">
+                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
+                                {{project.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetForm.controls['projectId'].valid">
+                            {{'Location.editor.pNameisrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Location Name*</mat-label>
+                        <mat-select formControlName="locationId">
+                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
+                                {{location.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetForm.controls['locationId'].valid">
+                           Location is Required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Reference</mat-label>
+                        <input matInput formControlName="assetRef"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Name 1</mat-label>
+                        <input matInput formControlName="aName1"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Name 2</mat-label>
+                        <input matInput formControlName="aName2"/>
+                    </mat-form-field>
+                </div> 
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Group</mat-label>
+                        <input matInput formControlName="assGroup"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Type</mat-label>
+                        <input matInput formControlName="assType"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Make</mat-label>
+                        <input matInput formControlName="assMake"/>
+                    </mat-form-field>
+                </div>  
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Model</mat-label>
+                        <input matInput formControlName="assModel"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Size</mat-label>
+                        <input matInput formControlName="assSize"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Reference 2</mat-label>
+                        <input matInput formControlName="assRef2"/>
+                    </mat-form-field>
+                </div>  
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Trade</mat-label>
+                        <input matInput formControlName="assTrade"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Conter</mat-label>
+                        <input matInput formControlName="assCounter"/>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Asset Fixed Date</mat-label>
+                        <input matInput formControlName="assFixDate"/>
+                    </mat-form-field>
+                </div>                
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"
+                    (click)="save()">{{'site.management.save' | translate}}</button>
+                <button mat-raised-button color="warn"
+                    (click)="onAssetCancel()">{{'site.management.cancel' | translate}}</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
+    </mat-card>
+</div>

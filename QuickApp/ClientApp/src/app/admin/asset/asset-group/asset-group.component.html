@@ -1,0 +1,88 @@
+<div class="page-content">
+    <mat-card>
+        <mat-card-title> Add Asset Group</mat-card-title>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="assetGroupForm">
+                <div class="row">
+                    <mat-form-field class="col-md-6">
+                        <mat-label>{{'site.management.Name1' | translate}}</mat-label>
+                        <input matInput formControlName="agName1" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agName1'].valid">
+                            {{'site.management.Name1isrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>{{'site.management.Name2' | translate}}</mat-label>
+                        <input matInput formControlName="agName2" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agName2'].valid">
+                            {{'site.management.Name2isrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-6">
+                        <mat-label>Asset Group Reference 1</mat-label>
+                        <input matInput formControlName="agRef1" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agRef1'].valid">
+                            {{'Asset.editor.assetGroupRef1Required' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>Asset Group Reference 2</mat-label>
+                        <input matInput formControlName="agRef2" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agRef2'].valid">
+                            {{'Asset.editor.assetGroupRef2Required' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-6">
+                        <mat-label> Asset Group Make</mat-label>
+                        <input matInput formControlName="agMake" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agMake'].valid">
+                            {{'Asset.editor.assetGroupMakerequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>Asset Group Model</mat-label>
+                        <input matInput formControlName="agModel" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agModel'].valid">
+                            {{'Asset.editor.assetGroupModelrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-6">
+                        <mat-label>Asset Group Type</mat-label>
+                        <input matInput formControlName="agType" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agType'].valid">
+                            {{'Asset.editor.assetGroupTyperequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label> Asset Group Capacity</mat-label>
+                        <input matInput formControlName="agCapacity" required />
+                        <mat-error *ngIf="!assetGroupForm.controls['agCapacity'].valid">
+                            {{'Asset.editor.assetGroupCapacityrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-checkbox class="col-md-2" formControlName="isActive">{{'site.management.IsActive' | translate}}
+                    </mat-checkbox>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"
+                    (click)="save()">{{'site.management.save' | translate}}</button>
+                <button mat-raised-button color="warn"
+                    (click)="onAssetCancel()">{{'site.management.cancel' | translate}}</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
+
+    </mat-card>
+</div>
