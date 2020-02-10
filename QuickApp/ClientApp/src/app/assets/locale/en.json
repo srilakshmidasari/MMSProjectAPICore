@@ -29,7 +29,8 @@
     "Site": "Site",
     "Project": "Project",
     "LookUp": "LookUp",
-    "Location": "Location"
+    "Location": "Location",
+    "Asset":"Asset"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",

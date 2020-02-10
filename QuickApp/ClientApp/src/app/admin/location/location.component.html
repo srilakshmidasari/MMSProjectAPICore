@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <!-- <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar> -->
-        <mat-table [dataSource]="dataSource" matSort>
+        <mat-table [dataSource]="dataSource" matSort matSort matSortActive="updatedDate" matSortDirection="desc" matSortDisableClear>
 
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}
@@ -38,6 +38,10 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Location.Management.lName2' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="updatedDate">
+                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>{{'site.management.UpdatedDate' | translate}}</mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>

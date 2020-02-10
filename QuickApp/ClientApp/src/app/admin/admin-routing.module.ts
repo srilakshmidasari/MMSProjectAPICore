@@ -16,6 +16,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { ProjectComponent } from './project/project.component';
 import { LookupListComponent } from './lookup-list/lookup-list.component';
 import { LocationComponent } from './location/location.component';
+import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -28,6 +29,7 @@ const adminRoutes: Routes = [
       { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { title: 'Admin | Profile' } },      
       { path: 'lookup', component: LookupListComponent, canActivate: [AuthGuard], data: { title: 'Admin | LookUp' } },
       { path: 'location', component: LocationComponent, canActivate: [AuthGuard], data: { title: 'Admin | Location' } },
+      { path: 'asset-location', component: AssetLocationComponent, canActivate: [AuthGuard], data: { title: 'Admin | Asset' } },
       
     ]
   }

@@ -25,7 +25,7 @@ export class LocationComponent implements OnInit {
   projectsList: any[] = []
   locationsData: any[] = [];
   locationRefData: any = {};
-  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'isActive', 'Actions'] 
+  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'updatedDate','isActive', 'Actions'] 
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;

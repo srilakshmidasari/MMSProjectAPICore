@@ -20,7 +20,8 @@
     "Site": "موقع",
     "Project": "مشروع",
     "LookUp": "ابحث عن",
-    "Location": "موقعك"
+    "Location": "موقعك",
+    "Asset":"الأصول"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
