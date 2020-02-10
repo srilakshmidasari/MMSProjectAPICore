@@ -25,11 +25,12 @@ export class LocationComponent implements OnInit {
   projectsList: any[] = []
   locationsData: any[] = [];
   locationRefData: any = {};
-  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'updatedDate','isActive', 'Actions'] 
+  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'updatedDate', 'isActive', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
     private snackBar: MatSnackBar,
@@ -39,7 +40,7 @@ export class LocationComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getLocation();   
+    this.getLocation();
     this.getSites();
     this.getProjects();
   }
@@ -62,18 +63,30 @@ export class LocationComponent implements OnInit {
         error => {
         });
   }
+
   // Location Data
   getLocation() {
+    this.alertService.startLoadingMessage();
+    this.loadingIndicator = true;
     this.accountService.getLocationData().subscribe((res: any) => {
-      this.locationsData = res.listResult;
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+      this.locationsData =  res.listResult == null ? [] : res.listResult;
       this.dataSource.data = this.locationsData;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
     },
       error => {
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
       }
     )
   }
+
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+
   // Form Building
   private buildForm() {
     this.locationForm = this.fb.group({
@@ -132,7 +145,7 @@ export class LocationComponent implements OnInit {
   onDeleteLocation(location) {
     this.snackBar.open(`Delete ${location.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
       this.alertService.startLoadingMessage('Deleting...');
-      this.loadingIndicator = true;     
+      this.loadingIndicator = true;
       this.accountService.deleteLocation(location.id).subscribe((res: any) => {
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
@@ -161,16 +174,17 @@ export class LocationComponent implements OnInit {
       "name1": formModel.lName1,
       "name2": formModel.lname2,
       "locationReference": formModel.locationRef,
-      "isActive": (formModel.isActive=='') ?false:formModel.isActive,
-      "createdBy":(this.locationRefData.createdBy==undefined)?this.currentUser.id:this.locationRefData.createdBy,
-      "createdDate": (this.locationRefData.createdDate==undefined)?new Date():this.locationRefData.createdDate,
+      "isActive": (formModel.isActive == '') ? false : formModel.isActive,
+      "createdBy": (this.locationRefData.createdBy == undefined) ? this.currentUser.id : this.locationRefData.createdBy,
+      "createdDate": (this.locationRefData.createdDate == undefined) ? new Date() : this.locationRefData.createdDate,
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date()
     }
-
   }
+
+
   // On Location Save
-  save() {    
+  save() {
     if (!this.locationForm.valid) {
       this.alertService.showValidationError();
       return;
