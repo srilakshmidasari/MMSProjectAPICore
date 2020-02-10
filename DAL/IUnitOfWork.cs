@@ -21,7 +21,7 @@ namespace DAL
         IProjectRepository Projects { get; }
 
         ILocationRepository Locations { get; }
-
+        IAssetRepository Assets { get; }
         int SaveChanges();
     }
 }

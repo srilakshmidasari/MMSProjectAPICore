@@ -24,6 +24,7 @@ namespace DAL
         IMasterRepository _Masters;
         IProjectRepository _Projects;
         ILocationRepository _Locations;
+        IAssetRepository _assets;
 
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
@@ -78,6 +79,16 @@ namespace DAL
             }
         }
 
+        public IAssetRepository Assets
+        {
+            get
+            {
+                if (_assets == null)
+                    _assets = new AssetRepository(_context, _mapper, _configuration);
+
+                return _assets;
+            }
+        }
 
         public int SaveChanges()
         {

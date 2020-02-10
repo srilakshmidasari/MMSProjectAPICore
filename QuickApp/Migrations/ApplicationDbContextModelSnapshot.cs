@@ -162,6 +162,79 @@ namespace MMS.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
+            modelBuilder.Entity("DAL.Models.AssetGroup", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AssetCapacity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AssetMake")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AssetModel")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AssetRef1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AssetRef2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("AssetType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("AssetGroup");
+                });
+
             modelBuilder.Entity("DAL.Models.ClassType", b =>
                 {
                     b.Property<int>("ClassTypeId")
@@ -739,6 +812,21 @@ namespace MMS.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("DAL.Models.AssetGroup", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_AssetGroup_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_AssetGroup_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_AssetGroup_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_AssetGroup_UpdatedUser")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Models.ClassType", b =>
                 {
                     b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
@@ -782,10 +870,10 @@ namespace MMS.Migrations
                         .HasConstraintName("FK_Location_CreatedUser")
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Project", "Project_Id")
-                        .WithMany("App_Location_ProjectId")
+                    b.HasOne("DAL.Models.Project", "Project")
+                        .WithMany("Location_ProjectId")
                         .HasForeignKey("ProjectId")
-                        .HasConstraintName("FK_App_Location_ProjectId")
+                        .HasConstraintName("FK_Location_ProjectId")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.SiteInfo", "SiteInfo_Id")
