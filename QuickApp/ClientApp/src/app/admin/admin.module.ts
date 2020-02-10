@@ -27,6 +27,7 @@ import { LookupListComponent } from './lookup-list/lookup-list.component';
 import { LookupDialogComponent } from './lookup-dialog/lookup-dialog.component';
 import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
 import { LocationComponent } from './location/location.component';
+import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { LocationComponent } from './location/location.component';
     LookupListComponent,
     LookupDialogComponent,
     LookupEditorComponent,
-    LocationComponent
+    LocationComponent,
+    AssetLocationComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
