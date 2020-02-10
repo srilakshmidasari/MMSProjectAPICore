@@ -188,8 +188,7 @@ namespace DAL.RequestResponseModels
             public string AssetMake { get; set; }
             public string AssetModel { get; set; }
             public string AssetCapacity { get; set; }
-            public string AssetType { get; set; }
-            public string LocationReference { get; set; }
+            public string AssetType { get; set; }          
             public bool IsActive { get; set; }
             public string CreatedBy { get; set; }
             public DateTime CreatedDate { get; set; }

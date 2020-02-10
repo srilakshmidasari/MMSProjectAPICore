@@ -47,7 +47,8 @@
     "Profile": "Profile",
     "LookUp": "LookUp Management",
     "Location": "Location Management",
-    "Asset": "Asset Management"
+    "Asset": "Asset Management",
+    "AssetGroup":"Asset Group"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -340,7 +341,7 @@
       "AssetGroupMake":"Asset Group Make",
       "AssetGroupModel":"Asset Group Model",
       "AssetGroupType":"Asset Group Type",
-      "AssetGroupCapacity":" AssetGroupCapacity"
+      "AssetGroupCapacity":" Asset Group Capacity"
 
     },
     "editor":{

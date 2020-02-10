@@ -46,6 +46,11 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getRepositoryByProjectUrl: string = '/api/Project/GetRepositoryByProject';
   private readonly _deleteProjectFileUrl: string = '/api/Project/DeleteProjectRepository';
   private readonly _locationUrl: string = '/api/Location';
+  private readonly _getAssetGroupUrl: string = '/api/Asset/GetAllAssetGroup';
+  private readonly _addAssetGroupUrl: string = '/​api​/Asset​/AddAssetGroup';
+  private readonly _upDateAssetGroupUrl: string = '/api/Asset/UpdateAssetGroup';
+  
+
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -76,6 +81,9 @@ export class AccountEndpoint extends EndpointBase {
   get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
   get locationUrlData() { return this.configurations.baseUrl + this._locationUrl; }
   get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
+  get getAssetGroup() { return this.configurations.baseUrl + this._getAssetGroupUrl; }
+  get addAssetGroup() { return this.configurations.baseUrl + this._addAssetGroupUrl; }
+  get upDateAssetGroup() { return this.configurations.baseUrl + this._upDateAssetGroupUrl; }
 
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -507,6 +515,30 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.deleteLocationEndpoint(locationId));
+      }));
+  }
+
+  getAssetGroupEndPoint<T>(): Observable<T> {
+    const endpointUrl = this.getAssetGroup;
+
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAssetGroupEndPoint());
+      }));
+  }
+  addAssetGroupEndpoint<T>(assGroupObject): Observable<T> {
+    const endpointUrl = this.addAssetGroup;
+
+    return this.http.post<T>(endpointUrl, JSON.stringify(assGroupObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.addAssetGroupEndpoint(assGroupObject));
+      }));
+  }
+  upDateAssetGroupEndpoint<T>(assGroupObject): Observable<T> {
+    const endpointUrl = this.upDateAssetGroup;
+    return this.http.put<T>(endpointUrl, JSON.stringify(assGroupObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.upDateAssetGroupEndpoint(assGroupObject));
       }));
   }
 
