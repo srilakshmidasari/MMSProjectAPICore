@@ -295,9 +295,9 @@
       "SelectCategory": "اختر الفئة",
       "PleaseSelectCategory": "يرجى اختيار الفئة",
       "Name1": "الاسم 1",
-      " Name1 is required": "الاسم 1 مطلوب",
+      "Name1 is required": "الاسم 1 مطلوب",
       "Name2": "الاسم 2",
-      " Name2 is required": "الاسم 2 مطلوب",
+      "Name2 is required": "الاسم 2 مطلوب",
       "Remarks": "ملاحظات",
       "isActive": "نشط"
     }
