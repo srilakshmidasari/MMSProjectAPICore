@@ -9,7 +9,7 @@
 
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
+        <mat-table [dataSource]="dataSource" matSort matSortActive="projectReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="projectReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.ProjectRef' | translate}}
