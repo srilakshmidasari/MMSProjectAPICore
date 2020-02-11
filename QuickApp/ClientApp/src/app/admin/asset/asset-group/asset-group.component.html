@@ -1,7 +1,98 @@
-<div class="page-content">
+<app-page-header title="AssetGroup" icon="assignment_ind"></app-page-header>
+<div class="page-content" [hidden]="isAdding">
+    <div class="search-box">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)"
+                placeholder="{{'Asset.Management.Search' | translate}}">
+        </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+            <mat-table [dataSource]="dataSource" matSort>
+
+                <ng-container matColumnDef="name1">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="name2">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetRef1">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Reference 1</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetRef1}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetRef2">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Reference 2</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetRef2}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetMake">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Make</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetMake}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetModel">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Model</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetModel}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetType">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Type</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetType}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetCapacity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Capacity</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetCapacity}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="updatedDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>UpDated Date</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.updatedDate| date:'dd/MM/yyyy'}}}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="isActive">
+                    <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                        {{'project.management.IsActive' | translate}}</mat-header-cell>
+                    <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                        <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                    </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="Actions">
+                    <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                        <button mat-button color="primary" matTooltip="Add" (click)="onEditAssetGroup()">
+                            <mat-icon class="mat-button-icon">add</mat-icon>Add Asset Group
+                        </button>
+                    </mat-header-cell>
+                    <mat-cell class="just-cont-center" *matCellDef="let row">
+                        <button mat-icon-button matTooltip="Edit" (click)="onEditAssetGroup(row)">
+                            <mat-icon color="primary">edit</mat-icon>
+                        </button>
+    
+                        <button mat-icon-button matTooltip="Delete" (click)="confirmDelete(row)">
+                            <mat-icon color="warn">delete</mat-icon>
+                        </button>
+                    </mat-cell>
+                </ng-container>
+                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: displayedColumns;">
+                </mat-row>
+            </mat-table>
+            <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+                <p>{{'project.management.No Records Found'|translate}}</p>
+            </div>
+            <div style="text-align: center;" *ngIf="displayNoRecords">
+                <p>{{'project.management.No Search Results Found'|translate}}</p>
+            </div>
+            <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+                [pageSizeOptions]="[5, 10, 25, 100]">
+            </mat-paginator>
+    </div>
+</div>
+
+
+
+ <div class="page-content" [hidden]="!isAdding"> 
     <mat-card>
         <mat-card-header>
-            <mat-card-title> {{'Asset.Management.Add Asset Group'|translate}}</mat-card-title>
+            <mat-card-title *ngIf="isNewAssetGroup"> Add Asset Group</mat-card-title>
+            <mat-card-title *ngIf="!isNewAssetGroup"> Edit Asset Group</mat-card-title>
         </mat-card-header>        
         <br>
         <mat-card-content>
@@ -81,10 +172,10 @@
                 <button mat-raised-button color="primary"
                     (click)="save()">{{'site.management.save' | translate}}</button>
                 <button mat-raised-button color="warn"
-                    (click)="onAssetCancel()">{{'site.management.cancel' | translate}}</button>
+                    (click)="onAssetGroupCancel()">{{'site.management.cancel' | translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
 
     </mat-card>
-</div>
+</div> 

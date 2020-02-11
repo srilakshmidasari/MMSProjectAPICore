@@ -79,6 +79,15 @@ namespace DAL.RequestResponseModels
             
             CreateMap<AddLocation, Location>();
             CreateMap<UpsertAssetGroup, AssetGroup>();
+
+            CreateMap<UpsertAssetLocation, AssetLocation>()
+                .ForMember(d => d.Project, map => map.Ignore())
+                .ForMember(d => d.SiteInfo_Id, map => map.Ignore())
+                .ForMember(d => d.AstGroup_Id, map => map.Ignore())
+                .ForMember(d => d.Location_Id, map => map.Ignore())
+                .ForMember(d => d.AstTrade_Id, map => map.Ignore());
+                
+            //.ForMember(d => d.Id, map => map.Condition(src => src.Id != null));
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-   public class Location
+    public class AssetLocation
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -22,9 +22,21 @@ namespace DAL.Models
         public int ProjectId { get; set; }
 
         [Required]
+        [Display(Name = "LocationId")]
+        public int LocationId { get; set; }
+
+        [Required]
+        [Display(Name = "AstGroupId")]
+        public int AstGroupId { get; set; }
+
+        [Required]
+        [Display(Name = "AstTradeId")]
+        public int AstTradeId { get; set; }
+
+        [Required]
         [StringLength(100)]
-        [Display(Name = "LocationReference")]
-        public string LocationReference { get; set; }
+        [Display(Name = "AssetReference")]
+        public string AssetRef { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -34,10 +46,30 @@ namespace DAL.Models
         [Required]
         [StringLength(100)]
         [Display(Name = "Name2")]
+
         public string Name2 { get; set; }
+        [Display(Name = "File Name")]
+        [StringLength(50)]
+        public string FileName { get; set; }
+
+        [Display(Name = "File Location")]
+        [StringLength(250)]
+        public string FileLocation { get; set; }
+
+        [Display(Name = "File Extention")]
+        [StringLength(10)]
+        public string FileExtention { get; set; }
 
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }
+
+        [Required]
+        [Display(Name = "Ast Counter")]
+        public int AstCounter { get; set; }
+
+        [Required]
+        [Display(Name = "AstFixed Date")]
+        public DateTime AstFixedDate { get; set; }
 
         [Required]
         [Display(Name = "Created By")]
@@ -62,12 +94,17 @@ namespace DAL.Models
         public Project Project { get; set; }
 
         [JsonIgnore]
+        public AssetGroup AstGroup_Id { get; set; }
+
+        [JsonIgnore]
+        public LookUp AstTrade_Id { get; set; }
+
+        [JsonIgnore]
+        public Location Location_Id { get; set; }
+
+        [JsonIgnore]
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
-
-        [JsonIgnore]
-        public ICollection<AssetLocation> App_AssetLocation_LocationId { get; set; }
-
     }
 }

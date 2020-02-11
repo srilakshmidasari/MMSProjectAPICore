@@ -85,5 +85,7 @@ namespace DAL.Models
 
         public ICollection<Location> App_Location_SiteId { get; set; }
 
+        public ICollection<AssetLocation> App_AssetLocation_SiteId { get; set; }
+
     }
 }

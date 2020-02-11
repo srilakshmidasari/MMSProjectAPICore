@@ -28,9 +28,8 @@ namespace DAL
         public DbSet<LookUp> LookUps { get; set; }
         public DbSet<LookUpProjectXref> LookUpProjectXrefs { get; set; }
         public DbSet<Location> Locations { get; set; }
-
         public DbSet<AssetGroup> AssetGroups { get; set; }
-
+        public DbSet<AssetLocation> AssetLocations { get; set; }
 
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
@@ -64,8 +63,9 @@ namespace DAL
             builder.Entity<LookUpProjectXref>().ToTable("LookUpProjectXref");
             builder.Entity<Location>().ToTable("Location");
             builder.Entity<AssetGroup>().ToTable("AssetGroup");
-
-
+            builder.Entity<AssetGroup>().Property(p => p.IsActive).HasDefaultValue(true);
+            builder.Entity<AssetLocation>().ToTable("AssetLocation");
+            builder.Entity<AssetLocation>().Property(p => p.IsActive).HasDefaultValue(true);
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
@@ -241,6 +241,48 @@ namespace DAL
                  .HasForeignKey(d => d.UpdatedBy)
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_App_AssetGroup_UpdatedUser");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.CreatedUser)
+          .WithMany(p => p.App_AssetLocation_CreatedUser)
+          .HasForeignKey(d => d.CreatedBy)
+          .OnDelete(DeleteBehavior.ClientSetNull)
+          .HasConstraintName("FK_AssetLocation_CreatedUser");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_AssetLocation_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_AssetLocation_UpdatedUser");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.SiteInfo_Id)
+              .WithMany(p => p.App_AssetLocation_SiteId)
+              .HasForeignKey(d => d.SiteId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+              .HasConstraintName("FK_App_AssetLocation_SiteId");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.Location_Id)
+                  .WithMany(p => p.App_AssetLocation_LocationId)
+                  .HasForeignKey(d => d.LocationId)
+                  .OnDelete(DeleteBehavior.ClientSetNull)
+                  .HasConstraintName("FK_App_AssetLocation_LocationId");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.Project)
+                 .WithMany(p => p.App_AssetLocation_ProjectId)
+                 .HasForeignKey(d => d.ProjectId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_AssetLocation_ProjectId");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.AstGroup_Id)
+                .WithMany(p => p.App_AssetLocation_AstGroup_Id)
+                .HasForeignKey(d => d.AstGroupId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_AssetLocation_AstGroupId");
+
+            builder.Entity<AssetLocation>().HasOne(d => d.AstTrade_Id)
+                .WithMany(p => p.App_AssetLocation_AstTrade_Id)
+                .HasForeignKey(d => d.AstTradeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_AssetLocation_AstTradeId");
 
         }
 

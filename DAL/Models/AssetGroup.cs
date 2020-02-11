@@ -14,6 +14,14 @@ namespace DAL.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "SiteId")]
+        public int SiteId { get; set; }
+
+        [Required]
+        [Display(Name = "ProjectId")]
+        public int ProjectId { get; set; }
+
+        [Required]
         [StringLength(100)]
         [Display(Name = "AssetReference1")]
         public string AssetRef1 { get; set; }
@@ -77,6 +85,10 @@ namespace DAL.Models
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
+
+        public ICollection<AssetLocation> App_AssetLocation_AstGroup_Id { get; set; }
+        
+
 
     }
 }

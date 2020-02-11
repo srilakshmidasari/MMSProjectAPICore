@@ -97,7 +97,7 @@
                         <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
                         <mat-select formControlName="siteId">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
-                                {{site.name1}}
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!locationForm.controls['siteId'].valid">
@@ -108,7 +108,7 @@
                         <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
                         <mat-select formControlName="projectId">
                             <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
-                                {{project.name1}}
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!locationForm.controls['projectId'].valid">
