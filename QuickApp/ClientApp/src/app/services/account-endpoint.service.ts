@@ -49,6 +49,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getAssetGroupUrl: string = '/api/Asset/GetAllAssetGroup';
   private readonly _addAssetGroupUrl: string = '/api/Asset/AddAssetGroup';
   private readonly _upDateAssetGroupUrl: string = '/api/Asset/UpdateAssetGroup';
+  private readonly _deleteAssetGroupUrl: string = '/api/Asset/DeleteAssetGroup';
   
 
 
@@ -84,6 +85,7 @@ export class AccountEndpoint extends EndpointBase {
   get getAssetGroup() { return this.configurations.baseUrl + this._getAssetGroupUrl; }
   get addAssetGroup() { return this.configurations.baseUrl + this._addAssetGroupUrl; }
   get upDateAssetGroup() { return this.configurations.baseUrl + this._upDateAssetGroupUrl; }
+  get deleteAssetGroup() { return this.configurations.baseUrl + this._deleteAssetGroupUrl; }
 
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -122,7 +124,6 @@ export class AccountEndpoint extends EndpointBase {
 
 
   getNewUserEndpoint<T>(userObject: any, isPublicRegistration?: boolean): Observable<T> {
-
     const endpointUrl = isPublicRegistration ? this.usersPublicUrl : this.usersUrl;
     return this.http.post<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
       catchError(error => {
@@ -132,7 +133,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getUpdateUserEndpoint<T>(userObject: any, userId?: string): Observable<T> {
     const endpointUrl = userId ? `${this.usersUrl}/${userId}` : this.currentUserUrl;
-
     return this.http.put<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getUpdateUserEndpoint(userObject, userId));
@@ -141,7 +141,6 @@ export class AccountEndpoint extends EndpointBase {
 
   updateUserEndpoint<T>(userObject: any, userId?: string): Observable<T> {
     const endpointUrl = userId ? `${this.updateUserUrl}/${userId}` : this.currentUserUrl;
-
     return this.http.put<T>(endpointUrl, JSON.stringify(userObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.updateUserEndpoint(userObject, userId));
@@ -197,7 +196,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getConfirmUserAccountEndpoint<T>(userId: string, confirmationCode: string): Observable<T> {
     const endpointUrl = `${this.confirmEmailUrl}?userid=${userId}&code=${confirmationCode}`;
-
     return this.http.put<T>(endpointUrl, null, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getConfirmUserAccountEndpoint(userId, confirmationCode));
@@ -206,7 +204,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getRecoverPasswordEndpoint<T>(usernameOrEmail: string): Observable<T> {
     const endpointUrl = this.recoverPasswordUrl;
-
     return this.http.post<T>(endpointUrl, JSON.stringify({ usernameOrEmail }), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getRecoverPasswordEndpoint(usernameOrEmail));
@@ -215,7 +212,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getResetPasswordEndpoint<T>(usernameOrEmail: string, newPassword: string, resetCode: string): Observable<T> {
     const endpointUrl = this.resetPasswordUrl;
-
     return this.http.post<T>(endpointUrl, JSON.stringify({ usernameOrEmail, password: newPassword, resetcode: resetCode }), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getResetPasswordEndpoint(usernameOrEmail, newPassword, resetCode));
@@ -224,7 +220,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getUnblockUserEndpoint<T>(userId: string): Observable<T> {
     const endpointUrl = `${this.unblockUserUrl}/${userId}`;
-
     return this.http.put<T>(endpointUrl, null, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getUnblockUserEndpoint(userId));
@@ -233,7 +228,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getDeleteUserEndpoint<T>(userId: string): Observable<T> {
     const endpointUrl = `${this.usersUrl}/${userId}`;
-
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getDeleteUserEndpoint(userId));
@@ -244,7 +238,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getRoleData<T>(): Observable<T> {
     const endpointUrl = this.rolesUrl;
-
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getRoleData());
@@ -253,7 +246,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getRoleEndpoint<T>(roleId: string): Observable<T> {
     const endpointUrl = `${this.rolesUrl}/${roleId}`;
-
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getRoleEndpoint(roleId));
@@ -263,7 +255,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getRoleByRoleNameEndpoint<T>(roleName: string): Observable<T> {
     const endpointUrl = `${this.roleByRoleNameUrl}/${roleName}`;
-
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getRoleByRoleNameEndpoint(roleName));
@@ -300,7 +291,6 @@ export class AccountEndpoint extends EndpointBase {
 
   getDeleteRoleEndpoint<T>(roleId: string): Observable<T> {
     const endpointUrl = `${this.rolesUrl}/${roleId}`;
-
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getDeleteRoleEndpoint(roleId));
@@ -309,7 +299,6 @@ export class AccountEndpoint extends EndpointBase {
 
 
   getPermissionsEndpoint<T>(): Observable<T> {
-
     return this.http.get<T>(this.permissionsUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getPermissionsEndpoint());
@@ -511,7 +500,6 @@ export class AccountEndpoint extends EndpointBase {
 
   deleteLocationEndpoint<T>(locationId: any): Observable<T> {
     const endpointUrl = this.locationUrlData + '?LocationId=' + locationId;
-
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.deleteLocationEndpoint(locationId));
@@ -538,6 +526,13 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.put<T>(endpointUrl, JSON.stringify(assGroupObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.upDateAssetGroupEndpoint(assGroupObject));
+      }));
+  }
+  deleteAssetGroupEndpoint<T>(assetGroupId: any): Observable<T> {
+    const endpointUrl = this.deleteAssetGroup + '/' + assetGroupId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteAssetGroupEndpoint(assetGroupId));
       }));
   }
 

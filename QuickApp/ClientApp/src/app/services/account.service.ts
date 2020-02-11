@@ -308,4 +308,7 @@ export class AccountService {
   upDateAssetGroup(assGroupObj){
     return this.accountEndpoint.upDateAssetGroupEndpoint(assGroupObj);
   }
+  deleteAssetGroup(assetGroupId){
+    return this.accountEndpoint.deleteAssetGroupEndpoint(assetGroupId);
+  }
 }
