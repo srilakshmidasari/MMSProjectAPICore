@@ -23,7 +23,7 @@ export class AssetGroupComponent implements OnInit {
   assetGroupList: any[] = [];
   assetGroupData: any = {};
   isNewAssetGroup: boolean;
-  displayedColumns = ['name1', 'name2', 'assetRef1', 'assetRef2', 'assetMake', 'assetModel', 'assetType', 'assetCapacity', 'isActive', 'Actions']
+  displayedColumns = ['name1', 'name2', 'assetRef1', 'assetRef2', 'assetMake', 'assetModel', 'assetType', 'assetCapacity','updatedDate', 'isActive', 'Actions']
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private fb: FormBuilder, private authService: AuthService, private alertService: AlertService,
@@ -63,7 +63,7 @@ export class AssetGroupComponent implements OnInit {
       agType: ['', Validators.required],
       agCapacity: ['', Validators.required],
       agRef2: ['', Validators.required],
-      isActive: ['', Validators.required]
+      isActive: [true, Validators.required]
     })
   }
   //  Reset Form data
