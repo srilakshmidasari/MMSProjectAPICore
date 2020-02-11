@@ -244,7 +244,7 @@
             <br>
             <div>
                 <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-                <mat-table [dataSource]="storeDataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
+                <mat-table [dataSource]="storeDataSource" matSort matSortActive="storeName1" matSortDirection="asc"
                     matSortDisableClear>
 
                     <ng-container matColumnDef="storeName1">
