@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-            <mat-table [dataSource]="dataSource" matSort>
+            <mat-table [dataSource]="dataSource" matSort matSortActive="assetRef1" matSortDirection="asc" matSortDisableClear>
 
                 <ng-container matColumnDef="name1">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
@@ -44,7 +44,7 @@
                 </ng-container>
                 <ng-container matColumnDef="updatedDate">
                     <mat-header-cell *matHeaderCellDef mat-sort-header>UpDated Date</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.updatedDate| date:'dd/MM/yyyy'}}}} </mat-cell>
+                    <mat-cell *matCellDef="let row"> {{row.updatedDate| date:'dd/MM/yyyy'}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="isActive">
                     <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>

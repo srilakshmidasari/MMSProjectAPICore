@@ -148,8 +148,6 @@ export class AppComponent implements OnInit {
 
     this.authService.getLoginStatusEvent().subscribe(isLoggedIn => {
       this.isUserLoggedIn = isLoggedIn;
-
-
       if (this.isUserLoggedIn) {
         this.initNotificationsLoading();
       } else {

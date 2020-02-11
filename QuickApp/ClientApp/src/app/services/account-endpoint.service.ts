@@ -50,7 +50,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _addAssetGroupUrl: string = '/api/Asset/AddAssetGroup';
   private readonly _upDateAssetGroupUrl: string = '/api/Asset/UpdateAssetGroup';
   private readonly _deleteAssetGroupUrl: string = '/api/Asset/DeleteAssetGroup';
-  
+  private readonly _getAssetGroupByIdUrl: string = '/api/Asset/GetAssetGroupDetilasById';
+
 
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -86,6 +87,7 @@ export class AccountEndpoint extends EndpointBase {
   get addAssetGroup() { return this.configurations.baseUrl + this._addAssetGroupUrl; }
   get upDateAssetGroup() { return this.configurations.baseUrl + this._upDateAssetGroupUrl; }
   get deleteAssetGroup() { return this.configurations.baseUrl + this._deleteAssetGroupUrl; }
+  get getAssetGroupDataById() { return this.configurations.baseUrl + this._getAssetGroupByIdUrl; }
 
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -533,6 +535,13 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.deleteAssetGroupEndpoint(assetGroupId));
+      }));
+  }
+  getAssetGroupEndpointById<T>(assetGroupId: any): Observable<T> {
+    const endpointUrl = this.getAssetGroupDataById + '?assetId=' + assetGroupId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAssetGroupEndpointById(assetGroupId));
       }));
   }
 

@@ -21,5 +21,7 @@ namespace DAL.Repositories.Interfaces
         ListDataResponse<GetAssetLocationResponse> GetAssetLocations();
 
         ValueDataResponse<AssetLocation> InsertAssetLocation(AssetLocation asset);
+
+        ListDataResponse<AssetGroup> GetAssetGroupDetilasById(int assetId);
     }
 }

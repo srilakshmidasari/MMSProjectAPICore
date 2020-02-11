@@ -110,7 +110,7 @@
   },
   "users": {
     "management": {
-      "Search": "Search for user",
+      "Search": "Search for User",
       "NewUser": "New User",
       "Edit": "Edit User",
       "Delete": "Delete User",
@@ -166,7 +166,7 @@
   },
   "roles": {
     "management": {
-      "Search": "Search for role...",
+      "Search": "Search for Role...",
       "NewRole": "New Role",
       "Edit": "Edit",
       "Details": "Details",
@@ -385,8 +385,8 @@
       "Asset Trade":"Asset Trade",
       "Asset Conter":"Asset Conter",
       "Asset Fixed Date":"Asset Fixed Date",
-      "save":"save",
-      "cancel":"cancel"
+      "save":"Save",
+      "cancel":"Cancel"
   }
  
   }
