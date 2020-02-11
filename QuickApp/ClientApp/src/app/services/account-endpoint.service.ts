@@ -47,7 +47,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _deleteProjectFileUrl: string = '/api/Project/DeleteProjectRepository';
   private readonly _locationUrl: string = '/api/Location';
   private readonly _getAssetGroupUrl: string = '/api/Asset/GetAllAssetGroup';
-  private readonly _addAssetGroupUrl: string = '/​api​/Asset​/AddAssetGroup';
+  private readonly _addAssetGroupUrl: string = '/api/Asset/AddAssetGroup';
   private readonly _upDateAssetGroupUrl: string = '/api/Asset/UpdateAssetGroup';
   
 
@@ -528,7 +528,6 @@ export class AccountEndpoint extends EndpointBase {
   }
   addAssetGroupEndpoint<T>(assGroupObject): Observable<T> {
     const endpointUrl = this.addAssetGroup;
-
     return this.http.post<T>(endpointUrl, JSON.stringify(assGroupObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.addAssetGroupEndpoint(assGroupObject));

@@ -19,12 +19,32 @@
                     <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetRef1">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Reference 1</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Reference 1</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetRef1}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetRef2">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Reference 2</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Reference 2</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetRef2}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetMake">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Make</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetMake}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetModel">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Model</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetModel}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetType">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Type</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetType}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="assetCapacity">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Capacity</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.assetCapacity}} </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="updatedDate">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>UpDated Date</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.updatedDate| date:'dd/MM/yyyy'}}}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="isActive">
                     <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>

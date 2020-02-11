@@ -21,7 +21,7 @@ export class AssetGroupComponent implements OnInit {
   assetGroupList: any[] = [];
   assetGroupData: any = {};
   isNewAssetGroup: boolean;
-  displayedColumns = ['name1', 'name2', 'assetRef1', 'assetRef2', 'isActive', 'Actions']
+  displayedColumns = ['name1', 'name2', 'assetRef1', 'assetRef2','assetMake','assetModel','assetType' ,'assetCapacity','isActive', 'Actions']
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   constructor(private fb: FormBuilder, private authService: AuthService, private alertService: AlertService, private accountService: AccountService) {
