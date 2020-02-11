@@ -7,7 +7,7 @@
     </div>
    <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="updatedDate" matSortDirection="desc"
+        <mat-table [dataSource]="dataSource" matSort matSortActive="siteReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="siteReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.siteRef' | translate}}</mat-header-cell>
