@@ -27,7 +27,7 @@ namespace MMS.Controllers
         [HttpGet("GetAllAssetGroup")]
         public ListDataResponse<AssetGroup> Get()
         {
-            return _unitOfWork.Assets.GetAssetRepositories();
+            return _unitOfWork.Assets.GetAssetGroups();
         }
 
         [HttpPost("AddAssetGroup")]
@@ -48,6 +48,19 @@ namespace MMS.Controllers
         public ValueDataResponse<AssetGroup> Delete(int AssetId)
         {
             return _unitOfWork.Assets.DeleteAssetGroup(AssetId);
+        }
+
+        [HttpGet("GetAllAssetLocation")]
+        public ListDataResponse<GetAssetLocationResponse> GetAllAssetLocation()
+        {
+            return _unitOfWork.Assets.GetAssetLocations();
+        }
+
+        [HttpPost("AddAssetLocation")]
+        public ValueDataResponse<AssetLocation> InsertAssetLocation(UpsertAssetLocation asset)
+        {
+            AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
+            return _unitOfWork.Assets.InsertAssetLocation(assetInfo);
         }
 
     }

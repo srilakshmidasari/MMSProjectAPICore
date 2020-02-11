@@ -90,20 +90,21 @@ export class AppComponent implements OnInit {
     this.appTitleService.appName = this.appTitle;
 
    
-    //language translate settings
-    //this.translate.setDefaultLang('en');
-    // var lang = localStorage.getItem('language');
-    // if (lang != 'undefined') {
-    //   if(lang == 'en'){
-    //     this.textDir = 'ltr';
-    //   }else{
-    //     this.textDir = 'rtl';
-    //   }
-    //   this.translate.use(localStorage.getItem('language')); 
-    // }
-    // else {
-    //   localStorage.setItem('textdir', 'ltr')
-    // }
+  //  language translate settings
+   this.translate.setDefaultLang('en');
+    var lang = localStorage.getItem('language');
+    if (lang != undefined) {
+      if(lang == 'en'){
+        this.textDir = 'ltr';
+        this.translate.use(lang); 
+      }else{
+        this.textDir = 'rtl';
+        this.translate.use(lang); 
+      }
+    }
+    else {
+      localStorage.setItem('textdir', 'ltr')
+    }
 
   }
 

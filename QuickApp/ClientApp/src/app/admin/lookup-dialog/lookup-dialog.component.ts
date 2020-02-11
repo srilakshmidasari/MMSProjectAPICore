@@ -12,8 +12,9 @@ export class LookupDialogComponent implements OnInit {
   @ViewChild(LookupEditorComponent, { static: true })
   lookupeditor: LookupEditorComponent
   lookUpHeading:string;
+  textDir: string;
   constructor(public dialogRef:MatDialogRef<LookupEditorComponent>, @Inject(MAT_DIALOG_DATA) public data:{lookUp}) {
-   
+    this.textDir = localStorage.getItem('textdir')
    }
 
   ngOnInit() {

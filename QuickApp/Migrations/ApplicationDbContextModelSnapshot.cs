@@ -207,7 +207,9 @@ namespace MMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
 
                     b.Property<string>("Name1")
                         .IsRequired()
@@ -218,6 +220,12 @@ namespace MMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SiteId")
+                        .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
@@ -233,6 +241,99 @@ namespace MMS.Migrations
                     b.HasIndex("UpdatedBy");
 
                     b.ToTable("AssetGroup");
+                });
+
+            modelBuilder.Entity("DAL.Models.AssetLocation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AssetRef")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("AstCounter")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("AstFixedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("AstGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("AstTradeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("FileExtention")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FileLocation")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("LocationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SiteId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AstGroupId");
+
+                    b.HasIndex("AstTradeId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("SiteId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("AssetLocation");
                 });
 
             modelBuilder.Entity("DAL.Models.ClassType", b =>
@@ -824,6 +925,51 @@ namespace MMS.Migrations
                         .WithMany("App_AssetGroup_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_App_AssetGroup_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.AssetLocation", b =>
+                {
+                    b.HasOne("DAL.Models.AssetGroup", "AstGroup_Id")
+                        .WithMany("App_AssetLocation_AstGroup_Id")
+                        .HasForeignKey("AstGroupId")
+                        .HasConstraintName("FK_App_AssetLocation_AstGroupId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "AstTrade_Id")
+                        .WithMany("App_AssetLocation_AstTrade_Id")
+                        .HasForeignKey("AstTradeId")
+                        .HasConstraintName("FK_App_AssetLocation_AstTradeId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_AssetLocation_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_AssetLocation_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Location", "Location_Id")
+                        .WithMany("App_AssetLocation_LocationId")
+                        .HasForeignKey("LocationId")
+                        .HasConstraintName("FK_App_AssetLocation_LocationId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Project", "Project")
+                        .WithMany("App_AssetLocation_ProjectId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_App_AssetLocation_ProjectId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.SiteInfo", "SiteInfo_Id")
+                        .WithMany("App_AssetLocation_SiteId")
+                        .HasForeignKey("SiteId")
+                        .HasConstraintName("FK_App_AssetLocation_SiteId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_AssetLocation_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_AssetLocation_UpdatedUser")
                         .IsRequired();
                 });
 

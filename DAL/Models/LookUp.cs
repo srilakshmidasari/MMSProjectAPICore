@@ -58,7 +58,7 @@ namespace DAL.Models
 
         public ICollection<LookUpProjectXref> StorexrefId { get; set; }
 
-       // public ICollection<Project> App_Project_StoreId { get; set; }
+        public ICollection<AssetLocation> App_AssetLocation_AstTrade_Id { get; set; }
     }
 }
  
