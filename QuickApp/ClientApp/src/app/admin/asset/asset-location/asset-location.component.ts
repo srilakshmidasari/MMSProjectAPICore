@@ -22,11 +22,20 @@ export class AssetLocationComponent implements OnInit {
   assetForm: FormGroup;
   projectsList: any[] = [];
   siteList: any[] = [];
+  assetTradeList:any[]=[];
   locationsList: any[] = [];
+  assetGroupList:any[]=[];
+  currenrDate:Date;
   assetData: any[] = [
     { siteName: 'Site Name 1', projectName: 'Project Name 1', locationName: 'Location Name1' },
     { siteName: 'Site Name 2', projectName: 'Project Name 2', locationName: 'Location Name2' }
   ];
+  counterList:any[]=[];
+  counterListData:any[]=[
+    {id:1,value:1},{id:2,value:2},{id:3,value:3},{id:4,value:4},{id:5,value:5},{id:6,value:6},
+    {id:7,value:7},{id:8,value:8},{id:9,value:9},{id:10,value:10},{id:11,value:11},{id:12,value:12},
+  ];
+  
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -34,12 +43,17 @@ export class AssetLocationComponent implements OnInit {
   constructor(private accountService: AccountService, private snackBar: MatSnackBar, private alertService: AlertService,
     private fb: FormBuilder) {
     this.buildForm();
+    this.currenrDate=new Date();
+    
   }
 
   ngOnInit() {
     this.getSites();
     this.getProjects();
     this.getLocations();
+    this.getAllAssetGroups();
+    this.getAssetTrade();
+    this.counterList=this.counterListData;
     this.dataSource.data = this.assetData;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -90,6 +104,37 @@ export class AssetLocationComponent implements OnInit {
       }
     )
   }
+  // Asset Group List
+  getAllAssetGroups() {
+    this.alertService.startLoadingMessage();
+    this.loadingIndicator = true;
+    this.accountService.getAssetGroupData().subscribe((result: any) => {
+      this.assetGroupList = result.listResult == null ? [] : result.listResult;      
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+    },
+    error => {
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+    }
+    )
+  }
+  // Asset Trade List
+  getAssetTrade(){
+    const typeCddId=5;
+    this.alertService.startLoadingMessage();
+    this.loadingIndicator = true;
+    this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result:any)=>{
+      this.assetTradeList= result.listResult == null ? [] : result.listResult;
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+    },
+    error => {
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+    })
+  }
+
   // Form Building
   private buildForm() {
     this.assetForm = this.fb.group({
