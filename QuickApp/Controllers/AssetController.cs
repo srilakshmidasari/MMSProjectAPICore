@@ -63,5 +63,11 @@ namespace MMS.Controllers
             return _unitOfWork.Assets.InsertAssetLocation(assetInfo);
         }
 
+        [HttpGet("GetAssetGroupDetilasById")]
+        public ListDataResponse<AssetGroup> Get(int assetId)
+        {
+            return _unitOfWork.Assets.GetAssetGroupDetilasById(assetId);
+        }
+
     }
 }
