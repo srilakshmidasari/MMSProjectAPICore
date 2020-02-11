@@ -45,9 +45,9 @@ namespace MMS.Controllers
         }
 
         [HttpDelete("DeleteAssetGroup/{Id}")]
-        public ValueDataResponse<AssetGroup> Delete(int AssetId)
+        public ValueDataResponse<AssetGroup> Delete(int Id)
         {
-            return _unitOfWork.Assets.DeleteAssetGroup(AssetId);
+            return _unitOfWork.Assets.DeleteAssetGroup(Id);
         }
 
         [HttpGet("GetAllAssetLocation")]

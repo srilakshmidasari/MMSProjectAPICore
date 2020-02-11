@@ -81,7 +81,7 @@ export class AssetLocationComponent implements OnInit {
     this.loadingIndicator = true;
     this.accountService.getLocationData().subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
-      this.alertService.startLoadingMessage();
+      this.alertService.stopLoadingMessage();
       this.loadingIndicator = false;
     },
       error => {

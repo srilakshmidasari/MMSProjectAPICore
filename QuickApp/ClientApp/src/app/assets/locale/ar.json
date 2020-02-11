@@ -21,7 +21,8 @@
     "Project": "مشروع",
     "LookUp": "ابحث عن",
     "Location": "موقعك",
-    "Asset":"الأصول"
+    "Asset":"الأصول",
+    "Asset Group":"مجموعة الأصول"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -321,8 +322,56 @@
   },
   "Asset":{
     "Management": {
-      "Search": "البحث عن الأصول ..."
-    }
+      "Add Asset Group":"إضافة مجموعة الأصول",
+      "Search": "البحث عن الأصول ...",
+      "AssetGroupReference1":"مرجع مجموعة الأصول 1",
+      "AssetGroupReference2":"مرجع مجموعة الأصول 2",
+      "AssetGroupMake":"مجموعة الأصول",
+      "AssetGroupModel":"نموذج مجموعة الأصول",
+      "AssetGroupType":"نوع مجموعة الأصول",
+      "AssetGroupCapacity":"مجموعة الأصول القدرات"
+    },
+    "editor":{
+  "assetGroupRef1Required":"مجموعة الأصول المرجع 1 مطلوب",
+  "assetGroupRef2Required":"مجموعة الأصول المرجع 2 مطلوب",
+  "assetGroupMakerequired":"مجموعة الأصول جعل المطلوبة",
+  "assetGroupModelrequired":"مجموعة الأصول النموذجي",
+  "assetGroupTyperequired":"نوع مجموعة الأصول المطلوبة",
+  "assetGroupCapacityrequired":"مجموعة الأصول القدرات"
 
+  }
+  },
+ "AssetLocation":{
+    "Management":{
+      "Site Name":"اسم الموقع",
+      "Project Name":"اسم المشروع",
+      "Location Name":"اسم الموقع",
+      "Add Asset":"إضافة الأصول",
+      "add":"إضافة",
+      "Edit":"تعديل",
+      "Delete":"حذف",
+      "No Records Found":"لا توجد سجلات",
+      "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
+      "Edit Asset":"تحرير الأصول",
+      "SiteName1":"اسم الموقع 1",
+      "SNameisrequired":"S اسم مطلوب",
+      "projectName":"اسم المشروع",
+      "pNameisrequired":"الاسم مطلوب",
+      "Location is Required":"الموقع مطلوب",
+      "Asset Reference":"مرجع الأصول",
+      "Asset Name 1":"اسم الأصل 1",
+      "Asset Name 2":"اسم الأصول 2",
+      "Asset Group":"مجموعة الأصول",
+      "Asset Type":"نوع الأصول",
+      "Asset Make":"جعل الأصول",
+      "Asset Model":"نموذج الأصول",
+      "Asset Size":"حجم الأصول",
+      "Asset Reference 2":"مرجع الأصول 2",
+      "Asset Trade":"تجارة الأصول",
+      "Asset Conter":"الأصول كونتر",
+      "Asset Fixed Date":"تاريخ الأصول الثابتة",
+      "save":"حفظ",
+      "cancel":"إلغاء"
+    }
   }
 }

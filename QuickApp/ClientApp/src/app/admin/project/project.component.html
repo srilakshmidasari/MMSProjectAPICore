@@ -117,7 +117,7 @@
                         <mat-label>Select Site *</mat-label>
                         <mat-select formControlName="siteId">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
-                                {{site.name1}}
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!projectForm.controls['siteId'].valid">
