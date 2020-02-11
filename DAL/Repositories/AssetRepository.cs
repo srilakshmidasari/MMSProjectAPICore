@@ -318,6 +318,130 @@ namespace DAL.Repositories
             return response;
         }
 
+
+        public ValueDataResponse<AssetLocation> UpdateAssetLocation(AssetLocation asset)
+        {
+            ValueDataResponse<AssetLocation> response = new ValueDataResponse<AssetLocation>();
+
+            try
+            {
+                var assetExists = _appContext.AssetLocations.Where(x => x.Id != asset.Id && x.AssetRef == asset.AssetRef).FirstOrDefault();
+                if (assetExists == null)
+                {
+                    var result = _appContext.AssetLocations.Where(x => x.Id == asset.Id).FirstOrDefault();
+                    if (result != null)
+                    {
+                        result.SiteId = asset.SiteId;
+                        result.ProjectId = asset.ProjectId;
+                        result.LocationId = asset.LocationId;
+                        result.AstGroupId = asset.AstGroupId;
+                        result.AstTradeId = asset.AstTradeId;
+                        result.Name1 = asset.Name1;
+                        result.Name2 = asset.Name2;
+                        result.Project = asset.Project;
+                        result.AssetRef = asset.AssetRef;
+                        result.AstCounter = asset.AstCounter;
+                        result.AstFixedDate = asset.AstFixedDate;
+                        result.IsActive = asset.IsActive;
+                        result.CreatedBy = asset.CreatedBy;
+                        result.CreatedDate = asset.CreatedDate;
+                        result.UpdatedBy = asset.UpdatedBy;
+                        result.UpdatedDate = asset.UpdatedDate;
+
+                        if (asset.FileName != null)
+                        {
+                            string ModuleName = "AssetLocation";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
+
+                            FileUploadService repo = new FileUploadService();
+
+
+                            string FolderLocation = _config.Value.FileRepositoryFolder;
+                            string ServerRootPath = _config.Value.ServerRootPath;
+
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                            byte[] FileBytes = Convert.FromBase64String(asset.FileName);
+
+                            result.FileName = repo.UploadFile(FileBytes, asset.FileExtention, Location);
+
+                            result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                            result.FileExtention = asset.FileExtention;
+                        }
+
+                        _appContext.SaveChanges();
+                        response.Result = result;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Asset Location  Updated Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Asset Location Updation Failed";
+                    }
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Asset Location Reference Already Exists";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+
+            }
+            return response;
+        }
+
+        public ValueDataResponse<AssetLocation> DeleteAssetLocation(int assetId)
+        {
+            ValueDataResponse<AssetLocation> response = new ValueDataResponse<AssetLocation>();
+            try
+            {
+                var assetData = _appContext.AssetLocations.Where(x => x.Id == assetId && x.IsActive == true).FirstOrDefault();
+                if (assetData != null)
+                {
+                    assetData.IsActive = false;
+                    assetData.UpdatedDate = DateTime.Now;
+                    _appContext.SaveChanges();
+                }
+
+                if (assetData != null)
+                {
+                    response.Result = assetData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "AssetLocation Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No AssetLocation Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
         public ListDataResponse<AssetGroup> GetAssetGroupDetilasById(int assetId)
         {
             ListDataResponse<AssetGroup> response = new ListDataResponse<AssetGroup>();
