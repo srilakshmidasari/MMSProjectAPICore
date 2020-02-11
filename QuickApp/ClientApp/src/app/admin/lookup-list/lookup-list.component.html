@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort   matSortActive="updatedDate" matSortDirection="desc">
+        <mat-table [dataSource]="dataSource" matSort   matSortActive="description" matSortDirection="asc">
             <ng-container matColumnDef="description">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Category'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
@@ -48,7 +48,7 @@
                     <button mat-button color="primary" matTooltip="{{'LookUp.management.Add'|translate}}" (click)="editlookup()" *ngIf="canManageStores" >
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'LookUp.management.Add LookUp'|translate}}
                     </button>
-                    <button mat-button color="primary" matTooltip="Actions"  *ngIf="!canManageStores" >{{'LookUp.management.Actions' | translate}}
+                    <button mat-button color="primary" matTooltip="Actions"  *ngIf="!canManageStores">{{'LookUp.management.Actions' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
