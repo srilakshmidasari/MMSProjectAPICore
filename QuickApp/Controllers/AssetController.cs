@@ -69,5 +69,18 @@ namespace MMS.Controllers
             return _unitOfWork.Assets.GetAssetGroupDetilasById(assetId);
         }
 
+        [HttpPut("UpdateAssetLocation")]
+        public ValueDataResponse<AssetLocation> UpdateAssetLocation(UpsertAssetLocation asset)
+        {
+            AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
+            return _unitOfWork.Assets.UpdateAssetLocation(assetInfo);
+        }
+
+        [HttpDelete("DeleteAssetLocation/{Id}")]
+        public ValueDataResponse<AssetLocation> DeleteAssetLocation(int Id)
+        {
+            return _unitOfWork.Assets.DeleteAssetLocation(Id);
+        }
+
     }
 }
