@@ -15,27 +15,29 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 })
 export class AssetLocationComponent implements OnInit {
   isAdding: boolean = false;
-  displayedColumns = ['siteName', 'projectName', 'locationName', 'Actions'];
+  displayedColumns = ['siteName', 'projectName', 'locationName', 'assName', 'Actions'];
   loadingIndicator: boolean = false;
   isNewAsset: boolean = false;
   assetRefData: any = {};
-  assetForm: FormGroup;
+  assetLocationForm: FormGroup;
   projectsList: any[] = [];
   siteList: any[] = [];
-  assetTradeList:any[]=[];
+  assetTradeList: any[] = [];
   locationsList: any[] = [];
-  assetGroupList:any[]=[];
-  currenrDate:Date;
+  assetGroupList: any[] = [];
+  assetGroupData:any={};
+  currenrDate: Date;
+  assetGroupList1:any[]=[];
   assetData: any[] = [
-    { siteName: 'Site Name 1', projectName: 'Project Name 1', locationName: 'Location Name1' },
-    { siteName: 'Site Name 2', projectName: 'Project Name 2', locationName: 'Location Name2' }
+    { siteName: 'Site Name 1', projectName: 'Project Name 1', locationName: 'Location Name1', assName: 'Asset Name 1' },
+    { siteName: 'Site Name 2', projectName: 'Project Name 2', locationName: 'Location Name2', assName: ' Asset Name 2 ' }
   ];
-  counterList:any[]=[];
-  counterListData:any[]=[
-    {id:1,value:1},{id:2,value:2},{id:3,value:3},{id:4,value:4},{id:5,value:5},{id:6,value:6},
-    {id:7,value:7},{id:8,value:8},{id:9,value:9},{id:10,value:10},{id:11,value:11},{id:12,value:12},
+  counterList: any[] = [];
+  counterListData: any[] = [
+    { id: 1, value: 1 }, { id: 2, value: 2 }, { id: 3, value: 3 }, { id: 4, value: 4 }, { id: 5, value: 5 }, { id: 6, value: 6 },
+    { id: 7, value: 7 }, { id: 8, value: 8 }, { id: 9, value: 9 }, { id: 10, value: 10 }, { id: 11, value: 11 }, { id: 12, value: 12 },
   ];
-  
+
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -43,8 +45,8 @@ export class AssetLocationComponent implements OnInit {
   constructor(private accountService: AccountService, private snackBar: MatSnackBar, private alertService: AlertService,
     private fb: FormBuilder) {
     this.buildForm();
-    this.currenrDate=new Date();
-    
+    this.currenrDate = new Date();
+
   }
 
   ngOnInit() {
@@ -53,7 +55,7 @@ export class AssetLocationComponent implements OnInit {
     this.getLocations();
     this.getAllAssetGroups();
     this.getAssetTrade();
-    this.counterList=this.counterListData;
+    this.counterList = this.counterListData;
     this.dataSource.data = this.assetData;
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -109,50 +111,51 @@ export class AssetLocationComponent implements OnInit {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getAssetGroupData().subscribe((result: any) => {
-      this.assetGroupList = result.listResult == null ? [] : result.listResult;      
+      this.assetGroupList1 = result.listResult == null ? [] : result.listResult;
+      this.assetGroupList=this.assetGroupList1.filter(x=>x.isActive==true);
       this.alertService.stopLoadingMessage();
       this.loadingIndicator = false;
     },
-    error => {
-      this.alertService.stopLoadingMessage();
-      this.loadingIndicator = false;
-    }
+      error => {
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
+      }
     )
   }
   // Asset Trade List
-  getAssetTrade(){
-    const typeCddId=5;
+  getAssetTrade() {
+    const typeCddId = 5;
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
-    this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result:any)=>{
-      this.assetTradeList= result.listResult == null ? [] : result.listResult;
+    this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
+      this.assetTradeList = result.listResult == null ? [] : result.listResult;
       this.alertService.stopLoadingMessage();
       this.loadingIndicator = false;
     },
-    error => {
-      this.alertService.stopLoadingMessage();
-      this.loadingIndicator = false;
-    })
+      error => {
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
+      })
   }
 
   // Form Building
   private buildForm() {
-    this.assetForm = this.fb.group({
+    this.assetLocationForm = this.fb.group({
       siteId: ['', Validators.required],
       projectId: ['', Validators.required],
-      locationId:['',Validators.required],
-      assetRef:[''],
-      aName1:[''],
-      aName2:[''],
-      assGroup:[''],
-      assType:[''],
-      assMake:[''],
-      assModel:[''],
-      assSize:[''],
-      assRef2:[''],
-      assTrade:[''],
-      assCounter:[''],
-      assFixDate:['']
+      locationId: ['', Validators.required],
+      assetRef: [''],
+      aName1: [''],
+      aName2: [''],
+      assGroup: [''],
+      assType: [''],
+      assMake: [''],
+      assModel: [''],
+      assSize: [''],
+      assRef2: [''],
+      assTrade: [''],
+      assCounter: [''],
+      assFixDate: ['']
     })
   }
   // For search
@@ -167,23 +170,51 @@ export class AssetLocationComponent implements OnInit {
   // On Edit Asset Click
   onEditAsset(asset?: any) {
     this.assetRefData = {};
-    this.isAdding = true;
     if (asset != undefined) {
       this.isAdding = true;
       this.isNewAsset = false;
       this.assetRefData = asset;
-      //this.resetForm();
+      this.resetForm();
     }
     else {
       this.isAdding = true;
       this.isNewAsset = true;
-      //this.buildForm();
+      this.buildForm();
     }
+  }
+  // Reseting Form Values
+  private resetForm() {
+    this.assetLocationForm.reset({
+      siteId: this.assetRefData.siteName,
+      projectId: this.assetRefData.projectName,
+      locationId: this.assetRefData.locationName,
+      aName1: this.assetRefData.assName
+    })
+
   }
   // On Cancel Click
   onAssetCancel() {
     this.isAdding = false;
   }
+  // Change Event For Group Counter
+  onSelectCounter(event) {    
+  }
+// Change Evene For Group
+onSelectAssGroup(event){
+  this.assetGroupData={};
+  this.alertService.startLoadingMessage();
+    this.loadingIndicator = true;
+  this.accountService.getAssetGroupDataById(event).subscribe((res:any)=>{
+    this.assetGroupData=res.result;
+    this.alertService.stopLoadingMessage();
+    this.loadingIndicator = false;
+  },
+  error => {
+    this.alertService.stopLoadingMessage();
+    this.loadingIndicator = false;
+  }
+  )
 
+}
 
 }

@@ -24,6 +24,11 @@
                     {{'AssetLocation.Management.Location Name'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="assName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    Asset Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.assName}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                     <button mat-button color="primary" matTooltip="Add" (click)="onEditAsset()">
@@ -66,89 +71,100 @@
         </mat-card-header>
         <br>
         <mat-card-content>
-            <form [formGroup]="assetForm">
+            <form [formGroup]="assetLocationForm">
                 <div class="row">
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.SiteName1'|translate}}*</mat-label>
                         <mat-select formControlName="siteId">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetForm.controls['siteId'].valid">
-                            {{'AssetLocation.Management.SNameisrequired'|translate}}
-                        </mat-error>
+                        </mat-select>                        
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Project Name'|translate}}*</mat-label>
                         <mat-select formControlName="projectId">
                             <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
                             </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetForm.controls['projectId'].valid">
-                            {{'AssetLocation.Management.pNameisrequired'|translate}}
-                        </mat-error>
+                        </mat-select>                      
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Location Name'|translate}}*</mat-label>
                         <mat-select formControlName="locationId">
                             <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
                                 {{location.name1}}(<span>{{location.locationReference}}</span>)
                             </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetForm.controls['locationId'].valid">
-                            {{'AssetLocation.Management.Location is Required'|translate}}
-                        </mat-error>
+                        </mat-select>                       
                     </mat-form-field>
+
                 </div>
+
                 <div class="row">
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Reference'|translate}} </mat-label>
                         <input matInput formControlName="assetRef" />
                     </mat-form-field>
+                    
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Name 1'|translate}} </mat-label>
                         <input matInput formControlName="aName1" />
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Name 2'|translate}}</mat-label>
                         <input matInput formControlName="aName2" />
                     </mat-form-field>
+
                 </div>
                 <div class="row">
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Group'|translate}}</mat-label>
-                        <mat-select formControlName="assGroup">
+                        <mat-select formControlName="assGroup" (ngModelChange)="onSelectAssGroup($event)">
                             <mat-option *ngFor="let assGroup of assetGroupList" [value]="assGroup.id" required>
                                 {{assGroup.name1}}(<span>{{assGroup.assetRef1}}</span>)
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Type'|translate}}</mat-label>
-                        <input matInput formControlName="assType" />
+                        <input matInput formControlName="assType" [(ngModel)]="assetGroupData.assetType" readonly/>
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Make'|translate}}</mat-label>
-                        <input matInput formControlName="assMake" />
+                        <input matInput formControlName="assMake"[(ngModel)]="assetGroupData.assetMake" readonly />
                     </mat-form-field>
+
                 </div>
+
                 <div class="row">
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Model'|translate}}</mat-label>
-                        <input matInput formControlName="assModel" />
+                        <input matInput formControlName="assModel" [(ngModel)]="assetGroupData.assetModel" readonly />
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Size'|translate}}</mat-label>
-                        <input matInput formControlName="assSize" />
+                        <input matInput formControlName="assSize" [(ngModel)]="assetGroupData.assetCapacity"  readonly/>
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Reference 2'|translate}}</mat-label>
-                        <input matInput formControlName="assRef2" />
+                        <input matInput formControlName="assRef2" [(ngModel)]="assetGroupData.assetRef2"  readonly/>
                     </mat-form-field>
+
                 </div>
+
                 <div class="row">
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Trade'|translate}}</mat-label>
                         <mat-select formControlName="assTrade">
@@ -157,15 +173,16 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Conter'|translate}}</mat-label>
-                        <mat-select formControlName="assCounter">
+                        <mat-select formControlName="assCounter" (ngModelChange)="onSelectCounter($event)">
                             <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
                                 {{counter.value}}
                             </mat-option>
                         </mat-select>
-
                     </mat-form-field>
+
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Fixed Date'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="assFixDate"
@@ -173,6 +190,7 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                     </mat-form-field>
+
                 </div>
             </form>
         </mat-card-content>
