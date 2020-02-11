@@ -318,5 +318,37 @@ namespace DAL.Repositories
             return response;
         }
 
+        public ListDataResponse<AssetGroup> GetAssetGroupDetilasById(int assetId)
+        {
+            ListDataResponse<AssetGroup> response = new ListDataResponse<AssetGroup>();
+            try
+            {
+                var assetData = _appContext.AssetGroups.Where(x => x.Id == assetId && x.IsActive == true).FirstOrDefault();
+                if (assetData != null)
+                {
+                    response.Result = assetData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = " Get AssetGroup Details Successfull";
+                }
+               
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No AssetGroup Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
     }
 }

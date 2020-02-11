@@ -299,16 +299,19 @@ export class AccountService {
   deleteLocation(locationId) {
     return this.accountEndpoint.deleteLocationEndpoint(locationId);
   }
-  getAssetGroupData(){
+  getAssetGroupData() {
     return this.accountEndpoint.getAssetGroupEndPoint();
   }
-  addAssetGroup(assGroupObj){
+  addAssetGroup(assGroupObj) {
     return this.accountEndpoint.addAssetGroupEndpoint(assGroupObj);
   }
-  upDateAssetGroup(assGroupObj){
+  upDateAssetGroup(assGroupObj) {
     return this.accountEndpoint.upDateAssetGroupEndpoint(assGroupObj);
   }
-  deleteAssetGroup(assetGroupId){
+  deleteAssetGroup(assetGroupId) {
     return this.accountEndpoint.deleteAssetGroupEndpoint(assetGroupId);
+  }
+  getAssetGroupDataById(assetGroupId) {
+    return this.accountEndpoint.getAssetGroupEndpointById(assetGroupId);
   }
 }
