@@ -8,6 +8,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { ThemeService } from 'ng2-charts';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-assets',
@@ -282,9 +283,9 @@ export class AssetsComponent implements OnInit {
       return;
     }
     this.alertService.startLoadingMessage('Saving changes...');
-    const editedProject = this.getEditedAsset();
+    const editedAsset = this.getEditedAsset();
     if (this.isNewAsset) {
-      this.accountService.addAsset(editedProject).subscribe(
+      this.accountService.addAsset(editedAsset).subscribe(
         (result: any) => {
           this.alertService.stopLoadingMessage();
           if (result.isSuccess) {
@@ -302,11 +303,11 @@ export class AssetsComponent implements OnInit {
         }
       );
     } else {
-      this.accountService.UpdateProject(editedProject).subscribe(
+      this.accountService.updateAsset(editedAsset).subscribe(
         (result: any) => {
           this.alertService.stopLoadingMessage();
           if (result.isSuccess) {
-            this.getProjects();
+            this.getAssets();
             this.isAdding = false;
             this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
             this.resetForm();
@@ -320,6 +321,29 @@ export class AssetsComponent implements OnInit {
         }
       );
     }
+  }
+
+
+  public confirmDelete(asset: any) {
+    this.snackBar.open(`Delete ${asset.name1}?`, 'DELETE', { duration: 5000 })
+      .onAction().subscribe(() => {
+        this.alertService.startLoadingMessage('Deleting...');
+        this.loadingIndicator = true;
+        this.accountService.deleteAsset(asset.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            if (results.isSuccess) {
+              this.getAssets();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      });
   }
 
 }

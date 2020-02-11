@@ -333,7 +333,15 @@ export class AccountService {
     return this.accountEndpoint.getAssetsEndpoint();
   }
 
-  addAsset(assGroupObj) {
-    return this.accountEndpoint.addAssetEndpoint(assGroupObj);
+  addAsset(reqObject) {
+    return this.accountEndpoint.addAssetEndpoint(reqObject);
+  }
+
+  updateAsset(reqObject) {
+    return this.accountEndpoint.updateAssetEndpoint(reqObject);
+  }
+  
+  deleteAsset(assetId) {
+    return this.accountEndpoint.deleteAssetEndpoint(assetId);
   }
 }

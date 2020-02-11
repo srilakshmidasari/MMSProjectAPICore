@@ -53,6 +53,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getAssetGroupByIdUrl: string = '/api/Asset/GetAssetGroupDetilasById';
   private readonly _getAssetLocationUrl: string = '/api/Asset/GetAllAssetLocation';
   private readonly _addAssetLocationUrl: string = '/api/Asset/AddAssetLocation';
+  private readonly _updateAssetLocationUrl: string = '/api/Asset/UpdateAssetLocation';
+  private readonly _deleteAssetLocationUrl: string = '/api/Asset/DeleteAssetLocation';
 
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -91,6 +93,9 @@ export class AccountEndpoint extends EndpointBase {
   get getAssetGroupDataById() { return this.configurations.baseUrl + this._getAssetGroupByIdUrl; }
   get getAssetLocationUrl() { return this.configurations.baseUrl + this._getAssetLocationUrl; }
   get addAssetLocationUrl() { return this.configurations.baseUrl + this._addAssetLocationUrl; }
+  get updateAssetLocationUrl() { return this.configurations.baseUrl + this._updateAssetLocationUrl; }
+  get deleteAssetLocationUrl() { return this.configurations.baseUrl + this._deleteAssetLocationUrl; }
+
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -563,6 +568,21 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.addAssetEndpoint(reqObject));
+      }));
+  }
+
+  updateAssetEndpoint<T>(reqObject): Observable<T> {
+    const endpointUrl = this.updateAssetLocationUrl;
+    return this.http.put<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.updateAssetEndpoint(reqObject));
+      }));
+  }
+  deleteAssetEndpoint<T>(assetId: any): Observable<T> {
+    const endpointUrl = this.deleteAssetLocationUrl + '/' + assetId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteAssetEndpoint(assetId));
       }));
   }
 
