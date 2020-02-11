@@ -206,20 +206,6 @@ export class AccountService {
   get currentUser() {
     return this.authService.currentUser;
   }
-  getSiteData() {
-    return this.accountEndpoint.getSiteEndpoint();
-  }
-  AddSite(site) {
-    return this.accountEndpoint.getNewSiteEndpoint(site);
-  }
-
-  updateSite(site) {
-    return this.accountEndpoint.updateSiteEndpoint(site);
-  }
-
-  deleteSite(site: any): Observable<any> {
-    return this.accountEndpoint.getDeleteSiteEndpoint<any>(site.id);
-  }
 
   getUserFileData(userid) {
     return this.accountEndpoint.getUserFileEndpoint(userid);
@@ -239,28 +225,28 @@ export class AccountService {
     return this.accountEndpoint.getUserDataById(userId)
   }
 
+  // Site
+
+  getSiteData() {
+    return this.accountEndpoint.getSiteEndpoint();
+  }
+  AddSite(site) {
+    return this.accountEndpoint.getNewSiteEndpoint(site);
+  }
+
+  updateSite(site) {
+    return this.accountEndpoint.updateSiteEndpoint(site);
+  }
+
+  deleteSite(site: any): Observable<any> {
+    return this.accountEndpoint.getDeleteSiteEndpoint<any>(site.id);
+  }
+
   // Project
 
   getProject() {
     return this.accountEndpoint.getProjectEndpoint();
   }
-  getLookUPData() {
-    return this.accountEndpoint.getLookUpData();
-  }
-
-
-  AddLookUp(LookUp) {
-    return this.accountEndpoint.AddLookUpEndpoint(LookUp);
-  }
-
-  updateLookUp(LookUp) {
-    return this.accountEndpoint.updateLookUpEndpoint(LookUp);
-  }
-
-  deleteLookUp(LookUp: any): Observable<any> {
-    return this.accountEndpoint.getDeleteLookUpEndpoint<any>(LookUp.id);
-  }
-
 
   getStoresByProjectId(ProjectId) {
     return this.accountEndpoint.getStoresByProjectId(ProjectId);
@@ -287,6 +273,27 @@ export class AccountService {
   deleteProject(ProjectId) {
     return this.accountEndpoint.deleteProjectEndpoint(ProjectId);
   }
+
+ // Look UP
+  getLookUPData() {
+    return this.accountEndpoint.getLookUpData();
+  }
+  AddLookUp(LookUp) {
+    return this.accountEndpoint.AddLookUpEndpoint(LookUp);
+  }
+
+  updateLookUp(LookUp) {
+    return this.accountEndpoint.updateLookUpEndpoint(LookUp);
+  }
+
+  deleteLookUp(LookUp: any): Observable<any> {
+    return this.accountEndpoint.getDeleteLookUpEndpoint<any>(LookUp.id);
+  }
+
+
+ 
+// Location
+ 
   getLocationData() {
     return this.accountEndpoint.getLocationEndpoint();
   }
@@ -299,6 +306,9 @@ export class AccountService {
   deleteLocation(locationId) {
     return this.accountEndpoint.deleteLocationEndpoint(locationId);
   }
+
+// AssetGroup
+
   getAssetGroupData() {
     return this.accountEndpoint.getAssetGroupEndPoint();
   }
@@ -311,7 +321,19 @@ export class AccountService {
   deleteAssetGroup(assetGroupId) {
     return this.accountEndpoint.deleteAssetGroupEndpoint(assetGroupId);
   }
+
   getAssetGroupDataById(assetGroupId) {
     return this.accountEndpoint.getAssetGroupEndpointById(assetGroupId);
+  }
+
+
+  // Asset Location 
+
+  getAssets() {
+    return this.accountEndpoint.getAssetsEndpoint();
+  }
+
+  addAsset(assGroupObj) {
+    return this.accountEndpoint.addAssetEndpoint(assGroupObj);
   }
 }
