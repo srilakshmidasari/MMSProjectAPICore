@@ -40,7 +40,7 @@ export class AssetsComponent implements OnInit {
   ];
 
   displayNoRecords: boolean;
-  displayedColumns = ['siteName', 'projectName', 'locationName', 'assetGroupName', 'assetTradeName', 'name1', 'name2', 'assetRefrerence', 'assetCounter', 'assetFixedDate', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['siteName', 'projectName', 'locationName', 'assetGroupName', 'assetTradeName', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetFixedDate', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -215,12 +215,12 @@ export class AssetsComponent implements OnInit {
 
   // Change Evene For Group
   onSelectAssGroup(event) {
+    debugger
     this.assetGroupData = {};
     this.accountService.getAssetGroupDataById(event).subscribe((res: any) => {
       this.assetGroupData = res.result;
     },
       error => {
-
       })
   }
 
@@ -278,6 +278,7 @@ export class AssetsComponent implements OnInit {
 
 
   saveAssets() {
+    debugger
     if (!this.assetLocationForm.valid) {
       this.alertService.showValidationError();
       return;
