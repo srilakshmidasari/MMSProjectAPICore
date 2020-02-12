@@ -40,7 +40,7 @@ export class AssetsComponent implements OnInit {
   ];
 
   displayNoRecords: boolean;
-  displayedColumns = ['siteName', 'projectName', 'locationName', 'assetGroupName', 'assetTradeName', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetFixedDate', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'astFixedDate', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

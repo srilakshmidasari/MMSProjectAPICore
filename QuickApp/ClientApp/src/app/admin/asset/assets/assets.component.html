@@ -10,27 +10,27 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort matSortActive="assetLocationRef" matSortDirection="asc"
             matSortDisableClear>
-            <ng-container matColumnDef="siteName">
+            <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Assets.Management.SiteName'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="projectName">
+            <ng-container matColumnDef="projectName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Assets.Management.ProjectName'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.projectName1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="locationName">
+            <ng-container matColumnDef="locationName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{'Assets.Management.LocationName'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.locationName1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="assetGroupName">
+            <ng-container matColumnDef="astGroupName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{'Assets.Management.assetGroupName'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.astGroupName1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="assetTradeName">
+            <ng-container matColumnDef="astTradeName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{'Assets.Management.assetTradeName'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.astTradeName1}} </mat-cell>
@@ -55,7 +55,7 @@
                     {{'Assets.Management.assetCounter'|translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell" *matCellDef="let row" class="just-cont-center"> {{row.astCounter}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="assetFixedDate">
+            <ng-container matColumnDef="astFixedDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header class="just-cont-center small-cell">
                     {{'Assets.Management.assetFixedDate'|translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell" *matCellDef="let row"> {{row.astFixedDate | date: 'dd/MM/yyyy' }} </mat-cell>
