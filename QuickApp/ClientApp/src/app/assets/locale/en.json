@@ -359,10 +359,10 @@
       "SiteName": "Site Name",
       "ProjectName": "Project Name",
       "LocationName": "Location Name",
-      "assetGroupName": "Asset Group Name",
-      "assetTradeName": "AstTrade Name",
-      "assetRefrerence": "Asset Reference",
-      "assetCounter": "AstCounter",
+      "assetGroupName": "asset Group Name",
+      "assetTradeName": "asset Trade Name",
+      "assetRefrerence": "asset Refrerence",
+      "assetCounter": "asset Counter",
       "assetFixedDate": "Asset Fixed Date",
       "AddAsset": "Add Asset",
       "add": "add",
@@ -393,5 +393,27 @@
       "save": "Save",
       "cancel": "Cancel"
     }
-  }
+  },
+    "AssetGroup":{
+      "Management": {
+        "Name 1":"Name 1",
+        "Name 2":"Name 2",
+        "AssetGroupReference 1":"AssetGroupReference 1",
+        "AssetGroupReference 2":"AssetGroupReference 2",
+        "AssetGroupMake":"AssetGroupMake",
+        "AssetGroupModel":"AssetGroupModel",
+        "AssetGroupType":"AssetGroupType",
+        "AssetGroupCapacity":"AssetGroupCapacity",
+        "UpDated Date":"UpDated Date",
+        "IsActive":"IsActive",
+        "Add":"Add",
+        "AddAssetGroup":"AddAssetGroup",
+        "Edit":"Edit",
+        "Delete":"Delete",
+        "No Records Found":"No Records Found",
+        "No Search Results Found":"No Search Results Found",
+        "Add Asset Group":"Add Asset Group",
+        "Edit Asset Group":"Edit Asset Group"
+    }
+ }
 }
