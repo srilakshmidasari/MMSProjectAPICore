@@ -8,6 +8,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-location',
@@ -229,6 +230,18 @@ export class LocationComponent implements OnInit {
   saveFailed(result) {
     this.alertService.stopLoadingMessage();
     this.alertService.showMessage('error', result.endUserMessage, MessageSeverity.error);
+  }
+
+  get canAddLocation() {
+    return this.accountService.userHasPermission(Permission.addLocationsPermission);
+  }
+
+  get canEditLocation() {
+    return this.accountService.userHasPermission(Permission.editLocationsPermission);
+  }
+
+  get canDeleteLocation() {
+    return this.accountService.userHasPermission(Permission.deleteLocationsPermission);
   }
 
 }
