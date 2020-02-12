@@ -97,15 +97,15 @@
         <mat-expansion-panel #asset [class.mat-elevation-z0]="!asset.expanded">
           <mat-expansion-panel-header>
             <mat-panel-title>
-                <mat-icon>assessment</mat-icon>Asset
+                <mat-icon>assessment</mat-icon>{{'mainMenu.Asset'|translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLinkActive="active" routerLink="/admin/asset-group">
-            <mat-icon>pets</mat-icon>{{'mainMenu.Asset Group'|translate}}
+            <mat-icon>pets</mat-icon>{{'mainMenu.AssetGroup'|translate}}
         
           </a>
           <a mat-list-item routerLinkActive="active" routerLink="/admin/assets">
-            <mat-icon> edit_location</mat-icon>Assets
+            <mat-icon> edit_location</mat-icon>{{'mainMenu.Assets'|translate}}
           </a>
         </mat-expansion-panel>
       </mat-nav-list>

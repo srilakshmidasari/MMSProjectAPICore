@@ -31,7 +31,8 @@
     "LookUp": "LookUp",
     "Location": "Location",
     "Asset": "Asset",
-    "Asset Group": "Asset Group"
+    "AssetGroup": "Asset Group",
+    "Assets" :"Assets"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -48,7 +49,7 @@
     "Profile": "Profile",
     "LookUp": "LookUp Management",
     "Location": "Location Management",
-    "Asset": "Asset Management",
+    "Assets": "Assets",
     "AssetGroup": "Asset Group"
   },
   "home": {
@@ -359,10 +360,10 @@
       "SiteName": "Site Name",
       "ProjectName": "Project Name",
       "LocationName": "Location Name",
-      "assetGroupName": "asset Group Name",
-      "assetTradeName": "asset Trade Name",
-      "assetRefrerence": "asset Refrerence",
-      "assetCounter": "asset Counter",
+      "assetGroupName": "Asset Group Name",
+      "assetTradeName": "Asset Trade Name",
+      "assetRefrerence": "Asset Refrerence",
+      "assetCounter": "Asset Counter",
       "assetFixedDate": "Asset Fixed Date",
       "AddAsset": "Add Asset",
       "add": "add",
@@ -372,10 +373,6 @@
       "No Search Results Found": "No Search Results Found",
       "EditAsset": "Edit Asset",
       "SiteName1": "Site Name",
-      "SNameisrequired": "SNameisrequired",
-      "projectName": "projectName",
-      "pNameisrequired": "pNameisrequired",
-      "Location is Required": "Location is Required",
       "Asset Reference": "Asset Reference",
       "Name1": "Name 1",
       "Name2": "Name 2",
@@ -391,7 +388,18 @@
       "AssetFixedDate": "Asset Fixed Date",
       "UploadImage": "Upload Image",
       "save": "Save",
-      "cancel": "Cancel"
+      "cancel": "Cancel",
+      "projectName": "projectName",
+      "PleaseSelectSite": "Please Select Site",
+      "PleaseSelectProject": "Please Select Project",
+      "PleaseSelectLocation": "Please Select Location",
+      "AssetReferenceisRequired":"Asset Reference is Required",
+      "NameisRequired" : "Name 1 is Required",
+      "Name2isRequired" : "Name 2 is Required",
+      "PleaseSelectAssetGroup": "Please Select Asset Group",
+      "PleaseSelectAssetTrade" : "Please Select Asset Trade",
+      "PleaseSelectAssetCounter" :"Please Select Asset Counter",
+      "AssetFixedDateisRequired":"Asset Fixed Date is Required"
     }
   },
     "AssetGroup":{

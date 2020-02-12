@@ -22,7 +22,8 @@
     "LookUp": "ابحث عن",
     "Location": "موقعك",
     "Asset":"الأصول",
-    "Asset Group":"مجموعة الأصول"
+    "AssetGroup":"مجموعة الأصول",
+    "Assets": "الأصول"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -38,7 +39,8 @@
     "Project": "معلومات المشروع",
     "LookUp": "بحث عن الإدارة",
     "Location": "إدارة الموقع",
-    "Asset": "إدارة الأصول"
+    "AssetGroup": "إدارة الأصول",
+    "Assets": "الأصول"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -357,7 +359,7 @@
       "Delete": "حذف",
       "No Records Found": "لا توجد سجلات",
       "No Search Results Found": "لم يتم العثور على نتائج عن البحث",
-      "Edit Asset": "تحرير الأصول",
+      "EditAsset": "تحرير الأصول",
       "SiteName1": "اسم الموقع",
       "SNameisrequired": "S اسم مطلوب",
       "projectName": "اسم المشروع",
@@ -378,7 +380,17 @@
       "AssetFixedDate": "تاريخ الأصول الثابتة",
       "UploadImage": "تحميل الصور",
       "save": "حفظ",
-      "cancel": "إلغاء"
+      "cancel": "إلغاء",
+      "PleaseSelectSite": "يرجى اختيار الموقع",
+      "PleaseSelectProject": "يرجى اختيار المشروع",
+      "PleaseSelectLocation": "يرجى اختيار الموقع",
+      "AssetReferenceisRequired":"مرجع الأصول هو المطلوب",
+      "NameisRequired" : "الاسم 1 مطلوب",
+      "Name2isRequired" : "الاسم 2 مطلوب",
+      "PleaseSelectAssetGroup ": "يرجى اختيار مجموعة الأصول",
+      "PleaseSelectAssetTrade" : "يرجى اختيار تجارة الأصول",
+      "PleaseSelectAssetCounter" :"يرجى اختيار عداد الأصول",
+      "AssetFixedDateisRequired":"تاريخ الأصول الثابتة مطلوب"
     }
   },
   "AssetGroup":{
