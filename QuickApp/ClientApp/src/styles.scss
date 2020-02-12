@@ -115,9 +115,14 @@ mat-header-row {
 
 .mat-header-cell {
   color: #fff;
-  font-size: 1rem;
+  font-size: 15px;;
   margin-left: 4px;
-  border-right: 1px solid #414e96;
+  border-right: 1px solid #6975b9;
+}
+.mat-cell {
+  border-right: 1px solid #f2f2f2;
+  align-self: stretch;
+  margin: 0px 2px;
 }
 
 .mat-paginator,
@@ -135,7 +140,13 @@ mat-header-row {
 }
 
 .just-cont-center {
-  justify-content: center;
+  justify-content: center !important;
+}
+.just-cont-left {
+  justify-content: left !important;
+}
+.align-item-center {
+  align-items: center !important;
 }
 .page-content {
   padding: 0 2em;
@@ -149,4 +160,28 @@ mat-header-row {
 }
 .form-control{
   padding: 0.215rem .75rem !important;
+}
+
+.small-cell-1 {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 5%;
+}
+
+.small-cell {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 8%;
+}
+
+.small-cell1 {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 10%;
+}
+
+.small-cell2 {
+  flex: 1 1 100%;
+  box-sizing: border-box;
+  max-width: 18%;
 }
