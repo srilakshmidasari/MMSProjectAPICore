@@ -25,30 +25,30 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupReference 2'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetRef2}} </mat-cell>
                 </ng-container>
-                <ng-container matColumnDef="assetMake">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupMake'|translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.assetMake}} </mat-cell>
+                <ng-container matColumnDef="assetMake" >
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="just-cont-left small-cell1">{{'AssetGroup.Management.AssetGroupMake'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="just-cont-left small-cell1"> {{row.assetMake}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetModel">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupModel'|translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.assetModel}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="small-cell just-cont-left align-item-center"><span class="text-left">{{'AssetGroup.Management.AssetGroupModel'|translate}}</span></mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="small-cell just-cont-left align-item-center"><span class="text-left">{{row.assetModel}}</span> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetType">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupType'|translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.assetType}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef class="small-cell text-left" mat-sort-header><span class="text-left">{{'AssetGroup.Management.AssetGroupType'|translate}}</span></mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="small-cell text-left"><span class="text-left">{{row.assetType}}</span></mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetCapacity">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupCapacity'|translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.assetCapacity}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header  class="just-cont-left" ><span class="text-left">{{'AssetGroup.Management.AssetGroupCapacity'|translate}}</span></mat-header-cell>
+                    <mat-cell *matCellDef="let row"  class="just-cont-left" ><span class="text-left"> {{row.assetCapacity}}</span> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="updatedDate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.UpDated Date'|translate}}</mat-header-cell>
-                    <mat-cell *matCellDef="let row"> {{row.updatedDate| date:'dd/MM/yyyy'}} </mat-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header class="small-cell just-cont-center" >{{'AssetGroup.Management.UpDated Date'|translate}}</mat-header-cell>
+                    <mat-cell *matCellDef="let row" class="small-cell just-cont-center" > {{row.updatedDate| date:'dd/MM/yyyy'}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="isActive">
-                    <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                    <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header>
                         {{'project.management.IsActive' | translate}}</mat-header-cell>
-                    <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    <mat-cell class="just-cont-center small-cell" *matCellDef="let row">
                         <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                     </mat-cell>
                 </ng-container>
