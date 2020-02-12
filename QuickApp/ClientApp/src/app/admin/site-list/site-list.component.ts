@@ -132,8 +132,20 @@ export class SiteListComponent implements OnInit {
       });
   }
 
-  get canManageSites() {
-    return this.accountService.userHasPermission(Permission.manageSitesPermission);
+  // get canManageSites() {
+  //   return this.accountService.userHasPermission(Permission.manageSitesPermission);
+  // }
+
+  get canAddSites() {
+    return this.accountService.userHasPermission(Permission.addSitesPermission);
+  }
+
+  get canEditSites() {
+    return this.accountService.userHasPermission(Permission.editSitesPermission);
+  }
+
+  get canDeleteSites() {
+    return this.accountService.userHasPermission(Permission.deleteSitesPermission);
   }
 
 }

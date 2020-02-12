@@ -336,4 +336,16 @@ export class AppComponent implements OnInit {
   get canViewStores() {
     return this.accountService.userHasPermission(Permission.viewStoresPermission);
   }
+
+  get canViewLocation() {
+    return this.accountService.userHasPermission(Permission.viewLocationsPermission);
+  }
+
+  get canViewAssets() {
+    return this.accountService.userHasPermission(Permission.viewAssetsPermission);
+  }
+
+  get canViewAssetGroup() {
+    return this.accountService.userHasPermission(Permission.viewAssetGroupsPermission);
+  }
 }

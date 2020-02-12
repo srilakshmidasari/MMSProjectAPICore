@@ -452,8 +452,22 @@ export class ProjectComponent implements OnInit {
       });
   }
 
-  get canManageProjects() {
-    return this.accountService.userHasPermission(Permission.manageProjectsPermission);
+  // get canManageProjects() {
+  //   return this.accountService.userHasPermission(Permission.manageProjectsPermission);
+  // }
+
+
+  
+  get canAddProjects() {
+    return this.accountService.userHasPermission(Permission.addProjectsPermission);
+  }
+
+  get canEditProjects() {
+    return this.accountService.userHasPermission(Permission.editProjectsPermission);
+  }
+
+  get canDeleteProjects() {
+    return this.accountService.userHasPermission(Permission.deleteProjectsPermission);
   }
 
 }

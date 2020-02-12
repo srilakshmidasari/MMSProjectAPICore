@@ -54,34 +54,34 @@
       </ng-container>
 
       <ng-container matColumnDef="phoneNumber">
-        <mat-header-cell fxFlex="40%" class="just-cont-center" *matHeaderCellDef mat-sort-header> {{'users.management.PhoneNumber' | translate}}
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.PhoneNumber' | translate}}
         </mat-header-cell>
-        <mat-cell fxFlex="40%" class="just-cont-center" *matCellDef="let row"> {{row.phoneNumber}} </mat-cell>
+        <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.phoneNumber}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="isEnabled">
-        <mat-header-cell fxFlex="40%"  class="just-cont-center" *matHeaderCellDef mat-sort-header> {{'users.management.IsActive' | translate}}
+        <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.IsActive' | translate}}
         </mat-header-cell>
-        <mat-cell fxFlex="40%" *matCellDef="let row"  class="just-cont-center">
-          <mat-checkbox [(ngModel)]="row.isEnabled"  disabled="true"> </mat-checkbox>
+        <mat-cell fxFlex="40%" *matCellDef="let row">
+          <mat-checkbox [(ngModel)]="row.isEnabled" disabled="true"> </mat-checkbox>
       </mat-cell>        
       </ng-container>
       
 
-      <ng-container *ngIf="canManageUsers" matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef fxFlex="170px"  class="just-cont-center">
-          <button *ngIf="canAssignRoles" mat-button color="primary"
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="170px">
+          <button  *ngIf="canAddUsers" mat-button color="primary"
             matTooltip="{{'users.management.NewUser' | translate}}" (click)="editUser()">
             <mat-icon class="mat-button-icon">person_add</mat-icon>{{'users.management.NewUser' | translate}}
           </button>
         </mat-header-cell>
-        <mat-cell  class="just-cont-center" *matCellDef="let row" fxFlex="140px" fxFlexOffset="30px">
-          <button mat-icon-button matTooltip="{{'users.management.Edit' | translate}}" (click)="editUser(row)">
+        <mat-cell *matCellDef="let row" fxFlex="140px" fxFlexOffset="30px">
+          <button  *ngIf="canEditUsers"  mat-icon-button matTooltip="{{'users.management.Edit' | translate}}" (click)="editUser(row)">
             <mat-icon>edit</mat-icon>
           </button>
-          <button [hidden]="!row.isEnabled"  mat-icon-button matTooltip="{{'users.management.Delete' | translate}}"  (click)="confirmDelete(row)">
+          <button  *ngIf="canDeleteUsers" [hidden]="!row.isEnabled"  mat-icon-button matTooltip="{{'users.management.Delete' | translate}}"  (click)="confirmDelete(row)">
             <mat-icon  color="warn">delete</mat-icon>
-          </button >
+          </button>
         </mat-cell>
       </ng-container>
 

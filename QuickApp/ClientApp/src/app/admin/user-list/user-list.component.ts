@@ -44,7 +44,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     private accountService: AccountService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog) {
-    if (this.canManageUsers) {
+    if (this.canAddUsers) {
       this.displayedColumns.push('actions');
     }
 
@@ -158,9 +158,9 @@ export class UserListComponent implements OnInit, AfterViewInit {
       });
   }
 
-  get canManageUsers() {
-    return this.accountService.userHasPermission(Permission.manageUsersPermission);
-  }
+  // get canManageUsers() {
+  //   return this.accountService.userHasPermission(Permission.manageUsersPermission);
+  // }
 
   get canViewRoles() {
     return this.accountService.userHasPermission(Permission.viewRolesPermission);
@@ -168,5 +168,18 @@ export class UserListComponent implements OnInit, AfterViewInit {
 
   get canAssignRoles() {
     return this.accountService.userHasPermission(Permission.assignRolesPermission);
+  }
+
+  
+  get canAddUsers() {
+    return this.accountService.userHasPermission(Permission.addUsersPermission);
+  }
+  
+  get canEditUsers() {
+    return this.accountService.userHasPermission(Permission.editUsersPermission);
+  }
+  
+  get canDeleteUsers() {
+    return this.accountService.userHasPermission(Permission.deleteUsersPermission);
   }
 }

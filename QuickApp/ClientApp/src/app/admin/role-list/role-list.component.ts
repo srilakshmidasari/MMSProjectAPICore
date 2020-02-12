@@ -47,9 +47,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource();
   }
 
-  get canManageRoles() {
-    return this.accountService.userHasPermission(Permission.manageRolesPermission);
-  }
+  
 
   ngOnInit() {
     this.loadData();
@@ -142,4 +140,10 @@ export class RoleListComponent implements OnInit, AfterViewInit {
             });
       });
   }
+
+  get canManageRoles() {
+    return this.accountService.userHasPermission(Permission.manageRolesPermission);
+  }
+
+
 }

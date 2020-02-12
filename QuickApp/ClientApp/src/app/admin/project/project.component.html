@@ -57,15 +57,15 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canManageProjects">
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canAddProjects">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
                     <button mat-button color="primary" matTooltip="Actions"
-                        *ngIf="!canManageProjects">{{'project.management.Actions' | translate}}
+                        *ngIf="!canAddProjects">{{'project.management.Actions' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canManageProjects">
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canEditProjects">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"
@@ -74,7 +74,7 @@
                     </button>
 
                     <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)"
-                        *ngIf="canManageProjects">
+                        *ngIf="canDeleteProjects">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
