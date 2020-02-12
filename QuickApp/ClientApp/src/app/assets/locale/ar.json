@@ -22,7 +22,8 @@
     "LookUp": "ابحث عن",
     "Location": "موقعك",
     "Asset":"الأصول",
-    "Asset Group":"مجموعة الأصول"
+    "AssetGroup":"مجموعة الأصول",
+    "Assets": "الأصول"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -38,7 +39,8 @@
     "Project": "معلومات المشروع",
     "LookUp": "بحث عن الإدارة",
     "Location": "إدارة الموقع",
-    "Asset": "إدارة الأصول"
+    "AssetGroup": "إدارة الأصول",
+    "Assets": "الأصول"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -341,37 +343,78 @@
 
   }
   },
- "AssetLocation":{
-    "Management":{
-      "Site Name":"اسم الموقع",
-      "Project Name":"اسم المشروع",
-      "Location Name":"اسم الموقع",
-      "Add Asset":"إضافة الأصول",
-      "add":"إضافة",
+  "Assets": {
+    "Management": {
+      "SiteName": "اسم الموقع",
+      "ProjectName": "اسم المشروع",
+      "LocationName": "اسم الموقع",
+      "assetGroupName": "اسم مجموعة الأصول",
+      "assetTradeName": "الاسم التجاري للأصول",
+      "assetRefrerence": "مرجع الأصول",
+      "assetCounter": "عداد الأصول",
+      "assetFixedDate": "تاريخ الأصول الثابتة",
+      "AddAsset": "إضافة الأصول",
+      "add": "إضافة",
+      "Edit": "تعديل",
+      "Delete": "حذف",
+      "No Records Found": "لا توجد سجلات",
+      "No Search Results Found": "لم يتم العثور على نتائج عن البحث",
+      "EditAsset": "تحرير الأصول",
+      "SiteName1": "اسم الموقع",
+      "SNameisrequired": "S اسم مطلوب",
+      "projectName": "اسم المشروع",
+      "pNameisrequired": "ع الاسم",
+      "Location is Required": "الموقع مطلوب",
+      "Asset Reference": "مرجع الأصول",
+      "Name1": "الاسم 1",
+      "Name2": "الاسم 2",
+      "AssetGroup": "مجموعة الأصول",
+      "AssetType": "نوع الأصول",
+      "AssetMake": "جعل الأصول",
+      "AssetModel": "نموذج الأصول",
+      "AssetSize": "حجم الأصول",
+      "AssetReference": "مرجع الأصول",
+      "AssetReference2": "مرجع مجموعة الأصول",
+      "AssetTrade": "تجارة الأصول",
+      "AssetConter": "الأصول كونتر",
+      "AssetFixedDate": "تاريخ الأصول الثابتة",
+      "UploadImage": "تحميل الصور",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "PleaseSelectSite": "يرجى اختيار الموقع",
+      "PleaseSelectProject": "يرجى اختيار المشروع",
+      "PleaseSelectLocation": "يرجى اختيار الموقع",
+      "AssetReferenceisRequired":"مرجع الأصول هو المطلوب",
+      "NameisRequired" : "الاسم 1 مطلوب",
+      "Name2isRequired" : "الاسم 2 مطلوب",
+      "PleaseSelectAssetGroup ": "يرجى اختيار مجموعة الأصول",
+      "PleaseSelectAssetTrade" : "يرجى اختيار تجارة الأصول",
+      "PleaseSelectAssetCounter" :"يرجى اختيار عداد الأصول",
+      "AssetFixedDateisRequired":"تاريخ الأصول الثابتة مطلوب"
+    }
+  },
+  "AssetGroup":{
+    "Management": {
+      "Name 1":"الاسم 1",
+      "Name 2":"الاسم 2",
+      "AssetGroupReference 1":"مرجع مجموعة الأصول 1",
+      "AssetGroupReference 2":"مرجع مجموعة الأصول 2",
+      "AssetGroupMake":"مجموعة الأصول",
+      "AssetGroupModel":"نموذج مجموعة الأصول",
+      "AssetGroupType":"مجموعة الأصول",
+      "AssetGroupCapacity":"مجموعة الأصول القدرات",
+      "UpDated Date":"تاريخ التحديث",
+      "IsActive":"نشط",
+      "Add":"إضافة",
+      "AddAssetGroup":"إضافة مجموعة الأصول",
       "Edit":"تعديل",
       "Delete":"حذف",
       "No Records Found":"لا توجد سجلات",
       "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
-      "Edit Asset":"تحرير الأصول",
-      "SiteName1":"اسم الموقع 1",
-      "SNameisrequired":"S اسم مطلوب",
-      "projectName":"اسم المشروع",
-      "pNameisrequired":"الاسم مطلوب",
-      "Location is Required":"الموقع مطلوب",
-      "Asset Reference":"مرجع الأصول",
-      "Asset Name 1":"اسم الأصل 1",
-      "Asset Name 2":"اسم الأصول 2",
-      "Asset Group":"مجموعة الأصول",
-      "Asset Type":"نوع الأصول",
-      "Asset Make":"جعل الأصول",
-      "Asset Model":"نموذج الأصول",
-      "Asset Size":"حجم الأصول",
-      "Asset Reference 2":"مرجع الأصول 2",
-      "Asset Trade":"تجارة الأصول",
-      "Asset Conter":"الأصول كونتر",
-      "Asset Fixed Date":"تاريخ الأصول الثابتة",
-      "save":"حفظ",
-      "cancel":"إلغاء"
-    }
+      "Add Asset Group":"إضافة مجموعة الأصول",
+      "Edit Asset Group":"تحرير مجموعة الأصول"
   }
 }
+}
+
+

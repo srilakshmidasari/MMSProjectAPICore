@@ -29,6 +29,7 @@ import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
 import { LocationComponent } from './location/location.component';
 import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
+import { AssetsComponent } from './asset/assets/assets.component';
 
 @NgModule({
   imports: [
@@ -55,7 +56,8 @@ import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
     LookupEditorComponent,
     LocationComponent,
     AssetLocationComponent,
-    AssetGroupComponent
+    AssetGroupComponent,
+    AssetsComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

@@ -264,7 +264,7 @@ namespace DAL.Repositories
 
                     if (asset.FileName != null)
                     {
-                        string ModuleName = "AssetLocation";
+                        string ModuleName = "Assets";
                         var now = DateTime.Now;
                         var yearName = now.ToString("yyyy");
                         var monthName = now.Month.ToString("d2");
@@ -291,13 +291,13 @@ namespace DAL.Repositories
                         response.Result = asset;
                         response.IsSuccess = true;
                         response.AffectedRecords = 1;
-                        response.EndUserMessage = "Asset Location Added Successfully";
+                        response.EndUserMessage = "Asset Added Successfully";
                     }
                     else
                     {
                         response.IsSuccess = true;
                         response.AffectedRecords = 0;
-                        response.EndUserMessage = "Asset Location Added Failed";
+                        response.EndUserMessage = "Asset Added Failed";
                     }
                 }
                 else
@@ -350,7 +350,7 @@ namespace DAL.Repositories
 
                         if (asset.FileName != null)
                         {
-                            string ModuleName = "AssetLocation";
+                            string ModuleName = "Assets";
                             var now = DateTime.Now;
                             var yearName = now.ToString("yyyy");
                             var monthName = now.Month.ToString("d2");
@@ -376,20 +376,20 @@ namespace DAL.Repositories
                         response.Result = result;
                         response.IsSuccess = true;
                         response.AffectedRecords = 1;
-                        response.EndUserMessage = "Asset Location  Updated Successfully";
+                        response.EndUserMessage = "Asset Updated Successfully";
                     }
                     else
                     {
                         response.IsSuccess = true;
                         response.AffectedRecords = 0;
-                        response.EndUserMessage = "Asset Location Updation Failed";
+                        response.EndUserMessage = "Asset Updation Failed";
                     }
                 }
                 else
                 {
                     response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "Asset Location Reference Already Exists";
+                    response.EndUserMessage = "Asset Reference Already Exists";
                 }
 
             }

@@ -173,7 +173,6 @@ export class SiteEditorComponent implements OnInit {
       }
       reader.readAsDataURL(file);
     }
-
   }
   alphaNumaricsOnly(event: any) {
     const alphabetspattern = /^[a-z0-9]+$/i;
