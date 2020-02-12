@@ -113,7 +113,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
         data: { role, allPermissions: this.allPermissions }
       });
     dialogRef.afterClosed().subscribe(role => {
-      if (role && this.canManageRoles) {
+      if (role) {
         this.updateRoles(role);
       }
     });
@@ -141,9 +141,19 @@ export class RoleListComponent implements OnInit, AfterViewInit {
       });
   }
 
-  get canManageRoles() {
-    return this.accountService.userHasPermission(Permission.manageRolesPermission);
-  }
+  // get canManageRoles() {
+  //   return this.accountService.userHasPermission(Permission.manageRolesPermission);
+  // }
 
+
+   get canAddRoles() {
+    return this.accountService.userHasPermission(Permission.addRolesPermission);
+  }
+  get canEditRoles() {
+    return this.accountService.userHasPermission(Permission.editRolesPermission);
+  }
+  get canDeleteRoles() {
+    return this.accountService.userHasPermission(Permission.deleteRolesPermission);
+  }
 
 }

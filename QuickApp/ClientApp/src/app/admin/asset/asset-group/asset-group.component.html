@@ -55,16 +55,16 @@
 
                 <ng-container matColumnDef="Actions">
                     <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                        <button mat-button color="primary" matTooltip="{{'AssetGroup.Management.Add'|translate}}" (click)="onEditAssetGroup()">
+                        <button mat-button color="primary" *ngIf="canAddAssetsGroup" matTooltip="{{'AssetGroup.Management.Add'|translate}}" (click)="onEditAssetGroup()">
                             <mat-icon class="mat-button-icon">add</mat-icon>{{'AssetGroup.Management.Add Asset Group'|translate}}
                         </button>
                     </mat-header-cell>
                     <mat-cell class="just-cont-center" *matCellDef="let row">
-                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Edit'|translate}}" (click)="onEditAssetGroup(row)">
+                        <button *ngIf="canEditAssetsGroup" mat-icon-button matTooltip="{{'AssetGroup.Management.Edit'|translate}}" (click)="onEditAssetGroup(row)">
                             <mat-icon color="primary">edit</mat-icon>
                         </button>
     
-                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Delete'|translate}}" (click)="confirmDelete(row)">
+                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Delete'|translate}}" [hidden]="!row.isActive"  *ngIf="canDeleteAssetsGroup" (click)="confirmDelete(row)">
                             <mat-icon color="warn">delete</mat-icon>
                         </button>
                     </mat-cell>

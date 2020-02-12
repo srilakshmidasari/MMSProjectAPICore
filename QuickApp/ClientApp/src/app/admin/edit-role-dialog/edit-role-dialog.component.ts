@@ -43,7 +43,7 @@ export class EditRoleDialogComponent {
         this.dialogRef.close(null);
     }
 
-    get canManageRoles() {
-        return this.accountService.userHasPermission(Permission.manageRolesPermission);
+    get canAddRoles() {
+        return this.accountService.userHasPermission(Permission.addRolesPermission);
     }
 }

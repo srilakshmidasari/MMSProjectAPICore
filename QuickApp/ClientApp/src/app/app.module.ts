@@ -44,11 +44,6 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { BannerDemoComponent } from './components/controls/banner-demo.component';
-import { TodoDemoComponent } from './components/controls/todo-demo.component';
-import { StatisticsDemoComponent } from './components/controls/statistics-demo.component';
-import { NotificationsViewerComponent } from './components/controls/notifications-viewer.component';
-import { AddTaskDialogComponent } from './components/controls/add-task-dialog.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 
 
@@ -86,9 +81,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     HomeComponent,
     AboutComponent,
     NotFoundComponent,
-    NotificationsViewerComponent,
-    AddTaskDialogComponent,
-    StatisticsDemoComponent, TodoDemoComponent, BannerDemoComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
@@ -105,7 +97,6 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
   ],
   entryComponents: [
     LoginDialogComponent,
-    AddTaskDialogComponent
   ],
   bootstrap: [AppComponent]
 })

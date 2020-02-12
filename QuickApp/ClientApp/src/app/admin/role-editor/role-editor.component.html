@@ -4,7 +4,7 @@
   <div fxLayout="row">
     <mat-form-field class="col-md-4">
       <mat-label>{{'roles.editor.Name' | translate}}</mat-label>
-      <input matInput formControlName="name" [readonly]="!canManageRoles" />
+      <input matInput formControlName="name" [readonly]="!canAddRoles" />
       <mat-error *ngIf="name.hasError('required')">
         {{'roles.editor.RoleNameRequired' | translate}}
       </mat-error>
@@ -12,7 +12,7 @@
 
     <mat-form-field class="col-md-4">
       <mat-label>{{'roles.editor.Description' | translate}}</mat-label>
-      <input matInput formControlName="description" [readonly]="!canManageRoles" />
+      <input matInput formControlName="description" [readonly]="!canAddRoles" />
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
@@ -35,7 +35,7 @@
         {{permissionGroup.key}}
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <mat-slide-toggle [disabled]="!canManageRoles" *ngFor="let permission of permissionGroup.value"
+    <mat-slide-toggle  *ngFor="let permission of permissionGroup.value"
       matTooltip="{{permission.description}}" (click)="$event.stopPropagation()"
       (change)="$event ? selectedPermissions.toggle(permission) : null"
       [checked]="selectedPermissions.isSelected(permission)">

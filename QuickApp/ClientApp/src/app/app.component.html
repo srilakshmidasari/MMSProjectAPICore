@@ -97,15 +97,15 @@
         <mat-expansion-panel #asset [class.mat-elevation-z0]="!asset.expanded">
           <mat-expansion-panel-header>
             <mat-panel-title>
-                <mat-icon>assessment</mat-icon>Asset
+                <mat-icon>assessment</mat-icon>{{'mainMenu.Asset'|translate}}
               <!-- <mat-icon>security</mat-icon>Asset -->
             </mat-panel-title>
           </mat-expansion-panel-header>
           <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
-            <mat-icon>place</mat-icon>{{'mainMenu.Asset Group'|translate}}
+            <mat-icon>pets</mat-icon>{{'mainMenu.AssetGroup'|translate}}
           </a>
-          <a mat-list-item routerLinkActive="active" *ngIf="canViewAssets" routerLink="/admin/assets">
-            <mat-icon>place</mat-icon>Asset Location
+          <a mat-list-item routerLinkActive="active"  *ngIf="canViewAssets"  routerLink="/admin/assets">
+            <mat-icon>receipt</mat-icon>{{'mainMenu.Assets'|translate}}
           </a>
         </mat-expansion-panel>
       </mat-nav-list>

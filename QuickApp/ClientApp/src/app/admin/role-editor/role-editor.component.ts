@@ -183,8 +183,12 @@ export class RoleEditorComponent {
     this.selectedPermissions = new SelectionModel<Permission>(true, selectePermissions);
   }
 
-  get canManageRoles() {
-    return this.accountService.userHasPermission(Permission.manageRolesPermission);
+  // get canManageRoles() {
+  //   return this.accountService.userHasPermission(Permission.manageRolesPermission);
+  // }
+
+  get canAddRoles() {
+    return this.accountService.userHasPermission(Permission.addRolesPermission);
   }
   private getRoles() {
     

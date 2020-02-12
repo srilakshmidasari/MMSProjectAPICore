@@ -19,7 +19,7 @@ namespace DAL.Core
 
         public const string UsersPermissionGroupName = "User Permissions";
         public static ApplicationPermission ViewUsers = new ApplicationPermission("View Users", "users.view", UsersPermissionGroupName, "Permission to view other users account details");
-       public static ApplicationPermission ManageUsers = new ApplicationPermission("Manage Users", "users.manage", UsersPermissionGroupName, "Permission to create, delete and modify other users account details");
+      //  public static ApplicationPermission ManageUsers = new ApplicationPermission("Manage Users", "users.manage", UsersPermissionGroupName, "Permission to create, delete and modify other users account details");
         //public static ApplicationPermission AddUpdateUsers = new ApplicationPermission("Add Update Users", "users.addupdate", UsersPermissionGroupName, "Permission to create and modify other users account details");
         public static ApplicationPermission AddUsers = new ApplicationPermission("Add  Users", "users.add", UsersPermissionGroupName, "Permission to create  other users account details");
         public static ApplicationPermission EditUsers = new ApplicationPermission("Edit Users", "users.edit", UsersPermissionGroupName, "Permission to Update other users account details");
@@ -27,12 +27,12 @@ namespace DAL.Core
 
         public const string RolesPermissionGroupName = "Role Permissions";
         public static ApplicationPermission ViewRoles = new ApplicationPermission("View Roles", "roles.view", RolesPermissionGroupName, "Permission to view available roles");
-        public static ApplicationPermission ManageRoles = new ApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
+       // public static ApplicationPermission ManageRoles = new ApplicationPermission("Manage Roles", "roles.manage", RolesPermissionGroupName, "Permission to create, delete and modify roles");
         public static ApplicationPermission AssignRoles = new ApplicationPermission("Assign Roles", "roles.assign", RolesPermissionGroupName, "Permission to assign roles to users");
         //public static ApplicationPermission AddUpdateRoles = new ApplicationPermission("Add Update Roles", "roles.addupdate", RolesPermissionGroupName, "Permission to create and modify roles");
-       // public static ApplicationPermission AddRoles = new ApplicationPermission("Add  Roles", "roles.add", RolesPermissionGroupName, "Permission to create  other roles  details");
-       // public static ApplicationPermission EditRoles = new ApplicationPermission("Edit Roles", "roles.edit", RolesPermissionGroupName, "Permission to Update other roles  details");
-       // public static ApplicationPermission DeleteRoles = new ApplicationPermission("Delete Roles", "roles.delete", RolesPermissionGroupName, "Permission to Delete other roles  details");
+       public static ApplicationPermission AddRoles = new ApplicationPermission("Add  Roles", "roles.add", RolesPermissionGroupName, "Permission to create  other roles  details");
+       public static ApplicationPermission EditRoles = new ApplicationPermission("Edit Roles", "roles.edit", RolesPermissionGroupName, "Permission to Update other roles  details");
+       public static ApplicationPermission DeleteRoles = new ApplicationPermission("Delete Roles", "roles.delete", RolesPermissionGroupName, "Permission to Delete other roles  details");
 
 
         public const string SitesPermissionGroupName = "Site Permissions";
@@ -93,39 +93,27 @@ namespace DAL.Core
             List<ApplicationPermission> allPermissions = new List<ApplicationPermission>()
             {
                 ViewUsers,
-                ManageUsers,
-              //AddUpdateUsers,
                 AddUsers,
                 EditUsers,
                 DeleteUsers,
 
-
                 ViewRoles,
-              ManageRoles,
+                AddRoles,
                 AssignRoles,
-           //  AddUpdateRoles,
-              // AddRoles,
-              // EditRoles,
-              // DeleteRoles,
+                EditRoles,
+                DeleteRoles,
 
                 ViewSites,
-             //  ManageSites,
-               //AddUpdateSites,
                 AddSites,
                 EditSites,
                 DeleteSites,
 
-
-               ViewProjects,
-              // ManageProjects,
-              // AddUpdateProjects,
-               AddProjects,
-               EditProjects,
-               DeleteProjects,
+                ViewProjects,
+                AddProjects,
+                EditProjects,
+                DeleteProjects,
 
                 ViewStores,
-             //   ManageStores,
-                //AddUpdateStores
                 AddStores,
                 EditStores,
                 DeleteStores,
@@ -167,7 +155,7 @@ namespace DAL.Core
         public static string[] GetAdministrativePermissionValues()
             //ManageUsers, ManageRoles,
         {
-            return new string[] {  ManageUsers, ManageRoles, AssignRoles };
+            return new string[] { AddUsers, AddRoles, AssignRoles };
         }
     }
 

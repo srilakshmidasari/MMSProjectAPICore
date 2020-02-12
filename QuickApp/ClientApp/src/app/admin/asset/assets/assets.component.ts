@@ -9,6 +9,7 @@ import { ThemeService } from 'ng2-charts';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-assets',
@@ -345,6 +346,18 @@ export class AssetsComponent implements OnInit {
                 MessageSeverity.error, error);
             });
       });
+  }
+
+  get canAddAssets() {
+    return this.accountService.userHasPermission(Permission.addAssetsPermission);
+  }
+
+  get canEditAssets() {
+    return this.accountService.userHasPermission(Permission.editAssetsPermission);
+  }
+
+  get canDeleteAssets() {
+    return this.accountService.userHasPermission(Permission.deleteAssetsPermission);
   }
 
 }

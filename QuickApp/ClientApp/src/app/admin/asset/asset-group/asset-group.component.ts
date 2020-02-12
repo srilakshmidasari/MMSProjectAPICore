@@ -8,6 +8,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-asset-group',
@@ -199,5 +200,18 @@ export class AssetGroupComponent implements OnInit {
       )
     })
   }
+
+  get canAddAssetsGroup() {
+    return this.accountService.userHasPermission(Permission.addAssetGroupsPermission);
+  }
+
+  get canEditAssetsGroup() {
+    return this.accountService.userHasPermission(Permission.editAssetGroupsPermission);
+  }
+
+  get canDeleteAssetsGroup() {
+    return this.accountService.userHasPermission(Permission.deleteAssetGroupsPermission);
+  }
+
 
 }

@@ -61,7 +61,7 @@ namespace MMS.Authorization
                  requirement.OperationName != AccountManagementOperations.DeleteOperationName))
                 return Task.CompletedTask;
 
-            if (context.User.HasClaim(ClaimConstants.Permission, ApplicationPermissions.ManageUsers) || GetIsSameUser(context.User, targetUserId))
+            if (context.User.HasClaim(ClaimConstants.Permission, ApplicationPermissions.AddUsers) || GetIsSameUser(context.User, targetUserId))
                 context.Succeed(requirement);
 
             return Task.CompletedTask;

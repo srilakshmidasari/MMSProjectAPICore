@@ -52,17 +52,17 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="onEditLocation()">
+                    <button mat-button color="primary" matTooltip="Add" *ngIf="canAddLocation" (click)="onEditLocation()">
                         <mat-icon class="mat-button-icon">add</mat-icon>
                         {{'Location.Management.addLocation' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="onEditLocation(row)">
+                    <button mat-icon-button matTooltip="Edit" *ngIf="canEditLocation" (click)="onEditLocation(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" (click)="onDeleteLocation(row)" *ngIf="row.isActive">
+                    <button mat-icon-button matTooltip="Delete" *ngIf="canDeleteLocation" (click)="onDeleteLocation(row)" [hidden]="!row.isActive">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
