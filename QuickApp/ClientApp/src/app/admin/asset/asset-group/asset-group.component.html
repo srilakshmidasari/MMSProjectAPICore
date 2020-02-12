@@ -25,6 +25,7 @@
                     <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupReference 2'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetRef2}} </mat-cell>
                 </ng-container>
+
                 <ng-container matColumnDef="assetMake" >
                     <mat-header-cell *matHeaderCellDef mat-sort-header class="just-cont-left small-cell1">{{'AssetGroup.Management.AssetGroupMake'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row" class="just-cont-left small-cell1"> {{row.assetMake}} </mat-cell>
@@ -64,7 +65,7 @@
                             <mat-icon color="primary">edit</mat-icon>
                         </button>
     
-                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Delete'|translate}}" (click)="confirmDelete(row)">
+                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                             <mat-icon color="warn">delete</mat-icon>
                         </button>
                     </mat-cell>
