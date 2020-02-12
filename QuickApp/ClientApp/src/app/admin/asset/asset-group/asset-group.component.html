@@ -9,41 +9,40 @@
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
             <mat-table [dataSource]="dataSource" matSort matSortActive="assetRef1" matSortDirection="asc" matSortDisableClear>
-
                 <ng-container matColumnDef="name1">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.Name 1'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="name2">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.Name 2'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetRef1">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Reference 1</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupReference 1'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetRef1}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetRef2">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Reference 2</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupReference 2'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetRef2}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetMake">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Make</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupMake'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetMake}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetModel">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Model</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupModel'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetModel}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetType">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Type</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupType'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetType}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetCapacity">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Group Capacity</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.AssetGroupCapacity'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.assetCapacity}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="updatedDate">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>UpDated Date</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'AssetGroup.Management.UpDated Date'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.updatedDate| date:'dd/MM/yyyy'}} </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="isActive">
@@ -56,16 +55,16 @@
 
                 <ng-container matColumnDef="Actions">
                     <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                        <button mat-button color="primary" matTooltip="Add" (click)="onEditAssetGroup()">
-                            <mat-icon class="mat-button-icon">add</mat-icon>Add Asset Group
+                        <button mat-button color="primary" matTooltip="{{'AssetGroup.Management.Add'|translate}}" (click)="onEditAssetGroup()">
+                            <mat-icon class="mat-button-icon">add</mat-icon>{{'AssetGroup.Management.Add Asset Group'|translate}}
                         </button>
                     </mat-header-cell>
                     <mat-cell class="just-cont-center" *matCellDef="let row">
-                        <button mat-icon-button matTooltip="Edit" (click)="onEditAssetGroup(row)">
+                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Edit'|translate}}" (click)="onEditAssetGroup(row)">
                             <mat-icon color="primary">edit</mat-icon>
                         </button>
     
-                        <button mat-icon-button matTooltip="Delete" (click)="confirmDelete(row)">
+                        <button mat-icon-button matTooltip="{{'AssetGroup.Management.Delete'|translate}}" (click)="confirmDelete(row)">
                             <mat-icon color="warn">delete</mat-icon>
                         </button>
                     </mat-cell>
@@ -91,8 +90,8 @@
  <div class="page-content" [hidden]="!isAdding"> 
     <mat-card>
         <mat-card-header>
-            <mat-card-title *ngIf="isNewAssetGroup"> Add Asset Group</mat-card-title>
-            <mat-card-title *ngIf="!isNewAssetGroup"> Edit Asset Group</mat-card-title>
+            <mat-card-title *ngIf="isNewAssetGroup">{{'AssetGroup.Management.Add Asset Group'|translate}}</mat-card-title>
+            <mat-card-title *ngIf="!isNewAssetGroup">{{'AssetGroup.Management.Edit Asset Group'|translate}}</mat-card-title>
         </mat-card-header>        
         <br>
         <mat-card-content>
