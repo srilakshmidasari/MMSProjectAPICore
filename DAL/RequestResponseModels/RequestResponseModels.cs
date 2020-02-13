@@ -101,6 +101,23 @@ namespace DAL.RequestResponseModels
             public List<UpsertProjectRepository> ProjectRepositories { get; set; }
         }
 
+        public class GetProjectData
+        {
+            public int Id { get; set; }
+            public int SiteId { get; set; }
+            public string ProjectReference { get; set; }
+            public string SiteName1 { get; set; }
+            public string SiteName2 { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public string ProjectDetails { get; set; }
+            public bool IsActive { get; set; }
+            public string CreatedBy { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public string UpdatedBy { get; set; }
+            public DateTime UpdatedDate { get; set; }
+        }
+
         public class UpsertProject : AuditableEntity
         {
             public int Id { get; set; }
@@ -275,6 +292,22 @@ namespace DAL.RequestResponseModels
             public DateTime CreatedDate { get; set; }
             public string UpdatedBy { get; set; }
             public DateTime UpdatedDate { get; set; }
+        }
+
+        public class UpsertSupplier: AuditableEntity
+        {
+            public int Id { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public string Address { get; set; }
+            public string Email { get; set; }
+            public string ContactNumber { get; set; }
+            public bool IsActive { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public string FileExtention { get; set; }
+          
+          
         }
 
     }

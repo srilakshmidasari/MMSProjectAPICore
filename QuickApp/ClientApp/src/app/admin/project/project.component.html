@@ -108,7 +108,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Project Refrerence'|translate}}</mat-label>
-                        <input matInput formControlName="projectReference" required maxlength="50" />
+                        <input matInput formControlName="projectReference" style="text-transform: capitalize;"  required maxlength="50" />
                         <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
                             {{'project.management.Project Reference is Required'|translate}}
                         </mat-error>

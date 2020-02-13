@@ -95,7 +95,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
-                        <mat-select formControlName="siteId">
+                        <mat-select formControlName="siteId" (ngModelChange)="onSelectSite($event)">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
@@ -119,7 +119,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Location.Management.locationRef' | translate}}</mat-label>
-                        <input matInput formControlName="locationRef" required />
+                        <input matInput formControlName="locationRef" required  style="text-transform: capitalize;" />
                         <mat-error *ngIf="!locationForm.controls['locationRef'].valid">
                             {{'Location.editor.locationRefisrequired' | translate}}
                         </mat-error>

@@ -83,33 +83,33 @@ export class AssetsComponent implements OnInit {
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
-        this.getProjects();
+       // this.getProjects();
       },
         error => {
         });
   }
-  // Project Data
-  private getProjects() {
-    this.accountService.getProject()
-      .subscribe((results: any) => {
-        this.projectsList = results.listResult == null ? [] : results.listResult;
-        this.getLocations();
-      },
-        error => {
-        });
-  }
+  // // Project Data
+  // private getProjects() {
+  //   this.accountService.getProject()
+  //     .subscribe((results: any) => {
+  //       this.projectsList = results.listResult == null ? [] : results.listResult;
+  //       this.getLocations();
+  //     },
+  //       error => {
+  //       });
+  // }
 
 
-  // Location Data
-  getLocations() {
-    this.accountService.getLocationData().subscribe((res: any) => {
-      this.locationsList = res.listResult == null ? [] : res.listResult;
+  // // Location Data
+  // getLocations() {
+  //   this.accountService.getLocationData().subscribe((res: any) => {
+  //     this.locationsList = res.listResult == null ? [] : res.listResult;
 
-    },
-      error => {
-      }
-    )
-  }
+  //   },
+  //     error => {
+  //     }
+  //   )
+  // }
   // Asset Group List
   getAllAssetGroups() {
     this.accountService.getAssetGroupData().subscribe((result: any) => {
@@ -131,6 +131,25 @@ export class AssetsComponent implements OnInit {
       })
   }
 
+  onSelectSiteByProject(event){
+    this.projectsList =[];
+    this.accountService.getProjectsBySite(event).subscribe((res: any) => {
+      this.projectsList =  res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+  
+  onSelectProjectByLocation(event){
+    this.locationsList =[];
+    this.accountService.getLocationsByProject(event).subscribe((res: any) => {
+      this.locationsList =  res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+
+
   // Form Building
   private buildForm() {
     this.assetLocationForm = this.fb.group({
@@ -149,7 +168,7 @@ export class AssetsComponent implements OnInit {
       assetTrade: ['', Validators.required],
       assetCounter: ['', Validators.required],
       assetFixDate: ['', Validators.required],
-      isActive: [true]
+      isActive: []
     })
   }
 
@@ -264,7 +283,7 @@ export class AssetsComponent implements OnInit {
       "fileName": this.base64string,
       "fileLocation": "",
       "fileExtention": this.fileExtension,
-      "isActive":formModel.isActive =='' || formModel.isActive == null ? false:true,
+      "isActive":formModel.isActive == '' || formModel.isActive == null ? false : true,
       "createdBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.createdBy,
       "createdDate": new Date(),
       "updatedBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.updatedBy,

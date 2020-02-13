@@ -43,7 +43,7 @@
                     </button>
 
                     <button mat-icon-button matTooltip="{{'AssetLocation.Management.Delete'|translate}}"
-                        (click)="confirmDelete(row)">
+                        >
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -176,7 +176,7 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'AssetLocation.Management.Asset Conter'|translate}}</mat-label>
-                        <mat-select formControlName="assCounter" (ngModelChange)="onSelectCounter($event)">
+                        <mat-select formControlName="assCounter" >
                             <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
                                 {{counter.value}}
                             </mat-option>
@@ -197,7 +197,7 @@
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
                 <button mat-raised-button color="primary"
-                    (click)="save()">{{'AssetLocation.Management.save'|translate}}</button>
+                    >{{'AssetLocation.Management.save'|translate}}</button>
                 <button mat-raised-button color="warn"
                     (click)="onAssetCancel()">{{'AssetLocation.Management.cancel'|translate}}</button>
             </div>

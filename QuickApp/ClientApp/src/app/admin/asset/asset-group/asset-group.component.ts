@@ -92,7 +92,7 @@ export class AssetGroupComponent implements OnInit {
     }
   }
   // On Cancel Click
-  onAssetGroupCancel(assGroup) {
+  onAssetGroupCancel() {
     this.isAdding = false;
   }
   // On  Add Or Edit Click

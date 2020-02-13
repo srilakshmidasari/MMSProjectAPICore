@@ -49,5 +49,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Locations.DeleteLocation(LocationId);
         }
+
+        [HttpGet("GetLocationsByProjectId/{ProjectId}")]
+        public ListDataResponse<Location> GetLocationsByProjectId(int ProjectId)
+        {
+            return _unitOfWork.Locations.GetLocationsByProjectId(ProjectId);
+        }
     }
 }

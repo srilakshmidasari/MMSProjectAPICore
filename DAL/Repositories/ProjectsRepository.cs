@@ -439,5 +439,38 @@ namespace DAL.Repositories
 
             return response;
         }
+
+
+        public ListDataResponse<Project> GetProjectsBySiteId(int SiteId)
+        {
+            ListDataResponse<Project> response = new ListDataResponse<Project>();
+            try
+            {
+                var result = _appContext.Projects.Where(x => x.SiteId == SiteId).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = result.Count();
+                    response.EndUserMessage = "Get Project Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Project Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

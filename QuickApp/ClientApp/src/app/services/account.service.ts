@@ -347,4 +347,14 @@ export class AccountService {
   getSuppliers(){
     return this.accountEndpoint.getSuppliersEndpoint();
   }
+
+  getProjectsBySite(SiteId) {
+    return this.accountEndpoint.getProjectsBySiteEndpoint(SiteId);
+  }
+
+  getLocationsByProject(ProjectId) {
+    return this.accountEndpoint.getLocationsByProjectEndPoint(ProjectId);
+  }
+
+
 }

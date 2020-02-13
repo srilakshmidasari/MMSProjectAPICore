@@ -185,3 +185,9 @@ mat-header-row {
   box-sizing: border-box;
   max-width: 18%;
 }
+.first-l-cap:first-letter{
+  text-transform: capitalize !important;
+}
+.first-l-cap::first-letter{
+  text-transform: capitalize !important;
+}
