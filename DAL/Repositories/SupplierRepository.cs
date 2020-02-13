@@ -129,8 +129,8 @@ namespace DAL.Repositories
                         result.Name2 = suppliers.Name2;
                         result.Address = suppliers.Address;
                         result.Email = suppliers.Email;
-                    result.ContactNumber = suppliers.ContactNumber;
-                         //result.Note = suppliers.Note;
+                        result.ContactNumber = suppliers.ContactNumber;
+                        result.Note = suppliers.Note;
                         result.IsActive = suppliers.IsActive;
                         result.CreatedBy = suppliers.CreatedBy;
                         result.CreatedDate = suppliers.CreatedDate;
@@ -184,6 +184,45 @@ namespace DAL.Repositories
                 response.Exception = ex;
 
             }
+            return response;
+        }
+
+        public ValueDataResponse<Supplier> DeleteSupplierByID(int SupplierId)
+        {
+            ValueDataResponse<Supplier> response = new ValueDataResponse<Supplier>();
+            try
+            {
+                var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId && x.IsActive == true).FirstOrDefault();
+                if (SupplierData != null)
+                {
+                    SupplierData.IsActive = false;
+                    //entityInfo.UpdatedBy = entity.Updated
+                    SupplierData.UpdatedDate = DateTime.Now;
+                    _appContext.SaveChanges();
+                }
+
+                if (SupplierData != null)
+                {
+                    response.Result = SupplierData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Supplier Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Supplier Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
             return response;
         }
     }

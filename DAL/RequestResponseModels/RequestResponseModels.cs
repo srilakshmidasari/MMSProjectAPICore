@@ -314,7 +314,7 @@ namespace DAL.RequestResponseModels
             public string Address { get; set; }
             public string Email { get; set; }
             public string ContactNumber { get; set; }
-           // public string Note { get; set; }
+            public string Note { get; set; }
             public bool IsActive { get; set; }
             public string FileName { get; set; }
             public string FileLocation { get; set; }

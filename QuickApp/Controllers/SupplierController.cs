@@ -44,5 +44,10 @@ namespace MMS.Controllers
             return _unitOfWork.Suppliers.UpdateSupplierDetials(SupplierDetails);
         }
 
+        [HttpDelete("DeleteSupplierByID")]
+        public ValueDataResponse<Supplier> DeleteSupplierByID(int SupplierId)
+        {
+            return _unitOfWork.Suppliers.DeleteSupplierByID(SupplierId);
+        }
     }
 }
