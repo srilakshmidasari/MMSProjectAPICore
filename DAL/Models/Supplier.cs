@@ -50,6 +50,7 @@ namespace DAL.Models
         [Display(Name = "File Extention")]
         [StringLength(10)]
         public string FileExtention { get; set; }
+
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }
 

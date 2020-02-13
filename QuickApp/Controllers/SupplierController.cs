@@ -8,6 +8,7 @@ using DAL.Models;
 using DAL.Response;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using static DAL.RequestResponseModels.RequestResponseModels;
 
 namespace MMS.Controllers
 {
@@ -30,7 +31,7 @@ namespace MMS.Controllers
         }
 
         [HttpPost("AddSupplierDetials")]
-        public ValueDataResponse<Supplier> AddSupplierDetials(Supplier suppliers)
+        public ValueDataResponse<Supplier> AddSupplierDetials(UpsertSupplier suppliers)
         {
             Supplier SupplierDetails = _mapper.Map<Supplier>(suppliers);
             return _unitOfWork.Suppliers.AddSupplierDetials(SupplierDetails);
