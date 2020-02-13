@@ -11,5 +11,6 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<Supplier> GetAllSupplier();
         ValueDataResponse<Supplier> AddSupplierDetials(Supplier suppliers);
+        ValueDataResponse<Supplier> UpdateSupplierDetials(Supplier suppliers);
     }
 }

@@ -37,5 +37,12 @@ namespace MMS.Controllers
             return _unitOfWork.Suppliers.AddSupplierDetials(SupplierDetails);
         }
 
+        [HttpPut("UpdateSupplierDetials")]
+        public ValueDataResponse<Supplier> UpdateSupplierDetials(UpsertSupplier suppliers)
+        {
+            Supplier SupplierDetails = _mapper.Map<Supplier>(suppliers);
+            return _unitOfWork.Suppliers.UpdateSupplierDetials(SupplierDetails);
+        }
+
     }
 }
