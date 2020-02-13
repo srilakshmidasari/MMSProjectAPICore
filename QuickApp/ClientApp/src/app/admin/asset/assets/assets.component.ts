@@ -149,7 +149,7 @@ export class AssetsComponent implements OnInit {
       assetTrade: ['', Validators.required],
       assetCounter: ['', Validators.required],
       assetFixDate: ['', Validators.required],
-      isActive: [true]
+      isActive: []
     })
   }
 
@@ -264,7 +264,7 @@ export class AssetsComponent implements OnInit {
       "fileName": this.base64string,
       "fileLocation": "",
       "fileExtention": this.fileExtension,
-      "isActive":formModel.isActive =='' || formModel.isActive == null ? false:true,
+      "isActive":formModel.isActive == '' || formModel.isActive == null ? false : true,
       "createdBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.createdBy,
       "createdDate": new Date(),
       "updatedBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.updatedBy,

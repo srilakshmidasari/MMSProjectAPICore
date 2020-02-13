@@ -256,7 +256,7 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetFixedDate'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="assetFixDate"
-                            placeholder="Asset Fixed Date" [min]="currenrDate" required>
+                            placeholder="Asset Fixed Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!assetLocationForm.controls['assetFixDate'].valid">
@@ -266,7 +266,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="file">{{'Assets.Management.UploadImage'|translate}} *</label>
+                        <label for="file">{{'Assets.Management.UploadImage'|translate}} </label>
                         <input type="file" class="form-control" id="file" accept="image/*" (change)="onSelectFiles($event)">
                     </div>
                     <div class="col-md-4" *ngIf="isNewAsset">
