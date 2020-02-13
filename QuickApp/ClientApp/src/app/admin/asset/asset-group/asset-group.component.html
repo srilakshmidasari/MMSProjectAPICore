@@ -115,14 +115,14 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Asset.Management.AssetGroupReference1' | translate}}</mat-label>
-                        <input matInput formControlName="agRef1" required />
+                        <input matInput formControlName="agRef1" required   style="text-transform: capitalize;"  />
                         <mat-error *ngIf="!assetGroupForm.controls['agRef1'].valid">
                             {{'Asset.editor.assetGroupRef1Required' | translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Asset.Management.AssetGroupReference2' | translate}}</mat-label>
-                        <input matInput formControlName="agRef2" required />
+                        <input matInput formControlName="agRef2" required   style="text-transform: capitalize;"  />
                         <mat-error *ngIf="!assetGroupForm.controls['agRef2'].valid">
                             {{'Asset.editor.assetGroupRef2Required' | translate}}
                         </mat-error>

@@ -344,4 +344,14 @@ export class AccountService {
   deleteAsset(assetId) {
     return this.accountEndpoint.deleteAssetEndpoint(assetId);
   }
+
+  getProjectsBySite(SiteId) {
+    return this.accountEndpoint.getProjectsBySiteEndpoint(SiteId);
+  }
+
+  getLocationsByProject(ProjectId) {
+    return this.accountEndpoint.getLocationsByProjectEndPoint(ProjectId);
+  }
+
+
 }

@@ -83,33 +83,33 @@ export class AssetsComponent implements OnInit {
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
-        this.getProjects();
+       // this.getProjects();
       },
         error => {
         });
   }
-  // Project Data
-  private getProjects() {
-    this.accountService.getProject()
-      .subscribe((results: any) => {
-        this.projectsList = results.listResult == null ? [] : results.listResult;
-        this.getLocations();
-      },
-        error => {
-        });
-  }
+  // // Project Data
+  // private getProjects() {
+  //   this.accountService.getProject()
+  //     .subscribe((results: any) => {
+  //       this.projectsList = results.listResult == null ? [] : results.listResult;
+  //       this.getLocations();
+  //     },
+  //       error => {
+  //       });
+  // }
 
 
-  // Location Data
-  getLocations() {
-    this.accountService.getLocationData().subscribe((res: any) => {
-      this.locationsList = res.listResult == null ? [] : res.listResult;
+  // // Location Data
+  // getLocations() {
+  //   this.accountService.getLocationData().subscribe((res: any) => {
+  //     this.locationsList = res.listResult == null ? [] : res.listResult;
 
-    },
-      error => {
-      }
-    )
-  }
+  //   },
+  //     error => {
+  //     }
+  //   )
+  // }
   // Asset Group List
   getAllAssetGroups() {
     this.accountService.getAssetGroupData().subscribe((result: any) => {
@@ -130,6 +130,25 @@ export class AssetsComponent implements OnInit {
       error => {
       })
   }
+
+  onSelectSiteByProject(event){
+    this.projectsList =[];
+    this.accountService.getProjectsBySite(event).subscribe((res: any) => {
+      this.projectsList =  res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+  
+  onSelectProjectByLocation(event){
+    this.locationsList =[];
+    this.accountService.getLocationsByProject(event).subscribe((res: any) => {
+      this.locationsList =  res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+
 
   // Form Building
   private buildForm() {

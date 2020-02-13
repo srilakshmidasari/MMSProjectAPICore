@@ -45,7 +45,12 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getLookUpDetailsByTypeIdUrl: string = '/api/Masters/GetLookUpDetilas';
   private readonly _getRepositoryByProjectUrl: string = '/api/Project/GetRepositoryByProject';
   private readonly _deleteProjectFileUrl: string = '/api/Project/DeleteProjectRepository';
+  private readonly _getProjectsBySiteUrl: string = '/api/Project/GetProjectsBySiteId';
+
+
   private readonly _locationUrl: string = '/api/Location';
+  private readonly _getLocationsByProjectUrl: string = '/api/Location/GetLocationsByProjectId';
+
   private readonly _getAssetGroupUrl: string = '/api/Asset/GetAllAssetGroup';
   private readonly _addAssetGroupUrl: string = '/api/Asset/AddAssetGroup';
   private readonly _upDateAssetGroupUrl: string = '/api/Asset/UpdateAssetGroup';
@@ -95,7 +100,9 @@ export class AccountEndpoint extends EndpointBase {
   get addAssetLocationUrl() { return this.configurations.baseUrl + this._addAssetLocationUrl; }
   get updateAssetLocationUrl() { return this.configurations.baseUrl + this._updateAssetLocationUrl; }
   get deleteAssetLocationUrl() { return this.configurations.baseUrl + this._deleteAssetLocationUrl; }
-
+ 
+  get getProjectsBySiteUrl() { return this.configurations.baseUrl + this. _getProjectsBySiteUrl; }
+  get getLocationsByProjectUrl() { return this.configurations.baseUrl + this._getLocationsByProjectUrl; }
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -482,6 +489,23 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.deleteProjectEndpoint(ProjectId));
       }));
   }
+
+  getProjectsBySiteEndpoint<T>(SiteId: any): Observable<T> {
+    const endpointUrl = this.getProjectsBySiteUrl + '/' + SiteId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getProjectsBySiteEndpoint(SiteId));
+      }));
+  }
+
+  getLocationsByProjectEndPoint<T>(ProjectId: any): Observable<T> {
+    const endpointUrl = this.getLocationsByProjectUrl + '/' + ProjectId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getLocationsByProjectEndPoint(ProjectId));
+      }));
+  }
+
   getLocationEndpoint<T>(): Observable<T> {
     const endpointUrl = this.locationUrlData;
 
@@ -514,6 +538,8 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.deleteLocationEndpoint(locationId));
       }));
   }
+
+
 
   getAssetGroupEndPoint<T>(): Observable<T> {
     const endpointUrl = this.getAssetGroup;

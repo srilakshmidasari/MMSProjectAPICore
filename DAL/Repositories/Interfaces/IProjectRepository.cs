@@ -19,6 +19,8 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<Project> DeleteProject(int  projectId);
 
+        ListDataResponse<Project> GetProjectsBySiteId(int SiteId);
+
         //ListDataResponse<> GetStoresByProjectId(int ProjectId);
     }
 }

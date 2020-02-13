@@ -1,7 +1,7 @@
 <form #form="ngForm" [formGroup]="siteForm" (ngSubmit)="save()">
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.siteRef' | translate}}</mat-label>
-    <input matInput formControlName="siteref" required maxlength="16" />
+    <input matInput formControlName="siteref" style="text-transform: capitalize;"  required maxlength="16" />
     <mat-error *ngIf="!siteForm.controls['siteref'].valid">
       {{'site.management.SiteReferenceisrequired' | translate}}
     </mat-error>
@@ -22,7 +22,7 @@
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.SiteManager' | translate}}</mat-label>
-    <input matInput formControlName="siteManager" required maxlength="30" onkeypress='return (event.charCode !=60 ) &&(event.charCode !=62 )' />
+    <input matInput formControlName="siteManager" required maxlength="30" onkeypress='return (event.charCode !=60 ) &&(event.charCode !=62 ) && (event.charCode !=47 ) &&  (event.charCode !=92)' />
     <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
       {{'site.management.SiteManagerRequired' | translate}}
     </mat-error>

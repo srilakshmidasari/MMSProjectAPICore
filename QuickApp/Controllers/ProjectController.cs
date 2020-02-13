@@ -69,6 +69,13 @@ namespace MMS.Controllers
         public ValueDataResponse<Project> DeleteProject(int ProjectId)
         {
             return _unitOfWork.Projects.DeleteProject(ProjectId);
-        } 
+        }
+
+
+        [HttpGet("GetProjectsBySiteId/{SiteId}")]
+        public ListDataResponse<Project> GetProjectsBySiteId(int SiteId)
+        {
+            return _unitOfWork.Projects.GetProjectsBySiteId(SiteId);
+        }
     }
 }

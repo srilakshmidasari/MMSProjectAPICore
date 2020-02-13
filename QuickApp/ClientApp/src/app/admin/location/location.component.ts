@@ -43,7 +43,7 @@ export class LocationComponent implements OnInit {
   ngOnInit() {
     this.getLocation();
     this.getSites();
-    this.getProjects();
+   // this.getProjects();
   }
 
   // Site Data
@@ -55,15 +55,15 @@ export class LocationComponent implements OnInit {
         error => {
         });
   }
-  // Project Data
-  private getProjects() {
-    this.accountService.getProject()
-      .subscribe((results: any) => {
-        this.projectsList = results.listResult == null ? [] : results.listResult;
-      },
-        error => {
-        });
-  }
+  // // Project Data
+  // private getProjects() {
+  //   this.accountService.getProject()
+  //     .subscribe((results: any) => {
+  //       this.projectsList = results.listResult == null ? [] : results.listResult;
+  //     },
+  //       error => {
+  //       });
+  // }
 
   // Location Data
   getLocation() {
@@ -111,6 +111,9 @@ export class LocationComponent implements OnInit {
       isActive: this.locationRefData.isActive || ''
     });
   }
+
+
+
   // On Search
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
@@ -135,6 +138,17 @@ export class LocationComponent implements OnInit {
       this.buildForm();
     }
   }
+
+
+  onSelectSite(event){
+    this.projectsList =[];
+    this.accountService.getProjectsBySite(event).subscribe((res: any) => {
+      this.projectsList =  res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+
   get currentUser() {
     return this.authService.currentUser;
   }
