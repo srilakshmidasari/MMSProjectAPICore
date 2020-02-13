@@ -12,7 +12,7 @@ using System.IO;
 
 namespace DAL.Repositories
 {
-    public class AssetRepository :Repository<dynamic>, IAssetRepository
+    public class AssetRepository : Repository<dynamic>, IAssetRepository
     {
         public readonly IOptions<AppSettings> _config;
         public AssetRepository(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration) : base(context, mapper, configuration)
@@ -59,23 +59,23 @@ namespace DAL.Repositories
 
             try
             {
-                    var result = _appContext.AssetGroups.Add(asset);
-                    _appContext.SaveChanges();
+                var result = _appContext.AssetGroups.Add(asset);
+                _appContext.SaveChanges();
 
-                    if (result != null)
-                    {
-                        response.Result = asset;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "AssetGroup Added Successfully";
-                    }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "AssetGroup Added Failed";
-                    }
-                              
+                if (result != null)
+                {
+                    response.Result = asset;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "AssetGroup Added Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "AssetGroup Added Failed";
+                }
+
             }
             catch (Exception ex)
             {
@@ -94,36 +94,36 @@ namespace DAL.Repositories
 
             try
             {
-                    var result = _appContext.AssetGroups.Where(x => x.Id == asset.Id).FirstOrDefault();
-                    if (result != null)
-                    {
-                        result.AssetRef1 = asset.AssetRef1;
-                        result.AssetRef2 = asset.AssetRef2;
-                        result.Name1 = asset.Name1;
-                        result.Name2 = asset.Name2;
-                        result.AssetMake = asset.AssetMake;
-                        result.AssetModel = asset.AssetModel;
-                        result.AssetCapacity = asset.AssetCapacity;
-                        result.AssetType = asset.AssetType;
-                        result.IsActive = asset.IsActive;
-                        result.CreatedBy = asset.CreatedBy;
-                        result.CreatedDate = asset.CreatedDate;
-                        result.UpdatedBy = asset.UpdatedBy;
-                        result.UpdatedDate = asset.UpdatedDate;
+                var result = _appContext.AssetGroups.Where(x => x.Id == asset.Id).FirstOrDefault();
+                if (result != null)
+                {
+                    result.AssetRef1 = asset.AssetRef1;
+                    result.AssetRef2 = asset.AssetRef2;
+                    result.Name1 = asset.Name1;
+                    result.Name2 = asset.Name2;
+                    result.AssetMake = asset.AssetMake;
+                    result.AssetModel = asset.AssetModel;
+                    result.AssetCapacity = asset.AssetCapacity;
+                    result.AssetType = asset.AssetType;
+                    result.IsActive = asset.IsActive;
+                    result.CreatedBy = asset.CreatedBy;
+                    result.CreatedDate = asset.CreatedDate;
+                    result.UpdatedBy = asset.UpdatedBy;
+                    result.UpdatedDate = asset.UpdatedDate;
 
-                        _appContext.SaveChanges();
+                    _appContext.SaveChanges();
 
-                        response.Result = asset;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "AssetGroup Updated Successfully";
-                    }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "AssetGroup Updated Failed";
-                    }
+                    response.Result = asset;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "AssetGroup Updated Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "AssetGroup Updated Failed";
+                }
             }
             catch (Exception ex)
             {
@@ -215,9 +215,9 @@ namespace DAL.Repositories
                                   AssetType = ag.AssetType,
                                   AstCounter = al.AstCounter,
                                   AstFixedDate = al.AstFixedDate,
-                                  FileName = al.FileName,
-                                  FileLocation = al.FileLocation,
-                                  FileExtention =al.FileExtention,
+                                  //FileName = al.FileName,
+                                  //FileLocation = al.FileLocation,
+                                  //FileExtention =al.FileExtention,
                                   IsActive = al.IsActive,
                                   CreatedBy = al.CreatedBy,
                                   CreatedDate = al.CreatedDate,
@@ -225,7 +225,7 @@ namespace DAL.Repositories
                                   UpdatedDate = al.UpdatedDate
                               }).ToList();
 
-                result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+                //  result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
                 if (result != null)
                 {
                     response.ListResult = result;
@@ -251,44 +251,62 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ValueDataResponse<AssetLocation> InsertAssetLocation(AssetLocation asset)
+        public ValueDataResponse<AssetLocation> InsertAssetLocation(UpsertAssetLocation asset)
         {
             ValueDataResponse<AssetLocation> response = new ValueDataResponse<AssetLocation>();
 
             try
             {
+                AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
+
                 var siteExists = _appContext.AssetLocations.Where(x => x.AssetRef == asset.AssetRef).FirstOrDefault();
                 if (siteExists == null)
                 {
-                    var result = _appContext.AssetLocations.Add(asset);
+                    var result = _appContext.AssetLocations.Add(assetInfo);
+                    _appContext.SaveChanges();
 
-                    if (asset.FileName != null)
+                    foreach (var req in asset.AssetRepositories)
                     {
-                        string ModuleName = "Assets";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
+                        if (req.FileName != null)
+                        {
+                            string ModuleName = "Assets";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
 
-                        FileUploadService repo = new FileUploadService();
+                            FileUploadService repo = new FileUploadService();
 
-                        //string FolderLocation = _config.Value.FileRepositoryFolder;
-                        string FolderLocation = "FileRepository";
-                        string ServerRootPath = _config.Value.ServerRootPath;
+                            string FolderLocation = "FileRepository";
+                            string ServerRootPath = _config.Value.ServerRootPath;
 
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                        byte[] FileBytes = Convert.FromBase64String(asset.FileName);
+                            byte[] FileBytes = Convert.FromBase64String(req.FileName);
 
-                        asset.FileName = repo.UploadFile(FileBytes, asset.FileExtention, Location);
+                            req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
 
-                        asset.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                            req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                            AssetFileRepository pros = new AssetFileRepository();
+                            {
+                                pros.AssetId = assetInfo.Id;
+                                pros.FileName = req.FileName;
+                                pros.FileLocation = req.FileLocation;
+                                pros.FileExtention = req.FileExtention;
+                                pros.CreatedBy = req.CreatedBy;
+                                pros.CreatedDate = DateTime.Now;
+                                pros.UpdatedBy = req.UpdatedBy;
+                                pros.UpdatedDate = DateTime.Now;
+                            }
+                            _appContext.AssetFileRepositories.Add(pros);
+                        }
                     }
                     _appContext.SaveChanges();
 
                     if (result != null)
                     {
-                        response.Result = asset;
+                        response.Result = assetInfo;
                         response.IsSuccess = true;
                         response.AffectedRecords = 1;
                         response.EndUserMessage = "Asset Added Successfully";
@@ -319,12 +337,13 @@ namespace DAL.Repositories
         }
 
 
-        public ValueDataResponse<AssetLocation> UpdateAssetLocation(AssetLocation asset)
+        public ValueDataResponse<AssetLocation> UpdateAssetLocation(UpsertAssetLocation asset)
         {
             ValueDataResponse<AssetLocation> response = new ValueDataResponse<AssetLocation>();
 
             try
             {
+                AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
                 var assetExists = _appContext.AssetLocations.Where(x => x.Id != asset.Id && x.AssetRef == asset.AssetRef).FirstOrDefault();
                 if (assetExists == null)
                 {
@@ -338,7 +357,6 @@ namespace DAL.Repositories
                         result.AstTradeId = asset.AstTradeId;
                         result.Name1 = asset.Name1;
                         result.Name2 = asset.Name2;
-                        result.Project = asset.Project;
                         result.AssetRef = asset.AssetRef;
                         result.AstCounter = asset.AstCounter;
                         result.AstFixedDate = asset.AstFixedDate;
@@ -347,31 +365,43 @@ namespace DAL.Repositories
                         result.CreatedDate = asset.CreatedDate;
                         result.UpdatedBy = asset.UpdatedBy;
                         result.UpdatedDate = asset.UpdatedDate;
-
-                        if (asset.FileName != null)
+                        foreach (var req in asset.AssetRepositories)
                         {
-                            string ModuleName = "Assets";
-                            var now = DateTime.Now;
-                            var yearName = now.ToString("yyyy");
-                            var monthName = now.Month.ToString("d2");
-                            var dayName = now.ToString("dd");
+                            if (req.FileName != null)
+                            {
+                                string ModuleName = "Assets";
+                                var now = DateTime.Now;
+                                var yearName = now.ToString("yyyy");
+                                var monthName = now.Month.ToString("d2");
+                                var dayName = now.ToString("dd");
 
-                            FileUploadService repo = new FileUploadService();
+                                FileUploadService repo = new FileUploadService();
 
+                                string FolderLocation = "FileRepository";
+                                string ServerRootPath = _config.Value.ServerRootPath;
 
-                            string FolderLocation = _config.Value.FileRepositoryFolder;
-                            string ServerRootPath = _config.Value.ServerRootPath;
+                                string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                                byte[] FileBytes = Convert.FromBase64String(req.FileName);
 
-                            byte[] FileBytes = Convert.FromBase64String(asset.FileName);
+                                req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
 
-                            result.FileName = repo.UploadFile(FileBytes, asset.FileExtention, Location);
+                                req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
 
-                            result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                            result.FileExtention = asset.FileExtention;
+                                AssetFileRepository pros = new AssetFileRepository();
+                                {
+                                    pros.AssetId = assetInfo.Id;
+                                    pros.FileName = req.FileName;
+                                    pros.FileLocation = req.FileLocation;
+                                    pros.FileExtention = req.FileExtention;
+                                    pros.CreatedBy = req.CreatedBy;
+                                    pros.CreatedDate = DateTime.Now;
+                                    pros.UpdatedBy = req.UpdatedBy;
+                                    pros.UpdatedDate = DateTime.Now;
+                                }
+                                _appContext.AssetFileRepositories.Add(pros);
+                            }
                         }
-
                         _appContext.SaveChanges();
                         response.Result = result;
                         response.IsSuccess = true;
@@ -455,7 +485,7 @@ namespace DAL.Repositories
                     response.AffectedRecords = 1;
                     response.EndUserMessage = " Get AssetGroup Details Successfull";
                 }
-               
+
                 else
                 {
                     response.IsSuccess = true;
