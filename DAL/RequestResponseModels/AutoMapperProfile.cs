@@ -86,8 +86,10 @@ namespace DAL.RequestResponseModels
                 .ForMember(d => d.AstGroup_Id, map => map.Ignore())
                 .ForMember(d => d.Location_Id, map => map.Ignore())
                 .ForMember(d => d.AstTrade_Id, map => map.Ignore());
-                
+
             //.ForMember(d => d.Id, map => map.Condition(src => src.Id != null));
+
+            CreateMap<UpsertSupplier, Supplier>();
         }
     }
 }

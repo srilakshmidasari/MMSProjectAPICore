@@ -306,5 +306,21 @@ namespace DAL.RequestResponseModels
             public DateTime UpdatedDate { get; set; }
         }
 
+        public class UpsertSupplier: AuditableEntity
+        {
+            public int Id { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public string Address { get; set; }
+            public string Email { get; set; }
+            public string ContactNumber { get; set; }
+            public bool IsActive { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public string FileExtention { get; set; }
+          
+          
+        }
+
     }
 }
