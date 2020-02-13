@@ -48,17 +48,17 @@ namespace DAL.Models
         [Display(Name = "Name2")]
 
         public string Name2 { get; set; }
-        [Display(Name = "File Name")]
-        [StringLength(50)]
-        public string FileName { get; set; }
+        //[Display(Name = "File Name")]
+        //[StringLength(50)]
+        //public string FileName { get; set; }
 
-        [Display(Name = "File Location")]
-        [StringLength(250)]
-        public string FileLocation { get; set; }
+        //[Display(Name = "File Location")]
+        //[StringLength(250)]
+        //public string FileLocation { get; set; }
 
-        [Display(Name = "File Extention")]
-        [StringLength(10)]
-        public string FileExtention { get; set; }
+        //[Display(Name = "File Extention")]
+        //[StringLength(10)]
+        //public string FileExtention { get; set; }
 
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }

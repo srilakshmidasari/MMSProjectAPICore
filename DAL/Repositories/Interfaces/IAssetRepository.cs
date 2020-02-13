@@ -20,8 +20,8 @@ namespace DAL.Repositories.Interfaces
         // Asset Location Services
         ListDataResponse<GetAssetLocationResponse> GetAssetLocations();
 
-        ValueDataResponse<AssetLocation> InsertAssetLocation(AssetLocation asset);
-        ValueDataResponse<AssetLocation> UpdateAssetLocation(AssetLocation asset);
+        ValueDataResponse<AssetLocation> InsertAssetLocation(UpsertAssetLocation asset);
+        ValueDataResponse<AssetLocation> UpdateAssetLocation(UpsertAssetLocation asset);
 
         ValueDataResponse<AssetLocation> DeleteAssetLocation(int assetId);
         ListDataResponse<AssetGroup> GetAssetGroupDetilasById(int assetId);

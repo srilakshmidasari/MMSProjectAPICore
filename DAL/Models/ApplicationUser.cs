@@ -90,5 +90,8 @@ namespace DAL.Models
 
         public ICollection<Supplier> App_Supplier_CreatedUser { get; set; }
         public ICollection<Supplier> App_Supplier_UpdatedUser { get; set; }
+
+        public ICollection<AssetFileRepository> App_AssetFileRepository_CreatedUser { get; set; }
+        public ICollection<AssetFileRepository> App_AssetFileRepository_UpdatedUser { get; set; }
     }
 }

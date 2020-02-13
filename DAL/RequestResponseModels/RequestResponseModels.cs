@@ -139,10 +139,7 @@ namespace DAL.RequestResponseModels
             public string Name2 { get; set; }
             public string Remarks { get; set; }
             public bool IsActive { get; set; }
-            public string CreatedBy { get; set; }
-            public DateTime CreatedDate { get; set; }
-            public string UpdatedBy { get; set; }
-            public DateTime UpdatedDate { get; set; }
+           
         }
 
         public class GetLoopUpResponse : AuditableEntity
@@ -261,9 +258,9 @@ namespace DAL.RequestResponseModels
             public string AssetLocationRef { get; set; }
             public int AstCounter { get; set; }
             public DateTime AstFixedDate { get; set; }
-            public string FileName { get; set; }
-            public string FileLocation { get; set; }
-            public string FileExtention { get; set; }
+            //public string FileName { get; set; }
+            //public string FileLocation { get; set; }
+            //public string FileExtention { get; set; }
             public bool IsActive { get; set; }
             public string CreatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
@@ -284,10 +281,25 @@ namespace DAL.RequestResponseModels
             public string AssetRef { get; set; }
             public int AstCounter { get; set; }
             public DateTime AstFixedDate { get; set; }
+            //public string FileName { get; set; }
+            //public string FileLocation { get; set; }
+            //public string FileExtention { get; set; }
+            public bool IsActive { get; set; }
+            public string CreatedBy { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public string UpdatedBy { get; set; }
+            public DateTime UpdatedDate { get; set; }
+            public List<UpsertAssetRepository> AssetRepositories { get; set; }
+        }
+
+
+        public class UpsertAssetRepository
+        {
+            public int AssetRpositoryId { get; set; }
+            public int AssetId { get; set; }
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
-            public bool IsActive { get; set; }
             public string CreatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
             public string UpdatedBy { get; set; }
@@ -302,6 +314,7 @@ namespace DAL.RequestResponseModels
             public string Address { get; set; }
             public string Email { get; set; }
             public string ContactNumber { get; set; }
+            public string Note { get; set; }
             public bool IsActive { get; set; }
             public string FileName { get; set; }
             public string FileLocation { get; set; }
