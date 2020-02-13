@@ -106,5 +106,6 @@ namespace DAL.Models
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
+        public ICollection<AssetFileRepository> App_Repository_Id { get; set; }
     }
 }
