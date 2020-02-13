@@ -41,6 +41,7 @@ export class ProjectComponent implements OnInit {
   siteList: any;
   projectData: any = {};
   documentList: any[] = [];
+  
   BASE64_MARKER: string = ';base64,';
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
   @Input() allowedImageExtension: string = "jpeg , jpg , png";

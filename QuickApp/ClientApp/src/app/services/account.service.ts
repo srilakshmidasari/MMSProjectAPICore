@@ -344,4 +344,7 @@ export class AccountService {
   deleteAsset(assetId) {
     return this.accountEndpoint.deleteAssetEndpoint(assetId);
   }
+  getSuppliers(){
+    return this.accountEndpoint.getSuppliersEndpoint();
+  }
 }

@@ -585,5 +585,15 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.deleteAssetEndpoint(assetId));
       }));
   }
+ 
+  //get supplier
+
+  getSuppliersEndpoint<T>(): Observable<T> {
+    const endpointUrl = this.getAssetLocationUrl;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getSuppliersEndpoint());
+      }));
+  }
 
 }
