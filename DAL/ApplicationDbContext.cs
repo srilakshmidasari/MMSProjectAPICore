@@ -32,6 +32,7 @@ namespace DAL
         public DbSet<AssetLocation> AssetLocations { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
 
+        public DbSet<AssetFileRepository> AssetFileRepositories { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -68,7 +69,7 @@ namespace DAL
             builder.Entity<AssetLocation>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<Supplier>().ToTable("Supplier");
             builder.Entity<Supplier>().Property(p => p.IsActive).HasDefaultValue(true);
-
+            builder.Entity<AssetFileRepository>().ToTable("AssetFileRepository");
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
@@ -288,16 +289,34 @@ namespace DAL
                 .HasConstraintName("FK_App_AssetLocation_AstTradeId");
 
             builder.Entity<Supplier>().HasOne(d => d.CreatedUser)
-       .WithMany(p => p.App_Supplier_CreatedUser)
-       .HasForeignKey(d => d.CreatedBy)
-       .OnDelete(DeleteBehavior.ClientSetNull)
-       .HasConstraintName("FK_Supplier_CreatedUser");
+                 .WithMany(p => p.App_Supplier_CreatedUser)
+                 .HasForeignKey(d => d.CreatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_Supplier_CreatedUser");
 
             builder.Entity<Supplier>().HasOne(d => d.UpdatedUser)
                  .WithMany(p => p.App_Supplier_UpdatedUser)
                  .HasForeignKey(d => d.UpdatedBy)
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_App_Supplier_UpdatedUser");
+          
+            builder.Entity<AssetFileRepository>().HasOne(d => d.CreatedUser)
+                 .WithMany(p => p.App_AssetFileRepository_CreatedUser)
+                 .HasForeignKey(d => d.CreatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_AssetFileRepository_CreatedUser");
+
+            builder.Entity<AssetFileRepository>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_AssetFileRepository_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_AssetFileRepository_UpdatedUser");
+
+            builder.Entity<AssetFileRepository>().HasOne(d => d.Asset_Id)
+                .WithMany(p => p.App_Repository_Id)
+                .HasForeignKey(d => d.AssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_Repository_Id");
 
         }
 

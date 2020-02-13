@@ -59,8 +59,8 @@ namespace MMS.Controllers
         [HttpPost("AddAssetLocation")]
         public ValueDataResponse<AssetLocation> InsertAssetLocation(UpsertAssetLocation asset)
         {
-            AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
-            return _unitOfWork.Assets.InsertAssetLocation(assetInfo);
+            
+            return _unitOfWork.Assets.InsertAssetLocation(asset);
         }
 
         [HttpGet("GetAssetGroupDetilasById")]
@@ -72,8 +72,8 @@ namespace MMS.Controllers
         [HttpPut("UpdateAssetLocation")]
         public ValueDataResponse<AssetLocation> UpdateAssetLocation(UpsertAssetLocation asset)
         {
-            AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
-            return _unitOfWork.Assets.UpdateAssetLocation(assetInfo);
+           // AssetLocation assetInfo = _mapper.Map<AssetLocation>(asset);
+            return _unitOfWork.Assets.UpdateAssetLocation(asset);
         }
 
         [HttpDelete("DeleteAssetLocation/{Id}")]
