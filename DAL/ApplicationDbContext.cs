@@ -30,7 +30,7 @@ namespace DAL
         public DbSet<Location> Locations { get; set; }
         public DbSet<AssetGroup> AssetGroups { get; set; }
         public DbSet<AssetLocation> AssetLocations { get; set; }
-
+        public DbSet<Supplier> Suppliers { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -66,6 +66,9 @@ namespace DAL
             builder.Entity<AssetGroup>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<AssetLocation>().ToTable("AssetLocation");
             builder.Entity<AssetLocation>().Property(p => p.IsActive).HasDefaultValue(true);
+            builder.Entity<Supplier>().ToTable("Supplier");
+            builder.Entity<Supplier>().Property(p => p.IsActive).HasDefaultValue(true);
+
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
@@ -283,6 +286,18 @@ namespace DAL
                 .HasForeignKey(d => d.AstTradeId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_App_AssetLocation_AstTradeId");
+
+            builder.Entity<Supplier>().HasOne(d => d.CreatedUser)
+       .WithMany(p => p.App_Supplier_CreatedUser)
+       .HasForeignKey(d => d.CreatedBy)
+       .OnDelete(DeleteBehavior.ClientSetNull)
+       .HasConstraintName("FK_Supplier_CreatedUser");
+
+            builder.Entity<Supplier>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_Supplier_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_Supplier_UpdatedUser");
 
         }
 
