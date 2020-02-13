@@ -25,6 +25,7 @@ namespace DAL
         IProjectRepository _Projects;
         ILocationRepository _Locations;
         IAssetRepository _assets;
+        ISupplierRepository _suppliers;
 
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
@@ -87,6 +88,17 @@ namespace DAL
                     _assets = new AssetRepository(_context, _mapper, _configuration);
 
                 return _assets;
+            }
+        }
+
+        public ISupplierRepository Suppliers
+        {
+            get
+            {
+                if (_suppliers == null)
+                    _suppliers = new SupplierRepository(_context, _mapper, _configuration);
+
+                return _suppliers;
             }
         }
 
