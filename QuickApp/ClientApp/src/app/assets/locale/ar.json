@@ -23,7 +23,8 @@
     "Location": "موقعك",
     "Asset":"الأصول",
     "Asset Group":"مجموعة الأصول",
-    "Assets": "الأصول"
+    "Assets": "الأصول",
+    "Supplier":"المورد"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -413,6 +414,11 @@
       "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
       "Add Asset Group":"إضافة مجموعة الأصول",
       "Edit Asset Group":"تحرير مجموعة الأصول"
+  }
+},
+"Supplier":{
+  "Management":{
+   "Search":"Search for Supplier ..."
   }
 }
 }

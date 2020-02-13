@@ -16,28 +16,23 @@ import { AlertService } from 'src/app/services/alert.service';
 export class SupplierComponent implements OnInit {
   loadingIndicator: boolean;
   sourcesupplier: any;
-  displayedColumns=['Name1','Name2','ContactNumber','Address','Email','Note','isActive','Actions']
-
+  displayedColumns=['name1','name2','address','email','contactNumber','isActive','Actions']
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
-
-  storeDataSource:any[]=[
-    {Name1:'sabitha',Name2:'sabitha',ContactNumber:'7976878',Address:'jntu',Email:'sabitha@gmail.com',Note:'kjkdj',isActive:'true'}    
-  ];
-  
-  @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
+ @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeSort: MatSort;
   supplierIds: any[] = [];
   isAllow: boolean = false;
   //projectRepositories: any[] = [];
-  supplierFileList: any[] = [];
+  supplierList:any[]=[];
   isAddingsupplier: boolean = false;
   supplierData: any = {};
   isNewsupplier: boolean = false;
   isViewsupplier: boolean = false;
   supplierForm: FormGroup;
+ 
   constructor(private accountService: AccountService,
      private authService: AuthService,
      private formBuilder: FormBuilder,
@@ -46,23 +41,19 @@ export class SupplierComponent implements OnInit {
 
   ngOnInit() {
     this.buildForm();
+    this.getsuppliers();
   }
-
-  onViewClick(row){
-    this.isViewsupplier = true
-    this.alertService.startLoadingMessage();
-  }
-
-
-private buildForm() {
+ 
+ private buildForm() {
   this.supplierForm=this.formBuilder.group({
-    Name1:['',Validators.required],
-    Name2:['',Validators.required],
-    ContactNumber:['',Validators.required],
-    Address:['',Validators.required],
-    Email:['',Validators.required],
-    Note:['',Validators.required],
-    isActive:[true]
+    name1:['',Validators.required],
+    name2:['',Validators.required],
+    address:['',Validators.required],
+    email:['',Validators.required],
+    contactNumber:['',Validators.required],
+    isActive:[true],
+    file:[''],
+    note:['']
   })
 }
 ngAfterViewInit() {
@@ -81,22 +72,35 @@ private refresh() {
   // Causes the filter to refresh there by updating with recently added data.
   this.applyFilter(this.dataSource.filter);
 }
+
+ private getsuppliers(){
+  this.alertService.startLoadingMessage();
+  this.loadingIndicator = true;
+  this.accountService.getsupplierdata()
+  .subscribe((results: any)=>{
+    this.supplierList = results.listResult == null ? [] : results.listResult;
+    this.dataSource.data = this.supplierList;
+    this.alertService.stopLoadingMessage();
+    this.loadingIndicator = false;
+  },
+    error => {
+      this.alertService.stopLoadingMessage();
+      this.loadingIndicator = false;
+    });
+  }
+  
   editClick(supplier?: any) {
-    this.supplierIds = [];
     this.isAllow = false;
-    //this.projectRepositories = [];
-   // this.editDocumentsList = [];
-    this.supplierFileList = [];
+    this.supplierList = [];
     this.isAddingsupplier = true;
     this.sourcesupplier = supplier;
-    //this.getDocuments();
     this.supplierData = supplier;
     if (this.supplierData) {
       this.isNewsupplier = false;
-      this.supplierData.supplierIds.forEach(element => {
-        this.supplierIds.push(element.supplierIds)
+      this.supplierData.storeId.forEach(element => {
+      //this.storeIds.push(element.storeId)
       });
-     // this.getRepositoryByProject()
+      
     } else {
       this.supplierData = {};
       this.isNewsupplier = true;
@@ -105,32 +109,34 @@ private refresh() {
     this.resetForm();
   }
 
-  
+  confirmDelete(){
+
+  }
   public resetForm(stopEditing: boolean = false) {
     if (!this.supplierData) {
       this.isNewsupplier = true;
     } else {
       this.buildForm();
     }
-    this.supplierForm.reset({
-      projectReference: this.supplierData.projectReference || '',
-      //siteId: this.projectData.siteId || '',
-      storeId: this.isNewsupplier ? this.supplierData.storeId : this.supplierIds || '',
-      name1: this.supplierData.name1 || '',
-      name2: this.supplierData.name2 || '',
-      projectDetails: this.supplierData.projectDetails || '',
-      isActive: this.supplierData.isActive || '',
-    });
+   
   }
 
+ 
   saveProject(){
 
   }
-  onCancelClick(){
-
+ 
+  onCancelClick() {
+    this.isAddingsupplier = false;
   }
   onCancelViewStore(){
 
   }
+  // File Change Event
+  uploadFile(event){
+ 
+    
+  }
+
 
 }

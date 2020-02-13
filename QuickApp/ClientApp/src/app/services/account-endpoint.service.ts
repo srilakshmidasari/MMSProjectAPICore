@@ -60,7 +60,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _addAssetLocationUrl: string = '/api/Asset/AddAssetLocation';
   private readonly _updateAssetLocationUrl: string = '/api/Asset/UpdateAssetLocation';
   private readonly _deleteAssetLocationUrl: string = '/api/Asset/DeleteAssetLocation';
-
+  private readonly _getAllSupplier: string = '/api/Supplier/GetAllSupplier';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -103,6 +103,7 @@ export class AccountEndpoint extends EndpointBase {
  
   get getProjectsBySiteUrl() { return this.configurations.baseUrl + this. _getProjectsBySiteUrl; }
   get getLocationsByProjectUrl() { return this.configurations.baseUrl + this._getLocationsByProjectUrl; }
+  get getAllSupplier() { return this.configurations.baseUrl + this._getAllSupplier; }
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -615,7 +616,7 @@ export class AccountEndpoint extends EndpointBase {
   //get supplier
 
   getSuppliersEndpoint<T>(): Observable<T> {
-    const endpointUrl = this.getAssetLocationUrl;
+    const endpointUrl = this.getAllSupplier;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getSuppliersEndpoint());

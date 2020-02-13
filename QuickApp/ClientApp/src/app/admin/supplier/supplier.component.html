@@ -1,45 +1,41 @@
 <app-page-header title="Supplier" icon="assignment_ind"></app-page-header>
-<div class="page-content"  [hidden]="isAddingProject || isViewStore">
+<div class="page-content"  [hidden]="isAddingsupplier">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
-                placeholder="{{'project.management.Search' | translate}}">
+                placeholder="{{'Supplier.Management.Search' | translate}}">
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
          <mat-table [dataSource]="dataSource" matSort matSortActive="Name1" matSortDirection="asc"
             matSortDisableClear>
-            <ng-container matColumnDef="Name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name1
+            <ng-container matColumnDef="name1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Name1}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="Name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name2
+            <ng-container matColumnDef="name2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Name2}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="ContactNumber">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Contact Number
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.ContactNumber}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="Address">
+            <ng-container matColumnDef="address">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Address
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Address}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="Email">
+            <ng-container matColumnDef="email">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Email
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Email}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="Note">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Note
+            <ng-container matColumnDef="contactNumber">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Contact Number
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.Note}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.contactNumber}} </mat-cell>
             </ng-container>
+           
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     {{'project.management.IsActive' | translate}}</mat-header-cell>
@@ -47,157 +43,84 @@
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>
             </ng-container>
-
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canAddProjects">
-                        <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
-                    </button>
-                    <button mat-button color="primary" matTooltip="Actions"
-                        *ngIf="!canAddProjects">{{'project.management.Actions' | translate}}
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>Add Supplier
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canEditProjects">
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"
-                        (click)="onViewClick(row)">
-                        <mat-icon color="accent">visibility icon</mat-icon>
-                    </button>
-
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)"
-                        *ngIf="canDeleteProjects">
+                
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
             </ng-container>
-           
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;">
             </mat-row>
          </mat-table>
          <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>{{'project.management.No Records Found'|translate}}</p>
+            <p>No Records Found</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>{{'project.management.No Search Results Found'|translate}}</p>
+            <p>No Search Results Found</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </div>
 </div>
-<div class="page-content" *ngIf="isAddingProject">
+<div class="page-content" *ngIf="isAddingsupplier">
     <mat-card>
-        <mat-card-header>
-            <mat-card-title *ngIf="isNewProject">{{'project.management.Add Project'|translate}}</mat-card-title>
-            <mat-card-title *ngIf="!isNewProject">{{'project.management.Edit Project'|translate}}</mat-card-title>
-        </mat-card-header>
         <br>
         <mat-card-content>
-            <form [formGroup]="supplierForm">  
+            <form [formGroup]="supplierForm">
                 <div class="row">
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Name1'|translate}}</mat-label>
-                        <input matInput formControlName="Name1" required maxlength="50" />
-                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
-                        </mat-error> -->
+                    <mat-form-field class="col-md-4">  
+                        <mat-label>Name 1</mat-label> 
+                        <input matInput formControlName="name1" style="text-transform: capitalize;"  required maxlength="50" />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Name2'|translate}}</mat-label>
-                        <input matInput formControlName="Name2" required maxlength="50" />
-                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
-                        </mat-error> -->
+                    <mat-form-field class="col-md-4">  
+                        <mat-label>Name 2</mat-label> 
+                        <input matInput formControlName="name2" style="text-transform: capitalize;"  required maxlength="50" />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.ContactNumber'|translate}}</mat-label>
-                        <input matInput formControlName="ContactNumber" required maxlength="50" />
-                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
-                        </mat-error> -->
+                    <mat-form-field class="col-md-4">  
+                        <mat-label>Address</mat-label> 
+                        <input matInput formControlName="address" style="text-transform: capitalize;"  required maxlength="50" />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Address'|translate}}</mat-label>
-                        <input matInput formControlName="Address" required maxlength="50" />
-                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
-                        </mat-error> -->
+                    <mat-form-field class="col-md-4">  
+                        <mat-label>Email</mat-label> 
+                        <input matInput formControlName="email" style="text-transform: capitalize;"  required maxlength="50" />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Email'|translate}}</mat-label>
-                        <input matInput formControlName="Email" required maxlength="50" />
-                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
-                        </mat-error> -->
+                    <mat-form-field class="col-md-4">  
+                        <mat-label>Contact Number</mat-label> 
+                        <input matInput formControlName="contactNumber" style="text-transform: capitalize;"  required maxlength="50" />
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Note'|translate}}</mat-label>
-                        <input matInput formControlName="Note" required maxlength="50" />
-                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
-                        </mat-error> -->
+
+                    <mat-form-field class="col-md-4">  
+                        <mat-label>note</mat-label> 
+                        <input matInput formControlName="note" style="text-transform: capitalize;"  required maxlength="50" />
                     </mat-form-field>
                 </div>
-                </form>
-            </mat-card-content>
-            <mat-card-actions>
-                <div class="float-right" style="padding-top: 12px;">
-                    <button mat-raised-button color="primary" (click)="saveProject()">{{'site.management.save' | translate}}</button>
-                    <button mat-raised-button color="warn" (click)="onCancelClick()">{{'site.management.cancel' | translate}}</button>
+                     <div class="row">
+                        <input type="file"  (change)="uploadFile($event)" class="form-control col-md-4" formControlName="file" style="text-transform: capitalize;"  required maxlength="50" />
+                     
                 </div>
-            </mat-card-actions>
-            <div class="clearfix"></div>
+           <mat-checkbox formControlName="isActive">IsActive</mat-checkbox>
+        </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary" (click)="savesupplier()">save</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">cancel</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
     </mat-card>
 </div>
 
-<div class="page-content" *ngIf="isViewsupplier">
-    <div class="example-container mat-elevation-z8">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>{{'project.management.View Store'|translate}}</mat-card-title>
-            </mat-card-header>
-            <br>
-            <div>
-                <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-                <mat-table [dataSource]="storeDataSource" matSort matSortActive="storeName1" matSortDirection="asc"
-                    matSortDisableClear>
-                    <ng-container matColumnDef="Name1">
-                        <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name1'|translate}}
-                        </mat-header-cell>
-                        <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
-                    </ng-container>
-                    <ng-container matColumnDef="isActive">
-                        <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                            {{'project.management.IsActive' | translate}}
-                        </mat-header-cell>
-                        <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
-                            <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
-                        </mat-cell>
-                    </ng-container>
-                    <mat-header-row *matHeaderRowDef="storeColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: storeColumns;">
-                    </mat-row>
-                </mat-table>
-                <div style="text-align: center;" [hidden]="!(storeDataSource.data.length==0)">
-                    <p>{{'project.management.No Records Found'|translate}}</p>
-                </div>
-                <mat-paginator [length]="storeDataSource.data.length" [pageSize]="10"
-                [pageSizeOptions]="[5, 10, 25, 100]">
-            </mat-paginator>
-      </div>
-      <mat-card-actions>
-        <div class="float-right" style="padding-top: 12px;padding-right: 15px;">
-            <button mat-raised-button color="warn"
-                (click)="onCancelViewStore()">{{'project.management.Close'|translate}}</button>
-        </div>
-    </mat-card-actions>
-    <div class="clearfix">
 
-    </div>
-
-   </mat-card>
-    </div>
- </div>

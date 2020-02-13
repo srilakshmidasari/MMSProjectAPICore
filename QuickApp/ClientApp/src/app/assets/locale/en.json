@@ -32,7 +32,8 @@
     "Location": "Location",
     "Asset": "Asset",
     "AssetGroup": "Asset Group",
-    "Assets" :"Assets"
+    "Assets" :"Assets",
+    "Supplier":"Supplier"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -50,7 +51,8 @@
     "LookUp": "LookUp Management",
     "Location": "Location Management",
     "Assets": "Assets",
-    "AssetGroup": "Asset Group Specification"
+    "AssetGroup": "Asset Group Specification",
+    "Supplier":"Supplier"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -423,5 +425,10 @@
         "Add Asset Group":"Add Asset Group",
         "Edit Asset Group":"Edit Asset Group"
     }
+ },
+ "Supplier":{
+   "Management":{
+    "Search":"Search for Supplier ..."
+   }
  }
 }

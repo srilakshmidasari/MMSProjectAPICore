@@ -344,10 +344,6 @@ export class AccountService {
   deleteAsset(assetId) {
     return this.accountEndpoint.deleteAssetEndpoint(assetId);
   }
-  getSuppliers(){
-    return this.accountEndpoint.getSuppliersEndpoint();
-  }
-
   getProjectsBySite(SiteId) {
     return this.accountEndpoint.getProjectsBySiteEndpoint(SiteId);
   }
@@ -356,5 +352,7 @@ export class AccountService {
     return this.accountEndpoint.getLocationsByProjectEndPoint(ProjectId);
   }
 
-
+ getsupplierdata(){
+   return this.accountEndpoint.getSuppliersEndpoint();
+ }
 }
