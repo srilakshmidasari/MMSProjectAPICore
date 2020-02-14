@@ -15,6 +15,11 @@ namespace DAL.Models
         public int Id { get; set; }
 
         [Required]
+        [Display(Name = "SupplierReference")]
+        [StringLength(50)]
+        public string SupplierReference { get; set; }
+
+        [Required]
         [StringLength(100)]
         [Display(Name = "Name1")]
         public string Name1 { get; set; }

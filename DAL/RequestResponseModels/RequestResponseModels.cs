@@ -321,6 +321,7 @@ namespace DAL.RequestResponseModels
         public class UpsertSupplier: AuditableEntity
         {
             public int Id { get; set; }
+            public string SupplierReference { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
             public string Address { get; set; }

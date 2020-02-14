@@ -63,46 +63,57 @@ namespace DAL.Repositories
 
             try
             {
-                    var result = _appContext.Suppliers.Add(suppliers);
+                var suppliersExists = _appContext.Suppliers.Where(x => x.SupplierReference == suppliers.SupplierReference).FirstOrDefault();
 
-                    if (suppliers.FileName != null)
-                    {
-                        string ModuleName = "Supplier";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
+                if(suppliersExists == null) { 
+                var result = _appContext.Suppliers.Add(suppliers);
 
-                        FileUploadService repo = new FileUploadService();
+                if (suppliers.FileName != null)
+                {
+                    string ModuleName = "Supplier";
+                    var now = DateTime.Now;
+                    var yearName = now.ToString("yyyy");
+                    var monthName = now.Month.ToString("d2");
+                    var dayName = now.ToString("dd");
 
-                        //string FolderLocation = _config.Value.FileRepositoryFolder;
-                        string FolderLocation = "FileRepository";
-                        string ServerRootPath = _config.Value.ServerRootPath;
+                    FileUploadService repo = new FileUploadService();
 
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                    //string FolderLocation = _config.Value.FileRepositoryFolder;
+                    string FolderLocation = "FileRepository";
+                    string ServerRootPath = _config.Value.ServerRootPath;
 
-                        byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
+                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                        suppliers.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
+                    byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
 
-                        suppliers.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                    }
-                    _appContext.SaveChanges();
+                    suppliers.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
 
-                    if (result != null)
-                    {
-                        response.Result = suppliers;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "Supplier Added Successfully";
-                    }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "Supplier Added Failed";
-                    }
-              
+                    suppliers.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                }
+                _appContext.SaveChanges();
+
+                if (result != null)
+                {
+                    response.Result = suppliers;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Supplier Added Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Supplier Added Failed";
+                }
+
+            }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Supplier Reference Already Exists";
+                }
+
             }
             catch (Exception ex)
             {
@@ -121,10 +132,13 @@ namespace DAL.Repositories
 
             try
             {
+                var supplierExists = _appContext.Suppliers.Where(x => x.Id != suppliers.Id && x.SupplierReference == suppliers.SupplierReference).FirstOrDefault();
+                if (supplierExists == null)
+                {
                     var result = _appContext.Suppliers.Where(x => x.Id == suppliers.Id).FirstOrDefault();
                     if (result != null)
                     {
-                        
+                        result.Name1 = suppliers.SupplierReference;
                         result.Name1 = suppliers.Name1;
                         result.Name2 = suppliers.Name2;
                         result.Address = suppliers.Address;
@@ -173,8 +187,13 @@ namespace DAL.Repositories
                         response.AffectedRecords = 0;
                         response.EndUserMessage = "Supplier Updation Failed";
                     }
-               
-
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Supplier Reference Already Exists";
+                }
             }
             catch (Exception ex)
             {
@@ -192,12 +211,14 @@ namespace DAL.Repositories
             ValueDataResponse<Supplier> response = new ValueDataResponse<Supplier>();
             try
             {
-                var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId && x.IsActive == true).FirstOrDefault();
+                var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId).FirstOrDefault();
                 if (SupplierData != null)
                 {
-                    SupplierData.IsActive = false;
-                    //entityInfo.UpdatedBy = entity.Updated
-                    SupplierData.UpdatedDate = DateTime.Now;
+                    _appContext.Remove(SupplierData);
+                    //SupplierData.IsActive = false;
+                    ////entityInfo.UpdatedBy = entity.Updated
+                    //SupplierData.UpdatedDate = DateTime.Now;
+
                     _appContext.SaveChanges();
                 }
 

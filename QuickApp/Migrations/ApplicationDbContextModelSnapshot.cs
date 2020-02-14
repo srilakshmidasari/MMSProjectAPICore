@@ -852,6 +852,11 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
+                    b.Property<string>("SupplierReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
