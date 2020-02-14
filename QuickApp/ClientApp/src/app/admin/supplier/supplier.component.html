@@ -35,6 +35,11 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.contactNumber}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="note">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Note
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.note}} </mat-cell>
+            </ng-container>
            
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
@@ -102,14 +107,27 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">  
-                        <mat-label>note</mat-label> 
-                        <input matInput formControlName="note" style="text-transform: capitalize;"  required maxlength="50" />
+                        <mat-label>Note</mat-label> 
+                        <input matInput formControlName="note" style="text-transform: capitalize;"   maxlength="50" />
                     </mat-form-field>
                 </div>
-                     <div class="row">
+
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label for="file">{{'Assets.Management.UploadImage'|translate}} </label>
+                        <input type="file" class="form-control" id="file" accept="image/*" (change)="onSelectFiles($event)">
+                    </div>
+                    <!-- <div class="col-md-4" *ngIf="isNewAsset">
+                        <img [src]="image" style="height: 80px;" alt="" />
+                    </div>
+                    <div class="col-md-4" *ngIf="!isNewAsset">
+                            <img [src]="assetRefData.fileLocation" style="height: 80px;" alt="" />
+                    </div> -->
+                </div>
+                     <!-- <div class="row">
                         <input type="file"  (change)="uploadFile($event)" class="form-control col-md-4" formControlName="file" style="text-transform: capitalize;"  required maxlength="50" />
                      
-                </div>
+                </div> -->
            <mat-checkbox formControlName="isActive">IsActive</mat-checkbox>
         </form>
         </mat-card-content>

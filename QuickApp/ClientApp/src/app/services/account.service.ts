@@ -355,4 +355,15 @@ export class AccountService {
  getsupplierdata(){
    return this.accountEndpoint.getSuppliersEndpoint();
  }
+ Adddsupplier(supplier: any) {
+  return this.accountEndpoint.AddsupplierEndPoint(supplier);
+}
+
+Updatesupplier(reqObject){
+ return this.accountEndpoint.updatesupplierEndpoint(reqObject);
+}
+deletesupplier(supplierId){
+  return this.accountEndpoint.deletesupplierEndpoint(supplierId);
+}
+
 }
