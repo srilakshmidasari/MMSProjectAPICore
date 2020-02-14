@@ -39,6 +39,10 @@ namespace DAL.Models
         [Display(Name = "ContactNumber")]
         public string ContactNumber { get; set; }
 
+        [StringLength(250)]
+        [Display(Name = "Note")]
+        public string Note { get; set; }
+
         [Display(Name = "File Name")]
         [StringLength(50)]
         public string FileName { get; set; }

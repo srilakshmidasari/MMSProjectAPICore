@@ -60,6 +60,10 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _addAssetLocationUrl: string = '/api/Asset/AddAssetLocation';
   private readonly _updateAssetLocationUrl: string = '/api/Asset/UpdateAssetLocation';
   private readonly _deleteAssetLocationUrl: string = '/api/Asset/DeleteAssetLocation';
+  private readonly _getAllSupplier: string = '/api/Supplier/GetAllSupplier';
+  private readonly _AddSupplierDetials: string = '/api/Supplier/AddSupplierDetials';
+  private readonly _UpdateSupplierDetials: string = '/api/Supplier/UpdateSupplierDetials';
+  private readonly _DeleteSupplierByID: string = '/api/Supplier/DeleteSupplierByID';
 
   private readonly _deleteAssetRepositoryUrl: string = '/api/Asset/DeleteProjectRepository';
   private readonly _getAssetRepositoryUrl: string = '/api/Asset/GetRepositoryByAsset';
@@ -107,6 +111,11 @@ export class AccountEndpoint extends EndpointBase {
   get getLocationsByProjectUrl() { return this.configurations.baseUrl + this._getLocationsByProjectUrl; }
   get getAssetRepositoryUrl() { return this.configurations.baseUrl + this. _getAssetRepositoryUrl; }
   get deleteAssetRepositoryUrl() { return this.configurations.baseUrl + this._deleteAssetRepositoryUrl; }
+
+  get getAllSupplier() { return this.configurations.baseUrl + this._getAllSupplier; }
+  get AddSupplierDetials() { return this.configurations.baseUrl + this._AddSupplierDetials; }
+  get UpdateSupplierDetials() { return this.configurations.baseUrl + this._UpdateSupplierDetials; }
+  get DeleteSupplierByID() { return this.configurations.baseUrl + this._DeleteSupplierByID; }
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -615,6 +624,44 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.deleteAssetEndpoint(assetId));
       }));
   }
+ 
+  //get supplier
+
+  getSuppliersEndpoint<T>(): Observable<T> {
+    const endpointUrl = this.getAllSupplier;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getSuppliersEndpoint());
+      }));
+  }
+
+  
+  AddsupplierEndPoint<T>(supplierObject: any): Observable<T> {
+    const endpointUrl = this.AddSupplierDetials;
+    return this.http.post<T>(endpointUrl, JSON.stringify(supplierObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddsupplierEndPoint(supplierObject));
+      }));
+  }
+
+  
+  updatesupplierEndpoint<T>(reqObject): Observable<T> {
+    const endpointUrl = this.UpdateSupplierDetials;
+    return this.http.put<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.updatesupplierEndpoint(reqObject));
+      }));
+  }
+ 
+ 
+  deletesupplierEndpoint<T>(supplierId: any): Observable<T> {
+    const endpointUrl = this.DeleteSupplierByID + '?supplierId=' + supplierId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deletesupplierEndpoint(supplierId));
+      }));
+  }
+
 
   deleteAssetRepositoryEndpoint<T>(repositoryId: any): Observable<T> {
     const endpointUrl = this.deleteAssetRepositoryUrl + '/' + repositoryId;

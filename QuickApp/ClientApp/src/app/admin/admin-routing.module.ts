@@ -19,6 +19,7 @@ import { LocationComponent } from './location/location.component';
 import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
+import { SupplierComponent } from './supplier/supplier.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -33,6 +34,7 @@ const adminRoutes: Routes = [
       { path: 'location', component: LocationComponent, canActivate: [AuthGuard], data: { title: 'Admin | Location' } },
       { path: 'assets', component: AssetsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Asset' } },
       { path: 'asset-group', component: AssetGroupComponent, canActivate: [AuthGuard], data: { title: 'Admin | Asset-Group' } },
+      { path: 'supplier', component: SupplierComponent, canActivate: [AuthGuard], data: { title: 'Admin | Supplier' } }
       
     ]
   }

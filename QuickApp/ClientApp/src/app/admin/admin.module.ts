@@ -30,6 +30,7 @@ import { LocationComponent } from './location/location.component';
 import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
+import { SupplierComponent } from './supplier/supplier.component';
 
 @NgModule({
   imports: [
@@ -57,7 +58,8 @@ import { AssetsComponent } from './asset/assets/assets.component';
     LocationComponent,
     AssetLocationComponent,
     AssetGroupComponent,
-    AssetsComponent
+    AssetsComponent,
+    SupplierComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

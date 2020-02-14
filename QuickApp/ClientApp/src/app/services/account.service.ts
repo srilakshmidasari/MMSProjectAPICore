@@ -344,7 +344,6 @@ export class AccountService {
   deleteAsset(assetId) {
     return this.accountEndpoint.deleteAssetEndpoint(assetId);
   }
-
   getProjectsBySite(SiteId) {
     return this.accountEndpoint.getProjectsBySiteEndpoint(SiteId);
   }
@@ -353,6 +352,19 @@ export class AccountService {
     return this.accountEndpoint.getLocationsByProjectEndPoint(ProjectId);
   }
 
+ getsupplierdata(){
+   return this.accountEndpoint.getSuppliersEndpoint();
+ }
+ Adddsupplier(supplier: any) {
+  return this.accountEndpoint.AddsupplierEndPoint(supplier);
+}
+
+Updatesupplier(reqObject){
+ return this.accountEndpoint.updatesupplierEndpoint(reqObject);
+}
+deletesupplier(supplierId){
+  return this.accountEndpoint.deletesupplierEndpoint(supplierId);
+}
   getAssetRepository(assetId) {
     return this.accountEndpoint.getAssetRepositoryEndpoint(assetId);
   }
