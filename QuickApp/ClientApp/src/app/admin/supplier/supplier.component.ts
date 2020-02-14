@@ -248,7 +248,12 @@ private refresh() {
     this.fileExtension = '.' + file.name.split('.').pop();
     if (file) {
       let reader = new FileReader();
-      reader.onload = (e: any) => {       
+      reader.onload = (e: any) => {     
+        if(this.isNewsupplier){
+          this.image = e.target.result;  
+        }else{
+          this.supplierData.fileLocation =e.target.result;  
+        }
         var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
         this.base64string = e.target.result.substring(base64Index);
       }

@@ -117,12 +117,12 @@
                         <label for="file">{{'Assets.Management.UploadImage'|translate}} </label>
                         <input type="file" class="form-control" id="file" accept="image/*" (change)="onSelectFiles($event)">
                     </div>
-                    <!-- <div class="col-md-4" *ngIf="isNewAsset">
+                    <div class="col-md-4" *ngIf="isNewsupplier">
                         <img [src]="image" style="height: 80px;" alt="" />
                     </div>
-                    <div class="col-md-4" *ngIf="!isNewAsset">
-                            <img [src]="assetRefData.fileLocation" style="height: 80px;" alt="" />
-                    </div> -->
+                    <div class="col-md-4" *ngIf="!isNewsupplier">
+                            <img [src]="supplierData.fileLocation" style="height: 80px;" alt="" />
+                    </div>
                 </div>
                      <!-- <div class="row">
                         <input type="file"  (change)="uploadFile($event)" class="form-control col-md-4" formControlName="file" style="text-transform: capitalize;"  required maxlength="50" />
