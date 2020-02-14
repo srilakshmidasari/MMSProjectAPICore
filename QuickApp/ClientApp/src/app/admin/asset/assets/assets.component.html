@@ -119,44 +119,6 @@
         <br>
         <mat-card-content>
             <form [formGroup]="assetLocationForm">
-                <div class="row">
-                    <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
-                        <mat-select formControlName="siteId" (ngModelChange)="onSelectSiteByProject($event)">
-                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
-                                {{site.name1}}(<span>{{site.siteReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetLocationForm.controls['siteId'].valid">
-                            {{'Assets.Management.PleaseSelectSite'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
-                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
-                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
-                                {{project.name1}}(<span>{{project.projectReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetLocationForm.controls['projectId'].valid">
-                            {{'Assets.Management.PleaseSelectProject'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
-                        <mat-select formControlName="locationId">
-                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
-                                {{location.name1}}(<span>{{location.locationReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetLocationForm.controls['locationId'].valid">
-                            {{'Assets.Management.PleaseSelectLocation'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
 
                 <div class="row">
 
@@ -267,6 +229,44 @@
                             {{'Assets.Management.AssetFixedDateisRequired'|translate}}
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
+                        <mat-select formControlName="siteId" (ngModelChange)="onSelectSiteByProject($event)">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetLocationForm.controls['siteId'].valid">
+                            {{'Assets.Management.PleaseSelectSite'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
+                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetLocationForm.controls['projectId'].valid">
+                            {{'Assets.Management.PleaseSelectProject'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
+                        <mat-select formControlName="locationId">
+                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
+                                {{location.name1}}(<span>{{location.locationReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetLocationForm.controls['locationId'].valid">
+                            {{'Assets.Management.PleaseSelectLocation'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+
                 </div>
 
                 <div class="row" *ngIf="isNewAsset">

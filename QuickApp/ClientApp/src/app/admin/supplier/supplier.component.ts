@@ -59,7 +59,7 @@ export class SupplierComponent implements OnInit {
     name1:['',Validators.required],
     name2:['',Validators.required],
     address:['',Validators.required],
-    email:['',Validators.required],
+    email:['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')])],
     contactNumber:['',Validators.required],
     isActive:[true],
     file:[''],

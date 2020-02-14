@@ -1,5 +1,5 @@
 <app-page-header title="Supplier" icon="assignment_ind"></app-page-header>
-<div class="page-content"  [hidden]="isAddingsupplier">
+<div class="page-content" [hidden]="isAddingsupplier">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -8,8 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-         <mat-table [dataSource]="dataSource" matSort matSortActive="Name1" matSortDirection="asc"
-            matSortDisableClear>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="name1" matSortDirection="asc" matSortDisableClear>
             <ng-container matColumnDef="name1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
                 </mat-header-cell>
@@ -40,7 +39,7 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.note}} </mat-cell>
             </ng-container>
-           
+
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     {{'project.management.IsActive' | translate}}</mat-header-cell>
@@ -58,17 +57,17 @@
                     <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                
+
                     <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
             </ng-container>
-           <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;">
             </mat-row>
-         </mat-table>
-         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
             <p>No Records Found</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
@@ -85,51 +84,70 @@
         <mat-card-content>
             <form [formGroup]="supplierForm">
                 <div class="row">
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Name 1</mat-label> 
-                        <input matInput formControlName="name1" style="text-transform: capitalize;"  required maxlength="50" />
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Name 1</mat-label>
+                        <input matInput formControlName="name1" required maxlength="50" />
+                        <mat-error *ngIf="!supplierForm.controls['name1'].valid">
+                            Name 1 is required
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Name 2</mat-label> 
-                        <input matInput formControlName="name2" style="text-transform: capitalize;"  required maxlength="50" />
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Name 2</mat-label>
+                        <input matInput formControlName="name2" required maxlength="50" />
+                        <mat-error *ngIf="!supplierForm.controls['name2'].valid">
+                            Name 2 is required
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Address</mat-label> 
-                        <input matInput formControlName="address" style="text-transform: capitalize;"  required maxlength="50" />
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Address</mat-label>
+                        <input matInput formControlName="address" required maxlength="100" />
+                        <mat-error *ngIf="!supplierForm.controls['address'].valid">
+                            Address is required
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Email</mat-label> 
-                        <input matInput formControlName="email" style="text-transform: capitalize;"  required maxlength="50" />
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Email</mat-label>
+                        <input matInput formControlName="email" required maxlength="50" />
+                        <mat-error *ngIf="supplierForm.controls['email'].hasError('required')">
+                            Email is required
+                        </mat-error>
+                        <mat-error *ngIf="supplierForm.controls['email'].hasError('pattern')">
+                            Invalid Email
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Contact Number</mat-label> 
-                        <input matInput formControlName="contactNumber" style="text-transform: capitalize;"  required maxlength="50" />
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Contact Number</mat-label>
+                        <input matInput formControlName="contactNumber" required maxlength="50" />
+                        <mat-error *ngIf="!supplierForm.controls['contactNumber'].valid">
+                            Contact Number is required
+                        </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Note</mat-label> 
-                        <input matInput formControlName="note" style="text-transform: capitalize;"   maxlength="50" />
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Note</mat-label>
+                        <input matInput formControlName="note" maxlength="50" />
                     </mat-form-field>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4">
                         <label for="file">{{'Assets.Management.UploadImage'|translate}} </label>
-                        <input type="file" class="form-control" id="file" accept="image/*" (change)="onSelectFiles($event)">
+                        <input type="file" class="form-control" id="file" accept="image/*"
+                            (change)="onSelectFiles($event)">
                     </div>
                     <div class="col-md-4" *ngIf="isNewsupplier">
                         <img [src]="image" style="height: 80px;" alt="" />
                     </div>
                     <div class="col-md-4" *ngIf="!isNewsupplier">
-                            <img [src]="supplierData.fileLocation" style="height: 80px;" alt="" />
+                        <img [src]="supplierData.fileLocation" style="height: 80px;" alt="" />
                     </div>
                 </div>
-                     <!-- <div class="row">
+                <!-- <div class="row">
                         <input type="file"  (change)="uploadFile($event)" class="form-control col-md-4" formControlName="file" style="text-transform: capitalize;"  required maxlength="50" />
                      
                 </div> -->
-           <mat-checkbox formControlName="isActive">IsActive</mat-checkbox>
-        </form>
+                <mat-checkbox formControlName="isActive">IsActive</mat-checkbox>
+            </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
@@ -140,5 +158,3 @@
         <div class="clearfix"></div>
     </mat-card>
 </div>
-
-
