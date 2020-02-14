@@ -179,6 +179,9 @@ namespace MMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DocumentType")
+                        .HasColumnType("int");
+
                     b.Property<string>("FileExtention")
                         .IsRequired()
                         .HasColumnType("nvarchar(10)")
@@ -204,6 +207,8 @@ namespace MMS.Migrations
                     b.HasIndex("AssetId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("DocumentType");
 
                     b.HasIndex("UpdatedBy");
 
@@ -1034,6 +1039,11 @@ namespace MMS.Migrations
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_AssetFileRepository_CreatedUser")
                         .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "Asset_TypeCdDmt")
+                        .WithMany("Asset_DocumnetId")
+                        .HasForeignKey("DocumentType")
+                        .HasConstraintName("FK_Asset_DocumnetId");
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_AssetFileRepository_UpdatedUser")

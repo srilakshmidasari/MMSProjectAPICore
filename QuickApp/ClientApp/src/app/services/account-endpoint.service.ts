@@ -61,6 +61,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _updateAssetLocationUrl: string = '/api/Asset/UpdateAssetLocation';
   private readonly _deleteAssetLocationUrl: string = '/api/Asset/DeleteAssetLocation';
 
+  private readonly _deleteAssetRepositoryUrl: string = '/api/Asset/DeleteProjectRepository';
+  private readonly _getAssetRepositoryUrl: string = '/api/Asset/GetRepositoryByAsset';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -103,6 +105,8 @@ export class AccountEndpoint extends EndpointBase {
  
   get getProjectsBySiteUrl() { return this.configurations.baseUrl + this. _getProjectsBySiteUrl; }
   get getLocationsByProjectUrl() { return this.configurations.baseUrl + this._getLocationsByProjectUrl; }
+  get getAssetRepositoryUrl() { return this.configurations.baseUrl + this. _getAssetRepositoryUrl; }
+  get deleteAssetRepositoryUrl() { return this.configurations.baseUrl + this._deleteAssetRepositoryUrl; }
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -609,6 +613,22 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.deleteAssetEndpoint(assetId));
+      }));
+  }
+
+  deleteAssetRepositoryEndpoint<T>(repositoryId: any): Observable<T> {
+    const endpointUrl = this.deleteAssetRepositoryUrl + '/' + repositoryId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteAssetRepositoryEndpoint(repositoryId));
+      }));
+  }
+
+  getAssetRepositoryEndpoint<T>(assetId: any): Observable<T> {
+    const endpointUrl = this.getAssetRepositoryUrl + '/' + assetId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAssetRepositoryEndpoint(assetId));
       }));
   }
 

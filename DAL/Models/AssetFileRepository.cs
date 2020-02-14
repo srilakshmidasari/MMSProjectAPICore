@@ -30,6 +30,9 @@ namespace DAL.Models
         [StringLength(10)]
         public string FileExtention { get; set; }
 
+        [Display(Name = "Document Type")]
+        public int? DocumentType { get; set; }
+
         [Required]
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
@@ -53,6 +56,9 @@ namespace DAL.Models
 
         [JsonIgnore]
         public AssetLocation Asset_Id { get; set; }
+
+        [JsonIgnore]
+        public TypeCdDmt Asset_TypeCdDmt { get; set; }
     }
 }
  

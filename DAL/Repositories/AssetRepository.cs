@@ -294,6 +294,7 @@ namespace DAL.Repositories
                                 pros.FileName = req.FileName;
                                 pros.FileLocation = req.FileLocation;
                                 pros.FileExtention = req.FileExtention;
+                                pros.DocumentType = req.DocumentTypeId;
                                 pros.CreatedBy = req.CreatedBy;
                                 pros.CreatedDate = DateTime.Now;
                                 pros.UpdatedBy = req.UpdatedBy;
@@ -394,6 +395,7 @@ namespace DAL.Repositories
                                     pros.FileName = req.FileName;
                                     pros.FileLocation = req.FileLocation;
                                     pros.FileExtention = req.FileExtention;
+                                    pros.DocumentType = req.DocumentTypeId;
                                     pros.CreatedBy = req.CreatedBy;
                                     pros.CreatedDate = DateTime.Now;
                                     pros.UpdatedBy = req.UpdatedBy;
@@ -491,6 +493,94 @@ namespace DAL.Repositories
                     response.IsSuccess = true;
                     response.AffectedRecords = 0;
                     response.EndUserMessage = "No AssetGroup Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+        public ListDataResponse<AssetRepositoryResposnse> GetRepositoryByAsset(int AssetId)
+        {
+            ListDataResponse<AssetRepositoryResposnse> response = new ListDataResponse<AssetRepositoryResposnse>();
+            try
+            {
+                var result = (from p in _appContext.AssetFileRepositories
+                              join t in _appContext.TypeCdDmts
+                               on p.DocumentType equals t.TypeCdDmtId
+
+                              select new AssetRepositoryResposnse
+                              {
+                                  RepositoryId = p.Id,
+                                  AssetId = p.AssetId,
+                                  FileName = p.FileName,
+                                  FileLocation = p.FileLocation,
+                                  FileExtention = p.FileExtention,
+                                  DocumentType = p.DocumentType,
+                                  FileTypeName = t.Description
+                              }).Where(x => x.AssetId == AssetId).ToList();
+
+                var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
+
+                result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Repositories Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Repositories Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+            return response;
+        }
+
+
+        public ValueDataResponse<AssetFileRepository> DeleteFileRepository(int RepositoryId)
+        {
+            ValueDataResponse<AssetFileRepository> response = new ValueDataResponse<AssetFileRepository>();
+            try
+            {
+                var repository = _appContext.AssetFileRepositories.Where(x => x.Id == RepositoryId).FirstOrDefault();
+
+                if (repository != null)
+                {
+                    _appContext.AssetFileRepositories.Remove(repository);
+
+                    _appContext.SaveChanges();
+                }
+
+                if (repository != null)
+                {
+                    response.Result = repository;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "File Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No File Found";
                 }
             }
             catch (Exception ex)

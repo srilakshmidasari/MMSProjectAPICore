@@ -25,8 +25,10 @@ export class DeleteFileComponent implements OnInit {
   onDeleteClick(){
     if(this.data.userId){
       this.onDeleteFile();
-    }else{
+    }else if(this.data.projectId){
       this.onDeleteProjectFile();
+    }else{
+      this.onDeleteAssetFile();
     }
   }
   // On  Delete Click
@@ -46,6 +48,20 @@ export class DeleteFileComponent implements OnInit {
 
   onDeleteProjectFile() {
     this.accountService.deleteProjectFile(this.data.repositoryId)
+      .subscribe((results: any) => {
+        if (results.isSuccess)
+          this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
+        this.dialogRef.close();
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the file.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+            MessageSeverity.error, error);
+        });
+  }
+
+  onDeleteAssetFile() {
+    this.accountService.deleteAssetRepository(this.data.repositoryId)
       .subscribe((results: any) => {
         if (results.isSuccess)
           this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);

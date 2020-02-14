@@ -69,5 +69,7 @@ namespace DAL.Models
 
         public ICollection<LookUp> LookUP_TypeId { get; set; }
 
+        public ICollection<AssetFileRepository> Asset_DocumnetId { get; set; }
+
     }
 }

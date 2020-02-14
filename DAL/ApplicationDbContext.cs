@@ -318,6 +318,12 @@ namespace DAL
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_App_Repository_Id");
 
+            builder.Entity<AssetFileRepository>().HasOne(d => d.Asset_TypeCdDmt)
+             .WithMany(p => p.Asset_DocumnetId)
+             .HasForeignKey(d => d.DocumentType)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_Asset_DocumnetId");
+
         }
 
         public override int SaveChanges()

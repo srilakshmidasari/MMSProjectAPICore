@@ -79,6 +79,17 @@ namespace DAL.RequestResponseModels
             public string FileTypeName { get; set; }
         }
 
+        public class AssetRepositoryResposnse
+        {
+            public int RepositoryId { get; set; }
+            public int AssetId { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public int? DocumentType { get; set; }
+            public string FileExtention { get; set; }
+            public string FileTypeName { get; set; }
+        }
+
         public class GetProjectResponse
         {
             public int Id { get; set; }
@@ -300,6 +311,7 @@ namespace DAL.RequestResponseModels
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
+            public int? DocumentTypeId { get; set; }
             public string CreatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
             public string UpdatedBy { get; set; }

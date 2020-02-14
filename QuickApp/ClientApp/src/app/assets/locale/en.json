@@ -1,5 +1,5 @@
 {
-  "appTitle": "Maintenance Management System",
+  "appTitle": "Caliber Maintenance Management System",
   "app": {
     "Welcome": "Welcome",
     "Notifications": "Notifications",
@@ -387,6 +387,7 @@
       "AssetConter": "Asset Conter",
       "AssetFixedDate": "Asset Fixed Date",
       "UploadImage": "Upload Image",
+      "UploadDocumnt":"Upload Documnt",
       "save": "Save",
       "cancel": "Cancel",
       "projectName": "projectName",

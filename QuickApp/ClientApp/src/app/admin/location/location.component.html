@@ -119,7 +119,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Location.Management.locationRef' | translate}}</mat-label>
-                        <input matInput formControlName="locationRef" required  style="text-transform: capitalize;" />
+                        <input matInput formControlName="locationRef" required  appTitleCase />
                         <mat-error *ngIf="!locationForm.controls['locationRef'].valid">
                             {{'Location.editor.locationRefisrequired' | translate}}
                         </mat-error>

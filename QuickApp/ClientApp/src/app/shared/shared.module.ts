@@ -18,6 +18,7 @@ import { UserEditorComponent } from '../admin/user-editor/user-editor.component'
 import { AppDialogComponent } from './app-dialog/app-dialog.component';
 
 import { GroupByPipe } from '../pipes/group-by.pipe';
+import { TitleCaseDirective } from './validators/titleCaseDirective';
 
 @NgModule({
   imports: [
@@ -35,12 +36,14 @@ import { GroupByPipe } from '../pipes/group-by.pipe';
     TranslateModule,
     PageHeaderComponent,
     GroupByPipe,
+    TitleCaseDirective,
     UserEditorComponent,
     AppDialogComponent
   ],
   declarations: [
     PageHeaderComponent,
     GroupByPipe,
+    TitleCaseDirective,
     UserEditorComponent,
     AppDialogComponent
   ],

@@ -353,5 +353,11 @@ export class AccountService {
     return this.accountEndpoint.getLocationsByProjectEndPoint(ProjectId);
   }
 
+  getAssetRepository(assetId) {
+    return this.accountEndpoint.getAssetRepositoryEndpoint(assetId);
+  }
+  deleteAssetRepository(repositoryId) {
+    return this.accountEndpoint.deleteAssetRepositoryEndpoint(repositoryId);
+  }
 
 }

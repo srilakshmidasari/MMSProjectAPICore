@@ -115,7 +115,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Asset.Management.AssetGroupReference1' | translate}}</mat-label>
-                        <input matInput formControlName="agRef1" required  class="first-l-cap" />
+                        <input id="field_ucfirst" matInput formControlName="agRef1" appTitleCase  required />
                         <mat-error *ngIf="!assetGroupForm.controls['agRef1'].valid">
                             {{'Asset.editor.assetGroupRef1Required' | translate}}
                         </mat-error>
