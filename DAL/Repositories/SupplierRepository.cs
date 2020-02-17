@@ -138,7 +138,7 @@ namespace DAL.Repositories
                     var result = _appContext.Suppliers.Where(x => x.Id == suppliers.Id).FirstOrDefault();
                     if (result != null)
                     {
-                        result.Name1 = suppliers.SupplierReference;
+                        result.SupplierReference = suppliers.SupplierReference;
                         result.Name1 = suppliers.Name1;
                         result.Name2 = suppliers.Name2;
                         result.Address = suppliers.Address;
