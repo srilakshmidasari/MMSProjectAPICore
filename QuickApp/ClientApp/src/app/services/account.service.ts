@@ -359,16 +359,17 @@ export class AccountService {
   return this.accountEndpoint.AddsupplierEndPoint(supplier);
 }
 
+// Supplier 
 Updatesupplier(reqObject){
  return this.accountEndpoint.updatesupplierEndpoint(reqObject);
-}
+  }
 deletesupplier(supplierId){
   return this.accountEndpoint.deletesupplierEndpoint(supplierId);
-}
-  getAssetRepository(assetId) {
+  }
+getAssetRepository(assetId) {
     return this.accountEndpoint.getAssetRepositoryEndpoint(assetId);
   }
-  deleteAssetRepository(repositoryId) {
+deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.deleteAssetRepositoryEndpoint(repositoryId);
   }
 

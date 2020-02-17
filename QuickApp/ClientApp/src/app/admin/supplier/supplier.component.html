@@ -9,56 +9,61 @@
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort matSortActive="name1" matSortDirection="asc" matSortDisableClear>
+            <ng-container matColumnDef="supplierReference">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Supplier Reference'|translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.supplierReference}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Name 1'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Name 2'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="address">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Address
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Address'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="email">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Email
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Email'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.email}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="contactNumber">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Contact Number
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Contact Number'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.contactNumber}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="note">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Note
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Supplier.Management.Note'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.note}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                    {{'project.management.IsActive' | translate}}</mat-header-cell>
+                    {{'Supplier.Management.IsActive' | translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>Add Supplier
+                    <button mat-button color="primary" matTooltip="{{'Supplier.Management.Add'|translate}}" (click)="editClick()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>{{'Supplier.Management.Add Supplier'| translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="{{'Supplier.Management.Edit'|translate}}" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'Supplier.Management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -68,10 +73,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>No Records Found</p>
+            <p>{{'Supplier.Management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>No Search Results Found</p>
+            <p>{{'Supplier.Management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
@@ -85,53 +90,60 @@
             <form [formGroup]="supplierForm">
                 <div class="row">
                     <mat-form-field class="col-md-4">
-                        <mat-label>Name 1</mat-label>
+                        <mat-label>{{'Supplier.Management.Supplier Reference'|translate}}</mat-label>
+                        <input matInput formControlName="supplierReference" required maxlength="50" />
+                        <mat-error *ngIf="!supplierForm.controls['supplierReference'].valid">
+                            {{'Supplier.Management.Supplier Reference is required'|translate}} 
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Supplier.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
                         <mat-error *ngIf="!supplierForm.controls['name1'].valid">
-                            Name 1 is required
+                            {{'Supplier.Management.Name 1 is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Name 2</mat-label>
+                        <mat-label>{{'Supplier.Management.Name 2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!supplierForm.controls['name2'].valid">
-                            Name 2 is required
+                            {{'Supplier.Management.Name 2 is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Address</mat-label>
+                        <mat-label>{{'Supplier.Management.Address'|translate}}</mat-label>
                         <input matInput formControlName="address" required maxlength="100" />
                         <mat-error *ngIf="!supplierForm.controls['address'].valid">
-                            Address is required
+                            {{'Supplier.Management.Address is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Email</mat-label>
+                        <mat-label>{{'Supplier.Management.Email'|translate}}</mat-label>
                         <input matInput formControlName="email" required maxlength="50" />
                         <mat-error *ngIf="supplierForm.controls['email'].hasError('required')">
-                            Email is required
+                            {{'Supplier.Management.Email is required'|translate}}
                         </mat-error>
                         <mat-error *ngIf="supplierForm.controls['email'].hasError('pattern')">
-                            Invalid Email
+                            {{'Supplier.Management.Invalid Email'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Contact Number</mat-label>
-                        <input matInput formControlName="contactNumber" required maxlength="50" />
+                        <mat-label>{{'Supplier.Management.Contact Number'|translate}}</mat-label>
+                        <input matInput formControlName="contactNumber"   (keypress)="numberOnly($event)"  maxlength="12" minlength="10" required />
                         <mat-error *ngIf="!supplierForm.controls['contactNumber'].valid">
-                            Contact Number is required
+                            {{'Supplier.Management.Contact Number is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>Note</mat-label>
+                        <mat-label>{{'Supplier.Management.Note'|translate}}</mat-label>
                         <input matInput formControlName="note" maxlength="50" />
                     </mat-form-field>
                 </div>
 
                 <div class="row">
                     <div class="form-group col-md-4">
-                        <label for="file">{{'Assets.Management.UploadImage'|translate}} </label>
+                        <label for="file">{{'Supplier.Management.UploadImage'|translate}} </label>
                         <input type="file" class="form-control" id="file" accept="image/*"
                             (change)="onSelectFiles($event)">
                     </div>
@@ -146,13 +158,13 @@
                         <input type="file"  (change)="uploadFile($event)" class="form-control col-md-4" formControlName="file" style="text-transform: capitalize;"  required maxlength="50" />
                      
                 </div> -->
-                <mat-checkbox formControlName="isActive">IsActive</mat-checkbox>
+                <mat-checkbox formControlName="isActive">{{'Supplier.Management.IsActive'|translate}}</mat-checkbox>
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="savesupplier()">save</button>
-                <button mat-raised-button color="warn" (click)="onCancelClick()">cancel</button>
+                <button mat-raised-button color="primary" (click)="savesupplier()">{{'Supplier.Management.save'|translate}}</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">{{'Supplier.Management.cancel'|translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>

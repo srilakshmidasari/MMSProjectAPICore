@@ -429,7 +429,30 @@
  },
  "Supplier":{
    "Management":{
-    "Search":"Search for Supplier ..."
+    "Search":"Search for Supplier ...",
+    "Supplier Reference":"Supplier Reference",
+    "Name 1":"Name 1",
+    "Name 2":"Name 2",
+    "Address":"Address",
+    "Email":"Email",
+    "Contact Number":"Contact Number",
+    "Note":"Note",
+    "Add":"Add",
+    "IsActive":"IsActive",
+    "Add Supplier":"Add Supplier",
+    "Edit":"Edit",
+    "Delete":"Delete",
+    "No Records Found":"No Records Found",
+    "No Search Results Found":"No Search Results Found",
+    "Name 1 is required":"Name 1 is required",
+    "Name 2 is required":"Name 2 is required",
+    "Address is required":"Address is required",
+    "Email is required":"Email is required",
+    "Invalid Email":"Invalid Email",
+    "Contact Number is required":"Contact Number is required",
+    "save":"save",
+    "cancel":"cancel",
+    "UploadImage":"UploadImage"
    }
  }
 }

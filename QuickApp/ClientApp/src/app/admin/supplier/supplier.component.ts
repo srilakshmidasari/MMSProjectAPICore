@@ -16,7 +16,7 @@ import { Utilities } from 'src/app/services/utilities';
 export class SupplierComponent implements OnInit {
   loadingIndicator: boolean;
   sourcesupplier: any;
-  displayedColumns=['name1','name2','address','email','contactNumber','note','isActive','Actions']
+  displayedColumns=['supplierReference','name1','name2','address','email','contactNumber','note','isActive','Actions']
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -56,6 +56,7 @@ export class SupplierComponent implements OnInit {
  private buildForm() {
    debugger;
   this.supplierForm=this.formBuilder.group({
+    supplierReference:['',Validators.required],
     name1:['',Validators.required],
     name2:['',Validators.required],
     address:['',Validators.required],
@@ -83,6 +84,7 @@ private refresh() {
   this.applyFilter(this.dataSource.filter);
 }
 
+ //get data
  private getsuppliers(){
    debugger;
   this.alertService.startLoadingMessage();
@@ -100,6 +102,7 @@ private refresh() {
     });
   }
 
+ //saveing the data
   savesupplier(){
     debugger;
     if(!this.supplierForm.valid){
@@ -158,6 +161,7 @@ private refresh() {
     const formModel = this.supplierForm.value;
    return{
     "id": (this.isNewsupplier==true)?0:this.supplierData.id,
+    "supplierReference":formModel.supplierReference,
     "name1":formModel.name1,
     "name2": formModel.name2,
     "address":formModel.address,
@@ -186,6 +190,7 @@ private refresh() {
       this.buildForm();
     }
     this.supplierForm.reset({
+      supplierReference:this.supplierData.supplierReference ||'',
       name1: this.supplierData.name1 || '',
       name2: this.supplierData.name2 || '',
       address: this.supplierData.address || '',
@@ -211,7 +216,7 @@ private refresh() {
       this.buildForm();
     }
   }
-
+  //Deleteing Record
   confirmDelete(supplier:any){
     debugger;
     this.snackBar.open(`Delete ${supplier.name1}?`, 'DELETE', { duration: 5000 })
@@ -260,6 +265,30 @@ private refresh() {
       reader.readAsDataURL(file);
     }
    }
+     // Accepting Only Numbers
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+   //  Accepting Only Alphabets
+   alphabetsOnly(event: any) {
+    const alphabetspattern = /^[a-zA-Z ]*$/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+  alphaNumaricsOnly(event: any) {
+    const alphabetspattern = /^[a-z0-9]+$/i;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!alphabetspattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
   }
 
 
