@@ -36,5 +36,18 @@ namespace MMS.Controllers
             Item ItemDetails = _mapper.Map<Item>(items);
             return _unitOfWork.Items.AddItemDetials(ItemDetails);
         }
+
+        [HttpPut("UpdateItem")]
+        public ValueDataResponse<Item> UpdateItem(UpsertItem items)
+        {
+            Item ItemDetails = _mapper.Map<Item>(items);
+            return _unitOfWork.Items.UpdateItem(ItemDetails);
+        }
+
+        [HttpDelete("DeleteItem")]
+        public ValueDataResponse<Item> DeleteItem(int ItemId)
+        {
+            return _unitOfWork.Items.DeleteItem(ItemId);
+        }
     }
 }

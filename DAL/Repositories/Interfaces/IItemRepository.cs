@@ -11,5 +11,9 @@ namespace DAL.Repositories.Interfaces
         ListDataResponse<Item> GetAllItems();
 
         ValueDataResponse<Item> AddItemDetials(Item items);
+        ValueDataResponse<Item> UpdateItem(Item items);
+
+        ValueDataResponse<Item> DeleteItem(int ItemId);
+
     }
 }

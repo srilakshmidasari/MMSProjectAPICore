@@ -95,5 +95,103 @@ namespace DAL.Repositories
             return response;
         }
 
+
+        public ValueDataResponse<Item> UpdateItem(Item items)
+        {
+            ValueDataResponse<Item> response = new ValueDataResponse<Item>();
+
+            try
+            {
+                var itemExists = _appContext.Items.Where(x => x.Id != items.Id && x.ItemReference == items.ItemReference).FirstOrDefault();
+                if (itemExists == null)
+                {
+                    var result = _appContext.Items.Where(x => x.Id == items.Id).FirstOrDefault();
+                    if (result != null)
+                    {
+                        result.ItemReference = items.ItemReference;
+                        result.ItemCategory = items.ItemCategory;
+                        result.Name1 = items.Name1;
+                        result.Name2 = items.Name2;
+                        result.AverageCost = items.AverageCost;
+                        result.UOMId = items.UOMId;
+                        result.UnitOfConversion = items.UnitOfConversion;
+                        result.Units = items.Units;
+                        result.IsActive = items.IsActive;
+                        result.CreatedBy = items.CreatedBy;
+                        result.CreatedDate = items.CreatedDate;
+                        result.UpdatedBy = items.UpdatedBy;
+                        result.UpdatedDate = items.UpdatedDate;
+
+                        _appContext.SaveChanges();
+                        response.Result = result;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Item Updated Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Item Updation Failed";
+                    }
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Item Reference Already Exists";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+
+            }
+            return response;
+        }
+
+
+        public ValueDataResponse<Item> DeleteItem(int ItemId)
+        {
+            ValueDataResponse<Item> response = new ValueDataResponse<Item>();
+            try
+            {
+                var ItemData = _appContext.Items.Where(x => x.Id == ItemId).FirstOrDefault();
+                if (ItemData != null)
+                {
+                    _appContext.Remove(ItemData);
+                    _appContext.SaveChanges();
+                }
+
+                if (ItemData != null)
+                {
+                    response.Result = ItemData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Item Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Item Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
     }
 }
