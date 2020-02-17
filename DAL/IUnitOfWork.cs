@@ -24,6 +24,8 @@ namespace DAL
         IAssetRepository Assets { get; }
 
         ISupplierRepository Suppliers { get; }
+
+        IItemRepository Items { get; }
         int SaveChanges();
     }
 }

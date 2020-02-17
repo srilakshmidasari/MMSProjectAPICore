@@ -93,5 +93,8 @@ namespace DAL.Models
 
         public ICollection<AssetFileRepository> App_AssetFileRepository_CreatedUser { get; set; }
         public ICollection<AssetFileRepository> App_AssetFileRepository_UpdatedUser { get; set; }
+
+        public ICollection<Item> App_Item_CreatedUser { get; set; }
+        public ICollection<Item> App_Item_UpdatedUser { get; set; }
     }
 }
