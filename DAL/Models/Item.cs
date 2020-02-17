@@ -1,35 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-    public class LookUp
+    public class Item
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "LookUp TypeId")]
-        public int LookUpTypeId { get; set; }
+        [Display(Name = "ItemReference")]
+        [StringLength(50)]
+        public string ItemReference { get; set; }
+
+        [Display(Name = "ItemCategory")]
+        public int ItemCategory { get; set; }
 
         [Required]
-        [StringLength(100)]
         [Display(Name = "Name1")]
+        [StringLength(100)]
         public string Name1 { get; set; }
 
         [Required]
-        [StringLength(100)]
         [Display(Name = "Name2")]
+        [StringLength(100)]
         public string Name2 { get; set; }
 
-        [StringLength(500)]
-        [Display(Name = "Remarks")]
-        public string Remarks { get; set; }
+        [Display(Name = "AverageCost")]
+        public int AverageCost { get; set; }
 
-        [Display(Name = "IsActive")]
+        [Display(Name = "UOMId")]
+        public int UOMId { get; set; }
+
+        [Required]
+        [Display(Name = "UnitOfConversion")]
+        [StringLength(100)]
+        public string UnitOfConversion { get; set; }
+
+        [Required]
+        [Display(Name = "Units")]
+        [StringLength(100)]
+        public string Units { get; set; }
+
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
         [Required]
@@ -54,15 +72,13 @@ namespace DAL.Models
         public ApplicationUser UpdatedUser { get; set; }
 
         [JsonIgnore]
-        public TypeCdDmt TypecdId { get; set; }
+        public LookUp UOM_Id { get; set; }
 
-        public ICollection<LookUpProjectXref> StorexrefId { get; set; }
+        [JsonIgnore]
+        public LookUp ItemCategory_Id { get; set; }
 
-        public ICollection<AssetLocation> App_AssetLocation_AstTrade_Id { get; set; }
 
-        public ICollection<Item> App_Item_UOM_Id { get; set; }
-
-        public ICollection<Item> App_Item_ItemCategory_Id { get; set; }
     }
-}
- 
+    }
+
+
