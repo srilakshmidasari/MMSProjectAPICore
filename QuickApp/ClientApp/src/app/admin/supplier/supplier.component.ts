@@ -21,8 +21,8 @@ export class SupplierComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
- @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
-  @ViewChild(MatSort, { static: true }) storeSort: MatSort;
+//  @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
+//   @ViewChild(MatSort, { static: true }) storeSort: MatSort;
   @Input() supplier:any={}
   supplierIds: any[] = [];
   isAllow: boolean = false;

@@ -33,7 +33,9 @@
     "Asset": "Asset",
     "AssetGroup": "Asset Group",
     "Assets" :"Assets",
-    "Supplier":"Supplier"
+    "Supplier":"Supplier",
+    "Inventory":"Inventory",
+    "Add Item":"Add Item"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -52,7 +54,8 @@
     "Location": "Location Management",
     "Assets": "Assets",
     "AssetGroup": "Asset Group Specification",
-    "Supplier":"Supplier"
+    "Supplier":"Supplier",
+    "Add Item":"Add Item"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -453,6 +456,11 @@
     "save":"save",
     "cancel":"cancel",
     "UploadImage":"UploadImage"
+   }
+ },
+ "Add Item":{
+   "Management":{
+    "Search":"Search for Item..."
    }
  }
 }
