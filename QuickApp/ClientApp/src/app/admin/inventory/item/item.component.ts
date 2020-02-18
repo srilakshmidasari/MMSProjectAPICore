@@ -144,8 +144,8 @@ export class ItemComponent implements OnInit {
       name1: this.itemData.name1 || '',
       name2: this.itemData.name2 || '',
       averageCost: this.itemData.averageCost || '',
-      unit: this.itemData.unit || '',
-      unitconversion: this.itemData.unitconversion || '',
+      unit: this.itemData.units || '',
+      unitconversion: this.itemData.unitOfConversion || '',
       isActive: this.itemData.isActive || '',
     });
   }
