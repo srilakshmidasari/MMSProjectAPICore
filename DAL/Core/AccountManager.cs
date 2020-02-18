@@ -431,6 +431,7 @@ namespace DAL.Core
                 {
                     result.IsEnabled = false;
                     result.UpdatedDate = DateTime.UtcNow;
+                    //_context.Users.Remove(result);
                     await _context.SaveChangesAsync();
                     response.Result = result;
                     response.IsSuccess = true;
