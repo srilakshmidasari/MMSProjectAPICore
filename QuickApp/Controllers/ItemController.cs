@@ -25,7 +25,7 @@ namespace MMS.Controllers
         }
 
         [HttpGet("GetAllItems")]
-        public ListDataResponse<Item> Get()
+        public ListDataResponse<GetItemResponse> Get()
         {
             return _unitOfWork.Items.GetAllItems();
         }

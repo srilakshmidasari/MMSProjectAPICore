@@ -352,5 +352,22 @@ namespace DAL.RequestResponseModels
 
         }
 
+        public class GetItemResponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public string ItemReference { get; set; }
+            public int ItemCategory { get; set; }
+            public string CategoryName { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public int AverageCost { get; set; }
+            public int UOMId { get; set; }
+            public string UOMName { get; set; }
+            public string UnitOfConversion { get; set; }
+            public string Units { get; set; }
+            public bool IsActive { get; set; }
+
+        }
+
     }
 }

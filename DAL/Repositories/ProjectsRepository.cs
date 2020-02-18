@@ -318,7 +318,7 @@ namespace DAL.Repositories
 
                 var locations = _appContext.Locations.Where(x => x.ProjectId == ProjectId).ToList();
 
-                if (locations.Count() > 0)
+                if (locations != null)
                 {
                     var res = _appContext.ProjectRepositories.Where(x =>x.ProjectId == ProjectId).ToList();
                     _appContext.ProjectRepositories.RemoveRange(res);
@@ -339,8 +339,6 @@ namespace DAL.Repositories
 
                 if (projects != null)
                 {
-                    _appContext.Projects.RemoveRange(projects);
-                    _appContext.SaveChanges();
                     response.Result = projects;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;

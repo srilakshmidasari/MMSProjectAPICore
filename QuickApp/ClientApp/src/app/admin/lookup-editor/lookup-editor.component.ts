@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { AlertService, MessageSeverity } from '../../services/alert.service';
 import { AccountService } from '../../services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { DataFactory } from 'src/app/shared/dataFactory';
 @Component({
   selector: 'app-lookup-editor',
   templateUrl: './lookup-editor.component.html',
@@ -28,26 +29,22 @@ export class LookupEditorComponent implements OnInit {
      }
 
   ngOnInit() {  
-    debugger;
        this.getlookUpData();
   }
 
 
   private buildForm() {
-    debugger;
     this.LookUpForm = this.fb.group({
       name1: ['', Validators.required],
       name2: ['', Validators.required],
       remarks: ['', Validators.required],
-      selectCategory: [''],
+      selectCategory:['', Validators.required],
       isActive: [true],
     })
   }
 
   private getlookUpData() {
-    debugger;
-    var classTypeId = 9
-    this.accountService.getCddmtData(classTypeId).subscribe((response: any) => {
+    this.accountService.getCddmtData(DataFactory.ClassTypes.LookUp).subscribe((response: any) => {
       this.lookUplist = response.listResult;
     })
   }

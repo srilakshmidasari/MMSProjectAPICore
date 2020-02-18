@@ -7,10 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using static DAL.RequestResponseModels.RequestResponseModels;
 
 namespace DAL.Repositories
 {
-   public class ItemRepository:Repository<dynamic>,IItemRepository
+    public class ItemRepository : Repository<dynamic>, IItemRepository
     {
         public readonly IOptions<AppSettings> _config;
         public ItemRepository(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration) : base(context, mapper, configuration)
@@ -19,13 +20,35 @@ namespace DAL.Repositories
         }
         private ApplicationDbContext _appContext => (ApplicationDbContext)_context;
 
-        public ListDataResponse<Item> GetAllItems()
+        public ListDataResponse<GetItemResponse> GetAllItems()
         {
-            ListDataResponse<Item> response = new ListDataResponse<Item>();
+            ListDataResponse<GetItemResponse> response = new ListDataResponse<GetItemResponse>();
             try
             {
-                var result = _appContext.Items.ToList();
+                //var result = _appContext.Items.ToList();
+                var result = (from It in _appContext.Items
+                              join l in _appContext.LookUps on It.ItemCategory equals l.Id
+                              join p in _appContext.LookUps on It.UOMId equals p.Id
 
+                              select new GetItemResponse
+                              {
+                                  Id = It.Id,
+                                  Name1 = It.Name1,
+                                  Name2 = It.Name2,
+                                  ItemReference = It.ItemReference,
+                                  ItemCategory =l.Id,
+                                  CategoryName = l.Name1,
+                                  UnitOfConversion = It.UnitOfConversion,
+                                  Units = It.Units,
+                                  UOMId = p.Id,
+                                  UOMName = p.Name1,
+                                  AverageCost = It.AverageCost,
+                                  IsActive = It.IsActive,
+                                  CreatedBy = It.CreatedBy,
+                                  CreatedDate = It.CreatedDate,
+                                  UpdatedBy = It.UpdatedBy,
+                                  UpdatedDate = It.UpdatedDate,
+                              }).ToList();
                 if (result != null)
                 {
                     response.ListResult = result;

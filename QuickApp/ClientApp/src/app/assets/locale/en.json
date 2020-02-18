@@ -441,7 +441,7 @@
     "Contact Number":"Contact Number",
     "Note":"Note",
     "Add":"Add",
-    "IsActive":"IsActive",
+    "IsActive":"Is Active",
     "Add Supplier":"Add Supplier",
     "Edit":"Edit",
     "Delete":"Delete",
@@ -450,11 +450,12 @@
     "Name 1 is required":"Name 1 is required",
     "Name 2 is required":"Name 2 is required",
     "Address is required":"Address is required",
+    "Supplier Reference is required":"Supplier Reference is required",
     "Email is required":"Email is required",
     "Invalid Email":"Invalid Email",
     "Contact Number is required":"Contact Number is required",
-    "save":"save",
-    "cancel":"cancel",
+    "save":"Save",
+    "cancel":"Cancel",
     "UploadImage":"UploadImage"
    }
  },
