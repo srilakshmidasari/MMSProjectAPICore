@@ -67,6 +67,8 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly _deleteAssetRepositoryUrl: string = '/api/Asset/DeleteProjectRepository';
   private readonly _getAssetRepositoryUrl: string = '/api/Asset/GetRepositoryByAsset';
+  private readonly _getAllitem: string = '/api/Item/GetAllItems';
+  private readonly _AddAllitem: string ='/api/Item/AddItemDetials';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -116,7 +118,8 @@ export class AccountEndpoint extends EndpointBase {
   get AddSupplierDetials() { return this.configurations.baseUrl + this._AddSupplierDetials; }
   get UpdateSupplierDetials() { return this.configurations.baseUrl + this._UpdateSupplierDetials; }
   get DeleteSupplierByID() { return this.configurations.baseUrl + this._DeleteSupplierByID; }
-
+  get getAllitem() { return this.configurations.baseUrl + this._getAllitem; }
+  get AddAllitem() { return this.configurations.baseUrl + this._AddAllitem; }
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -679,4 +682,19 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  getitemEndpoint<T>(){
+    const endpointUrl = this.getAllitem;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getitemEndpoint());
+      }));
+  }
+  addAllItemtEndpoint<T>(itemObject: any): Observable<T> {
+    const endpointUrl = this.AddAllitem;
+    return this.http.post<T>(endpointUrl, JSON.stringify(itemObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddsupplierEndPoint(itemObject));
+      }));
+  }
+ 
 }

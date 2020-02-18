@@ -28,6 +28,7 @@ export class LookupEditorComponent implements OnInit {
      }
 
   ngOnInit() {  
+    debugger;
        this.getlookUpData();
   }
 
@@ -44,10 +45,10 @@ export class LookupEditorComponent implements OnInit {
   }
 
   private getlookUpData() {
-    var classTypeId = 2
+    debugger;
+    var classTypeId = 9
     this.accountService.getCddmtData(classTypeId).subscribe((response: any) => {
       this.lookUplist = response.listResult;
-
     })
   }
 

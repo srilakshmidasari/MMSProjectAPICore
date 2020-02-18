@@ -373,4 +373,11 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.deleteAssetRepositoryEndpoint(repositoryId);
   }
 
+  getitemdata(){
+    return this.accountEndpoint.getitemEndpoint();
+  }
+  AddAllItems(reqObject) {
+    return this.accountEndpoint.addAllItemtEndpoint(reqObject);
+  }
+
 }
