@@ -24,7 +24,9 @@
     "Asset":"الأصول",
     "Asset Group":"مجموعة الأصول",
     "Assets": "الأصول",
-    "Supplier":"المورد"
+    "Supplier":"المورد",
+    "Inventory":"المخزون",
+    "Item":"بند"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -41,7 +43,9 @@
     "LookUp": "بحث عن الإدارة",
     "Location": "إدارة الموقع",
     "AssetGroup": "إدارة الأصول",
-    "Assets": "الأصول"
+    "Assets": "الأصول",
+    "Inventory":"المخزون",
+    "Item":"بند"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -442,6 +446,38 @@
    "save":"حفظ",
    "cancel":"إلغاء",
    "UploadImage":"تحميل الصور"
+  }
+},
+"Item":{
+  "Management":{
+   "Search":"البحث عن عنصر ...",
+   "Item Reference":"مرجع البند",
+   "Category Name":"اسم التصنيف",
+   "Name 1":"الاسم 1",
+   "Name 2":"الاسم 2",
+   "Average Cost":"متوسط ​​السعر",
+   "Units":"وحدات",
+   "Uom Name":"اسم ام",
+   "Units of Conversion":"وحدات التحويل",
+   "Is Active":"نشط",
+   "Add":"إضافة",
+   "Add Item":"اضافة عنصر",
+   "Edit":"تعديل",
+   "Delete":"حذف",
+   "No Records Found":"لا توجد سجلات",
+   "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
+   "Item Reference is required":"مرجع البند مطلوب",
+   "Please Select Category":"يرجى اختيار الفئة",
+   "Name1 is required":"الاسم 1 مطلوب",
+   "Name2 is required":"الاسم 2 مطلوب",
+   "Unit of Measure":"وحدة القياس",
+   "Please Select Unit of Measure":"يرجى اختيار وحدة القياس",
+   "Average Cost is required":"متوسط ​​التكلفة مطلوب",
+   "Units is required":"الوحدات مطلوبة",
+   "Units of Conversion is required":"وحدات التحويل مطلوبة",
+   "Item Category":"العنصر فئة",
+   "Save":"حفظ",
+   "Cancel":"إلغاء"
   }
 }
 }

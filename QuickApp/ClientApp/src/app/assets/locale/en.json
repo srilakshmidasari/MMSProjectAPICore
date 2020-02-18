@@ -35,7 +35,7 @@
     "Assets" :"Assets",
     "Supplier":"Supplier",
     "Inventory":"Inventory",
-    "Add Item":"Add Item"
+    "Item":"Item"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -55,7 +55,7 @@
     "Assets": "Assets",
     "AssetGroup": "Asset Group Specification",
     "Supplier":"Supplier",
-    "Add Item":"Add Item"
+    "Item":"Item"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -459,9 +459,36 @@
     "UploadImage":"UploadImage"
    }
  },
- "Add Item":{
+ "Item":{
    "Management":{
-    "Search":"Search for Item..."
+    "Search":"Search for Item...",
+    "Item Reference":"Item Reference",
+    "Category Name":"Category Name",
+    "Name 1":"Name 1",
+    "Name 2":"Name 2",
+    "Average Cost":"Average Cost",
+    "Units":"Units",
+    "Uom Name":"Uom Name",
+    "Units of Conversion":"Units of Conversion",
+    "Is Active":"Is Active",
+    "Add":"Add",
+    "Add Item":"Add Item",
+    "Edit":"Edit",
+    "Delete":"Delete",
+    "No Records Found":"No Records Found",
+    "No Search Results Found":"No Search Results Found",
+    "Item Reference is required":"Item Reference is required",
+    "Please Select Category":"Please Select Category",
+    "Name1 is required":"Name1 is required",
+    "Name2 is required":"Name2 is required",
+    "Unit of Measure":"Unit of Measure",
+    "Please Select Unit of Measure":"Please Select Unit of Measure",
+    "Average Cost is required":"Average Cost is required",
+    "Units is required":"Units is required",
+    "Units of Conversion is required":"Units of Conversion is required",
+    "Item Category":"Item Category",
+    "Save":"Save",
+    "Cancel":"Cancel"
    }
  }
 }

@@ -1,9 +1,9 @@
-<app-page-header title="Add Item" icon="assignment_ind"></app-page-header>
+<app-page-header title="Item" icon="assignment_ind"></app-page-header>
 <div class="page-content" [hidden]="isAddingitem">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
-                placeholder="{{'Add Item.Management.Search' | translate}}">
+                placeholder="{{'Item.Management.Search' | translate}}">
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
@@ -11,64 +11,64 @@
         <mat-table [dataSource]="dataSource" matSort matSortActive="itemReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="itemReference">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Item Reference
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Item Reference'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.itemReference}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="categoryName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Category Name
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Category Name'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.categoryName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Name 1'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Name 2'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="averageCost">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Average Cost
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Average Cost'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.averageCost}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="units">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Units
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.units}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="uomName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Uom Name
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Uom Name'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.uomName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="unitOfConversion">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Units of Conversion
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units of Conversion'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.unitOfConversion}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                    Is Active</mat-header-cell>
+                    {{'Item.Management.Is Active'|translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
-                        <mat-icon class="mat-button-icon">add</mat-icon>Add Item
+                    <button mat-button color="primary" matTooltip="{{'Item.Management.Add'|translate}}" (click)="editClick()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>{{'Item.Management.Add Item'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="{{'Item.Management.Edit'|translate}}" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'Item.Management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -78,10 +78,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>No Records Found</p>
+            <p>{{'Item.Management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>No Search Results Found</p>
+            <p>{{'Item.Management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
@@ -95,78 +95,78 @@
             <form [formGroup]="itemForm">
                 <div class="row">
                     <mat-form-field class="col-md-4">
-                        <mat-label>Item Reference</mat-label>
+                        <mat-label>{{'Item.Management.Item Reference'|translate}}</mat-label>
                         <input matInput formControlName="itemReference" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['itemReference'].valid">
-                            Item Reference is required
+                            {{'Item.Management.Item Reference is required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Item Category</mat-label>
+                        <mat-label>{{'Item.Management.Item Category'|translate}}</mat-label>
                         <mat-select formControlName="selectCategory" required>
                             <mat-option *ngFor="let doc of itemCategory" [value]="doc.id">
                                 {{doc.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!itemForm.controls['selectCategory'].valid">
-                            Please Select Category
+                            {{'Item.Management.Please Select Category'|translate}} 
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>Name 1</mat-label>
+                        <mat-label>{{'Item.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name1'].valid">
-                            Name1 is required
+                            {{'Item.Management.Name1 is required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Name 2</mat-label>
+                        <mat-label>{{'Item.Management.Name 2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name2'].valid">
-                            Name2 is required
+                            {{'Item.Management.Name2 is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Unit of Measure</mat-label>
+                        <mat-label>{{'Item.Management.Unit of Measure'|translate}}</mat-label>
                         <mat-select formControlName="uomId" required>
                             <mat-option *ngFor="let uom of UOMData" [value]="uom.id">
                                 {{uom.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!itemForm.controls['uomId'].valid">
-                            Please Select Unit of Measure
+                            {{'Item.Management.Please Select Unit of Measure'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Average Cost</mat-label>
+                        <mat-label>{{'Item.Management.Average Cost'|translate}}</mat-label>
                         <input matInput formControlName="averageCost" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['averageCost'].valid">
-                            Average Cost is required
+                            {{'Item.Management.Average Cost is required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Units</mat-label>
+                        <mat-label>{{'Item.Management.Units'|translate}}</mat-label>
                         <input matInput formControlName="unit" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unit'].valid">
-                            Units is required
+                            {{'Item.Management.Units is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Units of Conversion</mat-label>
+                        <mat-label>{{'Item.Management.Units of Conversion'|translate}}</mat-label>
                         <input matInput formControlName="unitconversion" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unitconversion'].valid">
-                            Units of Conversion is required
+                            {{'Item.Management.Units of Conversion is required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <mat-checkbox formControlName="isActive">{{'Supplier.Management.IsActive'|translate}}</mat-checkbox>
+                <mat-checkbox formControlName="isActive">{{'Item.Management.Is Active'|translate}} </mat-checkbox>
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="saveitem()">Save</button>
-                <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+                <button mat-raised-button color="primary" (click)="saveitem()">{{'Item.Management.Save'|translate}}</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">{{'Item.Management.Cancel'|translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
