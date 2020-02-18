@@ -10,22 +10,22 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>  
         <mat-table [dataSource]="dataSource" matSort >
             <ng-container matColumnDef="itemReference">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>ItemReference
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Item Reference
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.itemReference}} </mat-cell>
             </ng-container> 
             <ng-container matColumnDef="category">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>category
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Category
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.category}} </mat-cell>
             </ng-container> 
             <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name1
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Name2
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container> 
@@ -40,7 +40,7 @@
                 <mat-cell *matCellDef="let row"> {{row.unit}} </mat-cell>
             </ng-container> 
             <ng-container matColumnDef="unitconversion">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Unit conversion
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Unit Of Conversion
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.unitconversion}} </mat-cell>
             </ng-container> 
@@ -54,7 +54,7 @@
         <ng-container matColumnDef="Actions">
             <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                 <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
-                    <mat-icon class="mat-button-icon">add</mat-icon>Add item
+                    <mat-icon class="mat-button-icon">add</mat-icon>Add Item
                 </button>
             </mat-header-cell>
             <mat-cell class="just-cont-center" *matCellDef="let row">
@@ -96,40 +96,41 @@
                         </mat-error> 
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>SelectCategory</mat-label>
+                        <mat-label>Item Category</mat-label>
                         <mat-select formControlName="selectCategory" required>
-                            <mat-option *ngFor="let doc of itemlist" [value]="doc.typeCdDmtId">
-                                {{doc.description}}
+                            <mat-option *ngFor="let doc of itemCategory" [value]="doc.id">
+                                {{doc.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!itemForm.controls['selectCategory'].valid">
-                           PleaseSelectCategory
+                           Please Select Category
                         </mat-error>
                     </mat-form-field>
-                    <!-- <mat-form-field class="col-md-6">
-                        <mat-label>Select UOMId</mat-label>
-                        <mat-select formControlName="SelectUOMId" required>
-                            <mat-option *ngFor="let doc of itemlist" [value]="doc.typeCdDmtId">
-                                {{doc.description}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!itemForm.controls['SelectUOMId'].valid">
-                           PleaseSelectCategory
-                        </mat-error>
-                    </mat-form-field> -->
+                  
                     <mat-form-field class="col-md-4">  
-                        <mat-label>Name1</mat-label> 
+                        <mat-label>Name 1</mat-label> 
                         <input matInput formControlName="name1" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name1'].valid">
                             Name1 is required
                         </mat-error> 
                     </mat-form-field>
                     <mat-form-field class="col-md-4">  
-                        <mat-label>Name2</mat-label> 
+                        <mat-label>Name 2</mat-label> 
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name2'].valid">
                            Name2 is required
                         </mat-error> 
+                    </mat-form-field>
+                     <mat-form-field class="col-md-4">
+                        <mat-label>Unit Of Measure</mat-label>
+                        <mat-select formControlName="uomId" required>
+                            <mat-option *ngFor="let doc of itemlist" [value]="doc.id">
+                                {{doc.name2}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!itemForm.controls['uomId'].valid">
+                           Please Select Category
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">  
                         <mat-label>Average Cost</mat-label> 
@@ -139,17 +140,17 @@
                         </mat-error> 
                     </mat-form-field>
                     <mat-form-field class="col-md-4">  
-                        <mat-label>unit</mat-label> 
+                        <mat-label>Unit</mat-label> 
                         <input matInput formControlName="unit" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unit'].valid">
                             unit is required
                         </mat-error> 
                     </mat-form-field>
                     <mat-form-field class="col-md-4">  
-                        <mat-label>unitconversion</mat-label> 
+                        <mat-label>Unit Of conversion</mat-label> 
                         <input matInput formControlName="unitconversion" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unitconversion'].valid">
-                            unitconversion is required
+                            Unit Of Conversion is required
                         </mat-error> 
                     </mat-form-field>
                 </div>  
