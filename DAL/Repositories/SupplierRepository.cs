@@ -151,25 +151,25 @@ namespace DAL.Repositories
                         result.UpdatedBy = suppliers.UpdatedBy;
                         result.UpdatedDate = suppliers.UpdatedDate;
 
-                    if (suppliers.FileName != null)
-                    {
-                        string ModuleName = "Supplier";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
+                        if (suppliers.FileName != null)
+                        {
+                            string ModuleName = "Supplier";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
 
-                        FileUploadService repo = new FileUploadService();
+                            FileUploadService repo = new FileUploadService();
 
 
-                        string FolderLocation = _config.Value.FileRepositoryFolder;
-                        string ServerRootPath = _config.Value.ServerRootPath;
+                            string FolderLocation = _config.Value.FileRepositoryFolder;
+                            string ServerRootPath = _config.Value.ServerRootPath;
 
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                        byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
+                            byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
 
-                        result.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
+                            result.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
 
                             result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
                             result.FileExtention = suppliers.FileExtention;
@@ -187,7 +187,7 @@ namespace DAL.Repositories
                         response.AffectedRecords = 0;
                         response.EndUserMessage = "Supplier Updation Failed";
                     }
-               
+                }
 
             }
             catch (Exception ex)
