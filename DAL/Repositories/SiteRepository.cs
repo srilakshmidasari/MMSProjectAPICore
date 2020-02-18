@@ -10,6 +10,7 @@ using System.Linq;
 using System.IO;
 using static DAL.RequestResponseModels.RequestResponseModels;
 using GoogleMaps.LocationServices;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -144,7 +145,7 @@ namespace DAL.Repositories
                 if (siteExists == null)
                 {
                     var result = _appContext.SiteInfos.Where(x => x.Id == sites.Id).FirstOrDefault();
-                    if(result  != null)
+                    if (result != null)
                     {
                         result.SiteReference = sites.SiteReference;
                         result.Name1 = sites.Name1;
@@ -258,18 +259,37 @@ namespace DAL.Repositories
             ValueDataResponse<SiteInfo> response = new ValueDataResponse<SiteInfo>();
             try
             {
-                var SiteInfoData = _appContext.SiteInfos.Where(x => x.Id == SiteId && x.IsActive == true).FirstOrDefault();
-                if (SiteInfoData != null)
+
+
+                var result = _appContext.SiteInfos.Where(x => x.Id == SiteId).FirstOrDefault();
+                var projects = _appContext.Projects.Where(p => p.SiteId == SiteId).ToList();
+
+                if (projects != null)
                 {
-                    SiteInfoData.IsActive = false;
-                    //entityInfo.UpdatedBy = entity.UpdatedBy;
-                    SiteInfoData.UpdatedDate = DateTime.Now;
-                    _appContext.SaveChanges();
+
+                    var res = _appContext.ProjectRepositories.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
+                    _appContext.ProjectRepositories.RemoveRange(res);
+
+                    var ress = _appContext.LookUpProjectXrefs.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
+                    _appContext.LookUpProjectXrefs.RemoveRange(ress);
+
+                    var resss = _appContext.Locations.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
+
+                    var alocs = _appContext.AssetLocations.Where(x => resss.Select(al => al.Id).Contains(x.LocationId)).ToList();
+
+                    var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+                    _appContext.AssetFileRepositories.RemoveRange(assetRepo);
+                    _appContext.AssetLocations.RemoveRange(alocs);
+                    _appContext.Locations.RemoveRange(resss);
                 }
 
-                if (SiteInfoData != null)
+                _appContext.Projects.RemoveRange(projects);
+                _appContext.SiteInfos.Remove(result);
+                _appContext.SaveChanges();
+
+                if (result != null)
                 {
-                    response.Result = SiteInfoData;
+                    response.Result = result;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
                     response.EndUserMessage = "SiteInfo Deleted Successfull";

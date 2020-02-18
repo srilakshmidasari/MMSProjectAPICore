@@ -12,6 +12,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 import { DeleteFileComponent } from '../delete-file/delete-file.component';
 import { Utilities } from 'src/app/services/utilities';
 import { Permission } from 'src/app/models/permission.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-project',
@@ -431,27 +432,27 @@ export class ProjectComponent implements OnInit {
 
   }
 
-  public confirmDelete(project: any) {
-    this.snackBar.open(`Delete ${project.name1}?`, 'DELETE', { duration: 5000 })
-      .onAction().subscribe(() => {
-        this.alertService.startLoadingMessage('Deleting...');
-        this.loadingIndicator = true;
-        this.accountService.deleteProject(project.id)
-          .subscribe((results: any) => {
-            this.alertService.stopLoadingMessage();
-            this.loadingIndicator = false;
-            if (results.isSuccess) {
-              this.getProjects();
-            }
-          },
-            error => {
-              this.alertService.stopLoadingMessage();
-              this.loadingIndicator = false;
-              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-                MessageSeverity.error, error);
-            });
-      });
-  }
+  // public confirmDelete(project: any) {
+  //   this.snackBar.open(`Delete ${project.name1}?`, 'DELETE', { duration: 5000 })
+  //     .onAction().subscribe(() => {
+  //       this.alertService.startLoadingMessage('Deleting...');
+  //       this.loadingIndicator = true;
+  //       this.accountService.deleteProject(project.id)
+  //         .subscribe((results: any) => {
+  //           this.alertService.stopLoadingMessage();
+  //           this.loadingIndicator = false;
+  //           if (results.isSuccess) {
+  //             this.getProjects();
+  //           }
+  //         },
+  //           error => {
+  //             this.alertService.stopLoadingMessage();
+  //             this.loadingIndicator = false;
+  //             this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+  //               MessageSeverity.error, error);
+  //           });
+  //     });
+  // }
 
   // get canManageProjects() {
   //   return this.accountService.userHasPermission(Permission.manageProjectsPermission);
@@ -469,6 +470,37 @@ export class ProjectComponent implements OnInit {
 
   get canDeleteProjects() {
     return this.accountService.userHasPermission(Permission.deleteProjectsPermission);
+  }
+
+
+  //Delete Project 
+  confirmDelete(project: any) {
+    debugger
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete" + " " + project.projectReference,  msg: "Are you sure you want to delete this Project with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deleteProject(project.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getProjects();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+          }
+      });
   }
 
 }

@@ -45,6 +45,7 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 
 
 
@@ -81,6 +82,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     HomeComponent,
     AboutComponent,
     NotFoundComponent,
+    ConfirmationDialogComponent
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
@@ -96,7 +98,7 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
     LocalStoreManager
   ],
   entryComponents: [
-    LoginDialogComponent,
+    LoginDialogComponent,ConfirmationDialogComponent
   ],
   bootstrap: [AppComponent]
 })

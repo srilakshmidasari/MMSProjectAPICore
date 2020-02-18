@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DAL.Repositories
 {
-  public  class SupplierRepository:Repository<dynamic>,ISupplierRepository
+    public class SupplierRepository : Repository<dynamic>, ISupplierRepository
     {
         public readonly IOptions<AppSettings> _config;
         public SupplierRepository(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration) : base(context, mapper, configuration)
@@ -188,12 +188,7 @@ namespace DAL.Repositories
                         response.EndUserMessage = "Supplier Updation Failed";
                     }
                 }
-                else
-                {
-                    response.IsSuccess = false;
-                    response.AffectedRecords = 0;
-                    response.EndUserMessage = "Supplier Reference Already Exists";
-                }
+
             }
             catch (Exception ex)
             {
@@ -214,11 +209,7 @@ namespace DAL.Repositories
                 var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId).FirstOrDefault();
                 if (SupplierData != null)
                 {
-                    _appContext.Remove(SupplierData);
-                    //SupplierData.IsActive = false;
-                    ////entityInfo.UpdatedBy = entity.Updated
-                    //SupplierData.UpdatedDate = DateTime.Now;
-
+                    _appContext.Suppliers.Remove(SupplierData);
                     _appContext.SaveChanges();
                 }
 

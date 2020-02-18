@@ -9,6 +9,8 @@ import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { Utilities } from 'src/app/services/utilities';
 import { Permission } from 'src/app/models/permission.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-location',
@@ -34,7 +36,7 @@ export class LocationComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
-    private snackBar: MatSnackBar,
+    private snackBar: MatSnackBar,private dialog: MatDialog,
     private authService: AuthService, private alertService: AlertService,
   ) {
     this.buildForm();
@@ -156,29 +158,29 @@ export class LocationComponent implements OnInit {
   onLocationCancel() {
     this.isAdding = false;
   }
-  //  On Delete Location
-  onDeleteLocation(location) {
-    this.snackBar.open(`Delete ${location.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
-      this.alertService.startLoadingMessage('Deleting...');
-      this.loadingIndicator = true;
-      this.accountService.deleteLocation(location.id).subscribe((res: any) => {
-        this.alertService.stopLoadingMessage();
-        this.loadingIndicator = false;
-        if (res.isSuccess) {
-          this.alertService.showMessage('Success', res.endUserMessage, MessageSeverity.success);
-          this.getLocation();
-        }
-      },
-        error => {
-          this.alertService.stopLoadingMessage();
-          this.loadingIndicator = false;
-          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the Location.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-            MessageSeverity.error, error);
-        },
-      )
-    })
+  // //  On Delete Location
+  // onDeleteLocation(location) {
+  //   this.snackBar.open(`Delete ${location.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
+  //     this.alertService.startLoadingMessage('Deleting...');
+  //     this.loadingIndicator = true;
+  //     this.accountService.deleteLocation(location.id).subscribe((res: any) => {
+  //       this.alertService.stopLoadingMessage();
+  //       this.loadingIndicator = false;
+  //       if (res.isSuccess) {
+  //         this.alertService.showMessage('Success', res.endUserMessage, MessageSeverity.success);
+  //         this.getLocation();
+  //       }
+  //     },
+  //       error => {
+  //         this.alertService.stopLoadingMessage();
+  //         this.loadingIndicator = false;
+  //         this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the Location.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+  //           MessageSeverity.error, error);
+  //       },
+  //     )
+  //   })
 
-  }
+  // }
   //Request Object  For Location
   getLocationObject() {
     const formModel = this.locationForm.value;
@@ -256,6 +258,36 @@ export class LocationComponent implements OnInit {
 
   get canDeleteLocation() {
     return this.accountService.userHasPermission(Permission.deleteLocationsPermission);
+  }
+
+   //Delete Location 
+   onDeleteLocation(location: any) {
+    debugger
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete" + " " + location.locationReference,  msg: "Are you sure you want to delete this Location with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deleteLocation(location.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getLocation();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+          }
+      });
   }
 
 }

@@ -9,6 +9,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Utilities } from 'src/app/services/utilities';
 import { Permission } from 'src/app/models/permission.model';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-asset-group',
@@ -27,7 +29,7 @@ export class AssetGroupComponent implements OnInit {
   displayedColumns = ['name1', 'name2', 'assetRef1', 'assetRef2', 'assetMake', 'assetModel', 'assetType', 'assetCapacity', 'updatedDate', 'isActive', 'Actions']
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  constructor(private fb: FormBuilder, private authService: AuthService, private alertService: AlertService,
+  constructor(private fb: FormBuilder, private dialog: MatDialog, private authService: AuthService, private alertService: AlertService,
     private snackBar: MatSnackBar, private accountService: AccountService) {
     this.buildForm();
   }
@@ -178,28 +180,28 @@ export class AssetGroupComponent implements OnInit {
     this.alertService.stopLoadingMessage();
     this.alertService.showMessage('error', result.endUserMessage, MessageSeverity.error);
   }
-  // On Delete Click
-  confirmDelete(assGroup) {
-    this.snackBar.open(`Delete ${assGroup.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
-      this.alertService.startLoadingMessage('Deleting...');
-      this.loadingIndicator = true;
-      this.accountService.deleteAssetGroup(assGroup.id).subscribe((res: any) => {
-        this.alertService.stopLoadingMessage();
-        this.loadingIndicator = false;
-        if (res.isSuccess) {
-          this.alertService.showMessage('Success', res.endUserMessage, MessageSeverity.success);
-          this.getAllAssetGroups();
-        }
-      },
-        error => {
-          this.alertService.stopLoadingMessage();
-          this.loadingIndicator = false;
-          this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the Location.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-            MessageSeverity.error, error);
-        },
-      )
-    })
-  }
+  // // On Delete Click
+  // confirmDelete(assGroup) {
+  //   this.snackBar.open(`Delete ${assGroup.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
+  //     this.alertService.startLoadingMessage('Deleting...');
+  //     this.loadingIndicator = true;
+  //     this.accountService.deleteAssetGroup(assGroup.id).subscribe((res: any) => {
+  //       this.alertService.stopLoadingMessage();
+  //       this.loadingIndicator = false;
+  //       if (res.isSuccess) {
+  //         this.alertService.showMessage('Success', res.endUserMessage, MessageSeverity.success);
+  //         this.getAllAssetGroups();
+  //       }
+  //     },
+  //       error => {
+  //         this.alertService.stopLoadingMessage();
+  //         this.loadingIndicator = false;
+  //         this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the Location.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+  //           MessageSeverity.error, error);
+  //       },
+  //     )
+  //   })
+  // }
 
   get canAddAssetsGroup() {
     return this.accountService.userHasPermission(Permission.addAssetGroupsPermission);
@@ -213,7 +215,35 @@ export class AssetGroupComponent implements OnInit {
     return this.accountService.userHasPermission(Permission.deleteAssetGroupsPermission);
   }
 
-
+ //Delete Assets Groups
+ confirmDelete(asset: any) {
+  debugger
+  let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+    data: { title: "Delete" + " " + asset.assetRef1,  msg: "Are you sure you want to delete this Asset Group with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+    width: 'auto',
+    height: 'auto',
+    disableClose: true,
+  });
+  dialogRef.afterClosed().subscribe(result => {
+    if (result != undefined) {
+      this.accountService.deleteAssetGroup(asset.id)
+        .subscribe((results: any) => {
+          this.alertService.stopLoadingMessage();
+          this.loadingIndicator = false;
+          this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+          if (results.isSuccess) {
+            this.getAllAssetGroups();
+          }
+        },
+          error => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+              MessageSeverity.error, error);
+          });
+        }
+    });
+}
 
   // onFirstCapital(event: any) {
   //   const alphabetspattern = /^[A-Z][a-z0-9_-]{3,19}$/;

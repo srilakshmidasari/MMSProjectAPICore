@@ -140,11 +140,17 @@ namespace DAL.Repositories
             ValueDataResponse<AssetGroup> response = new ValueDataResponse<AssetGroup>();
             try
             {
-                var assetData = _appContext.AssetGroups.Where(x => x.Id == assetId && x.IsActive == true).FirstOrDefault();
-                if (assetData != null)
+                var assetData = _appContext.AssetGroups.Where(x => x.Id == assetId).FirstOrDefault();
+
+                var assetloc= _appContext.AssetLocations.Where(x => x.AstGroupId == assetId).ToList();
+                if (assetloc != null)
                 {
-                    assetData.IsActive = false;
-                    assetData.UpdatedDate = DateTime.Now;
+                    //assetData.IsActive = false;
+                    //assetData.UpdatedDate = DateTime.Now;
+                    var alocs = _appContext.AssetFileRepositories.Where(x => assetloc.Select(al => al.Id).Contains(x.AssetId)).ToList();
+                    _appContext.AssetFileRepositories.RemoveRange(alocs);
+                    _appContext.AssetLocations.RemoveRange(assetloc);
+                    _appContext.AssetGroups.RemoveRange(assetData);
                     _appContext.SaveChanges();
                 }
 
@@ -441,11 +447,15 @@ namespace DAL.Repositories
             ValueDataResponse<AssetLocation> response = new ValueDataResponse<AssetLocation>();
             try
             {
-                var assetData = _appContext.AssetLocations.Where(x => x.Id == assetId && x.IsActive == true).FirstOrDefault();
+                var assetData = _appContext.AssetLocations.Where(x => x.Id == assetId).FirstOrDefault();
+
                 if (assetData != null)
                 {
-                    assetData.IsActive = false;
-                    assetData.UpdatedDate = DateTime.Now;
+                    //assetData.IsActive = false;
+                    //assetData.UpdatedDate = DateTime.Now;
+                    var assetFiles = _appContext.AssetFileRepositories.Where(x => x.AssetId == assetId).ToList();
+                    _appContext.AssetFileRepositories.RemoveRange(assetFiles);
+                    _appContext.AssetLocations.Remove(assetData);
                     _appContext.SaveChanges();
                 }
 
