@@ -14,7 +14,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'category', 'name1', 'name2', 'averageCost', 'unit', 'unitconversion', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'category', 'name1', 'name2', 'averageCost', 'units', 'unitOfConversion', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -26,7 +26,7 @@ export class ItemComponent implements OnInit {
   isAddingitem: boolean = false;
   itemlist: any[] = [];
   itemCategory: any[]=[];
-  UOMId:any[]=[];
+  UOMData:any[]=[];
   form: any;
   isitem: boolean;
   public isSaving = false;
@@ -106,7 +106,7 @@ export class ItemComponent implements OnInit {
     debugger
     var lookUpTypeId = 10
     this.accountService.getLookUpDetailsByTypeId(lookUpTypeId).subscribe((response: any) => {
-    this.UOMId = response.listResult;
+    this.UOMData = response.listResult;
 
     })
   }
@@ -154,7 +154,7 @@ export class ItemComponent implements OnInit {
     }
     this.alertService.startLoadingMessage('Saving changes...');
     const editeditem = this.AddAllItemData();
-    if(this.isitem)
+    if(this.isNewitem)
     {
       this.accountService.AddAllItems(editeditem).subscribe(
         (result: any) => {
@@ -174,24 +174,56 @@ export class ItemComponent implements OnInit {
         }
       );
     }
+    else {
+      this.accountService.Updateitem(editeditem).subscribe(
+        (result: any) => {
+          this.alertService.stopLoadingMessage();
+          if (result.isSuccess) {
+            this.isAddingitem = false;
+            this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
+            this.getItem();
+           
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
+    }
+  }
     
-}
+
 
  private AddAllItemData():any{
-  const FormModel = this.itemForm.value;
+   debugger
+  const formModel = this.itemForm.value;
    return {
-    "id":(this.isitem==true)?0:this.itemData.id ,
-    "itemReference": FormModel.itemReference,
-    "itemCategory":FormModel.itemCategory,
-    "name1": FormModel.name1,
-    "name2": FormModel.name2,
-    "averageCost":FormModel.averageCost,
-    "uomId":FormModel.uomId,
-    "unitOfConversion":FormModel.unitOfConversion,
-    "units": FormModel.units,
-    "isActive":FormModel.isActive
+    "id":this.isNewitem == true ? 0 :this.itemData.id ,
+    "itemReference":formModel.itemReference,
+    "itemCategory":formModel.selectCategory,
+    "name1": formModel.name1,
+    "name2": formModel.name2,
+    "averageCost":parseInt(formModel.averageCost),
+    "uomId":formModel.uomId,
+    "unitOfConversion":formModel.unitconversion,
+    "units": formModel.unit,
+    "isActive":formModel.isActive,
+    "createdBy": this.currentUser.id,
+    "createdDate": new Date(),
+    "updatedBy": this.currentUser.id,
+    "updatedDate":  new Date()
     }
  }
+
+ get currentUser() {
+  return this.authService.currentUser;
+}
+
+
+
   onCancelClick() {
     this.isAddingitem = false;
   }

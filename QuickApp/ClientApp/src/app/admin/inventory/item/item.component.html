@@ -34,15 +34,15 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.averageCost}} </mat-cell>
             </ng-container> 
-            <ng-container matColumnDef="unit">
+            <ng-container matColumnDef="units">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Unit
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.unit}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.units}} </mat-cell>
             </ng-container> 
-            <ng-container matColumnDef="unitconversion">
+            <ng-container matColumnDef="unitOfConversion">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Unit Of Conversion
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.unitconversion}} </mat-cell>
+                <mat-cell *matCellDef="let row"> {{row.unitOfConversion}} </mat-cell>
             </ng-container> 
         <ng-container matColumnDef="isActive">
             <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
@@ -124,8 +124,8 @@
                      <mat-form-field class="col-md-4">
                         <mat-label>Unit Of Measure</mat-label>
                         <mat-select formControlName="uomId" required>
-                            <mat-option *ngFor="let doc of itemlist" [value]="doc.id">
-                                {{doc.name2}}
+                            <mat-option *ngFor="let uom of UOMData" [value]="uom.id">
+                                {{uom.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!itemForm.controls['uomId'].valid">
