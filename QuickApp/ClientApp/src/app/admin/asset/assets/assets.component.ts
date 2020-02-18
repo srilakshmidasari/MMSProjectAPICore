@@ -13,6 +13,7 @@ import { Permission } from 'src/app/models/permission.model';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteFileComponent } from '../../delete-file/delete-file.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-assets',
@@ -448,27 +449,27 @@ export class AssetsComponent implements OnInit {
   }
 
 
-  public confirmDelete(asset: any) {
-    this.snackBar.open(`Delete ${asset.name1}?`, 'DELETE', { duration: 5000 })
-      .onAction().subscribe(() => {
-        this.alertService.startLoadingMessage('Deleting...');
-        this.loadingIndicator = true;
-        this.accountService.deleteAsset(asset.id)
-          .subscribe((results: any) => {
-            this.alertService.stopLoadingMessage();
-            this.loadingIndicator = false;
-            if (results.isSuccess) {
-              this.getAssets();
-            }
-          },
-            error => {
-              this.alertService.stopLoadingMessage();
-              this.loadingIndicator = false;
-              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-                MessageSeverity.error, error);
-            });
-      });
-  }
+  // public confirmDelete(asset: any) {
+  //   this.snackBar.open(`Delete ${asset.name1}?`, 'DELETE', { duration: 5000 })
+  //     .onAction().subscribe(() => {
+  //       this.alertService.startLoadingMessage('Deleting...');
+  //       this.loadingIndicator = true;
+  //       this.accountService.deleteAsset(asset.id)
+  //         .subscribe((results: any) => {
+  //           this.alertService.stopLoadingMessage();
+  //           this.loadingIndicator = false;
+  //           if (results.isSuccess) {
+  //             this.getAssets();
+  //           }
+  //         },
+  //           error => {
+  //             this.alertService.stopLoadingMessage();
+  //             this.loadingIndicator = false;
+  //             this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+  //               MessageSeverity.error, error);
+  //           });
+  //     });
+  // }
 
   get canAddAssets() {
     return this.accountService.userHasPermission(Permission.addAssetsPermission);
@@ -519,7 +520,36 @@ export class AssetsComponent implements OnInit {
         if (item.typeCdDmtId === file.documentType) this.editDocumentsList.push(item);
       });
     })
+  }
 
+   //Delete Assets 
+   confirmDelete(asset: any) {
+    debugger
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete" + " " + asset.assetLocationRef,  msg: "Are you sure you want to delete this Assets with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deleteAsset(asset.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getAssets();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+          }
+      });
   }
 
 }

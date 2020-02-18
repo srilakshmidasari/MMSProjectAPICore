@@ -182,17 +182,22 @@ namespace DAL.Repositories
             ValueDataResponse<Location> response = new ValueDataResponse<Location>();
             try
             {
-                var LocationData = _appContext.Locations.Where(x => x.Id == LocationId && x.IsActive == true).FirstOrDefault();
-                if (LocationData != null)
+                var LocationData = _appContext.Locations.Where(x => x.Id == LocationId).FirstOrDefault();
+
+                var ast = _appContext.AssetLocations.Where(x => x.LocationId == LocationId).ToList();
+                if (ast != null)
                 {
-                    LocationData.IsActive = false;
-                    //entityInfo.UpdatedBy = entity.UpdatedBy;
-                    LocationData.UpdatedDate = DateTime.Now;
+                    var assetRepo = _appContext.AssetFileRepositories.Where(x => ast.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+                    _appContext.AssetFileRepositories.RemoveRange(assetRepo);
+                    _appContext.AssetLocations.RemoveRange(ast);
+                    _appContext.Locations.RemoveRange(LocationData);
                     _appContext.SaveChanges();
                 }
+                _appContext.SaveChanges();
 
                 if (LocationData != null)
                 {
+                   
                     response.Result = LocationData;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;

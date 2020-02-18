@@ -11,7 +11,7 @@ using System.Text;
 
 namespace DAL.Repositories
 {
-  public  class SupplierRepository:Repository<dynamic>,ISupplierRepository
+    public class SupplierRepository : Repository<dynamic>, ISupplierRepository
     {
         public readonly IOptions<AppSettings> _config;
         public SupplierRepository(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration) : base(context, mapper, configuration)
@@ -63,46 +63,46 @@ namespace DAL.Repositories
 
             try
             {
-                    var result = _appContext.Suppliers.Add(suppliers);
+                var result = _appContext.Suppliers.Add(suppliers);
 
-                    if (suppliers.FileName != null)
-                    {
-                        string ModuleName = "Supplier";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
+                if (suppliers.FileName != null)
+                {
+                    string ModuleName = "Supplier";
+                    var now = DateTime.Now;
+                    var yearName = now.ToString("yyyy");
+                    var monthName = now.Month.ToString("d2");
+                    var dayName = now.ToString("dd");
 
-                        FileUploadService repo = new FileUploadService();
+                    FileUploadService repo = new FileUploadService();
 
-                        //string FolderLocation = _config.Value.FileRepositoryFolder;
-                        string FolderLocation = "FileRepository";
-                        string ServerRootPath = _config.Value.ServerRootPath;
+                    //string FolderLocation = _config.Value.FileRepositoryFolder;
+                    string FolderLocation = "FileRepository";
+                    string ServerRootPath = _config.Value.ServerRootPath;
 
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                        byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
+                    byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
 
-                        suppliers.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
+                    suppliers.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
 
-                        suppliers.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                    }
-                    _appContext.SaveChanges();
+                    suppliers.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                }
+                _appContext.SaveChanges();
 
-                    if (result != null)
-                    {
-                        response.Result = suppliers;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "Supplier Added Successfully";
-                    }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "Supplier Added Failed";
-                    }
-              
+                if (result != null)
+                {
+                    response.Result = suppliers;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Supplier Added Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Supplier Added Failed";
+                }
+
             }
             catch (Exception ex)
             {
@@ -121,60 +121,57 @@ namespace DAL.Repositories
 
             try
             {
-                    var result = _appContext.Suppliers.Where(x => x.Id == suppliers.Id).FirstOrDefault();
-                    if (result != null)
+                var result = _appContext.Suppliers.Where(x => x.Id == suppliers.Id).FirstOrDefault();
+                if (result != null)
+                {
+
+                    result.Name1 = suppliers.Name1;
+                    result.Name2 = suppliers.Name2;
+                    result.Address = suppliers.Address;
+                    result.Email = suppliers.Email;
+                    result.ContactNumber = suppliers.ContactNumber;
+                    result.Note = suppliers.Note;
+                    result.IsActive = suppliers.IsActive;
+                    result.CreatedBy = suppliers.CreatedBy;
+                    result.CreatedDate = suppliers.CreatedDate;
+                    result.UpdatedBy = suppliers.UpdatedBy;
+                    result.UpdatedDate = suppliers.UpdatedDate;
+
+                    if (suppliers.FileName != null)
                     {
-                        
-                        result.Name1 = suppliers.Name1;
-                        result.Name2 = suppliers.Name2;
-                        result.Address = suppliers.Address;
-                        result.Email = suppliers.Email;
-                        result.ContactNumber = suppliers.ContactNumber;
-                        result.Note = suppliers.Note;
-                        result.IsActive = suppliers.IsActive;
-                        result.CreatedBy = suppliers.CreatedBy;
-                        result.CreatedDate = suppliers.CreatedDate;
-                        result.UpdatedBy = suppliers.UpdatedBy;
-                        result.UpdatedDate = suppliers.UpdatedDate;
+                        string ModuleName = "Supplier";
+                        var now = DateTime.Now;
+                        var yearName = now.ToString("yyyy");
+                        var monthName = now.Month.ToString("d2");
+                        var dayName = now.ToString("dd");
 
-                        if (suppliers.FileName != null)
-                        {
-                            string ModuleName = "Supplier";
-                            var now = DateTime.Now;
-                            var yearName = now.ToString("yyyy");
-                            var monthName = now.Month.ToString("d2");
-                            var dayName = now.ToString("dd");
-
-                            FileUploadService repo = new FileUploadService();
+                        FileUploadService repo = new FileUploadService();
 
 
-                            string FolderLocation = _config.Value.FileRepositoryFolder;
-                            string ServerRootPath = _config.Value.ServerRootPath;
+                        string FolderLocation = _config.Value.FileRepositoryFolder;
+                        string ServerRootPath = _config.Value.ServerRootPath;
 
-                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                            byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
+                        byte[] FileBytes = Convert.FromBase64String(suppliers.FileName);
 
-                            result.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
+                        result.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
 
-                            result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                            result.FileExtention = suppliers.FileExtention;
-                        }
-
-                        _appContext.SaveChanges();
-                        response.Result = result;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "Supplier Updated Successfully";
+                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                        result.FileExtention = suppliers.FileExtention;
                     }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "Supplier Updation Failed";
-                    }
-               
-
+                    _appContext.SaveChanges();
+                    response.Result = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Supplier Updated Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Supplier Updation Failed";
+                }
             }
             catch (Exception ex)
             {
@@ -192,12 +189,10 @@ namespace DAL.Repositories
             ValueDataResponse<Supplier> response = new ValueDataResponse<Supplier>();
             try
             {
-                var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId && x.IsActive == true).FirstOrDefault();
+                var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId).FirstOrDefault();
                 if (SupplierData != null)
                 {
-                    SupplierData.IsActive = false;
-                    //entityInfo.UpdatedBy = entity.Updated
-                    SupplierData.UpdatedDate = DateTime.Now;
+                    _appContext.Suppliers.Remove(SupplierData);
                     _appContext.SaveChanges();
                 }
 

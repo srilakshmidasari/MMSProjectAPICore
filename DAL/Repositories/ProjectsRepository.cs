@@ -43,7 +43,7 @@ namespace DAL.Repositories
                                   SiteId = s.Id,
                                   SiteName1 = s.Name1,
                                   SiteName2 = s.Name2,
-                                  StoreId = _appContext.LookUpProjectXrefs.Where(S=>S.ProjectId == p.Id).ToList(),
+                                  StoreId = _appContext.LookUpProjectXrefs.Where(S => S.ProjectId == p.Id).ToList(),
                                   //StoreName1 = l.Name1,
                                   //StoreName2 = l.Name2,
                                   ProjectDetails = p.ProjectDetails,
@@ -102,7 +102,7 @@ namespace DAL.Repositories
                                   Name2 = l.Name1,
                                   Name1 = l.Name1,
                                   LookUpTypeId = l.LookUpTypeId,
-                                  Remarks =l.Remarks,
+                                  Remarks = l.Remarks,
                                   IsActive = l.IsActive,
                                   CreatedBy = l.CreatedBy,
                                   CreatedDate = l.CreatedDate,
@@ -231,7 +231,7 @@ namespace DAL.Repositories
 
                 if (result != null)
                 {
-                    
+
                     result.SiteId = project.SiteId;
                     result.ProjectReference = project.ProjectReference;
                     result.Name1 = project.Name1;
@@ -242,8 +242,8 @@ namespace DAL.Repositories
                     result.CreatedDate = project.CreatedDate;
                     result.UpdatedBy = project.UpdatedBy;
                     result.UpdatedDate = project.UpdatedDate;
-                   
-                   
+
+
 
                     foreach (var req in project.ProjectRepositories)
                     {
@@ -254,7 +254,7 @@ namespace DAL.Repositories
                             var yearName = now.ToString("yyyy");
                             var monthName = now.Month.ToString("d2");
                             var dayName = now.ToString("dd");
-                            
+
                             FileUploadService repo = new FileUploadService();
 
                             string FolderLocation = "FileRepository";
@@ -314,19 +314,34 @@ namespace DAL.Repositories
             ValueDataResponse<Project> response = new ValueDataResponse<Project>();
             try
             {
-                var Projectdetials = _appContext.Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
+                var projects = _appContext.Projects.Where(x => x.Id == ProjectId).FirstOrDefault();
 
-                if (Projectdetials != null)
+                var locations = _appContext.Locations.Where(x => x.ProjectId == ProjectId).ToList();
+
+                if (locations.Count() > 0)
                 {
-                    Projectdetials.IsActive = false;
-                    Projectdetials.UpdatedDate = DateTime.Now;
+                    var res = _appContext.ProjectRepositories.Where(x =>x.ProjectId == ProjectId).ToList();
+                    _appContext.ProjectRepositories.RemoveRange(res);
 
+                    var ress = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList();
+                    _appContext.LookUpProjectXrefs.RemoveRange(ress);
+                   
+
+                    var alocs = _appContext.AssetLocations.Where(x => locations.Select(al => al.Id).Contains(x.LocationId)).ToList();
+
+                    var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+                    _appContext.AssetFileRepositories.RemoveRange(assetRepo);
+                    _appContext.AssetLocations.RemoveRange(alocs);
+                    _appContext.Locations.RemoveRange(locations);
+                    _appContext.Projects.RemoveRange(projects);
                     _appContext.SaveChanges();
                 }
 
-                if (Projectdetials != null)
+                if (projects != null)
                 {
-                    response.Result = Projectdetials;
+                    _appContext.Projects.RemoveRange(projects);
+                    _appContext.SaveChanges();
+                    response.Result = projects;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
                     response.EndUserMessage = "Project Deleted Successfull";
@@ -354,7 +369,7 @@ namespace DAL.Repositories
             ListDataResponse<ProjectRepositoryResposnse> response = new ListDataResponse<ProjectRepositoryResposnse>();
             try
             {
-                
+
                 var result = (from p in _appContext.ProjectRepositories
                               join t in _appContext.TypeCdDmts
                                on p.DocumentType equals t.TypeCdDmtId
@@ -374,7 +389,7 @@ namespace DAL.Repositories
 
                 result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
 
-               
+
 
                 if (result != null)
                 {
@@ -406,7 +421,7 @@ namespace DAL.Repositories
             ValueDataResponse<ProjectRepository> response = new ValueDataResponse<ProjectRepository>();
             try
             {
-                var projectRepository = _appContext.ProjectRepositories.Where(x =>x.ProjectRepositoryId  == RepositoryId).FirstOrDefault();
+                var projectRepository = _appContext.ProjectRepositories.Where(x => x.ProjectRepositoryId == RepositoryId).FirstOrDefault();
 
                 if (projectRepository != null)
                 {
