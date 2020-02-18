@@ -7,18 +7,19 @@
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
-        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>  
-        <mat-table [dataSource]="dataSource" matSort >
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="itemReference" matSortDirection="asc"
+            matSortDisableClear>
             <ng-container matColumnDef="itemReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Item Reference
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.itemReference}} </mat-cell>
-            </ng-container> 
-            <ng-container matColumnDef="category">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Category
+            </ng-container>
+            <ng-container matColumnDef="categoryName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Category Name
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.category}} </mat-cell>
-            </ng-container> 
+                <mat-cell *matCellDef="let row"> {{row.categoryName}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="name1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
                 </mat-header-cell>
@@ -28,58 +29,63 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Name 2
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
-            </ng-container> 
+            </ng-container>
             <ng-container matColumnDef="averageCost">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Average Cost
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.averageCost}} </mat-cell>
-            </ng-container> 
-            <ng-container matColumnDef="unit">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Unit
+            </ng-container>
+            <ng-container matColumnDef="units">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Units
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.unit}} </mat-cell>
-            </ng-container> 
-            <ng-container matColumnDef="unitconversion">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Unit Of Conversion
+                <mat-cell *matCellDef="let row"> {{row.units}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="uomName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Uom Name
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.unitconversion}} </mat-cell>
-            </ng-container> 
-        <ng-container matColumnDef="isActive">
-            <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-               IsActive</mat-header-cell>
-            <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
-                <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
-            </mat-cell>
-        </ng-container>
-        <ng-container matColumnDef="Actions">
-            <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
-                    <mat-icon class="mat-button-icon">add</mat-icon>Add Item
-                </button>
-            </mat-header-cell>
-            <mat-cell class="just-cont-center" *matCellDef="let row">
-                <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
-                    <mat-icon color="primary">edit</mat-icon>
-                </button>
+                <mat-cell *matCellDef="let row"> {{row.uomName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="unitOfConversion">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Units of Conversion
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.unitOfConversion}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="isActive">
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                    Is Active</mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>Add Item
+                    </button>
+                </mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row">
+                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
 
-                <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
-                    <mat-icon color="warn">delete</mat-icon>
-                </button>
-            </mat-cell>
-        </ng-container>
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;">
-        </mat-row>
-    </mat-table>
-    <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-        <p>No Records Found</p>
-    </div>
-    <div style="text-align: center;" *ngIf="displayNoRecords">
-        <p>No Search Results Found</p>
-    </div>
-    <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
-    [pageSizeOptions]="[5, 10, 25, 100]">
-    </mat-paginator>
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>No Records Found</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>No Search Results Found</p>
+        </div>
+        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
     </div>
 </div>
 <div class="page-content" *ngIf="isAddingitem">
@@ -88,12 +94,12 @@
         <mat-card-content>
             <form [formGroup]="itemForm">
                 <div class="row">
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Item Reference</mat-label> 
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Item Reference</mat-label>
                         <input matInput formControlName="itemReference" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['itemReference'].valid">
                             Item Reference is required
-                        </mat-error> 
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>Item Category</mat-label>
@@ -103,66 +109,66 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!itemForm.controls['selectCategory'].valid">
-                           Please Select Category
+                            Please Select Category
                         </mat-error>
                     </mat-form-field>
-                  
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Name 1</mat-label> 
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Name 1</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name1'].valid">
                             Name1 is required
-                        </mat-error> 
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Name 2</mat-label> 
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Name 2</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name2'].valid">
-                           Name2 is required
-                        </mat-error> 
+                            Name2 is required
+                        </mat-error>
                     </mat-form-field>
-                     <mat-form-field class="col-md-4">
-                        <mat-label>Unit Of Measure</mat-label>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Unit of Measure</mat-label>
                         <mat-select formControlName="uomId" required>
-                            <mat-option *ngFor="let doc of itemlist" [value]="doc.id">
-                                {{doc.name2}}
+                            <mat-option *ngFor="let uom of UOMData" [value]="uom.id">
+                                {{uom.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!itemForm.controls['uomId'].valid">
-                           Please Select Category
+                            Please Select Unit of Measure
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Average Cost</mat-label> 
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Average Cost</mat-label>
                         <input matInput formControlName="averageCost" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['averageCost'].valid">
-                           Average Cost is required
-                        </mat-error> 
+                            Average Cost is required
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Unit</mat-label> 
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Units</mat-label>
                         <input matInput formControlName="unit" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unit'].valid">
-                            unit is required
-                        </mat-error> 
+                            Units is required
+                        </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">  
-                        <mat-label>Unit Of conversion</mat-label> 
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Units of Conversion</mat-label>
                         <input matInput formControlName="unitconversion" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unitconversion'].valid">
-                            Unit Of Conversion is required
-                        </mat-error> 
+                            Units of Conversion is required
+                        </mat-error>
                     </mat-form-field>
-                </div>  
-                <mat-checkbox formControlName="isActive">{{'Supplier.Management.IsActive'|translate}}</mat-checkbox> 
-            </form>  
+                </div>
+                <mat-checkbox formControlName="isActive">{{'Supplier.Management.IsActive'|translate}}</mat-checkbox>
+            </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="saveitem()">save</button>
-                <button mat-raised-button color="warn" (click)="onCancelClick()">cancel</button>
+                <button mat-raised-button color="primary" (click)="saveitem()">Save</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
-    </mat-card>  
+    </mat-card>
 </div>

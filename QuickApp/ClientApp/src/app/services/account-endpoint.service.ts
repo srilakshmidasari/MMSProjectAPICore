@@ -69,6 +69,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getAssetRepositoryUrl: string = '/api/Asset/GetRepositoryByAsset';
   private readonly _getAllitem: string = '/api/Item/GetAllItems';
   private readonly _AddAllitem: string ='/api/Item/AddItemDetials';
+  private readonly _updateitem: string ='/api/Item/UpdateItem';
+  private readonly _deleteitem: string ='/api/Item/DeleteItem';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -119,7 +121,9 @@ export class AccountEndpoint extends EndpointBase {
   get UpdateSupplierDetials() { return this.configurations.baseUrl + this._UpdateSupplierDetials; }
   get DeleteSupplierByID() { return this.configurations.baseUrl + this._DeleteSupplierByID; }
   get getAllitem() { return this.configurations.baseUrl + this._getAllitem; }
-  get AddAllitem() { return this.configurations.baseUrl + this._AddAllitem; }
+  get AddAllitemdata() { return this.configurations.baseUrl + this._AddAllitem; }
+  get updateitem() { return this.configurations.baseUrl + this._updateitem; }
+  get deleteitem() { return this.configurations.baseUrl + this._deleteitem; }
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -690,11 +694,27 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
   addAllItemtEndpoint<T>(itemObject: any): Observable<T> {
-    const endpointUrl = this.AddAllitem;
+    const endpointUrl = this.AddAllitemdata;
     return this.http.post<T>(endpointUrl, JSON.stringify(itemObject), this.requestHeaders).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.AddsupplierEndPoint(itemObject));
+        return this.handleError(error, () => this.addAllItemtEndpoint(itemObject));
       }));
   }
+  updateitemEndpoint<T>(reqObject){
+    const endpointUrl = this.updateitem;
+    return this.http.put<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.updateitemEndpoint(reqObject));
+      }));
+  }
+
+  deleteitemEndpoint<T>(itemId: any): Observable<T> {
+    const endpointUrl = this.deleteitem + '?itemId=' + itemId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteitemEndpoint(itemId));
+      }));
+  }
+
  
 }

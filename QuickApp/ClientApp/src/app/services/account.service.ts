@@ -380,4 +380,11 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.addAllItemtEndpoint(reqObject);
   }
 
+  Updateitem(reqObject){
+    return this.accountEndpoint.updateitemEndpoint(reqObject);
+  }
+  deleteitem(itemId){
+    return this.accountEndpoint.deleteitemEndpoint(itemId);
+  }
+
 }
