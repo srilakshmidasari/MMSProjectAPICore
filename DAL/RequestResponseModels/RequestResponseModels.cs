@@ -317,10 +317,12 @@ namespace DAL.RequestResponseModels
             public string UpdatedBy { get; set; }
             public DateTime UpdatedDate { get; set; }
         }
+        
 
         public class UpsertSupplier: AuditableEntity
         {
             public int Id { get; set; }
+            public string SupplierReference { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
             public string Address { get; set; }
@@ -333,6 +335,21 @@ namespace DAL.RequestResponseModels
             public string FileExtention { get; set; }
           
           
+        }
+
+        public class UpsertItem : AuditableEntity
+        {
+            public int Id { get; set; }
+            public string ItemReference { get; set; }
+            public int ItemCategory { get; set; }
+            public string Name1 { get; set; }
+            public string Name2 { get; set; }
+            public int AverageCost { get; set; }
+            public int UOMId { get; set; }
+            public string UnitOfConversion { get; set; }
+            public string Units { get; set; }
+            public bool IsActive { get; set; }
+
         }
 
     }

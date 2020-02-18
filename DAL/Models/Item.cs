@@ -7,60 +7,47 @@ using System.Text.Json.Serialization;
 
 namespace DAL.Models
 {
-   public class Supplier
-
+    public class Item
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        [Display(Name = "SupplierReference")]
+        [Display(Name = "ItemReference")]
         [StringLength(50)]
-        public string SupplierReference { get; set; }
+        public string ItemReference { get; set; }
+
+        [Display(Name = "ItemCategory")]
+        public int ItemCategory { get; set; }
 
         [Required]
-        [StringLength(100)]
         [Display(Name = "Name1")]
+        [StringLength(100)]
         public string Name1 { get; set; }
 
         [Required]
-        [StringLength(100)]
         [Display(Name = "Name2")]
+        [StringLength(100)]
         public string Name2 { get; set; }
 
+        [Display(Name = "AverageCost")]
+        public int AverageCost { get; set; }
+
+        [Display(Name = "UOMId")]
+        public int UOMId { get; set; }
+
         [Required]
+        [Display(Name = "UnitOfConversion")]
         [StringLength(100)]
-        [Display(Name = "Address")]
-       public string Address { get; set; }
+        public string UnitOfConversion { get; set; }
 
         [Required]
+        [Display(Name = "Units")]
         [StringLength(100)]
-        [Display(Name = "Email")]
-        public string Email { get; set; }
+        public string Units { get; set; }
 
-        [Required]
-        [StringLength(20)]
-        [Display(Name = "ContactNumber")]
-        public string ContactNumber { get; set; }
-
-        [StringLength(250)]
-        [Display(Name = "Note")]
-        public string Note { get; set; }
-
-        [Display(Name = "File Name")]
-        [StringLength(50)]
-        public string FileName { get; set; }
-
-        [Display(Name = "File Location")]
-        [StringLength(250)]
-        public string FileLocation { get; set; }
-        
-        [Display(Name = "File Extention")]
-        [StringLength(10)]
-        public string FileExtention { get; set; }
-
-        [Display(Name = "IsActive")]
+        [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
         [Required]
@@ -83,5 +70,15 @@ namespace DAL.Models
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
+
+        [JsonIgnore]
+        public LookUp UOM_Id { get; set; }
+
+        [JsonIgnore]
+        public LookUp ItemCategory_Id { get; set; }
+
+
     }
-}
+    }
+
+

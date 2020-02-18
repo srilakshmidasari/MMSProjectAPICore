@@ -31,8 +31,8 @@ namespace DAL
         public DbSet<AssetGroup> AssetGroups { get; set; }
         public DbSet<AssetLocation> AssetLocations { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
-
         public DbSet<AssetFileRepository> AssetFileRepositories { get; set; }
+        public DbSet<Item> Items { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -70,6 +70,9 @@ namespace DAL
             builder.Entity<Supplier>().ToTable("Supplier");
             builder.Entity<Supplier>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<AssetFileRepository>().ToTable("AssetFileRepository");
+
+            builder.Entity<Item>().ToTable("Item");
+            builder.Entity<Item>().Property(p => p.IsActive).HasDefaultValue(true);
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
@@ -324,6 +327,30 @@ namespace DAL
              .OnDelete(DeleteBehavior.ClientSetNull)
              .HasConstraintName("FK_Asset_DocumnetId");
 
+
+            builder.Entity<Item>().HasOne(d => d.CreatedUser)
+                 .WithMany(p => p.App_Item_CreatedUser)
+                 .HasForeignKey(d => d.CreatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_Item_CreatedUser");
+
+            builder.Entity<Item>().HasOne(d => d.UpdatedUser)
+                 .WithMany(p => p.App_Item_UpdatedUser)
+                 .HasForeignKey(d => d.UpdatedBy)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_Item_UpdatedUser");
+
+            builder.Entity<Item>().HasOne(d => d.UOM_Id)
+             .WithMany(p => p.App_Item_UOM_Id)
+             .HasForeignKey(d => d.UOMId)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_Item_UOMId");
+
+            builder.Entity<Item>().HasOne(d => d.ItemCategory_Id)
+          .WithMany(p => p.App_Item_ItemCategory_Id)
+          .HasForeignKey(d => d.ItemCategory)
+          .OnDelete(DeleteBehavior.ClientSetNull)
+          .HasConstraintName("FK_App_Item_ItemCategoryId");
         }
 
         public override int SaveChanges()

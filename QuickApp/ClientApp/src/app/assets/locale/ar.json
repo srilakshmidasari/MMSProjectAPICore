@@ -418,7 +418,30 @@
 },
 "Supplier":{
   "Management":{
-   "Search":"Search for Supplier ..."
+   "Search":"البحث عن مورد ...",
+   "Supplier Reference":"المورد المرجعية",
+   "Name 1":"الاسم 1",
+   "Name 2":"الاسم 2",
+   "Address":"عنوان",
+   "Email":"البريد الإلكتروني",
+   "Contact Number":"رقم الاتصال",
+   "Note":"ملحوظة",
+   "IsActive":"نشط",
+   "Add":"إضافة",
+   "Add Supplier":"إضافة مورد",
+   "Edit":"تعديل",
+   "Delete":"حذف",
+   "No Records Found":"لا توجد سجلات",
+   "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
+   "Name 1 is required":"الاسم 1 مطلوب",
+   "Name 2 is required":"الاسم 2 مطلوب",
+   "Address is required":"العنوان مطلوب",
+   "Email is required":"البريد الالكتروني مطلوب",
+   "Invalid Email":"بريد إلكتروني خاطئ",
+   "Contact Number is required":"رقم الاتصال مطلوب",
+   "save":"حفظ",
+   "cancel":"إلغاء",
+   "UploadImage":"تحميل الصور"
   }
 }
 }

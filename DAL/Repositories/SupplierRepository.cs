@@ -63,6 +63,9 @@ namespace DAL.Repositories
 
             try
             {
+                var suppliersExists = _appContext.Suppliers.Where(x => x.SupplierReference == suppliers.SupplierReference).FirstOrDefault();
+
+                if(suppliersExists == null) { 
                 var result = _appContext.Suppliers.Add(suppliers);
 
                 if (suppliers.FileName != null)
@@ -104,6 +107,14 @@ namespace DAL.Repositories
                 }
 
             }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Supplier Reference Already Exists";
+                }
+
+            }
             catch (Exception ex)
             {
                 response.IsSuccess = false;
@@ -121,21 +132,24 @@ namespace DAL.Repositories
 
             try
             {
-                var result = _appContext.Suppliers.Where(x => x.Id == suppliers.Id).FirstOrDefault();
-                if (result != null)
+                var supplierExists = _appContext.Suppliers.Where(x => x.Id != suppliers.Id && x.SupplierReference == suppliers.SupplierReference).FirstOrDefault();
+                if (supplierExists == null)
                 {
-
-                    result.Name1 = suppliers.Name1;
-                    result.Name2 = suppliers.Name2;
-                    result.Address = suppliers.Address;
-                    result.Email = suppliers.Email;
-                    result.ContactNumber = suppliers.ContactNumber;
-                    result.Note = suppliers.Note;
-                    result.IsActive = suppliers.IsActive;
-                    result.CreatedBy = suppliers.CreatedBy;
-                    result.CreatedDate = suppliers.CreatedDate;
-                    result.UpdatedBy = suppliers.UpdatedBy;
-                    result.UpdatedDate = suppliers.UpdatedDate;
+                    var result = _appContext.Suppliers.Where(x => x.Id == suppliers.Id).FirstOrDefault();
+                    if (result != null)
+                    {
+                        result.SupplierReference = suppliers.SupplierReference;
+                        result.Name1 = suppliers.Name1;
+                        result.Name2 = suppliers.Name2;
+                        result.Address = suppliers.Address;
+                        result.Email = suppliers.Email;
+                        result.ContactNumber = suppliers.ContactNumber;
+                        result.Note = suppliers.Note;
+                        result.IsActive = suppliers.IsActive;
+                        result.CreatedBy = suppliers.CreatedBy;
+                        result.CreatedDate = suppliers.CreatedDate;
+                        result.UpdatedBy = suppliers.UpdatedBy;
+                        result.UpdatedDate = suppliers.UpdatedDate;
 
                     if (suppliers.FileName != null)
                     {
@@ -157,21 +171,24 @@ namespace DAL.Repositories
 
                         result.FileName = repo.UploadFile(FileBytes, suppliers.FileExtention, Location);
 
-                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-                        result.FileExtention = suppliers.FileExtention;
+                            result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                            result.FileExtention = suppliers.FileExtention;
+                        }
+
+                        _appContext.SaveChanges();
+                        response.Result = result;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Supplier Updated Successfully";
                     }
-                    _appContext.SaveChanges();
-                    response.Result = result;
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "Supplier Updated Successfully";
-                }
-                else
-                {
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 0;
-                    response.EndUserMessage = "Supplier Updation Failed";
-                }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Supplier Updation Failed";
+                    }
+               
+
             }
             catch (Exception ex)
             {

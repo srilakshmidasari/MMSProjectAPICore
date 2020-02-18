@@ -33,7 +33,9 @@
     "Asset": "Asset",
     "AssetGroup": "Asset Group",
     "Assets" :"Assets",
-    "Supplier":"Supplier"
+    "Supplier":"Supplier",
+    "Inventory":"Inventory",
+    "Add Item":"Add Item"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -52,7 +54,8 @@
     "Location": "Location Management",
     "Assets": "Assets",
     "AssetGroup": "Asset Group Specification",
-    "Supplier":"Supplier"
+    "Supplier":"Supplier",
+    "Add Item":"Add Item"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -429,7 +432,35 @@
  },
  "Supplier":{
    "Management":{
-    "Search":"Search for Supplier ..."
+    "Search":"Search for Supplier ...",
+    "Supplier Reference":"Supplier Reference",
+    "Name 1":"Name 1",
+    "Name 2":"Name 2",
+    "Address":"Address",
+    "Email":"Email",
+    "Contact Number":"Contact Number",
+    "Note":"Note",
+    "Add":"Add",
+    "IsActive":"IsActive",
+    "Add Supplier":"Add Supplier",
+    "Edit":"Edit",
+    "Delete":"Delete",
+    "No Records Found":"No Records Found",
+    "No Search Results Found":"No Search Results Found",
+    "Name 1 is required":"Name 1 is required",
+    "Name 2 is required":"Name 2 is required",
+    "Address is required":"Address is required",
+    "Email is required":"Email is required",
+    "Invalid Email":"Invalid Email",
+    "Contact Number is required":"Contact Number is required",
+    "save":"save",
+    "cancel":"cancel",
+    "UploadImage":"UploadImage"
+   }
+ },
+ "Add Item":{
+   "Management":{
+    "Search":"Search for Item..."
    }
  }
 }

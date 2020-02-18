@@ -468,6 +468,79 @@ namespace MMS.Migrations
                     b.ToTable("FileRepository");
                 });
 
+            modelBuilder.Entity("DAL.Models.Item", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AverageCost")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("ItemCategory")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ItemReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("Name1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int>("UOMId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UnitOfConversion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Units")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ItemCategory");
+
+                    b.HasIndex("UOMId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("Item");
+                });
+
             modelBuilder.Entity("DAL.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -852,6 +925,11 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(250)")
                         .HasMaxLength(250);
 
+                    b.Property<string>("SupplierReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -1148,6 +1226,33 @@ namespace MMS.Migrations
                         .WithMany("App_Repository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_FileRepository_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.Item", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_Item_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_Item_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "ItemCategory_Id")
+                        .WithMany("App_Item_ItemCategory_Id")
+                        .HasForeignKey("ItemCategory")
+                        .HasConstraintName("FK_App_Item_ItemCategoryId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "UOM_Id")
+                        .WithMany("App_Item_UOM_Id")
+                        .HasForeignKey("UOMId")
+                        .HasConstraintName("FK_App_Item_UOMId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_Item_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_Item_UpdatedUser")
                         .IsRequired();
                 });
 
