@@ -70,6 +70,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getAllitem: string = '/api/Item/GetAllItems';
   private readonly _AddAllitem: string ='/api/Item/AddItemDetials';
   private readonly _updateitem: string ='/api/Item/UpdateItem';
+  private readonly _deleteitem: string ='/api/Item/DeleteItem';
 
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -122,7 +123,7 @@ export class AccountEndpoint extends EndpointBase {
   get getAllitem() { return this.configurations.baseUrl + this._getAllitem; }
   get AddAllitemdata() { return this.configurations.baseUrl + this._AddAllitem; }
   get updateitem() { return this.configurations.baseUrl + this._updateitem; }
-
+  get deleteitem() { return this.configurations.baseUrl + this._deleteitem; }
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -706,5 +707,14 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.updateitemEndpoint(reqObject));
       }));
   }
+
+  deleteitemEndpoint<T>(itemId: any): Observable<T> {
+    const endpointUrl = this.deleteitem + '?itemId=' + itemId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteitemEndpoint(itemId));
+      }));
+  }
+
  
 }

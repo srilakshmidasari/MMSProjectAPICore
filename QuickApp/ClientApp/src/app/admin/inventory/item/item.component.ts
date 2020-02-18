@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AccountService } from 'src/app/services/account.service';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Utilities } from 'src/app/services/utilities';
+import { MatDialog } from '@angular/material';
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -14,7 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'category', 'name1', 'name2', 'averageCost', 'units', 'unitOfConversion', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'categoryName', 'name1', 'name2', 'averageCost', 'units','uomName', 'unitOfConversion', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -30,17 +33,14 @@ export class ItemComponent implements OnInit {
   form: any;
   isitem: boolean;
   public isSaving = false;
-  // itemDataSource:any[]=[{
-  //   itemReference:'computer',category:'electronics',name1:'keyboards',name2:'mouse',averageCost:'200',unit:'2',unitconversion:'integer',isActive:'true'
-  // }];
+
   constructor(private accountService: AccountService,
     private alertService: AlertService,
-    private authService: AuthService,
+    private authService: AuthService,private dialog: MatDialog,
     private formBuilder: FormBuilder, ) { }
 
   ngOnInit() {
     debugger;
-    // this.dataSource.data = this.itemDataSource;
     this.getlookUpData();
     this.getUOMIdData();
     this.buildForm();
@@ -62,6 +62,7 @@ export class ItemComponent implements OnInit {
     // Causes the filter to refresh there by updating with recently added data.
     this.applyFilter(this.dataSource.filter);
   }
+
   //get data
   private getItem() {
     this.alertService.startLoadingMessage();
@@ -99,9 +100,9 @@ export class ItemComponent implements OnInit {
     var lookUpTypeId = 9
     this.accountService.getLookUpDetailsByTypeId(lookUpTypeId).subscribe((response: any) => {
       this.itemCategory = response.listResult;
-
     })
   }
+
   private getUOMIdData() {
     debugger
     var lookUpTypeId = 10
@@ -110,6 +111,7 @@ export class ItemComponent implements OnInit {
 
     })
   }
+
   editClick(item?: any) {
     debugger;
     this.itemData = {};
@@ -135,6 +137,8 @@ export class ItemComponent implements OnInit {
     }
     this.itemForm.reset({
       itemReference: this.itemData.itemReference || '',
+      categoryName:this.itemData.categoryName || '',
+      uomName:this.itemData.categoryName || '',
       selectCategory: this.itemData.lookUpTypeId || '',
       uomId: this.itemData.lookUpTypeId || '',
       name1: this.itemData.name1 || '',
@@ -203,6 +207,7 @@ export class ItemComponent implements OnInit {
    return {
     "id":this.isNewitem == true ? 0 :this.itemData.id ,
     "itemReference":formModel.itemReference,
+    "categoryName":formModel.categoryName,
     "itemCategory":formModel.selectCategory,
     "name1": formModel.name1,
     "name2": formModel.name2,
@@ -210,6 +215,7 @@ export class ItemComponent implements OnInit {
     "uomId":formModel.uomId,
     "unitOfConversion":formModel.unitconversion,
     "units": formModel.unit,
+    "uomName":formModel.uomName,
     "isActive":formModel.isActive,
     "createdBy": this.currentUser.id,
     "createdDate": new Date(),
@@ -222,13 +228,39 @@ export class ItemComponent implements OnInit {
   return this.authService.currentUser;
 }
 
-
-
   onCancelClick() {
     this.isAddingitem = false;
   }
-  confirmDelete() {
+
+  confirmDelete(item:any) {
+    debugger;
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete" + " " + item.itemReference,  msg: "Are you sure you want to delete this item ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deleteitem(item.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getItem();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+          }
+      });
+   }
 
   }
-}
+
 
