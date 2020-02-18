@@ -187,9 +187,9 @@ namespace DAL.Repositories
             {
                 var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
                 var result = (from al in _appContext.AssetLocations
-                              join s in _appContext.SiteInfos on al.SiteId equals s.Id
-                              join p in _appContext.Projects on al.ProjectId equals p.Id
                               join l in _appContext.Locations on al.LocationId equals l.Id
+                              join p in _appContext.Projects on l.ProjectId equals p.Id
+                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
                               join ag in _appContext.AssetGroups on al.AstGroupId equals ag.Id
                               join at in _appContext.LookUps on al.AstTradeId equals at.Id
                               select new GetAssetLocationResponse
@@ -198,10 +198,10 @@ namespace DAL.Repositories
                                   Name1 = al.Name1,
                                   Name2 = al.Name2,
                                   AssetLocationRef = al.AssetRef,
-                                  SiteId = al.SiteId,
+                                  SiteId = p.SiteId,
                                   SiteName1 = s.Name1,
                                   SiteName2 = s.Name2,
-                                  ProjectId = al.ProjectId,
+                                  ProjectId = l.ProjectId,
                                   ProjectName1 = p.Name1,
                                   ProjectName2 = p.Name2,
                                   LocationId = al.LocationId,
@@ -357,8 +357,8 @@ namespace DAL.Repositories
                     var result = _appContext.AssetLocations.Where(x => x.Id == asset.Id).FirstOrDefault();
                     if (result != null)
                     {
-                        result.SiteId = asset.SiteId;
-                        result.ProjectId = asset.ProjectId;
+                        //result.SiteId = asset.SiteId;
+                        //result.ProjectId = asset.ProjectId;
                         result.LocationId = asset.LocationId;
                         result.AstGroupId = asset.AstGroupId;
                         result.AstTradeId = asset.AstTradeId;

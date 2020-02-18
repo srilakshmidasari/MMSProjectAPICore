@@ -259,14 +259,11 @@ namespace DAL.Repositories
             ValueDataResponse<SiteInfo> response = new ValueDataResponse<SiteInfo>();
             try
             {
-
-
                 var result = _appContext.SiteInfos.Where(x => x.Id == SiteId).FirstOrDefault();
                 var projects = _appContext.Projects.Where(p => p.SiteId == SiteId).ToList();
 
                 if (projects != null)
                 {
-
                     var res = _appContext.ProjectRepositories.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
                     _appContext.ProjectRepositories.RemoveRange(res);
 

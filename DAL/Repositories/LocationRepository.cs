@@ -27,14 +27,13 @@ namespace DAL.Repositories
             {
                 //var result = _appContext.Locations.ToList();
                 var result = (from l in _appContext.Locations
-                              join s in _appContext.SiteInfos
-                               on l.SiteId equals s.Id
-                              join p in _appContext.Projects
-                              on l.ProjectId equals p.Id
+                              join p in _appContext.Projects on l.ProjectId equals p.Id
+                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+
                               select new LocationDataResponse
                               {
                                   Id = l.Id,
-                                  SiteId = l.SiteId,
+                                  SiteId = p.SiteId,
                                   ProjectId=l.ProjectId,
                                   Name1 = l.Name1,
                                   Name2 = l.Name2,
@@ -134,7 +133,7 @@ namespace DAL.Repositories
                     var result = _appContext.Locations.Where(x => x.Id == location.Id).FirstOrDefault();
                     if (result != null)
                     {
-                        result.SiteId = location.SiteId;
+                        //result.SiteId = location.SiteId;
                         result.ProjectId = location.ProjectId;
                         result.LocationReference = location.LocationReference;
                         result.Name1 = location.Name1;
