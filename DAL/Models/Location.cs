@@ -13,9 +13,9 @@ namespace DAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "SiteId")]
-        public int SiteId { get; set; }
+        //[Required]
+        //[Display(Name = "SiteId")]
+        //public int SiteId { get; set; }
 
         [Required]
         [Display(Name = "ProjectId")]
@@ -55,8 +55,8 @@ namespace DAL.Models
         [Display(Name = "Updated Date")]
         public DateTime UpdatedDate { get; set; }
 
-        [JsonIgnore]
-        public SiteInfo SiteInfo_Id { get; set; }
+        //[JsonIgnore]
+        //public SiteInfo SiteInfo_Id { get; set; }
 
         [JsonIgnore]
         public Project Project { get; set; }

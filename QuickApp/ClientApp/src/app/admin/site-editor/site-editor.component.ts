@@ -86,8 +86,6 @@ export class SiteEditorComponent implements OnInit {
     this.alertService.startLoadingMessage('Saving changes...');
     const editedSite = this.getEditedSite();
     if (this.isNewSite) {
-      this.siteForm.removeControl('file');
-      this.siteForm.addControl('file', new FormControl("", Validators.required));
       this.accountService.AddSite(editedSite).subscribe(
         (result: any) => {
           if (result.isSuccess) {
@@ -98,11 +96,9 @@ export class SiteEditorComponent implements OnInit {
         }, error => {
           this.isSaving = false;
           this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
+          this.alertService.showStickyMessage('An error Occuered', null, MessageSeverity.error);
         });
     } else {
-      this.siteForm.removeControl('file');
-      this.siteForm.addControl('file', new FormControl(""));
       this.accountService.updateSite(editedSite).subscribe(
         (result: any) => {
           if (result.isSuccess) {
@@ -113,7 +109,7 @@ export class SiteEditorComponent implements OnInit {
         }, error => {
           this.isSaving = false;
           this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage(error.error.title, null, MessageSeverity.error);
+          this.alertService.showStickyMessage('An error Occuered', null, MessageSeverity.error);
         });
     }
   }

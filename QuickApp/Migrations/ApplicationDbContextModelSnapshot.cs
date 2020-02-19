@@ -345,12 +345,6 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("ProjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SiteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -367,10 +361,6 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("LocationId");
-
-                    b.HasIndex("ProjectId");
-
-                    b.HasIndex("SiteId");
 
                     b.HasIndex("UpdatedBy");
 
@@ -576,9 +566,6 @@ namespace MMS.Migrations
                     b.Property<int>("ProjectId")
                         .HasColumnType("int");
 
-                    b.Property<int>("SiteId")
-                        .HasColumnType("int");
-
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -591,8 +578,6 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("ProjectId");
-
-                    b.HasIndex("SiteId");
 
                     b.HasIndex("UpdatedBy");
 
@@ -806,7 +791,6 @@ namespace MMS.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("FileExtention")
-                        .IsRequired()
                         .HasColumnType("nvarchar(10)")
                         .HasMaxLength(10);
 
@@ -1175,18 +1159,6 @@ namespace MMS.Migrations
                         .HasConstraintName("FK_App_AssetLocation_LocationId")
                         .IsRequired();
 
-                    b.HasOne("DAL.Models.Project", "Project")
-                        .WithMany("App_AssetLocation_ProjectId")
-                        .HasForeignKey("ProjectId")
-                        .HasConstraintName("FK_App_AssetLocation_ProjectId")
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.SiteInfo", "SiteInfo_Id")
-                        .WithMany("App_AssetLocation_SiteId")
-                        .HasForeignKey("SiteId")
-                        .HasConstraintName("FK_App_AssetLocation_SiteId")
-                        .IsRequired();
-
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_AssetLocation_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
@@ -1268,12 +1240,6 @@ namespace MMS.Migrations
                         .WithMany("Location_ProjectId")
                         .HasForeignKey("ProjectId")
                         .HasConstraintName("FK_Location_ProjectId")
-                        .IsRequired();
-
-                    b.HasOne("DAL.Models.SiteInfo", "SiteInfo_Id")
-                        .WithMany("App_Location_SiteId")
-                        .HasForeignKey("SiteId")
-                        .HasConstraintName("FK_App_Location_SiteId")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")

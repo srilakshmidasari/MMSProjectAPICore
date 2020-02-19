@@ -231,11 +231,11 @@ namespace DAL
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK_Location_ProjectId");
 
-            builder.Entity<Location>().HasOne(d => d.SiteInfo_Id)
-                 .WithMany(p => p.App_Location_SiteId)
-                 .HasForeignKey(d => d.SiteId)
-                 .OnDelete(DeleteBehavior.ClientSetNull)
-                 .HasConstraintName("FK_App_Location_SiteId");
+            //builder.Entity<Location>().HasOne(d => d.SiteInfo_Id)
+            //     .WithMany(p => p.App_Location_SiteId)
+            //     .HasForeignKey(d => d.SiteId)
+            //     .OnDelete(DeleteBehavior.ClientSetNull)
+            //     .HasConstraintName("FK_App_Location_SiteId");
 
             builder.Entity<AssetGroup>().HasOne(d => d.CreatedUser)
              .WithMany(p => p.App_AssetGroup_CreatedUser)
@@ -261,11 +261,11 @@ namespace DAL
                  .OnDelete(DeleteBehavior.ClientSetNull)
                  .HasConstraintName("FK_App_AssetLocation_UpdatedUser");
 
-            builder.Entity<AssetLocation>().HasOne(d => d.SiteInfo_Id)
-              .WithMany(p => p.App_AssetLocation_SiteId)
-              .HasForeignKey(d => d.SiteId)
-              .OnDelete(DeleteBehavior.ClientSetNull)
-              .HasConstraintName("FK_App_AssetLocation_SiteId");
+            //builder.Entity<AssetLocation>().HasOne(d => d.SiteInfo_Id)
+            //  .WithMany(p => p.App_AssetLocation_SiteId)
+            //  .HasForeignKey(d => d.SiteId)
+            //  .OnDelete(DeleteBehavior.ClientSetNull)
+            //  .HasConstraintName("FK_App_AssetLocation_SiteId");
 
             builder.Entity<AssetLocation>().HasOne(d => d.Location_Id)
                   .WithMany(p => p.App_AssetLocation_LocationId)
@@ -273,11 +273,11 @@ namespace DAL
                   .OnDelete(DeleteBehavior.ClientSetNull)
                   .HasConstraintName("FK_App_AssetLocation_LocationId");
 
-            builder.Entity<AssetLocation>().HasOne(d => d.Project)
-                 .WithMany(p => p.App_AssetLocation_ProjectId)
-                 .HasForeignKey(d => d.ProjectId)
-                 .OnDelete(DeleteBehavior.ClientSetNull)
-                 .HasConstraintName("FK_App_AssetLocation_ProjectId");
+            //builder.Entity<AssetLocation>().HasOne(d => d.Project)
+            //     .WithMany(p => p.App_AssetLocation_ProjectId)
+            //     .HasForeignKey(d => d.ProjectId)
+            //     .OnDelete(DeleteBehavior.ClientSetNull)
+            //     .HasConstraintName("FK_App_AssetLocation_ProjectId");
 
             builder.Entity<AssetLocation>().HasOne(d => d.AstGroup_Id)
                 .WithMany(p => p.App_AssetLocation_AstGroup_Id)
