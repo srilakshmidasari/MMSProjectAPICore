@@ -1,7 +1,7 @@
 <form #form="ngForm" [formGroup]="siteForm" (ngSubmit)="save()">
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.siteRef' | translate}}</mat-label>
-    <input matInput formControlName="siteref" appTitleCase required maxlength="16" />
+    <input matInput formControlName="siteref" appTitleCase required maxlength="30" />
     <mat-error *ngIf="!siteForm.controls['siteref'].valid">
       {{'site.management.SiteReferenceisrequired' | translate}}
     </mat-error>
