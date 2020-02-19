@@ -57,7 +57,7 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()" *ngIf="canAddProjects">
+                    <button mat-button color="primary" matTooltip="{{'project.management.Add' | translate}}" (click)="editClick()" *ngIf="canAddProjects">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'project.management.AddProject' | translate}}
                     </button>
                     <button mat-button color="primary" matTooltip="Actions"
@@ -65,7 +65,7 @@
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)" *ngIf="canEditProjects">
+                    <button mat-icon-button matTooltip="{{'project.management.Edit' | translate}}" (click)="editClick(row)" *ngIf="canEditProjects">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"
@@ -73,7 +73,7 @@
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)"
+                    <button mat-icon-button matTooltip="{{'project.management.Delete' | translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)"
                         *ngIf="canDeleteProjects">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
@@ -114,7 +114,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <mat-label>Select Site *</mat-label>
+                        <mat-label>{{'project.management.Select Site'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="siteId">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)

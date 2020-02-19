@@ -270,7 +270,7 @@ export class AssetsComponent implements OnInit {
     });
   }
 
-  // Change Evene For Group
+  // Change Event For Group
   onSelectAssGroup(event) {
     this.assetGroupData = {};
     this.accountService.getAssetGroupDataById(event).subscribe((res: any) => {
