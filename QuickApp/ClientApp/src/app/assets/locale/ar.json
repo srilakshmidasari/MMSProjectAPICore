@@ -22,7 +22,7 @@
     "LookUp": "ابحث عن",
     "Location": "موقعك",
     "Asset":"الأصول",
-    "Asset Group":"مجموعة الأصول",
+    "AssetGroup":"مجموعة الأصول",
     "Assets": "الأصول",
     "Supplier":"المورد",
     "Inventory":"المخزون",
@@ -226,6 +226,10 @@
       "UpdatedDate": "تاريخ التحديث",
       "IsActive": "نشط",
       "AddSite": "نشط",
+      "Add":"إضافة",
+      "Edit":"تعديل",
+      "Delete": "حذف",
+      "Site Location":"مكان الموقع",
       "Actions": "أجراءات",
       "SiteManager": "مدير الموقع",
       "SiteReferenceisrequired": "مرجع الموقع مطلوب",
@@ -256,6 +260,7 @@
       "AddProject": "إضافة مشروع",
       "updatedDate": "تاريخ التحديث",
       "Actions": "أجراءات",
+      "Add": "إضافة",
       "Edit": "تعديل",
       "View Store": "عرض المتجر",
       "Delete": "حذف",
@@ -319,7 +324,10 @@
       "lName1": "اسم الموقع 1",
       "lName2": "اسم الموقع 2",
       "addLocation": "أضف الموقع",
-      "editLocation": "عدل الموقع"
+      "editLocation": "عدل الموقع",
+      "Add": "إضافة",
+      "Edit": "تعديل",
+      "Delete": "حذف"
     },
     "editor": {
       "sNameisrequired": "اسم الموقع مطلوب",
@@ -443,6 +451,7 @@
    "Email is required":"البريد الالكتروني مطلوب",
    "Invalid Email":"بريد إلكتروني خاطئ",
    "Contact Number is required":"رقم الاتصال مطلوب",
+   "Supplier Reference is required":"مرجع المورد مطلوب",
    "save":"حفظ",
    "cancel":"إلغاء",
    "UploadImage":"تحميل الصور"

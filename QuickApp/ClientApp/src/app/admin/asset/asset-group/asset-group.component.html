@@ -34,7 +34,7 @@
                     <mat-cell *matCellDef="let row" class="small-cell just-cont-left align-item-center"><span class="text-left">{{row.assetModel}}</span> </mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetType">
-                    <mat-header-cell *matHeaderCellDef class="small-cell text-left" mat-sort-header><span class="text-left">{{'AssetGroup.Management.AssetGroupType'|translate}}</span></mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef  mat-sort-header class="small-cell text-left"><span class="text-left">{{'AssetGroup.Management.AssetGroupType'|translate}}</span></mat-header-cell>
                     <mat-cell *matCellDef="let row" class="small-cell text-left"><span class="text-left">{{row.assetType}}</span></mat-cell>
                 </ng-container>
                 <ng-container matColumnDef="assetCapacity">
@@ -84,8 +84,6 @@
             </mat-paginator>
     </div>
 </div>
-
-
 
  <div class="page-content" [hidden]="!isAdding"> 
     <mat-card>
