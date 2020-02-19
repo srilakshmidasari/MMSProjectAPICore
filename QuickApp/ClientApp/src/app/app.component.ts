@@ -149,9 +149,9 @@ export class AppComponent implements OnInit {
     this.authService.getLoginStatusEvent().subscribe(isLoggedIn => {
       this.isUserLoggedIn = isLoggedIn;
       if (this.isUserLoggedIn) {
-        this.initNotificationsLoading();
+       
       } else {
-        this.unsubscribeNotifications();
+        
       }
 
       setTimeout(() => {
@@ -172,14 +172,10 @@ export class AppComponent implements OnInit {
 
   ngOnDestroy() {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-    this.unsubscribeNotifications();
+  
   }
 
-  private unsubscribeNotifications() {
-    if (this.notificationsLoadingSubscription) {
-      this.notificationsLoadingSubscription.unsubscribe();
-    }
-  }
+ 
 
   private refreshAdminExpanderState(currentUrl: string) {
     setTimeout(() => {
@@ -187,43 +183,6 @@ export class AppComponent implements OnInit {
         this.adminExpander.open();
       }
     }, 200);
-  }
-
-  initNotificationsLoading() {
-    this.notificationsLoadingSubscription = this.notificationService.getNewNotificationsPeriodically()
-      .subscribe(notifications => {
-        this.dataLoadingConsecutiveFailures = 0;
-        this.newNotificationCount = notifications.filter(n => !n.isRead).length;
-      },
-        error => {
-          this.alertService.logError(error);
-
-          if (this.dataLoadingConsecutiveFailures++ < 20) {
-            setTimeout(() => this.initNotificationsLoading(), 5000);
-          } else {
-            this.alertService.showStickyMessage('Load Error', 'Loading new notifications from the server failed!', MessageSeverity.error);
-          }
-        });
-  }
-
-  markNotificationsAsRead() {
-    const recentNotifications = this.notificationService.recentNotifications;
-
-    if (recentNotifications.length) {
-      this.notificationService.readUnreadNotification(recentNotifications.map(n => n.id), true)
-        .subscribe(response => {
-          for (const n of recentNotifications) {
-            n.isRead = true;
-          }
-
-          this.newNotificationCount = recentNotifications.filter(n => !n.isRead).length;
-        },
-          error => {
-            this.alertService.logError(error);
-            this.alertService.showMessage('Notification Error', 'Marking read notifications failed', MessageSeverity.error);
-
-          });
-    }
   }
 
   showLoginDialog(): void {

@@ -192,7 +192,6 @@ namespace DAL.Repositories
                             result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
                             result.FileExtention = sites.FileExtention;
                         }
-
                         _appContext.SaveChanges();
                         response.Result = result;
                         response.IsSuccess = true;
