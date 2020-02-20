@@ -345,6 +345,7 @@ namespace DAL.RequestResponseModels
             public int ItemType { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
+            public string Description { get; set; }
             public int AverageCost { get; set; }
             public int UOMId { get; set; }
             public string UnitOfConversion { get; set; }
@@ -363,6 +364,7 @@ namespace DAL.RequestResponseModels
             public string CategoryName { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
+            public string Description { get; set; }
             public int AverageCost { get; set; }
             public int UOMId { get; set; }
             public string UOMName { get; set; }

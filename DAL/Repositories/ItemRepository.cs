@@ -36,6 +36,7 @@ namespace DAL.Repositories
                                   Id = It.Id,
                                   Name1 = It.Name1,
                                   Name2 = It.Name2,
+                                  Description =It.Description,
                                   ItemReference = It.ItemReference,
                                   ItemCategory =l.Id,
                                   CategoryName = l.Name1,
@@ -51,6 +52,7 @@ namespace DAL.Repositories
                                   CreatedDate = It.CreatedDate,
                                   UpdatedBy = It.UpdatedBy,
                                   UpdatedDate = It.UpdatedDate,
+
                               }).ToList();
                 if (result != null)
                 {
@@ -139,6 +141,7 @@ namespace DAL.Repositories
                         result.ItemType = items.ItemType;
                         result.Name1 = items.Name1;
                         result.Name2 = items.Name2;
+                        result.Description = items.Description;
                         result.AverageCost = items.AverageCost;
                         result.UOMId = items.UOMId;
                         result.UnitOfConversion = items.UnitOfConversion;

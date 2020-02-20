@@ -21,6 +21,9 @@ namespace DAL.Models
         [Required]
         [Display(Name = "ItemCategory")]
         public int ItemCategory { get; set; }
+        
+        [Display(Name = "Description")]
+        public string Description { get; set; }
 
         [Required]
         [Display(Name = "ItemType")]
