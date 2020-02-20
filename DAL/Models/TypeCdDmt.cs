@@ -71,5 +71,7 @@ namespace DAL.Models
 
         public ICollection<AssetFileRepository> Asset_DocumnetId { get; set; }
 
+        public ICollection<Item> Item_ItemTypeId { get; set; }
+
     }
 }

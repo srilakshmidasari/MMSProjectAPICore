@@ -341,16 +341,22 @@ namespace DAL
                  .HasConstraintName("FK_App_Item_UpdatedUser");
 
             builder.Entity<Item>().HasOne(d => d.UOM_Id)
-             .WithMany(p => p.App_Item_UOM_Id)
-             .HasForeignKey(d => d.UOMId)
-             .OnDelete(DeleteBehavior.ClientSetNull)
-             .HasConstraintName("FK_App_Item_UOMId");
+                 .WithMany(p => p.App_Item_UOM_Id)
+                 .HasForeignKey(d => d.UOMId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_Item_UOMId");
 
             builder.Entity<Item>().HasOne(d => d.ItemCategory_Id)
-          .WithMany(p => p.App_Item_ItemCategory_Id)
-          .HasForeignKey(d => d.ItemCategory)
-          .OnDelete(DeleteBehavior.ClientSetNull)
-          .HasConstraintName("FK_App_Item_ItemCategoryId");
+                .WithMany(p => p.App_Item_ItemCategory_Id)
+                .HasForeignKey(d => d.ItemCategory)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_Item_ItemCategoryId");
+
+            builder.Entity<Item>().HasOne(d => d.ItemType_Id)
+                .WithMany(p => p.Item_ItemTypeId)
+                .HasForeignKey(d =>d.ItemType)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_Item_ItemType");
         }
 
         public override int SaveChanges()

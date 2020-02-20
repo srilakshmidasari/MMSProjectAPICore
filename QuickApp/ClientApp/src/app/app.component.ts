@@ -216,7 +216,6 @@ export class AppComponent implements OnInit {
       msg: alert.message.detail,
     };
 
-
     if (alert.operation == 'add_sticky') {
       toastOptions.timeout = 0;
 

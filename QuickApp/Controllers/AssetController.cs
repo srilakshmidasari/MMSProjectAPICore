@@ -26,6 +26,7 @@ namespace MMS.Controllers
 
         [HttpGet("GetAllAssetGroup")]
         public ListDataResponse<AssetGroup> Get()
+
         {
             return _unitOfWork.Assets.GetAssetGroups();
         }
@@ -81,7 +82,6 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Assets.DeleteAssetLocation(Id);
         }
-
 
         [HttpGet("GetRepositoryByAsset/{AssetId}")]
         public ListDataResponse<AssetRepositoryResposnse> GetRepositoryByAsset(int AssetId)

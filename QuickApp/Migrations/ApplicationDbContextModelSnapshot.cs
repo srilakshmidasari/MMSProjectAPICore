@@ -488,6 +488,9 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<int>("ItemType")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name1")
                         .IsRequired()
                         .HasColumnType("nvarchar(100)")
@@ -502,12 +505,10 @@ namespace MMS.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("UnitOfConversion")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("Units")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
@@ -523,6 +524,8 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("ItemCategory");
+
+                    b.HasIndex("ItemType");
 
                     b.HasIndex("UOMId");
 
@@ -1213,6 +1216,12 @@ namespace MMS.Migrations
                         .WithMany("App_Item_ItemCategory_Id")
                         .HasForeignKey("ItemCategory")
                         .HasConstraintName("FK_App_Item_ItemCategoryId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "ItemType_Id")
+                        .WithMany("Item_ItemTypeId")
+                        .HasForeignKey("ItemType")
+                        .HasConstraintName("FK_Item_ItemType")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.LookUp", "UOM_Id")
