@@ -45,6 +45,11 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.uomName}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="description">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Item Description'|translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+            </ng-container>
             <!-- <ng-container matColumnDef="units">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units'|translate}}
                 </mat-header-cell>
@@ -141,6 +146,13 @@
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name2'].valid">
                             {{'Item.Management.Name2 is required'|translate}} 
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Description</mat-label>
+                        <input matInput formControlName="description" required maxlength="50" />
+                        <mat-error *ngIf="!itemForm.controls['description'].valid">
+                            {{'Item.Management.Description is required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">

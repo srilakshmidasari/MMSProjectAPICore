@@ -484,6 +484,8 @@
     "Edit":"Edit",
     "Delete":"Delete",
     "Item Type":"Item Type",
+    "Item Description":"Item Description",
+    "Description is required":"Description is required",
     "Please Select ItemType":"Please Select ItemType",
     "No Records Found":"No Records Found",
     "No Search Results Found":"No Search Results Found",
