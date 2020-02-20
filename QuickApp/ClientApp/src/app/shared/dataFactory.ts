@@ -11,7 +11,8 @@ export const DataFactory={
 
     ClassTypes :{
        FileType :1,
-       LookUp:2
+       LookUp:2,
+       ItemType :3,
     },
 
     LookUp:{
@@ -22,6 +23,7 @@ export const DataFactory={
      Technician:7,
      WorkFaults:8,
      ItemCategory:9,
-     UOM:10
+     UOM:10,
+     
     }
 }

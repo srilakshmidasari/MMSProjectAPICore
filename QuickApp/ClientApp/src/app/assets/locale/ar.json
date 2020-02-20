@@ -473,6 +473,8 @@
    "Add Item":"اضافة عنصر",
    "Edit":"تعديل",
    "Delete":"حذف",
+   "Item Type":"نوع العنصر",
+   "Please Select ItemType":"يرجى اختيار نوع المادة",
    "No Records Found":"لا توجد سجلات",
    "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
    "Item Reference is required":"مرجع البند مطلوب",

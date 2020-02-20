@@ -483,6 +483,8 @@
     "Add Item":"Add Item",
     "Edit":"Edit",
     "Delete":"Delete",
+    "Item Type":"Item Type",
+    "Please Select ItemType":"Please Select ItemType",
     "No Records Found":"No Records Found",
     "No Search Results Found":"No Search Results Found",
     "Item Reference is required":"Item Reference is required",

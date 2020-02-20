@@ -20,6 +20,11 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.categoryName}} </mat-cell>
             </ng-container>
+            <!-- <ng-container matColumnDef="ItemType">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Category Name'|translate}}
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.categoryName}} </mat-cell>
+            </ng-container> -->
             <ng-container matColumnDef="name1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Name 1'|translate}}
                 </mat-header-cell>
@@ -35,21 +40,21 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.averageCost}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="units">
+            <!-- <ng-container matColumnDef="units">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.units}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="uomName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Uom Name'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.uomName}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="unitOfConversion">
+            <!-- <ng-container matColumnDef="unitOfConversion">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units of Conversion'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.unitOfConversion}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     {{'Item.Management.Is Active'|translate}} </mat-header-cell>
@@ -112,7 +117,17 @@
                             {{'Item.Management.Please Select Category'|translate}} 
                         </mat-error>
                     </mat-form-field>
-
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Item.Management.Item Type'|translate}}</mat-label>
+                        <mat-select formControlName="itemType" required>
+                            <mat-option *ngFor="let item of itemTypes" [value]="item.typeCdDmtId">
+                                {{item.description}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!itemForm.controls['itemType'].valid">
+                            {{'Item.Management.Please Select ItemType'|translate}} 
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
@@ -145,7 +160,7 @@
                             {{'Item.Management.Average Cost is required'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">
+                    <!-- <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Units'|translate}}</mat-label>
                         <input matInput formControlName="unit" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['unit'].valid">
@@ -158,7 +173,7 @@
                         <mat-error *ngIf="!itemForm.controls['unitconversion'].valid">
                             {{'Item.Management.Units of Conversion is required'|translate}} 
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                 </div>
                 <mat-checkbox formControlName="isActive">{{'Item.Management.Is Active'|translate}} </mat-checkbox>
             </form>

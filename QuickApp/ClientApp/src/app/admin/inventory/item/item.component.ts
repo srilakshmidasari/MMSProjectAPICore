@@ -9,6 +9,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
 import { MatDialog } from '@angular/material';
+import { DataFactory } from 'src/app/shared/dataFactory';
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -17,7 +18,7 @@ import { MatDialog } from '@angular/material';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'categoryName', 'name1', 'name2', 'averageCost', 'units','uomName', 'unitOfConversion', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'categoryName', 'name1', 'name2', 'averageCost', 'uomName', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -33,6 +34,7 @@ export class ItemComponent implements OnInit {
   form: any;
   isitem: boolean;
   public isSaving = false;
+  itemTypes: any[]=[];
 
   constructor(private accountService: AccountService,
     private alertService: AlertService,
@@ -45,6 +47,7 @@ export class ItemComponent implements OnInit {
     this.getUOMIdData();
     this.buildForm();
     this.getItem();
+   
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -85,6 +88,7 @@ export class ItemComponent implements OnInit {
     this.itemForm = this.formBuilder.group({
       itemReference: ['', Validators.required],
       selectCategory: [''],
+      itemType:['', Validators.required],
       name1: ['', Validators.required],
       name2: ['', Validators.required],
       uomId: ['', Validators.required],
@@ -96,10 +100,10 @@ export class ItemComponent implements OnInit {
   }
 
   private getlookUpData() {
-    debugger
     var lookUpTypeId = 9
     this.accountService.getLookUpDetailsByTypeId(lookUpTypeId).subscribe((response: any) => {
       this.itemCategory = response.listResult;
+      this.getItemTypes()
     })
   }
 
@@ -111,6 +115,16 @@ export class ItemComponent implements OnInit {
 
     })
   }
+
+    // Get ItemsTypes List
+    private getItemTypes() {
+      this.accountService.getCddmtData(DataFactory.ClassTypes.ItemType).subscribe((response: any) => {
+        this.itemTypes = response.listResult;   
+        console.log( this.itemTypes)    
+      }, error => {
+        this.alertService.stopLoadingMessage();
+      });
+    }
 
   editClick(item?: any) {
     debugger;
