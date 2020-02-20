@@ -10,11 +10,7 @@ import { SharedModule } from '../shared/shared.module';
 import { AdminRoutingModule } from './admin-routing.module';
 
 import { AdminComponent } from './admin.component';
-import { RoleListComponent } from './role-list/role-list.component';
-import { EditRoleDialogComponent } from './edit-role-dialog/edit-role-dialog.component';
-import { RoleEditorComponent } from './role-editor/role-editor.component';
-import { UserListComponent } from './user-list/user-list.component';
-import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
+
 import { SiteListComponent } from './site-list/site-list.component';
 import { SiteEditorComponent } from './site-editor/site-editor.component';
 import { SiteDialogComponent } from './site-dialog/site-dialog.component';
@@ -23,15 +19,20 @@ import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ProfileComponent } from './profile/profile.component';
 import { DeleteFileComponent } from './delete-file/delete-file.component';
 import { ProjectComponent } from './project/project.component';
-import { LookupListComponent } from './lookup-list/lookup-list.component';
-import { LookupDialogComponent } from './lookup-dialog/lookup-dialog.component';
-import { LookupEditorComponent } from './lookup-editor/lookup-editor.component';
 import { LocationComponent } from './location/location.component';
 import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { ItemComponent } from './inventory/item/item.component';
+import { RoleListComponent } from './security/role-list/role-list.component';
+import { EditRoleDialogComponent } from './security/edit-role-dialog/edit-role-dialog.component';
+import { RoleEditorComponent } from './security/role-editor/role-editor.component';
+import { UserListComponent } from './security/user-list/user-list.component';
+import { EditUserDialogComponent } from './security/edit-user-dialog/edit-user-dialog.component';
+import { LookupListComponent } from './master/lookup-list/lookup-list.component';
+import { LookupDialogComponent } from './master/lookup-dialog/lookup-dialog.component';
+import { LookupEditorComponent } from './master/lookup-editor/lookup-editor.component';
 
 @NgModule({
   imports: [

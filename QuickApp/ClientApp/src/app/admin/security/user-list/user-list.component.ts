@@ -10,15 +10,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { fadeInOut } from '../../services/animations';
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { AccountService } from '../../services/account.service';
-import { Utilities } from '../../services/utilities';
-import { User } from '../../models/user.model';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
 import { EditUserDialogComponent } from '../edit-user-dialog/edit-user-dialog.component';
+import { fadeInOut } from 'src/app/services/animations';
+import { User } from 'src/app/models/user.model';
+import { Role } from 'src/app/models/role.model';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { AppTranslationService } from 'src/app/services/app-translation.service';
+import { AccountService } from 'src/app/services/account.service';
+import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-user-list',

@@ -6,23 +6,21 @@
 import { Component, OnDestroy, ViewChild, Input, OnChanges, NgZone, ElementRef } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, Subscription } from 'rxjs';
-
-import { AccountService } from '../../services/account.service';
-import { AlertService, MessageSeverity } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { Utilities } from '../../services/utilities';
-import { LocalStoreManager } from '../../services/local-store-manager.service';
-import { DBkeys } from '../../services/db-keys';
-import { User } from '../../models/user.model';
-import { UserEdit } from '../../models/user-edit.model';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
-import { EqualValidator } from '../../shared/validators/equal.validator';
+import { User } from 'src/app/models/user.model';
+import { Role } from 'src/app/models/role.model';
+import { Permission } from 'src/app/models/permission.model';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { AppTranslationService } from 'src/app/services/app-translation.service';
+import { AccountService } from 'src/app/services/account.service';
+import { LocalStoreManager } from 'src/app/services/local-store-manager.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatDialog } from '@angular/material';
 import { DataFactory } from 'src/app/shared/dataFactory';
-import { AppDialogComponent } from 'src/app/shared/app-dialog/app-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
-import { DeleteFileComponent } from '../delete-file/delete-file.component';
+import { EqualValidator } from 'src/app/shared/validators/equal.validator';
+import { Utilities } from 'src/app/services/utilities';
+import { DeleteFileComponent } from '../../delete-file/delete-file.component';
+
+
 
 @Component({
   selector: 'user-editor',

@@ -14,11 +14,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import { QuickAppProMaterialModule } from '../modules/material.module';
 
 import { PageHeaderComponent } from './page-header/page-header.component';
-import { UserEditorComponent } from '../admin/user-editor/user-editor.component';
 import { AppDialogComponent } from './app-dialog/app-dialog.component';
 
 import { GroupByPipe } from '../pipes/group-by.pipe';
 import { TitleCaseDirective } from './validators/titleCaseDirective';
+import { UserEditorComponent } from '../admin/security/user-editor/user-editor.component';
 
 @NgModule({
   imports: [

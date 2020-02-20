@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { FormBuilder, Validators, NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { AlertService, MessageSeverity } from '../../services/alert.service';
-import { AccountService } from '../../services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { AccountService } from 'src/app/services/account.service';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 @Component({
   selector: 'app-lookup-editor',
   templateUrl: './lookup-editor.component.html',

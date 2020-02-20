@@ -7,12 +7,11 @@ import { Component, Input, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { Utilities } from '../../services/utilities';
-
-import { AlertService, MessageSeverity } from '../../services/alert.service';
-import { AccountService } from '../../services/account.service';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
+import { Permission } from 'src/app/models/permission.model';
+import { Role } from 'src/app/models/role.model';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { AccountService } from 'src/app/services/account.service';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'role-editor',

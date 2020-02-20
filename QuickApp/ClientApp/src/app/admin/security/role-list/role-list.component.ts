@@ -10,14 +10,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 
-import { fadeInOut } from '../../services/animations';
-import { AlertService, DialogType, MessageSeverity } from '../../services/alert.service';
-import { AppTranslationService } from '../../services/app-translation.service';
-import { AccountService } from '../../services/account.service';
-import { Utilities } from '../../services/utilities';
-import { Role } from '../../models/role.model';
-import { Permission } from '../../models/permission.model';
 import { EditRoleDialogComponent } from '../edit-role-dialog/edit-role-dialog.component';
+import { fadeInOut } from 'src/app/services/animations';
+import { Role } from 'src/app/models/role.model';
+import { Permission } from 'src/app/models/permission.model';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { AppTranslationService } from 'src/app/services/app-translation.service';
+import { AccountService } from 'src/app/services/account.service';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-role-list',

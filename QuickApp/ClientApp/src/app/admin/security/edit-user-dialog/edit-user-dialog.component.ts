@@ -6,10 +6,10 @@
 import { Component, ViewChild, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { User } from '../../models/user.model';
-import { Role } from '../../models/role.model';
 
 import { UserEditorComponent } from '../user-editor/user-editor.component';
+import { User } from 'src/app/models/user.model';
+import { Role } from 'src/app/models/role.model';
 
 @Component({
   selector: 'app-edit-user-dialog',

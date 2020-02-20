@@ -7,20 +7,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AdminComponent } from './admin.component';
-import { RoleListComponent } from './role-list/role-list.component';
-import { UserListComponent } from './user-list/user-list.component';
 import { AuthService } from '../services/auth.service';
 import { AuthGuard } from '../services/auth-guard.service';
 import { SiteListComponent } from './site-list/site-list.component';
 import { ProfileComponent } from './profile/profile.component';
 import { ProjectComponent } from './project/project.component';
-import { LookupListComponent } from './lookup-list/lookup-list.component';
 import { LocationComponent } from './location/location.component';
 import { AssetLocationComponent } from './asset/asset-location/asset-location.component';
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
 import { SupplierComponent } from './supplier/supplier.component';
 import { ItemComponent } from './inventory/item/item.component';
+import { UserListComponent } from './security/user-list/user-list.component';
+import { RoleListComponent } from './security/role-list/role-list.component';
+import { LookupListComponent } from './master/lookup-list/lookup-list.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',

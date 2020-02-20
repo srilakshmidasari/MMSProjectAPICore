@@ -7,7 +7,7 @@ import { Component, OnInit, AfterViewInit, OnDestroy, ViewChild } from '@angular
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatExpansionPanel } from '@angular/material/expansion';
 
-import { UserEditorComponent } from '../admin/user-editor/user-editor.component';
+
 import { UserPreferencesComponent } from './user-preferences/user-preferences.component';
 import { AppTranslationService } from '../services/app-translation.service';
 import { Permission } from '../models/permission.model';
@@ -17,6 +17,7 @@ import { AccountService } from '../services/account.service';
 import { AlertService, MessageSeverity } from '../services/alert.service';
 import { fadeInOut } from '../services/animations';
 import { Utilities } from '../services/utilities';
+import { UserEditorComponent } from '../admin/security/user-editor/user-editor.component';
 
 @Component({
   selector: 'settings',
