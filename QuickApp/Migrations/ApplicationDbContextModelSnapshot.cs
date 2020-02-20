@@ -777,6 +777,78 @@ namespace MMS.Migrations
                     b.ToTable("ProjectRepository");
                 });
 
+            modelBuilder.Entity("DAL.Models.PurchageItemXref", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ExpectdCost")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PurchageId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("PurchageId");
+
+                    b.ToTable("PurchageItemXref");
+                });
+
+            modelBuilder.Entity("DAL.Models.PurchageOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("ArrivingDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<int>("SupplierId")
+                        .HasColumnType("int")
+                        .HasMaxLength(50);
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("SupplierId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("PurchageOrder");
+                });
+
             modelBuilder.Entity("DAL.Models.SiteInfo", b =>
                 {
                     b.Property<int>("Id")
@@ -1341,6 +1413,42 @@ namespace MMS.Migrations
                         .WithMany("App_ProjectRepository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_App_ProjectRepository_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.PurchageItemXref", b =>
+                {
+                    b.HasOne("DAL.Models.Item", "Item_Id")
+                        .WithMany("Purchage_ItemXref_Id")
+                        .HasForeignKey("ItemId")
+                        .HasConstraintName("FK_Purchage_ItemXref_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.PurchageOrder", "Purchage_Id")
+                        .WithMany("Purchage_OrderXref_Id")
+                        .HasForeignKey("PurchageId")
+                        .HasConstraintName("FK_Purchage_OrderXref_Id")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.PurchageOrder", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_PurchageOrder_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_App_PurchageOrder_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Supplier", "Supplier_Id")
+                        .WithMany("Purchage_Supplier_Id")
+                        .HasForeignKey("SupplierId")
+                        .HasConstraintName("FK_Purchage_Supplier_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_PurchageOrder_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_PurchageOrder_UpdatedUser")
                         .IsRequired();
                 });
 

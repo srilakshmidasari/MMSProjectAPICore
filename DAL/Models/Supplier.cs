@@ -83,5 +83,7 @@ namespace DAL.Models
         public ApplicationUser CreatedUser { get; set; }
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
+
+        public ICollection<PurchageOrder> Purchage_Supplier_Id { get; set; }
     }
 }

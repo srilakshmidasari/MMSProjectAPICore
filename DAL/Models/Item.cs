@@ -87,6 +87,9 @@ namespace DAL.Models
 
         [JsonIgnore]
         public TypeCdDmt  ItemType_Id { get; set; }
+
+        public ICollection<PurchageItemXref> Purchage_ItemXref_Id { get; set; }
+
     }
 }
 

@@ -374,5 +374,36 @@ namespace DAL.RequestResponseModels
 
         }
 
+        public class GetPurchageResponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int SupplierId { get; set; }
+            public string SupplierName { get; set; }
+            public string SupplierAddress { get; set; }
+            public DateTime ArrivingDate { get; set; }
+            public bool IsActive { get; set; }
+
+        }
+
+        public class PurchaseItem
+        {
+            public int Id { get; set; }
+            public int ItemId { get; set; }
+            public string PurchaseId { get; set; }
+            public int Quantity { get; set; }
+            public int ExpectdCost { get; set; }
+
+        }
+
+        public class UpsertPurchaseOrder : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int SupplierId { get; set; }
+            public DateTime ArrivingDate { get; set; }
+            public bool IsActive { get; set; }
+            public List<PurchaseItem> PurchaseItems { get; set; }
+
+        }
+
     }
 }
