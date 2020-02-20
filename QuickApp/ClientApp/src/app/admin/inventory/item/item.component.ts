@@ -18,7 +18,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'categoryName', 'name1', 'name2', 'averageCost', 'uomName', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'categoryName','itemTypeName', 'name1', 'name2', 'averageCost', 'uomName', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -87,8 +87,8 @@ export class ItemComponent implements OnInit {
     debugger
     this.itemForm = this.formBuilder.group({
       itemReference: ['', Validators.required],
-      selectCategory: [''],
-      itemType:['', Validators.required],
+      selectCategory: ['',Validators.required],
+      itemTypeName:['', Validators.required],
       name1: ['', Validators.required],
       name2: ['', Validators.required],
       uomId: ['', Validators.required],
@@ -154,6 +154,8 @@ export class ItemComponent implements OnInit {
       categoryName:this.itemData.categoryName || '',
       uomName:this.itemData.categoryName || '',
       selectCategory: this.itemData.lookUpTypeId || '',
+      itemTypeName:this.itemData.itemTypeName || '',
+      itemType: this.itemData.lookUpTypeId || '',
       uomId: this.itemData.lookUpTypeId || '',
       name1: this.itemData.name1 || '',
       name2: this.itemData.name2 || '',
@@ -223,6 +225,7 @@ export class ItemComponent implements OnInit {
     "itemReference":formModel.itemReference,
     "categoryName":formModel.categoryName,
     "itemCategory":formModel.selectCategory,
+    "itemTypeName":formModel.itemTypeName,
     "name1": formModel.name1,
     "name2": formModel.name2,
     "averageCost":parseInt(formModel.averageCost),
