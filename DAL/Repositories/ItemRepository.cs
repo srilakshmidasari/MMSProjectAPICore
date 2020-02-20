@@ -29,6 +29,7 @@ namespace DAL.Repositories
                 var result = (from It in _appContext.Items
                               join l in _appContext.LookUps on It.ItemCategory equals l.Id
                               join p in _appContext.LookUps on It.UOMId equals p.Id
+                              join t in _appContext.TypeCdDmts on It.ItemType equals t.TypeCdDmtId
 
                               select new GetItemResponse
                               {
@@ -38,6 +39,8 @@ namespace DAL.Repositories
                                   ItemReference = It.ItemReference,
                                   ItemCategory =l.Id,
                                   CategoryName = l.Name1,
+                                  ItemTypeId = It.ItemType,
+                                  ItemTypeName =t.Description,
                                   UnitOfConversion = It.UnitOfConversion,
                                   Units = It.Units,
                                   UOMId = p.Id,
@@ -133,6 +136,7 @@ namespace DAL.Repositories
                     {
                         result.ItemReference = items.ItemReference;
                         result.ItemCategory = items.ItemCategory;
+                        result.ItemType = items.ItemType;
                         result.Name1 = items.Name1;
                         result.Name2 = items.Name2;
                         result.AverageCost = items.AverageCost;

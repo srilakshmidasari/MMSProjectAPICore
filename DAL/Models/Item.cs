@@ -18,8 +18,13 @@ namespace DAL.Models
         [StringLength(50)]
         public string ItemReference { get; set; }
 
+        [Required]
         [Display(Name = "ItemCategory")]
         public int ItemCategory { get; set; }
+
+        [Required]
+        [Display(Name = "ItemType")]
+        public int ItemType { get; set; }
 
         [Required]
         [Display(Name = "Name1")]
@@ -37,12 +42,12 @@ namespace DAL.Models
         [Display(Name = "UOMId")]
         public int UOMId { get; set; }
 
-        [Required]
+
         [Display(Name = "UnitOfConversion")]
         [StringLength(100)]
         public string UnitOfConversion { get; set; }
 
-        [Required]
+
         [Display(Name = "Units")]
         [StringLength(100)]
         public string Units { get; set; }
@@ -77,8 +82,9 @@ namespace DAL.Models
         [JsonIgnore]
         public LookUp ItemCategory_Id { get; set; }
 
-
+        [JsonIgnore]
+        public TypeCdDmt  ItemType_Id { get; set; }
     }
-    }
+}
 
 

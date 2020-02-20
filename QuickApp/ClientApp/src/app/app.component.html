@@ -29,10 +29,10 @@
     <button *ngIf="isUserLoggedIn" class="side-button" mat-button [matMenuTriggerFor]="accountMenu"
       matTooltip="{{'mainMenu.UserAccount' | translate}}">
       <mat-icon class="menu-button">account_circle</mat-icon>
-      <span fxHide.lt-sm>{{'mainMenu.Account' | translate}}</span>
+      <span fxHide.lt-sm>{{userName}}</span>
     </button>
     <mat-menu #accountMenu="matMenu">
-      <button mat-menu-item (click)="router.navigateByUrl('/settings')">
+      <button mat-menu-item (click)="router.navigateByUrl('/admin/profile')">
         <mat-icon>person</mat-icon><span>{{'mainMenu.Profile' | translate}}</span>
       </button>
       <!-- <button mat-menu-item (click)="router.navigateByUrl('/admin/profile')">

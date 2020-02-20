@@ -48,7 +48,7 @@ const routes: Routes = [
   { path: 'confirmemail', component: ConfirmEmailComponent, data: { title: 'Confirm Email' } },
   { path: 'recoverpassword', component: RecoverPasswordComponent, data: { title: 'Recover Password' } },
   { path: 'resetpassword', component: ResetPasswordComponent, data: { title: 'Reset Password' } },
-  { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], data: { title: 'Settings' } },
+  // { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], data: { title: 'Settings' } },
   { path: 'about', component: AboutComponent, data: { title: 'About Us' } },
   { path: 'home', redirectTo: '/', pathMatch: 'full' },
   { path: '**', component: NotFoundComponent, data: { title: 'Page Not Found' } }

@@ -342,6 +342,7 @@ namespace DAL.RequestResponseModels
             public int Id { get; set; }
             public string ItemReference { get; set; }
             public int ItemCategory { get; set; }
+            public int ItemType { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
             public int AverageCost { get; set; }
@@ -357,6 +358,8 @@ namespace DAL.RequestResponseModels
             public int Id { get; set; }
             public string ItemReference { get; set; }
             public int ItemCategory { get; set; }
+            public int ItemTypeId { get; set; }
+            public string ItemTypeName { get; set; }
             public string CategoryName { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
