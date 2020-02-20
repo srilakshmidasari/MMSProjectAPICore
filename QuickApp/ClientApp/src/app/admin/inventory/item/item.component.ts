@@ -18,7 +18,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'categoryName','itemTypeName', 'name1', 'name2', 'averageCost', 'uomName', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'categoryName','itemTypeName', 'name1', 'name2', 'averageCost', 'uomName','description', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -91,6 +91,7 @@ export class ItemComponent implements OnInit {
       itemTypeName:['', Validators.required],
       name1: ['', Validators.required],
       name2: ['', Validators.required],
+      description:['',Validators.required],
       uomId: ['', Validators.required],
       averageCost: ['', Validators.required],
       unit: [''],
@@ -156,6 +157,7 @@ export class ItemComponent implements OnInit {
       uomId: this.itemData.uomId || '',
       name1: this.itemData.name1 || '',
       name2: this.itemData.name2 || '',
+      description:this.itemData.description || '',
       averageCost: this.itemData.averageCost || '',
       unit: this.itemData.units || '',
       unitconversion: this.itemData.unitOfConversion || '',
@@ -224,6 +226,7 @@ export class ItemComponent implements OnInit {
     "itemType":formModel.itemTypeName,
     "name1": formModel.name1,
     "name2": formModel.name2,
+    "description":formModel.description,
     "averageCost":parseInt(formModel.averageCost),
     "uomId":formModel.uomId,
     "unitOfConversion":null,

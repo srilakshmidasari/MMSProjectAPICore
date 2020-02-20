@@ -474,6 +474,8 @@
    "Edit":"تعديل",
    "Delete":"حذف",
    "Item Type":"نوع العنصر",
+   "Item Description":"وصف السلعة",
+   "Description is required":"الوصف مطلوب",
    "Please Select ItemType":"يرجى اختيار نوع المادة",
    "No Records Found":"لا توجد سجلات",
    "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
