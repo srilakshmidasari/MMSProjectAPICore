@@ -93,8 +93,8 @@ export class ItemComponent implements OnInit {
       name2: ['', Validators.required],
       uomId: ['', Validators.required],
       averageCost: ['', Validators.required],
-      unit: ['', Validators.required],
-      unitconversion: ['', Validators.required],
+      unit: [''],
+      unitconversion: [''],
       isActive: [true]
     })
   }
@@ -151,12 +151,9 @@ export class ItemComponent implements OnInit {
     }
     this.itemForm.reset({
       itemReference: this.itemData.itemReference || '',
-      categoryName:this.itemData.categoryName || '',
-      uomName:this.itemData.categoryName || '',
-      selectCategory: this.itemData.lookUpTypeId || '',
-      itemTypeName:this.itemData.itemTypeName || '',
-      itemType: this.itemData.lookUpTypeId || '',
-      uomId: this.itemData.lookUpTypeId || '',
+      selectCategory: this.itemData.itemCategory || '',
+      itemTypeName:this.itemData.itemTypeId || '',
+      uomId: this.itemData.uomId || '',
       name1: this.itemData.name1 || '',
       name2: this.itemData.name2 || '',
       averageCost: this.itemData.averageCost || '',
@@ -223,22 +220,21 @@ export class ItemComponent implements OnInit {
    return {
     "id":this.isNewitem == true ? 0 :this.itemData.id ,
     "itemReference":formModel.itemReference,
-    "categoryName":formModel.categoryName,
     "itemCategory":formModel.selectCategory,
-    "itemTypeName":formModel.itemTypeName,
+    "itemType":formModel.itemTypeName,
     "name1": formModel.name1,
     "name2": formModel.name2,
     "averageCost":parseInt(formModel.averageCost),
     "uomId":formModel.uomId,
-    "unitOfConversion":formModel.unitconversion,
-    "units": formModel.unit,
-    "uomName":formModel.uomName,
+    "unitOfConversion":null,
+    "units": null,
     "isActive":formModel.isActive,
     "createdBy": this.currentUser.id,
     "createdDate": new Date(),
     "updatedBy": this.currentUser.id,
     "updatedDate":  new Date()
     }
+   
  }
 
  get currentUser() {

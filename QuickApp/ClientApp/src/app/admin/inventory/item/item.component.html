@@ -35,10 +35,10 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="averageCost">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Average Cost'|translate}}
+            <ng-container matColumnDef="averageCost" >
+                <mat-header-cell class="just-cont-center"  *matHeaderCellDef mat-sort-header>{{'Item.Management.Average Cost'|translate}}
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.averageCost}} </mat-cell>
+                <mat-cell class="just-cont-center"  *matCellDef="let row"> {{row.averageCost}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="uomName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Uom Name'|translate}}
@@ -107,17 +107,6 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Item.Management.Item Category'|translate}}</mat-label>
-                        <mat-select formControlName="selectCategory" required>
-                            <mat-option *ngFor="let doc of itemCategory" [value]="doc.id">
-                                {{doc.name1}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!itemForm.controls['selectCategory'].valid">
-                            {{'Item.Management.Please Select Category'|translate}} 
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Item Type'|translate}}</mat-label>
                         <mat-select formControlName="itemTypeName" required>
                             <mat-option *ngFor="let item of itemTypes" [value]="item.typeCdDmtId">
@@ -128,6 +117,18 @@
                             {{'Item.Management.Please Select ItemType'|translate}} 
                         </mat-error>
                     </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Item.Management.Item Category'|translate}}</mat-label>
+                        <mat-select formControlName="selectCategory" required>
+                            <mat-option *ngFor="let doc of itemCategory" [value]="doc.id">
+                                {{doc.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!itemForm.controls['selectCategory'].valid">
+                            {{'Item.Management.Please Select Category'|translate}} 
+                        </mat-error>
+                    </mat-form-field>
+                   
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
