@@ -115,7 +115,6 @@ namespace DAL.Repositories
             return response;
         }
 
-
         public ValueDataResponse<PurchageOrder> UpdatePurchaseOrder(UpsertPurchaseOrder purchages)
         {
             ValueDataResponse<PurchageOrder> response = new ValueDataResponse<PurchageOrder>();
@@ -171,6 +170,47 @@ namespace DAL.Repositories
                 response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
                 response.Exception = ex;
             }
+            return response;
+        }
+
+        public ValueDataResponse<PurchageOrder> DeletePurchaseOrder(int PurchaseId)
+        {
+            ValueDataResponse<PurchageOrder> response = new ValueDataResponse<PurchageOrder>();
+            try
+            {
+                var purchaseData = _appContext.PurchageOrders.Where(x => x.Id == PurchaseId).FirstOrDefault();
+
+                var ast = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == PurchaseId).ToList();
+                if (ast != null)
+                {
+                    _appContext.PurchageItemXrefs.RemoveRange(ast);
+                    _appContext.PurchageOrders.RemoveRange(purchaseData);
+                    _appContext.SaveChanges();
+                }
+
+                if (purchaseData != null)
+                {
+
+                    response.Result = purchaseData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Purchase Order Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Purchase Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
             return response;
         }
     }

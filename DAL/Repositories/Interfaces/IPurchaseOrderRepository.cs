@@ -15,5 +15,8 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<PurchageOrder> InsertPurchaseOrder(UpsertPurchaseOrder purchages);
 
         ValueDataResponse<PurchageOrder> UpdatePurchaseOrder(UpsertPurchaseOrder purchages);
+
+        ValueDataResponse<PurchageOrder> DeletePurchaseOrder(int PurchaseId);
+
     }
 }

@@ -34,8 +34,19 @@ namespace MMS.Controllers
         [HttpPost]
         public ValueDataResponse<PurchageOrder> Insert(UpsertPurchaseOrder purchases)
         {
-            // Project pro = _mapper.Map<Project>(project);
             return _unitOfWork.Purchages.InsertPurchaseOrder(purchases);
+        }
+
+        [HttpPut]
+        public ValueDataResponse<PurchageOrder> Update(UpsertPurchaseOrder purchases)
+        {
+            return _unitOfWork.Purchages.UpdatePurchaseOrder(purchases);
+        }
+
+        [HttpDelete]
+        public ValueDataResponse<PurchageOrder> DeleteProject(int PurchaseId)
+        {
+            return _unitOfWork.Purchages.DeletePurchaseOrder(PurchaseId);
         }
     }
 }
