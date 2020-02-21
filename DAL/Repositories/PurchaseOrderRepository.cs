@@ -35,6 +35,7 @@ namespace DAL.Repositories
                                   SupplierId = po.SupplierId,
                                   SupplierName = s.Name1,
                                   SupplierAddress = s.Address,
+                                  ArrivingDate = po.ArrivingDate,
                                   IsActive = po.IsActive,
                                   CreatedBy = po.CreatedBy,
                                   CreatedDate = po.CreatedDate,

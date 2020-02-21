@@ -8,28 +8,34 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>  
-        <mat-table [dataSource]="dataSource" matSort matSortActive="Name1" matSortDirection="asc"
+        <mat-table [dataSource]="dataSource" matSort matSortActive="supplierName" matSortDirection="asc"
         matSortDisableClear>
-        <ng-container matColumnDef="supplierId">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>SupplierId
+        <ng-container matColumnDef="supplierName">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Name
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.supplierId}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.supplierName}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="Name1">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Name 1
+        <ng-container matColumnDef="supplierAddress">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Supplier Address
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Name1}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.supplierAddress}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="Items">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Items
+        <ng-container matColumnDef="arrivingDate">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Arriving Date
             </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.Items}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.arrivingDate  | date: 'dd/MM/yyyy'}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="ArrivingDate">
+        <!-- <ng-container matColumnDef="ArrivingDate">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Arriving Date
             </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.ArrivingDate}} </mat-cell>
-        </ng-container>
+        </ng-container> -->
+        <ng-container matColumnDef="updatedDate">
+                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>
+                    {{'project.management.UpdatedDate' | translate}}</mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
+            </ng-container>
         <ng-container matColumnDef="isActive">
             <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                 {{'Item.Management.Is Active'|translate}} </mat-header-cell>

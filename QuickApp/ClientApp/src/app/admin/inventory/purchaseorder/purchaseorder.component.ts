@@ -12,31 +12,49 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class PurchaseorderComponent implements OnInit {
   loadingIndicator: boolean;
-  displayedColumns:['supplierId','Name1','Items','ArrivingDate','isActive','Actions'];
+  displayedColumns: ['supplierName', 'supplierAddress', 'arrivingDate',' updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayNoRecords:boolean;
+  displayNoRecords: boolean;
   @Input() purchaseorder: any = {}
   orderForm: FormGroup;
-
+  purchasesList:any[]=[];
   constructor(private accountService: AccountService,
     private alertService: AlertService,
-    private authService: AuthService,private dialog: MatDialog,
+    private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder, ) { }
 
-  Purchaseorder:any[]=[{
-    supplierId:'2',Name1:'Sabitha',Items:'electronics',ArrivingDate:'20-2-1-2020',isActive:'true'
-  }]
+ 
 
   ngOnInit() {
-    this.dataSource.data = this.Purchaseorder;
+    debugger
+   this.getPurchaseOrders();
   }
+
+
+  private getPurchaseOrders() {
+    this.alertService.startLoadingMessage();
+    this.loadingIndicator = true;
+    this.accountService.getPurchaseOrders()
+      .subscribe((results: any) => {
+        this.purchasesList = results.listResult == null ? [] : results.listResult;
+        this.dataSource.data = this.purchasesList;
+        this.alertService.stopLoadingMessage();
+        this.loadingIndicator = false;
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.loadingIndicator = false;
+        });
+  }
+
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {

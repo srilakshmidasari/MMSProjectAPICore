@@ -373,6 +373,8 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.deleteAssetRepositoryEndpoint(repositoryId);
   }
 
+  //Item
+
   getitemdata(){
     return this.accountEndpoint.getitemEndpoint();
   }
@@ -385,6 +387,16 @@ deleteAssetRepository(repositoryId) {
   }
   deleteitem(itemId){
     return this.accountEndpoint.deleteitemEndpoint(itemId);
+  }
+
+  // Purchase Order
+
+  getPurchaseOrders(){
+    return this.accountEndpoint.getPurchaseOrderEndpoint();
+  }
+  
+  AddPurchaseOrder(reqObject) {
+    return this.accountEndpoint.AddPurchaseOrderEndpoint(reqObject);
   }
 
 }

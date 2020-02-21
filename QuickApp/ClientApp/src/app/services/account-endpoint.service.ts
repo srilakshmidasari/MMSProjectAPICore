@@ -72,6 +72,9 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _updateitem: string ='/api/Item/UpdateItem';
   private readonly _deleteitem: string ='/api/Item/DeleteItem';
 
+  private readonly _purchaseOrderUrl: string ='​/api/PurchaseOrder';
+  
+
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
@@ -124,6 +127,9 @@ export class AccountEndpoint extends EndpointBase {
   get AddAllitemdata() { return this.configurations.baseUrl + this._AddAllitem; }
   get updateitem() { return this.configurations.baseUrl + this._updateitem; }
   get deleteitem() { return this.configurations.baseUrl + this._deleteitem; }
+
+  get purchaseOrderUrl() { return this.configurations.baseUrl + this._purchaseOrderUrl; }
+
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -716,5 +722,21 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  getPurchaseOrderEndpoint<T>(){
+    debugger
+    const endpointUrl = this.purchaseOrderUrl;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getPurchaseOrderEndpoint());
+      }));
+  }
+
+  AddPurchaseOrderEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.purchaseOrderUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddPurchaseOrderEndpoint(reqObject));
+      }));
+  }
  
 }
