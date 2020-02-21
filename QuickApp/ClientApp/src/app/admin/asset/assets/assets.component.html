@@ -140,16 +140,14 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.Name1'|translate}}</mat-label>
+                        <mat-label>{{'Assets.Management.Name2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!assetLocationForm.controls['name2'].valid">
                             {{'Assets.Management.Name2isRequired'|translate}}
                         </mat-error>
                     </mat-form-field>
-
                 </div>
                 <div class="row">
-
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetGroup'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="assetGroup" (ngModelChange)="onSelectAssGroup($event)">
@@ -171,11 +169,9 @@
                         <mat-label>{{'Assets.Management.AssetMake'|translate}}</mat-label>
                         <input matInput formControlName="assetMake" [(ngModel)]="assetGroupData.assetMake" readonly />
                     </mat-form-field>
-
                 </div>
 
                 <div class="row">
-
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetModel'|translate}}</mat-label>
                         <input matInput formControlName="assetModel" [(ngModel)]="assetGroupData.assetModel" readonly />
