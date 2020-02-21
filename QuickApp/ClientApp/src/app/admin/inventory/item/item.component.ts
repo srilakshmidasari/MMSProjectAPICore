@@ -213,8 +213,6 @@ export class ItemComponent implements OnInit {
       );
     }
   }
-    
-
 
  private AddAllItemData():any{
    debugger
@@ -276,7 +274,6 @@ export class ItemComponent implements OnInit {
           }
       });
    }
-
   }
 
 
