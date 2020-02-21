@@ -35,6 +35,11 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="description">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Item Description'|translate}}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="averageCost" >
                 <mat-header-cell class="just-cont-center"  *matHeaderCellDef mat-sort-header>{{'Item.Management.Average Cost'|translate}}
                 </mat-header-cell>
@@ -45,11 +50,11 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.uomName}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="description">
+            <!-- <ng-container matColumnDef="description">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Item Description'|translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <!-- <ng-container matColumnDef="units">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units'|translate}}
                 </mat-header-cell>

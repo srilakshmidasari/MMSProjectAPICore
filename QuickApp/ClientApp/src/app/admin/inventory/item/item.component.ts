@@ -18,7 +18,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'categoryName','itemTypeName', 'name1', 'name2', 'averageCost', 'uomName','description', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'categoryName','itemTypeName', 'name1', 'name2', 'description', 'averageCost', 'uomName', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

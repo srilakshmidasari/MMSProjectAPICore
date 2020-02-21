@@ -114,5 +114,64 @@ namespace DAL.Repositories
             }
             return response;
         }
+
+
+        public ValueDataResponse<PurchageOrder> UpdatePurchaseOrder(UpsertPurchaseOrder purchages)
+        {
+            ValueDataResponse<PurchageOrder> response = new ValueDataResponse<PurchageOrder>();
+
+            try
+            {
+                PurchageOrder pro = _mapper.Map<PurchageOrder>(purchages);
+                var result = _appContext.PurchageOrders.Where(x => x.Id == purchages.Id).FirstOrDefault();
+                var purchaseItemList = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == purchages.Id).ToList();
+                _appContext.PurchageItemXrefs.RemoveRange(purchaseItemList);
+                _appContext.SaveChanges();
+                foreach (var it in purchages.PurchaseItems)
+                {
+                    _appContext.PurchageItemXrefs.Add(new PurchageItemXref
+                    {
+                        ItemId = it.ItemId,
+                        PurchageId = pro.Id,
+                        Quantity = it.Quantity,
+                        ExpectdCost = it.ExpectdCost
+                    });
+                }
+                if(result != null)
+                {
+                    result.SupplierId = purchages.SupplierId;
+                    result.IsActive = purchages.IsActive;
+                    result.CreatedBy = purchages.CreatedBy;
+                    result.CreatedDate = purchages.CreatedDate;
+                    result.UpdatedBy = purchages.UpdatedBy;
+                    result.UpdatedDate = purchages.UpdatedDate;
+                    result.ArrivingDate = purchages.ArrivingDate;
+                    _appContext.SaveChanges();
+
+                    if (pro != null)
+                    {
+                        response.Result = pro;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Purchage Order Updated Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Purchage Order Updation Failed";
+                    }
+                }
+               
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+            return response;
+        }
     }
 }
