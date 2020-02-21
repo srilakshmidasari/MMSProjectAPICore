@@ -33,6 +33,9 @@ namespace DAL
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<AssetFileRepository> AssetFileRepositories { get; set; }
         public DbSet<Item> Items { get; set; }
+
+        public DbSet<PurchageOrder> PurchageOrders { get; set; }
+        public DbSet<PurchageItemXref> PurchageItemXrefs { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -73,6 +76,9 @@ namespace DAL
 
             builder.Entity<Item>().ToTable("Item");
             builder.Entity<Item>().Property(p => p.IsActive).HasDefaultValue(true);
+            builder.Entity<PurchageOrder>().ToTable("PurchageOrder");
+            builder.Entity<PurchageOrder>().Property(p => p.IsActive).HasDefaultValue(true);
+            builder.Entity<PurchageItemXref>().ToTable("PurchageItemXref");
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
@@ -357,6 +363,36 @@ namespace DAL
                 .HasForeignKey(d =>d.ItemType)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Item_ItemType");
+
+            builder.Entity<PurchageOrder>().HasOne(d => d.Supplier_Id)
+               .WithMany(p => p.Purchage_Supplier_Id)
+               .HasForeignKey(d => d.SupplierId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_Purchage_Supplier_Id");
+
+            builder.Entity<PurchageOrder>().HasOne(d => d.CreatedUser)
+               .WithMany(p => p.App_PurchageOrder_CreatedUser)
+               .HasForeignKey(d => d.CreatedBy)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_PurchageOrder_CreatedUser");
+
+            builder.Entity<PurchageOrder>().HasOne(d => d.UpdatedUser)
+               .WithMany(p => p.App_PurchageOrder_UpdatedUser)
+               .HasForeignKey(d => d.UpdatedBy)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_PurchageOrder_UpdatedUser");
+
+            builder.Entity<PurchageItemXref>().HasOne(d => d.Purchage_Id)
+              .WithMany(p => p.Purchage_OrderXref_Id)
+              .HasForeignKey(d => d.PurchageId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+              .HasConstraintName("FK_Purchage_OrderXref_Id");
+
+            builder.Entity<PurchageItemXref>().HasOne(d => d.Item_Id)
+            .WithMany(p => p.Purchage_ItemXref_Id)
+            .HasForeignKey(d => d.ItemId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_Purchage_ItemXref_Id");
         }
 
         public override int SaveChanges()

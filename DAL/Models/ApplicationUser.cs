@@ -96,5 +96,8 @@ namespace DAL.Models
 
         public ICollection<Item> App_Item_CreatedUser { get; set; }
         public ICollection<Item> App_Item_UpdatedUser { get; set; }
+
+        public ICollection<PurchageOrder> App_PurchageOrder_CreatedUser { get; set; }
+        public ICollection<PurchageOrder> App_PurchageOrder_UpdatedUser { get; set; }
     }
 }

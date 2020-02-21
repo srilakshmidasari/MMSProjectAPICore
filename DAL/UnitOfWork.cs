@@ -27,6 +27,7 @@ namespace DAL
         IAssetRepository _assets;
         ISupplierRepository _suppliers;
         ItemRepository _items;
+        IPurchaseOrderRepository _purchages;
 
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
@@ -113,6 +114,18 @@ namespace DAL
                 return _items;
             }
         }
+
+        public IPurchaseOrderRepository Purchages
+        {
+            get
+            {
+                if (_purchages == null)
+                    _purchages = new PurchaseOrderRepository(_context, _mapper, _configuration);
+
+                return _purchages;
+            }
+        }
+
 
         public int SaveChanges()
         {

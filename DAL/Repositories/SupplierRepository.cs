@@ -207,6 +207,8 @@ namespace DAL.Repositories
             try
             {
                 var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId).FirstOrDefault();
+
+               // var purchase = _appContext.PurchageOrders.Where(x => x.SupplierId == SupplierId).ToList();
                 if (SupplierData != null)
                 {
                     _appContext.Suppliers.Remove(SupplierData);
