@@ -33,6 +33,7 @@ import { EditUserDialogComponent } from './security/edit-user-dialog/edit-user-d
 import { LookupListComponent } from './master/lookup-list/lookup-list.component';
 import { LookupDialogComponent } from './master/lookup-dialog/lookup-dialog.component';
 import { LookupEditorComponent } from './master/lookup-editor/lookup-editor.component';
+import { PurchaseorderComponent } from './inventory/purchaseorder/purchaseorder.component';
 
 @NgModule({
   imports: [
@@ -62,7 +63,8 @@ import { LookupEditorComponent } from './master/lookup-editor/lookup-editor.comp
     AssetGroupComponent,
     AssetsComponent,
     SupplierComponent,
-    ItemComponent
+    ItemComponent,
+    PurchaseorderComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

@@ -35,7 +35,8 @@
     "Assets" :"Assets",
     "Supplier":"Supplier",
     "Inventory":"Inventory",
-    "Item":"Item"
+    "Item":"Item",
+    "Purchase Order":"Purchase Order"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -55,7 +56,8 @@
     "Assets": "Assets",
     "AssetGroup": "Asset Group Specification",
     "Supplier":"Supplier",
-    "Item":"Item"
+    "Item":"Item",
+    "Purchase Order":"Purchase Order"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -502,5 +504,10 @@
     "Save":"Save",
     "Cancel":"Cancel"
    }
+ },
+ "Purchase Order":{
+  "Management":{
+    "Search":"Search for Purchase Order..."
+  }
  }
 }

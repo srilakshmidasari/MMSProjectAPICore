@@ -26,7 +26,8 @@
     "Assets": "الأصول",
     "Supplier":"المورد",
     "Inventory":"المخزون",
-    "Item":"بند"
+    "Item":"بند",
+    "Purchase Order":"أمر شراء"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -45,7 +46,8 @@
     "AssetGroup": "إدارة الأصول",
     "Assets": "الأصول",
     "Inventory":"المخزون",
-    "Item":"بند"
+    "Item":"بند",
+    "Purchase Order":"أمر شراء"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -492,7 +494,14 @@
    "Save":"حفظ",
    "Cancel":"إلغاء"
   }
-}
+},
+  "Purchase Order":{
+    "Management":{
+      "Search":"البحث عن أمر الشراء ..." 
+  
+   }
+  }
+
 }
 
 

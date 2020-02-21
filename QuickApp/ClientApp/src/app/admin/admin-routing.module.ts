@@ -17,10 +17,11 @@ import { AssetLocationComponent } from './asset/asset-location/asset-location.co
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
 import { SupplierComponent } from './supplier/supplier.component';
-import { ItemComponent } from './inventory/item/item.component';
 import { UserListComponent } from './security/user-list/user-list.component';
 import { RoleListComponent } from './security/role-list/role-list.component';
 import { LookupListComponent } from './master/lookup-list/lookup-list.component';
+import { ItemComponent } from './inventory/item/item.component';
+import { PurchaseorderComponent } from './inventory/purchaseorder/purchaseorder.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -36,7 +37,8 @@ const adminRoutes: Routes = [
       { path: 'assets', component: AssetsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Asset' } },
       { path: 'asset-group', component: AssetGroupComponent, canActivate: [AuthGuard], data: { title: 'Admin | Asset-Group' } },
       { path: 'supplier', component: SupplierComponent, canActivate: [AuthGuard], data: { title: 'Admin | Supplier' } },
-      { path: 'item', component: ItemComponent, canActivate: [AuthGuard], data: { title: 'Admin | item' } }
+      { path: 'item', component: ItemComponent, canActivate: [AuthGuard], data: { title: 'Admin | item' } },
+      { path: 'purchaseorder', component: PurchaseorderComponent, canActivate: [AuthGuard], data: { title: 'Admin | PurchaseorderComponent' } }
       
     ]
   }
