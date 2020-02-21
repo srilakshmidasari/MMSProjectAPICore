@@ -385,11 +385,22 @@ namespace DAL.RequestResponseModels
 
         }
 
+        public class GetItemsResponse 
+        {
+            public int Id { get; set; }
+            public int PurchaseId { get; set; }
+            public string ItemName { get; set; }
+            public int  ItemId { get; set; }
+            public int Quantity { get; set; }
+            public int ExpectedCost { get; set; }  
+
+        }
+
         public class PurchaseItem
         {
             public int Id { get; set; }
             public int ItemId { get; set; }
-            public string PurchaseId { get; set; }
+            public int PurchaseId { get; set; }
             public int Quantity { get; set; }
             public int ExpectdCost { get; set; }
 

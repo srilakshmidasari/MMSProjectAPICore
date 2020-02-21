@@ -72,9 +72,11 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _updateitem: string ='/api/Item/UpdateItem';
   private readonly _deleteitem: string ='/api/Item/DeleteItem';
 
-  private readonly _purchaseOrderUrl: string ='​/api/PurchaseOrder';
-  
+  private readonly _getPurchaseOrderUrl: string ='/api/PurchaseOrder';
 
+  private readonly _getItemsByPurchaseId: string ='/api/PurchaseOrder/GetItemsByPurchaseId';
+  
+  
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
   get usersPublicUrl() { return this.configurations.baseUrl + this._usersPublicUrl; }
@@ -128,8 +130,10 @@ export class AccountEndpoint extends EndpointBase {
   get updateitem() { return this.configurations.baseUrl + this._updateitem; }
   get deleteitem() { return this.configurations.baseUrl + this._deleteitem; }
 
-  get purchaseOrderUrl() { return this.configurations.baseUrl + this._purchaseOrderUrl; }
+  get purchaseOrderUrl() { return this.configurations.baseUrl + this._getPurchaseOrderUrl; }
 
+  get getItemsByPurchaseIdUrl() { return this.configurations.baseUrl + this._getItemsByPurchaseId; }
+  
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -723,7 +727,6 @@ export class AccountEndpoint extends EndpointBase {
   }
 
   getPurchaseOrderEndpoint<T>(){
-    debugger
     const endpointUrl = this.purchaseOrderUrl;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
@@ -736,6 +739,14 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.AddPurchaseOrderEndpoint(reqObject));
+      }));
+  }
+
+  getItemsByPurchaseIdEndpoint<T>(purchaseId: any): Observable<T> {
+    const endpointUrl = this.getItemsByPurchaseIdUrl + '/' + purchaseId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getItemsByPurchaseIdEndpoint(purchaseId));
       }));
   }
  

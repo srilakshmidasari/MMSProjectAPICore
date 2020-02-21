@@ -41,9 +41,9 @@
                     <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="averageCost" >
-                <mat-header-cell class="just-cont-center"  *matHeaderCellDef mat-sort-header>{{'Item.Management.Average Cost'|translate}}
+                <mat-header-cell  *matHeaderCellDef mat-sort-header>{{'Item.Management.Average Cost'|translate}}
                 </mat-header-cell>
-                <mat-cell class="just-cont-center"  *matCellDef="let row"> {{row.averageCost}} </mat-cell>
+                <mat-cell class="text-right"  *matCellDef="let row"> {{row.averageCost}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="uomName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Uom Name'|translate}}

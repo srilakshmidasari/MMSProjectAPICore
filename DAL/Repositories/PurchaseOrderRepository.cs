@@ -214,5 +214,49 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ListDataResponse<GetItemsResponse> GetItemsByPurchaseId(int purchaseId)
+        {
+            ListDataResponse<GetItemsResponse> response = new ListDataResponse<GetItemsResponse>();
+            try
+            {
+                var result = (from pi in _appContext.PurchageItemXrefs
+                              join i in _appContext.Items on pi.ItemId equals i.Id
+                              join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
+                              select new GetItemsResponse
+                              {
+                                  Id = pi.Id,
+                                  PurchaseId = pi.PurchageId,
+                                  ItemId = pi.ItemId,
+                                  ItemName = i.Name1,
+                                  Quantity = pi.Quantity,
+                                  ExpectedCost = pi.ExpectdCost,
+
+                              }).Where(x => x.PurchaseId == purchaseId).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Item Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Item Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

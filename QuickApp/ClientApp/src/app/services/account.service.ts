@@ -391,12 +391,15 @@ deleteAssetRepository(repositoryId) {
 
   // Purchase Order
 
-  getPurchaseOrders(){
+  getPurchaseOrder(){
     return this.accountEndpoint.getPurchaseOrderEndpoint();
   }
-  
+
   AddPurchaseOrder(reqObject) {
     return this.accountEndpoint.AddPurchaseOrderEndpoint(reqObject);
   }
 
+  getItemsByPurchaseId(purchaseId) {
+    return this.accountEndpoint.getItemsByPurchaseIdEndpoint(purchaseId);
+  }
 }

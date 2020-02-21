@@ -18,5 +18,7 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<PurchageOrder> DeletePurchaseOrder(int PurchaseId);
 
+        ListDataResponse<GetItemsResponse> GetItemsByPurchaseId(int PurchaseId);
+
     }
 }

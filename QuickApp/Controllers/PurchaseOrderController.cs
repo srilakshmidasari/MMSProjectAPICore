@@ -48,5 +48,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Purchages.DeletePurchaseOrder(PurchaseId);
         }
+
+        [HttpGet("GetItemsByPurchaseId/{PurchaseId}")]
+        public ListDataResponse<GetItemsResponse> GetItemsByPurchaseId(int PurchaseId)
+        {
+            return _unitOfWork.Purchages.GetItemsByPurchaseId(PurchaseId);
+        }
     }
 }
