@@ -48,7 +48,7 @@
                     <button mat-icon-button matTooltip="Edit" (click)="onEditClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive">
+                    <button mat-icon-button matTooltip="Delete" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -115,7 +115,7 @@
 
                         <ng-container [formGroupName]="i">
                             <h4 *ngIf="i>0">Item {{i+1}}</h4>
-                            <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel" *ngIf="i>0">
+                            <button mat-raised-button color="warn" class="float-right mar-top" (click)="Delete(i)" title="Cancel" *ngIf="i>0">
                                 Remove
                             </button>
                             <div class="row">
@@ -206,9 +206,12 @@
     
                             <ng-container [formGroupName]="i">
                                 <h4 *ngIf="i>0">Item {{i+1}}</h4>
+                                <div class="float-right mar-top">
                                 <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel" *ngIf="i>0">
                                     Remove
                                 </button>
+                            </div>
+                                <div class="clearfix"></div>
                                 <div class="row">
     
                                     <mat-form-field class="col-md-4">

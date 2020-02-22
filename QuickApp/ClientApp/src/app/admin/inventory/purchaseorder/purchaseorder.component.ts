@@ -4,6 +4,8 @@ import { AccountService } from 'src/app/services/account.service';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -38,9 +40,9 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.addItem(this.i);
     this.getPurchaseOrders();
     this.buildForm();
+   // this.addItem(this.i);
   }
 
 
@@ -104,6 +106,7 @@ export class PurchaseorderComponent implements OnInit {
   onCancelClick() {
     this.isAdding = false;
     this.isEdit = false;
+    this.itemFrom.setControl('credentials', this.formBuilder.array([]));
   }
 
   //get Suppliers data
@@ -126,9 +129,10 @@ export class PurchaseorderComponent implements OnInit {
         error => {
         });
   }
+
+ 
    //get Suppliers data
    private getItemsByPurchaseId() {
-     debugger
     this.accountService.getItemsByPurchaseId(this.purchaseData.id)
       .subscribe((results: any) => {
         this.purchaseItemList = results.listResult == null ? [] : results.listResult;
@@ -138,8 +142,7 @@ export class PurchaseorderComponent implements OnInit {
         });
   }
   
-  setAddresses(addresses: any[]) {
-    debugger
+  setAddresses(addresses: any[]) {    
     let control = this.formBuilder.array([]);
     addresses.forEach(x => {
       control.push(this.formBuilder.group({
@@ -160,11 +163,11 @@ export class PurchaseorderComponent implements OnInit {
       this.isAdding = true;
       this.isNewPurchase = true;
       this.buildForm();
+      this.addItem(this.i);
    
   }
 
   onEditClick(purchase){
-    debugger
     this.isEdit = true;
     this.isAdding = false;
     this.isNewPurchase = false;
@@ -189,7 +192,7 @@ export class PurchaseorderComponent implements OnInit {
 
 
   saveOrder() {
-    debugger
+   
     if (!this.orderForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -216,13 +219,14 @@ export class PurchaseorderComponent implements OnInit {
       );
     }
     else {
-      this.accountService.Updateitem(editeditem).subscribe(
+      this.accountService.UpdatePurchaseOrder(editeditem).subscribe(
         (result: any) => {
           this.alertService.stopLoadingMessage();
           if (result.isSuccess) {
             this.isAdding = false;
+            this.isEdit = false;
             this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
-            this.getItem();
+            this.getPurchaseOrders();
 
           } else {
             this.alertService.stopLoadingMessage();
@@ -268,6 +272,35 @@ export class PurchaseorderComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+  confirmDelete(order:any) {
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete",  msg: "Are you sure you want to delete this item ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deletePurchaseOrder(order.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getPurchaseOrders();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+          }
+      });
+   }
+
+  
 
 
 }

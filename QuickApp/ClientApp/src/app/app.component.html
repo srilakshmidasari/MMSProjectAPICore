@@ -1,4 +1,4 @@
-<div id="app_container" [dir]="ltr" [class.is-mobile]="mobileQuery.matches" class="nav-container name">
+<div id="app_container" [dir]="textDir" [class.is-mobile]="mobileQuery.matches" class="nav-container name">
 
   <mat-toolbar ngPreserveWhitespaces color="primary" class="app-toolbar">
     <button mat-icon-button (click)="mainNav.toggle()">
@@ -122,9 +122,9 @@
           <a mat-list-item routerLinkActive="active" routerLink="/admin/item">
             <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
           </a>
-          <!-- <a mat-list-item routerLinkActive="active" routerLink="/admin/purchaseorder">
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/purchaseorder">
             <mat-icon>format_list_bulleted</mat-icon>Purchase Order
-          </a> -->
+          </a>
         </mat-expansion-panel>
       </mat-nav-list>
       <!-- <mat-nav-list>

@@ -182,16 +182,16 @@ namespace DAL.Repositories
                 var purchaseData = _appContext.PurchageOrders.Where(x => x.Id == PurchaseId).FirstOrDefault();
 
                 var ast = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == PurchaseId).ToList();
-                if (ast != null)
+                if (ast.Count > 0)
                 {
                     _appContext.PurchageItemXrefs.RemoveRange(ast);
-                    _appContext.PurchageOrders.RemoveRange(purchaseData);
+                   
+                    _appContext.PurchageOrders.Remove(purchaseData);
                     _appContext.SaveChanges();
                 }
 
                 if (purchaseData != null)
                 {
-
                     response.Result = purchaseData;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;

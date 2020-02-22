@@ -742,6 +742,14 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  UpdatePurchaseOrderEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.purchaseOrderUrl;
+    return this.http.put<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.UpdatePurchaseOrderEndpoint(reqObject));
+      }));
+  }
+
   getItemsByPurchaseIdEndpoint<T>(purchaseId: any): Observable<T> {
     const endpointUrl = this.getItemsByPurchaseIdUrl + '/' + purchaseId;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
@@ -749,5 +757,14 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.getItemsByPurchaseIdEndpoint(purchaseId));
       }));
   }
+
+  deletePurchaseOrderEndpoint<T>(purchaseId: any): Observable<T> {
+    const endpointUrl = this.purchaseOrderUrl + '?PurchaseId=' + purchaseId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deletePurchaseOrderEndpoint(purchaseId));
+      }));
+  }
+
  
 }
