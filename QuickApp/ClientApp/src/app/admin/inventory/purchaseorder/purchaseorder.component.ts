@@ -32,11 +32,13 @@ export class PurchaseorderComponent implements OnInit {
   itemList: any[] = [];
   i: any;
   purchaseItemList: any[]=[];
+  currenrDate: Date;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
       credentials: this.formBuilder.array([]),
     });
+    this.currenrDate = new Date();
   }
 
   ngOnInit() {
@@ -274,7 +276,7 @@ export class PurchaseorderComponent implements OnInit {
 
   confirmDelete(order:any) {
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete",  msg: "Are you sure you want to delete this item ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
+      data: { title: "Delete",  msg: "Are you sure you want to delete this order ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
       width: 'auto',
       height: 'auto',
       disableClose: true,

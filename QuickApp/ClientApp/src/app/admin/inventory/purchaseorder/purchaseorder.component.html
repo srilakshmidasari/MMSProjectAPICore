@@ -91,7 +91,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-5">
                         <mat-label>Arriving Date</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="arrivingDate"
+                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
                             placeholder="Arriving Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
@@ -126,9 +126,9 @@
                                         <mat-option *ngFor="let item of itemList" [value]="item.id" required>
                                             {{item.name1}}
                                         </mat-option>
-                                    </mat-select>
-                                    <!-- <mat-error *ngIf="!orderForm.controls['supplierId'].valid">
-                                            Please Select Supplier
+                                    </mat-select>                                   
+                                    <!-- <mat-error *ngIf="!itemFrom.controls['itemId'].valid">
+                                            Please Select Item
                                         </mat-error> -->
                                 </mat-form-field>
                                 <mat-form-field class="col-md-4">
@@ -182,7 +182,7 @@
                         </mat-form-field>
                         <mat-form-field class="col-md-5">
                             <mat-label>Arriving Date</mat-label>
-                            <input matInput [matDatepicker]="picker" formControlName="arrivingDate"
+                            <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
                                 placeholder="Arriving Date" required>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>

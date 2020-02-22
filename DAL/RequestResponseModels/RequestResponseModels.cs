@@ -392,7 +392,7 @@ namespace DAL.RequestResponseModels
             public string ItemName { get; set; }
             public int  ItemId { get; set; }
             public int Quantity { get; set; }
-            public int ExpectedCost { get; set; }  
+            public double ExpectedCost { get; set; }  
 
         }
 
@@ -402,7 +402,7 @@ namespace DAL.RequestResponseModels
             public int ItemId { get; set; }
             public int PurchaseId { get; set; }
             public int Quantity { get; set; }
-            public int ExpectdCost { get; set; }
+            public double ExpectdCost { get; set; }
 
         }
 

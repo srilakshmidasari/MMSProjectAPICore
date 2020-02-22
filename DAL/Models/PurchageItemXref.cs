@@ -27,7 +27,7 @@ namespace DAL.Models
 
         [Required]
         [Display(Name = "Expectd Cost")]
-        public int ExpectdCost { get; set; }
+        public double ExpectdCost { get; set; }
 
         [JsonIgnore]
         public Item Item_Id { get; set; }

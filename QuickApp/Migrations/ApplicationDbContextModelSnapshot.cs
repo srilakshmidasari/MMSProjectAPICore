@@ -784,8 +784,8 @@ namespace MMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("ExpectdCost")
-                        .HasColumnType("int");
+                    b.Property<double>("ExpectdCost")
+                        .HasColumnType("float");
 
                     b.Property<int>("ItemId")
                         .HasColumnType("int");

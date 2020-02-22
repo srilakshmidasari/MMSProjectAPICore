@@ -208,9 +208,12 @@ namespace DAL.Repositories
             {
                 var SupplierData = _appContext.Suppliers.Where(x => x.Id == SupplierId).FirstOrDefault();
 
-               // var purchase = _appContext.PurchageOrders.Where(x => x.SupplierId == SupplierId).ToList();
-                if (SupplierData != null)
+                var purchase = _appContext.PurchageOrders.Where(x => x.SupplierId == SupplierId).ToList();
+                if (purchase != null)
                 {
+                    var res = _appContext.PurchageItemXrefs.Where(x => purchase.Select(p => p.Id).Contains(x.PurchageId)).ToList();
+                    _appContext.PurchageItemXrefs.RemoveRange(res);
+                    _appContext.PurchageOrders.RemoveRange(purchase);
                     _appContext.Suppliers.Remove(SupplierData);
                     _appContext.SaveChanges();
                 }

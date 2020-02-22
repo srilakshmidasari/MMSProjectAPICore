@@ -191,8 +191,12 @@ namespace DAL.Repositories
             try
             {
                 var ItemData = _appContext.Items.Where(x => x.Id == ItemId).FirstOrDefault();
-                if (ItemData != null)
+                var purchase = _appContext.PurchageItemXrefs.Where(x => x.ItemId == ItemId).ToList();
+                if (purchase != null)
                 {
+                    var res = _appContext.PurchageOrders.Where(x => purchase.Select(p => p.Id).Contains(x.Id)).ToList();
+                    _appContext.PurchageOrders.RemoveRange(res);
+                    _appContext.PurchageItemXrefs.RemoveRange(purchase);
                     _appContext.Remove(ItemData);
                     _appContext.SaveChanges();
                 }
