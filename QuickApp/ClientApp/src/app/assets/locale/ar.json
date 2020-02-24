@@ -497,10 +497,33 @@
 },
   "Purchase Order":{
     "Management":{
-      "Search":"البحث عن أمر الشراء ..." 
-  
+      "Search":"البحث عن أمر الشراء ...",
+      "Supplier Name":"اسم المورد",
+      "Supplier Address":"عنوان المورد",
+     "Arriving Date":"تاريخ الوصول",
+     "UpdatedDate":"تاريخ التحديث",
+     "Is Active":"نشط",
+     "Add Order":"أضف طلب",
+     "Add Item":"اضافة عنصر",
+     "Add":"إضافة",
+     "Edit":"تعديل",
+     "Delete":"حذف",
+     "No Records Found":"لا توجد سجلات",
+     "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
+     "Add Purchase Order":"أضف طلب شراء",
+     "Edit Purchase Order":"تحرير أمر الشراء",
+     "Select Supplier":"حدد المورد",
+     "Please Select Supplier":"يرجى اختيار المورد",
+     "Arriving Date is Required":"تاريخ الوصول مطلوب",
+     "Select Item":"اختر البند",
+     "Quantity":"كمية",
+     "Expected Cost":"التكلفة المتوقعة",
+     "Save":"حفظ",
+     "Cancel":"إلغاء",
+      "Item":"بند",
+      "Remove":"إزالة"
+    }
    }
-  }
 
 }
 

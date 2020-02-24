@@ -485,6 +485,7 @@
     "Add Item":"Add Item",
     "Edit":"Edit",
     "Delete":"Delete",
+    "Remove":" Remove",
     "Item Type":"Item Type",
     "Item Description":"Item Description",
     "Description is required":"Description is required",
@@ -507,7 +508,32 @@
  },
  "Purchase Order":{
   "Management":{
-    "Search":"Search for Purchase Order..."
+    "Search":"Search for Purchase Order...",
+    "Supplier Name":"Supplier Name",
+    "Supplier Address":"Supplier Address",
+   "Arriving Date":"Arriving Date",
+   "UpdatedDate":"UpdatedDate",
+   "Is Active":"Is Active",
+   "Add Order":"Add Order",
+   "Add":"Add",
+   "Edit":"Edit",
+   "Delete":"Delete",
+   "No Records Found":"No Records Found",
+   "No Search Results Found":"No Search Results Found",
+   "Add Purchase Order":"Add Purchase Order",
+   "Edit Purchase Order":"Edit Purchase Order",
+   "Select Supplier":"Select Supplier",
+   "Please Select Supplier":"Please Select Supplier",
+   "Arriving Date is Required":"Arriving Date is Required",
+   "Select Item":"Select Item",
+   "Quantity":"Quantity",
+   "Expected Cost":"Expected Cost",
+   "Save":"Save",
+   "Cancel":"Cancel",
+  "Item":"Item",
+  "Remove":" Remove",
+  "Add Item":"Add Item"
+   
   }
  }
 }
