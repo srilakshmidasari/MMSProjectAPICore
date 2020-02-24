@@ -22,7 +22,7 @@ export class PurchaseorderComponent implements OnInit {
   displayNoRecords: boolean;
   purchasesList: any[] = [];
   purchaseData: any = {};
-
+  isViewItem:boolean = false;
   orderForm: FormGroup;
   isAdding: boolean = false;
   isNewPurchase: boolean = false;
@@ -101,9 +101,18 @@ export class PurchaseorderComponent implements OnInit {
   buildForm() {
     this.orderForm = this.formBuilder.group({
       supplierId: ['', Validators.required],
-      arrivingDate: ['', Validators.required]  ,
+      arrivingDate: ['', Validators.required] ,
      
     })
+  }
+
+   // Accepting Only Numbers
+   numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
   }
 
   onCancelClick() {
@@ -139,15 +148,15 @@ export class PurchaseorderComponent implements OnInit {
     this.accountService.getItemsByPurchaseId(this.purchaseData.id)
       .subscribe((results: any) => {
         this.purchaseItemList = results.listResult == null ? [] : results.listResult;
-        this.setAddresses(this.purchaseItemList)
+        this.setItems(this.purchaseItemList)
       },
         error => {
         });
   }
   
-  setAddresses(addresses: any[]) {    
+  setItems(itemsArray: any[]) {    
     let control = this.formBuilder.array([]);
-    addresses.forEach(x => {
+    itemsArray.forEach(x => {
       control.push(this.formBuilder.group({
         itemId: x.itemId,
         quantity: x.quantity,

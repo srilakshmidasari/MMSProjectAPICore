@@ -1,5 +1,5 @@
 <app-page-header title="Purchase Order" icon="assignment_ind"></app-page-header>
-<div class="page-content" [hidden]="isAdding || isEdit">
+<div class="page-content" [hidden]="isAdding || isEdit || isViewItem">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -11,17 +11,20 @@
         <mat-table [dataSource]="dataSource" matSort matSortActive="supplierName" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="supplierName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Purchase Order.Management.Supplier Name' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Purchase Order.Management.Supplier Name' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.supplierName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="supplierAddress">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Purchase Order.Management.Supplier Address' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Purchase Order.Management.Supplier Address' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.supplierAddress}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="arrivingDate">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Purchase Order.Management.Arriving Date' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Purchase Order.Management.Arriving Date' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.arrivingDate  | date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
@@ -40,15 +43,19 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addClick()">
-                        <mat-icon class="mat-button-icon">add</mat-icon> {{'Purchase Order.Management.Add Order'|translate}}
+                    <button mat-button color="primary" matTooltip="{{'Purchase Order.Management.Add'|translate}}"
+                        (click)="addClick()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>
+                        {{'Purchase Order.Management.Add Order'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'Purchase Order.Management.Edit'|translate}}" (click)="onEditClick(row)">
+                    <button mat-icon-button matTooltip="{{'Purchase Order.Management.Edit'|translate}}"
+                        (click)="onEditClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-icon-button matTooltip="{{'Purchase Order.Management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'Purchase Order.Management.Delete'|translate}}"
+                        [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -71,14 +78,16 @@
 <div class="page-content" *ngIf="isAdding">
     <mat-card>
         <mat-card-header>
-            <mat-card-title *ngIf="isNewPurchase">{{'Purchase Order.Management.Add Purchase Order'|translate}}</mat-card-title>
-            <mat-card-title *ngIf="!isNewPurchase">{{'Purchase Order.Management.Edit Purchase Order'|translate}}</mat-card-title>
+            <mat-card-title *ngIf="isNewPurchase">{{'Purchase Order.Management.Add Purchase Order'|translate}}
+            </mat-card-title>
+            <mat-card-title *ngIf="!isNewPurchase">{{'Purchase Order.Management.Edit Purchase Order'|translate}}
+            </mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
             <form [formGroup]="orderForm">
                 <div class="row">
-                    <mat-form-field class="col-md-5">
+                    <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Select Supplier'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="supplierId">
                             <mat-option *ngFor="let supplier of supplierList" [value]="supplier.id" required>
@@ -86,22 +95,24 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!orderForm.controls['supplierId'].valid">
-                            {{'Purchase Order.Management.Please Select Supplier'|translate}} 
+                            {{'Purchase Order.Management.Please Select Supplier'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-5">
+                    <mat-form-field class="col-md-3">
                         <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
                             placeholder="Arriving Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
-                            {{'Purchase Order.Management.Arriving Date is Required'|translate}} 
+                            {{'Purchase Order.Management.Arriving Date is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <div class="col-md-2">
-                        <button mat-raised-button color="primary" matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
-                            <mat-icon class="mat-button-icon">add</mat-icon>{{'Purchase Order.Management.Add Item'|translate}}
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                            {{'Purchase Order.Management.Add Item'|translate}}
                         </button>
 
                     </div>
@@ -114,46 +125,54 @@
                         *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
 
                         <ng-container [formGroupName]="i">
-                            <h4 *ngIf="i>0">{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
-                            <button mat-raised-button color="warn" class="float-right mar-top" (click)="Delete(i)" title="Cancel" *ngIf="i>0">
-                                {{'Purchase Order.Management.Remove'|translate}} 
-                            </button>
+                            <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
+                            
                             <div class="row">
-
-                                <mat-form-field class="col-md-4">
-                                    <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span></mat-label>
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
+                                    </mat-label>
                                     <mat-select formControlName="itemId">
                                         <mat-option *ngFor="let item of itemList" [value]="item.id" required>
                                             {{item.name1}}
                                         </mat-option>
-                                    </mat-select>                                   
-                                    <!-- <mat-error *ngIf="!itemFrom.controls['itemId'].valid">
-                                            Please Select Item
-                                        </mat-error> -->
+                                    </mat-select>
+                                    <mat-error *ngIf="item.controls.itemId.invalid">
+                                        {{'Purchase Order.Management.Please Select Item'|translate}}     
+                                    </mat-error>
                                 </mat-form-field>
-                                <mat-form-field class="col-md-4">
+                                <mat-form-field class="col-md-3">
                                     <mat-label>{{'Purchase Order.Management.Quantity'|translate}}</mat-label>
-                                    <input matInput formControlName="quantity" required />
-
+                                    <input matInput formControlName="quantity" required maxlength="5"  (keypress)="numberOnly($event)" />
+                                    <mat-error *ngIf="item.controls.quantity.invalid">
+                                        {{'Purchase Order.Management.Quantity is Required'|translate}}  
+                                    </mat-error>
                                 </mat-form-field>
-                                <mat-form-field class="col-md-4">
+                                <mat-form-field class="col-md-3">
                                     <mat-label>{{'Purchase Order.Management.Expected Cost'|translate}}</mat-label>
-                                    <input matInput formControlName="expectedCost" required />
-                                    <!-- <mat-error *ngIf="!itemForm.controls['name1'].valid">
-                                    {{'Item.Management.Name1 is required'|translate}}
-                                </mat-error> -->
+                                    <input matInput formControlName="expectedCost" required maxlength="10"   (keypress)="numberOnly($event)"/>
+                                    <mat-error *ngIf="item.controls.expectedCost.invalid">
+                                        {{'Purchase Order.Management.Expected Cost is Required'|translate}}  
+                                    </mat-error>
                                 </mat-form-field>
+                                <div class="col-md-3">
+                                    <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel" *ngIf="i>0">
+                                        {{'Purchase Order.Management.Remove'|translate}}
+                                    </button>
+                                </div>
+                                
                             </div>
                         </ng-container>
                     </div>
                 </form>
             </div>
-           
+
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
-                <button mat-raised-button color="warn" (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
+                <button mat-raised-button color="primary"
+                    (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
+                <button mat-raised-button color="warn"
+                    (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
@@ -161,95 +180,104 @@
     </mat-card>
 </div>
 <div class="page-content" *ngIf="isEdit">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Edit Purchase Order</mat-card-title>
-            </mat-card-header>
-            <br>
-            <mat-card-content>
-                <form [formGroup]="orderForm">
-                    <div class="row">
-                        <mat-form-field class="col-md-5">
-                            <mat-label>{{'Purchase Order.Management.Select Supplier'|translate}} <span>*</span></mat-label>
-                            <mat-select formControlName="supplierId">
-                                <mat-option *ngFor="let supplier of supplierList"  [value]="supplier.id" required>
-                                    {{supplier.name1}}(<span>{{supplier.supplierReference}}</span>)
-                                </mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="!orderForm.controls['supplierId'].valid">
-                                {{'Purchase Order.Management.Please Select Supplier'|translate}}
-                            </mat-error>
-                        </mat-form-field>
-                        <mat-form-field class="col-md-5">
-                            <mat-label>{{'Purchase Order.Management.Arriving Date'|translate}}</mat-label>
-                            <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
-                                placeholder="Arriving Date" required>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                            <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
-                                {{'Purchase Order.Management.Arriving Date is Required'|translate}} 
-                            </mat-error>
-                        </mat-form-field>
-                        <div class="col-md-2">
-                            <button mat-raised-button color="primary" matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
-                                <mat-icon class="mat-button-icon">add</mat-icon>{{'Purchase Order.Management.Add Item'|translate}}
-                            </button>
-    
-                        </div>
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Edit Purchase Order</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="orderForm">
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Purchase Order.Management.Select Supplier'|translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="supplierId">
+                            <mat-option *ngFor="let supplier of supplierList" [value]="supplier.id" required>
+                                {{supplier.name1}}(<span>{{supplier.supplierReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['supplierId'].valid">
+                            {{'Purchase Order.Management.Please Select Supplier'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Purchase Order.Management.Arriving Date'|translate}}</mat-label>
+                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
+                            placeholder="Arriving Date" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
+                            {{'Purchase Order.Management.Arriving Date is Required'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="col-md-3">
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                            {{'Purchase Order.Management.Add Item'|translate}}
+                        </button>
+
+                    </div>
+                </div>
+            </form>
+            <div class="row">
+                <form [formGroup]="itemFrom" class="col-md-12">
+
+                    <div formArrayName="credentials"
+                        *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
+
+                        <ng-container [formGroupName]="i">
+                            <h4>{{'Purchase Order.Management.Item'|translate}} {{i+1}}</h4>
+                            <div class="clearfix"></div>
+                            <div class="row">
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
+                                    </mat-label>
+                                    <mat-select formControlName="itemId" [disabled]="isEdit">
+                                        <mat-option *ngFor="let item of itemList" [value]="item.id" required>
+                                            {{item.name1}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="item.controls.itemId.invalid">
+                                        {{'Purchase Order.Management.Please Select Item'|translate}} 
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{'Purchase Order.Management.Quantity'|translate}}</mat-label>
+                                    <input matInput formControlName="quantity" required maxlength="5"  (keypress)="numberOnly($event)"/>
+                                    <mat-error *ngIf="item.controls.quantity.invalid">
+                                        {{'Purchase Order.Management.Quantity is required'|translate}}   
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>{{'Purchase Order.Management.Expected Cost'|translate}}</mat-label>
+                                    <input matInput formControlName="expectedCost" required maxlength="10" (keypress)="numberOnly($event)"/>
+                                    <mat-error *ngIf="item.controls.expectedCost.invalid">
+                                        {{'Purchase Order.Management.Expected Cost is required'|translate}}  
+                                    </mat-error>
+                                </mat-form-field>
+                                <div>
+                                    <div class="col-md-3" *ngIf="i>0">
+                                        <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel">
+                                            {{'Purchase Order.Management.Remove'|translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
                     </div>
                 </form>
-                <div class="row">
-                    <form [formGroup]="itemFrom" class="col-md-12">
-    
-                        <div formArrayName="credentials"
-                            *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
-    
-                            <ng-container [formGroupName]="i">
-                                <h4 *ngIf="i>0">{{'Purchase Order.Management.Item'|translate}} {{i+1}}</h4>
-                                <div class="float-right mar-top">
-                                <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel" *ngIf="i>0">
-                                    {{'Purchase Order.Management.Remove'|translate}} 
-                                </button>
-                            </div>
-                                <div class="clearfix"></div>
-                                <div class="row">
-    
-                                    <mat-form-field class="col-md-4">
-                                        <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span></mat-label>
-                                        <mat-select formControlName="itemId">
-                                            <mat-option *ngFor="let item of itemList" [value]="item.id" required>
-                                                {{item.name1}}
-                                            </mat-option>
-                                        </mat-select>
-                                        <!-- <mat-error *ngIf="!orderForm.controls['supplierId'].valid">
-                                                Please Select Supplier
-                                            </mat-error> -->
-                                    </mat-form-field>
-                                    <mat-form-field class="col-md-4">
-                                        <mat-label>{{'Purchase Order.Management.Quantity'|translate}}</mat-label>
-                                        <input matInput formControlName="quantity" required />
-                                    </mat-form-field>
-                                    <mat-form-field class="col-md-4">
-                                        <mat-label>{{'Purchase Order.Management.Expected Cost'|translate}}</mat-label>
-                                        <input matInput formControlName="expectedCost" required />
-                                        <!-- <mat-error *ngIf="!itemForm.controls['name1'].valid">
-                                        {{'Item.Management.Name1 is required'|translate}}
-                                    </mat-error> -->
-                                    </mat-form-field>
-                                </div>
-                            </ng-container>
-                        </div>
-                    </form>
-                </div>
-               
-            </mat-card-content>
-            <mat-card-actions>
-                <div class="float-right" style="padding-top: 12px;">
-                    <button mat-raised-button color="primary" (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
-                    <button mat-raised-button color="warn" (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
-                </div>
-            </mat-card-actions>
-            <div class="clearfix"></div>
-    
-        </mat-card>
-    </div>
+            </div>
+
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"
+                    (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
+                <button mat-raised-button color="warn"
+                    (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
+
+    </mat-card>
+</div>
