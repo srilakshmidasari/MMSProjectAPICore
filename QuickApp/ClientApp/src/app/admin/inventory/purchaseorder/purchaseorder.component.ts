@@ -101,7 +101,8 @@ export class PurchaseorderComponent implements OnInit {
   buildForm() {
     this.orderForm = this.formBuilder.group({
       supplierId: ['', Validators.required],
-      arrivingDate: ['', Validators.required]    
+      arrivingDate: ['', Validators.required]  ,
+     
     })
   }
 
@@ -250,7 +251,7 @@ export class PurchaseorderComponent implements OnInit {
         "itemId": this.itemFrom.value.credentials[i].itemId,
         "purchaseId": 0,
         "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
-        "expectdCost": parseInt(this.itemFrom.value.credentials[i].expectedCost),
+        "expectdCost": parseFloat(this.itemFrom.value.credentials[i].expectedCost),
       }
       purchaseItems.push(itemReq);
     }
