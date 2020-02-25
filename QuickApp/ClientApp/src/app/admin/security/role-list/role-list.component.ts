@@ -79,7 +79,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     } else {
       this.dataSource.data.push(role);
     }
-
+    this.loadData();
     this.refresh();
   }
 

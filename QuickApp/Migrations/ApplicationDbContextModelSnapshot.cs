@@ -822,10 +822,30 @@ namespace MMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("FileExtention")
+                        .HasColumnType("nvarchar(10)")
+                        .HasMaxLength(10);
+
+                    b.Property<string>("FileLocation")
+                        .HasColumnType("nvarchar(250)")
+                        .HasMaxLength(250);
+
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
+
+                    b.Property<string>("PurchaseReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
 
                     b.Property<int>("SupplierId")
                         .HasColumnType("int")
@@ -841,6 +861,8 @@ namespace MMS.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("StatusTypeId");
 
                     b.HasIndex("SupplierId");
 
@@ -1437,6 +1459,12 @@ namespace MMS.Migrations
                         .WithMany("App_PurchageOrder_CreatedUser")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_App_PurchageOrder_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
+                        .WithMany("Order_StatusTypeId")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("FK_App_Order_StatusTypeId")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Supplier", "Supplier_Id")

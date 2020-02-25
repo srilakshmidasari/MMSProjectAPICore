@@ -380,6 +380,9 @@ namespace DAL.RequestResponseModels
             public int SupplierId { get; set; }
             public string SupplierName { get; set; }
             public string SupplierAddress { get; set; }
+            public string PurchaseReference { get; set; }
+            public string StatusName { get; set; }
+            public int StatusTypeId { get; set; }
             public DateTime ArrivingDate { get; set; }
             public bool IsActive { get; set; }
 
@@ -390,6 +393,8 @@ namespace DAL.RequestResponseModels
             public int Id { get; set; }
             public int PurchaseId { get; set; }
             public string ItemName { get; set; }
+            public string  ItemReference { get; set; }
+            public string PurchaseReference { get; set; }
             public int  ItemId { get; set; }
             public int Quantity { get; set; }
             public double ExpectedCost { get; set; }  
@@ -403,6 +408,7 @@ namespace DAL.RequestResponseModels
             public int PurchaseId { get; set; }
             public int Quantity { get; set; }
             public double ExpectdCost { get; set; }
+            public string PurchaseReference { get; set; }
 
         }
 
@@ -410,11 +416,31 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int SupplierId { get; set; }
+            public string PurchaseReference { get; set; }
             public DateTime ArrivingDate { get; set; }
+            public int StatusTypeId { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public string FileExtention { get; set; }
             public bool IsActive { get; set; }
             public List<PurchaseItem> PurchaseItems { get; set; }
 
         }
+
+        public class GetPurchagePdfResponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int SupplierId { get; set; }
+            public string SupplierName { get; set; }
+            public string SupplierAddress { get; set; }
+            public string PhoneNumber { get; set; }
+            public string PurchaseReference { get; set; }
+            public DateTime ArrivingDate { get; set; }
+            public bool IsActive { get; set; }
+
+        }
+
+
 
     }
 }

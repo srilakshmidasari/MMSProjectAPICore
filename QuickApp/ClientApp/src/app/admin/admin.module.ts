@@ -34,11 +34,17 @@ import { LookupListComponent } from './master/lookup-list/lookup-list.component'
 import { LookupDialogComponent } from './master/lookup-dialog/lookup-dialog.component';
 import { LookupEditorComponent } from './master/lookup-editor/lookup-editor.component';
 import { PurchaseorderComponent } from './inventory/purchaseorder/purchaseorder.component';
+import {TableModule} from 'primeng/table';
+import {InputTextModule} from 'primeng/inputtext';
+import {CheckboxModule} from 'primeng/checkbox';
 
 @NgModule({
   imports: [
     SharedModule,
     AdminRoutingModule,
+    TableModule,
+    CheckboxModule,
+    InputTextModule,
     LeafletModule.forRoot()
   ],
   declarations: [

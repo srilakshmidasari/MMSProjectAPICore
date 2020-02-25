@@ -22,6 +22,26 @@ namespace DAL.Models
         [Display(Name = "Arriving Date")]
         public DateTime ArrivingDate { get; set; }
 
+        [Required]
+        [Display(Name = "Purchase Reference")]
+        [StringLength(50)]
+        public string PurchaseReference { get; set; }
+
+        [Display(Name = "File Name")]
+        [StringLength(50)]
+        public string FileName { get; set; }
+
+        [Display(Name = "File Location")]
+        [StringLength(250)]
+        public string FileLocation { get; set; }
+
+        [Display(Name = "File Extention")]
+        [StringLength(10)]
+        public string FileExtention { get; set; }
+
+        [Display(Name = "Status Type Id")]
+        public int StatusTypeId { get; set; }
+
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
@@ -48,6 +68,10 @@ namespace DAL.Models
 
         [JsonIgnore]
         public Supplier Supplier_Id { get; set; }
+
+
+        [JsonIgnore]
+        public TypeCdDmt StatusType_Id { get; set; }
 
         public ICollection<PurchageItemXref> Purchage_OrderXref_Id { get; set; }
 

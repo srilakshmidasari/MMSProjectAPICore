@@ -194,3 +194,30 @@ mat-header-row {
 .first-l-cap{
   text-transform: lowercase;
 }
+
+ body .ui-table .ui-table-thead > tr > th {
+  padding: 1.171em 0.857em;
+  border: 1px solid #c8c8c8;
+  font-weight: 700;
+  color: #f4f4f4;
+  background-color: #414e96 !important;
+}
+body .ui-table .ui-table-tbody > tr > td {
+  padding: 0.571em 0.857em;
+  background-color: inherit;
+  border: 1px solid #c8c8c8;
+}
+.ui-table .ui-paginator-bottom {
+  border-top: 0 none;
+  text-align: right !important;
+  border-top: 0 none;
+  text-align: right !important;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-right: 14px;
+}
+
+
+body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
+  color: #fff !important;
+}

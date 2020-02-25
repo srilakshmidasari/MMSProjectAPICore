@@ -73,5 +73,7 @@ namespace DAL.Models
 
         public ICollection<Item> Item_ItemTypeId { get; set; }
 
+        public ICollection<PurchageOrder> Order_StatusTypeId { get; set; }
+
     }
 }

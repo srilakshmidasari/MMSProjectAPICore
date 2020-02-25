@@ -25,5 +25,12 @@ export const DataFactory={
      ItemCategory:9,
      UOM:10,
      
+    },
+
+    StatusTypes :{
+        Open:14,
+        Approved:15,
+        Rejected:16,
+        Closed:17
     }
 }

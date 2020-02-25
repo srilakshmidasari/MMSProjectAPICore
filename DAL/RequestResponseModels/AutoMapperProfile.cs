@@ -97,7 +97,9 @@ namespace DAL.RequestResponseModels
                   .ForMember(d => d.ItemCategory_Id, map => map.Ignore());
 
             CreateMap<UpsertPurchaseOrder, PurchageOrder>()
-                 .ForMember(d => d.Supplier_Id, map => map.Ignore());
+                 .ForMember(d => d.Supplier_Id, map => map.Ignore())
+                 .ForMember(d => d.StatusType_Id, map => map.Ignore());
+            
         }
     }
 }

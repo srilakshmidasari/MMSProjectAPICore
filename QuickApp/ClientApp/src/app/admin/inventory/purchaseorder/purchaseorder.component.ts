@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
+import { DataFactory } from 'src/app/shared/dataFactory';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -15,7 +16,7 @@ import { Utilities } from 'src/app/services/utilities';
 export class PurchaseorderComponent implements OnInit {
   loadingIndicator: boolean;
   credentials: any[] = [];
-  displayedColumns = ['supplierName', 'supplierAddress', 'arrivingDate', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['purchaseReference','supplierName', 'supplierAddress', 'arrivingDate', 'statusName', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -54,7 +55,7 @@ export class PurchaseorderComponent implements OnInit {
     this.accountService.getPurchaseOrder()
       .subscribe((results: any) => {
         this.purchasesList = results.listResult == null ? [] : results.listResult;
-        this.dataSource.data = this.purchasesList;
+      //  this.dataSource.data = this.purchasesList;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
         this.getsuppliers();
@@ -84,8 +85,6 @@ export class PurchaseorderComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
-
-
   addItem(i) {
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
   }
@@ -102,7 +101,7 @@ export class PurchaseorderComponent implements OnInit {
     this.orderForm = this.formBuilder.group({
       supplierId: ['', Validators.required],
       arrivingDate: ['', Validators.required] ,
-     
+      purchaseReference :['', Validators.required]
     })
   }
 
@@ -144,8 +143,8 @@ export class PurchaseorderComponent implements OnInit {
 
  
    //get Suppliers data
-   private getItemsByPurchaseId() {
-    this.accountService.getItemsByPurchaseId(this.purchaseData.id)
+   private getItemsByPurchaseId(row) {
+    this.accountService.getItemsByPurchaseId(row.id)
       .subscribe((results: any) => {
         this.purchaseItemList = results.listResult == null ? [] : results.listResult;
         this.setItems(this.purchaseItemList)
@@ -180,11 +179,12 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   onEditClick(purchase){
+    debugger
     this.isEdit = true;
     this.isAdding = false;
     this.isNewPurchase = false;
     this.purchaseData = purchase;
-    this.getItemsByPurchaseId();
+    this.getItemsByPurchaseId(purchase);
     this.resetForm();
     
   }
@@ -199,12 +199,12 @@ export class PurchaseorderComponent implements OnInit {
     this.orderForm.reset({
       supplierId: this.purchaseData.supplierId || '',
       arrivingDate: this.purchaseData.arrivingDate || '',
+      purchaseReference:this.purchaseData.purchaseReference ||''
     });
   }
 
 
   saveOrder() {
-   
     if (!this.orderForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -269,6 +269,11 @@ export class PurchaseorderComponent implements OnInit {
       "id": this.isNewPurchase == true ? 0 : this.purchaseData.id,
       "supplierId": formModel.supplierId,
       "arrivingDate": formModel.arrivingDate,
+      "statusTypeId":DataFactory.StatusTypes.Open,
+      "fileName": "",
+      "fileLocation": "",
+      "fileExtention": ".pdf",
+      "purchaseReference":formModel.purchaseReference,
       "isActive": true,
       "purchaseItems": purchaseItems,
       "createdBy": this.currentUser.id,
@@ -276,7 +281,6 @@ export class PurchaseorderComponent implements OnInit {
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date()
     }
-
    
   }
 

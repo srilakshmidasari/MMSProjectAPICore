@@ -20,5 +20,7 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<GetItemsResponse> GetItemsByPurchaseId(int PurchaseId);
 
+        ValueDataResponse<string> GetPurchageItemsPdf(int PurchaseId);
+
     }
 }

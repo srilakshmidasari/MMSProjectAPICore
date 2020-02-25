@@ -382,6 +382,12 @@ namespace DAL
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK_App_PurchageOrder_UpdatedUser");
 
+            builder.Entity<PurchageOrder>().HasOne(d => d.StatusType_Id)
+               .WithMany(p => p.Order_StatusTypeId)
+               .HasForeignKey(d => d.StatusTypeId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_Order_StatusTypeId");
+
             builder.Entity<PurchageItemXref>().HasOne(d => d.Purchage_Id)
               .WithMany(p => p.Purchage_OrderXref_Id)
               .HasForeignKey(d => d.PurchageId)
