@@ -49,7 +49,7 @@ export class AssetsComponent implements OnInit {
   @Input() allowedDocExtension: string = "pdf , docx , doc";
   @Input() maxSize: number = 2300;//1150;
   displayNoRecords: boolean;
-  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'astFixedDate', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter','assetSize','assetCapacity','astFixedDate', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -72,6 +72,7 @@ export class AssetsComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.getAssets();
     this.getDocuments();
     this.getAssetGroup();
@@ -100,6 +101,7 @@ export class AssetsComponent implements OnInit {
 
   // Site Data
   private getSites() {
+    debugger
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
@@ -123,6 +125,7 @@ export class AssetsComponent implements OnInit {
 
   // Asset Trade List
   getAssetTrade() {
+    debugger
     const typeCddId = 5;
     this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
       this.assetTradeList = result.listResult == null ? [] : result.listResult;
@@ -133,6 +136,7 @@ export class AssetsComponent implements OnInit {
 
     // Asset Trade List
     getAssetGroup() {
+      debugger
       const typeCddId = 4;
       this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
         this.assetGroupList = result.listResult == null ? [] : result.listResult;
@@ -162,6 +166,7 @@ export class AssetsComponent implements OnInit {
 
   // Form Building
   private buildForm() {
+    debugger
     this.assetLocationForm = this.fb.group({
       siteId: ['', Validators.required],
       projectId: ['', Validators.required],
@@ -183,6 +188,7 @@ export class AssetsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
+    debugger
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -224,6 +230,7 @@ export class AssetsComponent implements OnInit {
 
   // Reseting Form Values
   private resetForm() {
+    debugger
     this.assetLocationForm.reset({
       siteId: this.assetRefData.siteId || '',
       projectId: this.assetRefData.projectId || '',
@@ -235,8 +242,8 @@ export class AssetsComponent implements OnInit {
       assetType: this.assetRefData.assetType || '',
       assetMake: this.assetRefData.assetMake || '',
       assetModel: this.assetRefData.assetModel || '',
-      assetSize: this.assetRefData.assetCapacity || '',
-      assetRef2: this.assetRefData.assetRef2 || '',
+      assetSize: this.assetRefData.assetSize || '',
+      assetRef2: this.assetRefData.assetCapacity || '',
       assetTrade: this.assetRefData.astTradeId || '',
       assetCounter: this.assetRefData.astCounter || '',
       assetFixDate: this.assetRefData.astFixedDate || '',
@@ -274,6 +281,7 @@ export class AssetsComponent implements OnInit {
 
   // forming Request Object
   private getEditedAsset(): any {
+    debugger
     const formModel = this.assetLocationForm.value;
     return {
       "id": this.isNewAsset ? 0 : this.assetRefData.id,
@@ -285,12 +293,13 @@ export class AssetsComponent implements OnInit {
       "name1": formModel.name1,
       "name2": formModel.name2,
       "assetRef": formModel.assetRef,
-      "assetRef2": formModel.assetRef2,
+      "assetRef2": formModel.assetCapacity,
       "astCounter": parseInt(formModel.assetCounter),
       "astFixedDate": formModel.assetFixDate,
       "assetMake": formModel.assetMake,
       "assetModel": formModel.assetModel,
-      "assetCapacity":formModel.assetSize,
+      "assetSize":formModel.assetSize,
+      "assetCapacity":formModel.assetRef2,
       "assetType": formModel.assetType,
       "isActive": formModel.isActive == '' || formModel.isActive == null ? false : true,
       "createdBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.createdBy,
