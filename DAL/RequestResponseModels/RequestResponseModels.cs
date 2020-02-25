@@ -256,7 +256,7 @@ namespace DAL.RequestResponseModels
             public string AstGroupName1 { get; set; }
             public string AstGroupName2 { get; set; }
             public string AssetGroupRef1 { get; set; }
-            public string AssetGroupRef2 { get; set; }
+            public string AssetRef2 { get; set; }
             public string AssetMake { get; set; }
             public string AssetModel { get; set; }
             public string AssetCapacity { get; set; }
@@ -290,11 +290,13 @@ namespace DAL.RequestResponseModels
             public string Name1 { get; set; }
             public string Name2 { get; set; }
             public string AssetRef { get; set; }
+            public string AssetRef2 { get; set; }
             public int AstCounter { get; set; }
             public DateTime AstFixedDate { get; set; }
-            //public string FileName { get; set; }
-            //public string FileLocation { get; set; }
-            //public string FileExtention { get; set; }
+            public string AssetMake { get; set; }
+            public string AssetModel { get; set; }
+            public string AssetCapacity { get; set; }
+            public string AssetType { get; set; }
             public bool IsActive { get; set; }
             public string CreatedBy { get; set; }
             public DateTime CreatedDate { get; set; }

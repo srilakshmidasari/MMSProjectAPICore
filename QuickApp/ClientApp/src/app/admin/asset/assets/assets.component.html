@@ -152,7 +152,7 @@
                         <mat-label>{{'Assets.Management.AssetGroup'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="assetGroup" (ngModelChange)="onSelectAssGroup($event)">
                             <mat-option *ngFor="let assGroup of assetGroupList" [value]="assGroup.id" required>
-                                {{assGroup.name1}}(<span>{{assGroup.assetRef1}}</span>)
+                                {{assGroup.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!assetLocationForm.controls['assetGroup'].valid">
@@ -162,30 +162,30 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetType'|translate}}</mat-label>
-                        <input matInput formControlName="assetType" [(ngModel)]="assetGroupData.assetType" readonly />
+                        <input matInput formControlName="assetType"  />
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetMake'|translate}}</mat-label>
-                        <input matInput formControlName="assetMake" [(ngModel)]="assetGroupData.assetMake" readonly />
+                        <input matInput formControlName="assetMake"   />
                     </mat-form-field>
                 </div>
 
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetModel'|translate}}</mat-label>
-                        <input matInput formControlName="assetModel" [(ngModel)]="assetGroupData.assetModel" readonly />
+                        <input matInput formControlName="assetModel"   />
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetSize'|translate}}</mat-label>
-                        <input matInput formControlName="assetSize" [(ngModel)]="assetGroupData.assetCapacity"
-                            readonly />
+                        <input matInput formControlName="assetSize" 
+                             />
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetReference2'|translate}}</mat-label>
-                        <input matInput formControlName="assetRef2" [(ngModel)]="assetGroupData.assetRef2" readonly />
+                        <input matInput formControlName="assetRef2"  />
                     </mat-form-field>
 
                 </div>

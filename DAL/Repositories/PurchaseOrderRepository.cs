@@ -405,7 +405,9 @@ namespace DAL.Repositories
             Font detailstyle = FontFactory.GetFont("Calibri", 10, Font.BOLD);
 
             // ** set logo ** //
-            string logo = "";
+            // string logo = "";
+            string logo = "http://183.82.111.111/MMS/assets/images/arkaan-logo-blue.png";
+
             //string logo = ConfigurationManager.AppSettings["ServerRootPath"].ToString()+"\\"+ "3FLogo.png";
             string header = "CALIBAR MAINTENANCE MANAGEMENT SYSTEM";
             string subheader3 = "email:caliberTech@mms.com";

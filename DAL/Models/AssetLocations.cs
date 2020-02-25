@@ -38,6 +38,11 @@ namespace DAL.Models
         [Display(Name = "AssetReference")]
         public string AssetRef { get; set; }
 
+      
+        [StringLength(100)]
+        [Display(Name = "AssetReference2")]
+        public string AssetRef2 { get; set; }
+
         [Required]
         [StringLength(100)]
         [Display(Name = "Name1")]
@@ -48,6 +53,7 @@ namespace DAL.Models
         [Display(Name = "Name2")]
 
         public string Name2 { get; set; }
+
         //[Display(Name = "File Name")]
         //[StringLength(50)]
         //public string FileName { get; set; }
@@ -59,6 +65,26 @@ namespace DAL.Models
         //[Display(Name = "File Extention")]
         //[StringLength(10)]
         //public string FileExtention { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Asset Make")]
+        public string AssetMake { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Asset Model")]
+        public string AssetModel { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Asset Type")]
+        public string AssetType { get; set; }
+
+        [Required]
+        [StringLength(100)]
+        [Display(Name = "Asset Capacity")]
+        public string AssetCapacity { get; set; }
 
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }

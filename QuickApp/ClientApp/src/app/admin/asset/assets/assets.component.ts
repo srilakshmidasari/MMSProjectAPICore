@@ -74,7 +74,7 @@ export class AssetsComponent implements OnInit {
   ngOnInit() {
     this.getAssets();
     this.getDocuments();
-    this.getAllAssetGroups();
+    this.getAssetGroup();
     this.getAssetTrade();
   }
 
@@ -108,39 +108,19 @@ export class AssetsComponent implements OnInit {
         error => {
         });
   }
-  // // Project Data
-  // private getProjects() {
-  //   this.accountService.getProject()
-  //     .subscribe((results: any) => {
-  //       this.projectsList = results.listResult == null ? [] : results.listResult;
-  //       this.getLocations();
-  //     },
-  //       error => {
-  //       });
-  // }
-
-
-  // // Location Data
-  // getLocations() {
-  //   this.accountService.getLocationData().subscribe((res: any) => {
-  //     this.locationsList = res.listResult == null ? [] : res.listResult;
-
+  
+  // Asset Group List
+  // getAllAssetGroups() {
+  //   this.accountService.getAssetGroupData().subscribe((result: any) => {
+  //     this.assetGroupList1 = result.listResult == null ? [] : result.listResult;
+  //     this.assetGroupList = this.assetGroupList1.filter(x => x.isActive == true);
   //   },
   //     error => {
   //     }
   //   )
   // }
-  // Asset Group List
-  getAllAssetGroups() {
-    this.accountService.getAssetGroupData().subscribe((result: any) => {
-      this.assetGroupList1 = result.listResult == null ? [] : result.listResult;
-      this.assetGroupList = this.assetGroupList1.filter(x => x.isActive == true);
-    },
-      error => {
 
-      }
-    )
-  }
+
   // Asset Trade List
   getAssetTrade() {
     const typeCddId = 5;
@@ -150,6 +130,16 @@ export class AssetsComponent implements OnInit {
       error => {
       })
   }
+
+    // Asset Trade List
+    getAssetGroup() {
+      const typeCddId = 4;
+      this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
+        this.assetGroupList = result.listResult == null ? [] : result.listResult;
+      },
+        error => {
+        })
+    }
 
   onSelectSiteByProject(event) {
     this.projectsList = [];
@@ -245,7 +235,7 @@ export class AssetsComponent implements OnInit {
       assetMake: this.assetRefData.assetMake || '',
       assetModel: this.assetRefData.assetModel || '',
       assetSize: this.assetRefData.assetCapacity || '',
-      assetRef2: this.assetRefData.assetGroupRef2 || '',
+      assetRef2: this.assetRefData.assetRef2 || '',
       assetTrade: this.assetRefData.astTradeId || '',
       assetCounter: this.assetRefData.astCounter || '',
       assetFixDate: this.assetRefData.astFixedDate || '',
@@ -294,8 +284,13 @@ export class AssetsComponent implements OnInit {
       "name1": formModel.name1,
       "name2": formModel.name2,
       "assetRef": formModel.assetRef,
+      "assetRef2": formModel.assetRef2,
       "astCounter": parseInt(formModel.assetCounter),
       "astFixedDate": formModel.assetFixDate,
+      "assetMake": formModel.assetMake,
+      "assetModel": formModel.assetModel,
+      "assetCapacity":formModel.assetSize,
+      "assetType": formModel.assetType,
       "isActive": formModel.isActive == '' || formModel.isActive == null ? false : true,
       "createdBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.createdBy,
       "createdDate": new Date(),
