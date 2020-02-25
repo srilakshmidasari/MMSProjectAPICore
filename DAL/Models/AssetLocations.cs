@@ -40,8 +40,8 @@ namespace DAL.Models
 
       
         [StringLength(100)]
-        [Display(Name = "AssetReference2")]
-        public string AssetRef2 { get; set; }
+        [Display(Name = "Asset Size")]
+        public string AssetSize { get; set; }
 
         [Required]
         [StringLength(100)]

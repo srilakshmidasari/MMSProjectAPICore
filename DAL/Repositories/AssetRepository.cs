@@ -216,7 +216,7 @@ namespace DAL.Repositories
                                   AssetMake = al.AssetMake,
                                   AssetCapacity = al.AssetCapacity,
                                   AssetModel = al.AssetModel,
-                                  AssetRef2 = al.AssetRef2,
+                                  AssetSize = al.AssetSize,
                                   AssetType = al.AssetType,
                                   AstCounter = al.AstCounter,
                                   AstFixedDate = al.AstFixedDate,
@@ -363,7 +363,7 @@ namespace DAL.Repositories
                         result.AssetRef = asset.AssetRef;
                         result.AstCounter = asset.AstCounter;
                         result.AstFixedDate = asset.AstFixedDate;
-                        result.AssetRef2 = asset.AssetRef2;
+                        result.AssetSize = asset.AssetSize;
                         result.AssetMake = asset.AssetMake;
                         result.AssetModel = asset.AssetModel;
                         result.AssetType = asset.AssetType;

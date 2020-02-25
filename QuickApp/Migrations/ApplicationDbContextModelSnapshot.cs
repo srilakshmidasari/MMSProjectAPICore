@@ -323,7 +323,7 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<string>("AssetRef2")
+                    b.Property<string>("AssetSize")
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
