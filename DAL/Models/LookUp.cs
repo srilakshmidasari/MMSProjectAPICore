@@ -60,6 +60,8 @@ namespace DAL.Models
 
         public ICollection<AssetLocation> App_AssetLocation_AstTrade_Id { get; set; }
 
+        public ICollection<AssetLocation> App_AssetLocation_AstGroup_Id { get; set; }
+
         public ICollection<Item> App_Item_UOM_Id { get; set; }
 
         public ICollection<Item> App_Item_ItemCategory_Id { get; set; }

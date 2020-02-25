@@ -86,7 +86,7 @@ namespace DAL.Models
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
 
-        public ICollection<AssetLocation> App_AssetLocation_AstGroup_Id { get; set; }
+     //   public ICollection<AssetLocation> App_AssetLocation_AstGroup_Id { get; set; }
         
 
 

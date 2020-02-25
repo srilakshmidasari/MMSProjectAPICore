@@ -197,6 +197,7 @@ export class AssetsComponent implements OnInit {
   }
   // On Edit Asset Click
   onEditAsset(asset?: any) {
+    debugger
     this.document = null;
     this.assetRefData = {};
     this.isAllow = false;

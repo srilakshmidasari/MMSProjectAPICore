@@ -120,7 +120,7 @@ namespace DAL.Models
         //public Project Project { get; set; }
 
         [JsonIgnore]
-        public AssetGroup AstGroup_Id { get; set; }
+        public LookUp AstGroup_Id { get; set; }
 
         [JsonIgnore]
         public LookUp AstTrade_Id { get; set; }

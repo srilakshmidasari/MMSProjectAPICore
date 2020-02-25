@@ -1259,7 +1259,7 @@ namespace MMS.Migrations
 
             modelBuilder.Entity("DAL.Models.AssetLocation", b =>
                 {
-                    b.HasOne("DAL.Models.AssetGroup", "AstGroup_Id")
+                    b.HasOne("DAL.Models.LookUp", "AstGroup_Id")
                         .WithMany("App_AssetLocation_AstGroup_Id")
                         .HasForeignKey("AstGroupId")
                         .HasConstraintName("FK_App_AssetLocation_AstGroupId")

@@ -190,7 +190,7 @@ namespace DAL.Repositories
                               join l in _appContext.Locations on al.LocationId equals l.Id
                               join p in _appContext.Projects on l.ProjectId equals p.Id
                               join s in _appContext.SiteInfos on p.SiteId equals s.Id
-                              join ag in _appContext.AssetGroups on al.AstGroupId equals ag.Id
+                              join ag in _appContext.LookUps on al.AstGroupId equals ag.Id
                               join at in _appContext.LookUps on al.AstTradeId equals at.Id
                               select new GetAssetLocationResponse
                               {
