@@ -65,6 +65,8 @@ namespace DAL.Models
         public ICollection<Item> App_Item_UOM_Id { get; set; }
 
         public ICollection<Item> App_Item_ItemCategory_Id { get; set; }
+
+        public ICollection<PurchageOrder> App_PurchageOrder_Store_Id { get; set; }
     }
 }
  

@@ -27,6 +27,14 @@ namespace DAL.Models
         [StringLength(50)]
         public string PurchaseReference { get; set; }
 
+        [Required]
+        [Display(Name = "Project Id")]
+        public int ProjectId { get; set; }
+
+        [Required]
+        [Display(Name = "Store Id")]
+        public int StoreId { get; set; }
+
         [Display(Name = "File Name")]
         [StringLength(50)]
         public string FileName { get; set; }
@@ -41,6 +49,10 @@ namespace DAL.Models
 
         [Display(Name = "Status Type Id")]
         public int StatusTypeId { get; set; }
+
+        [Display(Name = "Remarks")]
+        [StringLength(200)]
+        public string Remarks { get; set; }
 
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
@@ -72,6 +84,12 @@ namespace DAL.Models
 
         [JsonIgnore]
         public TypeCdDmt StatusType_Id { get; set; }
+
+        [JsonIgnore]
+        public Project Project_Id { get; set; }
+
+        [JsonIgnore]
+        public LookUp Store_Id { get; set; }
 
         public ICollection<PurchageItemXref> Purchage_OrderXref_Id { get; set; }
 

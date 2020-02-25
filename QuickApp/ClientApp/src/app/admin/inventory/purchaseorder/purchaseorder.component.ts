@@ -16,24 +16,26 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class PurchaseorderComponent implements OnInit {
   loadingIndicator: boolean;
   credentials: any[] = [];
-  displayedColumns = ['purchaseReference','supplierName', 'supplierAddress', 'arrivingDate', 'statusName', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['purchaseReference', 'supplierName', 'supplierAddress', 'projectName','storeName', 'arrivingDate', 'statusName', 'updatedDate', 'remarks', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
   purchasesList: any[] = [];
   purchaseData: any = {};
-  isViewItem:boolean = false;
+  isViewItem: boolean = false;
   orderForm: FormGroup;
   isAdding: boolean = false;
   isNewPurchase: boolean = false;
   supplierList: any[] = [];
-  isEdit:boolean = false;
+  isEdit: boolean = false;
   itemFrom: FormGroup;
   itemList: any[] = [];
   i: any;
-  purchaseItemList: any[]=[];
+  purchaseItemList: any[] = [];
   currenrDate: Date;
+  projectsList: any[] = [];
+  storesList: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
@@ -43,9 +45,11 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.getPurchaseOrders();
     this.buildForm();
-   // this.addItem(this.i);
+    this.getProjects();
+    // this.addItem(this.i);
   }
 
 
@@ -55,7 +59,7 @@ export class PurchaseorderComponent implements OnInit {
     this.accountService.getPurchaseOrder()
       .subscribe((results: any) => {
         this.purchasesList = results.listResult == null ? [] : results.listResult;
-      //  this.dataSource.data = this.purchasesList;
+        //  this.dataSource.data = this.purchasesList;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
         this.getsuppliers();
@@ -66,7 +70,7 @@ export class PurchaseorderComponent implements OnInit {
         });
   }
 
-  
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
@@ -93,20 +97,24 @@ export class PurchaseorderComponent implements OnInit {
     return this.formBuilder.group({
       itemId: new FormControl('', [Validators.required]),
       quantity: new FormControl('', [Validators.required]),
-      expectedCost: new FormControl('', [Validators.required])
-    })
-  }
-  
-  buildForm() {
-    this.orderForm = this.formBuilder.group({
-      supplierId: ['', Validators.required],
-      arrivingDate: ['', Validators.required] ,
-      purchaseReference :['', Validators.required]
+      expectedCost: new FormControl('', [Validators.required]),
+      comments :new FormControl('')
     })
   }
 
-   // Accepting Only Numbers
-   numberOnly(event: any) {
+  buildForm() {
+    this.orderForm = this.formBuilder.group({
+      supplierId: ['', Validators.required],
+      projectId :['', Validators.required],
+      storeId :['', Validators.required],
+      purchaseReference: ['', Validators.required],
+      arrivingDate: ['', Validators.required],
+      remarks :[]
+    })
+  }
+
+  // Accepting Only Numbers
+  numberOnly(event: any) {
     const numberpattern = /[0-9\+\-.\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
     if (!numberpattern.test(inputChar)) {
@@ -130,7 +138,17 @@ export class PurchaseorderComponent implements OnInit {
         error => {
         });
   }
- 
+
+  private getProjects() {
+    this.accountService.getProject()
+      .subscribe((results: any) => {
+        this.projectsList = results.listResult == null ? [] : results.listResult;
+        
+      },
+        error => {
+        });
+  }
+
   // get items Data
   private getItem() {
     this.accountService.getitemdata()
@@ -141,9 +159,21 @@ export class PurchaseorderComponent implements OnInit {
         });
   }
 
- 
-   //get Suppliers data
-   private getItemsByPurchaseId(row) {
+  getStoresByProject(event){
+    debugger
+    this.storesList =[];
+    this.accountService.getStoresByProjectId(event)
+      .subscribe((results: any) => {
+        this.storesList = results.listResult == null ? [] : results.listResult;
+        console.log(this.storesList)
+      },
+        error => {
+        });
+  }
+
+
+  //get Suppliers data
+  private getItemsByPurchaseId(row) {
     this.accountService.getItemsByPurchaseId(row.id)
       .subscribe((results: any) => {
         this.purchaseItemList = results.listResult == null ? [] : results.listResult;
@@ -152,15 +182,16 @@ export class PurchaseorderComponent implements OnInit {
         error => {
         });
   }
-  
-  setItems(itemsArray: any[]) {    
+
+  setItems(itemsArray: any[]) {
     let control = this.formBuilder.array([]);
     itemsArray.forEach(x => {
       control.push(this.formBuilder.group({
         itemId: x.itemId,
         quantity: x.quantity,
         expectedCost: x.expectedCost,
-        }))
+        comments:x.comments
+      }))
     })
     this.itemFrom.setControl('credentials', control);
   }
@@ -170,26 +201,28 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   addClick(purchase?: any) {
-     this.purchaseData = {};
-      this.isAdding = true;
-      this.isNewPurchase = true;
-      this.buildForm();
-      this.addItem(this.i);
-   
+    this.purchaseData = {};
+    this.isAdding = true;
+    this.isNewPurchase = true;
+    this.buildForm();
+    this.addItem(this.i);
+
   }
 
-  onEditClick(purchase){
+  onEditClick(purchase) {
     debugger
     this.isEdit = true;
     this.isAdding = false;
     this.isNewPurchase = false;
     this.purchaseData = purchase;
     this.getItemsByPurchaseId(purchase);
+    this.getStoresByProject(purchase.projectId)
     this.resetForm();
-    
+
   }
 
   public resetForm(stopEditing: boolean = false) {
+    debugger
     if (!this.purchaseData) {
       this.isNewPurchase = true;
     } else {
@@ -198,8 +231,11 @@ export class PurchaseorderComponent implements OnInit {
 
     this.orderForm.reset({
       supplierId: this.purchaseData.supplierId || '',
+      projectId: this.purchaseData.projectId || '',
+      storeId: this.purchaseData.storeId || '',
+      remarks: this.purchaseData.remarks || '',
       arrivingDate: this.purchaseData.arrivingDate || '',
-      purchaseReference:this.purchaseData.purchaseReference ||''
+      purchaseReference: this.purchaseData.purchaseReference || ''
     });
   }
 
@@ -261,6 +297,7 @@ export class PurchaseorderComponent implements OnInit {
         "purchaseId": 0,
         "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
         "expectdCost": parseFloat(this.itemFrom.value.credentials[i].expectedCost),
+        "comments":this.itemFrom.value.credentials[i].comments
       }
       purchaseItems.push(itemReq);
     }
@@ -269,11 +306,14 @@ export class PurchaseorderComponent implements OnInit {
       "id": this.isNewPurchase == true ? 0 : this.purchaseData.id,
       "supplierId": formModel.supplierId,
       "arrivingDate": formModel.arrivingDate,
-      "statusTypeId":DataFactory.StatusTypes.Open,
+      "statusTypeId": DataFactory.StatusTypes.Open,
+      "projectId": formModel.projectId,
+      "storeId": formModel.storeId,
+      "remarks": formModel.remarks,
       "fileName": "",
       "fileLocation": "",
       "fileExtention": ".pdf",
-      "purchaseReference":formModel.purchaseReference,
+      "purchaseReference": formModel.purchaseReference,
       "isActive": true,
       "purchaseItems": purchaseItems,
       "createdBy": this.currentUser.id,
@@ -281,16 +321,16 @@ export class PurchaseorderComponent implements OnInit {
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date()
     }
-   
+
   }
 
   get currentUser() {
     return this.authService.currentUser;
   }
 
-  confirmDelete(order:any) {
+  confirmDelete(order: any) {
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete",  msg: "Are you sure you want to delete this order ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
+      data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -312,11 +352,11 @@ export class PurchaseorderComponent implements OnInit {
               this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
                 MessageSeverity.error, error);
             });
-          }
-      });
-   }
+      }
+    });
+  }
 
-  
+
 
 
 }

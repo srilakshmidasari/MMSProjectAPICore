@@ -227,7 +227,7 @@ namespace DAL.Repositories
                                   UpdatedDate = al.UpdatedDate
                               }).ToList();
 
-                //  result.ForEach(f => f.FileLocation = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, f.FileLocation, f.FileName, f.FileExtention));
+            
                 if (result != null)
                 {
                     response.ListResult = result;

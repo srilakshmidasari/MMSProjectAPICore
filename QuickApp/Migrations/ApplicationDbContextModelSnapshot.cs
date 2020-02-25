@@ -304,17 +304,14 @@ namespace MMS.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AssetCapacity")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("AssetMake")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
                     b.Property<string>("AssetModel")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
@@ -328,7 +325,6 @@ namespace MMS.Migrations
                         .HasMaxLength(100);
 
                     b.Property<string>("AssetType")
-                        .IsRequired()
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
@@ -808,6 +804,11 @@ namespace MMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Comments")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
                     b.Property<double>("ExpectdCost")
                         .HasColumnType("float");
 
@@ -863,12 +864,22 @@ namespace MMS.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PurchaseReference")
                         .IsRequired()
                         .HasColumnType("nvarchar(50)")
                         .HasMaxLength(50);
 
+                    b.Property<string>("Remarks")
+                        .HasColumnType("nvarchar(200)")
+                        .HasMaxLength(200);
+
                     b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StoreId")
                         .HasColumnType("int");
 
                     b.Property<int>("SupplierId")
@@ -886,7 +897,11 @@ namespace MMS.Migrations
 
                     b.HasIndex("CreatedBy");
 
+                    b.HasIndex("ProjectId");
+
                     b.HasIndex("StatusTypeId");
+
+                    b.HasIndex("StoreId");
 
                     b.HasIndex("SupplierId");
 
@@ -1485,10 +1500,22 @@ namespace MMS.Migrations
                         .HasConstraintName("FK_App_PurchageOrder_CreatedUser")
                         .IsRequired();
 
+                    b.HasOne("DAL.Models.Project", "Project_Id")
+                        .WithMany("App_PurchageOrder_ProjectId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_App_PurchageOrder_ProjectId ")
+                        .IsRequired();
+
                     b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
                         .WithMany("Order_StatusTypeId")
                         .HasForeignKey("StatusTypeId")
                         .HasConstraintName("FK_App_Order_StatusTypeId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "Store_Id")
+                        .WithMany("App_PurchageOrder_Store_Id")
+                        .HasForeignKey("StoreId")
+                        .HasConstraintName("FK_App_PurchageOrder_Store_Id")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.Supplier", "Supplier_Id")

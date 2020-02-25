@@ -8,11 +8,11 @@
     </div> -->
     <div class="example-container mat-elevation-z8 mt-2">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <div >
+        <div>
             <p-table #dt [value]="purchasesList" [paginator]="true" expandableRows="true" [rows]="10"
                 sortField="purchaseReference" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExpandMode="single" dataKey="id"
-                [globalFilterFields]="['purchaseReference','supplierName','supplierAddress', 'arrivingDate','statusName']">
+                [globalFilterFields]="['purchaseReference','supplierName','supplierAddress','projectName','storeName', 'arrivingDate','statusName','remarks']">
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">
 
@@ -33,6 +33,12 @@
                         <th [pSortableColumn]="'supplierAddress'">Supplier Address
                             <p-sortIcon [field]="supplierAddress"></p-sortIcon>
                         </th>
+                        <th [pSortableColumn]="'projectName'"> Project Name
+                            <p-sortIcon [field]="projectName"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'storeName'"> Store Name
+                            <p-sortIcon [field]="storeName"></p-sortIcon>
+                        </th>
                         <th [pSortableColumn]="'arrivingDate'"> Arriving Date
                             <p-sortIcon [field]="arrivingDate"></p-sortIcon>
                         </th>
@@ -42,7 +48,9 @@
                         <th [pSortableColumn]="'updatedDate'"> Updated Date
                             <p-sortIcon [field]="updatedDate"></p-sortIcon>
                         </th>
-                       
+                        <th [pSortableColumn]="'remarks'"> Remarks
+                            <p-sortIcon [field]="remarks"></p-sortIcon>
+                        </th>
                         <th [pSortableColumn]="'isActive'"> Is Active
                             <p-sortIcon [field]="isActive"></p-sortIcon>
                         </th>
@@ -65,11 +73,14 @@
                         <td>{{req.purchaseReference}}</td>
                         <td>{{req.supplierName}}</td>
                         <td>{{req.supplierAddress}}</td>
+                        <td>{{req.projectName}}</td>
+                        <td>{{req.storeName}}</td>
                         <td>{{req.arrivingDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.statusName}}</td>
                         <td>{{req.updatedDate | date: 'dd/MM/yyyy'}}</td>
+                        <td>{{req.remarks}}</td>
                         <td align="center">
-                            <!-- <p-checkbox [(ngModel)]="req.isActive" binary="true" [disabled]=true></p-checkbox> -->
+
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center">
@@ -86,7 +97,7 @@
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                     <tr>
-                        <td [attr.colspan]="9">
+                        <td [attr.colspan]="12">
                             <p-table #dt1 [responsive]="true" [value]="purchaseItemList" [rows]="5" [paginator]="true"
                                 [rowsPerPageOptions]="[5,10,15]">
                                 <ng-template pTemplate="header">
@@ -104,7 +115,10 @@
                         <th class="product-id" [pSortableColumn]="'expectedCost'">Expected Cost
                             <p-sortIcon [field]="'expectedCost'"></p-sortIcon>
                         </th>
-                        <th>Actions</th>
+                        <th class="product-id" [pSortableColumn]="'comments'">Comments
+                            <p-sortIcon [field]="'comments'"></p-sortIcon>
+                        </th>
+                        <!-- <th>Actions</th> -->
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-expanded="expanded" let-rowdata>
@@ -112,8 +126,9 @@
                         <td>{{rowdata.itemName}}</td>
                         <td>{{rowdata.itemReference}}</td>
                         <td>{{rowdata.quantity}}</td>
-                        <td>{{rowdata.expectedCost}}</td>   
-                        <td></td>                       
+                        <td>{{rowdata.expectedCost}}</td>
+                        <td>{{rowdata.comments}}</td>
+                        <!-- <td></td> -->
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage" let-columns>
@@ -169,6 +184,37 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
+                        <mat-label>Select Project <span>*</span></mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="getStoresByProject($event)">
+                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
+                            Please Select Project
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="col-md-2">
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                            {{'Purchase Order.Management.Add Item'|translate}}
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Select Store <span>*</span></mat-label>
+                        <mat-select formControlName="storeId" (ngModelChange)="getStoresByProject($event)">
+                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
+                                {{store.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
+                            Please Select Store
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
                         <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
                             placeholder="Arriving Date" required>
@@ -178,14 +224,11 @@
                             {{'Purchase Order.Management.Arriving Date is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <div class="col-md-2">
-                        <button mat-raised-button color="primary"
-                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
-                            <mat-icon class="mat-button-icon">add</mat-icon>
-                            {{'Purchase Order.Management.Add Item'|translate}}
-                        </button>
 
-                    </div>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput formControlName="remarks" required maxlength="100" />
+                    </mat-form-field>
                 </div>
             </form>
             <div class="row">
@@ -234,6 +277,12 @@
                                 </div>
 
                             </div>
+                            <div class="row">
+                                <mat-form-field class="col-md-9">
+                                    <mat-label>Comments</mat-label>
+                                    <input matInput formControlName="comments" required maxlength="100" />
+                                </mat-form-field>
+                            </div>
                         </ng-container>
                     </div>
                 </form>
@@ -280,13 +329,14 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>{{'Purchase Order.Management.Arriving Date'|translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
-                            placeholder="Arriving Date" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
-                            {{'Purchase Order.Management.Arriving Date is Required'|translate}}
+                        <mat-label>Select Project <span>*</span></mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="getStoresByProject($event)">
+                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
+                            Please Select Project
                         </mat-error>
                     </mat-form-field>
 
@@ -299,13 +349,39 @@
 
                     </div>
                 </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Select Store <span>*</span></mat-label>
+                        <mat-select formControlName="storeId" (ngModelChange)="getStoresByProject($event)">
+                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
+                                {{store.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
+                            Please Select Store
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}} </mat-label>
+                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
+                            placeholder="Arriving Date" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
+                            {{'Purchase Order.Management.Arriving Date is Required'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Remarks</mat-label>
+                        <input matInput formControlName="remarks" required maxlength="100" />
+                    </mat-form-field>
+                </div>
             </form>
             <div class="row">
                 <form [formGroup]="itemFrom" class="col-md-12">
-
                     <div formArrayName="credentials"
                         *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
-
                         <ng-container [formGroupName]="i">
                             <h4>{{'Purchase Order.Management.Item'|translate}} {{i+1}}</h4>
                             <div class="clearfix"></div>
@@ -338,13 +414,17 @@
                                         {{'Purchase Order.Management.Expected Cost is required'|translate}}
                                     </mat-error>
                                 </mat-form-field>
-                                <div>
-                                    <div class="col-md-3" *ngIf="i>0">
-                                        <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel">
-                                            {{'Purchase Order.Management.Remove'|translate}}
-                                        </button>
-                                    </div>
+                                <div class="col-md-3" *ngIf="i>0">
+                                    <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel">
+                                        {{'Purchase Order.Management.Remove'|translate}}
+                                    </button>
                                 </div>
+                            </div>
+                            <div class="row">
+                                <mat-form-field class="col-md-9">
+                                    <mat-label>Comments</mat-label>
+                                    <input matInput formControlName="comments" required maxlength="100" />
+                                </mat-form-field>
                             </div>
                         </ng-container>
                     </div>

@@ -29,6 +29,11 @@ namespace DAL.Models
         [Display(Name = "Expectd Cost")]
         public double ExpectdCost { get; set; }
 
+        [Required]
+        [Display(Name = "Comments")]
+        [StringLength(500)]
+        public string Comments { get; set; }
+
         [JsonIgnore]
         public Item Item_Id { get; set; }
 

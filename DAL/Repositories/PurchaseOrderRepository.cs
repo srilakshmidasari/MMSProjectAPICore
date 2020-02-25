@@ -33,7 +33,9 @@ namespace DAL.Repositories
             {
                 var result = (from po in _appContext.PurchageOrders
                               join s in _appContext.Suppliers on po.SupplierId equals s.Id
+                              join p in _appContext.Projects on po.ProjectId equals p.Id
                               join t in _appContext.TypeCdDmts on po.StatusTypeId equals t.TypeCdDmtId
+                              join lo in _appContext.LookUps on po.StoreId equals lo.Id
                               select new GetPurchageResponse
                               {
                                   Id = po.Id,
@@ -43,7 +45,12 @@ namespace DAL.Repositories
                                   SupplierAddress = s.Address,
                                   StatusTypeId = po.StatusTypeId,
                                   StatusName = t.Description,
+                                  ProjectId = po.ProjectId,
+                                  ProjectName = p.Name1,
+                                  StoreId = po.StoreId,
+                                  StoreName =lo.Name1,
                                   ArrivingDate = po.ArrivingDate,
+                                  Remarks = po.Remarks,
                                   IsActive = po.IsActive,
                                   CreatedBy = po.CreatedBy,
                                   CreatedDate = po.CreatedDate,
@@ -93,7 +100,8 @@ namespace DAL.Repositories
                         ItemId = it.ItemId,
                         PurchageId = pro.Id,
                         Quantity = it.Quantity,
-                        ExpectdCost = it.ExpectdCost
+                        ExpectdCost = it.ExpectdCost,
+                        Comments = it.Comments
                     });
                 }
                 _appContext.SaveChanges();
@@ -140,12 +148,16 @@ namespace DAL.Repositories
                         ItemId = it.ItemId,
                         PurchageId = pro.Id,
                         Quantity = it.Quantity,
-                        ExpectdCost = it.ExpectdCost
+                        ExpectdCost = it.ExpectdCost,
+                        Comments = it.Comments
                     });
                 }
                 if (result != null)
                 {
                     result.SupplierId = purchages.SupplierId;
+                    result.ProjectId = purchages.ProjectId;
+                    result.StoreId = purchages.StoreId;
+                    result.Remarks = purchages.Remarks;
                     result.IsActive = purchages.IsActive;
                     result.CreatedBy = purchages.CreatedBy;
                     result.CreatedDate = purchages.CreatedDate;
@@ -240,6 +252,7 @@ namespace DAL.Repositories
                                   ItemName = i.Name1,
                                   Quantity = pi.Quantity,
                                   ExpectedCost = pi.ExpectdCost,
+                                  Comments = pi.Comments
 
                               }).Where(x => x.PurchaseId == purchaseId).ToList();
 

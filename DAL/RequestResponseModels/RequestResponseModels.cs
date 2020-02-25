@@ -384,6 +384,11 @@ namespace DAL.RequestResponseModels
             public string SupplierAddress { get; set; }
             public string PurchaseReference { get; set; }
             public string StatusName { get; set; }
+            public int ProjectId { get; set; }
+            public string ProjectName { get; set; }
+            public int StoreId { get; set; }
+            public string StoreName { get; set; }
+            public string Remarks { get; set; }
             public int StatusTypeId { get; set; }
             public DateTime ArrivingDate { get; set; }
             public bool IsActive { get; set; }
@@ -397,6 +402,7 @@ namespace DAL.RequestResponseModels
             public string ItemName { get; set; }
             public string  ItemReference { get; set; }
             public string PurchaseReference { get; set; }
+            public string Comments { get; set; }
             public int  ItemId { get; set; }
             public int Quantity { get; set; }
             public double ExpectedCost { get; set; }  
@@ -410,7 +416,7 @@ namespace DAL.RequestResponseModels
             public int PurchaseId { get; set; }
             public int Quantity { get; set; }
             public double ExpectdCost { get; set; }
-            public string PurchaseReference { get; set; }
+            public string Comments { get; set; }
 
         }
 
@@ -421,6 +427,9 @@ namespace DAL.RequestResponseModels
             public string PurchaseReference { get; set; }
             public DateTime ArrivingDate { get; set; }
             public int StatusTypeId { get; set; }
+            public int ProjectId { get; set; }
+            public int StoreId { get; set; }
+            public string Remarks { get; set; }
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }

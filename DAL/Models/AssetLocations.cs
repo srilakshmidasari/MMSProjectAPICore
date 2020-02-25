@@ -13,14 +13,6 @@ namespace DAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        //[Required]
-        //[Display(Name = "SiteId")]
-        //public int SiteId { get; set; }
-
-        //[Required]
-        //[Display(Name = "ProjectId")]
-        //public int ProjectId { get; set; }
-
         [Required]
         [Display(Name = "LocationId")]
         public int LocationId { get; set; }
@@ -37,7 +29,6 @@ namespace DAL.Models
         [StringLength(100)]
         [Display(Name = "AssetReference")]
         public string AssetRef { get; set; }
-
       
         [StringLength(100)]
         [Display(Name = "Asset Size")]
@@ -53,35 +44,21 @@ namespace DAL.Models
         [Display(Name = "Name2")]
 
         public string Name2 { get; set; }
-
-        //[Display(Name = "File Name")]
-        //[StringLength(50)]
-        //public string FileName { get; set; }
-
-        //[Display(Name = "File Location")]
-        //[StringLength(250)]
-        //public string FileLocation { get; set; }
-
-        //[Display(Name = "File Extention")]
-        //[StringLength(10)]
-        //public string FileExtention { get; set; }
-
-        [Required]
+       
         [StringLength(100)]
         [Display(Name = "Asset Make")]
         public string AssetMake { get; set; }
 
-        [Required]
+        
         [StringLength(100)]
         [Display(Name = "Asset Model")]
         public string AssetModel { get; set; }
 
-        [Required]
+        
         [StringLength(100)]
         [Display(Name = "Asset Type")]
         public string AssetType { get; set; }
-
-        [Required]
+       
         [StringLength(100)]
         [Display(Name = "Asset Capacity")]
         public string AssetCapacity { get; set; }
@@ -112,12 +89,6 @@ namespace DAL.Models
         [Required]
         [Display(Name = "Updated Date")]
         public DateTime UpdatedDate { get; set; }
-
-        //[JsonIgnore]
-        //public SiteInfo SiteInfo_Id { get; set; }
-
-        //[JsonIgnore]
-        //public Project Project { get; set; }
 
         [JsonIgnore]
         public LookUp AstGroup_Id { get; set; }

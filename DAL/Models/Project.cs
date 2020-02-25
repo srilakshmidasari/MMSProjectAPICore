@@ -78,6 +78,6 @@ namespace DAL.Models
 
         public ICollection<Location> Location_ProjectId { get; set; }
 
-        //public ICollection<AssetLocation> App_AssetLocation_ProjectId { get; set; }
+        public ICollection<PurchageOrder> App_PurchageOrder_ProjectId { get; set; }
     }
 }
