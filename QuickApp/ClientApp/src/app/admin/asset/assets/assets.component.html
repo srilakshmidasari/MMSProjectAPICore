@@ -47,15 +47,29 @@
             </ng-container>
             <ng-container matColumnDef="assetLocationRef">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.assetRefrerence'|translate}} </mat-header-cell>
+                    {{'Assets.Management.Asset Refrerence'|translate}} </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.assetLocationRef}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="assetCounter">
                 <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header
                     class="just-cont-center">
-                    {{'Assets.Management.assetCounter'|translate}} </mat-header-cell>
+                    {{'Assets.Management.Asset Counter'|translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell" *matCellDef="let row" class="just-cont-center">
                     {{row.astCounter}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="assetSize">
+                <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header
+                    class="just-cont-center">
+                    {{'Assets.Management.AssetSize'|translate}} </mat-header-cell>
+                <mat-cell class="just-cont-center small-cell" *matCellDef="let row" class="just-cont-center">
+                    {{row.assetSize}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="assetCapacity">
+                <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header
+                    class="just-cont-center">
+                    {{'Assets.Management.Asset Capacity'|translate}} </mat-header-cell>
+                <mat-cell class="just-cont-center small-cell" *matCellDef="let row" class="just-cont-center">
+                    {{row.assetCapacity}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="astFixedDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header class="just-cont-center small-cell">
@@ -179,12 +193,11 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetSize'|translate}}</mat-label>
-                        <input matInput formControlName="assetSize" 
-                             />
+                        <input matInput formControlName="assetSize"  />
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.AssetReference2'|translate}}</mat-label>
+                        <mat-label>{{'Assets.Management.Asset Capacity'|translate}}</mat-label>
                         <input matInput formControlName="assetRef2"  />
                     </mat-form-field>
 
@@ -204,7 +217,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.AssetConter'|translate}}<span>*</span></mat-label>
+                        <mat-label>{{'Assets.Management.Asset Counter'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="assetCounter">
                             <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
                                 {{counter.value}}

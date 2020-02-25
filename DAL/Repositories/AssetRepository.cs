@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DAL.Models;
 using DAL.Repositories.Interfaces;
 using DAL.Response;
