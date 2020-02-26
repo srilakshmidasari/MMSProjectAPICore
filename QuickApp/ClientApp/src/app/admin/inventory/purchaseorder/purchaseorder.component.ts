@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { DocumentFileComponent } from '../document-file/document-file.component';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -249,16 +250,18 @@ export class PurchaseorderComponent implements OnInit {
     const editeditem = this.AddAllItemData();
     if (this.isNewPurchase) {
       this.accountService.AddPurchaseOrder(editeditem).subscribe(
-        (result: any) => {
+        (response: any) => {
           this.alertService.stopLoadingMessage();
-          if (result.isSuccess) {
+          if (response.isSuccess) {
             this.getPurchaseOrders();
             this.isAdding = false;
-            this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
+           // this.onPdfDocument(response.result)
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
             this.resetForm();
+           
           } else {
             this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
           }
         }, error => {
           this.alertService.stopLoadingMessage();
@@ -356,8 +359,19 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
+  onPdfDocument(result) {
+    const dialogRef = this.dialog.open(DocumentFileComponent,
+      {
+        panelClass: 'mat-dialog-md',
+        data: { result }
+      });
+    dialogRef.afterClosed().subscribe(siteresponse => {
+    });
+  }
 
-
+  onViewDoc(row) {
+    window.open(row.pdfUrl);
+  }
 
 }
 

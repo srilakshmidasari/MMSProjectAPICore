@@ -386,12 +386,17 @@ namespace DAL.RequestResponseModels
             public string StatusName { get; set; }
             public int ProjectId { get; set; }
             public string ProjectName { get; set; }
+            public string PdfUrl { get; set; }
             public int StoreId { get; set; }
             public string StoreName { get; set; }
             public string Remarks { get; set; }
             public int StatusTypeId { get; set; }
             public DateTime ArrivingDate { get; set; }
             public bool IsActive { get; set; }
+            public string FileName { get; set; }
+            public string FileLocation { get; set; }
+            public string FileExtention { get; set; }
+
 
         }
 

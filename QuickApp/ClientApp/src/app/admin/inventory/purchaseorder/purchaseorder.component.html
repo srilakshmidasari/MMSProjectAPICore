@@ -92,6 +92,10 @@
                                 [hidden]="!req.isActive" (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
+                            <button mat-icon-button 
+                                (click)="onViewDoc(req)">
+                                <mat-icon>file_copy</mat-icon>
+                            </button>
                         </td>
                     </tr>
                 </ng-template>
@@ -346,7 +350,6 @@
                             <mat-icon class="mat-button-icon">add</mat-icon>
                             {{'Purchase Order.Management.Add Item'|translate}}
                         </button>
-
                     </div>
                 </div>
                 <div class="row">
