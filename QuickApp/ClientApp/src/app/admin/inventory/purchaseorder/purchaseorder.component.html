@@ -16,7 +16,7 @@
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">
 
-                        <input type="text" pInputText size="50" placeholder="Search By Purchase Order"
+                        <input type="text" pInputText size="50" placeholder="{{'Purchase Order.Management.Search By Purchase Order'|translate}}"
                             (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
                     </div>
                 </ng-template>
@@ -24,39 +24,39 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3em"></th>
-                        <th [pSortableColumn]="'purchaseReference'">Purchase Reference
+                        <th [pSortableColumn]="'purchaseReference'">{{'Purchase Order.Management.Purchase Reference'|translate}}
                             <p-sortIcon [field]="purchaseReference"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'supplierName'">Supplier Name
+                        <th [pSortableColumn]="'supplierName'">{{'Purchase Order.Management.Supplier Name'|translate}}
                             <p-sortIcon [field]="supplierName"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'supplierAddress'">Supplier Address
+                        <th [pSortableColumn]="'supplierAddress'">{{'Purchase Order.Management.Supplier Address'|translate}}
                             <p-sortIcon [field]="supplierAddress"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'projectName'"> Project Name
+                        <th [pSortableColumn]="'projectName'">{{'Purchase Order.Management.Project Name'|translate}} 
                             <p-sortIcon [field]="projectName"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'storeName'"> Store Name
+                        <th [pSortableColumn]="'storeName'">{{'Purchase Order.Management.Store Name'|translate}} 
                             <p-sortIcon [field]="storeName"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'arrivingDate'"> Arriving Date
+                        <th [pSortableColumn]="'arrivingDate'">{{'Purchase Order.Management.Arriving Date'|translate}} 
                             <p-sortIcon [field]="arrivingDate"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'statusName'">Status Name
+                        <th [pSortableColumn]="'statusName'">{{'Purchase Order.Management.Status Name'|translate}}
                             <p-sortIcon [field]="statusName"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'updatedDate'"> Updated Date
+                        <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}} 
                             <p-sortIcon [field]="updatedDate"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'remarks'"> Remarks
+                        <th [pSortableColumn]="'remarks'">{{'Purchase Order.Management.Remarks'|translate}} 
                             <p-sortIcon [field]="remarks"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'isActive'"> Is Active
+                        <th [pSortableColumn]="'isActive'">{{'Purchase Order.Management.Is Active'|translate}} 
                             <p-sortIcon [field]="isActive"></p-sortIcon>
                         </th>
                         <th class="just-cont-center">
-                            <button mat-button color="primary" matTooltip="Create" (click)="addClick()">
-                                <mat-icon class="mat-button-icon">add</mat-icon>Add Order
+                            <button mat-button color="primary" matTooltip="{{'Purchase Order.Management.Create'|translate}}" (click)="addClick()">
+                                <mat-icon class="mat-button-icon">add</mat-icon>{{'Purchase Order.Management.Add Order'|translate}}
                             </button>
                         </th>
                     </tr>
@@ -102,24 +102,24 @@
                 <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                     <tr>
                         <td [attr.colspan]="12">
-                            <p-table #dt1 [responsive]="true" [value]="purchaseItemList" [rows]="5" [paginator]="true"
+                            <p-table #dt1 [responsive]="true" [value]="purchaseItemList" [rows]="5"  sortField="itemName"  [paginator]="true"
                                 [rowsPerPageOptions]="[5,10,15]">
                                 <ng-template pTemplate="header">
                     <tr>
-                        <th class="product-id" [pSortableColumn]="'itemName'"> Item Name
+                        <th class="product-id" [pSortableColumn]="'itemName'">{{'Purchase Order.Management.Item Name'|translate}}
                             <p-sortIcon [field]="'itemName'"></p-sortIcon>
                         </th>
-                        <th class="product-id" [pSortableColumn]="'itemReference'"> Item Reference
+                        <th class="product-id" [pSortableColumn]="'itemReference'">{{'Purchase Order.Management.Item Reference'|translate}} 
                             <p-sortIcon [field]="'itemReference'"></p-sortIcon>
                         </th>
-                        <th class="product-id" [pSortableColumn]="'quantity'"> Quantity
+                        <th class="product-id" [pSortableColumn]="'quantity'">{{'Purchase Order.Management.Quantity'|translate}} 
                             <p-sortIcon [field]="'quantity'"></p-sortIcon>
                         </th>
 
-                        <th class="product-id" [pSortableColumn]="'expectedCost'">Expected Cost
+                        <th class="product-id" [pSortableColumn]="'expectedCost'">{{'Purchase Order.Management.Expected Cost'|translate}}
                             <p-sortIcon [field]="'expectedCost'"></p-sortIcon>
                         </th>
-                        <th class="product-id" [pSortableColumn]="'comments'">Comments
+                        <th class="product-id" [pSortableColumn]="'comments'">{{'Purchase Order.Management.Comments'|translate}}
                             <p-sortIcon [field]="'comments'"></p-sortIcon>
                         </th>
                         <!-- <th>Actions</th> -->
@@ -138,7 +138,7 @@
                 <ng-template pTemplate="emptymessage" let-columns>
                     <tr *ngIf="purchaseItemList == 0">
                         <td colspan="6" class="ui-datatable-emptymessage text-center">
-                            {{'No Records Found' | translate}}</td>
+                            {{'Purchase Order.Management.No Records Found'|translate}} </td>
                     </tr>
                 </ng-template>
             </p-table>
@@ -147,7 +147,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage" let-columns>
                 <tr>
-                    <td colspan="14" class="ui-datatable-emptymessage text-center">{{'No Records Found' | translate}}
+                    <td colspan="14" class="ui-datatable-emptymessage text-center">{{'Purchase Order.Management.No Records Found'|translate}}
                     </td>
                 </tr>
             </ng-template>
@@ -169,10 +169,10 @@
             <form [formGroup]="orderForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>Purchase Reference</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Purchase Reference'|translate}}</mat-label>
                         <input matInput formControlName="purchaseReference" maxlength="30" required />
                         <mat-error *ngIf="!orderForm.controls['purchaseReference'].valid">
-                            Purchase Reference is Required
+                            {{'Purchase Order.Management.Purchase Reference is Required'|translate}} 
                         </mat-error>
                     </mat-form-field>
 
@@ -188,7 +188,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Project <span>*</span></mat-label>
+                        <mat-label>{{'Purchase Order.Management.Select Project'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="projectId" (ngModelChange)="getStoresByProject($event)">
                             <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
@@ -215,7 +215,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!orderForm.controls['storeId'].valid">
-                            Please Select Store
+                            {{'Purchase Order.Management.Please Select Store'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
@@ -230,7 +230,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
-                        <mat-label>Remarks</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
                         <input matInput formControlName="remarks" required maxlength="100" />
                     </mat-form-field>
                 </div>
@@ -283,7 +283,7 @@
                             </div>
                             <div class="row">
                                 <mat-form-field class="col-md-9">
-                                    <mat-label>Comments</mat-label>
+                                    <mat-label>{{'Purchase Order.Management.Comments'|translate}}</mat-label>
                                     <input matInput formControlName="comments" required maxlength="100" />
                                 </mat-form-field>
                             </div>
@@ -308,17 +308,17 @@
 <div class="page-content" *ngIf="isEdit">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Edit Purchase Order</mat-card-title>
+            <mat-card-title>{{'Purchase Order.Management.Edit Purchase Order'|translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
             <form [formGroup]="orderForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>Purchase Reference</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Purchase Reference'|translate}}</mat-label>
                         <input matInput formControlName="purchaseReference" maxlength="30" required />
                         <mat-error *ngIf="!orderForm.controls['purchaseReference'].valid">
-                            Purchase Reference is Required
+                            {{'Purchase Order.Management.Purchase Reference is Required'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
@@ -333,14 +333,14 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Project <span>*</span></mat-label>
+                        <mat-label>{{'Purchase Order.Management.Select Project'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="projectId" (ngModelChange)="getStoresByProject($event)">
                             <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!orderForm.controls['projectId'].valid">
-                            Please Select Project
+                            {{'Purchase Order.Management. Please Select Project'|translate}}
                         </mat-error>
                     </mat-form-field>
 
@@ -354,18 +354,18 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Store <span>*</span></mat-label>
+                        <mat-label>{{'Purchase Order.Management.Select Store'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="storeId" (ngModelChange)="getStoresByProject($event)">
                             <mat-option *ngFor="let store of storesList" [value]="store.id" required>
                                 {{store.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!orderForm.controls['storeId'].valid">
-                            Please Select Store
+                            {{'Purchase Order.Management.Please Select Store'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}} </mat-label>
+                        <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
                             placeholder="Arriving Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -376,7 +376,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
-                        <mat-label>Remarks</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
                         <input matInput formControlName="remarks" required maxlength="100" />
                     </mat-form-field>
                 </div>
@@ -425,7 +425,7 @@
                             </div>
                             <div class="row">
                                 <mat-form-field class="col-md-9">
-                                    <mat-label>Comments</mat-label>
+                                    <mat-label>{{'Purchase Order.Management.Comments'|translate}}</mat-label>
                                     <input matInput formControlName="comments" required maxlength="100" />
                                 </mat-form-field>
                             </div>
