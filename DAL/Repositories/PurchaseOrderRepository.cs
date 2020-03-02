@@ -382,32 +382,86 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ValueDataResponse<string> GetPurchageItemsPdf(int purchaseId)
+
+        public ValueDataResponse<PurchageOrder> AcceptOrder(int PurchaseId)
         {
-            ValueDataResponse<string> response = new ValueDataResponse<string>();           
-                var purchaseDetails = _appContext.PurchageOrders.Where(x => x.Id == purchaseId).FirstOrDefault();
+            ValueDataResponse<PurchageOrder> response = new ValueDataResponse<PurchageOrder>();
+            try
+            {
+                var purchaseData = _appContext.PurchageOrders.Where(x => x.Id == PurchaseId).FirstOrDefault();
 
-                var supplierDetails = _appContext.Suppliers.Where(x => x.Id == purchaseDetails.SupplierId).FirstOrDefault();
+             
+                if (purchaseData != null)
+                {
+                    purchaseData.StatusTypeId = 15;
+                    _appContext.SaveChanges();
+                }
 
-                var result = (from pi in _appContext.PurchageItemXrefs
-                              join i in _appContext.Items on pi.ItemId equals i.Id
-                              join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
-                              select new GetItemsResponse
-                              {
-                                  Id = pi.Id,
-                                  ItemId = pi.ItemId,
-                                  ItemName = i.Name1,
-                                  ItemReference = i.ItemReference,
-                                  Quantity = pi.Quantity,
-                                  ExpectedCost = pi.ExpectdCost,
+                if (purchaseData != null)
+                {
+                    response.Result = purchaseData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Purchase Order Accepted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Purchase Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
 
-                              }).Where(x => x.PurchaseId == purchaseId).ToList();
-
-                //var pdfResponse = GeneratePurchaseOrderPdf(purchaseDetails, supplierDetails, result);
             return response;
         }
 
-     
+
+        public ValueDataResponse<PurchageOrder> RejectOrder(int PurchaseId)
+        {
+            ValueDataResponse<PurchageOrder> response = new ValueDataResponse<PurchageOrder>();
+            try
+            {
+                var purchaseData = _appContext.PurchageOrders.Where(x => x.Id == PurchaseId).FirstOrDefault();
+
+
+                if (purchaseData != null)
+                {
+                    purchaseData.StatusTypeId = 16;
+                    _appContext.SaveChanges();
+                }
+
+                if (purchaseData != null)
+                {
+                    response.Result = purchaseData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Purchase Order Rejected Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Purchase Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
 
         public byte[] GeneratePurchaseOrderPdf(PurchageOrder purchaseResponse, Supplier supplier, List<GetItemsResponse> itemData, Project project, LookUp store)
         {

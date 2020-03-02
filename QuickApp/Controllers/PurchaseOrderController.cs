@@ -54,5 +54,17 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Purchages.GetItemsByPurchaseId(PurchaseId);
         }
+
+        [HttpGet("AcceptOrder/{PurchaseId}")]
+        public ValueDataResponse<PurchageOrder> AcceptOrder(int PurchaseId)
+        {
+            return _unitOfWork.Purchages.AcceptOrder(PurchaseId);
+        }
+
+        [HttpGet("RejectOrder/{PurchaseId}")]
+        public ValueDataResponse<PurchageOrder> RejectOrder(int PurchaseId)
+        {
+            return _unitOfWork.Purchages.RejectOrder(PurchaseId);
+        }
     }
 }

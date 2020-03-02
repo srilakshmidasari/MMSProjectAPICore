@@ -20,7 +20,9 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<GetItemsResponse> GetItemsByPurchaseId(int PurchaseId);
 
-        ValueDataResponse<string> GetPurchageItemsPdf(int PurchaseId);
+        ValueDataResponse<PurchageOrder> AcceptOrder(int PurchaseId);
+
+        ValueDataResponse<PurchageOrder> RejectOrder(int PurchaseId);
 
     }
 }
