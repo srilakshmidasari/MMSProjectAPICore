@@ -840,6 +840,10 @@ namespace MMS.Migrations
                     b.Property<DateTime>("ArrivingDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("BillingAddress")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
                     b.Property<string>("CreatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -875,6 +879,10 @@ namespace MMS.Migrations
                     b.Property<string>("Remarks")
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<string>("ShippingAddress")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
 
                     b.Property<int>("StatusTypeId")
                         .HasColumnType("int");

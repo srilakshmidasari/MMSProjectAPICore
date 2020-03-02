@@ -54,6 +54,8 @@ namespace DAL.Repositories
                                   FileName = po.FileName,
                                   FileLocation = po.FileLocation,
                                   Remarks = po.Remarks,
+                                  BillindAddress = po.BillingAddress,
+                                  ShippingAddress = po.ShippingAddress,
                                   IsActive = po.IsActive,
                                   CreatedBy = po.CreatedBy,
                                   CreatedDate = po.CreatedDate,
@@ -219,7 +221,8 @@ namespace DAL.Repositories
                     result.UpdatedDate = purchages.UpdatedDate;
                     result.ArrivingDate = purchages.ArrivingDate;
                     result.PurchaseReference = purchages.PurchaseReference;
-
+                    result.BillingAddress = purchages.BillindAddress;
+                    result.ShippingAddress = purchages.ShippingAddress;
                     _appContext.SaveChanges();
 
                     string ModuleName = "Purchase Order";
@@ -639,8 +642,8 @@ namespace DAL.Repositories
             pdfDoc.Add(rqs);
             pdfDoc.Add(c6);
             pdfDoc.Add(rqa);
-          //  pdfDoc.Add(para);
-           // pdfDoc.Add(colTable);
+         // pdfDoc.Add(para);
+         // pdfDoc.Add(colTable);
             pdfDoc.Add(quiclpay);
             pdfDoc.Add(table);
             pdfDoc.Close();

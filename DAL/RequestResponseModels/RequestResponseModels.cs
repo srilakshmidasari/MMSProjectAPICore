@@ -390,6 +390,8 @@ namespace DAL.RequestResponseModels
             public int StoreId { get; set; }
             public string StoreName { get; set; }
             public string Remarks { get; set; }
+            public string BillindAddress { get; set; }
+            public string ShippingAddress { get; set; }
             public int StatusTypeId { get; set; }
             public DateTime ArrivingDate { get; set; }
             public bool IsActive { get; set; }
@@ -438,6 +440,8 @@ namespace DAL.RequestResponseModels
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
+            public string BillindAddress { get; set; }
+            public string ShippingAddress { get; set; }
             public bool IsActive { get; set; }
             public List<PurchaseItem> PurchaseItems { get; set; }
 

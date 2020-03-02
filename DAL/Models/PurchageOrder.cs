@@ -54,6 +54,15 @@ namespace DAL.Models
         [StringLength(200)]
         public string Remarks { get; set; }
 
+        
+        [Display(Name = "Billing Address")]
+        [StringLength(500)]
+        public string BillingAddress { get; set; }
+
+        [Display(Name = "Shipping Address")]
+        [StringLength(500)]
+        public string ShippingAddress { get; set; }
+
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
