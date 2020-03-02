@@ -496,39 +496,52 @@
    "Cancel":"إلغاء"
   }
 },
-  "Purchase Order":{
-    "Management":{
-      "Search":"البحث عن أمر الشراء ...",
-      "Supplier Name":"اسم المورد",
-      "Supplier Address":"عنوان المورد",
-     "Arriving Date":"تاريخ الوصول",
-     "UpdatedDate":"تاريخ التحديث",
-     "Is Active":"نشط",
-     "Add Order":"أضف طلب",
-     "Add Item":"اضافة عنصر",
-     "Add":"إضافة",
-     "Edit":"تعديل",
-     "Delete":"حذف",
-     "No Records Found":"لا توجد سجلات",
-     "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
-     "Add Purchase Order":"أضف طلب شراء",
-     "Edit Purchase Order":"تحرير أمر الشراء",
-     "Select Supplier":"حدد المورد",
-     "Please Select Supplier":"يرجى اختيار المورد",
-     "Arriving Date is Required":"تاريخ الوصول مطلوب",
-     "Please Select Item" :"يرجى اختيار البند",
-     "Quantity is required": "الكمية المطلوبة",
-     "Expected Cost is required":"التكلفة المتوقعة مطلوبة",
-     "Select Item":"اختر البند",
-     "Quantity":"كمية",
-     "Expected Cost":"التكلفة المتوقعة",
-     "Save":"حفظ",
-     "Cancel":"إلغاء",
-      "Item":"بند",
-      "Remove":"إزالة"
-    }
-   }
-
+"Purchase Order":{
+  "Management":{
+    "Search By Purchase Order":"البحث عن طريق طلب الشراء",
+    "Search":"البحث عن أمر الشراء ...",
+    "Purchase Reference":"شراء مرجع",
+    "Supplier Name":"اسم المورد",
+    "Supplier Address":"عنوان المورد",
+    "Project Name":"اسم المشروع",
+    "Store Name":"اسم المتجر",
+    "Arriving Date":"تاريخ الوصول",
+    "Status Name":"اسم الحالة",
+    "Updated Date":"تاريخ التحديث",
+    "Remarks":"ملاحظات",
+    "Is Active":"نشط",
+    "Create":"خلق",
+    "Add Order":"أضف طلب",
+    "Edit":"تعديل",
+    "Delete":"حذف",
+    "Item Name":"اسم العنصر",
+    "Item Reference":"مرجع البند",
+    "Quantity":"كمية",
+    "Expected Cost":"التكلفة المتوقعة",
+    "Comments":"تعليقات",
+    "No Records Found":"لا توجد سجلات",
+    "Add Purchase Order":"أضف طلب شراء",
+    "Edit Purchase Order":"تحرير أمر الشراء",
+    "Purchase Reference is Required":"مرجع الشراء مطلوب",
+    "Select Supplier":"حدد المورد",
+    "Please Select Supplier":"يرجى اختيار المورد",
+    "Please Select Project":"يرجى اختيار المشروع",
+    "Add Item":"اضافة عنصر",
+    "Select Store":"اختر المتجر",
+    "Please Select Store":"يرجى اختيار المتجر",
+    "Arriving Date is Required":"تاريخ الوصول مطلوب",
+    "Item":"بند",
+    "Select Item":"اختر البند",
+    "Please Select Item":"يرجى اختيار البند",
+    "Quantity is Required":"الكمية المطلوبة",
+    "Expected Cost is Required":"التكلفة المتوقعة مطلوبة",
+    "Remove":"إزالة",
+    "Save":"حفظ",
+    "Cancel":"إلغاء",
+    "Select Project":"اختر المشروع",
+    "Add":"إضافة"
+  }
+ }
 }
 
 
