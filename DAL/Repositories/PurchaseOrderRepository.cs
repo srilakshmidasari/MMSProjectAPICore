@@ -12,6 +12,7 @@ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using Microsoft.Extensions.Hosting.Internal;
 using System.IO;
+using iTextSharp.text.pdf.draw;
 
 namespace DAL.Repositories
 {
@@ -48,7 +49,7 @@ namespace DAL.Repositories
                                   ProjectId = po.ProjectId,
                                   ProjectName = p.Name1,
                                   StoreId = po.StoreId,
-                                  StoreName =lo.Name1,
+                                  StoreName = lo.Name1,
                                   ArrivingDate = po.ArrivingDate,
                                   FileExtention = po.FileExtention,
                                   FileName = po.FileName,
@@ -158,7 +159,7 @@ namespace DAL.Repositories
 
                 if (pro != null)
                 {
-                    response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, pro.FileLocation, pro.FileName, pro.FileExtention); 
+                    response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, pro.FileLocation, pro.FileName, pro.FileExtention);
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
                     response.EndUserMessage = "PurchageOrder Added Successfully";
@@ -204,7 +205,7 @@ namespace DAL.Repositories
                         Comments = it.Comments
                     });
                 }
-               
+
                 if (result != null)
                 {
                     result.SupplierId = purchages.SupplierId;
@@ -238,7 +239,7 @@ namespace DAL.Repositories
 
                     string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                 
+
                     var supplier = _appContext.Suppliers.Where(x => x.Id == pro.SupplierId).FirstOrDefault();
                     var project = _appContext.Projects.Where(x => x.Id == pro.ProjectId).FirstOrDefault();
                     var store = _appContext.LookUps.Where(x => x.Id == pro.StoreId).FirstOrDefault();
@@ -390,7 +391,7 @@ namespace DAL.Repositories
             {
                 var purchaseData = _appContext.PurchageOrders.Where(x => x.Id == PurchaseId).FirstOrDefault();
 
-             
+
                 if (purchaseData != null)
                 {
                     purchaseData.StatusTypeId = 15;
@@ -491,7 +492,7 @@ namespace DAL.Repositories
             //leave a gap before and after the table
             table.SpacingBefore = 10f;
 
-          //  table.SpacingAfter = 30f;
+            //  table.SpacingAfter = 30f;
 
             table.SetWidths(widths);
 
@@ -506,7 +507,7 @@ namespace DAL.Repositories
             colTable.LockedWidth = true;
 
             //set col widths in proportions - 1/3 and 2/3
-            float[] colWidths = new float[] { 2f, 2f, 2f, 2f,2f};
+            float[] colWidths = new float[] { 2f, 2f, 2f, 2f, 2f };
             colTable.SetWidths(colWidths);
             colTable.HorizontalAlignment = 0;
 
@@ -548,10 +549,10 @@ namespace DAL.Repositories
 
             colCell = new PdfPCell(new Phrase("Supplier Name", FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK)));
             colTable.AddCell(colCell);
-           
+
             colCell = new PdfPCell(new Phrase(1, "Supplier Address", FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK)));
             colTable.AddCell(colCell);
-            
+
             colCell = new PdfPCell(new Phrase(1, "Arriving Date ", FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK)));
             colTable.AddCell(colCell);
 
@@ -570,7 +571,7 @@ namespace DAL.Repositories
             DateTime Date = purchaseResponse.ArrivingDate;
             colCell = new PdfPCell(new Phrase(Date.ToString("dd/MM/yyyy")));
             colTable.AddCell(colCell);
-
+   
 
 
 
@@ -590,7 +591,8 @@ namespace DAL.Repositories
             //cell.HorizontalAlignment = Element.ALIGN_RIGHT;
             table.AddCell(cell);
 
-            foreach (var it in itemData) {
+            foreach (var it in itemData)
+            {
 
                 cell = new PdfPCell(new Phrase(it.ItemName));
                 table.AddCell(cell);
@@ -611,9 +613,9 @@ namespace DAL.Repositories
             Font mailsubHeader = FontFactory.GetFont("Calibri", 9, Font.BOLD, BaseColor.BLACK);
             Font fontHeader = FontFactory.GetFont("Calibri", 15, Font.BOLD, new BaseColor(0, 25, 51));
             Font fontTitle = FontFactory.GetFont("Calibri", 12, Font.BOLD, new BaseColor(12, 95, 151));
-            Font detailstyle = FontFactory.GetFont("Calibri", 10, Font.BOLD);
-            
-          
+            Font detailstyle = FontFactory.GetFont("Calibri", 13, Font.BOLD);
+
+
             string header = "CALIBER MAINTENANCE MANAGEMENT SYSTEM";
             string subheader1 = "132/A, Bluepal Building";
             string subheader2 = "Opp JNTU, Kukatpally, Hyderabad - 500 072.";
@@ -626,64 +628,99 @@ namespace DAL.Repositories
             header = header.PadLeft(40);
             subheader1 = subheader1.PadLeft(60);
             subheader3 = subheader3.PadLeft(90);
-         
+
 
             // set header names with styles //
 
             Paragraph head = new Paragraph(header + "\n", mainHeader);
             Paragraph subhead = new Paragraph(subheader1 + subheader2 + "\n", subHeader);
             Paragraph subhead2 = new Paragraph(subheader3 + "\n", mailsubHeader);
-            Phrase phrase = new Phrase();
-            Paragraph para = new Paragraph();
+
+           
             // get farmer and request details and set font style//
             Paragraph fName = new Paragraph(purchaseResponse.PurchaseReference, mailsubHeader);
 
-
-            // align Purchase Order details and request details
+           // align Purchase Order details and request details
             Chunk c1 = new Chunk("Purchase Reference :");
-            Chunk fc = new Chunk(" " + purchaseResponse.PurchaseReference,  detailstyle);
-         
+            Chunk fc = new Chunk(" " + purchaseResponse.PurchaseReference + "\n", detailstyle);
+            c1.Content.PadLeft(30);
 
             Chunk c2 = new Chunk("Project Name :");
             Chunk fn = new Chunk(" " + project.Name1 + "\n", detailstyle);
-            phrase.Add(c2);
-            para.Add(phrase);
-            para.Alignment = Element.ALIGN_RIGHT;
-
-
+            c2.Content.PadLeft(30);
 
             Chunk c3 = new Chunk("Store Name :");
-            Chunk rqc = new Chunk(" " + store.Name1 , detailstyle);
-           
+            Chunk rqc = new Chunk(" " + store.Name1 + "\n", detailstyle);
+            c3.Content.PadLeft(30);
 
             Chunk c4 = new Chunk("Supplier Name:");
-            Chunk rqd = new Chunk(" " +  supplier.Name1 + "\n", detailstyle);
-            phrase.Add(c4);
-            para.Add(phrase);
-            para.Alignment = Element.ALIGN_RIGHT;
-
+            Chunk rqd = new Chunk(" " + supplier.Name1 + "\n", detailstyle);
+            c4.Content.PadLeft(30);
 
             Chunk c5 = new Chunk("Supplier Address:");
-            Chunk rqs = new Chunk(" " + supplier.Address , detailstyle);
-          
-               
+            Chunk rqs = new Chunk(" " + supplier.Address + "\n", detailstyle);
+            c5.Content.PadLeft(30);
+
             DateTime DateAr = purchaseResponse.ArrivingDate;
 
             Chunk c6 = new Chunk("Arriving Date:");
             Chunk rqa = new Chunk(" " + DateAr.ToString("dd/MM/yyyy") + "\n", detailstyle);
-            phrase.Add(c6);
-            para.Add(phrase);
-            para.Alignment = Element.ALIGN_RIGHT;
+            c6.Content.PadLeft(30);
+           
+            //Chunk glue = new Chunk(new VerticalPositionMark());
+            //Phrase ph = new Phrase();
+            //ph.Add(new Chunk(Environment.NewLine));
+
+            //Phrase ph1 = new Phrase();
+            //ph1.Add(new Chunk(Environment.NewLine));
+
+            //Phrase ph2 = new Phrase();
+            //ph1.Add(new Chunk(Environment.NewLine));
+
+            //string reference = "Purchase Reference : " + purchaseResponse.PurchaseReference.ToString();
+            //string projectname = "Project Name: " + project.Name1.ToString();
+            //string storename = "Store Name: " + store.Name1.ToString();
+            //string suppliername = "Supplier Name: " + supplier.Name1.ToString();
+            //string supplierAddress = "Supplier Address: " + supplier.Address.ToString();
+            //DateTime DateAr = purchaseResponse.ArrivingDate;
+            //string arrivingDate = "Arriving Date: " + DateAr.ToString("dd/MM/yyyy");
+
+
+
+            //Paragraph main = new Paragraph();
+            //ph.Add(new Chunk(reference));
+            //ph.Add(glue);
+            //glue.Content.PadLeft(100);
+            //ph.Add(new Chunk(projectname));
+
+            //Paragraph main1 = new Paragraph();
+            //ph1.Add(new Chunk(storename));
+            //ph1.Add(glue);
+            //glue.Content.PadLeft(100);
+            //ph1.Add(new Chunk(suppliername));
+
+            //Paragraph main2 = new Paragraph();
+            //ph2.Add(new Chunk(supplierAddress));
+            //glue.Content.PadLeft(100);
+            //ph2.Add(glue);
+            //ph2.Add(new Chunk(arrivingDate));
+
+            //main.Add(ph);
+            //main1.Add(ph1);
+            //main2.Add(ph2);
 
             Paragraph purchaseData = new Paragraph(purchaseInfo, fontTitle);
 
             Paragraph quiclpay = new Paragraph(itemInfo, fontTitle);
             BaseColor bc = new BaseColor(5);
-           
+
             pdfDoc.Add(head);
             pdfDoc.Add(subhead);
             pdfDoc.Add(subhead2);
             pdfDoc.Add(purchaseData);
+            //pdfDoc.Add(main);
+            //pdfDoc.Add(main1);
+            //pdfDoc.Add(main2);
             pdfDoc.Add(c1);
             pdfDoc.Add(fc);
             pdfDoc.Add(c2);
@@ -696,8 +733,8 @@ namespace DAL.Repositories
             pdfDoc.Add(rqs);
             pdfDoc.Add(c6);
             pdfDoc.Add(rqa);
-         // pdfDoc.Add(para);
-         // pdfDoc.Add(colTable);
+            // pdfDoc.Add(para);
+            // pdfDoc.Add(colTable);
             pdfDoc.Add(quiclpay);
             pdfDoc.Add(table);
             pdfDoc.Close();
@@ -706,6 +743,6 @@ namespace DAL.Repositories
             return ms.ToArray();
         }
 
-        
+
     }
 }

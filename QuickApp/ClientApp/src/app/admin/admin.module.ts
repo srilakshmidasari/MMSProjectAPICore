@@ -37,6 +37,7 @@ import {TableModule} from 'primeng/table';
 import {InputTextModule} from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 import { DocumentFileComponent } from './inventory/document-file/document-file.component';
+import { WorkOrderComponent } from './inventory/work-order/work-order.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,8 @@ import { DocumentFileComponent } from './inventory/document-file/document-file.c
     SupplierComponent,
     ItemComponent,
     PurchaseorderComponent,
-    DocumentFileComponent
+    DocumentFileComponent,
+    WorkOrderComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
