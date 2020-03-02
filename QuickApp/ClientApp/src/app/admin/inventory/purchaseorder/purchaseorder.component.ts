@@ -163,6 +163,7 @@ export class PurchaseorderComponent implements OnInit {
   getStoresByProject(event){
     debugger
     this.storesList =[];
+    this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(event)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
@@ -205,6 +206,8 @@ export class PurchaseorderComponent implements OnInit {
     this.purchaseData = {};
     this.isAdding = true;
     this.isNewPurchase = true;
+    const arr = <FormArray>this.itemFrom.controls.credentials;
+    arr.controls = [];
     this.buildForm();
     this.addItem(this.i);
 
@@ -255,10 +258,9 @@ export class PurchaseorderComponent implements OnInit {
           if (response.isSuccess) {
             this.getPurchaseOrders();
             this.isAdding = false;
-           // this.onPdfDocument(response.result)
             this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
             this.resetForm();
-           
+            this.onViewPDF(response.result);
           } else {
             this.alertService.stopLoadingMessage();
             this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
@@ -271,17 +273,17 @@ export class PurchaseorderComponent implements OnInit {
     }
     else {
       this.accountService.UpdatePurchaseOrder(editeditem).subscribe(
-        (result: any) => {
+        (response: any) => {
           this.alertService.stopLoadingMessage();
-          if (result.isSuccess) {
+          if (response.isSuccess) {
             this.isAdding = false;
             this.isEdit = false;
-            this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
             this.getPurchaseOrders();
-
+            this.onViewPDF(response.result);
           } else {
             this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
           }
         }, error => {
           this.alertService.stopLoadingMessage();
@@ -371,6 +373,10 @@ export class PurchaseorderComponent implements OnInit {
 
   onViewDoc(row) {
     window.open(row.pdfUrl);
+  }
+
+  onViewPDF(doc) {
+    window.open(doc);
   }
 
 }

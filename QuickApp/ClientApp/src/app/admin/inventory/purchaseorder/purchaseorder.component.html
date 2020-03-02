@@ -209,7 +209,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label>Select Store <span>*</span></mat-label>
-                        <mat-select formControlName="storeId" (ngModelChange)="getStoresByProject($event)">
+                        <mat-select formControlName="storeId">
                             <mat-option *ngFor="let store of storesList" [value]="store.id" required>
                                 {{store.name1}}
                             </mat-option>
