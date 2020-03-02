@@ -410,4 +410,11 @@ deleteAssetRepository(repositoryId) {
   deletePurchaseOrder(purchageId){
     return this.accountEndpoint.deletePurchaseOrderEndpoint(purchageId);
   }
+  AcceptPurchaseOrder(purchageId){
+    return this.accountEndpoint.AcceptPurchaseOrderEndpoint(purchageId);
+  }
+
+  RejectPurchaseOrder(purchageId){
+    return this.accountEndpoint.RejectPurchaseOrderEndpoint(purchageId);
+  }
 }
