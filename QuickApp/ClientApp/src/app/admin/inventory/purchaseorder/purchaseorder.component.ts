@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, Validators, FormArray, FormControl } from '@ang
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { DocumentFileComponent } from '../document-file/document-file.component';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -162,6 +163,7 @@ export class PurchaseorderComponent implements OnInit {
   getStoresByProject(event){
     debugger
     this.storesList =[];
+    this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(event)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
@@ -204,6 +206,8 @@ export class PurchaseorderComponent implements OnInit {
     this.purchaseData = {};
     this.isAdding = true;
     this.isNewPurchase = true;
+    const arr = <FormArray>this.itemFrom.controls.credentials;
+    arr.controls = [];
     this.buildForm();
     this.addItem(this.i);
 
@@ -249,16 +253,17 @@ export class PurchaseorderComponent implements OnInit {
     const editeditem = this.AddAllItemData();
     if (this.isNewPurchase) {
       this.accountService.AddPurchaseOrder(editeditem).subscribe(
-        (result: any) => {
+        (response: any) => {
           this.alertService.stopLoadingMessage();
-          if (result.isSuccess) {
+          if (response.isSuccess) {
             this.getPurchaseOrders();
             this.isAdding = false;
-            this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
             this.resetForm();
+            this.onViewPDF(response.result);
           } else {
             this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
           }
         }, error => {
           this.alertService.stopLoadingMessage();
@@ -268,17 +273,17 @@ export class PurchaseorderComponent implements OnInit {
     }
     else {
       this.accountService.UpdatePurchaseOrder(editeditem).subscribe(
-        (result: any) => {
+        (response: any) => {
           this.alertService.stopLoadingMessage();
-          if (result.isSuccess) {
+          if (response.isSuccess) {
             this.isAdding = false;
             this.isEdit = false;
-            this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
             this.getPurchaseOrders();
-
+            this.onViewPDF(response.result);
           } else {
             this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
           }
         }, error => {
           this.alertService.stopLoadingMessage();
@@ -356,8 +361,23 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
+  onPdfDocument(result) {
+    const dialogRef = this.dialog.open(DocumentFileComponent,
+      {
+        panelClass: 'mat-dialog-md',
+        data: { result }
+      });
+    dialogRef.afterClosed().subscribe(siteresponse => {
+    });
+  }
 
+  onViewDoc(row) {
+    window.open(row.pdfUrl);
+  }
 
+  onViewPDF(doc) {
+    window.open(doc);
+  }
 
 }
 

@@ -32,13 +32,13 @@ namespace MMS.Controllers
         }
 
         [HttpPost]
-        public ValueDataResponse<PurchageOrder> Insert(UpsertPurchaseOrder purchases)
+        public ValueDataResponse<string> Insert(UpsertPurchaseOrder purchases)
         {
             return _unitOfWork.Purchages.InsertPurchaseOrder(purchases);
         }
 
         [HttpPut]
-        public ValueDataResponse<PurchageOrder> Update(UpsertPurchaseOrder purchases)
+        public ValueDataResponse<string> Update(UpsertPurchaseOrder purchases)
         {
             return _unitOfWork.Purchages.UpdatePurchaseOrder(purchases);
         }

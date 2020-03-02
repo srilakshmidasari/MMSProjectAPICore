@@ -12,9 +12,9 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<GetPurchageResponse> GetAllPurchases();
 
-        ValueDataResponse<PurchageOrder> InsertPurchaseOrder(UpsertPurchaseOrder purchages);
+        ValueDataResponse<string> InsertPurchaseOrder(UpsertPurchaseOrder purchages);
 
-        ValueDataResponse<PurchageOrder> UpdatePurchaseOrder(UpsertPurchaseOrder purchages);
+        ValueDataResponse<string> UpdatePurchaseOrder(UpsertPurchaseOrder purchages);
 
         ValueDataResponse<PurchageOrder> DeletePurchaseOrder(int PurchaseId);
 
