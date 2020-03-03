@@ -74,6 +74,7 @@ export class WorkOrderComponent implements OnInit {
     this.accountService.getItemsByWorkOrderId(row.id)
       .subscribe((results: any) => {
         this.workOrderItemList = results.listResult == null ? [] : results.listResult;
+        this.setItems(this.workOrderItemList)
       },
         error => {
         });
@@ -243,7 +244,10 @@ export class WorkOrderComponent implements OnInit {
       this.isNewOrder = false;
       this.orderData = order;
       this.getItemsByworkOrderId(order);
-      this.getStoresByProject(order.projectId)
+      this.onSelectSiteByProject(order.siteId);
+      this.onSelectProjectByLocation(order.projectId)
+      this.onSelectLocationByProject(order.locationId)
+      this.getStoresByProject(order.projectId);
       this.resetForm();
   
     }
@@ -280,7 +284,7 @@ export class WorkOrderComponent implements OnInit {
         workTypeId:this.orderData.workTypeId ||'',
         workStatusId:this.orderData.workStatusId ||'',
         workFaultId:this.orderData.workFaultId || '',
-        workTechId:this.orderData.workTechId ||''
+        workTechId:this.orderData.workTechnicianId ||''
       });
     }
 
@@ -334,6 +338,8 @@ export class WorkOrderComponent implements OnInit {
       }
     }
 
+
+  
     private AddAllItemData(): any {
       var workOrderItems = [];
       for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
@@ -371,5 +377,17 @@ export class WorkOrderComponent implements OnInit {
 
     get currentUser() {
       return this.authService.currentUser;
+    }
+
+    
+    setItems(itemsArray: any[]) {
+      let control = this.formBuilder.array([]);
+      itemsArray.forEach(x => {
+        control.push(this.formBuilder.group({
+          itemId: x.itemId,
+          quantity: x.quantity,
+        }))
+      })
+      this.itemFrom.setControl('credentials', control);
     }
 }

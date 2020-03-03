@@ -57,7 +57,7 @@ namespace DAL.Repositories
                                   FileName = po.FileName,
                                   FileLocation = po.FileLocation,
                                   Remarks = po.Remarks,
-                                  BillindAddress = po.BillingAddress,
+                                  BillingAddress = po.BillingAddress,
                                   ShippingAddress = po.ShippingAddress,
                                   IsActive = po.IsActive,
                                   CreatedBy = po.CreatedBy,
@@ -137,10 +137,10 @@ namespace DAL.Repositories
                                  Comments = pi.Comments,
                                  ExpectedCost = pi.ExpectdCost,
 
-                             }).Where(x => x.PurchaseId == pro.Id).ToList();
+                             }).Where(x => x.PurchaseId == pro.Id).FirstOrDefault();
                 DateTime Date = pro.ArrivingDate;
                
-                string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, items, null);
+                string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items.ItemName, items.Quantity, items.ExpectedCost, items.Comments, null);
                 if (message != null)
                 {
                     string ModuleName = "PurchaseOrder";
@@ -242,23 +242,9 @@ namespace DAL.Repositories
                     result.UpdatedDate = purchages.UpdatedDate;
                     result.ArrivingDate = purchages.ArrivingDate;
                     result.PurchaseReference = purchages.PurchaseReference;
-                    result.BillingAddress = purchages.BillindAddress;
+                    result.BillingAddress = purchages.BillingAddress;
                     result.ShippingAddress = purchages.ShippingAddress;
                     _appContext.SaveChanges();
-
-                    string ModuleName = "Purchase Order";
-                    var now = DateTime.Now;
-                    var yearName = now.ToString("yyyy");
-                    var monthName = now.Month.ToString("d2");
-                    var dayName = now.ToString("dd");
-
-                    FileUploadService repo = new FileUploadService();
-
-                    string FolderLocation = "FileRepository";
-                    string ServerRootPath = _config.Value.ServerRootPath;
-
-                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
-
 
                     var supplier = _appContext.Suppliers.Where(x => x.Id == pro.SupplierId).FirstOrDefault();
                     var project = _appContext.Projects.Where(x => x.Id == pro.ProjectId).FirstOrDefault();
@@ -278,16 +264,53 @@ namespace DAL.Repositories
                                      Quantity = pi.Quantity,
                                      Comments = pi.Comments,
                                      ExpectedCost = pi.ExpectdCost,
+                                 }).Where(x => x.PurchaseId == pro.Id).FirstOrDefault();
 
-                                 }).Where(x => x.PurchaseId == pro.Id).ToList();
+                    string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items.ItemName, items.Quantity, items.ExpectedCost, items.Comments, null);
+                    if(message != null)
+                    {
+                        string ModuleName = "Purchase Order";
+                        var now = DateTime.Now;
+                        var yearName = now.ToString("yyyy");
+                        var monthName = now.Month.ToString("d2");
+                        var dayName = now.ToString("dd");
 
-                    byteArray = GeneratePurchaseOrderPdf(pro, supplier, items, project, store);
+                        FileUploadService repo = new FileUploadService();
 
-                    result.FileName = repo.UploadFile(byteArray, pro.FileExtention, Location);
+                        string FolderLocation = "FileRepository";
+                        string ServerRootPath = _config.Value.ServerRootPath;
 
-                    result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
 
-                    _appContext.SaveChanges();
+                        var converter = new HtmlConverter();
+                        var html = message;
+
+                        Byte[] bytes = converter.FromHtmlString(html);
+
+                        string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+
+                        string ImageUrl = "data:image/png;base64," + base64String;
+
+                        byte[] FileBytes = Convert.FromBase64String(base64String);
+
+
+                        result.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
+
+
+                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                        _appContext.SaveChanges();
+
+                        //byteArray = GeneratePurchaseOrderPdf(pro, supplier, items, project, store);
+
+                        //result.FileName = repo.UploadFile(byteArray, pro.FileExtention, Location);
+
+                        //result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                        //_appContext.SaveChanges();
+                    }
+
+                    
 
                     if (pro != null)
                     {

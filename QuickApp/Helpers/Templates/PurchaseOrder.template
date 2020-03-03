@@ -2,7 +2,7 @@
   <!--<div id="background" style="position: absolute; z-index: 0; background: white; display: block; min-height: 50%; min-width: 50%; color: yellow;left:14%;top:-8%;vertical-align:central;justify-items:center;align-items:center;">
     <p id="bg-text" style="color: lightgrey; font-size: 52px; transform: rotate(300deg); -webkit-transform: rotate(300deg);">CALIBAR TECH</p>
   </div>-->
-  <div class="main-content" style="position: absolute; z-index: 1;width: 1024px !important;height: 480px !important;">
+  <div class="main-content" style="position: absolute; z-index: 1;width: 1024px !important;height: 500px !important;">
     <div style="text-align:center;">
       <h1 style="text-transform:uppercase">CALIBER MAINTENANCE MANAGEMENT SYSTEM</h1>
       <p style="margin-bottom:0px;">
@@ -69,7 +69,27 @@
             <tr>
               <td>Arriving Date</td>
               <td>:</td>
-              <td>{{arrivingDate}}</td>
+              <td>{arrivingDate}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <td>Billing Address</td>
+              <td>:</td>
+              <td>{billingAddress}</td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>Shipping Address</td>
+              <td>:</td>
+              <td>{shippingAddress}</td>
             </tr>
           </table>
         </td>
@@ -88,10 +108,10 @@
       </thead>
       <tbody>
         <tr>
-          <td style="border:1px solid #333;">KeyBoard</td>
-          <td style="border:1px solid #333;">1</td>
-          <td style="border:1px solid #333;">109</td>
-          <td style="border:1px solid #333;">asgsxb</td>
+          <td style="border:1px solid #333;">{ItemName}</td>
+          <td style="border:1px solid #333;">{Quantity}</td>
+          <td style="border:1px solid #333;">{ExpectedCost}</td>
+          <td style="border:1px solid #333;">{Comments}</td>
         </tr>
       </tbody>
     </table>

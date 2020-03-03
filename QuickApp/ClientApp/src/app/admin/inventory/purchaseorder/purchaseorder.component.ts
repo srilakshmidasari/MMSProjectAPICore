@@ -242,7 +242,7 @@ export class PurchaseorderComponent implements OnInit {
       projectId: this.purchaseData.projectId || '',
       storeId: this.purchaseData.storeId || '',
       remarks: this.purchaseData.remarks || '',
-      billindAddress:this.purchaseData.billindAddress ||'',
+      billindAddress:this.purchaseData.billingAddress ||'',
       shippingAddress:this.purchaseData.shippingAddress ||'',
       arrivingDate: this.purchaseData.arrivingDate || '',
       purchaseReference: this.purchaseData.purchaseReference || ''
@@ -321,7 +321,7 @@ export class PurchaseorderComponent implements OnInit {
       "projectId": formModel.projectId,
       "storeId": formModel.storeId,
       "remarks": formModel.remarks,
-      "billindAddress":formModel.billindAddress,
+      "billingAddress":formModel.billindAddress,
       "shippingAddress":formModel.shippingAddress,
       "fileName": "",
       "fileLocation": "",
@@ -401,7 +401,7 @@ export class PurchaseorderComponent implements OnInit {
   rejectClick(order: any){
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Reject", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Reject' },
+      data: { title: "Reject", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

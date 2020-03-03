@@ -10,6 +10,7 @@ using System.IO;
 using static System.Net.Mime.MediaTypeNames;
 using static DAL.RequestResponseModels.RequestResponseModels;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DAL.Helpers
 {
@@ -84,11 +85,16 @@ namespace DAL.Helpers
             return emailMessage;
         }
 
-        public static string GetPurchaseOrder(string purchaseReference, DateTime arrivingDate, string projectName, string storeName, string supplierName, string supplierAdtees, List<GetItemsResponse> itemData, string callbackUrl)
+        public static string GetPurchaseOrder(string purchaseReference, DateTime arrivingDate, string projectName, string storeName, string supplierName, string supplierAdtees, string billingAddress,string shippingAddress, string ItemName, int Quantity, double ExpectedCost, string Comments,string callbackUrl)
         {
             if (purchaseOrderTemplate == null)
                 purchaseOrderTemplate = ReadPhysicalFile("Helpers/Templates/PurchaseOrder.template");
-
+            //List<string> l = (from char c in itemData
+            //                  select c.ToString()).ToList();
+            //foreach (var file in itemData)
+            //{
+            //    string[] strSplittedFileName = file.Split(@"\");
+            //}
             string OrderMessage = purchaseOrderTemplate
                  .Replace("{PurchaseReference}", purchaseReference)
                  .Replace("{ProjectName}", projectName)
@@ -96,6 +102,12 @@ namespace DAL.Helpers
                  .Replace("{SupplierName}", supplierName)
                  .Replace("{supplierAdtees}", supplierAdtees)
                  .Replace("{arrivingDate}", arrivingDate.ToString("dd/MM/yyyy"))
+                 .Replace("{billingAddress}", billingAddress)
+                 .Replace("{shippingAddress}", shippingAddress)
+                 .Replace("{ItemName}", ItemName)
+                 .Replace("{Quantity}", Quantity.ToString())
+                 .Replace("{ExpectedCost}", ExpectedCost.ToString())
+                 .Replace("{Comments}", Comments)
                  .Replace("{url}", callbackUrl);
             return OrderMessage;
         }

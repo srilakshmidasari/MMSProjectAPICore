@@ -51,8 +51,8 @@
                         <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}}
                             <p-sortIcon [field]="updatedDate"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'billindAddress'">Billing Address
-                            <p-sortIcon [field]="billindAddress"></p-sortIcon>
+                        <th [pSortableColumn]="'billingAddress'">Billing Address
+                            <p-sortIcon [field]="billingAddress"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'shippingAddress'">Shipping Address
                             <p-sortIcon [field]="shippingAddress"></p-sortIcon>
@@ -89,7 +89,7 @@
                         <td>{{req.arrivingDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.statusName}}</td>
                         <td>{{req.updatedDate | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{req.billindAddress}}</td>
+                        <td>{{req.billingAddress}}</td>
                         <td>{{req.shippingAddress}}</td>
                         <td>{{req.remarks}}</td>
                         <td align="center">
