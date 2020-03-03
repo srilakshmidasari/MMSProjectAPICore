@@ -70,7 +70,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
 
-  private getItemsByworkOrderId(row) {
+  getItemsByworkOrderId(row,val) {
     this.accountService.getItemsByWorkOrderId(row.id)
       .subscribe((results: any) => {
         this.workOrderItemList = results.listResult == null ? [] : results.listResult;
@@ -243,7 +243,7 @@ export class WorkOrderComponent implements OnInit {
       this.isAdding = false;
       this.isNewOrder = false;
       this.orderData = order;
-      this.getItemsByworkOrderId(order);
+      this.getItemsByworkOrderId(order,true);
       this.onSelectSiteByProject(order.siteId);
       this.onSelectProjectByLocation(order.projectId)
       this.onSelectLocationByProject(order.locationId)

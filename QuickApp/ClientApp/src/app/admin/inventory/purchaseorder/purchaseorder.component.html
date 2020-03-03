@@ -27,41 +27,40 @@
                         <th style="width: 3em"></th>
                         <th [pSortableColumn]="'purchaseReference'">
                             {{'Purchase Order.Management.Purchase Reference'|translate}}
-                            <p-sortIcon [field]="purchaseReference"></p-sortIcon>
+                            <p-sortIcon [field]="'purchaseReference'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'supplierName'">{{'Purchase Order.Management.Supplier Name'|translate}}
-                            <p-sortIcon [field]="supplierName"></p-sortIcon>
+                            <p-sortIcon [field]="'supplierName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'supplierAddress'">
                             {{'Purchase Order.Management.Supplier Address'|translate}}
-                            <p-sortIcon [field]="supplierAddress"></p-sortIcon>
+                            <p-sortIcon [field]="'supplierAddress'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'projectName'">{{'Purchase Order.Management.Project Name'|translate}}
-                            <p-sortIcon [field]="projectName"></p-sortIcon>
+                            <p-sortIcon [field]="'projectName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'storeName'">{{'Purchase Order.Management.Store Name'|translate}}
-                            <p-sortIcon [field]="storeName"></p-sortIcon>
+                            <p-sortIcon [field]="'storeName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'arrivingDate'">{{'Purchase Order.Management.Arriving Date'|translate}}
-                            <p-sortIcon [field]="arrivingDate"></p-sortIcon>
+                            <p-sortIcon [field]="'arrivingDate'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'statusName'">{{'Purchase Order.Management.Status Name'|translate}}
-                            <p-sortIcon [field]="statusName"></p-sortIcon>
+                            <p-sortIcon [field]="'statusName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}}
-                            <p-sortIcon [field]="updatedDate"></p-sortIcon>
+                            <p-sortIcon [field]="'updatedDate'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'billingAddress'">Billing Address
-                            <p-sortIcon [field]="billingAddress"></p-sortIcon>
+                            <p-sortIcon [field]="'billingAddress'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'shippingAddress'">Shipping Address
-                            <p-sortIcon [field]="shippingAddress"></p-sortIcon>
+                            <p-sortIcon [field]="'shippingAddress'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'remarks'">{{'Purchase Order.Management.Remarks'|translate}}
-                            <p-sortIcon [field]="remarks"></p-sortIcon>
+                            <p-sortIcon [field]="'remarks'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'isActive'">{{'Purchase Order.Management.Is Active'|translate}}
-                            <p-sortIcon [field]="isActive"></p-sortIcon>
+                        <th>{{'Purchase Order.Management.Is Active'|translate}}
                         </th>
                         <th class="just-cont-center">
                             <button mat-button color="primary"
@@ -161,8 +160,8 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage" let-columns>
-                    <tr *ngIf="purchaseItemList == 0">
-                        <td colspan="6" class="ui-datatable-emptymessage text-center">
+                    <tr *ngIf="purchaseItemList.length == 0">
+                        <td colspan="5" class="ui-datatable-emptymessage text-center">
                             {{'Purchase Order.Management.No Records Found'|translate}} </td>
                     </tr>
                 </ng-template>
