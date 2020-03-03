@@ -4,7 +4,7 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
             <p-table #dt [value]="workOrdersList" [paginator]="true" expandableRows="true" [rows]="10"
-                sortField="State Date" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
+                sortField="reference1" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExpandMode="single" dataKey="id"
                 [globalFilterFields]="['assetName','startDate','endDate','reference1','reference2', 'issue','resolution','storeName','workTypeName','workStatusName','workTechnicianName','workFaultName']">
                 <ng-template pTemplate="caption">
@@ -18,44 +18,43 @@
                     <tr>
                         <th style="width: 3em"></th>
                         <th [pSortableColumn]="'assetName'">Asset Name
-                            <p-sortIcon [field]="assetName"></p-sortIcon>
+                            <p-sortIcon [field]="'assetName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'startDate'">State Date
-                            <p-sortIcon [field]="startDate"></p-sortIcon>
+                            <p-sortIcon [field]="'startDate'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'endDate'">End Date
-                            <p-sortIcon [field]="endDate"></p-sortIcon>
+                            <p-sortIcon [field]="'endDate'"></p-sortIcon>
                         </th>
 
                         <th [pSortableColumn]="'reference1'">Reference 1
-                            <p-sortIcon [field]="reference1"></p-sortIcon>
+                            <p-sortIcon [field]="'reference1'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'reference2'">Reference 2
-                            <p-sortIcon [field]="reference2"></p-sortIcon>
+                            <p-sortIcon [field]="'reference2'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'issue'">Issue
-                            <p-sortIcon [field]="issue"></p-sortIcon>
+                            <p-sortIcon [field]="'issue'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'resolution'">Resolution
-                            <p-sortIcon [field]="resolution"></p-sortIcon>
+                            <p-sortIcon [field]="'resolution'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'storeName'">Store Name
-                            <p-sortIcon [field]="storeName"></p-sortIcon>
+                            <p-sortIcon [field]="'storeName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'workTypeName'">Work Type
-                            <p-sortIcon [field]="workTypeName"></p-sortIcon>
+                            <p-sortIcon [field]="'workTypeName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'workStatusName'">Work Status
-                            <p-sortIcon [field]="workStatusName"></p-sortIcon>
+                            <p-sortIcon [field]="'workStatusName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'workTechnicianName'">Work Teach
-                            <p-sortIcon [field]="workTechnicianName"></p-sortIcon>
+                            <p-sortIcon [field]="'workTechnicianName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'workFaultName'">Work Fault
-                            <p-sortIcon [field]="workFaultName"></p-sortIcon>
+                            <p-sortIcon [field]="'workFaultName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'isActive'">{{'Purchase Order.Management.Is Active'|translate}}
-                            <p-sortIcon [field]="isActive"></p-sortIcon>
+                        <th>{{'Purchase Order.Management.Is Active'|translate}}
                         </th>
                         <th class="just-cont-center">
                             <button mat-button color="primary" matTooltip="Create" (click)="addClick()">
@@ -93,7 +92,7 @@
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
                             <button mat-icon-button matTooltip="Delete" [hidden]="!req.isActive"
-                                (click)="confirmDelete(req)">
+                                >
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
                         </td>
@@ -128,7 +127,7 @@
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage" let-columns>
-                    <tr *ngIf="workOrdersList == 0">
+                    <tr *ngIf="workOrderItemList.length == 0">
                         <td colspan="5" class="ui-datatable-emptymessage text-center">
                             No Records Found
                         </td>
@@ -394,7 +393,7 @@
 <div class="page-content" *ngIf="isEdit">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Add Work Order
+            <mat-card-title>Edit Work Order
             </mat-card-title>
 
         </mat-card-header>

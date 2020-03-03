@@ -179,7 +179,7 @@ export class PurchaseorderComponent implements OnInit {
 
 
   //get Suppliers data
-  private getItemsByPurchaseId(row) {
+  getItemsByPurchaseId(row,val) {
     this.accountService.getItemsByPurchaseId(row.id)
       .subscribe((results: any) => {
         this.purchaseItemList = results.listResult == null ? [] : results.listResult;
@@ -223,7 +223,7 @@ export class PurchaseorderComponent implements OnInit {
     this.isAdding = false;
     this.isNewPurchase = false;
     this.purchaseData = purchase;
-    this.getItemsByPurchaseId(purchase);
+    this.getItemsByPurchaseId(purchase,true);
     this.getStoresByProject(purchase.projectId)
     this.resetForm();
 
