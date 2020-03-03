@@ -265,17 +265,23 @@ export class WorkOrderComponent implements OnInit {
       } else {
         this.buildForm();
       }
-  
-      // this.orderForm.reset({
-      //   supplierId: this.orderData.supplierId || '',
-      //   projectId: this.orderData.projectId || '',
-      //   storeId: this.orderData.storeId || '',
-      //   remarks: this.orderData.remarks || '',
-      //   billindAddress:this.orderData.billindAddress ||'',
-      //   shippingAddress:this.orderData.shippingAddress ||'',
-      //   arrivingDate: this.orderData.arrivingDate || '',
-      //   purchaseReference: this.orderData.purchaseReference || ''
-      // });
+      this.orderForm.reset({
+        siteId: this.orderData.siteId || '',
+        projectId: this.orderData.projectId || '',
+        locationId: this.orderData.locationId || '',
+        assetId: this.orderData.assetId || '',
+        storeId:this.orderData.storeId ||'',
+        reference1:this.orderData.reference1 ||'',
+        reference2: this.orderData.reference2 || '',
+        issue: this.orderData.issue || '',
+        resolution:this.orderData.resolution ||'',
+        startDate:this.orderData.startDate ||'',
+        endDate:this.orderData.endDate ||'',
+        workTypeId:this.orderData.workTypeId ||'',
+        workStatusId:this.orderData.workStatusId ||'',
+        workFaultId:this.orderData.workFaultId || '',
+        workTechId:this.orderData.workTechId ||''
+      });
     }
 
     saveOrder() {
