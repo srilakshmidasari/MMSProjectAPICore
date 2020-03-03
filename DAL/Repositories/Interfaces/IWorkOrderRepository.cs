@@ -16,5 +16,7 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<WorkOrder> UpdateWorkOrder(UpsertWorkOrder workorder);
 
+        ListDataResponse<GetWorkItemsResponse> GetItemsByWorkOrderId(int workOrderId);
+
     }
 }

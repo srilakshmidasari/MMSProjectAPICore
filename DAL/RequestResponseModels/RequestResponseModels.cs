@@ -414,6 +414,8 @@ namespace DAL.RequestResponseModels
 
         }
 
+
+
         public class PurchaseItem
         {
             public int Id { get; set; }
@@ -509,6 +511,19 @@ namespace DAL.RequestResponseModels
             public int WorkOrderId { get; set; }
             public int Quantity { get; set; }
           
+        }
+
+        public class GetWorkItemsResponse
+        {
+            public int Id { get; set; }
+            public int WorkOrderId { get; set; }
+
+            public int ItemId { get; set; }
+            public string ItemName { get; set; }
+            public string ItemReference { get; set; }
+            public int Quantity { get; set; }
+            
+
         }
 
 

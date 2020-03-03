@@ -96,5 +96,13 @@ namespace MMS.Controllers
             return _unitOfWork.Assets.DeleteFileRepository(RepositoryId);
         }
 
+        [HttpGet("GetAssetsByLocationId/{LocationId}")]
+        public ListDataResponse<AssetLocation> GetAssetsByLocationId(int LocationId)
+        {
+            return _unitOfWork.Assets.GetAssetsByLocationId(LocationId);
+        }
+
+        
+
     }
 }

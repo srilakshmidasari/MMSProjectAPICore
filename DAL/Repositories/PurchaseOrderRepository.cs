@@ -168,7 +168,8 @@ namespace DAL.Repositories
                     byte[] FileBytes = Convert.FromBase64String(base64String);
 
                    
-                    pro.FileName = repo.UploadFile(bytes, pro.FileExtention, Location);
+                    pro.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
+
 
                     pro.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
 

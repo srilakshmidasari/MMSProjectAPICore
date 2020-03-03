@@ -368,6 +368,8 @@ export class PurchaseorderComponent implements OnInit {
       }
     });
   }
+
+  
   acceptClick(order: any){
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {

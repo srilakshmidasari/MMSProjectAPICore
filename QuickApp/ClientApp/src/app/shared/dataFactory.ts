@@ -22,6 +22,7 @@ export const DataFactory={
      WorkStatus:6,
      Technician:7,
      WorkFaults:8,
+     WorkType:18,
      ItemCategory:9,
      UOM:10,
      

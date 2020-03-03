@@ -75,6 +75,7 @@ export class SiteEditorComponent implements OnInit {
   }
   
   save() {
+    debugger
     if (!this.form.submitted) {
       this.form.onSubmit(null);
       return;

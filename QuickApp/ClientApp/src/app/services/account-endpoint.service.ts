@@ -76,7 +76,15 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly _getItemsByPurchaseId: string ='/api/PurchaseOrder/GetItemsByPurchaseId';
   private readonly _AddAcceptOrder: string ='/api/PurchaseOrder/AcceptOrder';
-  private readonly _RejectOrder:'/api/PurchaseOrder/RejectOrder';
+  private readonly _RejectOrder: string ='/api/PurchaseOrder/RejectOrder';
+
+  private readonly _getWorkOrderUrl: string ='/api/WorkOrder';
+  private readonly _getItemsByWorkOrderId: string ='/api/WorkOrder/GetItemsByWorkOrderId';
+
+  private readonly _getAssetsByLocationIdUrl: string ='/api/Asset/GetAssetsByLocationId';
+
+  
+
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -136,6 +144,15 @@ export class AccountEndpoint extends EndpointBase {
   get getItemsByPurchaseIdUrl() { return this.configurations.baseUrl + this._getItemsByPurchaseId; }
   get AddAcceptOrder() { return this.configurations.baseUrl + this._AddAcceptOrder; }
   get RejectOrder() { return this.configurations.baseUrl + this._RejectOrder; }
+
+  //get workOrderUrl() { return this.configurations.baseUrl + this._getWorkOrderUrl; }
+
+  get workOrderUrl() { return this.configurations.baseUrl + this._getWorkOrderUrl; }
+
+  get getItemsByWorkOrderIdUrl() { return this.configurations.baseUrl + this._getItemsByWorkOrderId; }
+
+  get getAssetsByLocationIdUrl() { return this.configurations.baseUrl + this._getAssetsByLocationIdUrl; }
+  
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -783,5 +800,45 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.RejectPurchaseOrderEndpoint(purchaseId));
       }));
   }
- 
+
+  getWorkOrderEndpoint<T>(){
+    const endpointUrl = this.workOrderUrl;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getWorkOrderEndpoint());
+      }));
+  }
+
+  AddWorkOrderEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.workOrderUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddWorkOrderEndpoint(reqObject));
+      }));
+  }
+
+  UpdateWorkOrderEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.workOrderUrl;
+    return this.http.put<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.UpdateWorkOrderEndpoint(reqObject));
+      }));
+  }
+  
+
+  getItemsByWorkOrderIdEndpoint<T>(workOrderId: any): Observable<T> {
+    const endpointUrl = this.getItemsByWorkOrderIdUrl + '/' + workOrderId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getItemsByWorkOrderIdEndpoint(workOrderId));
+      }));
+  }
+
+  getAssetsByLocationIdEndpoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getAssetsByLocationIdUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAssetsByLocationIdEndpoint(Id));
+      }));
+  }
 }

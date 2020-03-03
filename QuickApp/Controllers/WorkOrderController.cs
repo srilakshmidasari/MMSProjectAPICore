@@ -42,5 +42,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.WorkOrders.UpdateWorkOrder(workorders);
         }
+
+        [HttpGet("GetItemsByWorkOrderId/{WorkOrderId}")]
+        public ListDataResponse<GetWorkItemsResponse> GetItemsByWorkOrderId(int WorkOrderId)
+        {
+            return _unitOfWork.WorkOrders.GetItemsByWorkOrderId(WorkOrderId);
+        }
     }
 }

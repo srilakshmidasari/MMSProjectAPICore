@@ -417,4 +417,28 @@ deleteAssetRepository(repositoryId) {
   RejectPurchaseOrder(purchageId){
     return this.accountEndpoint.RejectPurchaseOrderEndpoint(purchageId);
   }
+  
+  // Work Order
+  
+  
+  getWorkOrder(){
+    return this.accountEndpoint.getWorkOrderEndpoint();
+  }
+  
+  AddWorkOrder(reqObject) {
+    return this.accountEndpoint.AddWorkOrderEndpoint(reqObject);
+  }
+
+  UpdateWorkOrder(reqObject) {
+    return this.accountEndpoint.UpdateWorkOrderEndpoint(reqObject);
+  }
+
+  getItemsByWorkOrderId(workOrderId) {
+    return this.accountEndpoint.getItemsByWorkOrderIdEndpoint(workOrderId);
+  }
+  
+
+  getAssetsByLocationId(Id) {
+    return this.accountEndpoint.getAssetsByLocationIdEndpoint(Id);
+  }
 }

@@ -206,5 +206,50 @@ namespace DAL.Repositories
         }
 
 
+        public ListDataResponse<GetWorkItemsResponse> GetItemsByWorkOrderId(int workOrderId)
+        {
+            ListDataResponse<GetWorkItemsResponse> response = new ListDataResponse<GetWorkItemsResponse>();
+            try
+            {
+                var result = (from wi in _appContext.WorkOrderItemXrefs
+                              join i in _appContext.Items on wi.ItemId equals i.Id
+                              join w in _appContext.WorkOrders on wi.WorkOrderId equals w.Id
+                              select new GetWorkItemsResponse
+                              {
+                                  Id = wi.Id,
+                                  WorkOrderId = wi.WorkOrderId,
+                                  ItemReference = i.ItemReference,
+                                  ItemId = wi.ItemId,
+                                  ItemName = i.Name1,
+                                  Quantity = wi.Quantity,
+                                
+
+                              }).Where(x => x.WorkOrderId == workOrderId).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Item Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Item Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
     }
 }

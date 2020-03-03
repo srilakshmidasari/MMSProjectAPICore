@@ -605,5 +605,37 @@ namespace DAL.Repositories
             return response;
         }
 
+        public ListDataResponse<AssetLocation> GetAssetsByLocationId(int LocationId)
+        {
+            ListDataResponse<AssetLocation> response = new ListDataResponse<AssetLocation>();
+            try
+            {
+                var result = _appContext.AssetLocations.Where(x => x.LocationId == LocationId).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = result.Count();
+                    response.EndUserMessage = "Get Asstes Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Asstes Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
     }
 }
