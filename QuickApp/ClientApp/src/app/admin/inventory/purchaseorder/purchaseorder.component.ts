@@ -325,7 +325,7 @@ export class PurchaseorderComponent implements OnInit {
       "shippingAddress":formModel.shippingAddress,
       "fileName": "",
       "fileLocation": "",
-      "fileExtention": ".pdf",
+      "fileExtention": ".png",
       "purchaseReference": formModel.purchaseReference,
       "isActive": true,
       "purchaseItems": purchaseItems,
@@ -369,7 +369,7 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
-  
+
   acceptClick(order: any){
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {

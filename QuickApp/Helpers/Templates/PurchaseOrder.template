@@ -1,4 +1,4 @@
-﻿<page size="A4" style="width: 21cm;height: 29.7cm;">
+﻿
   <div id="background" style="position: absolute; z-index: 0; background: white; display: block; min-height: 50%; min-width: 50%; color: yellow;left:-4%;vertical-align:central;justify-items:center;align-items:center;">
     <p id="bg-text" style="color: lightgrey; font-size: 82px; transform: rotate(300deg); -webkit-transform: rotate(300deg);">CALIBAR TECH</p>
   </div>
@@ -96,4 +96,3 @@
       </tbody>
     </table>
   </div>
-</page>

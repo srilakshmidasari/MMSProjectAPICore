@@ -1,5 +1,5 @@
 <app-page-header title="Work Order" icon="assignment_ind"></app-page-header>
-<div class="page-content">
+<div class="page-content" [hidden]="isAdding || isEdit">
     <div class="example-container mat-elevation-z8 mt-2">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
@@ -267,22 +267,22 @@
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label> Start Date </mat-label>
-                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="arrivingDate"
+                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
                             placeholder="Start Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
+                        <mat-error *ngIf="!orderForm.controls['startDate'].valid">
                             Start Date is Required
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
                         <mat-label> End Date </mat-label>
-                        <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="arrivingDate"
+                        <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="endDate"
                             placeholder="End Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
-                        <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
+                        <mat-error *ngIf="!orderForm.controls['endDate'].valid">
                             End Date is Required
                         </mat-error>
                     </mat-form-field>

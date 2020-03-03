@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { DataFactory } from 'src/app/shared/dataFactory';
@@ -35,13 +35,20 @@ export class WorkOrderComponent implements OnInit {
   isAdding: boolean = false;
   isNewOrder: boolean = false;
   isEdit: boolean = false;
+  ProjectId: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
-    private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) { }
+    private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
+      this.itemFrom = this.formBuilder.group({
+        credentials: this.formBuilder.array([]),
+      });
+      this.currenrDate = new Date();
+     }
 
   ngOnInit() {
     this.getworkOrderOrders();
     this.getSites();
     this.getItem();
+    this.buildForm();
   }
 
 
@@ -105,7 +112,10 @@ export class WorkOrderComponent implements OnInit {
     })
   }
 
-  
+  Delete(index) {
+    (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
+  }
+
 
   onCancelClick() {
     this.isAdding = false;
@@ -134,15 +144,17 @@ export class WorkOrderComponent implements OnInit {
 
   onSelectProjectByLocation(event) {
     this.locationsList = [];
+    this.ProjectId =event;
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
+      this.getStoresByProject(event)
     },
       error => {
       })
   }
 
   onSelectLocationByProject(event) {
-    this.locationsList = [];
+    this.assetsList = [];
     this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
       this.assetsList = res.listResult == null ? [] : res.listResult;
     },
@@ -151,11 +163,11 @@ export class WorkOrderComponent implements OnInit {
   }
   
 
-  getStoresByProject(event) {
+  getStoresByProject(ProjectId) {
     debugger
     this.storesList = [];
     //this.orderForm.get('storeId').setValue(null)
-    this.accountService.getStoresByProjectId(event)
+    this.accountService.getStoresByProjectId(ProjectId)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
         console.log(this.storesList)
@@ -236,6 +248,16 @@ export class WorkOrderComponent implements OnInit {
   
     }
 
+      // Accepting Only Numbers
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+
     public resetForm(stopEditing: boolean = false) {
       debugger
       if (!this.orderData) {
@@ -254,5 +276,94 @@ export class WorkOrderComponent implements OnInit {
       //   arrivingDate: this.orderData.arrivingDate || '',
       //   purchaseReference: this.orderData.purchaseReference || ''
       // });
+    }
+
+    saveOrder() {
+      debugger
+      if (!this.orderForm.valid) {
+        this.alertService.showValidationError();
+        return;
+      }
+      this.alertService.startLoadingMessage('Saving changes...');
+      const editeditem = this.AddAllItemData();
+      if (this.isNewOrder) {
+        this.accountService.AddWorkOrder(editeditem).subscribe(
+          (response: any) => {
+            this.alertService.stopLoadingMessage();
+            if (response.isSuccess) {
+              this.getworkOrderOrders();
+              this.isAdding = false;
+              this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+              this.resetForm();
+             // this.onViewPDF(response.result);
+            } else {
+              this.alertService.stopLoadingMessage();
+              this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+            }
+          }, error => {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+          }
+        );
+      }
+      else {
+        this.accountService.UpdateWorkOrder(editeditem).subscribe(
+          (response: any) => {
+            this.alertService.stopLoadingMessage();
+            if (response.isSuccess) {
+              this.isAdding = false;
+              this.isEdit = false;
+              this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+              this.getworkOrderOrders();
+            //  this.onViewPDF(response.result);
+            } else {
+              this.alertService.stopLoadingMessage();
+              this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+            }
+          }, error => {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+          }
+        );
+      }
+    }
+
+    private AddAllItemData(): any {
+      var workOrderItems = [];
+      for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
+        var itemReq = {
+          "id": 0,
+          "itemId": this.itemFrom.value.credentials[i].itemId,
+          "workOrderId": 0,
+          "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
+        }
+        workOrderItems.push(itemReq);
+      }
+      const formModel = this.orderForm.value;
+      return {
+          "id": this.isNewOrder == true ? 0 : this.orderData.id,
+          "assetId": formModel.assetId,
+          "startDate": formModel.startDate,
+          "endDate": formModel.endDate,
+          "reference1": formModel.reference1,
+          "reference2": formModel.reference2,
+          "issue": formModel.issue,
+          "resolution": formModel.resolution,
+          "workTypeId": formModel.workTypeId,
+          "workStatusId": formModel.workStatusId,
+          "workTechnicianId": formModel.workTechId,
+          "workFaultId": formModel.workFaultId,
+          "storeId": formModel.storeId,
+          "isActive": true,
+          "workOrderItems":workOrderItems,
+          "createdBy": this.currentUser.id,
+          "createdDate": new Date(),
+          "updatedBy": this.currentUser.id,
+          "updatedDate": new Date()
+        }
+    }
+
+    get currentUser() {
+      return this.authService.currentUser;
     }
 }
