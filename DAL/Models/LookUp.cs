@@ -67,6 +67,18 @@ namespace DAL.Models
         public ICollection<Item> App_Item_ItemCategory_Id { get; set; }
 
         public ICollection<PurchageOrder> App_PurchageOrder_Store_Id { get; set; }
+
+        public ICollection<WorkOrder> App_WorkOrder_WorkType_Id { get; set; }
+
+        public ICollection<WorkOrder> App_WorkOrder_Store_Id { get; set; }
+
+        public ICollection<WorkOrder> App_WorkOrder_WorkSatus_Id { get; set; }
+        public ICollection<WorkOrder> App_WorkOrder_WorkTechinician_Id { get; set; }
+        public ICollection<WorkOrder> App_WorkOrder_WorkFault_Id { get; set; }
+
+
+
+
     }
 }
  

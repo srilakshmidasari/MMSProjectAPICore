@@ -1,0 +1,99 @@
+﻿<page size="A4" style="width: 21cm;height: 29.7cm;">
+  <div id="background" style="position: absolute; z-index: 0; background: white; display: block; min-height: 50%; min-width: 50%; color: yellow;left:-4%;vertical-align:central;justify-items:center;align-items:center;">
+    <p id="bg-text" style="color: lightgrey; font-size: 82px; transform: rotate(300deg); -webkit-transform: rotate(300deg);">CALIBAR TECH</p>
+  </div>
+  <div class="main-content" style="position: absolute; z-index: 1;">
+    <div style="text-align:center;">
+      <h1 style="text-transform:uppercase">CALIBER MAINTENANCE MANAGEMENT SYSTEM</h1>
+      <p style="margin-bottom:0px;">
+        <b>132/A, Bluepal BuildingOpp JNTU, Kukatpally, Hyderabad - 500 072.</b>
+      </p>
+      <p style="text-align:center;">
+        <b>email: calibertech@mms.com</b>
+      </p>
+    </div>
+    <h4 style="color:#0f6ca2;">Purchase Details</h4>
+    <table width="100%">
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <td>Purchase Reference</td>
+              <td>:</td>
+              <td>{PurchaseReference}</td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>Supplier Name</td>
+              <td>:</td>
+              <td>{SupplierName}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <td>Project Name</td>
+              <td>:</td>
+              <td>{ProjectName}</td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>Supplier Address</td>
+              <td>:</td>
+              <td>{supplierAdtees}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <table>
+            <tr>
+              <td>Store Name</td>
+              <td>:</td>
+              <td>{StoreName}</td>
+            </tr>
+          </table>
+        </td>
+        <td>
+          <table>
+            <tr>
+              <td>Arriving Date</td>
+              <td>:</td>
+              <td>{{arrivingDate}}</td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+    <br />
+    <h4 style="color:#0f6ca2">Item Details</h4>
+    <table width="100%" style="border-collapse: collapse;">
+      <thead style="font-weight:600;">
+        <tr>
+          <td style="border:1px solid #333;">Item</td>
+          <td style="border:1px solid #333;">Quantity</td>
+          <td style="border:1px solid #333;">Expected Cost</td>
+          <td style="border:1px solid #333;">Comments</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="border:1px solid #333;">KeyBoard</td>
+          <td style="border:1px solid #333;">1</td>
+          <td style="border:1px solid #333;">109</td>
+          <td style="border:1px solid #333;">asgsxb</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</page>

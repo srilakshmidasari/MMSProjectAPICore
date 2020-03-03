@@ -60,6 +60,7 @@
   <ItemGroup>
     <!--Include email templates in the publish output-->
     <Content Include="Helpers\Templates\*.template" CopyToPublishDirectory="PreserveNewest" />
+    <None Remove="Helpers\Templates\PurchaseOrder.template" />
     <None Update="tempkey.rsa">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

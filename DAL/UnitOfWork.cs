@@ -29,6 +29,8 @@ namespace DAL
         ItemRepository _items;
         IPurchaseOrderRepository _purchages;
 
+        IWorkOrderRepository _workorders;
+
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
             _context = context;
@@ -123,6 +125,17 @@ namespace DAL
                     _purchages = new PurchaseOrderRepository(_context, _mapper, _configuration);
 
                 return _purchages;
+            }
+        }
+
+        public IWorkOrderRepository WorkOrders
+        {
+            get
+            {
+                if (_workorders == null)
+                    _workorders = new WorkOrderRepository(_context, _mapper, _configuration);
+
+                return _workorders;
             }
         }
 

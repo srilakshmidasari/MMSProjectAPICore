@@ -1135,6 +1135,118 @@ namespace MMS.Migrations
                     b.ToTable("TypeCdDmt");
                 });
 
+            modelBuilder.Entity("DAL.Models.WorkOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("Issue")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reference1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reference2")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Resolution")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StoreId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkFaultId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkTechnicianId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkTypeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("StoreId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("WorkFaultId");
+
+                    b.HasIndex("WorkStatusId");
+
+                    b.HasIndex("WorkTechnicianId");
+
+                    b.HasIndex("WorkTypeId");
+
+                    b.ToTable("WorkOrder");
+                });
+
+            modelBuilder.Entity("DAL.Models.WorkOrderItemXref", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("WorkOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
+
+                    b.HasIndex("WorkOrderId");
+
+                    b.ToTable("WorkOrderItemXref");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.Property<int>("Id")
@@ -1587,6 +1699,72 @@ namespace MMS.Migrations
                         .WithMany("App_TypeCdDmt_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_App_TypeCdDmt_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.WorkOrder", b =>
+                {
+                    b.HasOne("DAL.Models.AssetLocation", "Asset_Id")
+                        .WithMany("App_WorkOrderAsset_Id")
+                        .HasForeignKey("AssetId")
+                        .HasConstraintName("FK_App_WorkOrderAsset_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_WorkOrder_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_App_WorkOrder_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "Store_Id")
+                        .WithMany("App_WorkOrder_Store_Id")
+                        .HasForeignKey("StoreId")
+                        .HasConstraintName("FK_App_WorkOrder_Store_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_WorkOrder_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_WorkOrder_UpdatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "WorkFault_Id")
+                        .WithMany("App_WorkOrder_WorkFault_Id")
+                        .HasForeignKey("WorkFaultId")
+                        .HasConstraintName("FK_App_WorkOrder_WorkFault_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "WorkStatus_Id")
+                        .WithMany("App_WorkOrder_WorkSatus_Id")
+                        .HasForeignKey("WorkStatusId")
+                        .HasConstraintName("FK_App_WorkOrder_WorkSatus_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "WorkTechnician_Id")
+                        .WithMany("App_WorkOrder_WorkTechinician_Id")
+                        .HasForeignKey("WorkTechnicianId")
+                        .HasConstraintName("FK_App_WorkOrder_WorkTechinician_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "WorkType_Id")
+                        .WithMany("App_WorkOrder_WorkType_Id")
+                        .HasForeignKey("WorkTypeId")
+                        .HasConstraintName("FK_App_WorkOrder_WorkType_Id")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.WorkOrderItemXref", b =>
+                {
+                    b.HasOne("DAL.Models.Item", "Item_Id")
+                        .WithMany("App_WorkOrderItemIdXref_Id")
+                        .HasForeignKey("ItemId")
+                        .HasConstraintName("FK_App_WorkOrderItemIdXref_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.WorkOrder", "WorkOrder_Id")
+                        .WithMany("App_WorkOrderItemxref_Id")
+                        .HasForeignKey("WorkOrderId")
+                        .HasConstraintName("FK_App_WorkOrderItemxref_Id")
                         .IsRequired();
                 });
 

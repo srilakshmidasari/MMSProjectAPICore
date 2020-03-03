@@ -95,13 +95,21 @@ namespace DAL.RequestResponseModels
             CreateMap<UpsertItem, Item>()
                  .ForMember(d => d.UOM_Id, map => map.Ignore())
                   .ForMember(d => d.ItemCategory_Id, map => map.Ignore());
-
+            
             CreateMap<UpsertPurchaseOrder, PurchageOrder>()
                  .ForMember(d => d.Supplier_Id, map => map.Ignore())
                  .ForMember(d => d.StatusType_Id, map => map.Ignore())
                  .ForMember(d => d.Project_Id, map => map.Ignore())
                  .ForMember(d => d.Store_Id, map => map.Ignore());
-            
+
+            CreateMap<UpsertWorkOrder, WorkOrder>()
+                .ForMember(d => d.Asset_Id, map => map.Ignore())
+                .ForMember(d => d.WorkFault_Id, map => map.Ignore())
+                .ForMember(d => d.WorkStatus_Id, map => map.Ignore())
+                .ForMember(d => d.WorkTechnician_Id, map => map.Ignore())
+                .ForMember(d => d.WorkType_Id, map => map.Ignore())
+                .ForMember(d => d.Store_Id, map => map.Ignore());
+
         }
     }
 }

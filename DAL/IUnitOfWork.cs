@@ -28,6 +28,8 @@ namespace DAL
         IItemRepository Items { get; }
 
         IPurchaseOrderRepository  Purchages { get; }
+
+        IWorkOrderRepository WorkOrders { get; }
         int SaveChanges();
     }
 }

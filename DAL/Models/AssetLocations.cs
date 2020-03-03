@@ -104,5 +104,8 @@ namespace DAL.Models
         [JsonIgnore]
         public ApplicationUser UpdatedUser { get; set; }
         public ICollection<AssetFileRepository> App_Repository_Id { get; set; }
+
+        public ICollection<WorkOrder> App_WorkOrderAsset_Id { get; set; }
+
     }
 }

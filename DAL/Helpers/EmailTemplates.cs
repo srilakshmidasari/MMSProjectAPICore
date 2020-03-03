@@ -8,6 +8,8 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
+using static DAL.RequestResponseModels.RequestResponseModels;
+using System.Collections.Generic;
 
 namespace DAL.Helpers
 {
@@ -19,6 +21,7 @@ namespace DAL.Helpers
         static string confirmAccountEmailTemplate;
         static string resetPasswordEmailTemplate;
         static string employeeConfirmationTemplate;
+        static string purchaseOrderTemplate;
         public static string currentYear ;
         public static void Initialize(IWebHostEnvironment hostingEnvironment )
         {
@@ -79,6 +82,22 @@ namespace DAL.Helpers
                  .Replace("{url}", callbackUrl);
 
             return emailMessage;
+        }
+
+        public static string GetPurchaseOrder(string purchaseReference, DateTime arrivingDate, string projectName, string storeName, string supplierName, string supplierAdtees, List<GetItemsResponse> itemData, string callbackUrl)
+        {
+            if (purchaseOrderTemplate == null)
+                purchaseOrderTemplate = ReadPhysicalFile("Helpers/Templates/PurchaseOrder.template");
+
+            string OrderMessage = purchaseOrderTemplate
+                 .Replace("{PurchaseReference}", purchaseReference)
+                 .Replace("{ProjectName}", projectName)
+                 .Replace("{StoreName}", storeName)
+                 .Replace("{SupplierName}", supplierName)
+                 .Replace("{supplierAdtees}", supplierAdtees)
+                 .Replace("{arrivingDate}", arrivingDate.ToString("dd/MM/yyyy"))
+                 .Replace("{url}", callbackUrl);
+            return OrderMessage;
         }
 
         public static string GetPlainTextTestEmail(DateTime date)

@@ -90,6 +90,9 @@ namespace DAL.Models
 
         public ICollection<PurchageItemXref> Purchage_ItemXref_Id { get; set; }
 
+        public ICollection<WorkOrderItemXref> App_WorkOrderItemIdXref_Id { get; set; }
+
+
     }
 }
 

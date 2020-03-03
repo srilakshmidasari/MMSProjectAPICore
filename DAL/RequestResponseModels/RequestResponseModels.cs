@@ -398,8 +398,6 @@ namespace DAL.RequestResponseModels
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
-
-
         }
 
         public class GetItemsResponse 
@@ -458,6 +456,59 @@ namespace DAL.RequestResponseModels
             public DateTime ArrivingDate { get; set; }
             public bool IsActive { get; set; }
 
+        }
+
+        public class GetWorkOrderReponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int AssetId { get; set; }
+            public string AssetName { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
+            public string Reference1 { get; set; }
+            public string Reference2 { get; set; }
+            public string Issue { get; set; }
+            public string Resolution { get; set; }       
+            public int WorkTypeId { get; set; }
+            public string WorkTypeName { get; set; }
+            public int WorkStatusId { get; set; }
+            public string WorkStatusName { get; set; }
+            public int WorkTechnicianId { get; set; }
+            public string WorkTechnicianName { get; set; }
+            public int StoreId { get; set; }
+            public string StoreName { get; set; }
+            public int WorkFaultId { get; set; }
+            public string WorkFaultName { get; set; }
+            public bool IsActive { get; set; }
+        }
+
+        public class UpsertWorkOrder : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int AssetId { get; set; }
+            public DateTime StartDate { get; set; }
+            public DateTime EndDate { get; set; }
+            public string Reference1 { get; set; }
+            public string Reference2 { get; set; }
+            public string Issue { get; set; }
+            public string Resolution { get; set; }
+            public int WorkTypeId { get; set; }           
+            public int WorkStatusId { get; set; }
+            public int WorkTechnicianId { get; set; }
+            public int WorkFaultId { get; set; }
+            public int StoreId { get; set; }
+            public bool IsActive { get; set; }
+            public List<WorkOrderItem> WorkOrderItems { get; set; }
+
+        }
+
+        public class WorkOrderItem
+        {
+            public int Id { get; set; }
+            public int ItemId { get; set; }
+            public int WorkOrderId { get; set; }
+            public int Quantity { get; set; }
+          
         }
 
 
