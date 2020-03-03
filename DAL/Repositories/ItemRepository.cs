@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DAL.Models;
 using DAL.Repositories.Interfaces;
 using DAL.Response;
@@ -190,14 +190,22 @@ namespace DAL.Repositories
             ValueDataResponse<Item> response = new ValueDataResponse<Item>();
             try
             {
+
                 var ItemData = _appContext.Items.Where(x => x.Id == ItemId).FirstOrDefault();
                 var purchase = _appContext.PurchageItemXrefs.Where(x => x.ItemId == ItemId).ToList();
+
                 if (purchase != null)
                 {
-                    var res = _appContext.PurchageOrders.Where(x => purchase.Select(p => p.Id).Contains(x.Id)).ToList();
+                 var workOrder = _appContext.WorkOrderItemXrefs.Where(x => x.ItemId == ItemId).ToList();
+                 var res = _appContext.PurchageOrders.Where(x => purchase.Select(p => p.Id).Contains(x.Id)).ToList();
+                 var res1 = _appContext.WorkOrders.Where(x => workOrder.Select(p => p.Id).Contains(x.Id)).ToList();
+                  
                     _appContext.PurchageOrders.RemoveRange(res);
                     _appContext.PurchageItemXrefs.RemoveRange(purchase);
-                    _appContext.Remove(ItemData);
+                  _appContext.WorkOrders.RemoveRange(res1);
+                   _appContext.WorkOrderItemXrefs.RemoveRange(workOrder);
+
+          _appContext.Remove(ItemData);
                     _appContext.SaveChanges();
                 }
 
