@@ -75,7 +75,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getPurchaseOrderUrl: string ='/api/PurchaseOrder';
 
   private readonly _getItemsByPurchaseId: string ='/api/PurchaseOrder/GetItemsByPurchaseId';
-  
+  private readonly _AddAcceptOrder: string ='/api/PurchaseOrder/AcceptOrder';
+  private readonly _RejectOrder:'/api/PurchaseOrder/RejectOrder';
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -133,7 +134,9 @@ export class AccountEndpoint extends EndpointBase {
   get purchaseOrderUrl() { return this.configurations.baseUrl + this._getPurchaseOrderUrl; }
 
   get getItemsByPurchaseIdUrl() { return this.configurations.baseUrl + this._getItemsByPurchaseId; }
-  
+  get AddAcceptOrder() { return this.configurations.baseUrl + this._AddAcceptOrder; }
+  get RejectOrder() { return this.configurations.baseUrl + this._RejectOrder; }
+
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -766,5 +769,19 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  AcceptPurchaseOrderEndpoint<T>(purchaseId: any): Observable<T> {
+    const endpointUrl = this.AddAcceptOrder + '/' + purchaseId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AcceptPurchaseOrderEndpoint(purchaseId));
+      }));
+  }
+  RejectPurchaseOrderEndpoint<T>(purchaseId: any): Observable<T> {
+    const endpointUrl = this.RejectOrder + '/' + purchaseId;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.RejectPurchaseOrderEndpoint(purchaseId));
+      }));
+  }
  
 }

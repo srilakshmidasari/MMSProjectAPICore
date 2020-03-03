@@ -1,1 +1,183 @@
-<p>work-order works!</p>
+<app-page-header title="Work Order" icon="assignment_ind"></app-page-header>
+<div class="page-content">
+    <div class="example-container mat-elevation-z8 mt-2">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <div>
+            <p-table #dt [value]="purchasesList" [paginator]="true" expandableRows="true" [rows]="10"
+                sortField="State Date" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
+                [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExpandMode="single" dataKey="id"
+                [globalFilterFields]="['stateDate','endDate','assetId','reference1','reference2', 'issue','resolution','workType','workStatus','workTeach','workfault']">
+                <ng-template pTemplate="caption">
+                    <div style="text-align: right">
+
+                        <input type="text" pInputText size="50" placeholder="Search By work Order"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3em"></th>
+                        <th [pSortableColumn]="'stateDate'">State Date
+                            <p-sortIcon [field]="stateDate"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'endDate'">End Date
+                            <p-sortIcon [field]="endDate"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'assetId'">Asset Id
+                            <p-sortIcon [field]="assetId"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'reference1'">Reference 1
+                            <p-sortIcon [field]="reference1"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'reference2'">Reference 2
+                            <p-sortIcon [field]="reference2"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'issue'">Issue
+                            <p-sortIcon [field]="issue"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'resolution'">Resolution
+                            <p-sortIcon [field]="resolution"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'workType'">Work Type
+                            <p-sortIcon [field]="workType"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'workStatus'">Work Status
+                            <p-sortIcon [field]="workStatus"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'workTeach'">work Teach
+                            <p-sortIcon [field]="workTeach"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'workfault'">work Fault
+                            <p-sortIcon [field]="workfault"></p-sortIcon>
+                        </th>
+                        <th class="just-cont-center">
+                            <button mat-button color="primary" matTooltip="Create" (click)="addClick()">
+                                <mat-icon class="mat-button-icon">add</mat-icon>
+                                Add Order
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-req let-rowIndex="rowIndex" let-expanded="expanded">
+                    <tr>
+                        <td style="width: 3em">
+                            <a [pRowToggler]="req"
+                                (click)="getItemsByPurchaseId(req, expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right')">
+                                <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                            </a>
+                        </td>
+                        <td>{{req.stateDate}}</td>
+                        <td>{{req.endDate}}</td>
+                        <td>{{req.assetId}}</td>
+                        <td>{{req.reference1}}</td>
+                        <td>{{req.reference2}}</td>
+                        <td>{{req.issue}}</td>
+                        <td>{{req.resolution}}</td>
+                        <td>{{req.workType}}</td>
+                        <td>{{req.workStatus}}</td>
+                        <td>{{req.workTeach}}</td>
+                        <td>{{req.workfault}}</td>
+                        <td align="center">
+                            <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
+                        </td>
+                        <td class="just-cont-center">
+                            <button mat-icon-button matTooltip="Edit" (click)="onEditClick(req)">
+                                <mat-icon color="primary">edit</mat-icon>
+                            </button>
+                            <button mat-icon-button matTooltip="Delete" [hidden]="!req.isActive"
+                                (click)="confirmDelete(req)">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                    <tr>
+                        <td [attr.colspan]="14">
+                            <p-table #dt1 [responsive]="true" [value]="purchaseItemList" [rows]="5" sortField="itemName"
+                                [paginator]="true" [rowsPerPageOptions]="[5,10,15]">
+                                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="product-id" [pSortableColumn]="'stateDate'">
+                            State Date
+                            <p-sortIcon [field]="'stateDate'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'endDate'">
+                            End Date
+                            <p-sortIcon [field]="'endDate'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'assetId'">
+                            Asset Id
+                            <p-sortIcon [field]="'assetId'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'reference1'">
+                            Reference 1
+                            <p-sortIcon [field]="'reference1'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'reference2'">
+                            Reference 2
+                            <p-sortIcon [field]="'reference2'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'issue'">
+                            issue
+                            <p-sortIcon [field]="'issue'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'resolution'">
+                            resolution
+                            <p-sortIcon [field]="'resolution'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'workType'">
+                            workType
+                            <p-sortIcon [field]="'workType'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'workStatus'">
+                            workType
+                            <p-sortIcon [field]="'workStatus'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'workTeach'">
+                            workType
+                            <p-sortIcon [field]="'workTeach'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'workfault'">
+                            workType
+                            <p-sortIcon [field]="'workfault'"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-expanded="expanded" let-rowdata>
+                    <tr>
+                        <td>{{rowdata.stateDate}}</td>
+                        <td>{{rowdata.endDate}}</td>
+                        <td>{{rowdata.assetId}}</td>
+                        <td>{{rowdata.reference1}}</td>
+                        <td>{{rowdata.reference2}}</td>
+                        <td>{{rowdata.issue}}</td>
+                        <td>{{rowdata.resolution}}</td>
+                        <td>{{rowdata.workType}}</td>
+                        <td>{{rowdata.workStatus}}</td>
+                        <td>{{rowdata.workTeach}}</td>
+                        <td>{{rowdata.workfault}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr *ngIf="purchaseItemList == 0">
+                        <td colspan="6" class="ui-datatable-emptymessage text-center">
+                            No Records Found
+                        </td>
+                    </tr>
+                </ng-template>
+                            </p-table>
+                        </td>
+                    </tr>
+                    </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr>
+                        <td colspan="16" class="ui-datatable-emptymessage text-center">
+                            No Records Found
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>

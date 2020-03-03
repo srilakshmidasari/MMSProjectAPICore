@@ -36,7 +36,8 @@
     "Supplier":"Supplier",
     "Inventory":"Inventory",
     "Item":"Item",
-    "Purchase Order":"Purchase Order"
+    "Purchase Order":"Purchase Order",
+    "Work Order":"Work Order"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -57,7 +58,8 @@
     "AssetGroup": "Asset Group Specification",
     "Supplier":"Supplier",
     "Item":"Item",
-    "Purchase Order":"Purchase Order"
+    "Purchase Order":"Purchase Order",
+    "Work Order":"Work Order"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -551,6 +553,11 @@
     "Cancel":"Cancel",
     "Select Project":"Select Project",
     "Add":"Add"
+  }
+ },
+ "Work Order":{
+  "Management":{
+    "Search By Work Order":"Search By Work Order"  
   }
  }
 }

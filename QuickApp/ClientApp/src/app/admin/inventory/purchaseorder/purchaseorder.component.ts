@@ -17,7 +17,7 @@ import { DocumentFileComponent } from '../document-file/document-file.component'
 export class PurchaseorderComponent implements OnInit {
   loadingIndicator: boolean;
   credentials: any[] = [];
-  displayedColumns = ['purchaseReference', 'supplierName', 'supplierAddress', 'projectName','storeName', 'arrivingDate', 'statusName', 'updatedDate', 'remarks', 'isActive', 'Actions'];
+  displayedColumns = ['purchaseReference', 'supplierName', 'supplierAddress', 'projectName','storeName', 'arrivingDate', 'statusName', 'updatedDate','billindAddress','shippingAddress', 'remarks', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -37,12 +37,14 @@ export class PurchaseorderComponent implements OnInit {
   currenrDate: Date;
   projectsList: any[] = [];
   storesList: any[]=[];
+  isAccepted: number;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
       credentials: this.formBuilder.array([]),
     });
     this.currenrDate = new Date();
+    this.isAccepted= DataFactory.StatusTypes.Approved;
   }
 
   ngOnInit() {
@@ -110,7 +112,9 @@ export class PurchaseorderComponent implements OnInit {
       storeId :['', Validators.required],
       purchaseReference: ['', Validators.required],
       arrivingDate: ['', Validators.required],
-      remarks :[]
+      remarks :[],
+      billindAddress:[''],
+      shippingAddress:['']
     })
   }
 
@@ -238,6 +242,8 @@ export class PurchaseorderComponent implements OnInit {
       projectId: this.purchaseData.projectId || '',
       storeId: this.purchaseData.storeId || '',
       remarks: this.purchaseData.remarks || '',
+      billindAddress:this.purchaseData.billindAddress ||'',
+      shippingAddress:this.purchaseData.shippingAddress ||'',
       arrivingDate: this.purchaseData.arrivingDate || '',
       purchaseReference: this.purchaseData.purchaseReference || ''
     });
@@ -315,6 +321,8 @@ export class PurchaseorderComponent implements OnInit {
       "projectId": formModel.projectId,
       "storeId": formModel.storeId,
       "remarks": formModel.remarks,
+      "billindAddress":formModel.billindAddress,
+      "shippingAddress":formModel.shippingAddress,
       "fileName": "",
       "fileLocation": "",
       "fileExtention": ".pdf",
@@ -355,6 +363,62 @@ export class PurchaseorderComponent implements OnInit {
               this.alertService.stopLoadingMessage();
               this.loadingIndicator = false;
               this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      }
+    });
+  }
+  acceptClick(order: any){
+    debugger
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Accept", msg: "Are you sure you want to Accept this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.AcceptPurchaseOrder(order.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getPurchaseOrders();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      }
+    });
+  }
+  rejectClick(order: any){
+    debugger
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Reject", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Reject' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.RejectPurchaseOrder(order.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getPurchaseOrders();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
                 MessageSeverity.error, error);
             });
       }
