@@ -38,7 +38,6 @@ namespace DAL.RequestResponseModels
 
     public class UserFileViewModel 
     {
-
         public string CurrentPassword { get; set; }
 
         [MinLength(6, ErrorMessage = "New Password must be at least 6 characters")]
@@ -62,9 +61,12 @@ namespace DAL.RequestResponseModels
         public string EmployeeId { get; set; }
         public string Name1 { get; set; }
         public string Name2 { get; set; }
+        public int[] ProjectIds { get; set; }
         public List<UpsertRepository> FileRepositories { get; set; }
 
     }
+
+
 
 
 
@@ -170,6 +172,12 @@ namespace DAL.RequestResponseModels
       
     }
 
+    public class UserProject
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public int ProjectId { get; set; }
+    }
 
     //public class UserViewModelValidator : AbstractValidator<UserViewModel>
     //{

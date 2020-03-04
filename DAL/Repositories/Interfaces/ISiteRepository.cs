@@ -17,5 +17,7 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<SiteInfo> DeleteSiteInfo( int SiteId);
 
         coordinates GetLatLngByAddress(string address);
+
+        ListDataResponse<SiteInfo> GetSitesByProjectId(int ProjectId);
     }
 }

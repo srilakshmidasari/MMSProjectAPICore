@@ -33,6 +33,7 @@ export class LocationComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  sitesList: any[]=[];
 
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
@@ -45,7 +46,8 @@ export class LocationComponent implements OnInit {
   ngOnInit() {
     this.getLocation();
     this.getSites();
-   // this.getProjects();
+  
+  // this.getSitesByProjectId()
   }
 
   // Site Data
@@ -57,15 +59,18 @@ export class LocationComponent implements OnInit {
         error => {
         });
   }
-  // // Project Data
-  // private getProjects() {
-  //   this.accountService.getProject()
-  //     .subscribe((results: any) => {
-  //       this.projectsList = results.listResult == null ? [] : results.listResult;
-  //     },
-  //       error => {
-  //       });
-  // }
+
+
+ // Get sites data by ProjectId
+  private getSitesByProjectId(Id) {
+    this.accountService.getSitesByProjectId(Id)
+      .subscribe((results: any) => {
+        this.sitesList = results.listResult == null ? [] : results.listResult;
+        console.log(this.sitesList)
+      },
+        error => {
+        });
+  }
 
   // Location Data
   getLocation() {

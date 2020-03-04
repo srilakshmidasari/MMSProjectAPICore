@@ -22,6 +22,7 @@ using DAL.Helpers;
 using DAL.RequestResponseModels;
 using MMS.Authorization;
 using DAL;
+
 using System.IO;
 using static DAL.RequestResponseModels.RequestResponseModels;
 
@@ -72,7 +73,6 @@ namespace MMS.Controllers
         {
             if (!(await _authorizationService.AuthorizeAsync(this.User, id, AccountManagementOperations.Read)).Succeeded)
                 return new ChallengeResult();
-
 
             UserViewModel userVM = await GetUserViewModelHelper(id);
 
@@ -282,6 +282,17 @@ namespace MMS.Controllers
                     appUser.EmailConfirmed = isConfirmedEmailChanged ? false : appUser.EmailConfirmed;
 
                     var result = await _accountManager.UpdateUserAsync(appUser, user.Roles);
+                    var projectList = _appcontext.UserProjectXrefs.Where(x => x.UserId == appUser.Id).ToList();
+                    _appcontext.UserProjectXrefs.RemoveRange(projectList);
+                    _appcontext.SaveChanges();
+                    foreach (var up in user.ProjectIds)
+                    {
+                        _appcontext.UserProjectXrefs.Add(new UserProjectXref
+                        {
+                            UserId = appUser.Id,
+                            ProjectId = up,
+                        });
+                    }
                     if (result.Succeeded)
                     {
                         foreach (var req in user.FileRepositories)
@@ -421,6 +432,14 @@ namespace MMS.Controllers
                 ApplicationUser appUser = _mapper.Map<ApplicationUser>(user);
 
                 var result = await _accountManager.CreateUserAsync(appUser, user.Roles, user.NewPassword);
+                foreach (var up in user.ProjectIds)
+                {
+                    _appcontext.UserProjectXrefs.Add(new UserProjectXref
+                    {
+                        UserId = appUser.Id,
+                        ProjectId = up,
+                    });
+                }
                 if (result.Succeeded)
                 {
                     foreach (var req in user.FileRepositories)

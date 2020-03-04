@@ -262,7 +262,7 @@ namespace DAL.Repositories
                 var orderData = _appContext.WorkOrders.Where(x => x.Id == WorkOrderId).FirstOrDefault();
 
                 var ast = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == WorkOrderId).ToList();
-                if (ast.Count > 0)
+                if (ast !=  null)
                 {
                     _appContext.WorkOrderItemXrefs.RemoveRange(ast);
                     _appContext.WorkOrders.Remove(orderData);

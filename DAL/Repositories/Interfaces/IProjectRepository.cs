@@ -21,6 +21,8 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<Project> GetProjectsBySiteId(int SiteId);
 
+        ListDataResponse<GetUserProjects> GetProjectsByUserId(string UserId);
+
         //ListDataResponse<> GetStoresByProjectId(int ProjectId);
     }
 }
