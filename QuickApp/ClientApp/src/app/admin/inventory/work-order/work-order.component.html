@@ -23,8 +23,8 @@
                         <th [pSortableColumn]="'assetName'">Asset Name
                             <p-sortIcon [field]="'assetName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'location'">Location
-                            <p-sortIcon [field]="'location'"></p-sortIcon>
+                        <th [pSortableColumn]="'locationName'">Location Name
+                            <p-sortIcon [field]="'locationName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'reference1'">Reference 1
                             <p-sortIcon [field]="'reference1'"></p-sortIcon>
@@ -73,7 +73,7 @@
                         </td>
                         <td>{{req.startDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.assetName}}</td>
-                        <td>{{req.location}}</td>
+                        <td>{{req.locationName}}</td>
                         <!-- <td>{{req.endDate  | date: 'dd/MM/yyyy '}}</td> -->
                         <td>{{req.reference1}}</td>
                         <td>{{req.issue}}</td>
@@ -488,13 +488,13 @@
                 </div>
 
                 <div class="row">
-                    <mat-form-field class="col-md-3">
+                    <!-- <mat-form-field class="col-md-3">
                         <mat-label>Reference 2</mat-label>
                         <input matInput formControlName="reference2" required maxlength="50" />
                         <mat-error *ngIf="!orderForm.controls['reference2'].valid">
                             Reference 2 is Required
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
                     <mat-form-field class="col-md-3">
                         <mat-label>Issue </mat-label>
