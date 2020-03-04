@@ -6,7 +6,7 @@
             <p-table #dt [value]="workOrdersList" [paginator]="true" expandableRows="true" [rows]="10"
                 sortField="reference1" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExpandMode="single" dataKey="id"
-                [globalFilterFields]="['assetName','startDate','endDate','reference1','reference2', 'issue','resolution','storeName','workTypeName','workStatusName','workTechnicianName','workFaultName']">
+                [globalFilterFields]="['startDate','assetName','location','reference1', 'issue']">
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">
 
@@ -17,29 +17,28 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3em"></th>
+                          <th [pSortableColumn]="'startDate'">Start Date
+                            <p-sortIcon [field]="'startDate'"></p-sortIcon>
+                        </th>
                         <th [pSortableColumn]="'assetName'">Asset Name
                             <p-sortIcon [field]="'assetName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'startDate'">State Date
-                            <p-sortIcon [field]="'startDate'"></p-sortIcon>
+                        <th [pSortableColumn]="'locationName'">Location Name
+                            <p-sortIcon [field]="'locationName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'endDate'">End Date
-                            <p-sortIcon [field]="'endDate'"></p-sortIcon>
-                        </th>
-
                         <th [pSortableColumn]="'reference1'">Reference 1
                             <p-sortIcon [field]="'reference1'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'reference2'">Reference 2
+                        <!-- <th [pSortableColumn]="'reference2'">Reference 2
                             <p-sortIcon [field]="'reference2'"></p-sortIcon>
-                        </th>
+                        </th> -->
                         <th [pSortableColumn]="'issue'">Issue
                             <p-sortIcon [field]="'issue'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'resolution'">Resolution
+                        <!-- <th [pSortableColumn]="'resolution'">Resolution
                             <p-sortIcon [field]="'resolution'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'storeName'">Store Name
+                        </th> -->
+                        <!-- <th [pSortableColumn]="'storeName'">Store Name
                             <p-sortIcon [field]="'storeName'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'workTypeName'">Work Type
@@ -53,7 +52,7 @@
                         </th>
                         <th [pSortableColumn]="'workFaultName'">Work Fault
                             <p-sortIcon [field]="'workFaultName'"></p-sortIcon>
-                        </th>
+                        </th> -->
                         <th>{{'Purchase Order.Management.Is Active'|translate}}
                         </th>
                         <th class="just-cont-center">
@@ -72,18 +71,18 @@
                                 <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                             </a>
                         </td>
-                        <td>{{req.assetName}}</td>
                         <td>{{req.startDate | date: 'dd/MM/yyyy '}}</td>
-                        <td>{{req.endDate  | date: 'dd/MM/yyyy '}}</td>
+                        <td>{{req.assetName}}</td>
+                        <td>{{req.locationName}}</td>
+                        <!-- <td>{{req.endDate  | date: 'dd/MM/yyyy '}}</td> -->
                         <td>{{req.reference1}}</td>
-                        <td>{{req.reference2}}</td>
                         <td>{{req.issue}}</td>
-                        <td>{{req.resolution}}</td>
+                        <!-- <td>{{req.resolution}}</td>
                         <td>{{req.storeName}}</td>
                         <td>{{req.workTypeName}}</td>
                         <td>{{req.workStatusName}}</td>
                         <td>{{req.workTechnicianName}}</td>
-                        <td>{{req.workFaultName}}</td>
+                        <td>{{req.workFaultName}}</td> -->
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
@@ -237,32 +236,7 @@
                     </mat-form-field>
                 </div>
 
-                <div class="row">
-                    <mat-form-field class="col-md-3">
-                        <mat-label>Reference 2</mat-label>
-                        <input matInput formControlName="reference2" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
-                            Reference 2 is Required
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                        <mat-label>Issue </mat-label>
-                        <input matInput formControlName="issue" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
-                            Issue is Required
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                        <mat-label>Resolution</mat-label>
-                        <input matInput formControlName="resolution" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
-                            Resolution is Required
-                        </mat-error>
-                    </mat-form-field>
-
-                </div>
+               
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label> Start Date </mat-label>
@@ -333,6 +307,41 @@
                             Please Select work Technician
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div class="row">
+                    <!-- <mat-form-field class="col-md-3">
+                        <mat-label>Reference 2</mat-label>
+                        <input matInput formControlName="reference2" required maxlength="50" />
+                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
+                            Reference 2 is Required
+                        </mat-error>
+                    </mat-form-field> -->
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Issue </mat-label>
+                        <textarea matInput formControlName="issue"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
+                            Issue is Required
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Resolution</mat-label>
+                        <textarea matInput formControlName="resolution"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
+                            Resolution is Required
+                        </mat-error>
+                    </mat-form-field>
+
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-9">
+                        <mat-label>Extra Details</mat-label>
+                        <textarea matInput formControlName="extradetails"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['extradetails'].valid">
+                            Extradetails is Required
+                        </mat-error>
+                    </mat-form-field>   
                 </div>
             </form>
             <div class="row">
@@ -479,13 +488,13 @@
                 </div>
 
                 <div class="row">
-                    <mat-form-field class="col-md-3">
+                    <!-- <mat-form-field class="col-md-3">
                         <mat-label>Reference 2</mat-label>
                         <input matInput formControlName="reference2" required maxlength="50" />
                         <mat-error *ngIf="!orderForm.controls['reference2'].valid">
                             Reference 2 is Required
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
 
                     <mat-form-field class="col-md-3">
                         <mat-label>Issue </mat-label>
