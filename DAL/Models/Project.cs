@@ -79,5 +79,7 @@ namespace DAL.Models
         public ICollection<Location> Location_ProjectId { get; set; }
 
         public ICollection<PurchageOrder> App_PurchageOrder_ProjectId { get; set; }
+
+        public ICollection<UserProjectXref> App_UserProjectXref_ProjectId { get; set; }
     }
 }

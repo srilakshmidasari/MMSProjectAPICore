@@ -1135,6 +1135,29 @@ namespace MMS.Migrations
                     b.ToTable("TypeCdDmt");
                 });
 
+            modelBuilder.Entity("DAL.Models.UserProjectXref", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserProjectXref");
+                });
+
             modelBuilder.Entity("DAL.Models.WorkOrder", b =>
                 {
                     b.Property<int>("Id")
@@ -1155,6 +1178,9 @@ namespace MMS.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ExtraDetails")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -1165,10 +1191,6 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Reference1")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Reference2")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -1699,6 +1721,21 @@ namespace MMS.Migrations
                         .WithMany("App_TypeCdDmt_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_App_TypeCdDmt_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.UserProjectXref", b =>
+                {
+                    b.HasOne("DAL.Models.Project", "Project_Id")
+                        .WithMany("App_UserProjectXref_ProjectId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_App_UserProjectXref_ProjectId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "User_Id")
+                        .WithMany("App_UserProjectXref_UserId")
+                        .HasForeignKey("UserId")
+                        .HasConstraintName("FK_App_UserProjectXref_UserId")
                         .IsRequired();
                 });
 

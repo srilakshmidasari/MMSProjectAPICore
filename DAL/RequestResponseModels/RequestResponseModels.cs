@@ -464,15 +464,17 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int AssetId { get; set; }
-            public int SiteId { get; set; }
-
-            public int ProjectId { get; set; }
-            public int LocationId { get; set; }
             public string AssetName { get; set; }
+            public int SiteId { get; set; }
+            public string SiteName { get; set; }
+            public int ProjectId { get; set; }
+            public string ProjectName { get; set; }
+            public int LocationId { get; set; }
+            public string LocationName { get; set; }
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
             public string Reference1 { get; set; }
-            public string Reference2 { get; set; }
+            public string ExtraDetails { get; set; }
             public string Issue { get; set; }
             public string Resolution { get; set; }       
             public int WorkTypeId { get; set; }
@@ -495,7 +497,7 @@ namespace DAL.RequestResponseModels
             public DateTime StartDate { get; set; }
             public DateTime EndDate { get; set; }
             public string Reference1 { get; set; }
-            public string Reference2 { get; set; }
+            public string Extradetails { get; set; }
             public string Issue { get; set; }
             public string Resolution { get; set; }
             public int WorkTypeId { get; set; }           

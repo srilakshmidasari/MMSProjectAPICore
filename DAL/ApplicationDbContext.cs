@@ -33,13 +33,11 @@ namespace DAL
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<AssetFileRepository> AssetFileRepositories { get; set; }
         public DbSet<Item> Items { get; set; }
-
         public DbSet<PurchageOrder> PurchageOrders { get; set; }
         public DbSet<PurchageItemXref> PurchageItemXrefs { get; set; }
-
         public DbSet<WorkOrder> WorkOrders { get; set; }
-
         public DbSet<WorkOrderItemXref> WorkOrderItemXrefs { get; set; }
+        public DbSet<UserProjectXref> UserProjectXrefs { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -87,7 +85,8 @@ namespace DAL
             builder.Entity<WorkOrder>().ToTable("WorkOrder");
             builder.Entity<WorkOrder>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<WorkOrderItemXref>().ToTable("WorkOrderItemXref");
-
+            builder.Entity<UserProjectXref>().ToTable("UserProjectXref");
+            
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
            .HasForeignKey(d => d.CreatedBy)
@@ -422,10 +421,10 @@ namespace DAL
 
 
             builder.Entity<WorkOrder>().HasOne(d => d.CreatedUser)
-           .WithMany(p => p.App_WorkOrder_CreatedUser)
-           .HasForeignKey(d => d.CreatedBy)
-           .OnDelete(DeleteBehavior.ClientSetNull)
-           .HasConstraintName("FK_App_WorkOrder_CreatedUser");
+                .WithMany(p => p.App_WorkOrder_CreatedUser)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrder_CreatedUser");
 
             builder.Entity<WorkOrder>().HasOne(d => d.UpdatedUser)
                .WithMany(p => p.App_WorkOrder_UpdatedUser)
@@ -434,10 +433,10 @@ namespace DAL
                .HasConstraintName("FK_App_WorkOrder_UpdatedUser");
 
             builder.Entity<WorkOrder>().HasOne(d => d.Asset_Id)
-           .WithMany(p => p.App_WorkOrderAsset_Id)
-           .HasForeignKey(d => d.AssetId)
-           .OnDelete(DeleteBehavior.ClientSetNull)
-           .HasConstraintName("FK_App_WorkOrderAsset_Id");
+                .WithMany(p => p.App_WorkOrderAsset_Id)
+                .HasForeignKey(d => d.AssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrderAsset_Id");
 
             builder.Entity<WorkOrder>().HasOne(d => d.Store_Id)
               .WithMany(p => p.App_WorkOrder_Store_Id)
@@ -458,10 +457,10 @@ namespace DAL
                .HasConstraintName("FK_App_WorkOrder_WorkFault_Id");
 
             builder.Entity<WorkOrder>().HasOne(d => d.WorkType_Id)
-           .WithMany(p => p.App_WorkOrder_WorkType_Id)
-           .HasForeignKey(d => d.WorkTypeId)
-           .OnDelete(DeleteBehavior.ClientSetNull)
-           .HasConstraintName("FK_App_WorkOrder_WorkType_Id");
+                .WithMany(p => p.App_WorkOrder_WorkType_Id)
+                .HasForeignKey(d => d.WorkTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrder_WorkType_Id");
 
             builder.Entity<WorkOrder>().HasOne(d => d.WorkTechnician_Id)
               .WithMany(p => p.App_WorkOrder_WorkTechinician_Id)
@@ -480,6 +479,20 @@ namespace DAL
               .HasForeignKey(d => d.WorkOrderId)
               .OnDelete(DeleteBehavior.ClientSetNull)
               .HasConstraintName("FK_App_WorkOrderItemxref_Id");
+
+            builder.Entity<UserProjectXref>().HasOne(d => d.User_Id)
+            .WithMany(p => p.App_UserProjectXref_UserId)
+            .HasForeignKey(d => d.UserId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_App_UserProjectXref_UserId");
+
+            builder.Entity<UserProjectXref>().HasOne(d => d.Project_Id)
+            .WithMany(p => p.App_UserProjectXref_ProjectId)
+            .HasForeignKey(d => d.ProjectId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_App_UserProjectXref_ProjectId");
+
+
         }
 
         public override int SaveChanges()

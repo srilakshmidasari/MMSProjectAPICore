@@ -166,10 +166,8 @@ namespace DAL.Repositories
                     string ImageUrl = "data:image/png;base64," + base64String;
 
                     byte[] FileBytes = Convert.FromBase64String(base64String);
-
                    
                     pro.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
-
 
                     pro.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
 

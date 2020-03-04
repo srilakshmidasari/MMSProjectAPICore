@@ -44,14 +44,17 @@ namespace DAL.Repositories
                                   StartDate = wo.StartDate,
                                   EndDate = wo.EndDate,
                                   Reference1 = wo.Reference1,
-                                  Reference2 = wo.Reference2,
+                                  ExtraDetails = wo.ExtraDetails,
                                   Issue = wo.Issue,
                                   Resolution = wo.Resolution,
                                   AssetId = wo.AssetId,
+                                  AssetName = a.Name1,
                                   SiteId = s.Id,
+                                  SiteName = s.Name1,
                                   ProjectId = p.Id,
+                                  ProjectName = p.Name1,
                                   LocationId = l.Id,
-                                  AssetName= a.Name1,
+                                  LocationName = l.Name1,
                                   StoreId = wo.StoreId,
                                   StoreName = st.Name1,
                                   WorkStatusId = wo.WorkStatusId,
@@ -67,9 +70,7 @@ namespace DAL.Repositories
                                   CreatedDate = wo.CreatedDate,
                                   UpdatedBy = wo.UpdatedBy,
                                   UpdatedDate = wo.UpdatedDate,
-
                               }).ToList();
-                
 
                 if (result != null)
                 {
@@ -95,6 +96,7 @@ namespace DAL.Repositories
 
             return response;
         }
+
         public ValueDataResponse<WorkOrder> InsertWorkOrder(UpsertWorkOrder workorders)
         {
             ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
@@ -172,7 +174,7 @@ namespace DAL.Repositories
                     result.WorkFaultId = workorders.WorkFaultId;
                     result.StoreId = workorders.StoreId;
                     result.Reference1 = workorders.Reference1;
-                    result.Reference2 = workorders.Reference2;
+                    result.ExtraDetails = workorders.Extradetails;
                     result.Issue = workorders.Issue;
                     result.Resolution = workorders.Resolution;
                     result.CreatedBy = workorders.CreatedBy;
@@ -180,7 +182,6 @@ namespace DAL.Repositories
                     result.UpdatedBy = workorders.UpdatedBy;
                     result.UpdatedDate = workorders.UpdatedDate;
                     result.IsActive = workorders.IsActive;
-
                 }
                 _appContext.SaveChanges();
 
@@ -207,7 +208,6 @@ namespace DAL.Repositories
             }
             return response;
         }
-
 
         public ListDataResponse<GetWorkItemsResponse> GetItemsByWorkOrderId(int workOrderId)
         {
@@ -253,6 +253,47 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ValueDataResponse<WorkOrder> DeleteWorkOrder(int WorkOrderId)
+        {
+            ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
+            try
+            {
+                var orderData = _appContext.WorkOrders.Where(x => x.Id == WorkOrderId).FirstOrDefault();
+
+                var ast = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == WorkOrderId).ToList();
+                if (ast.Count > 0)
+                {
+                    _appContext.WorkOrderItemXrefs.RemoveRange(ast);
+                    _appContext.WorkOrders.Remove(orderData);
+                    _appContext.SaveChanges();
+                }
+
+                if (orderData != null)
+                {
+                    response.Result = orderData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Work Order Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Work Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
 
     }
 }
