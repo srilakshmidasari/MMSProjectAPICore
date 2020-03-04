@@ -48,5 +48,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.WorkOrders.GetItemsByWorkOrderId(WorkOrderId);
         }
+
+        [HttpDelete]
+        public ValueDataResponse<WorkOrder> DeleteWorkOrder(int WorkOrderId)
+        {
+            return _unitOfWork.WorkOrders.DeleteWorkOrder(WorkOrderId);
+        }
     }
 }

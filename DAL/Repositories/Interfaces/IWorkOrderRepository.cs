@@ -18,5 +18,10 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<GetWorkItemsResponse> GetItemsByWorkOrderId(int workOrderId);
 
+        ValueDataResponse<WorkOrder> DeleteWorkOrder(int WorkOrderId);
+
+
+
+
     }
 }

@@ -29,9 +29,9 @@ namespace DAL.Models
         [Display(Name = "Reference1")]
         public string Reference1 { get; set; }
 
-        [Required]
-        [Display(Name = "Reference2")]
-        public string Reference2 { get; set; }
+       
+        [Display(Name = "Extra Details")]
+        public string ExtraDetails { get; set; }
 
         [Required]
         [Display(Name = "Issue")]
