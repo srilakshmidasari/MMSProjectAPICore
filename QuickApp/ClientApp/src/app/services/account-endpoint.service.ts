@@ -84,7 +84,9 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getAssetsByLocationIdUrl: string ='/api/Asset/GetAssetsByLocationId';
   private readonly _deleteWorkOrder: string ='/api/WorkOrder';
 
-  
+  private readonly _getProjectsByUserIdUrl: string ='/api/Project/GetProjectsByUserId';
+
+  private readonly _getSitesByProjectIdUrl: string ='/api/Site/GetSitesByProjectId';
 
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -156,6 +158,11 @@ export class AccountEndpoint extends EndpointBase {
   get deleteWorkOrder() { return this.configurations.baseUrl + this._deleteWorkOrder; }
  
 
+  get getProjectsByUserIdUrl() { return this.configurations.baseUrl + this._getProjectsByUserIdUrl; }
+
+  get getSitesByProjectIdUrl() { return this.configurations.baseUrl + this._getSitesByProjectIdUrl; }
+  
+  
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -849,6 +856,24 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.deleteWorkOrderEndpoint(workOrderId));
+      }));
+  }
+  
+  
+  getProjectsByUserIdEndPoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getProjectsByUserIdUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getProjectsByUserIdEndPoint(Id));
+      }));
+  }
+
+
+  getSitesByProjectIdEndPoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getSitesByProjectIdUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getSitesByProjectIdEndPoint(Id));
       }));
   }
   

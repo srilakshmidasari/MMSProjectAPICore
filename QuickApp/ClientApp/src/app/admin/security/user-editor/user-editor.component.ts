@@ -62,6 +62,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   fileRepositories: any[] = [];
   isImage: any;
   isDocument: any;
+  projectsList: any[]=[];
+  projectIds: any[] = [];
+  userProjectsList: any[]=[];
 
   get confirmedEmailChanged() {
     return this.emailConfirmed && this.email.value != this.user.email;
@@ -128,13 +131,14 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.buildForm();
     this.isImage = DataFactory.docType.Image;
     this.isDocument = DataFactory.docType.Document;
+    
   }
 
   ngOnChanges() {
     if (this.user) {
       this.isNewUser = false;
       this.emailConfirmed = this.user.emailConfirmed;
-
+    
       const verificationEmailSent = this.localStorage.getDataObject<boolean>(this.getDBkey_VERIFICATION_EMAIL_SENT(this.user.id));
 
       if (this.isEditingSelf && !verificationEmailSent && !this.emailConfirmed) {
@@ -151,8 +155,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user.isEnabled = true;
     }
     this.getDocuments();
+    
     this.setRoles();
-    this.resetForm();
+    this.getProjects();
   }
 
   ngOnDestroy() {
@@ -196,6 +201,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       //fullName: '',
       phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
       isEnabled: ['true'],
+      projectId:['', Validators.required],
       // file: ''
     });
 
@@ -204,6 +210,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   //  Restting  userProfileForm
   public resetForm(stopEditing: boolean = false) {
+  //  this.projectIds =[];
+  // this.getProjects();
     if (stopEditing) {
       this.isEditMode = false;
     }
@@ -217,11 +225,11 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.isChangePassword = true;
       this.addNewPasswordValidators();
     } else {
-
       this.isChangePassword = false;
       this.newPassword.clearValidators();
       this.confirmPassword.clearValidators();
     }
+
 
     this.currentPassword.clearValidators();
 
@@ -238,6 +246,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         confirmPassword: ''
       },
       roles: this.user.roles || [],
+      projectId:this.isNewUser ?  this.user.projectId : this.projectIds || '',
       //fullName: this.user.fullName || '',
       phoneNumber: this.user.phoneNumber || '',
       isEnabled: this.user.isEnabled
@@ -254,108 +263,35 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     }
   }
 
-  // //  File  Change Event
-  // uploadFile(doc, event) {
-  //   debugger
-  //   var doc1 = doc;
-  //   var file = event.target.files[0];
-  //   if (doc.typeCdDmtId == DataFactory.docType.Image) {
-  //     var extensions = (this.allowedImageExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
-  //     if (file != undefined) {
-  //       this.fileExtension = '.' + file.name.split('.').pop();
-  //       // Get file extension
-  //       var ext = file.name.toUpperCase().split('.').pop() || file.name;
-  //       // Check the extension exists
-  //       var exists = extensions.includes(ext);
-  //       if (!exists) {
-  //         this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedImageExtension + " only.", null, MessageSeverity.error);
-  //         this.myInputVariable.nativeElement.value = '';
-  //         this.isAllow = false;
-  //       } else {
-  //         var fileSizeinMB = file.size / (1024 * 1000);
-  //         var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
-  //         if (size > this.maxSize) {
-  //           this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
-  //           this.myInputVariable.nativeElement.value = '';
-  //           this.isAllow = false;
-  //         } else {
-  //           this.isAllow = true;
-  //           this.isImageFile = true;
-  //         }
-  //       }
-  //     }
-    
-  //   } else {
-  //     var extensions = (this.allowedDocsExtension.split(',')).map(function (x) { return x.toLocaleUpperCase().trim() });
-  //     if (file != undefined) {
-  //       this.fileExtension = '.' + file.name.split('.').pop();
-  //       // Get file extension
-  //       var ext = file.name.toUpperCase().split('.').pop() || file.name;
-  //       // Check the extension exists
-  //       var exists = extensions.includes(ext);
-  //       if (!exists) {
-  //         this.alertService.showStickyMessage("This File is not allowed. Allowed File Extensions are " + this.allowedDocsExtension + " only.", null, MessageSeverity.error);
-  //         this.myInputVariable.nativeElement.value = '';
-  //         this.isAllow = false;
-  //       } else {
-  //         var fileSizeinMB = file.size / (1024 * 1000);
-  //         var size = Math.round(fileSizeinMB * 100) / 100; // convert upto 2 decimal place
-  //         if (size > this.maxSize) {
-  //           this.alertService.showStickyMessage("File Size exceeds the limit. Max. Allowed Size is : 1 GB", null, MessageSeverity.error);
-  //           this.myInputVariable.nativeElement.value = '';
-  //           this.isAllow = false;
-  //         } else {
-  //           this.isAllow = true;
-  //           this.isDocFile = true;
-  //         }
-  //       }
-  //     }      
-  //   }
-  //   let reader = new FileReader();
-  //   reader.onload = (e: any) => {
-  //     if (this.isAllow) {
-  //       this.userFileInfo.push({
-  //         "fileLocation": e.target.result,
-  //         "fileTypeName": doc.typeCdDmtId == 1 ? 'Image' : 'Document',
-  //         "documentType": doc.typeCdDmtId
-  //       })
-  //     if (!this.isNewUser) {
-  //       this.editUserFilesList.forEach((item1) => {
-  //         if (item1.typeCdDmtId == doc.typeCdDmtId) this.editUserFilesList.splice(item1, 1);
-  //       });
-  //     }
-  //     else if (this.isNewUser) {
-  //       this.documentList.forEach((item1) => {
-  //         if (item1.typeCdDmtId == doc.typeCdDmtId) this.documentList.splice(item1, 1);
-  //       });
-  //     }
-  //     var base64Index = e.target.result.indexOf(this.BASE64_MARKER) + this.BASE64_MARKER.length;
-  //     this.fileExtension = '.' + file.name.split('.').pop();
-  //     if (this.isDocFile || this.isImageFile) {
-  //       this.fileRepositories.forEach((item1) => {
-  //         if (item1.fileExtention == this.fileExtension) this.fileRepositories.splice(item1, 1);
-  //       });
-  //     }
-  //     this.fileRepositories.push(
-  //       {
-  //         "repositoryId": 0,
-  //         "userId": null,
-  //         "fileName": e.target.result.substring(base64Index),
-  //         "fileLocation": null,
-  //         "fileExtention": this.fileExtension,
-  //         "documentTypeId": doc1.typeCdDmtId,
-  //         "createdBy": this.currentUser.id,
-  //         "updatedBy": this.currentUser.id,
-  //         "updatedDate": new Date(),
-  //         "createdDate": new Date(),
-  //       })
-  //   }
-  // }
-  //   reader.readAsDataURL(file);
-  // }
+  private getProjects() {
+    this.projectIds =[];
+    this.accountService.getProject()
+      .subscribe((results: any) => {
+        this.projectsList = results.listResult == null ? [] : results.listResult;
+        if(this.user){
+          this.getProjectsByUserId(this.user.id);
+        }else{
+          this.resetForm();
+        }
+      },
+        error => {
+        });
+  }
 
+  private getProjectsByUserId(Id) {
+    this.accountService.getProjectsByUserId(Id)
+      .subscribe((results: any) => {
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        this.userProjectsList.forEach(element => {
+          this.projectIds.push(element.id)
+        });
+        this.resetForm();
+      },
+        error => {
+        });
+  }
 
-   //  File  Change Event
+   // File Change Event
    uploadFile(doc, event) {
     this.isAllow = false;
     var file = event.target.files[0];
@@ -505,6 +441,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       employeeId: formModel.empId,
       name1: formModel.name1,
       name2: formModel.name2,
+      projectIds:formModel.projectId,
       fileRepositories: this.fileRepositories
     };
   }
@@ -687,7 +624,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     } else {
       this.editUserFilesList = [];
     }
-
     this.accountService.getUserFileData(this.user.id).subscribe((response: any) => {
       this.userFileInfo = response;
       this.documentList.forEach((item, index) => {

@@ -45,5 +45,11 @@ namespace MMS.Controllers
             //Entity entityInfo = _mapper.Map<SiteInfo>(sites);
             return _unitOfWork.Sites.DeleteSiteInfo(SiteId);
         }
+
+        [HttpGet("GetSitesByProjectId/{ProjectId}")]
+        public ListDataResponse<SiteInfo> GetSitesByProjectId(int ProjectId)
+        {
+            return _unitOfWork.Sites.GetSitesByProjectId(ProjectId);
+        }
     }
 }

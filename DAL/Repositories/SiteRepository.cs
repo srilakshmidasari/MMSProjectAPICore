@@ -308,6 +308,49 @@ namespace DAL.Repositories
             return response;
         }
 
+        public ListDataResponse<SiteInfo> GetSitesByProjectId(int ProjectId)
+        {
+            ListDataResponse<SiteInfo> response = new ListDataResponse<SiteInfo>();
+            try
+            {
+                var result = (from p in _appContext.Projects.Where(x => x.Id == ProjectId).ToList()
+                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+                              select new SiteInfo
+                              {
+                                  Id = s.Id,
+                                  Name1 = s.Name1,
+                                  Name2 = s.Name2,
+                                  SiteReference = s.SiteReference,
+                                  CreatedBy = s.CreatedBy,
+                                  CreatedDate = s.CreatedDate,
+                                  UpdatedBy = s.UpdatedBy,
+                                  UpdatedDate = s.UpdatedDate,
 
+                              }).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Site Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Site Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

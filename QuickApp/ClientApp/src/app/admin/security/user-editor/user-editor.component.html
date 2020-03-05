@@ -16,10 +16,15 @@
       </mat-error>
     </mat-form-field>
 
-    <!-- <mat-form-field [floatLabel]="floatLabels" fxFlex>
-      <mat-label>{{'users.editor.FullName' | translate}}</mat-label>
-      <input matInput formControlName="fullName" maxlength="50" (keypress)="alphabetsOnly($event)" />
-    </mat-form-field> -->
+    <mat-form-field [floatLabel]="floatLabels" fxFlex>
+      <mat-label>Select Project<span>*</span></mat-label>
+      <mat-select formControlName="projectId" multiple>
+          <mat-option *ngFor="let project of projectsList" [value]="project.id">{{project.name1}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="!userProfileForm.controls['projectId'].valid">
+         Please Select Project
+      </mat-error>
+  </mat-form-field>
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
@@ -42,7 +47,6 @@
   </div>
 
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
-
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
       <mat-label>{{'users.editor.Email' | translate}}</mat-label>
       <input matInput formControlName="email" [class.auto-width]="emailConfirmed === false" maxlength="50"

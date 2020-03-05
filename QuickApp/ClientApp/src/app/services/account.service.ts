@@ -444,4 +444,12 @@ deleteAssetRepository(repositoryId) {
   getAssetsByLocationId(Id) {
     return this.accountEndpoint.getAssetsByLocationIdEndpoint(Id);
   }
+  
+  getProjectsByUserId(Id) {
+    return this.accountEndpoint.getProjectsByUserIdEndPoint(Id);
+  }
+
+  getSitesByProjectId(Id) {
+    return this.accountEndpoint.getSitesByProjectIdEndPoint(Id);
+  }
 }
