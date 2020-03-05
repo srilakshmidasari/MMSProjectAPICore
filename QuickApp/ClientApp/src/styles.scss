@@ -224,3 +224,28 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
 .color-blue{
   color: #3f51b5;
 }
+
+@media screen and (min-width: 1300px) {
+  .table-xl, .prng-table .ui-table {
+    min-width: 1620px;
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .tab-responsive, .table-lg {
+    min-width: 1300px;
+  }
+
+  .table-md {
+    min-width: 1050px;
+  }
+
+  .table-sm {
+    min-width: 850px;
+    width: 100%;
+  }
+
+  .prng-table .ui-table {
+    min-width: 1350px;
+  }
+}

@@ -102,99 +102,110 @@ namespace DAL.Repositories
             var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
             try
             {
-                PurchageOrder pro = _mapper.Map<PurchageOrder>(purchages);
-                var result = _appContext.PurchageOrders.Add(pro);
-                _appContext.SaveChanges();
-                foreach (var it in purchages.PurchaseItems)
+                var purchaseExists = _appContext.PurchageOrders.Where(x => x.PurchaseReference == purchages.PurchaseReference).FirstOrDefault();
+                if (purchaseExists == null)
                 {
-                    _appContext.PurchageItemXrefs.Add(new PurchageItemXref
-                    {
-                        ItemId = it.ItemId,
-                        PurchageId = pro.Id,
-                        Quantity = it.Quantity,
-                        ExpectdCost = it.ExpectdCost,
-                        Comments = it.Comments
-                    });
-                }
-                _appContext.SaveChanges();
-                var supplier = _appContext.Suppliers.Where(x => x.Id == pro.SupplierId).FirstOrDefault();
-                var project = _appContext.Projects.Where(x => x.Id == pro.ProjectId).FirstOrDefault();
-                var store = _appContext.LookUps.Where(x => x.Id == pro.StoreId).FirstOrDefault();
 
-
-                var items = (from pi in _appContext.PurchageItemXrefs
-                             join i in _appContext.Items on pi.ItemId equals i.Id
-                             join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
-                             select new GetItemsResponse
-                             {
-                                 Id = pi.Id,
-                                 PurchaseId = pi.PurchageId,
-                                 PurchaseReference = p.PurchaseReference,
-                                 ItemReference = i.ItemReference,
-                                 ItemId = pi.ItemId,
-                                 ItemName = i.Name1,
-                                 Quantity = pi.Quantity,
-                                 Comments = pi.Comments,
-                                 ExpectedCost = pi.ExpectdCost,
-
-                             }).Where(x => x.PurchaseId == pro.Id).ToList();
-                DateTime Date = pro.ArrivingDate;
-                // string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items, null);
-
-                // string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items.ItemName, items.Quantity, items.ExpectedCost, items.Comments, null);
-                byteArray = GeneratePurchaseOrderPdf(pro, supplier, items, project, store);
-                if (byteArray != null)
-                {
-                    string ModuleName = "PurchaseOrder";
-                    var now = DateTime.Now;
-                    var yearName = now.ToString("yyyy");
-                    var monthName = now.Month.ToString("d2");
-                    var dayName = now.ToString("dd");
-
-                    FileUploadService repo = new FileUploadService();
-
-                    string FolderLocation = "FileRepository";
-                    string ServerRootPath = _config.Value.ServerRootPath;
-
-                    string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
-
-                    pro.FileName = repo.UploadFile(byteArray, pro.FileExtention, Location);
-
-                    pro.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-
+                    PurchageOrder pro = _mapper.Map<PurchageOrder>(purchages);
+                    var result = _appContext.PurchageOrders.Add(pro);
                     _appContext.SaveChanges();
-
-                    //var converter = new HtmlConverter();
-                    //var html = message;
-
-                    //Byte[] bytes = converter.FromHtmlString(html);
-
-                    //string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-
-                    //string ImageUrl = "data:image/png;base64," + base64String;
-
-                    //byte[] FileBytes = Convert.FromBase64String(base64String);
-
-                    //pro.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
-
-                    //pro.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-
-                    //_appContext.SaveChanges();
-                }
+                    foreach (var it in purchages.PurchaseItems)
+                    {
+                        _appContext.PurchageItemXrefs.Add(new PurchageItemXref
+                        {
+                            ItemId = it.ItemId,
+                            PurchageId = pro.Id,
+                            Quantity = it.Quantity,
+                            ExpectdCost = it.ExpectdCost,
+                            Comments = it.Comments
+                        });
+                    }
+                    _appContext.SaveChanges();
+                    var supplier = _appContext.Suppliers.Where(x => x.Id == pro.SupplierId).FirstOrDefault();
+                    var project = _appContext.Projects.Where(x => x.Id == pro.ProjectId).FirstOrDefault();
+                    var store = _appContext.LookUps.Where(x => x.Id == pro.StoreId).FirstOrDefault();
 
 
-                if (pro != null)
-                {
-                    response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, pro.FileLocation, pro.FileName, pro.FileExtention);
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "PurchageOrder Added Successfully";
+                    var items = (from pi in _appContext.PurchageItemXrefs
+                                 join i in _appContext.Items on pi.ItemId equals i.Id
+                                 join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
+                                 select new GetItemsResponse
+                                 {
+                                     Id = pi.Id,
+                                     PurchaseId = pi.PurchageId,
+                                     PurchaseReference = p.PurchaseReference,
+                                     ItemReference = i.ItemReference,
+                                     ItemId = pi.ItemId,
+                                     ItemName = i.Name1,
+                                     Quantity = pi.Quantity,
+                                     Comments = pi.Comments,
+                                     ExpectedCost = pi.ExpectdCost,
+
+                                 }).Where(x => x.PurchaseId == pro.Id).ToList();
+                    DateTime Date = pro.ArrivingDate;
+                    // string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items, null);
+
+                    // string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items.ItemName, items.Quantity, items.ExpectedCost, items.Comments, null);
+                    byteArray = GeneratePurchaseOrderPdf(pro, supplier, items, project, store);
+                    if (byteArray != null)
+                    {
+                        string ModuleName = "PurchaseOrder";
+                        var now = DateTime.Now;
+                        var yearName = now.ToString("yyyy");
+                        var monthName = now.Month.ToString("d2");
+                        var dayName = now.ToString("dd");
+
+                        FileUploadService repo = new FileUploadService();
+
+                        string FolderLocation = "FileRepository";
+                        string ServerRootPath = _config.Value.ServerRootPath;
+
+                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                        pro.FileName = repo.UploadFile(byteArray, pro.FileExtention, Location);
+
+                        pro.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                        _appContext.SaveChanges();
+
+                        //var converter = new HtmlConverter();
+                        //var html = message;
+
+                        //Byte[] bytes = converter.FromHtmlString(html);
+
+                        //string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+
+                        //string ImageUrl = "data:image/png;base64," + base64String;
+
+                        //byte[] FileBytes = Convert.FromBase64String(base64String);
+
+                        //pro.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
+
+                        //pro.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                        //_appContext.SaveChanges();
+                    }
+
+
+                    if (pro != null)
+                    {
+                        response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, pro.FileLocation, pro.FileName, pro.FileExtention);
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Purchage Order Added Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Purchage Order Added Failed";
+                    }
                 }
                 else
                 {
-                    response.IsSuccess = true;
+                    response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "PurchageOrder Added Failed";
+                    response.EndUserMessage = "Purchage Order Reference Already Exists";
                 }
             }
             catch (Exception ex)
@@ -214,126 +225,138 @@ namespace DAL.Repositories
             var FileRepoBaseUrl = _config.Value.FileRepositoryUrl;
             try
             {
-                PurchageOrder pro = _mapper.Map<PurchageOrder>(purchages);
-                var result = _appContext.PurchageOrders.Where(x => x.Id == purchages.Id).FirstOrDefault();
-                var purchaseItemList = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == purchages.Id).ToList();
-                _appContext.PurchageItemXrefs.RemoveRange(purchaseItemList);
-                _appContext.SaveChanges();
-
-                foreach (var it in purchages.PurchaseItems)
+                var purchaseExists = _appContext.PurchageOrders.Where(x => x.Id != purchages.Id && x.PurchaseReference == purchages.PurchaseReference).FirstOrDefault();
+                if (purchaseExists == null)
                 {
-                    _appContext.PurchageItemXrefs.Add(new PurchageItemXref
-                    {
-                        ItemId = it.ItemId,
-                        PurchageId = pro.Id,
-                        Quantity = it.Quantity,
-                        ExpectdCost = it.ExpectdCost,
-                        Comments = it.Comments
-                    });
-                }
 
-                if (result != null)
-                {
-                    result.SupplierId = purchages.SupplierId;
-                    result.ProjectId = purchages.ProjectId;
-                    result.StoreId = purchages.StoreId;
-                    result.Remarks = purchages.Remarks;
-                    result.IsActive = purchages.IsActive;
-                    result.FileLocation = purchages.FileLocation;
-                    result.FileName = purchages.FileName;
-                    result.FileExtention = purchages.FileExtention;
-                    result.CreatedBy = purchages.CreatedBy;
-                    result.CreatedDate = purchages.CreatedDate;
-                    result.UpdatedBy = purchages.UpdatedBy;
-                    result.UpdatedDate = purchages.UpdatedDate;
-                    result.ArrivingDate = purchages.ArrivingDate;
-                    result.PurchaseReference = purchages.PurchaseReference;
-                    result.BillingAddress = purchages.BillingAddress;
-                    result.ShippingAddress = purchages.ShippingAddress;
+
+                    PurchageOrder pro = _mapper.Map<PurchageOrder>(purchages);
+                    var result = _appContext.PurchageOrders.Where(x => x.Id == purchages.Id).FirstOrDefault();
+                    var purchaseItemList = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == purchages.Id).ToList();
+                    _appContext.PurchageItemXrefs.RemoveRange(purchaseItemList);
                     _appContext.SaveChanges();
 
-                    var supplier = _appContext.Suppliers.Where(x => x.Id == pro.SupplierId).FirstOrDefault();
-                    var project = _appContext.Projects.Where(x => x.Id == pro.ProjectId).FirstOrDefault();
-                    var store = _appContext.LookUps.Where(x => x.Id == pro.StoreId).FirstOrDefault();
-
-                    var items = (from pi in _appContext.PurchageItemXrefs
-                                 join i in _appContext.Items on pi.ItemId equals i.Id
-                                 join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
-                                 select new GetItemsResponse
-                                 {
-                                     Id = pi.Id,
-                                     PurchaseId = pi.PurchageId,
-                                     PurchaseReference = p.PurchaseReference,
-                                     ItemReference = i.ItemReference,
-                                     ItemId = pi.ItemId,
-                                     ItemName = i.Name1,
-                                     Quantity = pi.Quantity,
-                                     Comments = pi.Comments,
-                                     ExpectedCost = pi.ExpectdCost,
-                                 }).Where(x => x.PurchaseId == pro.Id).ToList();
-
-                    //  string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items.ItemName, items.Quantity, items.ExpectedCost, items.Comments, null);
-                    // string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items, null);
-                    byteArray = GeneratePurchaseOrderPdf(pro, supplier, items, project, store);
-
-                    if (byteArray != null)
+                    foreach (var it in purchages.PurchaseItems)
                     {
-                        string ModuleName = "Purchase Order";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
+                        _appContext.PurchageItemXrefs.Add(new PurchageItemXref
+                        {
+                            ItemId = it.ItemId,
+                            PurchageId = pro.Id,
+                            Quantity = it.Quantity,
+                            ExpectdCost = it.ExpectdCost,
+                            Comments = it.Comments
+                        });
+                    }
 
-                        FileUploadService repo = new FileUploadService();
-
-                        string FolderLocation = "FileRepository";
-                        string ServerRootPath = _config.Value.ServerRootPath;
-
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
-
-                        //var converter = new HtmlConverter();
-                        //var html = message;
-
-                        //Byte[] bytes = converter.FromHtmlString(html);
-
-                        //string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
-
-                        //string ImageUrl = "data:image/png;base64," + base64String;
-
-                        //byte[] FileBytes = Convert.FromBase64String(base64String);
-
-
-                        //result.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
-
-
-                        //result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-
-                        //_appContext.SaveChanges();
-
-
-
-                        result.FileName = repo.UploadFile(byteArray, pro.FileExtention, Location);
-
-                        result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-
+                    if (result != null)
+                    {
+                        result.SupplierId = purchages.SupplierId;
+                        result.ProjectId = purchages.ProjectId;
+                        result.StoreId = purchages.StoreId;
+                        result.Remarks = purchages.Remarks;
+                        result.IsActive = purchages.IsActive;
+                        result.FileLocation = purchages.FileLocation;
+                        result.FileName = purchages.FileName;
+                        result.FileExtention = purchages.FileExtention;
+                        result.CreatedBy = purchages.CreatedBy;
+                        result.CreatedDate = purchages.CreatedDate;
+                        result.UpdatedBy = purchages.UpdatedBy;
+                        result.UpdatedDate = purchages.UpdatedDate;
+                        result.ArrivingDate = purchages.ArrivingDate;
+                        result.PurchaseReference = purchages.PurchaseReference;
+                        result.BillingAddress = purchages.BillingAddress;
+                        result.ShippingAddress = purchages.ShippingAddress;
                         _appContext.SaveChanges();
-                    }
+
+                        var supplier = _appContext.Suppliers.Where(x => x.Id == pro.SupplierId).FirstOrDefault();
+                        var project = _appContext.Projects.Where(x => x.Id == pro.ProjectId).FirstOrDefault();
+                        var store = _appContext.LookUps.Where(x => x.Id == pro.StoreId).FirstOrDefault();
+
+                        var items = (from pi in _appContext.PurchageItemXrefs
+                                     join i in _appContext.Items on pi.ItemId equals i.Id
+                                     join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
+                                     select new GetItemsResponse
+                                     {
+                                         Id = pi.Id,
+                                         PurchaseId = pi.PurchageId,
+                                         PurchaseReference = p.PurchaseReference,
+                                         ItemReference = i.ItemReference,
+                                         ItemId = pi.ItemId,
+                                         ItemName = i.Name1,
+                                         Quantity = pi.Quantity,
+                                         Comments = pi.Comments,
+                                         ExpectedCost = pi.ExpectdCost,
+                                     }).Where(x => x.PurchaseId == pro.Id).ToList();
+
+                        //  string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items.ItemName, items.Quantity, items.ExpectedCost, items.Comments, null);
+                        // string message = EmailTemplates.GetPurchaseOrder(pro.PurchaseReference, pro.ArrivingDate, project.Name1, supplier.Name1, supplier.Address, store.Name1, pro.BillingAddress, pro.ShippingAddress, items, null);
+                        byteArray = GeneratePurchaseOrderPdf(pro, supplier, items, project, store);
+
+                        if (byteArray != null)
+                        {
+                            string ModuleName = "PurchaseOrder";
+                            var now = DateTime.Now;
+                            var yearName = now.ToString("yyyy");
+                            var monthName = now.Month.ToString("d2");
+                            var dayName = now.ToString("dd");
+
+                            FileUploadService repo = new FileUploadService();
+
+                            string FolderLocation = "FileRepository";
+                            string ServerRootPath = _config.Value.ServerRootPath;
+
+                            string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                            //var converter = new HtmlConverter();
+                            //var html = message;
+
+                            //Byte[] bytes = converter.FromHtmlString(html);
+
+                            //string base64String = Convert.ToBase64String(bytes, 0, bytes.Length);
+
+                            //string ImageUrl = "data:image/png;base64," + base64String;
+
+                            //byte[] FileBytes = Convert.FromBase64String(base64String);
+
+
+                            //result.FileName = repo.UploadFile(FileBytes, pro.FileExtention, Location);
+
+
+                            //result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                            //_appContext.SaveChanges();
 
 
 
-                    if (pro != null)
-                    {
-                        response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, result.FileLocation, result.FileName, result.FileExtention); ;
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 1;
-                        response.EndUserMessage = "Purchage Order Updated Successfully";
+                            result.FileName = repo.UploadFile(byteArray, pro.FileExtention, Location);
+
+                            result.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                            _appContext.SaveChanges();
+                        }
+
+
+
+                        if (pro != null)
+                        {
+                            response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, result.FileLocation, result.FileName, result.FileExtention); ;
+                            response.IsSuccess = true;
+                            response.AffectedRecords = 1;
+                            response.EndUserMessage = "Purchage Order Updated Successfully";
+                        }
+                        else
+                        {
+                            response.IsSuccess = true;
+                            response.AffectedRecords = 0;
+                            response.EndUserMessage = "Purchage Order Updation Failed";
+                        }
                     }
-                    else
-                    {
-                        response.IsSuccess = true;
-                        response.AffectedRecords = 0;
-                        response.EndUserMessage = "Purchage Order Updation Failed";
-                    }
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Purchage Order Reference Already Exists";
                 }
 
             }
@@ -355,7 +378,7 @@ namespace DAL.Repositories
                 var purchaseData = _appContext.PurchageOrders.Where(x => x.Id == PurchaseId).FirstOrDefault();
 
                 var ast = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == PurchaseId).ToList();
-                if (ast.Count > 0)
+                if (ast != null)
                 {
                     _appContext.PurchageItemXrefs.RemoveRange(ast);
 
@@ -526,9 +549,9 @@ namespace DAL.Repositories
 
             // create  instance for pdf document genaration //
             Document pdfDoc = new Document(PageSize.A4, 35, 10, 25, 10);
-          //  PdfPCell cell1 = null;
-           // PdfPTable table1 = null;
-           // PdfPTable table2 = null;
+            //  PdfPCell cell1 = null;
+            // PdfPTable table1 = null;
+            // PdfPTable table2 = null;
 
             /* Item Table Styles start */
 
@@ -599,7 +622,7 @@ namespace DAL.Repositories
             under.ShowTextAligned(PdfContentByte.ALIGN_CENTER, watermarkText, xPosition, yPosition, angle);
             under.EndText();
             // ** set water mark end ** //
-          
+
 
             // Add Table And Styles Item Table //
             PdfPCell cell = new PdfPCell(new Phrase("Item", FontFactory.GetFont("Arial", 12, iTextSharp.text.Font.BOLD, BaseColor.BLACK)));
@@ -776,7 +799,7 @@ namespace DAL.Repositories
 
             string itemInfo = "Item Details";
             string purchaseInfo = "Purchase Details";
-          
+
 
             // set margins
             header = header.PadLeft(40);
@@ -795,7 +818,7 @@ namespace DAL.Repositories
             Paragraph purchaseData = new Paragraph(purchaseInfo, fontTitle);
 
             purchaseData.SpacingAfter = 10;
-         
+
 
             Paragraph itemHeader = new Paragraph(itemInfo, fontTitle);
 
@@ -809,7 +832,7 @@ namespace DAL.Repositories
             pdfDoc.Add(purchaseData);
             pdfDoc.Add(mtable);
             pdfDoc.Add(mtable1);
-            pdfDoc.Add(mtable2); 
+            pdfDoc.Add(mtable2);
             pdfDoc.Add(mtable3);
             pdfDoc.Add(itemHeader);
             pdfDoc.Add(table);
