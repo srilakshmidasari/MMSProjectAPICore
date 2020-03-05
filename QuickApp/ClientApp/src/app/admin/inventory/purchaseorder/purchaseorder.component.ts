@@ -325,7 +325,7 @@ export class PurchaseorderComponent implements OnInit {
       "shippingAddress":formModel.shippingAddress,
       "fileName": "",
       "fileLocation": "",
-      "fileExtention": ".png",
+      "fileExtention": ".pdf",
       "purchaseReference": formModel.purchaseReference,
       "isActive": true,
       "purchaseItems": purchaseItems,

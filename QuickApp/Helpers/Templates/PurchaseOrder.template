@@ -97,7 +97,7 @@
     </table>
     <br />
     <h4 style="color:#0f6ca2;margin-left:5%;">Item Details</h4>
-    <table width="90%" style="border-collapse: collapse;margin:auto;">
+    <table width="90%" style="border-collapse: collapse;margin:auto;" >
       <thead style="font-weight:600;">
         <tr>
           <td style="border:1px solid #333;">Item</td>

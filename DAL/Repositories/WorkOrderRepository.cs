@@ -102,34 +102,45 @@ namespace DAL.Repositories
             ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
             try
             {
-                WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
-                var result = _appContext.WorkOrders.Add(Wro);
-                _appContext.SaveChanges();
-
-                foreach (var it in workorders.WorkOrderItems)
+                var orderExists = _appContext.WorkOrders.Where(x => x.Reference1 == workorders.Reference1).FirstOrDefault();
+                if (orderExists == null)
                 {
-                    _appContext.WorkOrderItemXrefs.Add(new WorkOrderItemXref
+
+                    WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
+                    var result = _appContext.WorkOrders.Add(Wro);
+                    _appContext.SaveChanges();
+
+                    foreach (var it in workorders.WorkOrderItems)
                     {
-                        ItemId = it.ItemId,
-                        WorkOrderId = Wro.Id,
-                        Quantity = it.Quantity,
-                      
-                    });
-                }
-                _appContext.SaveChanges();
+                        _appContext.WorkOrderItemXrefs.Add(new WorkOrderItemXref
+                        {
+                            ItemId = it.ItemId,
+                            WorkOrderId = Wro.Id,
+                            Quantity = it.Quantity,
 
-                if (Wro != null)
-                {
-                    response.Result = Wro;
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "Work Order Added Successfully";
+                        });
+                    }
+                    _appContext.SaveChanges();
+
+                    if (Wro != null)
+                    {
+                        response.Result = Wro;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Work Order Added Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Work Order Added Failed";
+                    }
                 }
                 else
                 {
-                    response.IsSuccess = true;
+                    response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "Work Order Added Failed";
+                    response.EndUserMessage = "Work Order Reference is Already Exists";
                 }
             }
             catch (Exception ex)
@@ -147,57 +158,70 @@ namespace DAL.Repositories
             ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
             try
             {
-                WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
-                var result = _appContext.WorkOrders.Where(x => x.Id == workorders.Id).FirstOrDefault();
-                var workOrderItemList = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == workorders.Id).ToList();
-                _appContext.WorkOrderItemXrefs.RemoveRange(workOrderItemList);
-                _appContext.SaveChanges();
-
-                foreach (var it in workorders.WorkOrderItems)
+                var orderExists = _appContext.WorkOrders.Where(x => x.Reference1 == workorders.Reference1).FirstOrDefault();
+                if (orderExists == null)
                 {
-                    _appContext.WorkOrderItemXrefs.Add(new WorkOrderItemXref
+
+
+                    WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
+                    var result = _appContext.WorkOrders.Where(x => x.Id == workorders.Id).FirstOrDefault();
+                    var workOrderItemList = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == workorders.Id).ToList();
+                    _appContext.WorkOrderItemXrefs.RemoveRange(workOrderItemList);
+                    _appContext.SaveChanges();
+
+                    foreach (var it in workorders.WorkOrderItems)
                     {
-                        ItemId = it.ItemId,
-                        WorkOrderId = Wro.Id,
-                        Quantity = it.Quantity,
-                    });
-                }
+                        _appContext.WorkOrderItemXrefs.Add(new WorkOrderItemXref
+                        {
+                            ItemId = it.ItemId,
+                            WorkOrderId = Wro.Id,
+                            Quantity = it.Quantity,
+                        });
+                    }
 
-                if(result != null)
-                {
-                    result.AssetId = workorders.AssetId;
-                    result.StartDate = workorders.StartDate;
-                    result.EndDate = workorders.EndDate;
-                    result.WorkTypeId = workorders.WorkTypeId;
-                    result.WorkTechnicianId = workorders.WorkTechnicianId;
-                    result.WorkStatusId = workorders.WorkStatusId;
-                    result.WorkFaultId = workorders.WorkFaultId;
-                    result.StoreId = workorders.StoreId;
-                    result.Reference1 = workorders.Reference1;
-                    result.ExtraDetails = workorders.Extradetails;
-                    result.Issue = workorders.Issue;
-                    result.Resolution = workorders.Resolution;
-                    result.CreatedBy = workorders.CreatedBy;
-                    result.CreatedDate = workorders.CreatedDate;
-                    result.UpdatedBy = workorders.UpdatedBy;
-                    result.UpdatedDate = workorders.UpdatedDate;
-                    result.IsActive = workorders.IsActive;
-                }
-                _appContext.SaveChanges();
+                    if (result != null)
+                    {
+                        result.AssetId = workorders.AssetId;
+                        result.StartDate = workorders.StartDate;
+                        result.EndDate = workorders.EndDate;
+                        result.WorkTypeId = workorders.WorkTypeId;
+                        result.WorkTechnicianId = workorders.WorkTechnicianId;
+                        result.WorkStatusId = workorders.WorkStatusId;
+                        result.WorkFaultId = workorders.WorkFaultId;
+                        result.StoreId = workorders.StoreId;
+                        result.Reference1 = workorders.Reference1;
+                        result.ExtraDetails = workorders.Extradetails;
+                        result.Issue = workorders.Issue;
+                        result.Resolution = workorders.Resolution;
+                        result.CreatedBy = workorders.CreatedBy;
+                        result.CreatedDate = workorders.CreatedDate;
+                        result.UpdatedBy = workorders.UpdatedBy;
+                        result.UpdatedDate = workorders.UpdatedDate;
+                        result.IsActive = workorders.IsActive;
+                    }
+                    _appContext.SaveChanges();
 
-                if (Wro != null)
-                {
-                    response.Result = Wro;
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "Work Order Update Successfully";
+                    if (Wro != null)
+                    {
+                        response.Result = Wro;
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 1;
+                        response.EndUserMessage = "Work Order Update Successfully";
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.AffectedRecords = 0;
+                        response.EndUserMessage = "Work Order Updation Failed";
+                    }
                 }
                 else
                 {
-                    response.IsSuccess = true;
+                    response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "Work Order Updation Failed";
+                    response.EndUserMessage = "Work Order Reference is Already Exists";
                 }
+
             }
             catch (Exception ex)
             {
@@ -225,7 +249,7 @@ namespace DAL.Repositories
                                   ItemId = wi.ItemId,
                                   ItemName = i.Name1,
                                   Quantity = wi.Quantity,
-                                
+
 
                               }).Where(x => x.WorkOrderId == workOrderId).ToList();
 
@@ -262,7 +286,7 @@ namespace DAL.Repositories
                 var orderData = _appContext.WorkOrders.Where(x => x.Id == WorkOrderId).FirstOrDefault();
 
                 var ast = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == WorkOrderId).ToList();
-                if (ast !=  null)
+                if (ast != null)
                 {
                     _appContext.WorkOrderItemXrefs.RemoveRange(ast);
                     _appContext.WorkOrders.Remove(orderData);
