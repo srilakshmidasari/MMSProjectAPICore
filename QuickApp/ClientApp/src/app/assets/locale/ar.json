@@ -27,7 +27,8 @@
     "Supplier":"المورد",
     "Inventory":"المخزون",
     "Item":"بند",
-    "Purchase Order":"أمر شراء"
+    "Purchase Order":"أمر شراء",
+    "Work Order":"ترتيب العمل"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -47,7 +48,8 @@
     "Assets": "الأصول",
     "Inventory":"المخزون",
     "Item":"بند",
-    "Purchase Order":"أمر شراء"
+    "Purchase Order":"أمر شراء",
+    "Work Order":"ترتيب العمل"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -541,7 +543,73 @@
     "Select Project":"اختر المشروع",
     "Add":"إضافة"
   }
+ },
+ "Work Order":{
+  "Management":{
+    "Search By Work Order":"البحث حسب ترتيب العمل",
+    "Reference 1":"المرجع 1",
+    "Start Date":"تاريخ البدء",
+    "End Date":"تاريخ الانتهاء",
+    "Asset Name":"اسم الأصل",
+    "Location Name":"اسم الموقع",
+    "Updated Date":"تاريخ التحديث",
+    "Issue":"القضية",
+    "Resolution":"الدقة",
+    "Create":"خلق",
+    "Add Order":"أضف طلب",
+    "Edit":"تعديل",
+    "Delete":"حذف",
+    "View WorkOrder":"عرض ترتيب العمل",
+    "Item Name":"اسم العنصر",
+    "Item Reference":"مرجع البند",
+    "Quantity":"كمية",
+    "No Records Found":"لا توجد سجلات",
+    "Add Work Order":"أضف طلب عمل",
+    "PleaseSelectSite":"يرجى اختيار الموقع",
+    "ProjectName":"اسم المشروع",
+    "PleaseSelectProject":"من فضلكمختارالمشروع",
+    "LocationName":"اسم الموقع",
+    "PleaseSelectLocation":"يرجى اختيار الموقع",
+    "Add":"أضف",
+    "Add Item":"اضافة عنصر",
+    "Select Asset":"اختر الأصل",
+    "Please Select Asset":"يرجى اختيار الأصول",
+    "Select Store":"اختر المتجر",
+    "Please Select Store":"يرجى اختيار المتجر",
+    "Reference 1 is Required":"المرجع 1 هو المطلوب",
+    "Start Date is Required":"تاريخ البدء مطلوب",
+    "Select Work Type":"اختر نوع العمل",
+    "Please Select Work Type":"يرجى اختيار نوع العمل",
+    "Select Work Status":"حدد حالة العمل",
+    "Please Select Work Status":"يرجى اختيار حالة العمل",
+    "Select Work Fault":"حدد خطأ العمل",
+    "Please Select Work Fault":"يرجى اختيار خطأ العمل",
+    "Select Work Technician":"اختر فني عمل",
+    "Please Select work Technician":"يرجى اختيار فني العمل",
+    "Issue is Required":"العدد مطلوب",
+    "Resolution is Required":"القرار مطلوب",
+    "Extra Details":"تفاصيل اضافية",
+    "Extra Details is Required":"تفاصيل اضافية مطلوبة",
+    "Item":"بند",
+    "Select Item":"اختر البند",
+    "Please Select Item":"يرجى اختيار البند",
+    "Quantity is Required":"الكمية المطلوبة",
+    "Remove":"إزالة",
+    "Save":"حفظ",
+    "Cancel":"إلغاء",
+    "Edit Work Order":"تحرير ترتيب العمل",
+    "Work Order Information":"معلومات طلب العمل",
+    "Site Name":"اسم الموقع",
+    "Project Name":"اسم المشروع",
+    "Store Name":"اسم المتجر",
+    "Work Type Name":"اسم نوع العمل",
+    "Work Status Name":"اسم حالة العمل",
+    "Work Technician Name":"اسم فني العمل",
+    "Work Fault Name":"اسم خطأ العمل",
+    "Close":"قريب"
+  }
  }
 }
+
 
 

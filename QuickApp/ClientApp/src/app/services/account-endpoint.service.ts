@@ -82,6 +82,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getItemsByWorkOrderId: string ='/api/WorkOrder/GetItemsByWorkOrderId';
 
   private readonly _getAssetsByLocationIdUrl: string ='/api/Asset/GetAssetsByLocationId';
+  private readonly _deleteWorkOrder: string ='/api/WorkOrder';
 
   private readonly _getProjectsByUserIdUrl: string ='/api/Project/GetProjectsByUserId';
 
@@ -154,6 +155,8 @@ export class AccountEndpoint extends EndpointBase {
   get getItemsByWorkOrderIdUrl() { return this.configurations.baseUrl + this._getItemsByWorkOrderId; }
 
   get getAssetsByLocationIdUrl() { return this.configurations.baseUrl + this._getAssetsByLocationIdUrl; }
+  get deleteWorkOrder() { return this.configurations.baseUrl + this._deleteWorkOrder; }
+ 
 
   get getProjectsByUserIdUrl() { return this.configurations.baseUrl + this._getProjectsByUserIdUrl; }
 
@@ -847,6 +850,15 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.getAssetsByLocationIdEndpoint(Id));
       }));
   }
+  
+  deleteWorkOrderEndpoint<T>(workOrderId: any): Observable<T> {
+    const endpointUrl = this.deleteWorkOrder + '?workOrderId=' + workOrderId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteWorkOrderEndpoint(workOrderId));
+      }));
+  }
+  
   
   getProjectsByUserIdEndPoint<T>(Id: any): Observable<T> {
     const endpointUrl = this.getProjectsByUserIdUrl + '/' + Id;
