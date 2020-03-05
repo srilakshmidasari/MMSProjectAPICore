@@ -82,6 +82,7 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getItemsByWorkOrderId: string ='/api/WorkOrder/GetItemsByWorkOrderId';
 
   private readonly _getAssetsByLocationIdUrl: string ='/api/Asset/GetAssetsByLocationId';
+  private readonly _deleteWorkOrder: string ='/api/WorkOrder';
 
   
 
@@ -152,7 +153,8 @@ export class AccountEndpoint extends EndpointBase {
   get getItemsByWorkOrderIdUrl() { return this.configurations.baseUrl + this._getItemsByWorkOrderId; }
 
   get getAssetsByLocationIdUrl() { return this.configurations.baseUrl + this._getAssetsByLocationIdUrl; }
-  
+  get deleteWorkOrder() { return this.configurations.baseUrl + this._deleteWorkOrder; }
+ 
 
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
@@ -841,4 +843,13 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.getAssetsByLocationIdEndpoint(Id));
       }));
   }
+  
+  deleteWorkOrderEndpoint<T>(workOrderId: any): Observable<T> {
+    const endpointUrl = this.deleteWorkOrder + '?workOrderId=' + workOrderId;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteWorkOrderEndpoint(workOrderId));
+      }));
+  }
+  
 }

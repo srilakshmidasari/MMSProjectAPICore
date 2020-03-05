@@ -5,6 +5,8 @@ import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Utilities } from 'src/app/services/utilities';
 
 @Component({
   selector: 'app-work-order',
@@ -14,6 +16,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class WorkOrderComponent implements OnInit {
   projectsList: any[] = [];
   orderData: any = {};
+  workorder: any ={};
   loadingIndicator: boolean;
   credentials: any[] = [];
   workOrdersList: any[] = [];
@@ -35,6 +38,7 @@ export class WorkOrderComponent implements OnInit {
   isAdding: boolean = false;
   isNewOrder: boolean = false;
   isEdit: boolean = false;
+  isView:boolean = false;
   ProjectId: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -100,7 +104,7 @@ export class WorkOrderComponent implements OnInit {
       assetId: ['', Validators.required],
       storeId :['', Validators.required],
       reference1: ['', Validators.required],
-      extradetails: ['', Validators.required],
+      extraDetails: ['', Validators.required],
       issue: ['', Validators.required],
       resolution: ['', Validators.required],
       startDate: ['', Validators.required],
@@ -251,6 +255,47 @@ export class WorkOrderComponent implements OnInit {
       this.resetForm();
   
     }
+    onViewClick(row){
+      debugger
+      this.workorder =row; 
+      this.isView = true;
+       
+
+    }
+   
+    closeViewWorkOrder() {
+    this.isView = false;
+    
+  }
+
+    confirmDelete(order: any){
+      debugger
+      let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+        data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+        width: 'auto',
+        height: 'auto',
+        disableClose: true,
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        if (result != undefined) {
+          this.accountService.deleteWorkOrder(order.id)
+            .subscribe((results: any) => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+              if (results.isSuccess) {
+                this.getworkOrderOrders();
+              }
+            },
+              error => {
+                this.alertService.stopLoadingMessage();
+                this.loadingIndicator = false;
+                this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                  MessageSeverity.error, error);
+              });
+        }
+      });
+    }
 
       // Accepting Only Numbers
   numberOnly(event: any) {
@@ -276,7 +321,7 @@ export class WorkOrderComponent implements OnInit {
         assetId: this.orderData.assetId || '',
         storeId:this.orderData.storeId ||'',
         reference1:this.orderData.reference1 ||'',
-        extradetails: this.orderData.extradetails || '',
+        extraDetails: this.orderData.extraDetails || '',
         issue: this.orderData.issue || '',
         resolution:this.orderData.resolution ||'',
         startDate:this.orderData.startDate ||'',
@@ -358,7 +403,7 @@ export class WorkOrderComponent implements OnInit {
           "startDate": formModel.startDate,
           "endDate": formModel.endDate,
           "reference1": formModel.reference1,
-          "extradetails": formModel.extradetails,
+          "extradetails": formModel.extraDetails,
           "locationName":formModel.locationName,
           "issue": formModel.issue,
           "resolution": formModel.resolution,

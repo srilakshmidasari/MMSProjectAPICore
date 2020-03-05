@@ -437,6 +437,9 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.getItemsByWorkOrderIdEndpoint(workOrderId);
   }
   
+  deleteWorkOrder(workOrderId){
+    return this.accountEndpoint.deleteWorkOrderEndpoint(workOrderId);
+  }
 
   getAssetsByLocationId(Id) {
     return this.accountEndpoint.getAssetsByLocationIdEndpoint(Id);
