@@ -85,31 +85,44 @@ namespace DAL.Helpers
             return emailMessage;
         }
 
-        public static string GetPurchaseOrder(string purchaseReference, DateTime arrivingDate, string projectName, string storeName, string supplierName, string supplierAdtees, string billingAddress,string shippingAddress, string ItemName, int Quantity, double ExpectedCost, string Comments,string callbackUrl)
+        public static string GetPurchaseOrder(string purchaseReference, DateTime arrivingDate, string projectName, string storeName, string supplierName, string supplierAdtees, string billingAddress, string shippingAddress, List<GetItemsResponse> itemData, string callbackUrl)
         {
             if (purchaseOrderTemplate == null)
                 purchaseOrderTemplate = ReadPhysicalFile("Helpers/Templates/PurchaseOrder.template");
-            //List<string> l = (from char c in itemData
-            //                  select c.ToString()).ToList();
-            //foreach (var file in itemData)
-            //{
-            //    string[] strSplittedFileName = file.Split(@"\");
-            //}
-            string OrderMessage = purchaseOrderTemplate
-                 .Replace("{PurchaseReference}", purchaseReference)
-                 .Replace("{ProjectName}", projectName)
-                 .Replace("{StoreName}", storeName)
-                 .Replace("{SupplierName}", supplierName)
-                 .Replace("{supplierAdtees}", supplierAdtees)
-                 .Replace("{arrivingDate}", arrivingDate.ToString("dd/MM/yyyy"))
-                 .Replace("{billingAddress}", billingAddress)
-                 .Replace("{shippingAddress}", shippingAddress)
-                 .Replace("{ItemName}", ItemName)
-                 .Replace("{Quantity}", Quantity.ToString())
-                 .Replace("{ExpectedCost}", ExpectedCost.ToString())
-                 .Replace("{Comments}", Comments)
-                 .Replace("{url}", callbackUrl);
-            return OrderMessage;
+
+            //string ItemMessage = purchaseOrderTemplate
+            //     .Replace("{PurchaseReference}", purchaseReference)
+            //     .Replace("{ProjectName}", projectName)
+            //     .Replace("{StoreName}", storeName)
+            //     .Replace("{SupplierName}", supplierName)
+            //     .Replace("{supplierAdtees}", supplierAdtees)
+            //     .Replace("{arrivingDate}", arrivingDate.ToString("dd/MM/yyyy"))
+            //     .Replace("{billingAddress}", billingAddress)
+            //     .Replace("{shippingAddress}", shippingAddress)
+            //     .Replace("{ItemName}", ItemName)
+            //     .Replace("{Quantity}", Quantity.ToString())
+            //     .Replace("{ExpectedCost}", ExpectedCost.ToString())
+            //     .Replace("{Comments}", Comments)
+            //     .Replace("{url}", callbackUrl);
+            string ItemMessage ="";
+            foreach (var file in itemData)
+            {
+                ItemMessage = purchaseOrderTemplate
+                  //.Replace("{PurchaseReference}", purchaseReference)
+                  //.Replace("{ProjectName}", projectName)
+                  //.Replace("{StoreName}", storeName)
+                  //.Replace("{SupplierName}", supplierName)
+                  //.Replace("{supplierAdtees}", supplierAdtees)
+                  //.Replace("{arrivingDate}", arrivingDate.ToString("dd/MM/yyyy"))
+                  //.Replace("{billingAddress}", billingAddress)
+                  //.Replace("{shippingAddress}", shippingAddress)
+                  .Replace("{ItemName}", file.ItemName)
+                  .Replace("{Quantity}", file.Quantity.ToString())
+                  .Replace("{ExpectedCost}", file.ExpectedCost.ToString())
+                  .Replace("{Comments}", file.Comments);
+
+            }
+            return ItemMessage;
         }
 
         public static string GetPlainTextTestEmail(DateTime date)
