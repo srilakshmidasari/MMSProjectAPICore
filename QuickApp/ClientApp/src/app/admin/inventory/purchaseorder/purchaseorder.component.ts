@@ -24,7 +24,7 @@ export class PurchaseorderComponent implements OnInit {
   displayNoRecords: boolean;
   purchasesList: any[] = [];
   purchaseData: any = {};
-  isViewItem: boolean = false;
+  isView: boolean = false;
   orderForm: FormGroup;
   isAdding: boolean = false;
   isNewPurchase: boolean = false;
@@ -38,6 +38,8 @@ export class PurchaseorderComponent implements OnInit {
   projectsList: any[] = [];
   storesList: any[]=[];
   isAccepted: number;
+  purchase: any={};
+
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
@@ -228,6 +230,7 @@ export class PurchaseorderComponent implements OnInit {
     this.resetForm();
 
   }
+  
 
   public resetForm(stopEditing: boolean = false) {
     debugger
@@ -444,6 +447,17 @@ export class PurchaseorderComponent implements OnInit {
   onViewPDF(doc) {
     window.open(doc);
   }
+
+  onViewdetailsClick(row){
+    debugger
+    this.purchase=row;
+    this.isView=true;  
+    this.isEdit=false;
+    }
+
+    closeViewpurchaseOrder(){
+      this.isView = false;
+    }
 
 }
 
