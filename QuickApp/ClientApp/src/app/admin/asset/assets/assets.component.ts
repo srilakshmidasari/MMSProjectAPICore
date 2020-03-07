@@ -49,7 +49,7 @@ export class AssetsComponent implements OnInit {
   @Input() allowedDocExtension: string = "pdf , docx , doc";
   @Input() maxSize: number = 2300;//1150;
   displayNoRecords: boolean;
-  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetSize', 'assetCapacity', 'astFixedDate', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetSize', 'assetCapacity', 'astFixedDate',  'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

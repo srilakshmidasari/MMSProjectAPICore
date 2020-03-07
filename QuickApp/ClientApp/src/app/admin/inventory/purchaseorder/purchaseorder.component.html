@@ -6,9 +6,9 @@
                 placeholder="{{'Purchase Order.Management.Search' | translate}}">
         </mat-form-field>
     </div> -->
-    <div class="example-container mat-elevation-z8 mt-2">
+    <div class="example-container mat-elevation-z8 mt-2 prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <div class="table-responsive prng-table">
+        <div>
             <p-table #dt [value]="purchasesList" [paginator]="true" expandableRows="true" [rows]="10"
                 sortField="purchaseReference" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExp

@@ -5,12 +5,6 @@
 .pull-right{
     float: right !important;
 }
-
-@font-face {
-    font-family: Arial, sans-serif;
-    /*src: url(SourceSansPro-Regular.ttf);*/
-}
-
 .clearfix:after {
     content: "";
     display: table;
@@ -22,10 +16,10 @@ a {
     text-decoration: none;
 }
 
-body {
+#print-container {
     position: relative;
     width: 21cm;
-    height: 29.7cm;
+    height: 28.7cm;
     margin: 0 auto;
     color: #555555;
     background: #FFFFFF;
@@ -61,6 +55,12 @@ header {
     border-left: 4px solid #0087C3;
     float: left;
 }
+.ship{
+    padding-right: 6px;
+    border-right: 4px solid #0087C3;
+    float: right;
+    margin-bottom: 20px;
+}
 #client div{
     line-height:18px;
 }
@@ -71,10 +71,9 @@ header {
 #client .to {
     color: #777777;
 }
-.ins-no{
-    margin-top:25px;
+.w-300{
+    width: 300px;
 }
-
 h2.name {
     font-size: 1.4em;
     font-weight: normal;

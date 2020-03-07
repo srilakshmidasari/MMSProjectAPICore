@@ -1,6 +1,6 @@
 <app-page-header title="Work Order" icon="assignment_ind"></app-page-header>
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
-    <div class="example-container mat-elevation-z8 mt-2">
+    <div class="example-container mat-elevation-z8 mt-2  prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
             <p-table #dt [value]="workOrdersList" [paginator]="true" expandableRows="true" [rows]="10"

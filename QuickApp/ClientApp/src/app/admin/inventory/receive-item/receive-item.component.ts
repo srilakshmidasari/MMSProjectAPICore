@@ -104,27 +104,33 @@ export class ReceiveItemComponent implements OnInit {
       inventoryItems.push(itemReq);
     }
   
-    this.accountService.UpdateInventory(inventoryItems)
-      .subscribe((results:any) => {
-        this.alertService.stopLoadingMessage();
-        if (results.isSuccess) {
-          this.isViewRecipt = true;
-          for(let i = 0; i < this.itemList.length; i++) {
-            this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
-            this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
-            this.sumTotal += this.itemList[i].receivedCost;
-          }
-         this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
-        }
-        else {
-          this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage(results.endUserMessage, null, MessageSeverity.error);
-        }
-      },
-        error => {
-          this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage('An Error Occured', null, MessageSeverity.error);
-        });
+    this.isViewRecipt = true;
+    for(let i = 0; i < this.itemList.length; i++) {
+      this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
+      this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
+      this.sumTotal += this.itemList[i].receivedCost;
+    }
+    // this.accountService.UpdateInventory(inventoryItems)
+    //   .subscribe((results:any) => {
+    //     this.alertService.stopLoadingMessage();
+    //     if (results.isSuccess) {
+    //       this.isViewRecipt = true;
+    //       for(let i = 0; i < this.itemList.length; i++) {
+    //         this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
+    //         this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
+    //         this.sumTotal += this.itemList[i].receivedCost;
+    //       }
+    //      this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
+    //     }
+    //     else {
+    //       this.alertService.stopLoadingMessage();
+    //       this.alertService.showStickyMessage(results.endUserMessage, null, MessageSeverity.error);
+    //     }
+    //   },
+    //     error => {
+    //       this.alertService.stopLoadingMessage();
+    //       this.alertService.showStickyMessage('An Error Occured', null, MessageSeverity.error);
+    //     });
   }
 
   onPrintClick(el) {

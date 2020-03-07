@@ -268,6 +268,7 @@ export class WorkOrderComponent implements OnInit {
     this.orderData = order;
     this.getItemsByworkOrderId(order, true);
     this.onSelectSiteByProject(order.siteId);
+    this.getSitesByProjectId(order.projectId)
     this.onSelectProjectByLocation(order.projectId)
     this.onSelectLocationByProject(order.locationId)
     this.getStoresByProject(order.projectId);
