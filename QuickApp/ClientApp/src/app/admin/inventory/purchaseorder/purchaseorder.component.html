@@ -1,5 +1,5 @@
 <app-page-header title="Purchase Order" icon="assignment_ind"></app-page-header>
-<div class="page-content" [hidden]="isAdding || isEdit">
+<div class="page-content" [hidden]="isAdding || isEdit || isView">
     <!-- <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -11,17 +11,16 @@
         <div class="table-responsive prng-table">
             <p-table #dt [value]="purchasesList" [paginator]="true" expandableRows="true" [rows]="10"
                 sortField="purchaseReference" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
-                [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExpandMode="single" dataKey="id"
+                [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExp
+                andMode="single" dataKey="id"
                 [globalFilterFields]="['purchaseReference','supplierName','supplierAddress','projectName','storeName', 'arrivingDate','statusName','remarks']">
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">
-
                         <input type="text" pInputText size="50"
                             placeholder="{{'Purchase Order.Management.Search By Purchase Order'|translate}}"
                             (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
                     </div>
                 </ng-template>
-
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3em"></th>
@@ -48,7 +47,7 @@
                         <th [pSortableColumn]="'statusName'">{{'Purchase Order.Management.Status Name'|translate}}
                             <p-sortIcon [field]="'statusName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}}
+                        <!-- <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}}
                             <p-sortIcon [field]="'updatedDate'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'billingAddress'">{{'Purchase Order.Management.Billing Address'|translate}}
@@ -56,7 +55,7 @@
                         </th>
                         <th [pSortableColumn]="'shippingAddress'">{{'Purchase Order.Management.Shipping Address'|translate}}
                             <p-sortIcon [field]="'shippingAddress'"></p-sortIcon>
-                        </th>
+                        </th> -->
                         <th [pSortableColumn]="'remarks'">{{'Purchase Order.Management.Remarks'|translate}}
                             <p-sortIcon [field]="'remarks'"></p-sortIcon>
                         </th>
@@ -79,7 +78,6 @@
                                 <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                             </a>
                         </td>
-
                         <td>{{req.purchaseReference}}</td>
                         <td>{{req.supplierName}}</td>
                         <td>{{req.supplierAddress}}</td>
@@ -87,9 +85,9 @@
                         <td>{{req.storeName}}</td>
                         <td>{{req.arrivingDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.statusName}}</td>
-                        <td>{{req.updatedDate | date: 'dd/MM/yyyy'}}</td>
+                        <!-- <td>{{req.updatedDate | date: 'dd/MM/yyyy'}}</td>
                         <td>{{req.billingAddress}}</td>
-                        <td>{{req.shippingAddress}}</td>
+                        <td>{{req.shippingAddress}}</td> -->
                         <td>{{req.remarks}}</td>
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
@@ -114,6 +112,15 @@
                                 (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
                             </button>
+                            <button class="just-cont-center" mat-icon-button matTooltip="View Details"
+                                (click)="onViewdetailsClick(req)">
+                                <mat-icon color="accent">visibility icon</mat-icon>
+                            </button>
+
+                            <!-- <button mat-icon-button matTooltip=Receive *ngIf="isAccepted == req.statusTypeId"
+                                (click)="onReceiveClick(req)">
+                                <mat-icon>repeat</mat-icon>
+                            </button> -->
                         </td>
                     </tr>
                 </ng-template>
@@ -219,7 +226,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!orderForm.controls['projectId'].valid">
-                            {{'Purchase Order.Management.Please Select Project'|translate}} 
+                            {{'Purchase Order.Management.Please Select Project'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <div class="col-md-2">
@@ -272,13 +279,10 @@
             </form>
             <div class="row">
                 <form [formGroup]="itemFrom" class="col-md-12">
-
                     <div formArrayName="credentials"
                         *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
-
                         <ng-container [formGroupName]="i">
                             <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
-
                             <div class="row">
                                 <mat-form-field class="col-md-3">
                                     <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
@@ -493,4 +497,128 @@
         <div class="clearfix"></div>
 
     </mat-card>
+</div>
+<div class="page-content" *ngIf="isView">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>{{'Purchase Order.Management.Purchase Order Information'|translate}}</mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="clearfix space20"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            {{'Purchase Order.Management.Purchase Reference'|translate}} 
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{purchase.purchaseReference}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            {{'Purchase Order.Management.Supplier Name'|translate}}
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{purchase.supplierName}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            {{'Purchase Order.Management.Supplier Address'|translate}} 
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{purchase.supplierAddress}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            {{'Purchase Order.Management.Project Name'|translate}}
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{purchase.projectName}}</b>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                </div>
+           <div class="col-xs-12 col-md-12">
+            <div class="clearfix space20"></div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    {{'Purchase Order.Management.Store Name'|translate}}
+                    <b class="pull-right">:</b>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    <b>{{purchase.storeName}}</b>&nbsp;&nbsp;
+                </div> 
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    {{'Purchase Order.Management.Arriving Date'|translate}}
+                    <b class="pull-right">:</b>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    <b>{{purchase.arrivingDate| date: 'dd/MM/yyyy' }}</b>&nbsp;&nbsp;
+                </div>
+            </div>
+            </div>
+            <div class="col-xs-12 col-md-12">
+            <div class="clearfix space20"></div>
+            <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            {{'Purchase Order.Management.Status Name'|translate}} 
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{purchase.statusName}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            {{'Purchase Order.Management.Updated Date'|translate}}
+                             <b class="pull-right">:</b>
+                            </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{purchase.updatedDate | date: 'dd/MM/yyyy'}}</b>&nbsp;&nbsp;
+                        </div>
+                        
+             </div>
+             </div>
+             <div class="col-xs-12 col-md-12">
+             <div class="clearfix space20"></div>
+            <div class="row">
+                    <div class="col-xs-6 col-sm-6 col-md-3">
+                        {{'Purchase Order.Management.Shipping Address'|translate}}
+                    <b class="pull-right">:</b>
+                    </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    <b>{{purchase.shippingAddress}}</b>&nbsp;&nbsp;
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    {{'Purchase Order.Management.Shipping Address'|translate}} 
+                    <b class="pull-right">:</b>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    <b>{{purchase.billingAddress}}</b>&nbsp;&nbsp;
+               </div>
+           </div>
+           </div>
+           <div class="col-xs-12 col-md-12">
+            <div class="clearfix space20"></div>
+            <div class="row">
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    {{'Purchase Order.Management.Remarks'|translate}} 
+                    <b class="pull-right">:</b>
+                    </div>
+                <div class="col-xs-6 col-sm-6 col-md-3">
+                    <b>{{purchase.remarks}}</b>&nbsp;&nbsp;
+                </div>
+            </div> 
+            </div>
+
+</div>
+
+
+<mat-card-actions>
+    <div class="float-right" style="padding-top: 12px;padding-right: 15px;">
+        <button mat-raised-button (click)="closeViewpurchaseOrder()" color="warn">{{'Purchase Order.Management.Close'|translate}}</button>
+    </div>
+</mat-card-actions>
+</mat-card-content>
+<div class="clearfix"></div>
+</mat-card>
 </div>

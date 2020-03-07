@@ -66,5 +66,17 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Purchages.RejectOrder(PurchaseId);
         }
+
+
+        [HttpPost("UpdateInventory")]
+
+
+
+        public ValueDataResponse<List<Inventory>> UpdateInventory(List<UpsertInventory> inventory)
+        {
+            List<Inventory> inventoryInfo =  _mapper.Map<List<Inventory>>(inventory);
+            
+            return _unitOfWork.Purchages.UpdateInventory(inventoryInfo);
+        }
     }
 }

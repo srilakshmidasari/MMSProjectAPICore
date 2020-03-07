@@ -15,6 +15,7 @@ using System.IO;
 
 using DAL.Helpers;
 using CoreHtmlToImage;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -228,8 +229,6 @@ namespace DAL.Repositories
                 var purchaseExists = _appContext.PurchageOrders.Where(x => x.Id != purchages.Id && x.PurchaseReference == purchages.PurchaseReference).FirstOrDefault();
                 if (purchaseExists == null)
                 {
-
-
                     PurchageOrder pro = _mapper.Map<PurchageOrder>(purchages);
                     var result = _appContext.PurchageOrders.Where(x => x.Id == purchages.Id).FirstOrDefault();
                     var purchaseItemList = _appContext.PurchageItemXrefs.Where(x => x.PurchageId == purchages.Id).ToList();
@@ -415,23 +414,31 @@ namespace DAL.Repositories
         {
             ListDataResponse<GetItemsResponse> response = new ListDataResponse<GetItemsResponse>();
             try
-            {
-                var result = (from pi in _appContext.PurchageItemXrefs
-                              join i in _appContext.Items on pi.ItemId equals i.Id
-                              join p in _appContext.PurchageOrders on pi.PurchageId equals p.Id
+            { 
+                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId})
+                .Select(g => new {
+                    PurchaseOrderId= g.Key.PurchaseOrderId,
+                    ReceivedCost = g.Sum(x=>x.ReceivedCost),
+                    Quantity=g.Sum(x=>x.Quantity)
+                }).Where(x=>x.PurchaseOrderId== purchaseId).ToList();
+ 
+                var result = (from pi in _appContext.PurchageItemXrefs.Include(x=>x.Item_Id).Include(x=>x.Purchage_Id).Where(x=>x.PurchageId== purchaseId).ToList()
+                              join iv in res on pi.PurchageId equals iv.PurchaseOrderId into Details
+                              from m in Details.DefaultIfEmpty()
                               select new GetItemsResponse
                               {
-                                  Id = pi.Id,
                                   PurchaseId = pi.PurchageId,
-                                  PurchaseReference = p.PurchaseReference,
-                                  ItemReference = i.ItemReference,
+                                  PurchaseReference = pi.Purchage_Id.PurchaseReference,
+                                  ItemReference = pi.Item_Id.ItemReference,
                                   ItemId = pi.ItemId,
-                                  ItemName = i.Name1,
+                                  ItemName = pi.Item_Id.Name1,
                                   Quantity = pi.Quantity,
                                   ExpectedCost = pi.ExpectdCost,
-                                  Comments = pi.Comments
+                                  Comments = pi.Comments,
+                                  ReceivedQuantity = m!=null? m.Quantity:0,
+                                  ReceivedCost = m != null ? m.ReceivedCost : 0.0
 
-                              }).Where(x => x.PurchaseId == purchaseId).ToList();
+                              }).Where(x => x.PurchaseId == purchaseId).Distinct().ToList();
 
                 if (result != null)
                 {
@@ -457,7 +464,6 @@ namespace DAL.Repositories
 
             return response;
         }
-
 
         public ValueDataResponse<PurchageOrder> AcceptOrder(int PurchaseId)
         {
@@ -526,6 +532,50 @@ namespace DAL.Repositories
                     response.AffectedRecords = 0;
                     response.EndUserMessage = "No Purchase Order Found";
                 }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
+        public ValueDataResponse<List<Inventory>> UpdateInventory(List<Inventory> inventory)
+        {
+            ValueDataResponse<List<Inventory>> response = new ValueDataResponse<List<Inventory>>();
+
+            try
+            {
+                foreach (var it in inventory)
+                {
+                    _appContext.Inventories.Add(new Inventory
+                    {
+                        PurchaseOrderId = it.PurchaseOrderId,
+                        Quantity = it.Quantity,
+                        ReceivedCost = it.ReceivedCost
+                    });
+
+                    _appContext.SaveChanges();
+                }
+                if (inventory != null)
+                {
+                    response.Result = inventory;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Inventory Updated Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Inventory Updatiton Failed";
+                }
+
             }
             catch (Exception ex)
             {

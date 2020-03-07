@@ -169,7 +169,6 @@ namespace DAL.RequestResponseModels
             public int Id { get; set; }
             public string Name1 { get; set; }
             public string Name2 { get; set; }
-
             public string ProjectReference { get; set; }
 
         }
@@ -419,8 +418,10 @@ namespace DAL.RequestResponseModels
             public string PurchaseReference { get; set; }
             public string Comments { get; set; }
             public int  ItemId { get; set; }
-            public int Quantity { get; set; }
-            public double ExpectedCost { get; set; }  
+            public int Quantity { get; set; }          
+            public double ExpectedCost { get; set; }
+            public int? ReceivedQuantity { get; set; }
+            public double? ReceivedCost { get; set; }
 
         }
 
@@ -537,11 +538,19 @@ namespace DAL.RequestResponseModels
             public string ItemName { get; set; }
             public string ItemReference { get; set; }
             public int Quantity { get; set; }
-            
 
         }
 
+        public class UpsertInventory
+        {
+            public int Id { get; set; }
+            public int PurchaseOrderId { get; set; }
+            public int Quantity { get; set; }
+            public double ReceivedCost { get; set; }
 
+        }
+
+        
 
     }
 }

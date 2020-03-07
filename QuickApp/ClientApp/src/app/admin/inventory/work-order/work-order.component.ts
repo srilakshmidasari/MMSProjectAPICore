@@ -40,6 +40,7 @@ export class WorkOrderComponent implements OnInit {
   isEdit: boolean = false;
   isView: boolean = false;
   ProjectId: any;
+  userProjectsList: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
@@ -50,7 +51,7 @@ export class WorkOrderComponent implements OnInit {
 
   ngOnInit() {
     this.getworkOrderOrders();
-    this.getSites();
+  //  this.getSites();
     this.getItem();
     this.buildForm();
   }
@@ -65,7 +66,7 @@ export class WorkOrderComponent implements OnInit {
         this.workOrdersList = results.listResult == null ? [] : results.listResult;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
-        console.log(this.workOrdersList)
+        this.getProjectsByUserId();
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -138,6 +139,28 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
+  private getProjectsByUserId() {
+    this.accountService.getProjectsByUserId(this.currentUser.id)
+      .subscribe((results: any) => {
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
+  // Get sites data by ProjectId
+  private getSitesByProjectId(event) {
+    this.ProjectId = event;
+    this.accountService.getSitesByProjectId(event)
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+        this.onSelectProjectByLocation(this.ProjectId)
+      },
+        error => {
+        });
+  }
+
+
   onSelectSiteByProject(event) {
     this.projectsList = [];
     this.accountService.getProjectsBySite(event).subscribe((res: any) => {
@@ -148,8 +171,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
   onSelectProjectByLocation(event) {
-    this.locationsList = [];
-    this.ProjectId = event;
+    this.locationsList = [];  
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
       this.getStoresByProject(event)
@@ -169,13 +191,11 @@ export class WorkOrderComponent implements OnInit {
 
 
   getStoresByProject(ProjectId) {
-    debugger
     this.storesList = [];
     //this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(ProjectId)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
-        console.log(this.storesList)
       },
         error => {
         });
@@ -242,7 +262,6 @@ export class WorkOrderComponent implements OnInit {
   }
 
   onEditClick(order) {
-    debugger
     this.isEdit = true;
     this.isAdding = false;
     this.isNewOrder = false;
@@ -255,6 +274,11 @@ export class WorkOrderComponent implements OnInit {
     this.resetForm();
   }
 
+  onViewClick(row) {
+    debugger
+    this.workorder = row;
+    this.isView = true;
+  }
 
   closeViewWorkOrder() {
     this.isView = false;
@@ -262,8 +286,6 @@ export class WorkOrderComponent implements OnInit {
   }
 
   confirmDelete(order: any) {
-    this.isView = false;
-    this.isEdit = false;
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
@@ -431,12 +453,4 @@ export class WorkOrderComponent implements OnInit {
     })
     this.itemFrom.setControl('credentials', control);
   }
-
-  onViewClick(row) {
-    debugger
-    this.workorder = row;
-    this.isView = true;
-    this.isEdit = false;
-  }
-  
 }

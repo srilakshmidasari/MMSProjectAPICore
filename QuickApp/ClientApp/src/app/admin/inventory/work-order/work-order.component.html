@@ -93,16 +93,18 @@
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
-                        <td >
-                            <button class="just-cont-center" mat-icon-button matTooltip="{{'Work Order.Management.Edit'|translate}}"
-                                (click)="onEditClick(req)">
+                        <td>
+                            <button class="just-cont-center" mat-icon-button
+                                matTooltip="{{'Work Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button class="just-cont-center" mat-icon-button matTooltip="{{'Work Order.Management.Delete'|translate}}"
-                                [hidden]="!req.isActive" (click)="confirmDelete(req)">
+                            <button class="just-cont-center" mat-icon-button
+                                matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
+                                (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
-                            <button class="just-cont-center" mat-icon-button matTooltip="{{'Work Order.Management.View WorkOrder'|translate}}"
+                            <button class="just-cont-center" mat-icon-button
+                                matTooltip="{{'Work Order.Management.View WorkOrder'|translate}}"
                                 (click)="onViewClick(req)">
                                 <mat-icon color="accent">visibility icon</mat-icon>
                             </button>
@@ -172,8 +174,19 @@
             <form [formGroup]="orderForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="getSitesByProjectId($event)">
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
+                            {{'Assets.Management.PleaseSelectProject'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
-                        <mat-select formControlName="siteId" (ngModelChange)="onSelectSiteByProject($event)">
+                        <mat-select formControlName="siteId" >
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
@@ -183,17 +196,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
-                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
-                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
-                                {{project.name1}}(<span>{{project.projectReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
-                            {{'Assets.Management.PleaseSelectProject'|translate}}
-                        </mat-error>
-                    </mat-form-field>
+
 
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
@@ -423,8 +426,19 @@
             <form [formGroup]="orderForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="getSitesByProjectId($event)">
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
+                            {{'Assets.Management.PleaseSelectProject'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
-                        <mat-select formControlName="siteId" (ngModelChange)="onSelectSiteByProject($event)">
+                        <mat-select formControlName="siteId" >
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
@@ -434,17 +448,7 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
-                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
-                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
-                                {{project.name1}}(<span>{{project.projectReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
-                            {{'Assets.Management.PleaseSelectProject'|translate}}
-                        </mat-error>
-                    </mat-form-field>
+
 
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>

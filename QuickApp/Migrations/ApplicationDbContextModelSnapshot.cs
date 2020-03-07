@@ -478,6 +478,29 @@ namespace MMS.Migrations
                     b.ToTable("FileRepository");
                 });
 
+            modelBuilder.Entity("DAL.Models.Inventory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("PurchaseOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<double>("ReceivedCost")
+                        .HasColumnType("float");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.ToTable("Inventory");
+                });
+
             modelBuilder.Entity("DAL.Models.Item", b =>
                 {
                     b.Property<int>("Id")
@@ -1479,6 +1502,15 @@ namespace MMS.Migrations
                         .WithMany("App_Repository_UpdatedUser")
                         .HasForeignKey("UpdatedBy")
                         .HasConstraintName("FK_FileRepository_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.Inventory", b =>
+                {
+                    b.HasOne("DAL.Models.PurchageOrder", "PurchaseOrder_Id")
+                        .WithMany("App_Inventory_Order_Id")
+                        .HasForeignKey("PurchaseOrderId")
+                        .HasConstraintName("FK_App_Inventory_Order_Id")
                         .IsRequired();
                 });
 

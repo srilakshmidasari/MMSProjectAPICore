@@ -101,6 +101,7 @@ namespace DAL.Models
         public LookUp Store_Id { get; set; }
 
         public ICollection<PurchageItemXref> Purchage_OrderXref_Id { get; set; }
+        public ICollection<Inventory> App_Inventory_Order_Id { get; set; }
 
     }
 }
