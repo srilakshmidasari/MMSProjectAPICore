@@ -50,10 +50,10 @@
                         <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}}
                             <p-sortIcon [field]="'updatedDate'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'billingAddress'">Billing Address
+                        <th [pSortableColumn]="'billingAddress'">{{'Purchase Order.Management.Billing Address'|translate}}
                             <p-sortIcon [field]="'billingAddress'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'shippingAddress'">Shipping Address
+                        <th [pSortableColumn]="'shippingAddress'">{{'Purchase Order.Management.Shipping Address'|translate}}
                             <p-sortIcon [field]="'shippingAddress'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'remarks'">{{'Purchase Order.Management.Remarks'|translate}}
@@ -91,7 +91,6 @@
                         <td>{{req.shippingAddress}}</td>
                         <td>{{req.remarks}}</td>
                         <td align="center">
-
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center">
@@ -224,7 +223,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!orderForm.controls['projectId'].valid">
-                            Please Select Project
+                            {{'Purchase Order.Management.Please Select Project'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <div class="col-md-2">
@@ -237,7 +236,7 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Store <span>*</span></mat-label>
+                        <mat-label>{{'Purchase Order.Management.Select Store'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="storeId">
                             <mat-option *ngFor="let store of storesList" [value]="store.id" required>
                                 {{store.name1}}
@@ -265,11 +264,11 @@
 
                 <div class="row">
                     <mat-form-field class="col-md-4">
-                        <mat-label>Billing Address</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Billing Address'| translate}}</mat-label>
                         <textarea matInput formControlName="billindAddress"></textarea>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Shipping Address</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Shipping Address'| translate}}</mat-label>
                         <textarea matInput formControlName="shippingAddress"></textarea>
                     </mat-form-field>
                 </div>
@@ -419,13 +418,13 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">
-                        <mat-label>Billing Address</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Billing Address'|translate}}</mat-label>
                         <textarea matInput formControlName="billindAddress"></textarea>
                     </mat-form-field>
 
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>Shipping Address</mat-label>
+                        <mat-label>{{'Purchase Order.Management.Shipping Address'|translate}}</mat-label>
                         <textarea matInput formControlName="shippingAddress"></textarea>
                     </mat-form-field>
                 </div>

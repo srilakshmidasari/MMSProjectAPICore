@@ -552,15 +552,18 @@
     "Save":"Save",
     "Cancel":"Cancel",
     "Select Project":"Select Project",
-    "Add":"Add"
+    "Add":"Add",
+    "Billing Address":"Billing Address",
+    "Shipping Address":"Shipping Address"
   }
  },
  "Work Order":{
   "Management":{
-    "Search By Work Order":"Search By Work Order",
+    "Search By work Order":"Search By work Order",
     "Reference 1":"Reference 1",
     "Start Date":"Start Date",
     "End Date":"End Date",
+    "End Date is Required":"End Date is Required",
     "Asset Name":"Asset Name",
     "Location Name":"Location Name",
     "Updated Date":"Updated Date",
@@ -600,7 +603,6 @@
     "Issue is Required":"Issue is Required",
     "Resolution is Required":"Resolution is Required",
     "Extra Details":"Extra Details",
-    "Extra Details is Required":"Extradetails is Required",
     "Item":"Item",
     "Select Item":"Select Item",
     "Please Select Item":"Please Select Item",

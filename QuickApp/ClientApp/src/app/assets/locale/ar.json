@@ -541,15 +541,18 @@
     "Save":"حفظ",
     "Cancel":"إلغاء",
     "Select Project":"اختر المشروع",
-    "Add":"إضافة"
+    "Add":"إضافة",
+    "Billing Address":"عنوان وصول الفواتير",
+    "Shipping Address":"عنوان الشحن"
   }
  },
  "Work Order":{
   "Management":{
-    "Search By Work Order":"البحث حسب ترتيب العمل",
+    "Search By work Order":"البحث حسب ترتيب العمل",
     "Reference 1":"المرجع 1",
     "Start Date":"تاريخ البدء",
     "End Date":"تاريخ الانتهاء",
+    "End Date is Required":"تاريخ الانتهاء مطلوب",
     "Asset Name":"اسم الأصل",
     "Location Name":"اسم الموقع",
     "Updated Date":"تاريخ التحديث",
@@ -589,7 +592,6 @@
     "Issue is Required":"العدد مطلوب",
     "Resolution is Required":"القرار مطلوب",
     "Extra Details":"تفاصيل اضافية",
-    "Extra Details is Required":"تفاصيل اضافية مطلوبة",
     "Item":"بند",
     "Select Item":"اختر البند",
     "Please Select Item":"يرجى اختيار البند",
