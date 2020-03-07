@@ -7,9 +7,9 @@
         </mat-form-field>
     </div>
 
-    <div class="example-container mat-elevation-z8">
+    <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="projectReference" matSortDirection="asc"
+        <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="projectReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="projectReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.ProjectRef' | translate}}

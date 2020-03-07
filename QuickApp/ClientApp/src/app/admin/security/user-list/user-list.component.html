@@ -8,9 +8,9 @@
     </mat-form-field>
   </div>
 
-  <div class="mat-elevation-z8">
+  <div class="mat-elevation-z8 table-responsive">
     <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-    <mat-table [dataSource]="dataSource" matSort   matSortActive="userName" matSortDirection="asc" matSortDisableClear>
+    <mat-table [dataSource]="dataSource" matSort class="table-lg" matSortActive="userName" matSortDirection="asc" matSortDisableClear>
 
       <!-- <ng-container matColumnDef="jobTitle">
         <mat-header-cell fxFlex="15%" *matHeaderCellDef mat-sort-header> {{'users.management.Title' | translate}} </mat-header-cell>
@@ -50,7 +50,7 @@
       <ng-container matColumnDef="email">
         <mat-header-cell fxFlex="40%" *matHeaderCellDef mat-sort-header> {{'users.management.Email' | translate}}
         </mat-header-cell>
-        <mat-cell fxFlex="40%" *matCellDef="let row"> {{row.email}} </mat-cell>
+        <mat-cell fxFlex="40%" class="word-break-all" *matCellDef="let row"> {{row.email}} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="phoneNumber">
@@ -95,7 +95,6 @@
     <div style="text-align: center;" *ngIf="displayNoRecords">
       <p>{{'project.management.No Search Results Found'|translate}}</p>
     </div>
-
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+    <mat-paginator class="table-lg" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
   </div>
 </div>

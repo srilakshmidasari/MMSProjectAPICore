@@ -6,9 +6,9 @@
                 placeholder="{{'Item.Management.Search' | translate}}">
         </mat-form-field>
     </div>
-    <div class="example-container mat-elevation-z8">
+    <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="itemReference" matSortDirection="asc"
+        <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="itemReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="itemReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Item Reference'|translate}}

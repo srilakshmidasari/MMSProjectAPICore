@@ -5,9 +5,9 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'site.management.Search' | translate}}">
         </mat-form-field>
     </div>
-   <div class="example-container mat-elevation-z8">
+   <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="siteReference" matSortDirection="asc"
+        <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="siteReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="siteReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.siteRef' | translate}}</mat-header-cell>

@@ -6,9 +6,9 @@
                 placeholder="{{'LookUp.management.Search' | translate}}">
         </mat-form-field>
     </div>
-    <div class="example-container mat-elevation-z8">
+    <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort   matSortActive="description" matSortDirection="asc">
+        <mat-table [dataSource]="dataSource" matSort class="table-lg" matSortActive="description" matSortDirection="asc">
             <ng-container matColumnDef="description">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'LookUp.management.Category'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
