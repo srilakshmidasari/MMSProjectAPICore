@@ -46,6 +46,7 @@
     "Location": "إدارة الموقع",
     "AssetGroup": "إدارة الأصول",
     "Assets": "الأصول",
+    "Supplier":"المورد",
     "Inventory":"المخزون",
     "Item":"بند",
     "Purchase Order":"أمر شراء",
@@ -166,7 +167,9 @@
       "Name2Required": "الاسم 2 مطلوب",
       "PhoneNumberRequired": "رقم الهاتف مطلوب",
       "PhoneNumberMinLength": "أدخل 10 أرقام لرقم الهاتف",
-      "Update": "تحديث"
+      "Update": "تحديث",
+      "Select Project":"اختر المشروع",
+      "Please Select Project":"يرجى اختيار المشروع"
     }
   },
   "roles": {
@@ -372,7 +375,7 @@
       "assetFixedDate": "تاريخ الأصول الثابتة",
       "AddAsset": "إضافة الأصول",
       "Asset Capacity":"قدرة الأصول",
-      "add": "إضافة",
+      "Add": "إضافة",
       "Edit": "تعديل",
       "Delete": "حذف",
       "No Records Found": "لا توجد سجلات",
@@ -405,7 +408,7 @@
       "AssetReferenceisRequired":"مرجع الأصول هو المطلوب",
       "NameisRequired" : "الاسم 1 مطلوب",
       "Name2isRequired" : "الاسم 2 مطلوب",
-      "PleaseSelectAssetGroup ": "يرجى اختيار مجموعة الأصول",
+      "PleaseSelectAssetGroup": "يرجى اختيار مجموعة الأصول",
       "PleaseSelectAssetTrade" : "يرجى اختيار تجارة الأصول",
       "PleaseSelectAssetCounter" :"يرجى اختيار عداد الأصول",
       "AssetFixedDateisRequired":"تاريخ الأصول الثابتة مطلوب"
@@ -543,7 +546,9 @@
     "Select Project":"اختر المشروع",
     "Add":"إضافة",
     "Billing Address":"عنوان وصول الفواتير",
-    "Shipping Address":"عنوان الشحن"
+    "Shipping Address":"عنوان الشحن",
+    "Purchase Order Information":"معلومات طلب الشراء",
+    "Close":"قريب"
   }
  },
  "Work Order":{

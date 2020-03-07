@@ -25,7 +25,7 @@ export class PurchaseorderComponent implements OnInit {
   displayNoRecords: boolean;
   purchasesList: any[] = [];
   purchaseData: any = {};
-  isViewItem: boolean = false;
+  isView: boolean = false;
   orderForm: FormGroup;
   isAdding: boolean = false;
   isNewPurchase: boolean = false;
@@ -43,6 +43,8 @@ export class PurchaseorderComponent implements OnInit {
   selectItem: any;
   duplicateItemList: any[] = [];
   itemData: any[]=[];
+  purchase: any={};
+
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
@@ -246,6 +248,7 @@ export class PurchaseorderComponent implements OnInit {
     this.resetForm();
   }
 
+  }
 
   public resetForm(stopEditing: boolean = false) {
     if (!this.purchaseData) {
@@ -475,8 +478,16 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
+  onViewdetailsClick(row){
+    debugger
+    this.purchase=row;
+    this.isView=true;  
+    this.isEdit=false;
+    }
 
-
+    closeViewpurchaseOrder(){
+      this.isView = false;
+    }
 
 }
 

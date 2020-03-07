@@ -171,7 +171,9 @@
       "Name2Required": "Name 2 is required",
       "PhoneNumberRequired": "Phone Number is required",
       "PhoneNumberMinLength": "Enter 10 digits for Phone Number",
-      "Update": "Update"
+      "Update": "Update",
+      "Select Project":"Select Project",
+      "Please Select Project":"Please Select Project"
     }
   },
   "roles": {
@@ -384,7 +386,7 @@
       "assetFixedDate": "Asset Fixed Date",
       "Asset Capacity":"Asset Capacity",
       "AddAsset": "Add Asset",
-      "add": "add",
+      "Add": "Add",
       "Edit": "Edit",
       "Delete": "Delete",
       "No Records Found": "No Records Found",
@@ -415,10 +417,12 @@
       "AssetReferenceisRequired":"Asset Reference is Required",
       "NameisRequired" : "Name 1 is Required",
       "Name2isRequired" : "Name 2 is Required",
-      "PleaseSelectAssetGroup": "Please Select Asset Group",
+      "PleaseSelectAssetGroup": "PleaseSelectAssetGroup",
       "PleaseSelectAssetTrade" : "Please Select Asset Trade",
       "PleaseSelectAssetCounter" :"Please Select Asset Counter",
       "AssetFixedDateisRequired":"Asset Fixed Date is Required"
+     
+      
     }
   },
     "AssetGroup":{
@@ -554,7 +558,9 @@
     "Select Project":"Select Project",
     "Add":"Add",
     "Billing Address":"Billing Address",
-    "Shipping Address":"Shipping Address"
+    "Shipping Address":"Shipping Address",
+    "Purchase Order Information":"Purchase Order Information",
+    "Close":"Close"
   }
  },
  "Work Order":{
