@@ -169,7 +169,6 @@ export class WorkOrderComponent implements OnInit {
   
 
   getStoresByProject(ProjectId) {
-    debugger
     this.storesList = [];
     //this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(ProjectId)
@@ -242,7 +241,7 @@ export class WorkOrderComponent implements OnInit {
     }
   
     onEditClick(order) {
-      debugger
+     
       this.isEdit = true;
       this.isAdding = false;
       this.isNewOrder = false;

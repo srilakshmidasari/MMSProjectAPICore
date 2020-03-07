@@ -38,6 +38,8 @@ namespace DAL
         public DbSet<WorkOrder> WorkOrders { get; set; }
         public DbSet<WorkOrderItemXref> WorkOrderItemXrefs { get; set; }
         public DbSet<UserProjectXref> UserProjectXrefs { get; set; }
+
+        public DbSet<Inventory> Inventories { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -86,7 +88,9 @@ namespace DAL
             builder.Entity<WorkOrder>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<WorkOrderItemXref>().ToTable("WorkOrderItemXref");
             builder.Entity<UserProjectXref>().ToTable("UserProjectXref");
-            
+            builder.Entity<Inventory>().ToTable("Inventory");
+
+
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
            .WithMany(p => p.App_SiteInfo_CreatedUser)
            .HasForeignKey(d => d.CreatedBy)
@@ -491,6 +495,13 @@ namespace DAL
             .HasForeignKey(d => d.ProjectId)
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_App_UserProjectXref_ProjectId");
+
+
+            builder.Entity<Inventory>().HasOne(d => d.PurchaseOrder_Id)
+            .WithMany(p => p.App_Inventory_Order_Id)
+            .HasForeignKey(d => d.PurchaseOrderId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_App_Inventory_Order_Id");
 
 
         }

@@ -49,7 +49,7 @@ export class AssetsComponent implements OnInit {
   @Input() allowedDocExtension: string = "pdf , docx , doc";
   @Input() maxSize: number = 2300;//1150;
   displayNoRecords: boolean;
-  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter','assetSize','assetCapacity','astFixedDate', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetSize', 'assetCapacity', 'astFixedDate', 'updatedDate', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -63,6 +63,8 @@ export class AssetsComponent implements OnInit {
   isImage: any;
   isDocument: any;
   fileData: any = {};
+  userProjectsList: any[] = [];
+  projectId: any;
   constructor(private accountService: AccountService, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private alertService: AlertService, private fb: FormBuilder) {
     this.buildForm();
     this.currenrDate = new Date();
@@ -72,7 +74,6 @@ export class AssetsComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.getAssets();
     this.getDocuments();
     this.getAssetGroup();
@@ -81,7 +82,6 @@ export class AssetsComponent implements OnInit {
 
   // get Asset Data
   private getAssets() {
-    debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getAssets()
@@ -90,7 +90,7 @@ export class AssetsComponent implements OnInit {
         this.loadingIndicator = false;
         this.assetLocationList = results.listResult == null ? [] : results.listResult;
         this.dataSource.data = this.assetLocationList;
-        this.getSites();
+        this.getProjectsByUserId();
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -98,19 +98,38 @@ export class AssetsComponent implements OnInit {
         });
   }
 
-
-  // Site Data
-  private getSites() {
-    debugger
-    this.accountService.getSiteData()
+  private getProjectsByUserId() {
+    this.accountService.getProjectsByUserId(this.currentUser.id)
       .subscribe((results: any) => {
-        this.siteList = results.listResult == null ? [] : results.listResult;
-        // this.getProjects();
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
       },
         error => {
         });
   }
-  
+
+  // Get sites data by ProjectId
+  private getSitesByProjectId(event) {
+    this.projectId = event;
+    this.accountService.getSitesByProjectId(event)
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+        this.onSelectProjectByLocation()
+      },
+        error => {
+        });
+  }
+
+
+  // Site Data
+  private getSites() {
+    this.accountService.getSiteData()
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
   // Asset Group List
   // getAllAssetGroups() {
   //   this.accountService.getAssetGroupData().subscribe((result: any) => {
@@ -125,7 +144,6 @@ export class AssetsComponent implements OnInit {
 
   // Asset Trade List
   getAssetTrade() {
-    debugger
     const typeCddId = 5;
     this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
       this.assetTradeList = result.listResult == null ? [] : result.listResult;
@@ -134,16 +152,15 @@ export class AssetsComponent implements OnInit {
       })
   }
 
-    // Asset Trade List
-    getAssetGroup() {
-      debugger
-      const typeCddId = 4;
-      this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
-        this.assetGroupList = result.listResult == null ? [] : result.listResult;
-      },
-        error => {
-        })
-    }
+  // Asset Trade List
+  getAssetGroup() {
+    const typeCddId = 4;
+    this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
+      this.assetGroupList = result.listResult == null ? [] : result.listResult;
+    },
+      error => {
+      })
+  }
 
   onSelectSiteByProject(event) {
     this.projectsList = [];
@@ -154,9 +171,9 @@ export class AssetsComponent implements OnInit {
       })
   }
 
-  onSelectProjectByLocation(event) {
+  onSelectProjectByLocation() {
     this.locationsList = [];
-    this.accountService.getLocationsByProject(event).subscribe((res: any) => {
+    this.accountService.getLocationsByProject(this.projectId).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
     },
       error => {
@@ -166,7 +183,6 @@ export class AssetsComponent implements OnInit {
 
   // Form Building
   private buildForm() {
-    debugger
     this.assetLocationForm = this.fb.group({
       siteId: ['', Validators.required],
       projectId: ['', Validators.required],
@@ -188,7 +204,6 @@ export class AssetsComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    debugger
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
@@ -203,7 +218,6 @@ export class AssetsComponent implements OnInit {
   }
   // On Edit Asset Click
   onEditAsset(asset?: any) {
-    debugger
     this.document = null;
     this.assetRefData = {};
     this.isAllow = false;
@@ -230,7 +244,6 @@ export class AssetsComponent implements OnInit {
 
   // Reseting Form Values
   private resetForm() {
-    debugger
     this.assetLocationForm.reset({
       siteId: this.assetRefData.siteId || '',
       projectId: this.assetRefData.projectId || '',
@@ -281,7 +294,6 @@ export class AssetsComponent implements OnInit {
 
   // forming Request Object
   private getEditedAsset(): any {
-    debugger
     const formModel = this.assetLocationForm.value;
     return {
       "id": this.isNewAsset ? 0 : this.assetRefData.id,
@@ -298,8 +310,8 @@ export class AssetsComponent implements OnInit {
       "astFixedDate": formModel.assetFixDate,
       "assetMake": formModel.assetMake,
       "assetModel": formModel.assetModel,
-      "assetSize":formModel.assetSize,
-      "assetCapacity":formModel.assetRef2,
+      "assetSize": formModel.assetSize,
+      "assetCapacity": formModel.assetRef2,
       "assetType": formModel.assetType,
       "isActive": formModel.isActive == '' || formModel.isActive == null ? false : true,
       "createdBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.createdBy,
@@ -407,7 +419,6 @@ export class AssetsComponent implements OnInit {
 
 
   saveAssets() {
-    debugger
     if (!this.assetLocationForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -489,8 +500,7 @@ export class AssetsComponent implements OnInit {
   }
 
 
-  getAssetRepository() {
-    debugger
+  getAssetRepository() {   
     this.alertService.startLoadingMessage();
     this.accountService.getAssetRepository(this.assetRefData.id).subscribe((res: any) => {
       this.alertService.stopLoadingMessage();
@@ -527,11 +537,11 @@ export class AssetsComponent implements OnInit {
     })
   }
 
-   //Delete Assets 
-   confirmDelete(asset: any) {
+  //Delete Assets 
+  confirmDelete(asset: any) {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + asset.assetLocationRef,  msg: "Are you sure you want to delete this Assets with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + asset.assetLocationRef, msg: "Are you sure you want to delete this Assets with relavant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -553,8 +563,8 @@ export class AssetsComponent implements OnInit {
               this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
                 MessageSeverity.error, error);
             });
-          }
-      });
+      }
+    });
   }
 
 }

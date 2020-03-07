@@ -38,6 +38,7 @@ import {InputTextModule} from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 import { DocumentFileComponent } from './inventory/document-file/document-file.component';
 import { WorkOrderComponent } from './inventory/work-order/work-order.component';
+import { ReceiveItemComponent } from './inventory/receive-item/receive-item.component';
 
 @NgModule({
   imports: [
@@ -72,7 +73,8 @@ import { WorkOrderComponent } from './inventory/work-order/work-order.component'
     ItemComponent,
     PurchaseorderComponent,
     DocumentFileComponent,
-    WorkOrderComponent
+    WorkOrderComponent,
+    ReceiveItemComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
@@ -81,7 +83,8 @@ import { WorkOrderComponent } from './inventory/work-order/work-order.component'
     SiteLocationComponent,
     DeleteFileComponent,
     LookupDialogComponent,
-    DocumentFileComponent
+    DocumentFileComponent,
+    ReceiveItemComponent
   ]
 })
 export class AdminModule {

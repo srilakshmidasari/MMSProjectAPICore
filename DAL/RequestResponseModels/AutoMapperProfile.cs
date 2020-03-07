@@ -90,7 +90,7 @@ namespace DAL.RequestResponseModels
             //.ForMember(d => d.Id, map => map.Condition(src => src.Id != null));
 
             CreateMap<UpsertSupplier, Supplier>();
-           
+            
 
             CreateMap<UpsertItem, Item>()
                  .ForMember(d => d.UOM_Id, map => map.Ignore())
@@ -109,6 +109,9 @@ namespace DAL.RequestResponseModels
                 .ForMember(d => d.WorkTechnician_Id, map => map.Ignore())
                 .ForMember(d => d.WorkType_Id, map => map.Ignore())
                 .ForMember(d => d.Store_Id, map => map.Ignore());
+
+            CreateMap<UpsertInventory, Inventory>()
+                 .ForMember(d => d.PurchaseOrder_Id, map => map.Ignore());
 
         }
     }

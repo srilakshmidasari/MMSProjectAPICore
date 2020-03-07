@@ -8,7 +8,8 @@
     </div>
     <div class="example-container mat-elevation-z8">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="locationReference" matSortDirection="asc" matSortDisableClear>
+        <mat-table [dataSource]="dataSource" matSort matSortActive="locationReference" matSortDirection="asc"
+            matSortDisableClear>
 
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}
@@ -40,8 +41,10 @@
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="updatedDate">
-                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>{{'site.management.UpdatedDate' | translate}}</mat-header-cell>
-                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>
+                    {{'site.management.UpdatedDate' | translate}}</mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
@@ -52,17 +55,20 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="{{'Location.Management.Add'| translate}}" *ngIf="canAddLocation" (click)="onEditLocation()">
+                    <button mat-button color="primary" matTooltip="{{'Location.Management.Add'| translate}}"
+                        *ngIf="canAddLocation" (click)="onEditLocation()">
                         <mat-icon class="mat-button-icon">add</mat-icon>
                         {{'Location.Management.addLocation' | translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'Location.Management.Edit'| translate}}" *ngIf="canEditLocation" (click)="onEditLocation(row)">
+                    <button mat-icon-button matTooltip="{{'Location.Management.Edit'| translate}}"
+                        *ngIf="canEditLocation" (click)="onEditLocation(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="{{'Location.Management.Delete'| translate}}" *ngIf="canDeleteLocation" (click)="onDeleteLocation(row)" [hidden]="!row.isActive">
+                    <button mat-icon-button matTooltip="{{'Location.Management.Delete'| translate}}"
+                        *ngIf="canDeleteLocation" (click)="onDeleteLocation(row)" [hidden]="!row.isActive">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -91,11 +97,22 @@
         </mat-card-header>
         <br>
         <mat-card-content>
-            <form  [formGroup]="locationForm" >
+            <form [formGroup]="locationForm">
                 <div class="row">
                     <mat-form-field class="col-md-6">
+                        <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="getSitesByProjectId($event)">
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!locationForm.controls['projectId'].valid">
+                            {{'Location.editor.pNameisrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
-                        <mat-select formControlName="siteId" (ngModelChange)="onSelectSite($event)">
+                        <mat-select formControlName="siteId">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
@@ -104,22 +121,12 @@
                             {{'Location.editor.sNameisrequired' | translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-6">
-                        <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
-                        <mat-select formControlName="projectId">
-                            <mat-option *ngFor="let project of projectsList" [value]="project.id" required>
-                                {{project.name1}}(<span>{{project.projectReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!locationForm.controls['projectId'].valid">
-                            {{'Location.editor.pNameisrequired' | translate}}
-                        </mat-error>
-                    </mat-form-field>
+
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Location.Management.locationRef' | translate}}</mat-label>
-                        <input matInput formControlName="locationRef" required  appTitleCase />
+                        <input matInput formControlName="locationRef" required appTitleCase />
                         <mat-error *ngIf="!locationForm.controls['locationRef'].valid">
                             {{'Location.editor.locationRefisrequired' | translate}}
                         </mat-error>
@@ -144,13 +151,15 @@
                 <div class="row">
                     <mat-checkbox class="col-md-6" formControlName="isActive">
                         {{'site.management.IsActive' | translate}}</mat-checkbox>
-                </div>                
+                </div>
             </form>
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="save()">{{'site.management.save' | translate}}</button>
-                <button mat-raised-button color="warn" (click)="onLocationCancel()">{{'site.management.cancel' | translate}}</button>
+                <button mat-raised-button color="primary"
+                    (click)="save()">{{'site.management.save' | translate}}</button>
+                <button mat-raised-button color="warn"
+                    (click)="onLocationCancel()">{{'site.management.cancel' | translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>

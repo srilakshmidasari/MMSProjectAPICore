@@ -34,6 +34,7 @@ export class LocationComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sitesList: any[]=[];
+  userProjectsList: any[]=[];
 
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
@@ -45,32 +46,44 @@ export class LocationComponent implements OnInit {
 
   ngOnInit() {
     this.getLocation();
-    this.getSites();
+  //  this.getSites();
   
-  // this.getSitesByProjectId()
+    this.getProjectsByUserId()
   }
 
-  // Site Data
-  private getSites() {
-    this.accountService.getSiteData()
+  private getProjectsByUserId() {
+    this.accountService.getProjectsByUserId(this.currentUser.id)
       .subscribe((results: any) => {
-        this.siteList = results.listResult == null ? [] : results.listResult;
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+       
       },
         error => {
         });
   }
-
 
  // Get sites data by ProjectId
-  private getSitesByProjectId(Id) {
-    this.accountService.getSitesByProjectId(Id)
-      .subscribe((results: any) => {
-        this.sitesList = results.listResult == null ? [] : results.listResult;
-        console.log(this.sitesList)
-      },
-        error => {
-        });
-  }
+ private getSitesByProjectId(event) {
+  this.accountService.getSitesByProjectId(event)
+    .subscribe((results: any) => {
+      this.siteList = results.listResult == null ? [] : results.listResult;
+    },
+      error => {
+      });
+}
+
+
+  // Site Data
+  // private getSites() {
+  //   this.accountService.getSiteData()
+  //     .subscribe((results: any) => {
+  //       this.siteList = results.listResult == null ? [] : results.listResult;
+  //     },
+  //       error => {
+  //       });
+  // }
+
+
+
 
   // Location Data
   getLocation() {

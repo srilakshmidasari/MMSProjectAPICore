@@ -8,6 +8,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 import { Utilities } from 'src/app/services/utilities';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { DocumentFileComponent } from '../document-file/document-file.component';
+import { ReceiveItemComponent } from '../receive-item/receive-item.component';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -17,7 +18,7 @@ import { DocumentFileComponent } from '../document-file/document-file.component'
 export class PurchaseorderComponent implements OnInit {
   loadingIndicator: boolean;
   credentials: any[] = [];
-  displayedColumns = ['purchaseReference', 'supplierName', 'supplierAddress', 'projectName','storeName', 'arrivingDate', 'statusName', 'updatedDate','billindAddress','shippingAddress', 'remarks', 'isActive', 'Actions'];
+  displayedColumns = ['purchaseReference', 'supplierName', 'supplierAddress', 'projectName', 'storeName', 'arrivingDate', 'statusName', 'updatedDate', 'billindAddress', 'shippingAddress', 'remarks', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -34,21 +35,24 @@ export class PurchaseorderComponent implements OnInit {
   itemList: any[] = [];
   i: any;
   purchaseItemList: any[] = [];
+  selectItemList: any[] = [];
   currenrDate: Date;
   projectsList: any[] = [];
-  storesList: any[]=[];
+  storesList: any[] = [];
   isAccepted: number;
+  selectItem: any;
+  duplicateItemList: any[] = [];
+  itemData: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
       credentials: this.formBuilder.array([]),
     });
     this.currenrDate = new Date();
-    this.isAccepted= DataFactory.StatusTypes.Approved;
+    this.isAccepted = DataFactory.StatusTypes.Approved;
   }
 
   ngOnInit() {
-    debugger
     this.getPurchaseOrders();
     this.buildForm();
     this.getProjects();
@@ -94,27 +98,43 @@ export class PurchaseorderComponent implements OnInit {
 
   addItem(i) {
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
+    // this.itemList.forEach((item) => {
+    //   this.selectItemList.forEach((item1) => {
+    //     if (item.id == item1.Id) {
+    //       this.itemList.splice(item, 1);
+    //     }
+    //   });
+    // });
   }
+
+  // onSelectItem(event) {
+  //   debugger
+  //   this.selectItem = event;
+  //   this.selectItemList.push({
+  //     "Id": event
+  //   })
+  // }
+
 
   createItem(item) {
     return this.formBuilder.group({
       itemId: new FormControl('', [Validators.required]),
       quantity: new FormControl('', [Validators.required]),
       expectedCost: new FormControl('', [Validators.required]),
-      comments :new FormControl('')
+      comments: new FormControl('')
     })
   }
 
   buildForm() {
     this.orderForm = this.formBuilder.group({
       supplierId: ['', Validators.required],
-      projectId :['', Validators.required],
-      storeId :['', Validators.required],
+      projectId: ['', Validators.required],
+      storeId: ['', Validators.required],
       purchaseReference: ['', Validators.required],
       arrivingDate: ['', Validators.required],
-      remarks :[],
-      billindAddress:[''],
-      shippingAddress:['']
+      remarks: [],
+      billindAddress: [''],
+      shippingAddress: ['']
     })
   }
 
@@ -148,7 +168,6 @@ export class PurchaseorderComponent implements OnInit {
     this.accountService.getProject()
       .subscribe((results: any) => {
         this.projectsList = results.listResult == null ? [] : results.listResult;
-        
       },
         error => {
         });
@@ -159,19 +178,19 @@ export class PurchaseorderComponent implements OnInit {
     this.accountService.getitemdata()
       .subscribe((results: any) => {
         this.itemList = results.listResult == null ? [] : results.listResult;
+        this.duplicateItemList = JSON.parse(JSON.stringify(this.itemList));
       },
         error => {
         });
   }
 
-  getStoresByProject(event){
+  getStoresByProject(event) {
     debugger
-    this.storesList =[];
+    this.storesList = [];
     this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(event)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
-        console.log(this.storesList)
       },
         error => {
         });
@@ -179,7 +198,7 @@ export class PurchaseorderComponent implements OnInit {
 
 
   //get Suppliers data
-  getItemsByPurchaseId(row,val) {
+  getItemsByPurchaseId(row, val) {
     this.accountService.getItemsByPurchaseId(row.id)
       .subscribe((results: any) => {
         this.purchaseItemList = results.listResult == null ? [] : results.listResult;
@@ -196,7 +215,7 @@ export class PurchaseorderComponent implements OnInit {
         itemId: x.itemId,
         quantity: x.quantity,
         expectedCost: x.expectedCost,
-        comments:x.comments
+        comments: x.comments
       }))
     })
     this.itemFrom.setControl('credentials', control);
@@ -218,36 +237,35 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   onEditClick(purchase) {
-    debugger
     this.isEdit = true;
     this.isAdding = false;
     this.isNewPurchase = false;
     this.purchaseData = purchase;
-    this.getItemsByPurchaseId(purchase,true);
+    this.getItemsByPurchaseId(purchase, true);
     this.getStoresByProject(purchase.projectId)
     this.resetForm();
-
   }
 
+
   public resetForm(stopEditing: boolean = false) {
-    debugger
     if (!this.purchaseData) {
       this.isNewPurchase = true;
     } else {
       this.buildForm();
     }
-
     this.orderForm.reset({
       supplierId: this.purchaseData.supplierId || '',
       projectId: this.purchaseData.projectId || '',
       storeId: this.purchaseData.storeId || '',
       remarks: this.purchaseData.remarks || '',
-      billindAddress:this.purchaseData.billingAddress ||'',
-      shippingAddress:this.purchaseData.shippingAddress ||'',
+      billindAddress: this.purchaseData.billingAddress || '',
+      shippingAddress: this.purchaseData.shippingAddress || '',
       arrivingDate: this.purchaseData.arrivingDate || '',
       purchaseReference: this.purchaseData.purchaseReference || ''
     });
   }
+
+
 
 
   saveOrder() {
@@ -308,7 +326,7 @@ export class PurchaseorderComponent implements OnInit {
         "purchaseId": 0,
         "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
         "expectdCost": parseFloat(this.itemFrom.value.credentials[i].expectedCost),
-        "comments":this.itemFrom.value.credentials[i].comments
+        "comments": this.itemFrom.value.credentials[i].comments
       }
       purchaseItems.push(itemReq);
     }
@@ -321,8 +339,8 @@ export class PurchaseorderComponent implements OnInit {
       "projectId": formModel.projectId,
       "storeId": formModel.storeId,
       "remarks": formModel.remarks,
-      "billingAddress":formModel.billindAddress,
-      "shippingAddress":formModel.shippingAddress,
+      "billingAddress": formModel.billindAddress,
+      "shippingAddress": formModel.shippingAddress,
       "fileName": "",
       "fileLocation": "",
       "fileExtention": ".pdf",
@@ -370,8 +388,7 @@ export class PurchaseorderComponent implements OnInit {
   }
 
 
-  acceptClick(order: any){
-    debugger
+  acceptClick(order: any) {
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Accept", msg: "Are you sure you want to Accept this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
       width: 'auto',
@@ -398,8 +415,8 @@ export class PurchaseorderComponent implements OnInit {
       }
     });
   }
-  rejectClick(order: any){
-    debugger
+
+  rejectClick(order: any) {
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Reject", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
       width: 'auto',
@@ -444,6 +461,22 @@ export class PurchaseorderComponent implements OnInit {
   onViewPDF(doc) {
     window.open(doc);
   }
+
+
+
+  onReceiveClick(row) {
+    const dialogRef = this.dialog.open(ReceiveItemComponent,
+      {
+        panelClass: 'mat-dialog-md',
+        data: { row }
+      });
+    dialogRef.afterClosed().subscribe(siteresponse => {
+
+    });
+  }
+
+
+
 
 }
 

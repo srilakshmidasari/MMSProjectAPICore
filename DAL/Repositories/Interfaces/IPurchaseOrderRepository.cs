@@ -24,5 +24,8 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<PurchageOrder> RejectOrder(int PurchaseId);
 
+      //  ValueDataResponse<Inventory> UpdateInventory(List<Inventory> inventory);
+        ValueDataResponse<List<Inventory>> UpdateInventory(List<Inventory> inventory);
+
     }
 }

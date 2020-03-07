@@ -1,0 +1,138 @@
+<h1 mat-dialog-title>Receive Item</h1>
+<div mat-dialog-content>
+    <div class="row" [hidden]="isViewRecipt">
+        <form [formGroup]="itemFrom" class="col-md-12">
+            <div formArrayName="credentials"
+                *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
+                <ng-container [formGroupName]="i">
+                    <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <mat-label>Item Name</mat-label>
+                            <input matInput formControlName="itemName" placeholder="Item Name" readonly />
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <mat-label>Quantity</mat-label>
+                            <input matInput formControlName="qty" placeholder="Quantity" readonly />
+                        </mat-form-field>
+
+                        <mat-form-field class="col-md-4">
+                            <mat-label>Unit Price</mat-label>
+                            <input matInput formControlName="unitPrice" placeholder="Unit Price" readonly />
+                        </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Received Quantity</mat-label>
+                            <input matInput formControlName="receiveQty"  [readonly]="isReadOnly" placeholder="Received Quantity"
+                                (keypress)="numberOnly($event)" maxlength="10" />
+                        </mat-form-field>
+                        <mat-form-field class="col-md-6">
+                            <mat-label>Received Price</mat-label>
+                            <input matInput formControlName="receivePrice" [readonly]="isReadOnly" placeholder="Received Price"
+                                (keypress)="numberOnly($event)" maxlength="10" />
+                        </mat-form-field>
+                    </div>
+                </ng-container>
+            </div>
+
+        </form>
+        <div class="clearfix space20"></div>
+
+    </div>
+    <div class="row" *ngIf="isViewRecipt">
+        <div id='print-container'>
+        <header class="clearfix">
+            <div id="logo">
+                <h1>INVOICE</h1>
+            </div>
+            <div id="company">
+                <h2 class="name">MMS
+                    </h2>
+                <div>132/A, Bluepal BuildingOpp JNTU, </div>
+                <div>Kukatpally, Hyderabad - 500 072.</div>
+                <div>(000) 000-0450</div>
+                <div><a href="mailto:calibertech@mms.com">calibertech@mms.com</a></div>
+            </div>
+        </header>
+        <main>
+            <div id="details" class="clearfix">
+                <div id="client">
+                    <div class="to">BILL TO:</div>
+                    <!-- <h5 class="name"></h5> -->
+                    <div class="address">{{purchaseData.billingAddress}}</div>
+                    <!-- <div class="address">TX 79273, US</div>  -->
+                   
+                </div>
+                <div id="invoice">
+                    <div class="ship">
+                        <div class="to">SHIP TO:</div>
+                        <!-- <h2 class="name">John Doe</h2> -->
+                        <div class="address">{{purchaseData.shippingAddress}}</div>
+                        <!-- <div class="address">TX 79273, US</div> -->
+                        <!-- <div class="email"><a href="mailto:john@example.com">john@example.com</a></div> -->
+                    </div>
+                    <div class="ins-no">
+                        <h1>INVOICE# {{purchaseData.purchaseReference}}</h1>
+                        <div class="date">Date of Invoice: {{purchaseData.createdDate | date: 'dd/MM/yyyy '}}</div>
+                        <div class="date">Arriving Date: {{purchaseData.arrivingDate | date: 'dd/MM/yyyy '}}</div>
+                    </div>
+                </div>
+            </div>
+            <table border="0" cellspacing="0" cellpadding="0" >
+                <thead>
+                    <tr>
+                        <th class="no">#</th>
+                        <th class="desc">ITEM</th>
+                        <th class="unit">UNIT PRICE</th>
+                        <th class="qty">QTY</th>
+                        <th class="total">AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of itemList;let i = index">
+                        <td class="no">{{i+1}}</td>
+                        <td class="desc">
+                            <h3>{{item.itemName}}</h3>
+                        </td>
+                        <td class="unit">{{item.receivedCost}}.00</td>
+                        <td class="qty">{{item.receivedQuantity}}</td>
+                        <td class="total">{{item.receivedCost}}.00</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2">SUBTOTAL</td>
+                        <td>{{sumTotal}}</td>
+                    </tr>
+                    <!-- <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2">TAX 25%</td>
+                        <td>100.00</td>
+                    </tr> -->
+                    <tr>
+                        <td colspan="2"></td>
+                        <td colspan="2">GRAND TOTAL</td>
+                        <td>{{sumTotal}}.00</td>
+                    </tr>
+                </tfoot>
+            </table>
+            <div id="thanks">Thank you!</div>
+            <div id="notices">
+                <div>NOTICE:</div>
+                <div class="notice">A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+            </div>
+        </main>
+        <footer>
+            Invoice was created on a computer and is valid without the signature and seal.
+        </footer>
+    </div>
+</div>
+<div mat-dialog-actions class="float-right" style="padding-top: 12px;">
+    <button mat-raised-button color="primary" [hidden]="isViewRecipt"  (click)="save()">Save</button>
+    <button mat-raised-button color="primary" [hidden]="!isViewRecipt" (click)="onPrintClick('print-container')">Print</button>
+    <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>
+</div>
+<div class="clearfix space20"></div>

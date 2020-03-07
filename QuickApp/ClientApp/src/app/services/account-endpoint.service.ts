@@ -88,6 +88,8 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly _getSitesByProjectIdUrl: string ='/api/Site/GetSitesByProjectId';
 
+  private readonly _updateInventory: string ='/api/PurchaseOrder/UpdateInventory';
+  
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -161,6 +163,8 @@ export class AccountEndpoint extends EndpointBase {
   get getProjectsByUserIdUrl() { return this.configurations.baseUrl + this._getProjectsByUserIdUrl; }
 
   get getSitesByProjectIdUrl() { return this.configurations.baseUrl + this._getSitesByProjectIdUrl; }
+
+  get updateInventory() { return this.configurations.baseUrl + this._updateInventory; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -877,4 +881,12 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
   
+  UpdateInventoryEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.updateInventory;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.UpdateInventoryEndpoint(reqObject));
+      }));
+  }
+
 }
