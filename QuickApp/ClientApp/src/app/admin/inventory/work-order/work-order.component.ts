@@ -16,7 +16,7 @@ import { Utilities } from 'src/app/services/utilities';
 export class WorkOrderComponent implements OnInit {
   projectsList: any[] = [];
   orderData: any = {};
-  workorder: any ={};
+  workorder: any = {};
   loadingIndicator: boolean;
   credentials: any[] = [];
   workOrdersList: any[] = [];
@@ -29,28 +29,29 @@ export class WorkOrderComponent implements OnInit {
   storesList: any[] = [];
   siteList: any[] = [];
   locationsList: any[] = [];
-  assetsList :any[]=[];
-  workTypeList: any[]=[];
-  workStatusList: any[]=[];
-  workFaultsList: any[]=[];
-  workTechList: any[]=[];
+  assetsList: any[] = [];
+  workTypeList: any[] = [];
+  workStatusList: any[] = [];
+  workFaultsList: any[] = [];
+  workTechList: any[] = [];
   orderForm: FormGroup;
   isAdding: boolean = false;
   isNewOrder: boolean = false;
   isEdit: boolean = false;
-  isView:boolean = false;
+  isView: boolean = false;
   ProjectId: any;
+  userProjectsList: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
-      this.itemFrom = this.formBuilder.group({
-        credentials: this.formBuilder.array([]),
-      });
-      this.currenrDate = new Date();
-     }
+    this.itemFrom = this.formBuilder.group({
+      credentials: this.formBuilder.array([]),
+    });
+    this.currenrDate = new Date();
+  }
 
   ngOnInit() {
     this.getworkOrderOrders();
-    this.getSites();
+  //  this.getSites();
     this.getItem();
     this.buildForm();
   }
@@ -65,7 +66,7 @@ export class WorkOrderComponent implements OnInit {
         this.workOrdersList = results.listResult == null ? [] : results.listResult;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
-        console.log(this.workOrdersList)
+        this.getProjectsByUserId();
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -74,7 +75,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
 
-  getItemsByworkOrderId(row,val) {
+  getItemsByworkOrderId(row, val) {
     this.accountService.getItemsByWorkOrderId(row.id)
       .subscribe((results: any) => {
         this.workOrderItemList = results.listResult == null ? [] : results.listResult;
@@ -92,17 +93,17 @@ export class WorkOrderComponent implements OnInit {
     return this.formBuilder.group({
       itemId: new FormControl('', [Validators.required]),
       quantity: new FormControl('', [Validators.required]),
-    
+
     })
   }
 
   buildForm() {
     this.orderForm = this.formBuilder.group({
       siteId: ['', Validators.required],
-      projectId :['', Validators.required],
+      projectId: ['', Validators.required],
       locationId: ['', Validators.required],
       assetId: ['', Validators.required],
-      storeId :['', Validators.required],
+      storeId: ['', Validators.required],
       reference1: ['', Validators.required],
       extraDetails: ['', Validators.required],
       issue: ['', Validators.required],
@@ -113,7 +114,7 @@ export class WorkOrderComponent implements OnInit {
       workStatusId: ['', Validators.required],
       workFaultId: ['', Validators.required],
       workTechId: ['', Validators.required],
-     
+
     })
   }
 
@@ -138,6 +139,28 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
+  private getProjectsByUserId() {
+    this.accountService.getProjectsByUserId(this.currentUser.id)
+      .subscribe((results: any) => {
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
+  // Get sites data by ProjectId
+  private getSitesByProjectId(event) {
+    this.ProjectId = event;
+    this.accountService.getSitesByProjectId(event)
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+        this.onSelectProjectByLocation(this.ProjectId)
+      },
+        error => {
+        });
+  }
+
+
   onSelectSiteByProject(event) {
     this.projectsList = [];
     this.accountService.getProjectsBySite(event).subscribe((res: any) => {
@@ -148,8 +171,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
   onSelectProjectByLocation(event) {
-    this.locationsList = [];
-    this.ProjectId =event;
+    this.locationsList = [];  
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
       this.getStoresByProject(event)
@@ -166,7 +188,7 @@ export class WorkOrderComponent implements OnInit {
       error => {
       })
   }
-  
+
 
   getStoresByProject(ProjectId) {
     this.storesList = [];
@@ -174,7 +196,6 @@ export class WorkOrderComponent implements OnInit {
     this.accountService.getStoresByProjectId(ProjectId)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
-        console.log(this.storesList)
       },
         error => {
         });
@@ -193,110 +214,107 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
- 
-   getWorkType() {
+
+  getWorkType() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkType).subscribe((result: any) => {
       this.workTypeList = result.listResult == null ? [] : result.listResult;
-      this.getWorkStatus() ;
+      this.getWorkStatus();
     },
       error => {
       })
   }
-    
-    getWorkStatus() {
-      this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkStatus).subscribe((result: any) => {
-        this.workStatusList = result.listResult == null ? [] : result.listResult;
-        this.geworkFault();
-      },
-        error => {
-        })
-    }
 
-    geworkFault() {
-      this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkFaults).subscribe((result: any) => {
-        this.workFaultsList = result.listResult == null ? [] : result.listResult;
-        this.getWorkTech();
-      },
-        error => {
-        })
-    }
-
-    getWorkTech() {
-      this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
-        this.workTechList = result.listResult == null ? [] : result.listResult;
-      },
-        error => {
-        })
-    }
-
-    addClick(purchase?: any) {
-      this.orderData = {};
-      this.isAdding = true;
-      this.isNewOrder = true;
-      const arr = <FormArray>this.itemFrom.controls.credentials;
-      arr.controls = [];
-      this.buildForm();
-      this.addItem(this.i);
-  
-    }
-  
-    onEditClick(order) {
-     
-      this.isEdit = true;
-      this.isAdding = false;
-      this.isNewOrder = false;
-      this.orderData = order;
-      this.getItemsByworkOrderId(order,true);
-      this.onSelectSiteByProject(order.siteId);
-      this.onSelectProjectByLocation(order.projectId)
-      this.onSelectLocationByProject(order.locationId)
-      this.getStoresByProject(order.projectId);
-      this.resetForm();
-  
-    }
-    onViewClick(row){
-      debugger
-      this.workorder =row; 
-      this.isView = true;
-       
-
-    }
-   
-    closeViewWorkOrder() {
-    this.isView = false;
-    
+  getWorkStatus() {
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkStatus).subscribe((result: any) => {
+      this.workStatusList = result.listResult == null ? [] : result.listResult;
+      this.geworkFault();
+    },
+      error => {
+      })
   }
 
-    confirmDelete(order: any){
-      debugger
-      let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
-        width: 'auto',
-        height: 'auto',
-        disableClose: true,
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined) {
-          this.accountService.deleteWorkOrder(order.id)
-            .subscribe((results: any) => {
+  geworkFault() {
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkFaults).subscribe((result: any) => {
+      this.workFaultsList = result.listResult == null ? [] : result.listResult;
+      this.getWorkTech();
+    },
+      error => {
+      })
+  }
+
+  getWorkTech() {
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
+      this.workTechList = result.listResult == null ? [] : result.listResult;
+    },
+      error => {
+      })
+  }
+
+  addClick(purchase?: any) {
+    this.orderData = {};
+    this.isAdding = true;
+    this.isNewOrder = true;
+    const arr = <FormArray>this.itemFrom.controls.credentials;
+    arr.controls = [];
+    this.buildForm();
+    this.addItem(this.i);
+
+  }
+
+  onEditClick(order) {
+    this.isEdit = true;
+    this.isAdding = false;
+    this.isNewOrder = false;
+    this.orderData = order;
+    this.getItemsByworkOrderId(order, true);
+    this.onSelectSiteByProject(order.siteId);
+    this.onSelectProjectByLocation(order.projectId)
+    this.onSelectLocationByProject(order.locationId)
+    this.getStoresByProject(order.projectId);
+    this.resetForm();
+  }
+
+  onViewClick(row) {
+    debugger
+    this.workorder = row;
+    this.isView = true;
+  }
+
+  closeViewWorkOrder() {
+    this.isView = false;
+
+  }
+
+  confirmDelete(order: any) {
+    debugger
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deleteWorkOrder(order.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getworkOrderOrders();
+            }
+          },
+            error => {
               this.alertService.stopLoadingMessage();
               this.loadingIndicator = false;
-              this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
-              if (results.isSuccess) {
-                this.getworkOrderOrders();
-              }
-            },
-              error => {
-                this.alertService.stopLoadingMessage();
-                this.loadingIndicator = false;
-                this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-                  MessageSeverity.error, error);
-              });
-        }
-      });
-    }
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      }
+    });
+  }
 
-      // Accepting Only Numbers
+  // Accepting Only Numbers
   numberOnly(event: any) {
     const numberpattern = /[0-9\+\-.\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
@@ -306,133 +324,133 @@ export class WorkOrderComponent implements OnInit {
   }
 
 
-    public resetForm(stopEditing: boolean = false) {
-      debugger
-      if (!this.orderData) {
-        this.isNewOrder = true;
-      } else {
-        this.buildForm();
-      }
-      this.orderForm.reset({
-        siteId: this.orderData.siteId || '',
-        projectId: this.orderData.projectId || '',
-        locationId: this.orderData.locationId || '',
-        assetId: this.orderData.assetId || '',
-        storeId:this.orderData.storeId ||'',
-        reference1:this.orderData.reference1 ||'',
-        extraDetails: this.orderData.extraDetails || '',
-        issue: this.orderData.issue || '',
-        resolution:this.orderData.resolution ||'',
-        startDate:this.orderData.startDate ||'',
-        endDate:this.orderData.endDate ||'',
-        workTypeId:this.orderData.workTypeId ||'',
-        workStatusId:this.orderData.workStatusId ||'',
-        workFaultId:this.orderData.workFaultId || '',
-        workTechId:this.orderData.workTechnicianId ||''
-      });
+  public resetForm(stopEditing: boolean = false) {
+    debugger
+    if (!this.orderData) {
+      this.isNewOrder = true;
+    } else {
+      this.buildForm();
     }
+    this.orderForm.reset({
+      siteId: this.orderData.siteId || '',
+      projectId: this.orderData.projectId || '',
+      locationId: this.orderData.locationId || '',
+      assetId: this.orderData.assetId || '',
+      storeId: this.orderData.storeId || '',
+      reference1: this.orderData.reference1 || '',
+      extraDetails: this.orderData.extraDetails || '',
+      issue: this.orderData.issue || '',
+      resolution: this.orderData.resolution || '',
+      startDate: this.orderData.startDate || '',
+      endDate: this.orderData.endDate || '',
+      workTypeId: this.orderData.workTypeId || '',
+      workStatusId: this.orderData.workStatusId || '',
+      workFaultId: this.orderData.workFaultId || '',
+      workTechId: this.orderData.workTechnicianId || ''
+    });
+  }
 
-    saveOrder() {
-      debugger
-      if (!this.orderForm.valid) {
-        this.alertService.showValidationError();
-        return;
-      }
-      this.alertService.startLoadingMessage('Saving changes...');
-      const editeditem = this.AddAllItemData();
-      if (this.isNewOrder) {
-        this.accountService.AddWorkOrder(editeditem).subscribe(
-          (response: any) => {
+  saveOrder() {
+    debugger
+    if (!this.orderForm.valid) {
+      this.alertService.showValidationError();
+      return;
+    }
+    this.alertService.startLoadingMessage('Saving changes...');
+    const editeditem = this.AddAllItemData();
+    if (this.isNewOrder) {
+      this.accountService.AddWorkOrder(editeditem).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            this.getworkOrderOrders();
+            this.isAdding = false;
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.resetForm();
+            // this.onViewPDF(response.result);
+          } else {
             this.alertService.stopLoadingMessage();
-            if (response.isSuccess) {
-              this.getworkOrderOrders();
-              this.isAdding = false;
-              this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-              this.resetForm();
-             // this.onViewPDF(response.result);
-            } else {
-              this.alertService.stopLoadingMessage();
-              this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
-            }
-          }, error => {
-            this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
           }
-        );
-      }
-      else {
-        this.accountService.UpdateWorkOrder(editeditem).subscribe(
-          (response: any) => {
-            this.alertService.stopLoadingMessage();
-            if (response.isSuccess) {
-              this.isAdding = false;
-              this.isEdit = false;
-              this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-              this.getworkOrderOrders();
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
+    }
+    else {
+      this.accountService.UpdateWorkOrder(editeditem).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            this.isAdding = false;
+            this.isEdit = false;
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.getworkOrderOrders();
             //  this.onViewPDF(response.result);
-            } else {
-              this.alertService.stopLoadingMessage();
-              this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
-            }
-          }, error => {
+          } else {
             this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
           }
-        );
-      }
-    }
-
-
-  
-    private AddAllItemData(): any {
-      var workOrderItems = [];
-      for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
-        var itemReq = {
-          "id": 0,
-          "itemId": this.itemFrom.value.credentials[i].itemId,
-          "workOrderId": 0,
-          "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
         }
-        workOrderItems.push(itemReq);
+      );
+    }
+  }
+
+
+
+  private AddAllItemData(): any {
+    var workOrderItems = [];
+    for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
+      var itemReq = {
+        "id": 0,
+        "itemId": this.itemFrom.value.credentials[i].itemId,
+        "workOrderId": 0,
+        "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
       }
-      const formModel = this.orderForm.value;
-      return {
-          "id": this.isNewOrder == true ? 0 : this.orderData.id,
-          "assetId": formModel.assetId,
-          "startDate": formModel.startDate,
-          "endDate": formModel.endDate,
-          "reference1": formModel.reference1,
-          "extradetails": formModel.extraDetails,
-          "locationName":formModel.locationName,
-          "issue": formModel.issue,
-          "resolution": formModel.resolution,
-          "workTypeId": formModel.workTypeId,
-          "workStatusId": formModel.workStatusId,
-          "workTechnicianId": formModel.workTechId,
-          "workFaultId": formModel.workFaultId,
-          "storeId": formModel.storeId,
-          "isActive": true,
-          "workOrderItems":workOrderItems,
-          "createdBy": this.currentUser.id,
-          "createdDate": new Date(),
-          "updatedBy": this.currentUser.id,
-          "updatedDate": new Date()
-        }
+      workOrderItems.push(itemReq);
     }
+    const formModel = this.orderForm.value;
+    return {
+      "id": this.isNewOrder == true ? 0 : this.orderData.id,
+      "assetId": formModel.assetId,
+      "startDate": formModel.startDate,
+      "endDate": formModel.endDate,
+      "reference1": formModel.reference1,
+      "extradetails": formModel.extraDetails,
+      "locationName": formModel.locationName,
+      "issue": formModel.issue,
+      "resolution": formModel.resolution,
+      "workTypeId": formModel.workTypeId,
+      "workStatusId": formModel.workStatusId,
+      "workTechnicianId": formModel.workTechId,
+      "workFaultId": formModel.workFaultId,
+      "storeId": formModel.storeId,
+      "isActive": true,
+      "workOrderItems": workOrderItems,
+      "createdBy": this.currentUser.id,
+      "createdDate": new Date(),
+      "updatedBy": this.currentUser.id,
+      "updatedDate": new Date()
+    }
+  }
 
-    get currentUser() {
-      return this.authService.currentUser;
-    }
+  get currentUser() {
+    return this.authService.currentUser;
+  }
 
-    
-    setItems(itemsArray: any[]) {
-      let control = this.formBuilder.array([]);
-      itemsArray.forEach(x => {
-        control.push(this.formBuilder.group({
-          itemId: x.itemId,
-          quantity: x.quantity,
-        }))
-      })
-      this.itemFrom.setControl('credentials', control);
-    }
+
+  setItems(itemsArray: any[]) {
+    let control = this.formBuilder.array([]);
+    itemsArray.forEach(x => {
+      control.push(this.formBuilder.group({
+        itemId: x.itemId,
+        quantity: x.quantity,
+      }))
+    })
+    this.itemFrom.setControl('credentials', control);
+  }
 }

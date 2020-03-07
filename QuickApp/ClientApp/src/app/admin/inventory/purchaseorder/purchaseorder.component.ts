@@ -248,7 +248,7 @@ export class PurchaseorderComponent implements OnInit {
     this.resetForm();
   }
 
-  }
+  
 
   public resetForm(stopEditing: boolean = false) {
     if (!this.purchaseData) {
