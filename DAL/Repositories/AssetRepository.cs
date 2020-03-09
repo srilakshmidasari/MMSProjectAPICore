@@ -450,12 +450,19 @@ namespace DAL.Repositories
             {
                 var assetData = _appContext.AssetLocations.Where(x => x.Id == assetId).FirstOrDefault();
 
+                var workOrders = _appContext.WorkOrders.Where(x => x.AssetId == assetId).ToList();
+
                 if (assetData != null)
                 {
                     //assetData.IsActive = false;
                     //assetData.UpdatedDate = DateTime.Now;
+                   
                     var assetFiles = _appContext.AssetFileRepositories.Where(x => x.AssetId == assetId).ToList();
+                    var resss = _appContext.WorkOrderItemXrefs.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
                     _appContext.AssetFileRepositories.RemoveRange(assetFiles);
+                    _appContext.WorkOrderItemXrefs.RemoveRange(resss);
+                    _appContext.WorkOrders.RemoveRange(workOrders);
                     _appContext.AssetLocations.Remove(assetData);
                     _appContext.SaveChanges();
                 }

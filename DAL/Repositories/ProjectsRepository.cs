@@ -53,7 +53,7 @@ namespace DAL.Repositories
                                   CreatedDate = p.CreatedDate,
                                   UpdatedBy = p.UpdatedBy,
                                   UpdatedDate = p.UpdatedDate,
-                              }).ToList();
+                              }).Where(x => x.IsActive == true).ToList();
                 foreach (var item in result)
                 {
                     var responce = finalResilt.Where(s => s.Id == item.Id).FirstOrDefault();
@@ -142,109 +142,16 @@ namespace DAL.Repositories
 
             try
             {
-                Project pro = _mapper.Map<Project>(project);
-                var result = _appContext.Projects.Add(pro);
-                _appContext.SaveChanges();
-                foreach (var sId in project.StoreIds)
+                var projectExists = _appContext.Projects.Where(x => x.ProjectReference == project.ProjectReference).FirstOrDefault();
+                if (projectExists == null)
                 {
-                    _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
-                }
-
-                foreach (var req in project.ProjectRepositories)
-                {
-                    if (req.FileName != null)
-                    {
-                        string ModuleName = "Project";
-                        var now = DateTime.Now;
-                        var yearName = now.ToString("yyyy");
-                        var monthName = now.Month.ToString("d2");
-                        var dayName = now.ToString("dd");
-
-                        FileUploadService repo = new FileUploadService();
-
-                        string FolderLocation = "FileRepository";
-                        string ServerRootPath = _config.Value.ServerRootPath;
-
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
-
-                        byte[] FileBytes = Convert.FromBase64String(req.FileName);
-
-                        req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
-
-                        req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
-
-                        ProjectRepository pros = new ProjectRepository();
-                        {
-                            pros.ProjectId = pro.Id;
-                            pros.FileName = req.FileName;
-                            pros.FileLocation = req.FileLocation;
-                            pros.FileExtention = req.FileExtention;
-                            pros.DocumentType = req.DocumentTypeId;
-                            pros.CreatedBy = req.CreatedBy;
-                            pros.CreatedDate = DateTime.Now;
-                            pros.UpdatedBy = req.UpdatedBy;
-                            pros.UpdatedDate = DateTime.Now;
-                        }
-                        _appContext.ProjectRepositories.Add(pros);
-                    }
+                    Project pro = _mapper.Map<Project>(project);
+                    var result = _appContext.Projects.Add(pro);
                     _appContext.SaveChanges();
-                }
-
-                if (pro != null)
-                {
-                    response.Result = pro;
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 1;
-                    response.EndUserMessage = "Project Added Successfully";
-                }
-                else
-                {
-                    response.IsSuccess = true;
-                    response.AffectedRecords = 0;
-                    response.EndUserMessage = "Project Added Failed";
-                }
-            }
-            catch (Exception ex)
-            {
-                response.IsSuccess = false;
-                response.AffectedRecords = 0;
-                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
-                response.Exception = ex;
-            }
-            return response;
-        }
-
-        public ValueDataResponse<Project> UpdateProject(UpsertProject project)
-        {
-            ValueDataResponse<Project> response = new ValueDataResponse<Project>();
-
-            try
-            {
-                Project pro = _mapper.Map<Project>(project);
-                var result = _appContext.Projects.Where(x => x.Id == project.Id).FirstOrDefault();
-                var projectList = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == project.Id).ToList();
-                _appContext.LookUpProjectXrefs.RemoveRange(projectList);
-                _appContext.SaveChanges();
-                foreach (var sId in project.StoreIds)
-                {
-                    _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
-                }
-
-                if (result != null)
-                {
-
-                    result.SiteId = project.SiteId;
-                    result.ProjectReference = project.ProjectReference;
-                    result.Name1 = project.Name1;
-                    result.Name2 = project.Name2;
-                    result.ProjectDetails = project.ProjectDetails;
-                    result.IsActive = project.IsActive;
-                    result.CreatedBy = project.CreatedBy;
-                    result.CreatedDate = project.CreatedDate;
-                    result.UpdatedBy = project.UpdatedBy;
-                    result.UpdatedDate = project.UpdatedDate;
-
-
+                    foreach (var sId in project.StoreIds)
+                    {
+                        _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
+                    }
 
                     foreach (var req in project.ProjectRepositories)
                     {
@@ -283,22 +190,136 @@ namespace DAL.Repositories
                             }
                             _appContext.ProjectRepositories.Add(pros);
                         }
+                        _appContext.SaveChanges();
                     }
-                    _appContext.SaveChanges();
+
                     if (pro != null)
                     {
                         response.Result = pro;
                         response.IsSuccess = true;
                         response.AffectedRecords = 1;
-                        response.EndUserMessage = "Project Updated Successfully";
+                        response.EndUserMessage = "Project Added Successfully";
                     }
                     else
                     {
                         response.IsSuccess = true;
                         response.AffectedRecords = 0;
-                        response.EndUserMessage = "Project Update Failed";
+                        response.EndUserMessage = "Project Added Failed";
                     }
                 }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Project Reference is Already Exists";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+            return response;
+        }
+
+        public ValueDataResponse<Project> UpdateProject(UpsertProject project)
+        {
+            ValueDataResponse<Project> response = new ValueDataResponse<Project>();
+
+            try
+            {
+                var projectsExists = _appContext.Projects.Where(x => x.Id != project.Id && x.ProjectReference == project.ProjectReference).FirstOrDefault();
+
+                if (projectsExists == null)
+                {
+                    Project pro = _mapper.Map<Project>(project);
+                    var result = _appContext.Projects.Where(x => x.Id == project.Id).FirstOrDefault();
+                    var projectList = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == project.Id).ToList();
+                    _appContext.LookUpProjectXrefs.RemoveRange(projectList);
+                    _appContext.SaveChanges();
+                    foreach (var sId in project.StoreIds)
+                    {
+                        _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
+                    }
+
+                    if (result != null)
+                    {
+
+                        result.SiteId = project.SiteId;
+                        result.ProjectReference = project.ProjectReference;
+                        result.Name1 = project.Name1;
+                        result.Name2 = project.Name2;
+                        result.ProjectDetails = project.ProjectDetails;
+                        result.IsActive = project.IsActive;
+                        result.CreatedBy = project.CreatedBy;
+                        result.CreatedDate = project.CreatedDate;
+                        result.UpdatedBy = project.UpdatedBy;
+                        result.UpdatedDate = project.UpdatedDate;
+
+                        foreach (var req in project.ProjectRepositories)
+                        {
+                            if (req.FileName != null)
+                            {
+                                string ModuleName = "Project";
+                                var now = DateTime.Now;
+                                var yearName = now.ToString("yyyy");
+                                var monthName = now.Month.ToString("d2");
+                                var dayName = now.ToString("dd");
+
+                                FileUploadService repo = new FileUploadService();
+
+                                string FolderLocation = "FileRepository";
+                                string ServerRootPath = _config.Value.ServerRootPath;
+
+                                string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+
+                                byte[] FileBytes = Convert.FromBase64String(req.FileName);
+
+                                req.FileName = repo.UploadFile(FileBytes, req.FileExtention, Location);
+
+                                req.FileLocation = Path.Combine(yearName, monthName, dayName, ModuleName);
+
+                                ProjectRepository pros = new ProjectRepository();
+                                {
+                                    pros.ProjectId = pro.Id;
+                                    pros.FileName = req.FileName;
+                                    pros.FileLocation = req.FileLocation;
+                                    pros.FileExtention = req.FileExtention;
+                                    pros.DocumentType = req.DocumentTypeId;
+                                    pros.CreatedBy = req.CreatedBy;
+                                    pros.CreatedDate = DateTime.Now;
+                                    pros.UpdatedBy = req.UpdatedBy;
+                                    pros.UpdatedDate = DateTime.Now;
+                                }
+                                _appContext.ProjectRepositories.Add(pros);
+                            }
+                        }
+                        _appContext.SaveChanges();
+                        if (pro != null)
+                        {
+                            response.Result = pro;
+                            response.IsSuccess = true;
+                            response.AffectedRecords = 1;
+                            response.EndUserMessage = "Project Updated Successfully";
+                        }
+                        else
+                        {
+                            response.IsSuccess = true;
+                            response.AffectedRecords = 0;
+                            response.EndUserMessage = "Project Update Failed";
+                        }
+                    }
+                }
+                else
+                {
+                    response.IsSuccess = false;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "Project Reference is Already Exists";
+                }
+
             }
             catch (Exception ex)
             {
@@ -321,20 +342,21 @@ namespace DAL.Repositories
 
                 if (locations != null)
                 {
-                    var res = _appContext.ProjectRepositories.Where(x => x.ProjectId == ProjectId).ToList();
-                    _appContext.ProjectRepositories.RemoveRange(res);
+                    projects.IsActive = false;
+                    projects.UpdatedDate = DateTime.Now;
+                    //var res = _appContext.ProjectRepositories.Where(x => x.ProjectId == ProjectId).ToList();
+                    //_appContext.ProjectRepositories.RemoveRange(res);
 
-                    var ress = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList();
-                    _appContext.LookUpProjectXrefs.RemoveRange(ress);
+                    //var ress = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList();
+                    //_appContext.LookUpProjectXrefs.RemoveRange(ress);
 
+                    //var alocs = _appContext.AssetLocations.Where(x => locations.Select(al => al.Id).Contains(x.LocationId)).ToList();
 
-                    var alocs = _appContext.AssetLocations.Where(x => locations.Select(al => al.Id).Contains(x.LocationId)).ToList();
-
-                    var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
-                    _appContext.AssetFileRepositories.RemoveRange(assetRepo);
-                    _appContext.AssetLocations.RemoveRange(alocs);
-                    _appContext.Locations.RemoveRange(locations);
-                    _appContext.Projects.RemoveRange(projects);
+                    //var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+                    //_appContext.AssetFileRepositories.RemoveRange(assetRepo);
+                    //_appContext.AssetLocations.RemoveRange(alocs);
+                    //_appContext.Locations.RemoveRange(locations);
+                    //_appContext.Projects.RemoveRange(projects);
                     _appContext.SaveChanges();
                 }
 
@@ -496,10 +518,10 @@ namespace DAL.Repositories
                               join p in _appContext.Projects on up.ProjectId equals p.Id
                               select new GetUserProjects
                               {
-                                 Id = up.ProjectId,
-                                 Name1 = p.Name1,
-                                 Name2 = p.Name2,
-                                 ProjectReference = p.ProjectReference
+                                  Id = up.ProjectId,
+                                  Name1 = p.Name1,
+                                  Name2 = p.Name2,
+                                  ProjectReference = p.ProjectReference
                               }).ToList();
 
                 if (result != null)

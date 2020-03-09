@@ -227,7 +227,8 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
 
 @media screen and (min-width: 1300px) {
   .table-xl, .prng-table .ui-table {
-    min-width: 1460px;
+    /* min-width: 1620px; */
+   
   }
 }
 @media screen and (max-width: 1300px) {
@@ -248,12 +249,38 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
     min-width: 1350px;
   }
 }
+// @media screen and (min-width: 1300px) {
+//   .table-xl, .prng-table .ui-table table {
+//     min-width: 1460px !important;
+//   }
+// }
+// @media screen and (max-width: 1300px) {
+//   .tab-responsive, .table-lg {
+//     min-width: 1300px !important;;
+//   }
+
+//   .table-md {
+//     min-width: 1050px;
+//   }
+
+//   .table-sm {
+//     min-width: 850px;
+//     width: 100%;
+//   }
+
+//   .prng-table .ui-table table {
+//     min-width: 1350px !important;;
+//   }
+// }
 .word-break{
   word-wrap: break-word;
 }
 .word-break-all{
   word-wrap: break-word;
   word-break: break-all;
+}
+.z-index{
+  z-index: 1001;
 }
 // @media screen and (max-width: 70em) {
 //   .mv-text-container{

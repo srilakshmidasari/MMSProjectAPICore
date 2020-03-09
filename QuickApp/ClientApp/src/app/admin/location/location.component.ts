@@ -62,7 +62,7 @@ export class LocationComponent implements OnInit {
   }
 
  // Get sites data by ProjectId
- private getSitesByProjectId(event) {
+ getSitesByProjectId(event) {
   this.accountService.getSitesByProjectId(event)
     .subscribe((results: any) => {
       this.siteList = results.listResult == null ? [] : results.listResult;
@@ -282,7 +282,7 @@ export class LocationComponent implements OnInit {
    onDeleteLocation(location: any) {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + location.locationReference,  msg: "Are you sure you want to delete this Location with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + location.locationReference,  msg: "Are you sure you want to delete this Location with relevant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

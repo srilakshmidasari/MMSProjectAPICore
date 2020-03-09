@@ -108,7 +108,7 @@ export class AssetsComponent implements OnInit {
   }
 
   // Get sites data by ProjectId
-  private getSitesByProjectId(event) {
+   getSitesByProjectId(event) {
     this.projectId = event;
     this.accountService.getSitesByProjectId(event)
       .subscribe((results: any) => {
@@ -541,7 +541,7 @@ export class AssetsComponent implements OnInit {
   confirmDelete(asset: any) {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + asset.assetLocationRef, msg: "Are you sure you want to delete this Assets with relavant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + asset.assetLocationRef, msg: "Are you sure you want to delete this Assets with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

@@ -6,9 +6,9 @@
                 placeholder="{{'Asset.Management.Search' | translate}}">
         </mat-form-field>
     </div>
-    <div class="example-container mat-elevation-z8">
+    <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="assetLocationRef" matSortDirection="asc"
+        <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="assetLocationRef" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Assets.Management.SiteName'|translate}}

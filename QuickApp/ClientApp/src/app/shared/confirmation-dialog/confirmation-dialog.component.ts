@@ -8,12 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./confirmation-dialog.component.css']
 })
  export class ConfirmationDialogComponent implements OnInit {
-    
- 
   msg: any; 
- 
+  textDir: string;
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private router: Router, private dialogRef: MatDialogRef<ConfirmationDialogComponent>) {
- 
+    this.textDir = localStorage.getItem('textdir')
    }
 
   ngOnInit() {

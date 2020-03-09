@@ -477,7 +477,7 @@ export class ProjectComponent implements OnInit {
   confirmDelete(project: any) {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + project.projectReference,  msg: "Are you sure you want to delete this Project with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + project.projectReference,  msg: "Are you sure you want to delete this Project with relevant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

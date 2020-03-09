@@ -149,7 +149,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
   // Get sites data by ProjectId
-  private getSitesByProjectId(event) {
+   getSitesByProjectId(event) {
     this.ProjectId = event;
     this.accountService.getSitesByProjectId(event)
       .subscribe((results: any) => {

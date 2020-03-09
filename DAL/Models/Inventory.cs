@@ -12,21 +12,26 @@ namespace DAL.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        [Required]
+      
         [Display(Name = "Purchase Order Id")]
         public int PurchaseOrderId { get; set; }
+      
+        [Display(Name = "Item Id")]
+        public int ItemId { get; set; }
 
-        [Required]
         [Display(Name = "Quantity")]
         public int Quantity { get; set; }
 
-        [Required]
+        
         [Display(Name = "Received Cost")]
         public double ReceivedCost { get; set; }
 
         [JsonIgnore]
         public PurchageOrder PurchaseOrder_Id { get; set; }
+
+        [JsonIgnore]
+        public Item Item_Id { get; set; }
+
     }
 
 }

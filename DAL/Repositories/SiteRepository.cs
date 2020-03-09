@@ -278,7 +278,6 @@ namespace DAL.Repositories
                     _appContext.AssetLocations.RemoveRange(alocs);
                     _appContext.Locations.RemoveRange(resss);
                 }
-
                 _appContext.Projects.RemoveRange(projects);
                 _appContext.SiteInfos.Remove(result);
                 _appContext.SaveChanges();

@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" matSort matSortActive="locationReference" matSortDirection="asc"
+        <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="locationReference" matSortDirection="asc"
             matSortDisableClear>
 
             <ng-container matColumnDef="siteName1">

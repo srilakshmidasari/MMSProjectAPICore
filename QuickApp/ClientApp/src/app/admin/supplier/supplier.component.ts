@@ -203,8 +203,8 @@ export class SupplierComponent implements OnInit {
   }
 
   editClick(supplier?: any) {
-    debugger;
     this.supplierData = {};
+    this.image ="";
     if (supplier != undefined) {
       this.isAddingsupplier = true;
       this.isNewsupplier = false;
@@ -248,7 +248,6 @@ export class SupplierComponent implements OnInit {
 
   // File Change Event
   onSelectFiles(event) {
-    debugger;
     this.fileExtension = '';
     var file = event.target.files[0];
     this.fileExtension = '.' + file.name.split('.').pop();

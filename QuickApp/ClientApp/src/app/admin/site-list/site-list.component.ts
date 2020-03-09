@@ -154,7 +154,7 @@ export class SiteListComponent implements OnInit {
   confirmDelete(site: any) {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + site.siteReference,  msg: "Are you sure you want to delete this site with relavant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + site.siteReference,  msg: "Are you sure you want to delete this site with relevant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

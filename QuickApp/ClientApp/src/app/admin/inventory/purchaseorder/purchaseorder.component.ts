@@ -44,6 +44,7 @@ export class PurchaseorderComponent implements OnInit {
   duplicateItemList: any[] = [];
   itemData: any[]=[];
   purchase: any={};
+  isRejected: number;
 
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -52,6 +53,7 @@ export class PurchaseorderComponent implements OnInit {
     });
     this.currenrDate = new Date();
     this.isAccepted = DataFactory.StatusTypes.Approved;
+    this.isRejected = DataFactory.StatusTypes.Rejected;
   }
 
   ngOnInit() {

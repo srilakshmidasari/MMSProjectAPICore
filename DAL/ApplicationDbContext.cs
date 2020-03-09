@@ -503,6 +503,12 @@ namespace DAL
             .OnDelete(DeleteBehavior.ClientSetNull)
             .HasConstraintName("FK_App_Inventory_Order_Id");
 
+            builder.Entity<Inventory>().HasOne(d => d.Item_Id)
+          .WithMany(p => p.App_InventoryItemId_Id)
+          .HasForeignKey(d => d.ItemId)
+         .OnDelete(DeleteBehavior.ClientSetNull)
+          .HasConstraintName("FK_App_InventoryItemId_Id");
+
 
         }
 

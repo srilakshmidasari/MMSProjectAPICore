@@ -187,7 +187,13 @@ namespace DAL.Repositories
                 if (ast != null)
                 {
                     var assetRepo = _appContext.AssetFileRepositories.Where(x => ast.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+                    var workOrders = _appContext.WorkOrders.Where(x => ast.Select(p => p.Id).Contains(x.AssetId)).ToList();
+
+                    var resss = _appContext.WorkOrderItemXrefs.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
                     _appContext.AssetFileRepositories.RemoveRange(assetRepo);
+                    _appContext.WorkOrderItemXrefs.RemoveRange(resss);
+                    _appContext.WorkOrders.RemoveRange(workOrders);
                     _appContext.AssetLocations.RemoveRange(ast);
                     _appContext.Locations.RemoveRange(LocationData);
                     _appContext.SaveChanges();

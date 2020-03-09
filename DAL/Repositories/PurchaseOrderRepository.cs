@@ -414,14 +414,22 @@ namespace DAL.Repositories
         {
             ListDataResponse<GetItemsResponse> response = new ListDataResponse<GetItemsResponse>();
             try
-            { 
-                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId})
-                .Select(g => new {
-                    PurchaseOrderId= g.Key.PurchaseOrderId,
-                    ReceivedCost = g.Sum(x=>x.ReceivedCost),
-                    Quantity=g.Sum(x=>x.Quantity)
-                }).Where(x=>x.PurchaseOrderId== purchaseId).ToList();
- 
+            {
+                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId })
+                .Select(g => new
+                {
+                    PurchaseOrderId = g.Key.PurchaseOrderId,
+                    ReceivedCost = g.Sum(x => x.ReceivedCost),
+                    Quantity = g.Sum(x => x.Quantity)
+                }).Where(x => x.PurchaseOrderId == purchaseId).ToList();
+
+                //var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId, n.ReceivedCost, n.Quantity  })
+                //.Select(g => new {
+                //    PurchaseOrderId = g.Key.PurchaseOrderId,
+                //    ReceivedCost = g.Key.ReceivedCost,
+                //    Quantity = g.Key.Quantity
+                //}).Where(x => x.PurchaseOrderId == purchaseId).ToList();
+
                 var result = (from pi in _appContext.PurchageItemXrefs.Include(x=>x.Item_Id).Include(x=>x.Purchage_Id).Where(x=>x.PurchageId== purchaseId).ToList()
                               join iv in res on pi.PurchageId equals iv.PurchaseOrderId into Details
                               from m in Details.DefaultIfEmpty()
@@ -556,6 +564,7 @@ namespace DAL.Repositories
                     _appContext.Inventories.Add(new Inventory
                     {
                         PurchaseOrderId = it.PurchaseOrderId,
+                        ItemId = it.ItemId,
                         Quantity = it.Quantity,
                         ReceivedCost = it.ReceivedCost
                     });

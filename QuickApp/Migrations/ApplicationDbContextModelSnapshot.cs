@@ -485,6 +485,9 @@ namespace MMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("ItemId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PurchaseOrderId")
                         .HasColumnType("int");
 
@@ -495,6 +498,8 @@ namespace MMS.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ItemId");
 
                     b.HasIndex("PurchaseOrderId");
 
@@ -1507,6 +1512,12 @@ namespace MMS.Migrations
 
             modelBuilder.Entity("DAL.Models.Inventory", b =>
                 {
+                    b.HasOne("DAL.Models.Item", "Item_Id")
+                        .WithMany("App_InventoryItemId_Id")
+                        .HasForeignKey("ItemId")
+                        .HasConstraintName("FK_App_InventoryItemId_Id")
+                        .IsRequired();
+
                     b.HasOne("DAL.Models.PurchageOrder", "PurchaseOrder_Id")
                         .WithMany("App_Inventory_Order_Id")
                         .HasForeignKey("PurchaseOrderId")

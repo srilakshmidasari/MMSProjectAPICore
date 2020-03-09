@@ -92,6 +92,8 @@ namespace DAL.Models
 
         public ICollection<WorkOrderItemXref> App_WorkOrderItemIdXref_Id { get; set; }
 
+        public ICollection<Inventory> App_InventoryItemId_Id { get; set; }
+
 
     }
 }

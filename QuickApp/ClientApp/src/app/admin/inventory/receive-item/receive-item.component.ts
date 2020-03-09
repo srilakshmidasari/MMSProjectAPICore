@@ -19,6 +19,7 @@ export class ReceiveItemComponent implements OnInit {
   shippingAddress: any[]=[];
   sumTotal:number
   isReadOnly: boolean= false;
+  inventoryItems :any[]=[];
   constructor(private accountService: AccountService,private alertService: AlertService, public dialogRef: MatDialogRef<ReceiveItemComponent>, @Inject(MAT_DIALOG_DATA) public data: { row },
   private formBuilder: FormBuilder) {
     
@@ -93,44 +94,45 @@ export class ReceiveItemComponent implements OnInit {
 
   save() {
     debugger
-    var inventoryItems = [];
+    this. inventoryItems = [];
     for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
       var itemReq = {
         "id": 0,
         "purchaseOrderId": this.purchaseData.id,
+        "itemId":0,
         "quantity": parseInt(this.itemFrom.value.credentials[i].receiveQty),
         "receivedCost": parseFloat(this.itemFrom.value.credentials[i].receivePrice),
       }
-      inventoryItems.push(itemReq);
+      this.inventoryItems.push(itemReq);
     }
   
-    this.isViewRecipt = true;
-    for(let i = 0; i < this.itemList.length; i++) {
-      this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
-      this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
-      this.sumTotal += this.itemList[i].receivedCost;
-    }
-    // this.accountService.UpdateInventory(inventoryItems)
-    //   .subscribe((results:any) => {
-    //     this.alertService.stopLoadingMessage();
-    //     if (results.isSuccess) {
-    //       this.isViewRecipt = true;
-    //       for(let i = 0; i < this.itemList.length; i++) {
-    //         this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
-    //         this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
-    //         this.sumTotal += this.itemList[i].receivedCost;
-    //       }
-    //      this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
-    //     }
-    //     else {
-    //       this.alertService.stopLoadingMessage();
-    //       this.alertService.showStickyMessage(results.endUserMessage, null, MessageSeverity.error);
-    //     }
-    //   },
-    //     error => {
-    //       this.alertService.stopLoadingMessage();
-    //       this.alertService.showStickyMessage('An Error Occured', null, MessageSeverity.error);
-    //     });
+    // this.isViewRecipt = true;
+    // for(let i = 0; i < this.itemList.length; i++) {
+    //   this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
+    //   this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
+    //   this.sumTotal += this.itemList[i].receivedCost;
+    // }
+    this.accountService.UpdateInventory(this.inventoryItems)
+      .subscribe((results:any) => {
+        this.alertService.stopLoadingMessage();
+        if (results.isSuccess) {
+          this.isViewRecipt = true;
+          for(let i = 0; i < this.itemList.length; i++) {
+            this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
+            this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
+            this.sumTotal += this.itemList[i].receivedCost;
+          }
+         this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
+        }
+        else {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage(results.endUserMessage, null, MessageSeverity.error);
+        }
+      },
+        error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An Error Occured', null, MessageSeverity.error);
+        });
   }
 
   onPrintClick(el) {

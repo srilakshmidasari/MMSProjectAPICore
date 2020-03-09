@@ -6,7 +6,7 @@
                 placeholder="{{'Purchase Order.Management.Search' | translate}}">
         </mat-form-field>
     </div> -->
-    <div class="example-container mat-elevation-z8 mt-2 prng-table">
+    <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
             <p-table #dt [value]="purchasesList" [paginator]="true" expandableRows="true" [rows]="10"
@@ -93,22 +93,22 @@
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center">
-                            <button mat-icon-button matTooltip="{{'Purchase Order.Management.Edit'|translate}}"
+                            <button class="z-index" mat-icon-button matTooltip="{{'Purchase Order.Management.Edit'|translate}}"
                                 (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip="{{'Purchase Order.Management.Delete'|translate}}"
+                            <button class="z-index" mat-icon-button matTooltip="{{'Purchase Order.Management.Delete'|translate}}"
                                 [hidden]="!req.isActive" (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
-                            <button mat-icon-button (click)="onViewDoc(req)">
+                            <button class="z-index" mat-icon-button (click)="onViewDoc(req)">
                                 <mat-icon>file_copy</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip=Accept *ngIf="isAccepted != req.statusTypeId"
+                            <button class="z-index" mat-icon-button matTooltip=Accept *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId"
                                 (click)="acceptClick(req)">
                                 <mat-icon color="primary">thumb_up</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip=Reject *ngIf="isAccepted != req.statusTypeId"
+                            <button class="z-index" mat-icon-button matTooltip=Reject *ngIf="isAccepted!= req.statusTypeId && isRejected != req.statusTypeId"
                                 (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
                             </button>
@@ -116,11 +116,10 @@
                                 (click)="onViewdetailsClick(req)">
                                 <mat-icon color="accent">visibility icon</mat-icon>
                             </button>
-
-                            <!-- <button mat-icon-button matTooltip=Receive *ngIf="isAccepted == req.statusTypeId"
+                            <button mat-icon-button matTooltip=Receive *ngIf="isAccepted == req.statusTypeId"
                                 (click)="onReceiveClick(req)">
                                 <mat-icon>repeat</mat-icon>
-                            </button> -->
+                            </button>
                         </td>
                     </tr>
                 </ng-template>

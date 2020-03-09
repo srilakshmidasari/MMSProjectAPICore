@@ -421,6 +421,7 @@ namespace DAL.RequestResponseModels
             public int Quantity { get; set; }          
             public double ExpectedCost { get; set; }
             public int? ReceivedQuantity { get; set; }
+            public int? RemainingQuantity { get; set; }
             public double? ReceivedCost { get; set; }
 
         }
@@ -545,6 +546,7 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int PurchaseOrderId { get; set; }
+            public int ItemId{ get; set; }
             public int Quantity { get; set; }
             public double ReceivedCost { get; set; }
 
