@@ -89,7 +89,11 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getSitesByProjectIdUrl: string ='/api/Site/GetSitesByProjectId';
 
   private readonly _updateInventory: string ='/api/PurchaseOrder/UpdateInventory';
-  
+
+  private readonly _getProjectsByUserIdandSiteIdUrl: string ='/api/Project/GetProjectsByUserIdandSiteId';
+
+  private readonly _getSitesByUserIdUrl: string ='/api/Site/GetSitesByUserId';
+ 
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -165,6 +169,10 @@ export class AccountEndpoint extends EndpointBase {
   get getSitesByProjectIdUrl() { return this.configurations.baseUrl + this._getSitesByProjectIdUrl; }
 
   get updateInventory() { return this.configurations.baseUrl + this._updateInventory; }
+
+  get getProjectsByUserIdandSiteIdUrl() { return this.configurations.baseUrl + this._getProjectsByUserIdandSiteIdUrl; }
+
+  get getSitesByUserIdUrl() { return this.configurations.baseUrl + this._getSitesByUserIdUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -889,4 +897,22 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  getProjectsByUserIdandSiteIdEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getProjectsByUserIdandSiteIdUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getProjectsByUserIdandSiteIdEndPoint(reqObject));
+      }));
+  }
+
+  getSitesByUserIdEndPoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getSitesByUserIdUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getSitesByUserIdEndPoint(Id));
+      }));
+  }
+  
+  
+  
 }

@@ -111,6 +111,7 @@ namespace DAL.RequestResponseModels
                 .ForMember(d => d.Store_Id, map => map.Ignore());
 
             CreateMap<UpsertInventory, Inventory>()
+                 .ForMember(d => d.Item_Id, map => map.Ignore())
                  .ForMember(d => d.PurchaseOrder_Id, map => map.Ignore());
 
         }

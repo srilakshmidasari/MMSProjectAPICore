@@ -49,7 +49,7 @@ export class AssetsComponent implements OnInit {
   @Input() allowedDocExtension: string = "pdf , docx , doc";
   @Input() maxSize: number = 2300;//1150;
   displayNoRecords: boolean;
-  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetSize', 'assetCapacity', 'astFixedDate',  'isActive', 'Actions'];
+  displayedColumns = ['siteName1', 'projectName1', 'locationName1', 'astGroupName1', 'astTradeName1', 'name1', 'name2', 'assetLocationRef', 'assetCounter', 'assetSize', 'assetCapacity', 'astFixedDate', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -90,7 +90,7 @@ export class AssetsComponent implements OnInit {
         this.loadingIndicator = false;
         this.assetLocationList = results.listResult == null ? [] : results.listResult;
         this.dataSource.data = this.assetLocationList;
-        this.getProjectsByUserId();
+        this.getSitesByUserId();
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -98,22 +98,25 @@ export class AssetsComponent implements OnInit {
         });
   }
 
-  private getProjectsByUserId() {
-    this.accountService.getProjectsByUserId(this.currentUser.id)
+  // Get sites data by UserId
+  getSitesByUserId() {
+    this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
-        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        this.siteList = results.listResult == null ? [] : results.listResult;
       },
         error => {
         });
   }
 
-  // Get sites data by ProjectId
-   getSitesByProjectId(event) {
-    this.projectId = event;
-    this.accountService.getSitesByProjectId(event)
+  private getProjectsByUserIdandSiteId(event) {
+    this.userProjectsList = [];
+    var req = {
+      "siteId": event,
+      "userId": this.currentUser.id
+    }
+    this.accountService.getProjectsByUserIdandSiteId(req)
       .subscribe((results: any) => {
-        this.siteList = results.listResult == null ? [] : results.listResult;
-        this.onSelectProjectByLocation()
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
       },
         error => {
         });
@@ -171,9 +174,9 @@ export class AssetsComponent implements OnInit {
       })
   }
 
-  onSelectProjectByLocation() {
+  onSelectProjectByLocation(event) {
     this.locationsList = [];
-    this.accountService.getLocationsByProject(this.projectId).subscribe((res: any) => {
+    this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
     },
       error => {
@@ -500,7 +503,7 @@ export class AssetsComponent implements OnInit {
   }
 
 
-  getAssetRepository() {   
+  getAssetRepository() {
     this.alertService.startLoadingMessage();
     this.accountService.getAssetRepository(this.assetRefData.id).subscribe((res: any) => {
       this.alertService.stopLoadingMessage();

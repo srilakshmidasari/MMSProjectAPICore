@@ -53,7 +53,7 @@ namespace DAL.Repositories
                                   CreatedDate = p.CreatedDate,
                                   UpdatedBy = p.UpdatedBy,
                                   UpdatedDate = p.UpdatedDate,
-                              }).Where(x => x.IsActive == true).ToList();
+                              }).ToList();
                 foreach (var item in result)
                 {
                     var responce = finalResilt.Where(s => s.Id == item.Id).FirstOrDefault();
@@ -148,10 +148,13 @@ namespace DAL.Repositories
                     Project pro = _mapper.Map<Project>(project);
                     var result = _appContext.Projects.Add(pro);
                     _appContext.SaveChanges();
+                    _appContext.UserProjectXrefs.Add(new UserProjectXref { UserId = pro.CreatedBy, ProjectId = pro.Id });
+
                     foreach (var sId in project.StoreIds)
                     {
                         _appContext.LookUpProjectXrefs.Add(new LookUpProjectXref { StoreId = sId, ProjectId = pro.Id });
                     }
+                    _appContext.SaveChanges();
 
                     foreach (var req in project.ProjectRepositories)
                     {
@@ -516,6 +519,47 @@ namespace DAL.Repositories
             {
                 var result = (from up in _appContext.UserProjectXrefs.Where(x => x.UserId == UserId).ToList()
                               join p in _appContext.Projects on up.ProjectId equals p.Id
+                              select new GetUserProjects
+                              {
+                                  Id = up.ProjectId,
+                                  Name1 = p.Name1,
+                                  Name2 = p.Name2,
+                                  ProjectReference = p.ProjectReference
+                              }).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Project Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Project Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+        public ListDataResponse<GetUserProjects> GetProjectsByUserIdandSiteId(string UserId, int SiteId)
+        {
+            ListDataResponse<GetUserProjects> response = new ListDataResponse<GetUserProjects>();
+            try
+            {
+                var result = (from up in _appContext.UserProjectXrefs
+                              join p in _appContext.Projects on up.ProjectId equals p.Id
+                              where up.UserId == UserId && p.SiteId == SiteId
                               select new GetUserProjects
                               {
                                   Id = up.ProjectId,

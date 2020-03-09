@@ -307,25 +307,26 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ListDataResponse<SiteInfo> GetSitesByProjectId(int ProjectId)
+        public ListDataResponse<SiteInfo> GetUserSites(string UserId)
         {
             ListDataResponse<SiteInfo> response = new ListDataResponse<SiteInfo>();
             try
             {
-                var result = (from p in _appContext.Projects.Where(x => x.Id == ProjectId).ToList()
-                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+                var result = (from p in _appContext.Projects.Include(s=>s.SiteInfo_Id)
+                              join s in _appContext.UserProjectXrefs on p.Id equals s.ProjectId
+                              where s.UserId == UserId
                               select new SiteInfo
                               {
-                                  Id = s.Id,
-                                  Name1 = s.Name1,
-                                  Name2 = s.Name2,
-                                  SiteReference = s.SiteReference,
-                                  CreatedBy = s.CreatedBy,
-                                  CreatedDate = s.CreatedDate,
-                                  UpdatedBy = s.UpdatedBy,
-                                  UpdatedDate = s.UpdatedDate,
+                                  Id = p.SiteInfo_Id.Id,
+                                  Name1 = p.SiteInfo_Id.Name1,
+                                  Name2 = p.SiteInfo_Id.Name2,
+                                  SiteReference = p.SiteInfo_Id.SiteReference,
+                                  CreatedBy = p.SiteInfo_Id.CreatedBy,
+                                  CreatedDate = p.SiteInfo_Id.CreatedDate,
+                                  UpdatedBy = p.SiteInfo_Id.UpdatedBy,
+                                  UpdatedDate = p.SiteInfo_Id.UpdatedDate,
 
-                              }).ToList();
+                              }).Distinct().ToList();
 
                 if (result != null)
                 {

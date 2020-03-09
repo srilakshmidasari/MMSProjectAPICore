@@ -46,10 +46,10 @@ namespace MMS.Controllers
             return _unitOfWork.Sites.DeleteSiteInfo(SiteId);
         }
 
-        [HttpGet("GetSitesByProjectId/{ProjectId}")]
-        public ListDataResponse<SiteInfo> GetSitesByProjectId(int ProjectId)
+        [HttpGet("GetSitesByUserId/{UserId}")]
+        public ListDataResponse<SiteInfo> GetSitesByProjectId(string UserId)
         {
-            return _unitOfWork.Sites.GetSitesByProjectId(ProjectId);
+            return _unitOfWork.Sites.GetUserSites(UserId);
         }
     }
 }

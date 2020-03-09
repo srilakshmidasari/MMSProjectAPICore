@@ -24,7 +24,7 @@ export class ProjectComponent implements OnInit {
   sourceProject: any;
   fileData: any = {};
   ProjectsList: any[] = []
-  displayedColumns = ['projectReference', 'name1', 'name2', 'siteName1', 'projectDetails', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['projectReference', 'name1', 'name2', 'siteName1', 'projectDetails', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;

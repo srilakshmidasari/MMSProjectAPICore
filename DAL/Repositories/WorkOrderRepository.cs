@@ -158,10 +158,9 @@ namespace DAL.Repositories
             ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
             try
             {
-                var orderExists = _appContext.WorkOrders.Where(x => x.Reference1 == workorders.Reference1).FirstOrDefault();
+                var orderExists = _appContext.WorkOrders.Where(x => x.Id != workorders.Id && x.Reference1 == workorders.Reference1).FirstOrDefault();
                 if (orderExists == null)
                 {
-
 
                     WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
                     var result = _appContext.WorkOrders.Where(x => x.Id == workorders.Id).FirstOrDefault();

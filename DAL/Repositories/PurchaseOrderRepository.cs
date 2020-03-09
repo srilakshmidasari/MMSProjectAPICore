@@ -415,17 +415,19 @@ namespace DAL.Repositories
             ListDataResponse<GetItemsResponse> response = new ListDataResponse<GetItemsResponse>();
             try
             {
-                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId })
+                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId})
                 .Select(g => new
                 {
-                    PurchaseOrderId = g.Key.PurchaseOrderId,
-                    ReceivedCost = g.Sum(x => x.ReceivedCost),
+                    PurchaseOrderId = g.Key.PurchaseOrderId,                  
+                    ReceivedCost = 0,
                     Quantity = g.Sum(x => x.Quantity)
                 }).Where(x => x.PurchaseOrderId == purchaseId).ToList();
 
-                //var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId, n.ReceivedCost, n.Quantity  })
-                //.Select(g => new {
+                //var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId, n.ItemId,  n.ReceivedCost, n.Quantity })
+                //.Select(g => new
+                //{
                 //    PurchaseOrderId = g.Key.PurchaseOrderId,
+                //    ItemId = g.Key.ItemId,
                 //    ReceivedCost = g.Key.ReceivedCost,
                 //    Quantity = g.Key.Quantity
                 //}).Where(x => x.PurchaseOrderId == purchaseId).ToList();
@@ -443,6 +445,7 @@ namespace DAL.Repositories
                                   Quantity = pi.Quantity,
                                   ExpectedCost = pi.ExpectdCost,
                                   Comments = pi.Comments,
+                                  RemainingQuantity = m != null ? pi.Quantity - m.Quantity: 0,
                                   ReceivedQuantity = m!=null? m.Quantity:0,
                                   ReceivedCost = m != null ? m.ReceivedCost : 0.0
 

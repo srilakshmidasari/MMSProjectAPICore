@@ -457,4 +457,12 @@ deleteAssetRepository(repositoryId) {
   UpdateInventory(reqObject) {
     return this.accountEndpoint.UpdateInventoryEndpoint(reqObject);
   }
+
+  getProjectsByUserIdandSiteId(reqObject) {
+    return this.accountEndpoint.getProjectsByUserIdandSiteIdEndPoint(reqObject);
+  }
+
+  getSitesByUserId(Id) {
+    return this.accountEndpoint.getSitesByUserIdEndPoint(Id);
+  }
 }

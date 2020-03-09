@@ -83,5 +83,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Projects.GetProjectsByUserId(UserId);
         }
+
+        [HttpPost("GetProjectsByUserIdandSiteId")]
+        public ListDataResponse<GetUserProjects> GetProjectsByUserIdandSiteId(GetProjectsByUserIdandSiteIdRequest request)
+        {
+            return _unitOfWork.Projects.GetProjectsByUserIdandSiteId(request.UserId, request.SiteId);
+        }
     }
 }

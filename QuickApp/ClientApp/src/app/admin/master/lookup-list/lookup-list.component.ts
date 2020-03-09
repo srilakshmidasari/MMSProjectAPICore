@@ -17,7 +17,7 @@ import { Permission } from 'src/app/models/permission.model';
 })
 export class LookupListComponent implements OnInit {
   loadingIndicator: boolean;
-  displayedColumn = ['description', 'name1', 'name2', 'remarks', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumn = ['description', 'name1', 'name2', 'remarks', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   lookUpData: any[] = [];
   sourcelookup: any;

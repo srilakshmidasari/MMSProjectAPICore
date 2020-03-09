@@ -22,7 +22,7 @@ export class SiteListComponent implements OnInit {
   siteInfo: any = [];
   sourceSite: any;
   siteList: any[] = []
-  displayedColumns = ['siteReference', 'name1', 'name2', 'address', 'updatedDate', 'isActive', 'Actions'];
+  displayedColumns = ['siteReference', 'name1', 'name2', 'address', 'isActive', 'Actions'];
 
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;

@@ -37,7 +37,7 @@ namespace DAL.RequestResponseModels
 
         }
 
-        public class UpsertProjectRepository 
+        public class UpsertProjectRepository
         {
             public int ProjectRepositoryId { get; set; }
             public int ProjectId { get; set; }
@@ -57,7 +57,7 @@ namespace DAL.RequestResponseModels
             public double Longitude { get; set; }
         }
 
-        public class FileRepositoryResposnse 
+        public class FileRepositoryResposnse
         {
             public int RepositoryId { get; set; }
             public string UserId { get; set; }
@@ -142,7 +142,7 @@ namespace DAL.RequestResponseModels
             public List<UpsertProjectRepository> ProjectRepositories { get; set; }
         }
 
-        public class AddLookUp: AuditableEntity
+        public class AddLookUp : AuditableEntity
         {
             public int Id { get; set; }
             public int LookUpTypeId { get; set; }
@@ -150,7 +150,7 @@ namespace DAL.RequestResponseModels
             public string Name2 { get; set; }
             public string Remarks { get; set; }
             public bool IsActive { get; set; }
-           
+
         }
 
         public class GetLoopUpResponse : AuditableEntity
@@ -161,7 +161,7 @@ namespace DAL.RequestResponseModels
             public string Name2 { get; set; }
             public string Remarks { get; set; }
             public bool IsActive { get; set; }
-           
+
         }
 
         public class GetUserProjects
@@ -187,7 +187,7 @@ namespace DAL.RequestResponseModels
             public DateTime UpdatedDate { get; set; }
             public string Description { get; set; }
             public string CreatedByUser { get; set; }
-            public string UpdatedByUser { get; set; }         
+            public string UpdatedByUser { get; set; }
         }
 
         public class AddLocation
@@ -206,7 +206,7 @@ namespace DAL.RequestResponseModels
 
         }
 
-       
+
 
         public class LocationDataResponse
         {
@@ -240,7 +240,7 @@ namespace DAL.RequestResponseModels
             public string AssetMake { get; set; }
             public string AssetModel { get; set; }
             public string AssetCapacity { get; set; }
-            public string AssetType { get; set; }          
+            public string AssetType { get; set; }
             public bool IsActive { get; set; }
             public string CreatedBy { get; set; }
             public DateTime CreatedDate { get; set; }
@@ -328,9 +328,9 @@ namespace DAL.RequestResponseModels
             public string UpdatedBy { get; set; }
             public DateTime UpdatedDate { get; set; }
         }
-        
 
-        public class UpsertSupplier: AuditableEntity
+
+        public class UpsertSupplier : AuditableEntity
         {
             public int Id { get; set; }
             public string SupplierReference { get; set; }
@@ -344,8 +344,8 @@ namespace DAL.RequestResponseModels
             public string FileName { get; set; }
             public string FileLocation { get; set; }
             public string FileExtention { get; set; }
-          
-          
+
+
         }
 
         public class UpsertItem : AuditableEntity
@@ -409,16 +409,16 @@ namespace DAL.RequestResponseModels
             public string FileExtention { get; set; }
         }
 
-        public class GetItemsResponse 
+        public class GetItemsResponse
         {
             public int Id { get; set; }
             public int PurchaseId { get; set; }
             public string ItemName { get; set; }
-            public string  ItemReference { get; set; }
+            public string ItemReference { get; set; }
             public string PurchaseReference { get; set; }
             public string Comments { get; set; }
-            public int  ItemId { get; set; }
-            public int Quantity { get; set; }          
+            public int ItemId { get; set; }
+            public int Quantity { get; set; }
             public double ExpectedCost { get; set; }
             public int? ReceivedQuantity { get; set; }
             public int? RemainingQuantity { get; set; }
@@ -488,7 +488,7 @@ namespace DAL.RequestResponseModels
             public string Reference1 { get; set; }
             public string ExtraDetails { get; set; }
             public string Issue { get; set; }
-            public string Resolution { get; set; }       
+            public string Resolution { get; set; }
             public int WorkTypeId { get; set; }
             public string WorkTypeName { get; set; }
             public int WorkStatusId { get; set; }
@@ -512,7 +512,7 @@ namespace DAL.RequestResponseModels
             public string Extradetails { get; set; }
             public string Issue { get; set; }
             public string Resolution { get; set; }
-            public int WorkTypeId { get; set; }           
+            public int WorkTypeId { get; set; }
             public int WorkStatusId { get; set; }
             public int WorkTechnicianId { get; set; }
             public int WorkFaultId { get; set; }
@@ -528,7 +528,7 @@ namespace DAL.RequestResponseModels
             public int ItemId { get; set; }
             public int WorkOrderId { get; set; }
             public int Quantity { get; set; }
-          
+
         }
 
         public class GetWorkItemsResponse
@@ -546,13 +546,17 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int PurchaseOrderId { get; set; }
-            public int ItemId{ get; set; }
+            public int ItemId { get; set; }
             public int Quantity { get; set; }
             public double ReceivedCost { get; set; }
 
         }
 
-        
+        public class GetProjectsByUserIdandSiteIdRequest
+        {
+            public int SiteId { get; set; }
+            public string UserId { get; set; }
 
+        }
     }
 }

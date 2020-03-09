@@ -28,17 +28,17 @@ export class LocationComponent implements OnInit {
   projectsList: any[] = []
   locationsData: any[] = [];
   locationRefData: any = {};
-  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'updatedDate', 'isActive', 'Actions']
+  displayedColumns = ['siteName1', 'projectName1', 'locationReference', 'name1', 'name2', 'isActive', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  sitesList: any[]=[];
-  userProjectsList: any[]=[];
+  sitesList: any[] = [];
+  userProjectsList: any[] = [];
 
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
-    private snackBar: MatSnackBar,private dialog: MatDialog,
+    private snackBar: MatSnackBar, private dialog: MatDialog,
     private authService: AuthService, private alertService: AlertService,
   ) {
     this.buildForm();
@@ -46,30 +46,35 @@ export class LocationComponent implements OnInit {
 
   ngOnInit() {
     this.getLocation();
-  //  this.getSites();
-  
-    this.getProjectsByUserId()
+    this.getSitesByUserId()
   }
 
-  private getProjectsByUserId() {
-    this.accountService.getProjectsByUserId(this.currentUser.id)
+
+  // Get sites data by UserId
+  getSitesByUserId() {
+    this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
-        this.userProjectsList = results.listResult == null ? [] : results.listResult;
-       
+        this.siteList = results.listResult == null ? [] : results.listResult;
       },
         error => {
         });
   }
 
- // Get sites data by ProjectId
- getSitesByProjectId(event) {
-  this.accountService.getSitesByProjectId(event)
-    .subscribe((results: any) => {
-      this.siteList = results.listResult == null ? [] : results.listResult;
-    },
-      error => {
-      });
-}
+  private getProjectsByUserIdandSiteId(event) {
+    this.userProjectsList = [];
+    var req = {
+      "siteId": event,
+      "userId": this.currentUser.id
+    }
+    this.accountService.getProjectsByUserIdandSiteId(req)
+      .subscribe((results: any) => {
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        console.log(this.userProjectsList)
+      },
+        error => {
+        });
+  }
+
 
 
   // Site Data
@@ -92,7 +97,7 @@ export class LocationComponent implements OnInit {
     this.accountService.getLocationData().subscribe((res: any) => {
       this.alertService.stopLoadingMessage();
       this.loadingIndicator = false;
-      this.locationsData =  res.listResult == null ? [] : res.listResult;
+      this.locationsData = res.listResult == null ? [] : res.listResult;
       this.dataSource.data = this.locationsData;
     },
       error => {
@@ -150,6 +155,7 @@ export class LocationComponent implements OnInit {
       this.isAdding = true;
       this.isNewLocation = false;
       this.locationRefData = location;
+      this.getProjectsByUserIdandSiteId(location.siteId)
       this.resetForm();
     }
     else {
@@ -160,10 +166,10 @@ export class LocationComponent implements OnInit {
   }
 
 
-  onSelectSite(event){
-    this.projectsList =[];
+  onSelectSite(event) {
+    this.projectsList = [];
     this.accountService.getProjectsBySite(event).subscribe((res: any) => {
-      this.projectsList =  res.listResult == null ? [] : res.listResult;
+      this.projectsList = res.listResult == null ? [] : res.listResult;
     },
       error => {
       })
@@ -278,11 +284,11 @@ export class LocationComponent implements OnInit {
     return this.accountService.userHasPermission(Permission.deleteLocationsPermission);
   }
 
-   //Delete Location 
-   onDeleteLocation(location: any) {
+  //Delete Location 
+  onDeleteLocation(location: any) {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + location.locationReference,  msg: "Are you sure you want to delete this Location with relevant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + location.locationReference, msg: "Are you sure you want to delete this Location with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -304,8 +310,8 @@ export class LocationComponent implements OnInit {
               this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
                 MessageSeverity.error, error);
             });
-          }
-      });
+      }
+    });
   }
 
 }

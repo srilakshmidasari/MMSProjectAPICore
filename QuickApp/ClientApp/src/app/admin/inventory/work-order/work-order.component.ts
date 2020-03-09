@@ -66,7 +66,7 @@ export class WorkOrderComponent implements OnInit {
         this.workOrdersList = results.listResult == null ? [] : results.listResult;
         this.alertService.stopLoadingMessage();
         this.loadingIndicator = false;
-        this.getProjectsByUserId();
+        this.getSitesByUserId();
       },
         error => {
           this.alertService.stopLoadingMessage();
@@ -139,36 +139,30 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
-  private getProjectsByUserId() {
-    this.accountService.getProjectsByUserId(this.currentUser.id)
-      .subscribe((results: any) => {
-        this.userProjectsList = results.listResult == null ? [] : results.listResult;
-      },
-        error => {
-        });
-  }
-
-  // Get sites data by ProjectId
-   getSitesByProjectId(event) {
-    this.ProjectId = event;
-    this.accountService.getSitesByProjectId(event)
-      .subscribe((results: any) => {
-        this.siteList = results.listResult == null ? [] : results.listResult;
-        this.onSelectProjectByLocation(this.ProjectId)
-      },
-        error => {
-        });
-  }
-
-
-  onSelectSiteByProject(event) {
-    this.projectsList = [];
-    this.accountService.getProjectsBySite(event).subscribe((res: any) => {
-      this.projectsList = res.listResult == null ? [] : res.listResult;
-    },
-      error => {
-      })
-  }
+    // Get sites data by UserId
+    getSitesByUserId() {
+      this.accountService.getSitesByUserId(this.currentUser.id)
+        .subscribe((results: any) => {
+          this.siteList = results.listResult == null ? [] : results.listResult;
+        },
+          error => {
+          });
+    }
+  
+    private getProjectsByUserIdandSiteId(event) {
+      this.userProjectsList = [];
+      var req = {
+        "siteId": event,
+        "userId": this.currentUser.id
+      }
+      this.accountService.getProjectsByUserIdandSiteId(req)
+        .subscribe((results: any) => {
+          this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        },
+          error => {
+          });
+    }
+  
 
   onSelectProjectByLocation(event) {
     this.locationsList = [];  
@@ -267,8 +261,8 @@ export class WorkOrderComponent implements OnInit {
     this.isNewOrder = false;
     this.orderData = order;
     this.getItemsByworkOrderId(order, true);
-    this.onSelectSiteByProject(order.siteId);
-    this.getSitesByProjectId(order.projectId)
+    this.getSitesByUserId();
+    this.getProjectsByUserIdandSiteId(order.siteId)
     this.onSelectProjectByLocation(order.projectId)
     this.onSelectLocationByProject(order.locationId)
     this.getStoresByProject(order.projectId);

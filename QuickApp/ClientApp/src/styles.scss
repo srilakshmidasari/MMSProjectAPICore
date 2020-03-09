@@ -282,6 +282,16 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
 .z-index{
   z-index: 1001;
 }
+
+.mat-list-base .mat-list-item {
+  font-size: 14px;
+}
+
+body .ui-widget {
+  font-family: "Open Sans", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  text-decoration: none;
+}
 // @media screen and (max-width: 70em) {
 //   .mv-text-container{
 //    white-space: normal !important;

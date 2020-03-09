@@ -8,8 +8,8 @@
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="locationReference" matSortDirection="asc"
-            matSortDisableClear>
+        <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="locationReference"
+            matSortDirection="asc" matSortDisableClear>
 
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.SiteName1' | translate}}
@@ -40,12 +40,12 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="updatedDate">
+            <!-- <ng-container matColumnDef="updatedDate">
                 <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>
                     {{'site.management.UpdatedDate' | translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     {{'site.management.IsActive' | translate}} </mat-header-cell>
@@ -100,19 +100,8 @@
             <form [formGroup]="locationForm">
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
-                        <mat-select formControlName="projectId" (ngModelChange)="getSitesByProjectId($event)">
-                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
-                                {{project.name1}}(<span>{{project.projectReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!locationForm.controls['projectId'].valid">
-                            {{'Location.editor.pNameisrequired' | translate}}
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.SiteName1' | translate}}*</mat-label>
-                        <mat-select formControlName="siteId">
+                        <mat-select formControlName="siteId"  (ngModelChange)="getProjectsByUserIdandSiteId($event)">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
@@ -121,6 +110,18 @@
                             {{'Location.editor.sNameisrequired' | translate}}
                         </mat-error>
                     </mat-form-field>
+                    <mat-form-field class="col-md-6">
+                        <mat-label>{{'Location.Management.projectName' | translate}}*</mat-label>
+                        <mat-select formControlName="projectId" >
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!locationForm.controls['projectId'].valid">
+                            {{'Location.editor.pNameisrequired' | translate}}
+                        </mat-error>
+                    </mat-form-field>
+
 
                 </div>
                 <div class="row">

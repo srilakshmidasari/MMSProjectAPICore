@@ -42,9 +42,10 @@ export class ReceiveItemComponent implements OnInit {
       itemName: new FormControl(''),
       qty: new FormControl(''),
       unitPrice: new FormControl(''),
+      remainQty: new FormControl(''),
       receiveQty: new FormControl(''),
       receivePrice: new FormControl(''),
-    
+      itemId:new FormControl(''),
     })
   }
 
@@ -70,10 +71,12 @@ export class ReceiveItemComponent implements OnInit {
     itemsArray.forEach(x => {
       control.push(this.formBuilder.group({
         itemName: x.itemName,
+        itemId:x.itemId,
         qty: x.quantity,
         unitPrice:x.expectedCost,
-        receiveQty: x.receivedQuantity,
-        receivePrice:x.receivedCost
+        remainQty :x.remainingQuantity,
+        receiveQty:0,
+        receivePrice:0
       }))
     })
     this.itemFrom.setControl('credentials', control);
@@ -99,19 +102,12 @@ export class ReceiveItemComponent implements OnInit {
       var itemReq = {
         "id": 0,
         "purchaseOrderId": this.purchaseData.id,
-        "itemId":0,
+        "itemId":this.itemFrom.value.credentials[i].itemId,
         "quantity": parseInt(this.itemFrom.value.credentials[i].receiveQty),
         "receivedCost": parseFloat(this.itemFrom.value.credentials[i].receivePrice),
       }
       this.inventoryItems.push(itemReq);
     }
-  
-    // this.isViewRecipt = true;
-    // for(let i = 0; i < this.itemList.length; i++) {
-    //   this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
-    //   this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
-    //   this.sumTotal += this.itemList[i].receivedCost;
-    // }
     this.accountService.UpdateInventory(this.inventoryItems)
       .subscribe((results:any) => {
         this.alertService.stopLoadingMessage();

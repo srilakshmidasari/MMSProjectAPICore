@@ -25,10 +25,10 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'site.management.Address' | translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.address}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="updatedDate">
+            <!-- <ng-container matColumnDef="updatedDate">
                 <mat-header-cell *matHeaderCellDef class="just-cont-center small-cell1" mat-sort-header>{{'site.management.UpdatedDate' | translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.updatedDate | date: 'dd/MM/yyyy'}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>{{'site.management.IsActive' | translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
