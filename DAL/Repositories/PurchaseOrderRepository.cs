@@ -415,10 +415,11 @@ namespace DAL.Repositories
             ListDataResponse<GetItemsResponse> response = new ListDataResponse<GetItemsResponse>();
             try
             {
-                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId})
+                var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId, n.ItemId })
                 .Select(g => new
                 {
-                    PurchaseOrderId = g.Key.PurchaseOrderId,                  
+                    PurchaseOrderId = g.Key.PurchaseOrderId,   
+                    ItemId = g.Key.ItemId,
                     ReceivedCost = 0,
                     Quantity = g.Sum(x => x.Quantity)
                 }).Where(x => x.PurchaseOrderId == purchaseId).ToList();
@@ -433,7 +434,7 @@ namespace DAL.Repositories
                 //}).Where(x => x.PurchaseOrderId == purchaseId).ToList();
 
                 var result = (from pi in _appContext.PurchageItemXrefs.Include(x=>x.Item_Id).Include(x=>x.Purchage_Id).Where(x=>x.PurchageId== purchaseId).ToList()
-                              join iv in res on pi.PurchageId equals iv.PurchaseOrderId into Details
+                              join iv in res on pi.ItemId equals iv.ItemId into Details
                               from m in Details.DefaultIfEmpty()
                               select new GetItemsResponse
                               {
@@ -446,8 +447,8 @@ namespace DAL.Repositories
                                   ExpectedCost = pi.ExpectdCost,
                                   Comments = pi.Comments,
                                   RemainingQuantity = m != null ? pi.Quantity - m.Quantity: 0,
-                                  ReceivedQuantity = m!=null? m.Quantity:0,
-                                  ReceivedCost = m != null ? m.ReceivedCost : 0.0
+                                  ReceivedQuantity = m!=null?0:0,
+                                  ReceivedCost = m != null ? 0.0 : 0.0
 
                               }).Where(x => x.PurchaseId == purchaseId).Distinct().ToList();
 

@@ -345,21 +345,24 @@ namespace DAL.Repositories
 
                 if (locations != null)
                 {
-                    projects.IsActive = false;
-                    projects.UpdatedDate = DateTime.Now;
-                    //var res = _appContext.ProjectRepositories.Where(x => x.ProjectId == ProjectId).ToList();
-                    //_appContext.ProjectRepositories.RemoveRange(res);
+                    //projects.IsActive = false;
+                    //projects.UpdatedDate = DateTime.Now;
+                    var userress = _appContext.UserProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList();
+                    _appContext.UserProjectXrefs.RemoveRange(userress);
 
-                    //var ress = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList();
-                    //_appContext.LookUpProjectXrefs.RemoveRange(ress);
+                    var res = _appContext.ProjectRepositories.Where(x => x.ProjectId == ProjectId).ToList();
+                    _appContext.ProjectRepositories.RemoveRange(res);
 
-                    //var alocs = _appContext.AssetLocations.Where(x => locations.Select(al => al.Id).Contains(x.LocationId)).ToList();
+                    var ress = _appContext.LookUpProjectXrefs.Where(x => x.ProjectId == ProjectId).ToList();
+                    _appContext.LookUpProjectXrefs.RemoveRange(ress);
 
-                    //var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
-                    //_appContext.AssetFileRepositories.RemoveRange(assetRepo);
-                    //_appContext.AssetLocations.RemoveRange(alocs);
-                    //_appContext.Locations.RemoveRange(locations);
-                    //_appContext.Projects.RemoveRange(projects);
+                    var alocs = _appContext.AssetLocations.Where(x => locations.Select(al => al.Id).Contains(x.LocationId)).ToList();
+
+                    var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+                    _appContext.AssetFileRepositories.RemoveRange(assetRepo);
+                    _appContext.AssetLocations.RemoveRange(alocs);
+                    _appContext.Locations.RemoveRange(locations);
+                    _appContext.Projects.RemoveRange(projects);
                     _appContext.SaveChanges();
                 }
 
