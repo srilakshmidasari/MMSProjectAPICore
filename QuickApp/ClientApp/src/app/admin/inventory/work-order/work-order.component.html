@@ -1,9 +1,13 @@
-<app-page-header title="Work Order" icon="assignment_ind"></app-page-header>
+<!-- <app-page-header title="Work Order" icon="assignment_ind"></app-page-header> -->
+    <header _ngcontent-huc-c14="" class="pageHeader pl-3 pr-3">
+        <mat-icon _ngcontent-huc-c14="" aria-hidden="true" class="mat-icon-md mat-icon notranslate material-icons mat-icon-no-color d-inline-block" role="img" style="display: inline-block;">assignment_ind</mat-icon>
+        <h3 _ngcontent-huc-c14="" class="d-inline-block">Work Order</h3>
+        <button mat-raised-button color="primary" class="float-right d-inline-block" title="Export"  (click)="download()"
+    [disabled]="workOrdersList.length==0">Export</button>
+      </header>
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
-    <div class="row float-right">
-        <button mat-raised-button color="primary" title="Export"  (click)="download()"
-            [disabled]="workOrdersList.length==0">Export</button>
-    </div>
+    <!-- <div class="row float-right">
+    </div> -->
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
