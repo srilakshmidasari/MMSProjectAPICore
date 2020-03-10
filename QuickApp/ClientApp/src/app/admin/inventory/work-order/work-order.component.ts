@@ -40,6 +40,7 @@ export class WorkOrderComponent implements OnInit {
   isEdit: boolean = false;
   isView: boolean = false;
   ProjectId: any;
+  
   userProjectsList: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -252,6 +253,7 @@ export class WorkOrderComponent implements OnInit {
     arr.controls = [];
     this.buildForm();
     this.addItem(this.i);
+    this.resetForm();
 
   }
 
@@ -336,8 +338,8 @@ export class WorkOrderComponent implements OnInit {
       extraDetails: this.orderData.extraDetails || '',
       issue: this.orderData.issue || '',
       resolution: this.orderData.resolution || '',
-      startDate: this.orderData.startDate || '',
-      endDate: this.orderData.endDate || '',
+      startDate:  this.isNewOrder ? this.currenrDate : this.orderData.startDate || '',
+      endDate: this.isNewOrder ? this.currenrDate :this.orderData.endDate || '',
       workTypeId: this.orderData.workTypeId || '',
       workStatusId: this.orderData.workStatusId || '',
       workFaultId: this.orderData.workFaultId || '',
@@ -409,10 +411,12 @@ export class WorkOrderComponent implements OnInit {
       workOrderItems.push(itemReq);
     }
     const formModel = this.orderForm.value;
+    formModel.startDate.setDate(formModel.startDate.getDate() + 1);
+    formModel.endDate.setDate(formModel.endDate.getDate() + 1);
     return {
       "id": this.isNewOrder == true ? 0 : this.orderData.id,
       "assetId": formModel.assetId,
-      "startDate": formModel.startDate,
+      "startDate":formModel.startDate,
       "endDate": formModel.endDate,
       "reference1": formModel.reference1,
       "extradetails": formModel.extraDetails,
@@ -448,4 +452,53 @@ export class WorkOrderComponent implements OnInit {
     })
     this.itemFrom.setControl('credentials', control);
   }
+
+  //ExportToExcel
+  download = function () {
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportWorkOrders(this.workOrdersList).subscribe((result) => {
+      this.alertService.stopLoadingMessage();
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "Work Order.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+    error => {
+      this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+    })
+  }
+
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
 }

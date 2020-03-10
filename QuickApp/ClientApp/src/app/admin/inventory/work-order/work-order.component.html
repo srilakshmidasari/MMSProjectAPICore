@@ -1,5 +1,9 @@
 <app-page-header title="Work Order" icon="assignment_ind"></app-page-header>
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
+    <div class="row float-right">
+        <button mat-raised-button color="primary" title="Export"  (click)="download()"
+            [disabled]="workOrdersList.length==0">Export</button>
+    </div>
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
@@ -161,19 +165,16 @@
         </div>
     </div>
 </div>
-
 <div class="page-content" *ngIf="isAdding">
     <mat-card>
         <mat-card-header>
             <mat-card-title>{{'Work Order.Management.Add Work Order'|translate}}
             </mat-card-title>
-
         </mat-card-header>
         <br>
         <mat-card-content>
             <form [formGroup]="orderForm">
                 <div class="row">
-
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
                         <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
@@ -185,7 +186,6 @@
                             {{'Assets.Management.PleaseSelectSite'|translate}}
                         </mat-error>
                     </mat-form-field>
-
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
                         <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
@@ -197,7 +197,6 @@
                             {{'Assets.Management.PleaseSelectProject'|translate}}
                         </mat-error>
                     </mat-form-field>
-
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
                         <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
@@ -217,7 +216,6 @@
                         </button>
                     </div>
                 </div>
-
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Asset'|translate}}<span>*</span></mat-label>
@@ -231,50 +229,56 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Store'|translate}}<span>*</span></mat-label>
-                        <mat-select formControlName="storeId">
-                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
-                                {{store.name1}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
-                            {{'Work Order.Management.Please Select Store'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Reference 1'|translate}}</mat-label>
-                        <input matInput formControlName="reference1" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['reference1'].valid">
-                            {{'Work Order.Management.Reference 1 is Required'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-
-                <div class="row">
-                    <mat-form-field class="col-md-3">
                         <mat-label> {{'Work Order.Management.Start Date'|translate}} </mat-label>
-                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
-                            placeholder="Start Date" required>
+                        <input matInput [matDatepicker]="picker"  [min]="currenrDate"
+                            formControlName="startDate" placeholder="Start Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!orderForm.controls['startDate'].valid">
                             {{'Work Order.Management.Start Date is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
-
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.End Date'|translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="endDate"
-                            placeholder="End Date" required>
+                        <input matInput [matDatepicker]="picker1"  [min]="currenrDate"
+                            formControlName="endDate" placeholder="End Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error *ngIf="!orderForm.controls['endDate'].valid">
                             {{'Work Order.Management.End Date is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
+                        <textarea matInput formControlName="issue"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
+                            {{'Work Order.Management.Issue is Required'|translate}}
+                        </mat-error>
+                    </mat-form-field>
 
+                    <mat-form-field class="col-md-5">
+                        <mat-label>{{'Work Order.Management.Resolution'|translate}}</mat-label>
+                        <textarea matInput formControlName="resolution"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
+                            {{'Work Order.Management.Resolution is Required'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
+                        </mat-label>
+                        <mat-select formControlName="workTechId">
+                            <mat-option *ngFor="let work of workTechList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
+                            {{'Work Order.Management.Please Select work Technician'|translate}}
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="workTypeId">
@@ -286,9 +290,26 @@
                             {{'Work Order.Management.Please Select Work Type'|translate}}
                         </mat-error>
                     </mat-form-field>
-
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Reference 1'| translate}}</mat-label>
+                        <input matInput formControlName="reference1" required maxlength="50" />
+                        <mat-error *ngIf="!orderForm.controls['reference1'].valid">
+                            {{'Work Order.Management.Reference 1 is Required'| translate}}
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Store'|translate}}<span>*</span></mat-label>
+                        <mat-select formControlName="storeId">
+                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
+                                {{store.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
+                            {{'Work Order.Management.Please Select Store'|translate}}
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Status'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="workStatusId">
@@ -311,18 +332,6 @@
                             {{'Work Order.Management.Please Select Work Fault'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
-                        </mat-label>
-                        <mat-select formControlName="workTechId">
-                            <mat-option *ngFor="let work of workTechList" [value]="work.id" required>
-                                {{work.name1}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
-                            {{'Work Order.Management.Please Select work Technician'|translate}}
-                        </mat-error>
-                    </mat-form-field>
                 </div>
                 <div class="row">
                     <!-- <mat-form-field class="col-md-3">
@@ -332,23 +341,6 @@
                             Reference 2 is Required
                         </mat-error>
                     </mat-form-field> -->
-
-                    <mat-form-field class="col-md-4">
-                        <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
-                        <textarea matInput formControlName="issue"></textarea>
-                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
-                            {{'Work Order.Management.Issue is Required'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-5">
-                        <mat-label>{{'Work Order.Management.Resolution'|translate}}</mat-label>
-                        <textarea matInput formControlName="resolution"></textarea>
-                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
-                            {{'Work Order.Management.Resolution is Required'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-9">
@@ -362,13 +354,10 @@
             </form>
             <div class="row">
                 <form [formGroup]="itemFrom" class="col-md-12">
-
                     <div formArrayName="credentials"
                         *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
-
                         <ng-container [formGroupName]="i">
                             <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
-
                             <div class="row">
                                 <mat-form-field class="col-md-4">
                                     <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
@@ -401,7 +390,6 @@
                     </div>
                 </form>
             </div>
-
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
@@ -482,40 +470,6 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Store'| translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="storeId">
-                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
-                                {{store.name1}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
-                            {{'Purchase Order.Management.Please Select Store'| translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Reference 1'| translate}}</mat-label>
-                        <input matInput formControlName="reference1" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['reference1'].valid">
-                            {{'Work Order.Management.Reference 1 is Required'| translate}}
-                        </mat-error>
-                    </mat-form-field>
-                </div>
-
-                <div class="row">
-                    <!-- <mat-form-field class="col-md-3">
-                        <mat-label>Reference 2</mat-label>
-                        <input matInput formControlName="reference2" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
-                            Reference 2 is Required
-                        </mat-error>
-                    </mat-form-field> -->
-
-
-
-                </div>
-                <div class="row">
-                    <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Start Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
                             placeholder="Start Date" required>
@@ -536,7 +490,44 @@
                             {{'Work Order.Management.End Date is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
+                </div>
+                <div class="row">
+                    <!-- <mat-form-field class="col-md-3">
+                        <mat-label>Reference 2</mat-label>
+                        <input matInput formControlName="reference2" required maxlength="50" />
+                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
+                            Reference 2 is Required
+                        </mat-error>
+                    </mat-form-field> -->
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
+                        <textarea matInput formControlName="issue"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
+                            {{'Work Order.Management.Issue is Required'|translate}}
+                        </mat-error>
+                    </mat-form-field>
 
+                    <mat-form-field class="col-md-5">
+                        <mat-label>{{'Work Order.Management.Resolution'|translate}}</mat-label>
+                        <textarea matInput formControlName="resolution"></textarea>
+                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
+                            {{'Work Order.Management.Resolution is Required'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
+                        </mat-label>
+                        <mat-select formControlName="workTechId">
+                            <mat-option *ngFor="let work of workTechList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
+                            {{'Work Order.Management.Please Select work Technician'|translate}}
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="workTypeId">
@@ -548,9 +539,26 @@
                             {{'Work Order.Management.Please Select Work Type'|translate}}
                         </mat-error>
                     </mat-form-field>
-
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Reference 1'| translate}}</mat-label>
+                        <input matInput formControlName="reference1" required maxlength="50" />
+                        <mat-error *ngIf="!orderForm.controls['reference1'].valid">
+                            {{'Work Order.Management.Reference 1 is Required'| translate}}
+                        </mat-error>
+                    </mat-form-field>
                 </div>
                 <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Store'| translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="storeId">
+                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
+                                {{store.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
+                            {{'Purchase Order.Management.Please Select Store'| translate}}
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Status'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="workStatusId">
@@ -573,34 +581,6 @@
                             {{'Work Order.Management.Please Select Work Fault'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
-                        </mat-label>
-                        <mat-select formControlName="workTechId">
-                            <mat-option *ngFor="let work of workTechList" [value]="work.id" required>
-                                {{work.name1}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
-                            {{'Work Order.Management.Please Select work Technician'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-                    <mat-form-field class="col-md-4">
-                        <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
-                        <textarea matInput formControlName="issue"></textarea>
-                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
-                            {{'Work Order.Management.Issue is Required'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-5">
-                        <mat-label>{{'Work Order.Management.Resolution'|translate}}</mat-label>
-                        <textarea matInput formControlName="resolution"></textarea>
-                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
-                            {{'Work Order.Management.Resolution is Required'|translate}}
-                        </mat-error>
-                    </mat-form-field>
-
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-9">
@@ -611,17 +591,13 @@
                         </mat-error> -->
                     </mat-form-field>
                 </div>
-
             </form>
             <div class="row">
                 <form [formGroup]="itemFrom" class="col-md-12">
-
                     <div formArrayName="credentials"
                         *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
-
                         <ng-container [formGroupName]="i">
                             <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
-
                             <div class="row">
                                 <mat-form-field class="col-md-4">
                                     <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
@@ -654,7 +630,6 @@
                     </div>
                 </form>
             </div>
-
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
@@ -665,7 +640,6 @@
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>
-
     </mat-card>
 </div>
 <div class="page-content" *ngIf="isView">
