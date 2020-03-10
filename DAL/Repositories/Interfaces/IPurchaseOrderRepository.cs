@@ -27,5 +27,7 @@ namespace DAL.Repositories.Interfaces
       //  ValueDataResponse<Inventory> UpdateInventory(List<Inventory> inventory);
         ValueDataResponse<List<Inventory>> UpdateInventory(List<Inventory> inventory);
 
+       
+
     }
 }

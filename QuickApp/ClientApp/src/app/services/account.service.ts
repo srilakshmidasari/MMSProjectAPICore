@@ -465,4 +465,9 @@ deleteAssetRepository(repositoryId) {
   getSitesByUserId(Id) {
     return this.accountEndpoint.getSitesByUserIdEndPoint(Id);
   }
+
+  ExportWorkOrders(reqObject) {
+    return this.accountEndpoint.getExportWorkOrdersEndPoint(reqObject);
+  }
+  
 }

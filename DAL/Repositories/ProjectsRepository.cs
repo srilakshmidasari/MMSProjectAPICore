@@ -359,6 +359,19 @@ namespace DAL.Repositories
                     var alocs = _appContext.AssetLocations.Where(x => locations.Select(al => al.Id).Contains(x.LocationId)).ToList();
 
                     var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+
+                    var orderProjects = _appContext.PurchageOrders.Where(x => x.ProjectId == ProjectId).ToList();
+
+                    var orderItems = _appContext.PurchageItemXrefs.Where(x => orderProjects.Select(al => al.Id).Contains(x.PurchageId)).ToList();
+
+                    var inventoryItems = _appContext.Inventories.Where(x => orderProjects.Select(al => al.Id).Contains(x.PurchaseOrderId)).ToList();
+
+                    _appContext.PurchageItemXrefs.RemoveRange(orderItems);
+
+                    _appContext.Inventories.RemoveRange(inventoryItems);
+
+                    _appContext.PurchageOrders.RemoveRange(orderProjects);
+
                     _appContext.AssetFileRepositories.RemoveRange(assetRepo);
                     _appContext.AssetLocations.RemoveRange(alocs);
                     _appContext.Locations.RemoveRange(locations);

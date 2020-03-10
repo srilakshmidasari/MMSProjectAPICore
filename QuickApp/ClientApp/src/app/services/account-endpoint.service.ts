@@ -93,6 +93,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getProjectsByUserIdandSiteIdUrl: string ='/api/Project/GetProjectsByUserIdandSiteId';
 
   private readonly _getSitesByUserIdUrl: string ='/api/Site/GetSitesByUserId';
+
+  private readonly  _getExportWorkOrdersUrl: string ='/api/WorkOrder/ExportWorkOrders';
  
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -173,6 +175,8 @@ export class AccountEndpoint extends EndpointBase {
   get getProjectsByUserIdandSiteIdUrl() { return this.configurations.baseUrl + this._getProjectsByUserIdandSiteIdUrl; }
 
   get getSitesByUserIdUrl() { return this.configurations.baseUrl + this._getSitesByUserIdUrl; }
+
+  get getExportWorkOrdersUrl() { return this.configurations.baseUrl + this._getExportWorkOrdersUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -910,6 +914,14 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getSitesByUserIdEndPoint(Id));
+      }));
+  }
+
+  getExportWorkOrdersEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getExportWorkOrdersUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getExportWorkOrdersEndPoint(reqObject));
       }));
   }
   
