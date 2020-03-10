@@ -381,6 +381,9 @@ namespace DAL.Repositories
                 {
                     _appContext.PurchageItemXrefs.RemoveRange(ast);
 
+                    var inventoryItems = _appContext.Inventories.Where(x => x.PurchaseOrderId == PurchaseId).ToList();
+                    _appContext.Inventories.RemoveRange(inventoryItems);
+
                     _appContext.PurchageOrders.Remove(purchaseData);
                     _appContext.SaveChanges();
                 }
@@ -600,6 +603,7 @@ namespace DAL.Repositories
 
             return response;
         }
+
 
 
         public byte[] GeneratePurchaseOrderPdf(PurchageOrder purchase, Supplier supplier, List<GetItemsResponse> itemData, Project project, LookUp store)

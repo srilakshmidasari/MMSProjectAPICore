@@ -8,6 +8,10 @@ using System.Text;
 using System.Linq;
 using static DAL.RequestResponseModels.RequestResponseModels;
 using DAL.Models;
+using System.IO;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace DAL.Repositories
 {
@@ -316,6 +320,9 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        
+
 
 
     }

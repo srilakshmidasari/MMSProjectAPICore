@@ -20,8 +20,5 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<WorkOrder> DeleteWorkOrder(int WorkOrderId);
 
-
-
-
     }
 }
