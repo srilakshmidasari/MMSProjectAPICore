@@ -276,13 +276,7 @@ export class WorkOrderComponent implements OnInit {
     this.workorder = row;
     this.isView = true;
   }
-  acceptClick(){
-
-  }
-  rejectClick(){
-    
-  }
-
+ 
   closeViewWorkOrder() {
     this.isView = false;
 
@@ -316,6 +310,13 @@ export class WorkOrderComponent implements OnInit {
       }
     });
   }
+  acceptClick(){
+
+  }
+  rejectClick(){
+
+  }
+
 
   // Accepting Only Numbers
   numberOnly(event: any) {
@@ -429,6 +430,7 @@ export class WorkOrderComponent implements OnInit {
       "locationName": formModel.locationName,
       "issue": formModel.issue,
       "resolution": formModel.resolution,
+      "statusTypeId":DataFactory.StatusTypes.Open,
       "workTypeId": formModel.workTypeId,
       "workStatusId": formModel.workStatusId,
       "workTechnicianId": formModel.workTechId,
