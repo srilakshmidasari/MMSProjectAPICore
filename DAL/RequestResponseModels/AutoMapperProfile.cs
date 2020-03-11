@@ -1,4 +1,4 @@
-﻿// =============================
+// =============================
 // Email: info@ebenmonney.com
 // www.ebenmonney.com/templates
 // =============================
@@ -104,6 +104,7 @@ namespace DAL.RequestResponseModels
 
             CreateMap<UpsertWorkOrder, WorkOrder>()
                 .ForMember(d => d.Asset_Id, map => map.Ignore())
+                .ForMember(d => d.StatusType_Id, map => map.Ignore())
                 .ForMember(d => d.WorkFault_Id, map => map.Ignore())
                 .ForMember(d => d.WorkStatus_Id, map => map.Ignore())
                 .ForMember(d => d.WorkTechnician_Id, map => map.Ignore())

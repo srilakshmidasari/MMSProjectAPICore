@@ -39,6 +39,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import { DocumentFileComponent } from './inventory/document-file/document-file.component';
 import { WorkOrderComponent } from './inventory/work-order/work-order.component';
 import { ReceiveItemComponent } from './inventory/receive-item/receive-item.component';
+import { CloseorderComponent } from './inventory/closeorder/closeorder.component';
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 
 @NgModule({
@@ -76,6 +77,8 @@ import { InventoryItemsComponent } from './inventory/inventory-items/inventory-i
     DocumentFileComponent,
     WorkOrderComponent,
     ReceiveItemComponent,
+    CloseorderComponent
+    ReceiveItemComponent,
     InventoryItemsComponent
   ],
   entryComponents: [
@@ -86,7 +89,8 @@ import { InventoryItemsComponent } from './inventory/inventory-items/inventory-i
     DeleteFileComponent,
     LookupDialogComponent,
     DocumentFileComponent,
-    ReceiveItemComponent
+    ReceiveItemComponent,
+    CloseorderComponent
   ]
 })
 export class AdminModule {
