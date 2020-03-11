@@ -38,6 +38,7 @@
     "Item":"Item",
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order"
+    
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -59,7 +60,8 @@
     "Supplier":"Supplier",
     "Item":"Item",
     "Purchase Order":"Purchase Order",
-    "Work Order":"Work Order"
+    "Work Order":"Work Order",
+    "InventoryItems" : "Inventory Items"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",

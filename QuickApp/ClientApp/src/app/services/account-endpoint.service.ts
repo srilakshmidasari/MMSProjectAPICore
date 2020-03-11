@@ -95,7 +95,9 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getSitesByUserIdUrl: string ='/api/Site/GetSitesByUserId';
 
   private readonly  _getExportWorkOrdersUrl: string ='/api/WorkOrder/ExportWorkOrders';
- 
+
+  private readonly  _getAllInventoryUrl: string ='/api/PurchaseOrder/GetAllInventories';
+  
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -177,6 +179,8 @@ export class AccountEndpoint extends EndpointBase {
   get getSitesByUserIdUrl() { return this.configurations.baseUrl + this._getSitesByUserIdUrl; }
 
   get getExportWorkOrdersUrl() { return this.configurations.baseUrl + this._getExportWorkOrdersUrl; }
+
+  get getAllInventoryUrl() { return this.configurations.baseUrl + this._getAllInventoryUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -925,6 +929,13 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
   
+  getAllInventoryEndpoint<T>(): Observable<T> {
+    const endpointUrl = this.getAllInventoryUrl;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAllInventoryEndpoint());
+      }));
+  }
   
   
 }

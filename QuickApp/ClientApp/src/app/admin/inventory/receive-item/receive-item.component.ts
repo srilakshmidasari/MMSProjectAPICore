@@ -119,7 +119,7 @@ export class ReceiveItemComponent implements OnInit {
         if (results.isSuccess) {
           this.isViewRecipt = true;
           for(let i = 0; i < this.itemList.length; i++) {
-            this.itemList[i].receivedQuantity += parseInt(this.itemFrom.value.credentials[i].receiveQty)
+            this.itemList[i].receivedQuantity = parseInt(this.itemFrom.value.credentials[i].receiveQty)
             this.itemList[i].receivedCost += parseFloat(this.itemFrom.value.credentials[i].receivePrice)
             this.sumTotal += this.itemList[i].receivedCost;
           }

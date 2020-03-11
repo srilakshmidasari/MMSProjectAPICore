@@ -469,5 +469,9 @@ deleteAssetRepository(repositoryId) {
   ExportWorkOrders(reqObject) {
     return this.accountEndpoint.getExportWorkOrdersEndPoint(reqObject);
   }
+
+  getAllInventory() {
+    return this.accountEndpoint.getAllInventoryEndpoint();
+  }
   
 }

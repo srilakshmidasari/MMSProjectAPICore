@@ -22,6 +22,7 @@ import { LookupListComponent } from './master/lookup-list/lookup-list.component'
 import { ItemComponent } from './inventory/item/item.component';
 import { PurchaseorderComponent } from './inventory/purchaseorder/purchaseorder.component';
 import { WorkOrderComponent } from './inventory/work-order/work-order.component';
+import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -40,6 +41,7 @@ const adminRoutes: Routes = [
       { path: 'item', component: ItemComponent, canActivate: [AuthGuard], data: { title: 'Admin | item' } },
       { path: 'purchaseorder', component: PurchaseorderComponent, canActivate: [AuthGuard], data: { title: 'Admin | PurchaseorderComponent' } },
       { path: 'work-order', component: WorkOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | Work Order' } },
+      { path: 'inventory-items', component: InventoryItemsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Inventory Items' } }
     ]
   }
 ];

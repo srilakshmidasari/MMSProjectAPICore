@@ -21,7 +21,7 @@
 //'roles.view' | 'roles.manage' | 'roles.assign' | 'roles.add' |'roles.edit'|'roles.delete'|
 
 export type PermissionNames =
-    'View Users'  |'Add Users'|'Edit Users'|'Delete Users'|
+    'View Users'  |'Add Users'|'Edit Users'|'Delete Users'|'Add All Projects' |
     'View Roles' | 'Assign Roles'|'Add Roles'|'Edit Roles'|'Delete Roles'|
     'View Sites' | 'Add Sites'|'Edit Sites'|'Delete Sites'| 'Manage Sites'|
     'View Projects'|'Add Projects'|'Add Projects'|'Add Projects'| 'Manage Projects'|
@@ -31,7 +31,7 @@ export type PermissionNames =
     'View Assets' |'Add Assets'|'Edit Assets'|'Delete Assets';
 
 export type PermissionValues =
-    'users.view' | 'users.add'|'users.edit'|'users.delete'|
+    'users.view' | 'users.add'|'users.edit'|'users.delete'|'all.projects'|
     'roles.view'| 'roles.assign' | 'roles.add' |'roles.edit'|'roles.delete'|
     'sites.view' | 'sites.add'|'sites.edit'|'sites.delete'|
     'projects.view' | 'projects.add'|'projects.edit'|'projects.delete'|
@@ -50,6 +50,7 @@ export class Permission {
    public static readonly addUsersPermission: PermissionValues = 'users.add';
    public static readonly editUsersPermission: PermissionValues = 'users.edit';
    public static readonly deleteUsersPermission: PermissionValues = 'users.delete';
+   public static readonly addAllProjects: PermissionValues = 'all.projects';
 
    
    // public static readonly manageRolesPermission: PermissionValues = 'roles.manage';

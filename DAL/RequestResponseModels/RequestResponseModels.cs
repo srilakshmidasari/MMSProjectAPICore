@@ -576,5 +576,18 @@ namespace DAL.RequestResponseModels
             public string Comments { get; set; }
 
         }
+
+        public class GetInventoryItemsResponse
+        {
+            public int Id { get; set; }
+            public int PurchaseId { get; set; }
+            public int ItemId { get; set; }
+            public string ItemName { get; set; }
+            public string ItemReference { get; set; }
+            public string PurchaseReference { get; set; }
+            public string ProjectName { get; set; }
+            public string StoreName { get; set; }
+            public int Quantity { get; set; }
+        }
     }
 }

@@ -69,14 +69,17 @@ namespace MMS.Controllers
 
 
         [HttpPost("UpdateInventory")]
-
-
-
         public ValueDataResponse<List<Inventory>> UpdateInventory(List<UpsertInventory> inventory)
         {
             List<Inventory> inventoryInfo =  _mapper.Map<List<Inventory>>(inventory);
             
             return _unitOfWork.Purchages.UpdateInventory(inventoryInfo);
+        }
+
+        [HttpGet("GetAllInventories")]
+        public ListDataResponse<GetInventoryItemsResponse> GetAllInventories()
+        {
+            return _unitOfWork.Purchages.GetAllInventories();
         }
     }
 }

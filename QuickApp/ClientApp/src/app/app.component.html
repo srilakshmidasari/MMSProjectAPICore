@@ -78,9 +78,7 @@
               <mat-icon>assessment</mat-icon>Masters
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/item">
-            <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
-          </a>
+         
           <a mat-list-item routerLinkActive="active" *ngIf="canViewSites" routerLink="/admin/site">
             <mat-icon>house</mat-icon>{{'mainMenu.Site'| translate}}
           </a>
@@ -94,10 +92,13 @@
           <a mat-list-item routerLinkActive="active" *ngIf="canViewStores" routerLink="/admin/lookup">
             <mat-icon>find_replace</mat-icon>{{'mainMenu.LookUp'| translate}}
           </a>
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/item">
+            <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
+          </a>
         </mat-expansion-panel>
-        <!-- <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
+         <!-- <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
             <mat-icon>pets</mat-icon>{{'mainMenu.AssetGroup'|translate}}
-          </a> -->
+         </a> -->
         <mat-nav-list>
           <a mat-list-item routerLinkActive="active" *ngIf="canViewAssets" routerLink="/admin/assets">
             <mat-icon>receipt</mat-icon>{{'mainMenu.Assets'|translate}}
@@ -123,6 +124,11 @@
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Work Order'|translate}}
           </a>
         </mat-expansion-panel>
+      </mat-nav-list>
+      <mat-nav-list>
+        <a mat-list-item routerLinkActive="active" routerLink="/admin/inventory-items">
+          <mat-icon>list_alt</mat-icon>Inventory-Items
+        </a>
       </mat-nav-list>
       <!-- <mat-nav-list>
         <a mat-list-item routerLinkActive="active" routerLink="/about"><mat-icon>info</mat-icon>{{'mainMenu.About' | translate}}</a>

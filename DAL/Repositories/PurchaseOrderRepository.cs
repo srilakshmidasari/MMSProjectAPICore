@@ -605,6 +605,55 @@ namespace DAL.Repositories
         }
 
 
+        public ListDataResponse<GetInventoryItemsResponse> GetAllInventories()
+        {
+            ListDataResponse<GetInventoryItemsResponse> response = new ListDataResponse<GetInventoryItemsResponse>();
+            try
+            {
+                var result = (from In in _appContext.Inventories
+                              join po in _appContext.PurchageOrders on In.PurchaseOrderId equals po.Id
+                              join p in _appContext.Projects on po.ProjectId equals p.Id
+                              join l in _appContext.LookUps on po.StoreId equals l.Id
+                              join i in _appContext.Items on In.ItemId equals i.Id
+                              select new GetInventoryItemsResponse
+                              {
+                                Id = In.Id,
+                                PurchaseId = In.PurchaseOrderId,
+                                ItemId = In.ItemId,
+                                ItemName = i.Name1,
+                                ItemReference = i.ItemReference,
+                                PurchaseReference = po.PurchaseReference,
+                                ProjectName = p.Name1,
+                                StoreName = l.Name1,
+                                Quantity =In.Quantity
+
+                              }).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Inventory Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Inventory Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
 
         public byte[] GeneratePurchaseOrderPdf(PurchageOrder purchase, Supplier supplier, List<GetItemsResponse> itemData, Project project, LookUp store)
         {

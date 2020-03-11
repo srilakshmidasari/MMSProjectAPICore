@@ -39,6 +39,7 @@ import {CheckboxModule} from 'primeng/checkbox';
 import { DocumentFileComponent } from './inventory/document-file/document-file.component';
 import { WorkOrderComponent } from './inventory/work-order/work-order.component';
 import { ReceiveItemComponent } from './inventory/receive-item/receive-item.component';
+import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 
 @NgModule({
   imports: [
@@ -74,7 +75,8 @@ import { ReceiveItemComponent } from './inventory/receive-item/receive-item.comp
     PurchaseorderComponent,
     DocumentFileComponent,
     WorkOrderComponent,
-    ReceiveItemComponent
+    ReceiveItemComponent,
+    InventoryItemsComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
