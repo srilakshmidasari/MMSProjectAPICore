@@ -77,8 +77,7 @@ import { InventoryItemsComponent } from './inventory/inventory-items/inventory-i
     DocumentFileComponent,
     WorkOrderComponent,
     ReceiveItemComponent,
-    CloseorderComponent
-    ReceiveItemComponent,
+    CloseorderComponent,
     InventoryItemsComponent
   ],
   entryComponents: [
