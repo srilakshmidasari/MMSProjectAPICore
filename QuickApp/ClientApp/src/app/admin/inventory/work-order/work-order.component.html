@@ -1,4 +1,4 @@
-<!-- <app-page-header title="Work Order" icon="assignment_ind"></app-page-header> -->
+     <!-- <app-page-header title="Work Order" icon="assignment_ind"></app-page-header> -->
     <header _ngcontent-huc-c14="" class="pageHeader pl-3 pr-3">
         <mat-icon _ngcontent-huc-c14="" aria-hidden="true" class="mat-icon-md mat-icon notranslate material-icons mat-icon-no-color d-inline-block" role="img" style="display: inline-block;">assignment_ind</mat-icon>
         <h3 _ngcontent-huc-c14="" class="d-inline-block">Work Order</h3>
@@ -6,15 +6,15 @@
     [disabled]="workOrdersList.length==0">Export</button>
       </header>
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
-    <!-- <div class="row float-right">
-    </div> -->
+      <!-- <div class="row float-right">
+    < /div> -->
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
             <p-table #dt [value]="workOrdersList" [paginator]="true" expandableRows="true" [rows]="10"
-                sortField="reference1" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
+                sortField="id"  matSortDirection="desc"  [tableStyle]="{'table-layout':'auto'}"
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExpandMode="single" dataKey="id"
-                [globalFilterFields]="['reference1','startDate','endDate','assetName','locationName', 'updatedDate','issue','resolution']">
+                [globalFilterFields]="['id','reference1','startDate','endDate','assetName','locationName', 'updatedDate','issue','resolution']">
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">
 
@@ -26,6 +26,9 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3em"></th>
+                        <th [pSortableColumn]="'id'">Id
+                            <p-sortIcon [field]="'id'"></p-sortIcon>
+                        </th>
                         <th [pSortableColumn]="'reference1'">{{'Work Order.Management.Reference 1'| translate}}
                             <p-sortIcon [field]="'reference1'"></p-sortIcon>
                         </th>
@@ -42,9 +45,9 @@
                             <p-sortIcon [field]="'locationName'"></p-sortIcon>
                         </th>
 
-                        <th [pSortableColumn]="'updatedDate'">{{'Work Order.Management.Updated Date'| translate}}
+                        <!-- <th [pSortableColumn]="'updatedDate'">{{'Work Order.Management.Updated Date'| translate}}
                             <p-sortIcon [field]="'updatedDate'"></p-sortIcon>
-                        </th>
+                        </th> -->
                         <th [pSortableColumn]="'issue'">{{'Work Order.Management.Issue'| translate}}
                             <p-sortIcon [field]="'issue'"></p-sortIcon>
                         </th>
@@ -85,12 +88,13 @@
                                 <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
                             </a>
                         </td>
+                        <td>{{req.id}}</td>
                         <td>{{req.reference1}}</td>
                         <td>{{req.startDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.endDate  | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.assetName}}</td>
                         <td>{{req.locationName}}</td>
-                        <td>{{req.updatedDate | date: 'dd/MM/yyyy '}}</td>
+                        <!-- <td>{{req.updatedDate | date: 'dd/MM/yyyy '}}</td> -->
                         <td>{{req.issue}}</td>
                         <td>{{req.resolution}}</td>
                         <!-- <td>{{req.storeName}}</td>
@@ -115,6 +119,14 @@
                                 matTooltip="{{'Work Order.Management.View WorkOrder'|translate}}"
                                 (click)="onViewClick(req)">
                                 <mat-icon color="accent">visibility icon</mat-icon>
+                            </button>
+                            <button class="z-index" mat-icon-button matTooltip=Accept
+                                (click)="acceptClick(req)">
+                                <mat-icon color="primary">thumb_up</mat-icon>
+                            </button>
+                            <button class="z-index" mat-icon-button matTooltip=Reject
+                                (click)="rejectClick(req)">
+                                <mat-icon color="warn">thumb_down</mat-icon>
                             </button>
                         </td>
                     </tr>
