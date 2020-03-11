@@ -60,8 +60,25 @@ namespace MMS.Controllers
             return _unitOfWork.WorkOrders.DeleteWorkOrder(WorkOrderId);
         }
 
-      
-       
+
+        [HttpPost("AcceptWorkOrder")]
+        public ValueDataResponse<WorkOrder> AcceptWorkOrder(AcceptWorkOrderRequest request)
+        {
+            return _unitOfWork.WorkOrders.AcceptWorkOrder(request.WorkOrderId, request.StatusTypeId);
+        }
+
+        [HttpPost("RejectWorkOrder")]
+        public ValueDataResponse<WorkOrder> RejectWorkOrder(AcceptWorkOrderRequest request)
+        {
+            return _unitOfWork.WorkOrders.RejectWorkOrder(request.WorkOrderId, request.StatusTypeId);
+        }
+
+        [HttpPost("CloseWorkOrder")]
+        public ValueDataResponse<WorkOrder> CloseWorkOrder(CloseWorkOrderRequest request)
+        {
+            return _unitOfWork.WorkOrders.CloseWorkOrder(request.WorkOrderId, request.StatusTypeId,request.Comments);
+        }
+
         [HttpPost("ExportWorkOrders")]
         public IActionResult ExportWorkOrders(List<GetWorkOrderReponse> res)
         {

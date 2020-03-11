@@ -324,9 +324,152 @@ namespace DAL.Repositories
             return response;
         }
 
-        
+
+        public ValueDataResponse<WorkOrder> AcceptWorkOrder(int WorkOrderId, int StatusTypeId)
+            
+        {
+            ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
+            try
+            {
+                var orderData = _appContext.WorkOrders.Where(x => x.Id == WorkOrderId).FirstOrDefault();
 
 
+                if (orderData != null)
+                {
+                    orderData.StatusTypeId = StatusTypeId;
+                    WorkOrderStatusHistory request = new WorkOrderStatusHistory()
+                    {
+                        WorkOrderId = orderData.Id,
+                        StatusTypeId = StatusTypeId,
+                        CreatedBy = orderData.CreatedBy,
+                        UpdatedBy = orderData.UpdatedBy,
+                        CreatedDate = orderData.CreatedDate,
+                        UpdatedDate = orderData.UpdatedDate,
 
+                    };
+                    _appContext.WorkOrderStatusHistories.Add(request);
+                    _appContext.SaveChanges();
+                    response.Result = orderData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Work Order Accepted Successfully";
+                }
+               
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Work Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
+        public ValueDataResponse<WorkOrder> RejectWorkOrder(int WorkOrderId, int StatusTypeId)
+        {
+            ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
+            try
+            {
+                var orderData = _appContext.WorkOrders.Where(x => x.Id == WorkOrderId).FirstOrDefault();
+
+
+                if (orderData != null)
+                {
+                    orderData.StatusTypeId = StatusTypeId;
+                    WorkOrderStatusHistory request = new WorkOrderStatusHistory()
+                    {
+                        WorkOrderId = orderData.Id,
+                        StatusTypeId = StatusTypeId,
+                        CreatedBy = orderData.CreatedBy,
+                        UpdatedBy = orderData.UpdatedBy,
+                        CreatedDate = orderData.CreatedDate,
+                        UpdatedDate = DateTime.Now,
+
+                    };
+                    _appContext.WorkOrderStatusHistories.Add(request);
+                    _appContext.SaveChanges();
+                    response.Result = orderData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Work Order Accepted Successfully";
+                }
+
+                
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Work Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
+        public ValueDataResponse<WorkOrder> CloseWorkOrder(int WorkOrderId, int StatusTypeId, string Comments)
+        {
+            ValueDataResponse<WorkOrder> response = new ValueDataResponse<WorkOrder>();
+            try
+            {
+                var orderData = _appContext.WorkOrders.Where(x => x.Id == WorkOrderId).FirstOrDefault();
+
+
+                if (orderData != null)
+                {
+                    orderData.StatusTypeId = StatusTypeId;
+                    WorkOrderStatusHistory request = new WorkOrderStatusHistory()
+                    {
+                        WorkOrderId = orderData.Id,
+                        StatusTypeId = StatusTypeId,
+                        Comments = Comments,
+                        CreatedBy = orderData.CreatedBy,
+                        UpdatedBy = orderData.UpdatedBy,
+                        CreatedDate = orderData.CreatedDate,
+                        UpdatedDate = DateTime.Now,
+
+                    };
+                    _appContext.WorkOrderStatusHistories.Add(request);
+                    _appContext.SaveChanges();
+                    response.Result = orderData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Work Order Accepted Successfully";
+                }
+
+
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Work Order Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

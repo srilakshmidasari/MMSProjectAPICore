@@ -561,5 +561,20 @@ namespace DAL.RequestResponseModels
             public string UserId { get; set; }
 
         }
+
+        public class AcceptWorkOrderRequest 
+        {
+            public int WorkOrderId { get; set; }
+            public int  StatusTypeId { get; set; }
+
+        }
+
+        public class CloseWorkOrderRequest
+        {
+            public int WorkOrderId { get; set; }
+            public int StatusTypeId { get; set; }
+            public string Comments { get; set; }
+
+        }
     }
 }
