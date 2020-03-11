@@ -266,6 +266,9 @@ namespace DAL.Repositories
                     var res = _appContext.ProjectRepositories.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
                     _appContext.ProjectRepositories.RemoveRange(res);
 
+                    var userress = _appContext.UserProjectXrefs.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
+                    _appContext.UserProjectXrefs.RemoveRange(userress);
+
                     var ress = _appContext.LookUpProjectXrefs.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
                     _appContext.LookUpProjectXrefs.RemoveRange(ress);
 
@@ -274,6 +277,25 @@ namespace DAL.Repositories
                     var alocs = _appContext.AssetLocations.Where(x => resss.Select(al => al.Id).Contains(x.LocationId)).ToList();
 
                     var assetRepo = _appContext.AssetFileRepositories.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+
+                    var workOrders = _appContext.WorkOrders.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
+
+                    var workItems = _appContext.WorkOrderItemXrefs.Where(x => alocs.Select(ar => ar.Id).Contains(x.WorkOrderId)).ToList();
+
+                    var orderProjects = _appContext.PurchageOrders.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
+
+                    var orderItems = _appContext.PurchageItemXrefs.Where(x => orderProjects.Select(al => al.Id).Contains(x.PurchageId)).ToList();
+
+                    var inventoryItems = _appContext.Inventories.Where(x => orderProjects.Select(al => al.Id).Contains(x.PurchaseOrderId)).ToList();
+
+                    _appContext.PurchageItemXrefs.RemoveRange(orderItems);
+
+                    _appContext.Inventories.RemoveRange(inventoryItems);
+
+                    _appContext.PurchageOrders.RemoveRange(orderProjects);
+                    _appContext.WorkOrderItemXrefs.RemoveRange(workItems);
+                    _appContext.WorkOrders.RemoveRange(workOrders);
+                  
                     _appContext.AssetFileRepositories.RemoveRange(assetRepo);
                     _appContext.AssetLocations.RemoveRange(alocs);
                     _appContext.Locations.RemoveRange(resss);

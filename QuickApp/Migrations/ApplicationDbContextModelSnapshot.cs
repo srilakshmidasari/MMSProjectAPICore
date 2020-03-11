@@ -1229,6 +1229,9 @@ namespace MMS.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
+
                     b.Property<int>("StoreId")
                         .HasColumnType("int");
 
@@ -1256,6 +1259,8 @@ namespace MMS.Migrations
                     b.HasIndex("AssetId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("StatusTypeId");
 
                     b.HasIndex("StoreId");
 
@@ -1295,6 +1300,50 @@ namespace MMS.Migrations
                     b.HasIndex("WorkOrderId");
 
                     b.ToTable("WorkOrderItemXref");
+                });
+
+            modelBuilder.Entity("DAL.Models.WorkOrderStatusHistory", b =>
+                {
+                    b.Property<int>("WorkOrderStatusHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkOrderId")
+                        .HasColumnType("int");
+
+                    b.HasKey("WorkOrderStatusHistoryId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("StatusTypeId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("WorkOrderId");
+
+                    b.ToTable("WorkOrderStatusHistory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -1796,6 +1845,12 @@ namespace MMS.Migrations
                         .HasConstraintName("FK_App_WorkOrder_CreatedUser")
                         .IsRequired();
 
+                    b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
+                        .WithMany("WorkOrder_StatusTypeId")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("FK_WorkOrder_StatusTypeId")
+                        .IsRequired();
+
                     b.HasOne("DAL.Models.LookUp", "Store_Id")
                         .WithMany("App_WorkOrder_Store_Id")
                         .HasForeignKey("StoreId")
@@ -1845,6 +1900,33 @@ namespace MMS.Migrations
                         .WithMany("App_WorkOrderItemxref_Id")
                         .HasForeignKey("WorkOrderId")
                         .HasConstraintName("FK_App_WorkOrderItemxref_Id")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.WorkOrderStatusHistory", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_WorkOrderStatusHistory_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_App_WorkOrderStatusHistory_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "TypeCdDmt")
+                        .WithMany("App_WorkOrderStatusHistory_StausId")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("FK_App_WorkOrderStatusHistory_StausId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_WorkOrderStatusHistory_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_WorkOrderStatusHistory_UpdatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.WorkOrder", "WorkOrder_Id")
+                        .WithMany("App_WorkOrderStatusHistory_Id")
+                        .HasForeignKey("WorkOrderId")
+                        .HasConstraintName("FK_App_WorkOrderStatusHistory_Id")
                         .IsRequired();
                 });
 

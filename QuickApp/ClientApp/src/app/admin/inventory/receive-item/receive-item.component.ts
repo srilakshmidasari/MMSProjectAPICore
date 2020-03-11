@@ -46,6 +46,7 @@ export class ReceiveItemComponent implements OnInit {
       receiveQty: new FormControl(''),
       receivePrice: new FormControl(''),
       itemId:new FormControl(''),
+      isReadOnly:'',
     })
   }
 
@@ -57,7 +58,9 @@ export class ReceiveItemComponent implements OnInit {
         for(let i = 0; i < this.itemList.length; i++) {
           this.sumTotal += this.itemList[i].receivedCost;
           if(this.itemList[i].quantity == this.itemList[i].receivedQuantity){
-            this.isReadOnly = true;
+            this.itemList[i].isReadOnly = true;
+          }else{
+            this.itemList[i].isReadOnly = false;
           }
         }
        this.setItems(this.itemList)
@@ -67,6 +70,7 @@ export class ReceiveItemComponent implements OnInit {
   }
 
   setItems(itemsArray: any[]) {
+   
     let control = this.formBuilder.array([]);
     itemsArray.forEach(x => {
       control.push(this.formBuilder.group({
@@ -76,7 +80,8 @@ export class ReceiveItemComponent implements OnInit {
         unitPrice:x.expectedCost,
         remainQty :x.remainingQuantity,
         receiveQty:0,
-        receivePrice:0
+        receivePrice:0,
+        isReadOnly:x.isReadOnly
       }))
     })
     this.itemFrom.setControl('credentials', control);

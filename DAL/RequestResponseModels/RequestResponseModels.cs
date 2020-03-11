@@ -489,6 +489,8 @@ namespace DAL.RequestResponseModels
             public string ExtraDetails { get; set; }
             public string Issue { get; set; }
             public string Resolution { get; set; }
+            public int StatusTypeId { get; set; }
+            public string StatusTypeName { get; set; }
             public int WorkTypeId { get; set; }
             public string WorkTypeName { get; set; }
             public int WorkStatusId { get; set; }
@@ -512,6 +514,7 @@ namespace DAL.RequestResponseModels
             public string Extradetails { get; set; }
             public string Issue { get; set; }
             public string Resolution { get; set; }
+            public int StatusTypeId { get; set; }
             public int WorkTypeId { get; set; }
             public int WorkStatusId { get; set; }
             public int WorkTechnicianId { get; set; }

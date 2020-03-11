@@ -450,7 +450,7 @@ namespace DAL.Repositories
                                   ExpectedCost = pi.ExpectdCost,
                                   Comments = pi.Comments,
                                   RemainingQuantity = m != null ? pi.Quantity - m.Quantity: 0,
-                                  ReceivedQuantity = m!=null?0:0,
+                                  ReceivedQuantity = m!=null ? m.Quantity : 0,
                                   ReceivedCost = m != null ? 0.0 : 0.0
 
                               }).Where(x => x.PurchaseId == purchaseId).Distinct().ToList();

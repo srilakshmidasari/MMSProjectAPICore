@@ -104,5 +104,8 @@ namespace DAL.Models
         public ICollection<WorkOrder> App_WorkOrder_UpdatedUser { get; set; }
 
         public ICollection<UserProjectXref> App_UserProjectXref_UserId { get; set; }
+
+        public ICollection<WorkOrderStatusHistory> App_WorkOrderStatusHistory_CreatedUser { get; set; }
+        public ICollection<WorkOrderStatusHistory> App_WorkOrderStatusHistory_UpdatedUser { get; set; }
     }
 }

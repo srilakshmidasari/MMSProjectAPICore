@@ -87,11 +87,12 @@
           <a mat-list-item routerLinkActive="active" *ngIf="canViewProjects" routerLink="/admin/project">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Project'| translate}}
           </a>
-          <a mat-list-item routerLinkActive="active" *ngIf="canViewStores" routerLink="/admin/lookup">
-            <mat-icon>find_replace</mat-icon>{{'mainMenu.LookUp'| translate}}
-          </a>
+         
           <a mat-list-item routerLinkActive="active" *ngIf="canViewLocation" routerLink="/admin/location">
             <mat-icon>place</mat-icon>{{'mainMenu.Location'| translate}}
+          </a>
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewStores" routerLink="/admin/lookup">
+            <mat-icon>find_replace</mat-icon>{{'mainMenu.LookUp'| translate}}
           </a>
         </mat-expansion-panel>
         <!-- <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
