@@ -108,7 +108,7 @@ export class AssetsComponent implements OnInit {
         });
   }
 
-  private getProjectsByUserIdandSiteId(event) {
+  getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
       "siteId": event,

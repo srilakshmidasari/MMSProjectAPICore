@@ -75,5 +75,9 @@ namespace DAL.Models
 
         public ICollection<PurchageOrder> Order_StatusTypeId { get; set; }
 
+        public ICollection<WorkOrder> WorkOrder_StatusTypeId { get; set; }
+
+        public ICollection<WorkOrderStatusHistory> App_WorkOrderStatusHistory_StausId { get; set; }
+
     }
 }

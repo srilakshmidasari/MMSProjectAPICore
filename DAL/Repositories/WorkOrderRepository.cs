@@ -41,7 +41,7 @@ namespace DAL.Repositories
                               join ws in _appContext.LookUps on wo.WorkStatusId equals ws.Id
                               join wf in _appContext.LookUps on wo.WorkFaultId equals wf.Id
                               join wt in _appContext.LookUps on wo.WorkTechnicianId equals wt.Id
-
+                              join sta in _appContext.TypeCdDmts on wo.StatusTypeId equals sta.TypeCdDmtId
                               select new GetWorkOrderReponse
                               {
                                   Id = wo.Id,
@@ -51,6 +51,8 @@ namespace DAL.Repositories
                                   ExtraDetails = wo.ExtraDetails,
                                   Issue = wo.Issue,
                                   Resolution = wo.Resolution,
+                                  StatusTypeId = wo.StatusTypeId,
+                                  StatusTypeName = sta.Description,
                                   AssetId = wo.AssetId,
                                   AssetName = a.Name1,
                                   SiteId = s.Id,
@@ -188,6 +190,7 @@ namespace DAL.Repositories
                         result.StartDate = workorders.StartDate;
                         result.EndDate = workorders.EndDate;
                         result.WorkTypeId = workorders.WorkTypeId;
+                        result.StatusTypeId = workorders.StatusTypeId;
                         result.WorkTechnicianId = workorders.WorkTechnicianId;
                         result.WorkStatusId = workorders.WorkStatusId;
                         result.WorkFaultId = workorders.WorkFaultId;

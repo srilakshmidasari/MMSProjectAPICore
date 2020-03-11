@@ -26,13 +26,18 @@
                         <mat-form-field class="col-md-4">
                             <mat-label>Remaining Quantity</mat-label>
                             <input matInput formControlName="remainQty" 
-                                placeholder="Remaining Quantity" (keypress)="numberOnly($event)" maxlength="10" />
+                                placeholder="Remaining Quantity"  (keypress)="numberOnly($event)" maxlength="10" readonly/>
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
                             <mat-label>Received Quantity</mat-label>
                             <input matInput formControlName="receiveQty" 
-                                placeholder="Received Quantity" (keypress)="numberOnly($event)" maxlength="10" />
+                                placeholder="Received Quantity" (keypress)="numberOnly($event)" maxlength="10"   />
                         </mat-form-field>
+                        <!-- <mat-form-field class="col-md-4" >
+                                <mat-label>Received Quantity</mat-label>
+                                <input matInput formControlName="receiveQty" 
+                                    placeholder="Received Quantity" (keypress)="numberOnly($event)" maxlength="10"   />
+                            </mat-form-field> -->
                         <mat-form-field class="col-md-4">
                             <mat-label>Received Price</mat-label>
                             <input matInput formControlName="receivePrice" 

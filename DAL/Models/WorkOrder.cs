@@ -64,6 +64,9 @@ namespace DAL.Models
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
+        [Display(Name = "Status Type Id")]
+        public int StatusTypeId { get; set; }
+
         [Required]
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
@@ -103,7 +106,13 @@ namespace DAL.Models
         [JsonIgnore]
         public AssetLocation Asset_Id { get; set; }
 
+        [JsonIgnore]
+        public TypeCdDmt StatusType_Id { get; set; }
+
         public ICollection<WorkOrderItemXref> App_WorkOrderItemxref_Id { get; set; }
+
+        public ICollection<WorkOrderStatusHistory> App_WorkOrderStatusHistory_Id { get; set; }
+
 
     }
 }

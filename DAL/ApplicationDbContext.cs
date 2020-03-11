@@ -39,6 +39,8 @@ namespace DAL
         public DbSet<WorkOrderItemXref> WorkOrderItemXrefs { get; set; }
         public DbSet<UserProjectXref> UserProjectXrefs { get; set; }
 
+        public DbSet<WorkOrderStatusHistory> WorkOrderStatusHistories { get; set; }
+        
         public DbSet<Inventory> Inventories { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -89,6 +91,7 @@ namespace DAL
             builder.Entity<WorkOrderItemXref>().ToTable("WorkOrderItemXref");
             builder.Entity<UserProjectXref>().ToTable("UserProjectXref");
             builder.Entity<Inventory>().ToTable("Inventory");
+            builder.Entity<WorkOrderStatusHistory>().ToTable("WorkOrderStatusHistory");
 
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
@@ -467,10 +470,16 @@ namespace DAL
                 .HasConstraintName("FK_App_WorkOrder_WorkType_Id");
 
             builder.Entity<WorkOrder>().HasOne(d => d.WorkTechnician_Id)
-              .WithMany(p => p.App_WorkOrder_WorkTechinician_Id)
-              .HasForeignKey(d => d.WorkTechnicianId)
-              .OnDelete(DeleteBehavior.ClientSetNull)
-              .HasConstraintName("FK_App_WorkOrder_WorkTechinician_Id");
+                .WithMany(p => p.App_WorkOrder_WorkTechinician_Id)
+                .HasForeignKey(d => d.WorkTechnicianId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrder_WorkTechinician_Id");
+
+            builder.Entity<WorkOrder>().HasOne(d => d.StatusType_Id)
+               .WithMany(p => p.WorkOrder_StatusTypeId)
+               .HasForeignKey(d => d.StatusTypeId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_WorkOrder_StatusTypeId");
 
             builder.Entity<WorkOrderItemXref>().HasOne(d => d.Item_Id)
                 .WithMany(p => p.App_WorkOrderItemIdXref_Id)
@@ -479,35 +488,60 @@ namespace DAL
                 .HasConstraintName("FK_App_WorkOrderItemIdXref_Id");
 
             builder.Entity<WorkOrderItemXref>().HasOne(d => d.WorkOrder_Id)
-              .WithMany(p => p.App_WorkOrderItemxref_Id)
-              .HasForeignKey(d => d.WorkOrderId)
-              .OnDelete(DeleteBehavior.ClientSetNull)
-              .HasConstraintName("FK_App_WorkOrderItemxref_Id");
+                .WithMany(p => p.App_WorkOrderItemxref_Id)
+                .HasForeignKey(d => d.WorkOrderId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrderItemxref_Id");
 
             builder.Entity<UserProjectXref>().HasOne(d => d.User_Id)
-            .WithMany(p => p.App_UserProjectXref_UserId)
-            .HasForeignKey(d => d.UserId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_App_UserProjectXref_UserId");
+                .WithMany(p => p.App_UserProjectXref_UserId)
+                .HasForeignKey(d => d.UserId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_UserProjectXref_UserId");
 
             builder.Entity<UserProjectXref>().HasOne(d => d.Project_Id)
-            .WithMany(p => p.App_UserProjectXref_ProjectId)
-            .HasForeignKey(d => d.ProjectId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_App_UserProjectXref_ProjectId");
+                .WithMany(p => p.App_UserProjectXref_ProjectId)
+                .HasForeignKey(d => d.ProjectId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_UserProjectXref_ProjectId");
 
 
             builder.Entity<Inventory>().HasOne(d => d.PurchaseOrder_Id)
-            .WithMany(p => p.App_Inventory_Order_Id)
-            .HasForeignKey(d => d.PurchaseOrderId)
-            .OnDelete(DeleteBehavior.ClientSetNull)
-            .HasConstraintName("FK_App_Inventory_Order_Id");
+               .WithMany(p => p.App_Inventory_Order_Id)
+               .HasForeignKey(d => d.PurchaseOrderId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_Inventory_Order_Id");
 
             builder.Entity<Inventory>().HasOne(d => d.Item_Id)
-          .WithMany(p => p.App_InventoryItemId_Id)
-          .HasForeignKey(d => d.ItemId)
-         .OnDelete(DeleteBehavior.ClientSetNull)
-          .HasConstraintName("FK_App_InventoryItemId_Id");
+               .WithMany(p => p.App_InventoryItemId_Id)
+               .HasForeignKey(d => d.ItemId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_InventoryItemId_Id");
+
+            builder.Entity<WorkOrderStatusHistory>().HasOne(d => d.WorkOrder_Id)
+               .WithMany(p => p.App_WorkOrderStatusHistory_Id)
+               .HasForeignKey(d => d.WorkOrderId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_WorkOrderStatusHistory_Id");
+
+            builder.Entity<WorkOrderStatusHistory>().HasOne(d => d.TypeCdDmt)
+                .WithMany(p => p.App_WorkOrderStatusHistory_StausId)
+                .HasForeignKey(d => d.StatusTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrderStatusHistory_StausId");
+
+
+            builder.Entity<WorkOrderStatusHistory>().HasOne(d => d.CreatedUser)
+                .WithMany(p => p.App_WorkOrderStatusHistory_CreatedUser)
+                .HasForeignKey(d => d.CreatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrderStatusHistory_CreatedUser");
+
+            builder.Entity<WorkOrderStatusHistory>().HasOne(d => d.UpdatedUser)
+                .WithMany(p => p.App_WorkOrderStatusHistory_UpdatedUser)
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_WorkOrderStatusHistory_UpdatedUser");
 
 
         }
