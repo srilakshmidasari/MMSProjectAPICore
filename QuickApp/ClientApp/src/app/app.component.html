@@ -78,6 +78,9 @@
               <mat-icon>assessment</mat-icon>Masters
             </mat-panel-title>
           </mat-expansion-panel-header>
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/item">
+            <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
+          </a>
           <a mat-list-item routerLinkActive="active" *ngIf="canViewSites" routerLink="/admin/site">
             <mat-icon>house</mat-icon>{{'mainMenu.Site'| translate}}
           </a>
@@ -112,9 +115,7 @@
               <mat-icon>poll</mat-icon>{{'mainMenu.Inventory'|translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/item">
-            <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
-          </a>
+        
           <a mat-list-item routerLinkActive="active" routerLink="/admin/purchaseorder">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Purchase Order'|translate}}
           </a>

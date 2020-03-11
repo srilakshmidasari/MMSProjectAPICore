@@ -10,7 +10,7 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
             <p-table #dt [value]="purchasesList" [paginator]="true" expandableRows="true" [rows]="10"
-                sortField="purchaseReference" sortOrder="-1" [tableStyle]="{'table-layout':'auto'}"
+                sortField="purchaseReference" matSortDirection="-1" [tableStyle]="{'table-layout':'auto'}"
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExp andMode="single" dataKey="id"
                 [globalFilterFields]="['purchaseReference','supplierName','supplierAddress','projectName','storeName', 'arrivingDate','statusName','remarks']">
                 <ng-template pTemplate="caption">

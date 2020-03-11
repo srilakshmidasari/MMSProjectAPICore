@@ -276,6 +276,12 @@ export class WorkOrderComponent implements OnInit {
     this.workorder = row;
     this.isView = true;
   }
+  acceptClick(){
+
+  }
+  rejectClick(){
+    
+  }
 
   closeViewWorkOrder() {
     this.isView = false;
