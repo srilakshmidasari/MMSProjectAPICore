@@ -83,7 +83,9 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly _getAssetsByLocationIdUrl: string ='/api/Asset/GetAssetsByLocationId';
   private readonly _deleteWorkOrder: string ='/api/WorkOrder';
-
+  private readonly _AddAcceptWorkOrder: string ='/api/WorkOrder/AcceptWorkOrder';
+  private readonly _RejectWorkOrder: string ='/api/WorkOrder/RejectWorkOrder';
+  private readonly _CloseWorkOrder: string ='/api/WorkOrder/CloseWorkOrder';
   private readonly _getProjectsByUserIdUrl: string ='/api/Project/GetProjectsByUserId';
 
   private readonly _getSitesByProjectIdUrl: string ='/api/Site/GetSitesByProjectId';
@@ -177,8 +179,9 @@ export class AccountEndpoint extends EndpointBase {
   get getSitesByUserIdUrl() { return this.configurations.baseUrl + this._getSitesByUserIdUrl; }
 
   get getExportWorkOrdersUrl() { return this.configurations.baseUrl + this._getExportWorkOrdersUrl; }
-  
-  
+  get AddAcceptWorkOrder() { return this.configurations.baseUrl + this._AddAcceptWorkOrder; }
+  get RejectWorkOrder() { return this.configurations.baseUrl + this._RejectWorkOrder; }
+  get CloseWorkOrder() { return this.configurations.baseUrl + this._CloseWorkOrder; }
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -850,6 +853,27 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
   
+  AcceptWorkOrderEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.AddAcceptWorkOrder;
+    return this.http.post<T>(endpointUrl,JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AcceptWorkOrderEndpoint(reqObject));
+      }));
+  }
+  RejectWorkOrderEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.RejectWorkOrder;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.RejectWorkOrderEndpoint(reqObject));
+      }));
+  }
+  CloseWorkOrderEndpoint<T>(reqObject: any):Observable<T>{
+    const endpointUrl = this.CloseWorkOrder;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.CloseWorkOrderEndpoint(reqObject));
+      }));
+  }
 
   getItemsByWorkOrderIdEndpoint<T>(workOrderId: any): Observable<T> {
     const endpointUrl = this.getItemsByWorkOrderIdUrl + '/' + workOrderId;

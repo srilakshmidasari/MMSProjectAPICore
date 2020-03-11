@@ -124,14 +124,18 @@
                                 <mat-icon color="accent">visibility icon</mat-icon>
                             </button>
                             <button class="z-index" mat-icon-button matTooltip=Accept
-                           
+                            *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId"
                                 (click)="acceptClick(req)">
                                 <mat-icon color="primary">thumb_up</mat-icon>
                             </button>
                             <button class="z-index" mat-icon-button matTooltip=Reject
-                           
+                            *ngIf="isAccepted!= req.statusTypeId && isRejected != req.statusTypeId"
                                 (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
+                            </button>
+                            <button class="z-index" mat-icon-button matTooltip=Close
+                                (click)="CloseWorkOrderClick(req)">
+                                <mat-icon color="warn">close</mat-icon>
                             </button>
                         </td>
                     </tr>

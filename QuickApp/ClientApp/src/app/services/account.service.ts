@@ -441,6 +441,17 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.deleteWorkOrderEndpoint(workOrderId);
   }
 
+  AcceptWorkOrder(workOrderId){
+    return this.accountEndpoint.AcceptWorkOrderEndpoint(workOrderId);
+  }
+  RejectWorkOrder(workOrderId){
+    return this.accountEndpoint.RejectWorkOrderEndpoint(workOrderId);
+  }
+
+  CloseWorkOrder(workOrderId){
+    return this.accountEndpoint.CloseWorkOrderEndpoint(workOrderId);
+  }
+
   getAssetsByLocationId(Id) {
     return this.accountEndpoint.getAssetsByLocationIdEndpoint(Id);
   }
