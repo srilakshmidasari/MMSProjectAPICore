@@ -20,5 +20,12 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<WorkOrder> DeleteWorkOrder(int WorkOrderId);
 
+
+        ValueDataResponse<WorkOrder> AcceptWorkOrder(int WorkOrderId, int StatusTypeId);
+
+        ValueDataResponse<WorkOrder> RejectWorkOrder(int WorkOrderId, int StatusTypeId);
+
+        ValueDataResponse<WorkOrder> CloseWorkOrder(int WorkOrderId, int StatusTypeId,string Comments);
+
     }
 }
