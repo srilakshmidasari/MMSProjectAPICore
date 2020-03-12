@@ -142,7 +142,7 @@ namespace DAL.Repositories
             {
                 var assetData = _appContext.AssetGroups.Where(x => x.Id == assetId).FirstOrDefault();
 
-                var assetloc= _appContext.AssetLocations.Where(x => x.AstGroupId == assetId).ToList();
+                var assetloc = _appContext.AssetLocations.Where(x => x.AstGroupId == assetId).ToList();
                 if (assetloc != null)
                 {
                     //assetData.IsActive = false;
@@ -227,7 +227,7 @@ namespace DAL.Repositories
                                   UpdatedDate = al.UpdatedDate
                               }).ToList();
 
-            
+
                 if (result != null)
                 {
                     response.ListResult = result;
@@ -456,7 +456,7 @@ namespace DAL.Repositories
                 {
                     //assetData.IsActive = false;
                     //assetData.UpdatedDate = DateTime.Now;
-                   
+
                     var assetFiles = _appContext.AssetFileRepositories.Where(x => x.AssetId == assetId).ToList();
                     var resss = _appContext.WorkOrderItemXrefs.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
 
@@ -642,6 +642,44 @@ namespace DAL.Repositories
             }
 
             return response;
+        }
+
+
+        public ListDataResponse<AssetLocation> GetAssetsBySearch(SearchAsset search)
+        {
+
+            ListDataResponse<AssetLocation> response = new ListDataResponse<AssetLocation>();
+            try
+            {
+                var result = _appContext.AssetLocations.Where(x => x.LocationId == search.LocationId &&
+                               (x.Name1.ToLower().Contains(search.searchValue.ToLower()) || x.AssetRef.Contains(search.searchValue))).ToList();
+
+
+
+                if (result.Count > 0)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = result.Count;
+                    response.EndUserMessage = "Get Asset Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Asset Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+
         }
 
     }

@@ -1,12 +1,12 @@
-
-<h1 mat-dialog-title>Close Order</h1>
+<h1 mat-dialog-title>Close Work Order</h1>
 <div mat-dialog-content>
-<div class="row">
-    <mat-form-field  class="col-md-9">
-        <input matInput placeholder="Comments" >
-    </mat-form-field>
-</div>
+    <div class="row">
+        <mat-form-field class="col-md-12">
+            <input matInput placeholder="Comments" [(ngModel)]="comments" required>
+        </mat-form-field>
+    </div>
 </div>
 <div mat-dialog-actions class="float-right" style="padding-top: 12px;">
-    <button mat-raised-button (click)="Cancel()" color="warn">Cancel</button>   
+    <button mat-raised-button color="primary" (click)="CloseWorkOrderClick()">Close Order</button>
+    <button mat-raised-button (click)="Cancel()" color="warn">Cancel</button>
 </div>

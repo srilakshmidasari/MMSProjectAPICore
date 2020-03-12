@@ -589,5 +589,19 @@ namespace DAL.RequestResponseModels
             public string StoreName { get; set; }
             public int Quantity { get; set; }
         }
+
+        public class SearchString
+        {
+            public string searchValue { get; set; }
+
+            public int ProjectId { get; set; }
+        }
+
+        public class SearchAsset
+        {
+            public string searchValue { get; set; }
+
+            public int LocationId { get; set; }
+        }
     }
 }

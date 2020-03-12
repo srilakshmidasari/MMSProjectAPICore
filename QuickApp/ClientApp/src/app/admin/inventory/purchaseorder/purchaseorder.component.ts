@@ -481,7 +481,6 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   onViewdetailsClick(row){
-    debugger
     this.purchase=row;
     this.isView=true;  
     this.isEdit=false;

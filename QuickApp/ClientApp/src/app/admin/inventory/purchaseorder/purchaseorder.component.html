@@ -92,11 +92,11 @@
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center">
-                            <button class="z-index" mat-icon-button
+                            <button class="z-index" mat-icon-button *ngIf="isAccepted != req.statusTypeId"
                                 matTooltip="{{'Purchase Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button class="z-index" mat-icon-button
+                            <button class="z-index" mat-icon-button 
                                 matTooltip="{{'Purchase Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>

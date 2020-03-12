@@ -102,7 +102,11 @@ namespace MMS.Controllers
             return _unitOfWork.Assets.GetAssetsByLocationId(LocationId);
         }
 
-        
+        [HttpPost("GetAssetsBySearch")]
+        public ListDataResponse<AssetLocation> GetAssetsBySearch(SearchAsset search)
+        {
+            return _unitOfWork.Assets.GetAssetsBySearch(search);
+        }
 
     }
 }
