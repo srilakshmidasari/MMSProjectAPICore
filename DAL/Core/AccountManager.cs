@@ -115,13 +115,34 @@ namespace DAL.Core
             var result = await _userManager.CreateAsync(user, password);
             if (!result.Succeeded)
                 return (false, result.Errors.Select(e => e.Description).ToArray());
-
-
             user = await _userManager.FindByNameAsync(user.UserName);
-
             try
             {
                 result = await this._userManager.AddToRolesAsync(user, roles.Distinct());
+                //if (roles != null)
+                //{
+                //    var singleString = string.Join(",", roles.ToArray());
+                //    var res = await GetRoleLoadRelatedAsync(singleString);
+                //    foreach (var rc in res.Claims)
+                //    {
+                //        if (rc.ClaimValue == "all.projects")
+                //        {
+                //            var projects = _context.Projects.ToList();
+                //            if (projects != null)
+                //            {
+                //                foreach (var up in projects)
+                //                {
+                //                    _context.UserProjectXrefs.Add(new UserProjectXref
+                //                    {
+                //                        UserId = user.Id,
+                //                        ProjectId = up.Id,
+                //                    });
+                //                }
+                //                _context.SaveChanges();
+                //            }
+                //        }
+                //    }
+                //}
             }
             catch
             {
@@ -452,7 +473,7 @@ namespace DAL.Core
                 response.AffectedRecords = 0;
                 response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
                 response.Exception = ex;
-               
+
             }
             return response;
         }
@@ -460,12 +481,12 @@ namespace DAL.Core
         public async Task<UserResViewModel> GetUserById(string userId)
         {
 
-            var user =  _context.Users.Where(u => u.Id == userId).FirstOrDefault();
+            var user = _context.Users.Where(u => u.Id == userId).FirstOrDefault();
             if (user == null)
                 return null;
             var userVM = _mapper.Map<UserResViewModel>(user);
 
-           
+
             return (userVM);
 
         }
