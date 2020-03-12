@@ -55,5 +55,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.Locations.GetLocationsByProjectId(ProjectId);
         }
+
+        [HttpPost("GetLocationsBySearch")]
+        public ListDataResponse<Location> GetLocationsBySearch(SearchString search)
+        {
+            return _unitOfWork.Locations.GetLocationsBySearch(search);
+        }
     }
 }

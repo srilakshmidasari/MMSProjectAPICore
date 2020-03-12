@@ -18,5 +18,7 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<Location> DeleteLocation(int LocationId);
 
         ListDataResponse<Location> GetLocationsByProjectId(int ProjectId);
+
+        ListDataResponse<Location> GetLocationsBySearch(SearchString search);
     }
 }

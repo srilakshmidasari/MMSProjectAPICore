@@ -41,19 +41,21 @@ export class WorkOrderComponent implements OnInit {
   isEdit: boolean = false;
   isView: boolean = false;
   ProjectId: any;
-  
-  userProjectsList: any[]=[];
+
+  userProjectsList: any[] = [];
+
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
       credentials: this.formBuilder.array([]),
     });
     this.currenrDate = new Date();
+   
   }
 
   ngOnInit() {
     this.getworkOrderOrders();
-  //  this.getSites();
+    //  this.getSites();
     this.getItem();
     this.buildForm();
   }
@@ -141,33 +143,33 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
-    // Get sites data by UserId
-    getSitesByUserId() {
-      this.accountService.getSitesByUserId(this.currentUser.id)
-        .subscribe((results: any) => {
-          this.siteList = results.listResult == null ? [] : results.listResult;
-        },
-          error => {
-          });
+  // Get sites data by UserId
+  getSitesByUserId() {
+    this.accountService.getSitesByUserId(this.currentUser.id)
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
+  getProjectsByUserIdandSiteId(event) {
+    this.userProjectsList = [];
+    var req = {
+      "siteId": event,
+      "userId": this.currentUser.id
     }
-  
-    getProjectsByUserIdandSiteId(event) {
-      this.userProjectsList = [];
-      var req = {
-        "siteId": event,
-        "userId": this.currentUser.id
-      }
-      this.accountService.getProjectsByUserIdandSiteId(req)
-        .subscribe((results: any) => {
-          this.userProjectsList = results.listResult == null ? [] : results.listResult;
-        },
-          error => {
-          });
-    }
-  
+    this.accountService.getProjectsByUserIdandSiteId(req)
+      .subscribe((results: any) => {
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
 
   onSelectProjectByLocation(event) {
-    this.locationsList = [];  
+    this.locationsList = [];
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
       this.getStoresByProject(event)
@@ -273,18 +275,16 @@ export class WorkOrderComponent implements OnInit {
   }
 
   onViewClick(row) {
-    debugger
     this.workorder = row;
     this.isView = true;
   }
- 
+
   closeViewWorkOrder() {
     this.isView = false;
 
   }
 
   confirmDelete(order: any) {
-    debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
@@ -312,101 +312,7 @@ export class WorkOrderComponent implements OnInit {
     });
   }
 
-  acceptClick(order:any){
-    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Accept", msg: "Are you sure you want to Accept this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
-      width: 'auto',
-      height: 'auto',
-      disableClose: true,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        var req={
-          "workOrderId": order.id,
-          "statusTypeId":DataFactory.StatusTypes.Approved
-        }
-        this.accountService.AcceptWorkOrder(req)
-          .subscribe((results: any) => {
-            this.alertService.stopLoadingMessage();
-            this.loadingIndicator = false;
-            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
-            if (results.isSuccess) {
-              this.getworkOrderOrders();
-            }
-          },
-            error => {
-              this.alertService.stopLoadingMessage();
-              this.loadingIndicator = false;
-              this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-                MessageSeverity.error, error);
-            });
-      }
-    });
-  }
 
-  rejectClick(order:any){
-    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Reject", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
-      width: 'auto',
-      height: 'auto',
-      disableClose: true,
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        var req={
-          "workOrderId": order.id,
-          "statusTypeId":DataFactory.StatusTypes.Rejected
-        }
-        this.accountService.RejectWorkOrder(req)
-          .subscribe((results: any) => {
-            this.alertService.stopLoadingMessage();
-            this.loadingIndicator = false;
-            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
-            if (results.isSuccess) {
-              this.getworkOrderOrders();
-            }
-          },
-            error => {
-              this.alertService.stopLoadingMessage();
-              this.loadingIndicator = false;
-              this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-                MessageSeverity.error, error);
-            });
-      }
-    });
-  }
-  CloseWorkOrderClick(order: any){
-    const dialogRef = this.dialog.open(CloseorderComponent,
-      {
-        data: { title: "close", msg: "Are you sure you want to Close this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Close', cancel: 'Cancel' },
-
-      });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result != undefined) {
-        var req={
-          "workOrderId": order.id,
-          "statusTypeId":DataFactory.StatusTypes.Rejected,
-          "comments":order.comments
-        }
-      
-      this.accountService.CloseWorkOrder(req)
-      .subscribe((results: any) => {
-        this.alertService.stopLoadingMessage();
-        this.loadingIndicator = false;
-        this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
-        if (results.isSuccess) {
-          this.getworkOrderOrders();
-        }
-      },
-        error => {
-          this.alertService.stopLoadingMessage();
-          this.loadingIndicator = false;
-          this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-            MessageSeverity.error, error);
-        });
-      }
-    });
-  }
 
 
   // Accepting Only Numbers
@@ -420,7 +326,6 @@ export class WorkOrderComponent implements OnInit {
 
 
   public resetForm(stopEditing: boolean = false) {
-    debugger
     if (!this.orderData) {
       this.isNewOrder = true;
     } else {
@@ -436,8 +341,8 @@ export class WorkOrderComponent implements OnInit {
       extraDetails: this.orderData.extraDetails || '',
       issue: this.orderData.issue || '',
       resolution: this.orderData.resolution || '',
-      startDate:  this.isNewOrder ? this.currenrDate : this.orderData.startDate || '',
-      endDate: this.isNewOrder ? this.currenrDate :this.orderData.endDate || '',
+      startDate: this.isNewOrder ? this.currenrDate : this.orderData.startDate || '',
+      endDate: this.isNewOrder ? this.currenrDate : this.orderData.endDate || '',
       workTypeId: this.orderData.workTypeId || '',
       workStatusId: this.orderData.workStatusId || '',
       workFaultId: this.orderData.workFaultId || '',
@@ -446,7 +351,6 @@ export class WorkOrderComponent implements OnInit {
   }
 
   saveOrder() {
-    debugger
     if (!this.orderForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -509,19 +413,24 @@ export class WorkOrderComponent implements OnInit {
       workOrderItems.push(itemReq);
     }
     const formModel = this.orderForm.value;
-    formModel.startDate.setDate(formModel.startDate.getDate() + 1);
-    formModel.endDate.setDate(formModel.endDate.getDate() + 1);
+    if (this.isNewOrder) {
+      formModel.startDate.setDate(formModel.startDate.getDate() + 1);
+      formModel.endDate.setDate(formModel.endDate.getDate() + 1);
+    } else {
+
+    }
+
     return {
       "id": this.isNewOrder == true ? 0 : this.orderData.id,
       "assetId": formModel.assetId,
-      "startDate":formModel.startDate,
+      "startDate": formModel.startDate,
       "endDate": formModel.endDate,
       "reference1": formModel.reference1,
       "extradetails": formModel.extraDetails,
       "locationName": formModel.locationName,
       "issue": formModel.issue,
       "resolution": formModel.resolution,
-      "statusTypeId":DataFactory.StatusTypes.Open,
+      "statusTypeId": DataFactory.StatusTypes.Open,
       "workTypeId": formModel.workTypeId,
       "workStatusId": formModel.workStatusId,
       "workTechnicianId": formModel.workTechId,
@@ -572,9 +481,9 @@ export class WorkOrderComponent implements OnInit {
         this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
       }
     },
-    error => {
-      this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-    })
+      error => {
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
   }
 
   b64toBlob(b64Data, contentType, sliceSize) {
@@ -600,4 +509,82 @@ export class WorkOrderComponent implements OnInit {
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   };
+
+  acceptClick(order: any) {
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Accept Work Order", msg: "Are you sure you want to Accept this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        var req = {
+          "workOrderId": order.id,
+          "statusTypeId": DataFactory.StatusTypes.Approved
+        }
+
+        this.accountService.AcceptWorkOrder(req)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getworkOrderOrders();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      }
+    });
+  }
+
+  rejectClick(order: any) {
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Reject Work Order", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        var req = {
+          "workOrderId": order.id,
+          "statusTypeId": DataFactory.StatusTypes.Rejected
+        }
+        this.accountService.RejectWorkOrder(req)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getworkOrderOrders();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage(' Accept Error', `An error occured whilst  Accept the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      }
+    });
+  }
+
+
+  CloseWorkOrderClick(row) {
+    const dialogRef = this.dialog.open(CloseorderComponent,
+      {
+        panelClass: 'mat-dialog-sm',
+        data: { row }
+      });
+    dialogRef.afterClosed().subscribe(siteresponse => {
+
+    });
+  }
+
 }

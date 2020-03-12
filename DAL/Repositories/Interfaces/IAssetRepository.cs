@@ -31,5 +31,7 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<AssetFileRepository> DeleteFileRepository(int RepositoryId);
 
         ListDataResponse<AssetLocation> GetAssetsByLocationId(int LocationId);
+
+        ListDataResponse<AssetLocation> GetAssetsBySearch(SearchAsset search);
     }
 }
