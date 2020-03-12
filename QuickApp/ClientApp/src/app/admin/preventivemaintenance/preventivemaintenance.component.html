@@ -1,0 +1,255 @@
+<app-page-header title="Preventive Maintenance" icon="assignment_ind"></app-page-header>
+<div class="page-content" [hidden]="isAdding">
+    <div class="search-box">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search for Preventive Maintenance..">
+        </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8 table-responsive">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="itemName" matSortDirection="asc"
+            matSortDisableClear>
+            <ng-container matColumnDef="sitename">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Site Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.sitename}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="projectname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectname}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="locationName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="assetname">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.assetname}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="startDate">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.startDate}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="technician">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Technician</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.technician}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="duration">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Duration Per Hour</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.duration}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="details">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="Actions">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef>
+                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
+                        <mat-icon class="mat-button-icon">add</mat-icon>
+                        Add Maintainance
+                    </button>
+                </mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row">
+                    <button mat-icon-button matTooltip="Edit"  (click)="editClick(row)">
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                    <button class="just-cont-center" mat-icon-button matTooltip="Delete"  (click)="confirmDelete(row)" >
+                        <mat-icon color="warn">delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>No Records Found</p>
+        </div> 
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>No Search Results Found</p>
+        </div>
+        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+            [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+    </div>
+</div>
+<div class="page-content" *ngIf="isAdding">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Add Maintanance
+            </mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="maintenanceForm">
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Select Site</mat-label>
+                        <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['siteId'].valid">
+                            PleaseSelectSite
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Select Project</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['projectId'].valid">
+                           PleaseSelectProject
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Select Location</mat-label>
+                        <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
+                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
+                                {{location.name1}}(<span>{{location.locationReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['locationId'].valid">
+                           PleaseSelectLocation
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Select Asset<span>*</span></mat-label>
+                        <mat-select formControlName="assetId">
+                            <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
+                                {{asset.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['assetId'].valid">
+                            Please Select Asset
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Type Of Maintainance</mat-label>
+                        <mat-select formControlName="assetId">
+                            <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
+                                {{asset.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['assetId'].valid">
+                            Please Select Asset
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>StartDate</mat-label>
+                        <input matInput formControlName="startDate" required />
+                        <mat-error *ngIf="!maintenanceForm.controls['startDate'].valid">
+                            startDateisrequired
+                        </mat-error>
+                    </mat-form-field>
+                   </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Technician</mat-label>
+                        <input matInput formControlName="technician" required />
+                        <mat-error *ngIf="!maintenanceForm.controls['technician'].valid">
+                            Technicianisrequired
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Duration Per Hour</mat-label>
+                        <input matInput formControlName="duration" required />
+                        <mat-error *ngIf="!maintenanceForm.controls['duration'].valid">
+                            durationisrequired
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Details</mat-label>
+                        <input matInput formControlName="details" required />
+                        <mat-error *ngIf="!maintenanceForm.controls['details'].valid">
+                            detailsisrequired
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                 
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"
+                    (click)="saveMaintenance()">Save</button>
+                <button mat-raised-button color="warn"
+                    (click)="onCancelClick()">Cancel</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
+    </mat-card>
+</div>
+<!-- <div class="page-content" *ngIf="isEdit">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Edit Maintenance
+            </mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="maintenanceForm">
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
+                        <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['siteId'].valid">
+                            {{'Assets.Management.PleaseSelectSite'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['projectId'].valid">
+                            {{'Assets.Management.PleaseSelectProject'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
+                        <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
+                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
+                                {{location.name1}}(<span>{{location.locationReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['locationId'].valid">
+                            {{'Assets.Management.PleaseSelectLocation'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Asset'|translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="assetId">
+                            <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
+                                {{asset.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!maintenanceForm.controls['assetId'].valid">
+                            {{'Work Order.Management.Please Select Asset'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </form>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"
+                    (click)="saveMaintenance()">Save</button>
+                <button mat-raised-button color="warn"
+                    (click)="onCancelClick()">Management</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
+    </mat-card>
+</div> -->

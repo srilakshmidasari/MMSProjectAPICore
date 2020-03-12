@@ -37,7 +37,8 @@
     "Inventory":"Inventory",
     "Item":"Item",
     "Purchase Order":"Purchase Order",
-    "Work Order":"Work Order"
+    "Work Order":"Work Order",
+    "Preventive Maintenance":"Preventive Maintenance"
     
   },
   "pageHeader": {
@@ -61,7 +62,8 @@
     "Item":"Item",
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
-    "InventoryItems" : "Inventory Items"
+    "InventoryItems" : "Inventory Items",
+    "Preventive Maintenance":"Preventive Maintenance"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
