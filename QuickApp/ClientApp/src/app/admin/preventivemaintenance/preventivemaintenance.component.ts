@@ -13,8 +13,8 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 export class PreventivemaintenanceComponent implements OnInit {
   isAdding: boolean;
   maitananceRefData: any = {};
-  isNewmaintanance:boolean;
-  displayedColumns =['sitename','projectname','locationName','assetname','startDate','technician','duration','details', 'Actions']
+  isNewMaintanance:boolean;
+  displayedColumns =['sitename','projectname','locationName','assetname','startDate','technician','duration','details', 'isActive','Actions']
   maintanacecoloumns:any[]=[{
     sitename:'AparnaCostructions',projectname:'B1',locationName:"WestFace Buildiing1",assetname:'Inverter',startDate:'12-3-2020',technician:'Sabitha',duration:'8 hrs',details:'working good'
   }]
@@ -23,7 +23,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   maintenanceForm: FormGroup;
-
+  
   constructor(private accountService: AccountService,
     private authService: AuthService,private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -39,15 +39,18 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.maitananceRefData={};
     if(maintanance!=undefined){
       this.isAdding=true;
-      this.isNewmaintanance=false;
+      this.isNewMaintanance=false;
       this.maitananceRefData=maintanance;
+      this.resetForm();
     }
     else {
       this.isAdding = true;
-      this.isNewmaintanance = true;
-       this.buildForm();
-    }
+      this.isNewMaintanance = true;
+      this.buildForm();
+    } 
   }
+
+
   confirmDelete(){
 
   }
@@ -62,10 +65,24 @@ private buildForm() {
     startDate:['',Validators.required],
     technician:['',Validators.required],
     duration:['',Validators.required],
-    details:['',Validators.required]
+    details:['',Validators.required],
+    isActive:[true]
   })
 }
-  
+private resetForm() {
+  this.maintenanceForm.reset({
+    siteId: this.maitananceRefData.siteId || '',
+    projectId: this.maitananceRefData.projectId || '',
+    locationId: this.maitananceRefData.locationId || '',
+    assetId: this.maitananceRefData.assetId || '',
+    startDate: this.maitananceRefData.startDate || '',
+    technician:this.maitananceRefData.technician ||'',
+    duration:this.maitananceRefData.duration || '',
+    details:this.maitananceRefData.details ||'',
+    isActive: this.maitananceRefData.isActive || ''
+  });
+}
+
   
   // On Search
   public applyFilter(filterValue: string) {

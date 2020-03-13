@@ -41,6 +41,13 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="isActive">
+                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
+                    IsActive</mat-header-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
+                    <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
+                </mat-cell>
+            </ng-container>
           
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
@@ -76,8 +83,8 @@
 <div class="page-content" *ngIf="isAdding">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Add Maintanance
-            </mat-card-title>
+            <mat-card-title *ngIf="isNewMaintanance">Add Project</mat-card-title>
+            <mat-card-title *ngIf="!isNewMaintanance">Edit Project</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
