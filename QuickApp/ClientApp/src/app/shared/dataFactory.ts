@@ -13,6 +13,7 @@ export const DataFactory={
        FileType :1,
        LookUp:2,
        ItemType :3,
+       TypeOfMaintenance:5
     },
 
     LookUp:{

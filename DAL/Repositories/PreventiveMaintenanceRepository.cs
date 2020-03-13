@@ -34,6 +34,7 @@ namespace DAL.Repositories
                               select new GetPreventiveMaintenanceResponse
                               {
                                   Id = pm.Id,
+                                  PreventiveRefId =pm.PreventiveRefId,
                                   StartDate = pm.StartDate,
                                   DurationInHours = pm.DurationinHours,
                                   Details = pm.Details,
@@ -139,8 +140,9 @@ namespace DAL.Repositories
 
                 foreach (var sId in PmOrders.AssetIds)
                 {
-                    _appContext.PMAssetXrefs.Add(new PMAssetXref { PreventiveMaintenanceId = PM.Id, AssetId = sId });
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId , PreventiveMaintenanceId = PM.Id });
                 }
+                _appContext.SaveChanges();
 
                 if (PmOrders != null)
                 {

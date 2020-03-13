@@ -10,7 +10,7 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="itemName" matSortDirection="asc"
             matSortDisableClear>
-            <ng-container matColumnDef="assetName">
+            <!-- <ng-container matColumnDef="assetName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.assetName}} </mat-cell>
             </ng-container>
@@ -25,7 +25,7 @@
             <ng-container matColumnDef="locationName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="startDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
@@ -138,7 +138,7 @@
 
                     <mat-form-field class="col-md-3">
                         <mat-label>Select Asset<span>*</span></mat-label>
-                        <mat-select formControlName="assetId">
+                        <mat-select formControlName="assetId" multiple>
                             <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
                                 {{asset.name1}}
                             </mat-option>

@@ -13,10 +13,9 @@ namespace DAL.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-
-        //[Required]
-        //[Display(Name = "Asset Id")]
-        //public int AssetId { get; set; }
+        
+        [Display(Name = "Preventive Ref Id")]
+        public string PreventiveRefId { get; set; }
 
         [Required]
         [Display(Name = "Start Date")]
