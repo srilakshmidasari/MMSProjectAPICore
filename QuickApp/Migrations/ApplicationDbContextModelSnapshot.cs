@@ -712,6 +712,71 @@ namespace MMS.Migrations
                     b.ToTable("LookUpProjectXref");
                 });
 
+            modelBuilder.Entity("DAL.Models.PreventiveMaintenance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Details")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("DurationinHours")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypeOfMaintenance")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("WorkTechnicianId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("StatusTypeId");
+
+                    b.HasIndex("TypeOfMaintenance");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.HasIndex("WorkTechnicianId");
+
+                    b.ToTable("PreventiveMaintenance");
+                });
+
             modelBuilder.Entity("DAL.Models.Project", b =>
                 {
                     b.Property<int>("Id")
@@ -1661,6 +1726,45 @@ namespace MMS.Migrations
                         .WithMany("StorexrefId")
                         .HasForeignKey("StoreId")
                         .HasConstraintName("FK_StorexrefId")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.PreventiveMaintenance", b =>
+                {
+                    b.HasOne("DAL.Models.AssetLocation", "Asset_Id")
+                        .WithMany("App_PreventiveMaintenance_Asset_Id")
+                        .HasForeignKey("AssetId")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_Asset_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_PreventiveMaintenance_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
+                        .WithMany("App_PreventiveMaintenance_StatusId")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_StatusId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "TypeOfMaintenance_Id")
+                        .WithMany("App_PreventiveMaintenance_MaintenanceId")
+                        .HasForeignKey("TypeOfMaintenance")
+                        .HasConstraintName("FK_AApp_PreventiveMaintenance_MaintenanceId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_PreventiveMaintenance_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_UpdatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "WorkTechnician_Id")
+                        .WithMany("App_PreventiveMaintenance_WorkTechinician_Id")
+                        .HasForeignKey("WorkTechnicianId")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_WorkTechinician_Id")
                         .IsRequired();
                 });
 

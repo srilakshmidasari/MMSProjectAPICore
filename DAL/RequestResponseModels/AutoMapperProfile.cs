@@ -115,6 +115,16 @@ namespace DAL.RequestResponseModels
                  .ForMember(d => d.Item_Id, map => map.Ignore())
                  .ForMember(d => d.PurchaseOrder_Id, map => map.Ignore());
 
+            CreateMap<UpsertPreventiveMaintenance, PreventiveMaintenance>()
+              .ForMember(d => d.Asset_Id, map => map.Ignore())
+              .ForMember(d => d.StatusType_Id, map => map.Ignore())
+              .ForMember(d => d.TypeOfMaintenance_Id, map => map.Ignore())
+              .ForMember(d => d.WorkTechnician_Id, map => map.Ignore());
+              
+             
+
+            
+
         }
     }
 }

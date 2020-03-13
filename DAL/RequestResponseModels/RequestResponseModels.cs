@@ -603,5 +603,42 @@ namespace DAL.RequestResponseModels
 
             public int LocationId { get; set; }
         }
+
+        public class GetPreventiveMaintenanceResponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int AssetId { get; set; }
+            public string AssetName { get; set; }
+            public int SiteId { get; set; }
+            public string SiteName { get; set; }
+            public int ProjectId { get; set; }
+            public string ProjectName { get; set; }
+            public int LocationId { get; set; }
+            public string LocationName { get; set; }
+            public DateTime StartDate { get; set; }
+            public string DurationInHours { get; set; }
+            public int TypeOfMaintainanceId { get; set; }
+            public string TypeOfMaintainanceName { get; set; }
+            public string Details { get; set; }          
+            public int StatusTypeId { get; set; }
+            public string StatusTypeName { get; set; }
+            public int TechnicianId { get; set; }
+            public string TechnicianName { get; set; }
+            public bool IsActive { get; set; }
+        }
+
+        public class UpsertPreventiveMaintenance : AuditableEntity
+        {
+            public int Id { get; set; }
+            public int AssetId { get; set; }
+            public DateTime StartDate { get; set; }
+            public string DurationInHours { get; set; }
+            public string Details { get; set; }
+            public int StatusTypeId { get; set; }
+            public int TypeOfMaintenance { get; set; }          
+            public int WorkTechnicianId { get; set; }
+            public bool IsActive { get; set; }
+
+        }
     }
 }

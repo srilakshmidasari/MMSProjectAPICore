@@ -76,7 +76,7 @@ namespace DAL.Models
         public ICollection<WorkOrder> App_WorkOrder_WorkTechinician_Id { get; set; }
         public ICollection<WorkOrder> App_WorkOrder_WorkFault_Id { get; set; }
 
-
+        public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_WorkTechinician_Id { get; set; }
 
 
     }

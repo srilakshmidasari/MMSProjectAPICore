@@ -432,6 +432,7 @@ namespace MMS.Controllers
                 ApplicationUser appUser = _mapper.Map<ApplicationUser>(user);
 
                 var result = await _accountManager.CreateUserAsync(appUser, user.Roles, user.NewPassword);
+                 
                 foreach (var up in user.ProjectIds)
                 {
                     _appcontext.UserProjectXrefs.Add(new UserProjectXref

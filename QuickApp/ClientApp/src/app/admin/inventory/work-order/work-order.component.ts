@@ -427,7 +427,6 @@ export class WorkOrderComponent implements OnInit {
       "endDate": formModel.endDate,
       "reference1": formModel.reference1,
       "extradetails": formModel.extraDetails,
-      "locationName": formModel.locationName,
       "issue": formModel.issue,
       "resolution": formModel.resolution,
       "statusTypeId": DataFactory.StatusTypes.Open,

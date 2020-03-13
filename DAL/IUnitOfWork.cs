@@ -30,6 +30,8 @@ namespace DAL
         IPurchaseOrderRepository  Purchages { get; }
 
         IWorkOrderRepository WorkOrders { get; }
+
+        IPreventiveMaintenanceRepository PreventiveMaintenances { get; }
         int SaveChanges();
     }
 }

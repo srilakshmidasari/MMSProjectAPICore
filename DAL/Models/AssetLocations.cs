@@ -107,5 +107,8 @@ namespace DAL.Models
 
         public ICollection<WorkOrder> App_WorkOrderAsset_Id { get; set; }
 
+        public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_Asset_Id { get; set; }
+
+
     }
 }

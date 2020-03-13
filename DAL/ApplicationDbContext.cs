@@ -40,7 +40,9 @@ namespace DAL
         public DbSet<UserProjectXref> UserProjectXrefs { get; set; }
 
         public DbSet<WorkOrderStatusHistory> WorkOrderStatusHistories { get; set; }
-        
+
+        public DbSet<PreventiveMaintenance> PreventiveMaintenances { get; set; }
+
         public DbSet<Inventory> Inventories { get; set; }
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -92,6 +94,8 @@ namespace DAL
             builder.Entity<UserProjectXref>().ToTable("UserProjectXref");
             builder.Entity<Inventory>().ToTable("Inventory");
             builder.Entity<WorkOrderStatusHistory>().ToTable("WorkOrderStatusHistory");
+            builder.Entity<PreventiveMaintenance>().ToTable("PreventiveMaintenance");
+            builder.Entity<PreventiveMaintenance>().Property(p => p.IsActive).HasDefaultValue(true);
 
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
@@ -542,6 +546,45 @@ namespace DAL
                 .HasForeignKey(d => d.UpdatedBy)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_App_WorkOrderStatusHistory_UpdatedUser");
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.CreatedUser)
+               .WithMany(p => p.App_PreventiveMaintenance_CreatedUser)
+               .HasForeignKey(d => d.CreatedBy)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_PreventiveMaintenance_CreatedUser");
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.UpdatedUser)
+                .WithMany(p => p.App_PreventiveMaintenance_UpdatedUser)
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_PreventiveMaintenance_UpdatedUser");
+
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.Asset_Id)
+                .WithMany(p => p.App_PreventiveMaintenance_Asset_Id)
+                .HasForeignKey(d => d.AssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_PreventiveMaintenance_Asset_Id");
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.StatusType_Id)
+             .WithMany(p => p.App_PreventiveMaintenance_StatusId)
+             .HasForeignKey(d => d.StatusTypeId)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_PreventiveMaintenance_StatusId");
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.TypeOfMaintenance_Id)
+             .WithMany(p => p.App_PreventiveMaintenance_MaintenanceId)
+             .HasForeignKey(d => d.TypeOfMaintenance)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_AApp_PreventiveMaintenance_MaintenanceId");
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.WorkTechnician_Id)
+             .WithMany(p => p.App_PreventiveMaintenance_WorkTechinician_Id)
+             .HasForeignKey(d => d.WorkTechnicianId)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_PreventiveMaintenance_WorkTechinician_Id");
+
+            
 
 
         }

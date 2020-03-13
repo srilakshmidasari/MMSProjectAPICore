@@ -39,7 +39,6 @@ namespace DAL.Repositories
                                   Id = p.Id,
                                   Name1 = p.Name1,
                                   Name2 = p.Name2,
-
                                   ProjectReference = p.ProjectReference,
                                   SiteId = s.Id,
                                   SiteName1 = s.Name1,

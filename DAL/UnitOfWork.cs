@@ -30,7 +30,7 @@ namespace DAL
         IPurchaseOrderRepository _purchages;
 
         IWorkOrderRepository _workorders;
-
+        IPreventiveMaintenanceRepository _preventiveMaintenance;
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
             _context = context;
@@ -136,6 +136,17 @@ namespace DAL
                     _workorders = new WorkOrderRepository(_context, _mapper, _configuration);
 
                 return _workorders;
+            }
+        }
+
+        public IPreventiveMaintenanceRepository PreventiveMaintenances
+        {
+            get
+            {
+                if (_preventiveMaintenance == null)
+                    _preventiveMaintenance = new PreventiveMaintenanceRepository(_context, _mapper, _configuration);
+
+                return _preventiveMaintenance;
             }
         }
 
