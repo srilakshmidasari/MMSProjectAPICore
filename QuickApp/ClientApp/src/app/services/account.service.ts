@@ -484,5 +484,19 @@ deleteAssetRepository(repositoryId) {
   getAllInventory() {
     return this.accountEndpoint.getAllInventoryEndpoint();
   }
+
+  // PreventiveMaintenance
+
+  getpreventive(){
+    return this.accountEndpoint.getpreventiveEndpoint();
+  }
+    
+  Addmaintenance(reqObject) {
+    return this.accountEndpoint.AddMaintenanceEndpoint(reqObject);
+  }
+
+  UpdateMaintenance(reqObject) {
+    return this.accountEndpoint.UpdateMaintenanceEndpoint(reqObject);
+  }
   
 }
