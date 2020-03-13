@@ -712,7 +712,7 @@ namespace MMS.Migrations
                     b.ToTable("LookUpProjectXref");
                 });
 
-            modelBuilder.Entity("DAL.Models.PreventiveMaintenance", b =>
+            modelBuilder.Entity("DAL.Models.PMAssetXref", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -721,6 +721,75 @@ namespace MMS.Migrations
 
                     b.Property<int>("AssetId")
                         .HasColumnType("int");
+
+                    b.Property<int>("PreventiveMaintenanceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetId");
+
+                    b.HasIndex("PreventiveMaintenanceId");
+
+                    b.ToTable("PMAssetXref");
+                });
+
+            modelBuilder.Entity("DAL.Models.PMStatusHistory", b =>
+                {
+                    b.Property<int>("PMStatusHistoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Comments")
+                        .HasColumnType("nvarchar(1000)")
+                        .HasMaxLength(1000);
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("PreventiveMaintenanceId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedUserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("PMStatusHistoryId");
+
+                    b.HasIndex("CreatedUserId");
+
+                    b.HasIndex("PreventiveMaintenanceId");
+
+                    b.HasIndex("StatusTypeId");
+
+                    b.HasIndex("UpdatedUserId");
+
+                    b.ToTable("PMStatusHistory");
+                });
+
+            modelBuilder.Entity("DAL.Models.PreventiveMaintenance", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
@@ -761,8 +830,6 @@ namespace MMS.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AssetId");
 
                     b.HasIndex("CreatedBy");
 
@@ -1283,6 +1350,9 @@ namespace MMS.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderTypeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Reference1")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1324,6 +1394,8 @@ namespace MMS.Migrations
                     b.HasIndex("AssetId");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("OrderTypeId");
 
                     b.HasIndex("StatusTypeId");
 
@@ -1729,14 +1801,46 @@ namespace MMS.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("DAL.Models.PreventiveMaintenance", b =>
+            modelBuilder.Entity("DAL.Models.PMAssetXref", b =>
                 {
                     b.HasOne("DAL.Models.AssetLocation", "Asset_Id")
-                        .WithMany("App_PreventiveMaintenance_Asset_Id")
+                        .WithMany("App_PMAssetXref_Asset_Id")
                         .HasForeignKey("AssetId")
-                        .HasConstraintName("FK_App_PreventiveMaintenance_Asset_Id")
+                        .HasConstraintName("FK_App_PMAssetXref_Asset_Id")
                         .IsRequired();
 
+                    b.HasOne("DAL.Models.PreventiveMaintenance", "PreventiveMaintenance_Id")
+                        .WithMany("App_PreventiveMaintenance_AssetXref_Id")
+                        .HasForeignKey("PreventiveMaintenanceId")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_AssetXref_Id")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.PMStatusHistory", b =>
+                {
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany()
+                        .HasForeignKey("CreatedUserId");
+
+                    b.HasOne("DAL.Models.PreventiveMaintenance", "PreventiveMaintenance_Id")
+                        .WithMany("App_PMStatusHistory_PMtStatus_Id")
+                        .HasForeignKey("PreventiveMaintenanceId")
+                        .HasConstraintName("FK_App_PMStatusHistory_PMtStatus_Id")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "TypeCdDmt")
+                        .WithMany("App_PMStatusHistoryr_StatusId")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("FK_App_PMStatusHistoryr_StatusId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany()
+                        .HasForeignKey("UpdatedUserId");
+                });
+
+            modelBuilder.Entity("DAL.Models.PreventiveMaintenance", b =>
+                {
                     b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
                         .WithMany("App_PreventiveMaintenance_CreatedUser")
                         .HasForeignKey("CreatedBy")
@@ -1947,6 +2051,12 @@ namespace MMS.Migrations
                         .WithMany("App_WorkOrder_CreatedUser")
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_App_WorkOrder_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "OrderType_Id")
+                        .WithMany("App_WorkOrder_OrderTypeId")
+                        .HasForeignKey("OrderTypeId")
+                        .HasConstraintName("FK_App_WorkOrder_OrderTypeId")
                         .IsRequired();
 
                     b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")

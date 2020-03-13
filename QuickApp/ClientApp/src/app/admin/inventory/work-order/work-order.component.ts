@@ -435,6 +435,7 @@ export class WorkOrderComponent implements OnInit {
       "workTechnicianId": formModel.workTechId,
       "workFaultId": formModel.workFaultId,
       "storeId": formModel.storeId,
+      "orderTypeId": DataFactory.OrderTypes.NormalWorkOrder,
       "isActive": true,
       "workOrderItems": workOrderItems,
       "createdBy": this.currentUser.id,

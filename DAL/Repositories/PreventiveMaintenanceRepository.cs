@@ -24,14 +24,10 @@ namespace DAL.Repositories
 
         public ListDataResponse<GetPreventiveMaintenanceResponse> GetAllPreventiveMaintenances()
         {
-            ListDataResponse<GetPreventiveMaintenanceResponse> response = new ListDataResponse<GetPreventiveMaintenanceResponse>();
+            ListDataResponse<GetPreventiveMaintenanceResponse> response = new ListDataResponse<GetPreventiveMaintenanceResponse> ();
             try
             {
-                var result = (from pm in _appContext.PreventiveMaintenances
-                              join a in _appContext.AssetLocations on pm.AssetId equals a.Id
-                              join l in _appContext.Locations on a.LocationId equals l.Id
-                              join p in _appContext.Projects on l.ProjectId equals p.Id
-                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+                var result = (from pm in _appContext.PreventiveMaintenances                            
                               join wt in _appContext.LookUps on pm.WorkTechnicianId equals wt.Id
                               join sta in _appContext.TypeCdDmts on pm.StatusTypeId equals sta.TypeCdDmtId
                               join ty in _appContext.TypeCdDmts on pm.TypeOfMaintenance equals ty.TypeCdDmtId
@@ -47,14 +43,6 @@ namespace DAL.Repositories
                                   TypeOfMaintainanceName = ty.Description,
                                   StatusTypeId = pm.StatusTypeId,
                                   StatusTypeName = sta.Description,
-                                  AssetId = pm.AssetId,
-                                  AssetName = a.Name1,
-                                  SiteId = s.Id,
-                                  SiteName = s.Name1,
-                                  ProjectId = p.Id,
-                                  ProjectName = p.Name1,
-                                  LocationId = l.Id,
-                                  LocationName = l.Name1,
                                   IsActive = pm.IsActive,
                                   CreatedBy = pm.CreatedBy,
                                   CreatedDate = pm.CreatedDate,
@@ -74,7 +62,7 @@ namespace DAL.Repositories
                 {
                     response.IsSuccess = true;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "No Work Preventive Maintenances Found";
+                    response.EndUserMessage = "No Preventive Maintenances Found";
                 }
             }
             catch (Exception ex)
@@ -88,6 +76,58 @@ namespace DAL.Repositories
             return response;
         }
 
+        public ListDataResponse<GetPMAssetResponse> GetPMAssetsbyPMId(int Id)
+        {
+            ListDataResponse<GetPMAssetResponse> response = new ListDataResponse<GetPMAssetResponse>();
+            try
+            {
+                var result = (from pma in _appContext.PMAssetXrefs.Where(x => x.PreventiveMaintenanceId == Id).ToList()
+                              join pm in _appContext.PreventiveMaintenances on pma.PreventiveMaintenanceId equals pm.Id
+                              join a in _appContext.AssetLocations on pma.AssetId equals a.Id
+                              join l in _appContext.Locations on a.LocationId equals l.Id
+                              join p in _appContext.Projects on l.ProjectId equals p.Id
+                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+
+                              select new GetPMAssetResponse
+                              {
+                                  AssetId = pma.AssetId,
+                                  AssetReference = a.AssetRef,
+                                  AssetName = a.Name1,
+                                  LocationId = a.LocationId,
+                                  LocationName = l.Name1,
+                                  ProjectId = l.ProjectId,
+                                  ProjectName = p.Name1,
+                                  SiteId = p.SiteId,
+                                  SiteName = s.Name1,
+
+                              }).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Assets Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Assets Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
+
         public ValueDataResponse<PreventiveMaintenance> InsertPreventiveMaintenance(UpsertPreventiveMaintenance PmOrders)
         {
             ValueDataResponse<PreventiveMaintenance> response = new ValueDataResponse<PreventiveMaintenance>();
@@ -96,6 +136,11 @@ namespace DAL.Repositories
                 PreventiveMaintenance PM = _mapper.Map<PreventiveMaintenance>(PmOrders);
                 var result = _appContext.PreventiveMaintenances.Add(PM);
                 _appContext.SaveChanges();
+
+                foreach (var sId in PmOrders.AssetIds)
+                {
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { PreventiveMaintenanceId = PM.Id, AssetId = sId });
+                }
 
                 if (PmOrders != null)
                 {
@@ -133,7 +178,7 @@ namespace DAL.Repositories
 
                 if (result != null)
                 {
-                    result.AssetId = PmOrder.AssetId;
+                   // result.AssetId = PmOrder.AssetId;
                     result.StartDate = PmOrder.StartDate;
                     result.DurationinHours = PmOrder.DurationInHours;
                     result.StatusTypeId = PmOrder.StatusTypeId;

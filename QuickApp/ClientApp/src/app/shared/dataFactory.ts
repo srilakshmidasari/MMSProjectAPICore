@@ -33,5 +33,10 @@ export const DataFactory={
         Approved:15,
         Rejected:16,
         Closed:17
+    },
+
+    OrderTypes:{
+        NormalWorkOrder:23,
+        PMOrder:24
     }
 }

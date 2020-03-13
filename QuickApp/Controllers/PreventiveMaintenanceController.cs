@@ -32,6 +32,12 @@ namespace MMS.Controllers
             return _unitOfWork.PreventiveMaintenances.GetAllPreventiveMaintenances();
         }
 
+        [HttpGet("GetPMAssetsbyPMId/{Id}")]
+        public ListDataResponse<GetPMAssetResponse> GetPMAssetsbyPMId(int Id)
+        {
+            return _unitOfWork.PreventiveMaintenances.GetPMAssetsbyPMId(Id);
+        }
+
         [HttpPost]
         public ValueDataResponse<PreventiveMaintenance> InsertPreventiveMaintenance(UpsertPreventiveMaintenance PmOrder)
         {

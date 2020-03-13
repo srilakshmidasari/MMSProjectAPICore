@@ -49,6 +49,7 @@ namespace DAL.Repositories
                                   EndDate = wo.EndDate,
                                   Reference1 = wo.Reference1,
                                   ExtraDetails = wo.ExtraDetails,
+                                  OrderTypeId =wo.OrderTypeId,
                                   Issue = wo.Issue,
                                   Resolution = wo.Resolution,
                                   StatusTypeId = wo.StatusTypeId,
@@ -132,6 +133,8 @@ namespace DAL.Repositories
                     {
                         response.Result = Wro;
                         response.IsSuccess = true;
+                        
+                        
                         response.AffectedRecords = 1;
                         response.EndUserMessage = "Work Order Added Successfully";
                     }
@@ -187,6 +190,7 @@ namespace DAL.Repositories
                     if (result != null)
                     {
                         result.AssetId = workorders.AssetId;
+                        result.OrderTypeId = workorders.OrderTypeId;
                         result.StartDate = workorders.StartDate;
                         result.EndDate = workorders.EndDate;
                         result.WorkTypeId = workorders.WorkTypeId;

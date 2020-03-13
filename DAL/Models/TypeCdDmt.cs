@@ -84,6 +84,11 @@ namespace DAL.Models
 
         public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_MaintenanceId { get; set; }
 
+        public ICollection<WorkOrder> App_WorkOrder_OrderTypeId { get; set; }
+
+        public ICollection<PMStatusHistory> App_PMStatusHistoryr_StatusId { get; set; }
+
+
 
     }
 }

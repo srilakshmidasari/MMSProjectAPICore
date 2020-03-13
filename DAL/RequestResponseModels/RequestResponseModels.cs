@@ -501,6 +501,8 @@ namespace DAL.RequestResponseModels
             public string StoreName { get; set; }
             public int WorkFaultId { get; set; }
             public string WorkFaultName { get; set; }
+            public int OrderTypeId { get; set; }
+            public int OrderTypeName { get; set; }
             public bool IsActive { get; set; }
         }
 
@@ -520,6 +522,7 @@ namespace DAL.RequestResponseModels
             public int WorkTechnicianId { get; set; }
             public int WorkFaultId { get; set; }
             public int StoreId { get; set; }
+            public int OrderTypeId { get; set; } 
             public bool IsActive { get; set; }
             public List<WorkOrderItem> WorkOrderItems { get; set; }
 
@@ -607,14 +610,6 @@ namespace DAL.RequestResponseModels
         public class GetPreventiveMaintenanceResponse : AuditableEntity
         {
             public int Id { get; set; }
-            public int AssetId { get; set; }
-            public string AssetName { get; set; }
-            public int SiteId { get; set; }
-            public string SiteName { get; set; }
-            public int ProjectId { get; set; }
-            public string ProjectName { get; set; }
-            public int LocationId { get; set; }
-            public string LocationName { get; set; }
             public DateTime StartDate { get; set; }
             public string DurationInHours { get; set; }
             public int TypeOfMaintainanceId { get; set; }
@@ -630,7 +625,7 @@ namespace DAL.RequestResponseModels
         public class UpsertPreventiveMaintenance : AuditableEntity
         {
             public int Id { get; set; }
-            public int AssetId { get; set; }
+            public int[] AssetIds { get; set; }
             public DateTime StartDate { get; set; }
             public string DurationInHours { get; set; }
             public string Details { get; set; }
@@ -640,5 +635,19 @@ namespace DAL.RequestResponseModels
             public bool IsActive { get; set; }
 
         }
+
+        public class GetPMAssetResponse
+        {
+            public int AssetId { get; set; }
+            public string AssetName { get; set; }
+            public string AssetReference { get; set; }
+            public int SiteId { get; set; }
+            public string SiteName { get; set; }
+            public int ProjectId { get; set; }
+            public string ProjectName { get; set; }
+            public int LocationId { get; set; }
+            public string LocationName { get; set; }
+        }
+       
     }
 }

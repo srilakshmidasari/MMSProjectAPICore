@@ -11,6 +11,8 @@ namespace DAL.Repositories.Interfaces
     {
         ListDataResponse<GetPreventiveMaintenanceResponse> GetAllPreventiveMaintenances();
 
+        ListDataResponse<GetPMAssetResponse> GetPMAssetsbyPMId(int Id);
+
         ValueDataResponse<PreventiveMaintenance> InsertPreventiveMaintenance(UpsertPreventiveMaintenance PmOrder);
 
         ValueDataResponse<PreventiveMaintenance> UpdatePreventiveMaintenance(UpsertPreventiveMaintenance PmOrder);

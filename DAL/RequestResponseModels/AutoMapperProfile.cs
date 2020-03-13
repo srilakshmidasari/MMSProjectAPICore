@@ -109,6 +109,7 @@ namespace DAL.RequestResponseModels
                 .ForMember(d => d.WorkStatus_Id, map => map.Ignore())
                 .ForMember(d => d.WorkTechnician_Id, map => map.Ignore())
                 .ForMember(d => d.WorkType_Id, map => map.Ignore())
+                .ForMember(d => d.OrderType_Id, map => map.Ignore())
                 .ForMember(d => d.Store_Id, map => map.Ignore());
 
             CreateMap<UpsertInventory, Inventory>()
@@ -116,7 +117,6 @@ namespace DAL.RequestResponseModels
                  .ForMember(d => d.PurchaseOrder_Id, map => map.Ignore());
 
             CreateMap<UpsertPreventiveMaintenance, PreventiveMaintenance>()
-              .ForMember(d => d.Asset_Id, map => map.Ignore())
               .ForMember(d => d.StatusType_Id, map => map.Ignore())
               .ForMember(d => d.TypeOfMaintenance_Id, map => map.Ignore())
               .ForMember(d => d.WorkTechnician_Id, map => map.Ignore());

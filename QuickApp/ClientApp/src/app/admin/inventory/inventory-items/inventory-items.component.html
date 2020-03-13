@@ -5,22 +5,14 @@
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search for Items..">
         </mat-form-field>
     </div>
-   <div class="example-container mat-elevation-z8 table-responsive">
+    <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="itemName" matSortDirection="asc"
             matSortDisableClear>
-            <ng-container matColumnDef="purchaseReference">
+            <!-- <ng-container matColumnDef="purchaseReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Purchase Reference</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.purchaseReference}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="projectName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="storeName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Store Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.storeName}} </mat-cell>
-            </ng-container>
+            </ng-container> -->
             <ng-container matColumnDef="itemName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Item Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.itemName}} </mat-cell>
@@ -28,6 +20,14 @@
             <ng-container matColumnDef="quantity">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.quantity}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="storeName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Store Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.storeName}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="projectName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumns;">

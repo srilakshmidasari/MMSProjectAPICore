@@ -14,9 +14,9 @@ namespace DAL.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
-        [Required]
-        [Display(Name = "Asset Id")]
-        public int AssetId { get; set; }
+        //[Required]
+        //[Display(Name = "Asset Id")]
+        //public int AssetId { get; set; }
 
         [Required]
         [Display(Name = "Start Date")]
@@ -68,13 +68,18 @@ namespace DAL.Models
         [JsonIgnore]
         public LookUp WorkTechnician_Id { get; set; }
 
-        [JsonIgnore]
-        public AssetLocation Asset_Id { get; set; }
+        //[JsonIgnore]
+        //public AssetLocation Asset_Id { get; set; }
 
         [JsonIgnore]
         public TypeCdDmt StatusType_Id { get; set; }
 
         [JsonIgnore]
         public TypeCdDmt TypeOfMaintenance_Id { get; set; }
+
+
+        public ICollection<PMAssetXref> App_PreventiveMaintenance_AssetXref_Id { get; set; }
+
+        public ICollection<PMStatusHistory> App_PMStatusHistory_PMtStatus_Id { get; set; }
     }
 }

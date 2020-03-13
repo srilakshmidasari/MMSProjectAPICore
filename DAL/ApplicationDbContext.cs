@@ -44,6 +44,12 @@ namespace DAL
         public DbSet<PreventiveMaintenance> PreventiveMaintenances { get; set; }
 
         public DbSet<Inventory> Inventories { get; set; }
+
+        public DbSet<PMAssetXref> PMAssetXrefs { get; set; }
+
+        public DbSet<PMStatusHistory> PMStatusHistories { get; set; }
+
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
 
@@ -96,6 +102,10 @@ namespace DAL
             builder.Entity<WorkOrderStatusHistory>().ToTable("WorkOrderStatusHistory");
             builder.Entity<PreventiveMaintenance>().ToTable("PreventiveMaintenance");
             builder.Entity<PreventiveMaintenance>().Property(p => p.IsActive).HasDefaultValue(true);
+            builder.Entity<PMAssetXref>().ToTable("PMAssetXref");
+            builder.Entity<PMStatusHistory>().ToTable("PMStatusHistory");
+
+
 
 
             builder.Entity<SiteInfo>().HasOne(d => d.CreatedUser)
@@ -274,10 +284,10 @@ namespace DAL
                  .HasConstraintName("FK_App_AssetGroup_UpdatedUser");
 
             builder.Entity<AssetLocation>().HasOne(d => d.CreatedUser)
-          .WithMany(p => p.App_AssetLocation_CreatedUser)
-          .HasForeignKey(d => d.CreatedBy)
-          .OnDelete(DeleteBehavior.ClientSetNull)
-          .HasConstraintName("FK_AssetLocation_CreatedUser");
+               .WithMany(p => p.App_AssetLocation_CreatedUser)
+               .HasForeignKey(d => d.CreatedBy)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_AssetLocation_CreatedUser");
 
             builder.Entity<AssetLocation>().HasOne(d => d.UpdatedUser)
                  .WithMany(p => p.App_AssetLocation_UpdatedUser)
@@ -485,6 +495,12 @@ namespace DAL
                .OnDelete(DeleteBehavior.ClientSetNull)
                .HasConstraintName("FK_WorkOrder_StatusTypeId");
 
+            builder.Entity<WorkOrder>().HasOne(d => d.OrderType_Id)
+              .WithMany(p => p.App_WorkOrder_OrderTypeId)
+              .HasForeignKey(d => d.OrderTypeId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+              .HasConstraintName("FK_App_WorkOrder_OrderTypeId");
+
             builder.Entity<WorkOrderItemXref>().HasOne(d => d.Item_Id)
                 .WithMany(p => p.App_WorkOrderItemIdXref_Id)
                 .HasForeignKey(d => d.ItemId)
@@ -560,11 +576,11 @@ namespace DAL
                 .HasConstraintName("FK_App_PreventiveMaintenance_UpdatedUser");
 
 
-            builder.Entity<PreventiveMaintenance>().HasOne(d => d.Asset_Id)
-                .WithMany(p => p.App_PreventiveMaintenance_Asset_Id)
-                .HasForeignKey(d => d.AssetId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK_App_PreventiveMaintenance_Asset_Id");
+            //builder.Entity<PreventiveMaintenance>().HasOne(d => d.Asset_Id)
+            //    .WithMany(p => p.App_PreventiveMaintenance_Asset_Id)
+            //    .HasForeignKey(d => d.AssetId)
+            //    .OnDelete(DeleteBehavior.ClientSetNull)
+            //    .HasConstraintName("FK_App_PreventiveMaintenance_Asset_Id");
 
             builder.Entity<PreventiveMaintenance>().HasOne(d => d.StatusType_Id)
              .WithMany(p => p.App_PreventiveMaintenance_StatusId)
@@ -584,7 +600,32 @@ namespace DAL
              .OnDelete(DeleteBehavior.ClientSetNull)
              .HasConstraintName("FK_App_PreventiveMaintenance_WorkTechinician_Id");
 
-            
+            builder.Entity<PMAssetXref>().HasOne(d => d.PreventiveMaintenance_Id)
+                 .WithMany(p => p.App_PreventiveMaintenance_AssetXref_Id)
+                 .HasForeignKey(d => d.PreventiveMaintenanceId)
+                 .OnDelete(DeleteBehavior.ClientSetNull)
+                 .HasConstraintName("FK_App_PreventiveMaintenance_AssetXref_Id");
+
+            builder.Entity<PMAssetXref>().HasOne(d => d.Asset_Id)
+                .WithMany(p => p.App_PMAssetXref_Asset_Id)
+                .HasForeignKey(d => d.AssetId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_PMAssetXref_Asset_Id");
+
+            builder.Entity<PMStatusHistory>().HasOne(d => d.PreventiveMaintenance_Id)
+              .WithMany(p => p.App_PMStatusHistory_PMtStatus_Id)
+              .HasForeignKey(d => d.PreventiveMaintenanceId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+              .HasConstraintName("FK_App_PMStatusHistory_PMtStatus_Id");
+
+
+            builder.Entity<PMStatusHistory>().HasOne(d => d.TypeCdDmt)
+              .WithMany(p => p.App_PMStatusHistoryr_StatusId)
+              .HasForeignKey(d => d.StatusTypeId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+              .HasConstraintName("FK_App_PMStatusHistoryr_StatusId");
+
+
 
 
         }

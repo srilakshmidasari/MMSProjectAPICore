@@ -78,14 +78,14 @@
               <mat-icon>assessment</mat-icon>Masters
             </mat-panel-title>
           </mat-expansion-panel-header>
-         
+
           <a mat-list-item routerLinkActive="active" *ngIf="canViewSites" routerLink="/admin/site">
             <mat-icon>house</mat-icon>{{'mainMenu.Site'| translate}}
           </a>
           <a mat-list-item routerLinkActive="active" *ngIf="canViewProjects" routerLink="/admin/project">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Project'| translate}}
           </a>
-         
+
           <a mat-list-item routerLinkActive="active" *ngIf="canViewLocation" routerLink="/admin/location">
             <mat-icon>place</mat-icon>{{'mainMenu.Location'| translate}}
           </a>
@@ -96,7 +96,7 @@
             <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
           </a>
         </mat-expansion-panel>
-         <!-- <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
+        <!-- <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
             <mat-icon>pets</mat-icon>{{'mainMenu.AssetGroup'|translate}}
          </a> -->
         <mat-nav-list>
@@ -116,26 +116,38 @@
               <mat-icon>poll</mat-icon>{{'mainMenu.Inventory'|translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
-        
+
           <a mat-list-item routerLinkActive="active" routerLink="/admin/purchaseorder">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Purchase Order'|translate}}
           </a>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/work-order">
-            <mat-icon>list_alt</mat-icon>{{'mainMenu.Work Order'|translate}}
-          </a>
-        </mat-expansion-panel>
-        <mat-nav-list>
+
           <a mat-list-item routerLinkActive="active" routerLink="/admin/inventory-items">
             <mat-icon>list_alt</mat-icon>Inventory-Items
           </a>
-        </mat-nav-list>
-        <mat-nav-list>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/preventivemaintenance">
-            <mat-icon>list_alt</mat-icon>Preventive Maintenance
+          <!-- <a mat-list-item routerLinkActive="active" routerLink="/admin/work-order">
+            <mat-icon>list_alt</mat-icon>{{'mainMenu.Work Order'|translate}}
+          </a> -->
+        </mat-expansion-panel>
+
+        <mat-expansion-panel #MMS [class.mat-elevation-z0]="!MMS.expanded">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <mat-icon>poll</mat-icon>MMS
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/work-order">
+            <mat-icon>list_alt</mat-icon>{{'mainMenu.Work Order'|translate}}
           </a>
-        </mat-nav-list>
+
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/preventivemaintenance">
+            <mat-icon>list_alt</mat-icon>PM Procedures
+          </a>
+        </mat-expansion-panel>
+
+
       </mat-nav-list>
-     
+
       <!-- <mat-nav-list>
         <a mat-list-item routerLinkActive="active" routerLink="/about"><mat-icon>info</mat-icon>{{'mainMenu.About' | translate}}</a>
       </mat-nav-list> -->

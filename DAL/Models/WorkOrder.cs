@@ -18,6 +18,10 @@ namespace DAL.Models
         public int AssetId { get; set; }
 
         [Required]
+        [Display(Name = "Order Type Id")]
+        public int OrderTypeId { get; set; }
+
+        [Required]
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
 
@@ -53,11 +57,11 @@ namespace DAL.Models
         [Display(Name = "Work Technician Id")]
         public int WorkTechnicianId { get; set; }
 
-        [Required]
+        
         [Display(Name = "Store_Id")]
         public int StoreId { get; set; }
 
-        [Required]
+        
         [Display(Name = "Work Fault Id")]
         public int WorkFaultId { get; set; }
 
@@ -108,6 +112,9 @@ namespace DAL.Models
 
         [JsonIgnore]
         public TypeCdDmt StatusType_Id { get; set; }
+
+        [JsonIgnore]
+        public TypeCdDmt OrderType_Id { get; set; }
 
         public ICollection<WorkOrderItemXref> App_WorkOrderItemxref_Id { get; set; }
 
