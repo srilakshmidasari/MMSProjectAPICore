@@ -498,5 +498,9 @@ deleteAssetRepository(repositoryId) {
   UpdateMaintenance(reqObject) {
     return this.accountEndpoint.UpdateMaintenanceEndpoint(reqObject);
   }
+
+  getPMAssetsbyPMId(Id) {
+    return this.accountEndpoint.getPMAssetsbyPMIdEndPoint(Id);
+  }
   
 }

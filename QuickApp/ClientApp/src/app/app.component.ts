@@ -124,6 +124,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.isUserLoggedIn = this.authService.isLoggedIn;
 
     // 0.5 extra sec to display preboot/loader information. Preboot screen is removed 0.5 sec later
@@ -178,6 +179,7 @@ export class AppComponent implements OnInit {
  
 
   private refreshAdminExpanderState(currentUrl: string) {
+    debugger
     setTimeout(() => {
       if (this.adminExpander && currentUrl.toLowerCase().indexOf('admin') > 0) {
         this.adminExpander.open();

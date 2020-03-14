@@ -379,7 +379,6 @@ export class ProjectComponent implements OnInit {
       .subscribe((results: any) => {
         this.alertService.stopLoadingMessage();
         this.storesList = results.listResult == null ? [] : results.listResult;
-        console.log(this.storesList)
         this.storeDataSource.data = this.storesList;
       },
         error => {

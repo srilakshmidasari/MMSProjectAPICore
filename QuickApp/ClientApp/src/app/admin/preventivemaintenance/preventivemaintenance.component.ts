@@ -22,7 +22,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   loadingIndicator: boolean;
   maintenanceData: any[] = [];
   siteList: any[] = [];
-  displayedColumns = ['startDate', 'durationInHours', 'typeOfMaintainanceName', 'technicianName', 'details', 'statusTypeName', 'isActive', 'Actions']
+  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'startDate', 'durationInHours', 'technicianName',  'statusTypeName', 'details', 'isActive', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -34,6 +34,8 @@ export class PreventivemaintenanceComponent implements OnInit {
   workTechList: any[] = [];
   TypesList: any[] = [];
   currenrDate: Date;
+  assetsPMList: any[] = [];
+  AssetIds: any[] = [];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -132,6 +134,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   // Form Building
   private buildForm() {
     this.maintenanceForm = this.formBuilder.group({
+      preventiveRefId: ['', Validators.required],
       assetId: ['', Validators.required],
       siteId: ['', Validators.required],
       projectId: ['', Validators.required],
@@ -151,42 +154,68 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.buildForm();
     }
     this.maintenanceForm.reset({
-      assetId: this.maitananceRefData.assetId || '',
-      siteId: this.maitananceRefData.projectId || '',
+      assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
+      siteId: this.maitananceRefData.siteId || '',
       projectId: this.maitananceRefData.projectId || '',
       locationId: this.maitananceRefData.locationId || '',
+      preventiveRefId: this.maitananceRefData.preventiveRefId || '',
       startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
       durationInHours: this.maitananceRefData.durationInHours || '',
       typeOfMaintainanceId: this.maitananceRefData.typeOfMaintainanceId || '',
       technicianId: this.maitananceRefData.technicianId || '',
-      details: this.maitananceRefData.statusTypeId || '',
+      details: this.maitananceRefData.details || '',
       isActive: this.maitananceRefData.isActive || ''
     });
   }
 
+  getPMAssetsbyPMId(Id) {
+    this.assetsPMList = [];
+    this.accountService.getPMAssetsbyPMId(Id).subscribe((res: any) => {
+      this.assetsPMList = res.listResult == null ? [] : res.listResult;
+      this.assetsPMList.forEach((item) => {
+        this.maitananceRefData.projectId = item.projectId,
+        this.maitananceRefData.siteId = item.siteId,
+        this.maitananceRefData.locationId = item.locationId
+        this.getProjectsByUserIdandSiteId(item.siteId)
+        this.onSelectProjectByLocation(item.projectId)
+        this.onSelectLocationByProject(item.locationId)
+        this.resetForm();
+      });
+    },
+      error => {
+      })
+  }
+
 
   editClick(maintanance?: any) {
+    this.AssetIds = [];
     this.maitananceRefData = {};
     if (maintanance != undefined) {
       this.isAdding = true;
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
-      this.resetForm();
+      this.getSitesByUserId();
+      this.getPMAssetsbyPMId(this.maitananceRefData.id)
+      this.maitananceRefData.assetId.forEach(element => {
+        this.AssetIds.push(element.assetId)
+      });
     }
     else {
       this.isAdding = true;
       this.isNewMaintanance = true;
       this.buildForm();
+      this.resetForm();
     }
+   
   }
 
   private getAllmaitenance(): any {
-    debugger
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
       "assetIds": formModel.assetId,
       "startDate": formModel.startDate,
+      "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
       "details": formModel.details,
       "statusTypeId": DataFactory.StatusTypes.Open,

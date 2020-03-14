@@ -38,6 +38,7 @@ namespace DAL.Repositories
                                   StartDate = pm.StartDate,
                                   DurationInHours = pm.DurationinHours,
                                   Details = pm.Details,
+                                  AssetId = _appContext.PMAssetXrefs.Where(S => S.PreventiveMaintenanceId == pm.Id).ToList(),
                                   TechnicianId = pm.WorkTechnicianId,
                                   TechnicianName = wt.Name1,
                                   TypeOfMaintainanceId = pm.TypeOfMaintenance,
@@ -178,9 +179,18 @@ namespace DAL.Repositories
                 PreventiveMaintenance PM = _mapper.Map<PreventiveMaintenance>(PmOrder);
                 var result = _appContext.PreventiveMaintenances.Where(x => x.Id == PmOrder.Id).FirstOrDefault();
 
+                var List = _appContext.PMAssetXrefs.Where(x => x.PreventiveMaintenanceId == result.Id).ToList();
+                _appContext.PMAssetXrefs.RemoveRange(List);
+                _appContext.SaveChanges();
+                foreach (var sId in PmOrder.AssetIds)
+                {
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId, PreventiveMaintenanceId = PM.Id });
+                }
+                _appContext.SaveChanges();
+
                 if (result != null)
                 {
-                   // result.AssetId = PmOrder.AssetId;
+                    result.PreventiveRefId = PmOrder.PreventiveRefId;
                     result.StartDate = PmOrder.StartDate;
                     result.DurationinHours = PmOrder.DurationInHours;
                     result.StatusTypeId = PmOrder.StatusTypeId;

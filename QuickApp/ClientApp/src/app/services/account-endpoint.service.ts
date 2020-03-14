@@ -100,8 +100,9 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly  _getAllInventoryUrl: string ='/api/PurchaseOrder/GetAllInventories';
   private readonly  _getPreventiveMaintenance: string ='/api/PreventiveMaintenance';
-  // private readonly  _AddMaintenance: string ='/api/PreventiveMaintenance';
-  // private readonly  _UpdateMaintenance: string ='/api/PreventiveMaintenance';
+
+  private readonly  _getPMAssetsbyPMIdUrl: string ='/api/PreventiveMaintenance/GetPMAssetsbyPMId';
+ 
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -189,6 +190,8 @@ export class AccountEndpoint extends EndpointBase {
 
   get getAllInventoryUrl() { return this.configurations.baseUrl + this._getAllInventoryUrl; }
   get getPreventiveMaintenance() { return this.configurations.baseUrl + this._getPreventiveMaintenance; }
+
+  get getPMAssetsbyPMIdUrl() { return this.configurations.baseUrl + this._getPMAssetsbyPMIdUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -989,7 +992,14 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.UpdateMaintenanceEndpoint(reqObject));
       }));
   }
- 
+
+  getPMAssetsbyPMIdEndPoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getPMAssetsbyPMIdUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getPMAssetsbyPMIdEndPoint(Id));
+      }));
+  }
 
   
   

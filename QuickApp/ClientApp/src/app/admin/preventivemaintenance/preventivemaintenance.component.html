@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="itemName" matSortDirection="asc"
+        <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="preventiveRefId" matSortDirection="asc"
             matSortDisableClear>
             <!-- <ng-container matColumnDef="assetName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Name</mat-header-cell>
@@ -26,33 +26,34 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
             </ng-container> -->
-
+            <ng-container matColumnDef="preventiveRefId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Preventive Reference</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.preventiveRefId}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="typeOfMaintainanceName">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>Type Of Maintainance</mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.typeOfMaintainanceName}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="startDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.startDate| date: 'dd/MM/yyyy '}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="durationInHours">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Duration In Hour</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.durationInHours}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="typeOfMaintainanceName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Type Of Maintainance Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.typeOfMaintainanceName}} </mat-cell>
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>Duration In Hours</mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.durationInHours}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="technicianName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Technician Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.technicianName}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="details">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
-            </ng-container>
+            </ng-container>           
             <ng-container matColumnDef="statusTypeName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Status Type Name</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.statusTypeName}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="details">
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+                    <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
+                </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     IsActive</mat-header-cell>
@@ -103,7 +104,7 @@
             <form [formGroup]="maintenanceForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Site</mat-label>
+                        <mat-label>Select Site<span>*</span></mat-label>
                         <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
@@ -114,7 +115,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Project</mat-label>
+                        <mat-label>Select Project<span>*</span></mat-label>
                         <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
                             <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
@@ -125,7 +126,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Location</mat-label>
+                        <mat-label>Select Location<span>*</span></mat-label>
                         <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
                             <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
                                 {{location.name1}}(<span>{{location.locationReference}}</span>)
@@ -149,6 +150,14 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
+
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Preventive Reference</mat-label>
+                        <input matInput formControlName="preventiveRefId" required />
+                        <mat-error *ngIf="!maintenanceForm.controls['preventiveRefId'].valid">
+                            Preventive Reference is Required
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>Type Of Maintainance</mat-label>
                         <mat-select formControlName="typeOfMaintainanceId">
@@ -167,16 +176,10 @@
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!maintenanceForm.controls['startDate'].valid">
-                           Start Date is Required
+                            Start Date is Required
                         </mat-error>
                     </mat-form-field>
-                    <!-- <mat-form-field class="col-md-3">
-                        <mat-label>StartDate</mat-label>
-                        <input matInput formControlName="startDate" required />
-                        <mat-error *ngIf="!maintenanceForm.controls['startDate'].valid">
-                            startDateisrequired
-                        </mat-error>
-                    </mat-form-field> -->
+
                     <mat-form-field class="col-md-3">
                         <mat-label>Duration in Hours</mat-label>
                         <input matInput formControlName="durationInHours" required />
@@ -184,8 +187,9 @@
                             durationisrequired
                         </mat-error>
                     </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-6">
                         <mat-label>Techinician</mat-label>
                         <mat-select formControlName="technicianId">
                             <mat-option *ngFor="let tech of workTechList" [value]="tech.id" required>
@@ -196,9 +200,7 @@
                             Please Select Technician
                         </mat-error>
                     </mat-form-field>
-                </div>
-                <div class="row">
-                    <mat-form-field class="col-md-3">
+                    <mat-form-field class="col-md-6">
                         <mat-label>Details</mat-label>
                         <input matInput formControlName="details" required />
                         <mat-error *ngIf="!maintenanceForm.controls['details'].valid">

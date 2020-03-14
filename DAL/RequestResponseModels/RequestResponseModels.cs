@@ -611,7 +611,7 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public DateTime StartDate { get; set; }
-
+            public List<PMAssetXref> AssetId { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
             public int TypeOfMaintainanceId { get; set; }
