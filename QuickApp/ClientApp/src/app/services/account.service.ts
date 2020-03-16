@@ -161,6 +161,10 @@ export class AccountService {
     }
   }
 
+  getRoleByRoleName(name){
+    return this.accountEndpoint.getRoleByRoleNameEndpoint<Role[]>(name);
+  }
+
   newRole(role: Role) {
     return this.accountEndpoint.getNewRoleEndpoint<Role>(role).pipe<Role>(
       tap(data => this.onRolesChanged([role], AccountService.roleAddedOperation)));
@@ -183,7 +187,6 @@ export class AccountService {
   }
 
   getPermissions() {
-
     return this.accountEndpoint.getPermissionsEndpoint<Permission[]>();
   }
 

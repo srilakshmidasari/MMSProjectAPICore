@@ -47,23 +47,23 @@ namespace DAL.Models
 
        
         [Display(Name = "Work Type Id")]
-        public int WorkTypeId { get; set; }
+        public int? WorkTypeId { get; set; }
 
        
         [Display(Name = "Work Status Id")]
-        public int WorkStatusId { get; set; }
+        public int? WorkStatusId { get; set; }
 
        
         [Display(Name = "Work Technician Id")]
-        public int WorkTechnicianId { get; set; }
+        public int? WorkTechnicianId { get; set; }
 
         
         [Display(Name = "Store_Id")]
-        public int StoreId { get; set; }
+        public int? StoreId { get; set; }
 
         
         [Display(Name = "Work Fault Id")]
-        public int WorkFaultId { get; set; }
+        public int? WorkFaultId { get; set; }
 
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }

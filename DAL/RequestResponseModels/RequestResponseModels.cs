@@ -491,15 +491,15 @@ namespace DAL.RequestResponseModels
             public string Resolution { get; set; }
             public int StatusTypeId { get; set; }
             public string StatusTypeName { get; set; }
-            public int WorkTypeId { get; set; }
+            public int? WorkTypeId { get; set; }
             public string WorkTypeName { get; set; }
-            public int WorkStatusId { get; set; }
+            public int? WorkStatusId { get; set; }
             public string WorkStatusName { get; set; }
-            public int WorkTechnicianId { get; set; }
+            public int? WorkTechnicianId { get; set; }
             public string WorkTechnicianName { get; set; }
-            public int StoreId { get; set; }
+            public int? StoreId { get; set; }
             public string StoreName { get; set; }
-            public int WorkFaultId { get; set; }
+            public int? WorkFaultId { get; set; }
             public string WorkFaultName { get; set; }
             public int OrderTypeId { get; set; }
             public int OrderTypeName { get; set; }
@@ -517,11 +517,11 @@ namespace DAL.RequestResponseModels
             public string Issue { get; set; }
             public string Resolution { get; set; }
             public int StatusTypeId { get; set; }
-            public int WorkTypeId { get; set; }
-            public int WorkStatusId { get; set; }
-            public int WorkTechnicianId { get; set; }
-            public int WorkFaultId { get; set; }
-            public int StoreId { get; set; }
+            public int? WorkTypeId { get; set; }
+            public int? WorkStatusId { get; set; }
+            public int? WorkTechnicianId { get; set; }
+            public int? WorkFaultId { get; set; }
+            public int? StoreId { get; set; }
             public int OrderTypeId { get; set; } 
             public bool IsActive { get; set; }
             public List<WorkOrderItem> WorkOrderItems { get; set; }

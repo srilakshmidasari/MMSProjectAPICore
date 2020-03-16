@@ -1370,7 +1370,7 @@ namespace MMS.Migrations
                     b.Property<int>("StatusTypeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("StoreId")
+                    b.Property<int?>("StoreId")
                         .HasColumnType("int");
 
                     b.Property<string>("UpdatedBy")
@@ -1380,16 +1380,16 @@ namespace MMS.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("WorkFaultId")
+                    b.Property<int?>("WorkFaultId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkStatusId")
+                    b.Property<int?>("WorkStatusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkTechnicianId")
+                    b.Property<int?>("WorkTechnicianId")
                         .HasColumnType("int");
 
-                    b.Property<int>("WorkTypeId")
+                    b.Property<int?>("WorkTypeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -2071,8 +2071,7 @@ namespace MMS.Migrations
                     b.HasOne("DAL.Models.LookUp", "Store_Id")
                         .WithMany("App_WorkOrder_Store_Id")
                         .HasForeignKey("StoreId")
-                        .HasConstraintName("FK_App_WorkOrder_Store_Id")
-                        .IsRequired();
+                        .HasConstraintName("FK_App_WorkOrder_Store_Id");
 
                     b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
                         .WithMany("App_WorkOrder_UpdatedUser")
@@ -2083,26 +2082,22 @@ namespace MMS.Migrations
                     b.HasOne("DAL.Models.LookUp", "WorkFault_Id")
                         .WithMany("App_WorkOrder_WorkFault_Id")
                         .HasForeignKey("WorkFaultId")
-                        .HasConstraintName("FK_App_WorkOrder_WorkFault_Id")
-                        .IsRequired();
+                        .HasConstraintName("FK_App_WorkOrder_WorkFault_Id");
 
                     b.HasOne("DAL.Models.LookUp", "WorkStatus_Id")
                         .WithMany("App_WorkOrder_WorkSatus_Id")
                         .HasForeignKey("WorkStatusId")
-                        .HasConstraintName("FK_App_WorkOrder_WorkSatus_Id")
-                        .IsRequired();
+                        .HasConstraintName("FK_App_WorkOrder_WorkSatus_Id");
 
                     b.HasOne("DAL.Models.LookUp", "WorkTechnician_Id")
                         .WithMany("App_WorkOrder_WorkTechinician_Id")
                         .HasForeignKey("WorkTechnicianId")
-                        .HasConstraintName("FK_App_WorkOrder_WorkTechinician_Id")
-                        .IsRequired();
+                        .HasConstraintName("FK_App_WorkOrder_WorkTechinician_Id");
 
                     b.HasOne("DAL.Models.LookUp", "WorkType_Id")
                         .WithMany("App_WorkOrder_WorkType_Id")
                         .HasForeignKey("WorkTypeId")
-                        .HasConstraintName("FK_App_WorkOrder_WorkType_Id")
-                        .IsRequired();
+                        .HasConstraintName("FK_App_WorkOrder_WorkType_Id");
                 });
 
             modelBuilder.Entity("DAL.Models.WorkOrderItemXref", b =>

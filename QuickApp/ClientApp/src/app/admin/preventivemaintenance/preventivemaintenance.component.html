@@ -111,7 +111,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['siteId'].valid">
-                            PleaseSelectSite
+                            Please Select Site
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
@@ -122,7 +122,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['projectId'].valid">
-                            PleaseSelectProject
+                            Please Select Project
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
@@ -133,7 +133,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['locationId'].valid">
-                            PleaseSelectLocation
+                            Please Select Location
                         </mat-error>
                     </mat-form-field>
 
@@ -184,7 +184,7 @@
                         <mat-label>Duration in Hours</mat-label>
                         <input matInput formControlName="durationInHours" required />
                         <mat-error *ngIf="!maintenanceForm.controls['durationInHours'].valid">
-                            durationisrequired
+                            Duration is required
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -202,10 +202,10 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>Details</mat-label>
-                        <input matInput formControlName="details" required />
-                        <mat-error *ngIf="!maintenanceForm.controls['details'].valid">
+                        <input matInput formControlName="details"  />
+                        <!-- <mat-error *ngIf="!maintenanceForm.controls['details'].valid">
                             detailsisrequired
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
             </form>

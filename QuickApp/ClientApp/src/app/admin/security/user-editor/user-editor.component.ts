@@ -45,7 +45,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   userFileData: any[] = [];
   editUserDocs: any[] = [];
   isEditMode: boolean;
-  isAllow: boolean =false;
+  isAllow: boolean = false;
   BASE64_MARKER: string = ';base64,';
   fileExtension: any;
   editUserFilesList: any[] = [];
@@ -62,10 +62,12 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   fileRepositories: any[] = [];
   isImage: any;
   isDocument: any;
-  projectsList: any[]=[];
+  projectsList: any[] = [];
   projectIds: any[] = [];
-  userProjectsList: any[]=[];
-
+  userProjectsList: any[] = [];
+  roleName: any;
+  premissionData: any[]=[];
+  allProjectIds:any[]=[];
   get confirmedEmailChanged() {
     return this.emailConfirmed && this.email.value != this.user.email;
   }
@@ -131,14 +133,14 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.buildForm();
     this.isImage = DataFactory.docType.Image;
     this.isDocument = DataFactory.docType.Document;
-    
+
   }
 
   ngOnChanges() {
     if (this.user) {
       this.isNewUser = false;
       this.emailConfirmed = this.user.emailConfirmed;
-    
+
       const verificationEmailSent = this.localStorage.getDataObject<boolean>(this.getDBkey_VERIFICATION_EMAIL_SENT(this.user.id));
 
       if (this.isEditingSelf && !verificationEmailSent && !this.emailConfirmed) {
@@ -155,7 +157,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       this.user.isEnabled = true;
     }
     this.getDocuments();
-    
+
     this.setRoles();
     this.getProjects();
   }
@@ -201,7 +203,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       //fullName: '',
       phoneNumber: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(12)]],
       isEnabled: ['true'],
-      projectId:['', Validators.required],
+      projectId: ['', Validators.required],
       // file: ''
     });
 
@@ -210,8 +212,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   //  Restting  userProfileForm
   public resetForm(stopEditing: boolean = false) {
-  //  this.projectIds =[];
-  // this.getProjects();
+    //  this.projectIds =[];
+    // this.getProjects();
     if (stopEditing) {
       this.isEditMode = false;
     }
@@ -246,7 +248,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         confirmPassword: ''
       },
       roles: this.user.roles || [],
-      projectId:this.isNewUser ?  this.user.projectId : this.projectIds || '',
+      projectId: this.isNewUser ? this.user.projectId : this.projectIds || '',
       //fullName: this.user.fullName || '',
       phoneNumber: this.user.phoneNumber || '',
       isEnabled: this.user.isEnabled
@@ -264,13 +266,13 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
   private getProjects() {
-    this.projectIds =[];
+    this.projectIds = [];
     this.accountService.getProject()
       .subscribe((results: any) => {
         this.projectsList = results.listResult == null ? [] : results.listResult;
-        if(this.user){
+        if (this.user) {
           this.getProjectsByUserId(this.user.id);
-        }else{
+        } else {
           this.resetForm();
         }
       },
@@ -291,8 +293,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         });
   }
 
-   // File Change Event
-   uploadFile(doc, event) {
+  // File Change Event
+  uploadFile(doc, event) {
     this.isAllow = false;
     var file = event.target.files[0];
     if (doc.typeCdDmtId == DataFactory.docType.Image) {
@@ -391,9 +393,32 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     return this.authService.currentUser;
   }
 
+
+  onRoleSelectToAddProjects(event) {
+    debugger
+    this.allProjectIds =[];
+    this.userProfileForm.get('projectId').setValue(null);
+    this.roleName = event;
+    this.accountService.getRoleByRoleName(this.roleName)
+      .subscribe((results: any) => { 
+        if(results.permissions != null){
+          this.premissionData=results.permissions;
+          this.premissionData.forEach(element => {
+            if(element.value == 'all.projects'){
+              this.projectsList.forEach(element => {
+                this.allProjectIds.push(element.id)
+              });
+              this.userProfileForm.get('projectId').setValue(this.allProjectIds);
+            }
+          });
+        }
+      },
+        error => {
+        });
+  }
+
   // On save Click
   public save() {
-    debugger
     if (!this.form.submitted) {
       // Causes validation to update.
       this.form.onSubmit(null);
@@ -432,7 +457,9 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       email: formModel.email,
       emailConfirmed: this.user.emailConfirmed,
       phoneNumber: formModel.phoneNumber,
-      roles: formModel.roles,
+      roles: [
+        formModel.roles,
+      ],
       currentPassword: formModel.password.currentPassword,
       newPassword: this.isChangePassword ? formModel.password.newPassword : null,
       confirmPassword: this.isChangePassword ? formModel.password.confirmPassword : null,
@@ -441,7 +468,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
       employeeId: formModel.empId,
       name1: formModel.name1,
       name2: formModel.name2,
-      projectIds:formModel.projectId,
+      projectIds: formModel.projectId,
       fileRepositories: this.fileRepositories
     };
   }
@@ -450,7 +477,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.fileRepositories = [];
     this.resetForm();
     this.isEditMode = false;
-
     this.alertService.resetStickyMessage();
   }
 
@@ -466,9 +492,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.isDocFile = false;
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
-
     this.resetForm(true);
-
     this.onUserSaved.next(this.user);
   }
 
@@ -539,7 +563,6 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   public unlockUser() {
     this.isSaving = true;
     this.alertService.startLoadingMessage('Unblocking user...');
-
     this.accountService.unblockUser(this.user.id)
       .subscribe(() => {
         this.isSaving = false;
@@ -601,20 +624,19 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         });
       });
     })
-
   }
 
   //  On Delete File
-  onDeleteFile(file) { 
+  onDeleteFile(file) {
     const dialogRef = this.dialog.open(DeleteFileComponent, {
       // panelClass: 'mat-dialog-sm',
       data: file
     });
     dialogRef.afterClosed().subscribe(res => {
-     this.getCurrentUserFiles();
-     this.documentList.forEach((item) => {
-      if (item.typeCdDmtId === file.documentType) this.editUserFilesList.push(item);
-    });
+      this.getCurrentUserFiles();
+      this.documentList.forEach((item) => {
+        if (item.typeCdDmtId === file.documentType) this.editUserFilesList.push(item);
+      });
     })
 
   }

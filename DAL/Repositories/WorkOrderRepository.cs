@@ -116,19 +116,21 @@ namespace DAL.Repositories
                     WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
                     var result = _appContext.WorkOrders.Add(Wro);
                     _appContext.SaveChanges();
-
-                    foreach (var it in workorders.WorkOrderItems)
+                    if(workorders.WorkOrderItems != null)
                     {
-                        _appContext.WorkOrderItemXrefs.Add(new WorkOrderItemXref
+                        foreach (var it in workorders.WorkOrderItems)
                         {
-                            ItemId = it.ItemId,
-                            WorkOrderId = Wro.Id,
-                            Quantity = it.Quantity,
-
-                        });
+                            _appContext.WorkOrderItemXrefs.Add(new WorkOrderItemXref
+                            {
+                                ItemId = it.ItemId,
+                                WorkOrderId = Wro.Id,
+                                Quantity = it.Quantity,
+                            });
+                        }
+                        _appContext.SaveChanges();
                     }
-                    _appContext.SaveChanges();
 
+                    
                     if (Wro != null)
                     {
                         response.Result = Wro;
