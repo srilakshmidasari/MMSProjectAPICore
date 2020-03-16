@@ -14,7 +14,7 @@ export class InventoryItemsComponent implements OnInit {
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  displayedColumns = ['itemName','quantity','storeName','projectName' ];
+  displayedColumns = ['itemId','itemName','quantity','storeName','projectName' ];
   displayNoRecords: boolean;
   constructor(private accountService: AccountService, private alertService: AlertService) { }
 

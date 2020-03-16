@@ -36,10 +36,10 @@
     "Supplier":"Supplier",
     "Inventory":"Inventory",
     "Item":"Item",
+    "InventoryItems":"InventoryItems",
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
     "Preventive Maintenance":"Preventive Maintenance"
-    
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -62,7 +62,7 @@
     "Item":"Item",
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
-    "InventoryItems" : "Inventory Items",
+    "InventoryItems" :"InventoryItems",
     "Preventive Maintenance":"Preventive Maintenance"
   },
   "home": {
@@ -630,6 +630,18 @@
     "Work Technician Name":"Work Technician Name",
     "Work Fault Name":"Work Fault Name",
     "Close":"Close"
+  }
+ },
+ "InventoryItems":{
+  "Management":{
+    "Search By InventoryItems":"Search By InventoryItems",
+    "Item Id":"Item Id",
+    "Item Name":"Item Name",
+    "Quantity":"Quantity",
+    "Store Name":"Store Name",
+    "Project Name":"Project Name",
+    "No Records Found":"No Records Found",
+    "No Search Results Found":"No Search Results Found"
   }
  }
 }
