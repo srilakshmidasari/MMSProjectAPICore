@@ -615,6 +615,18 @@
     "Work Fault Name":"اسم خطأ العمل",
     "Close":"قريب"
   }
+ },
+ "InventoryItems":{
+  "Management":{
+    "Search By InventoryItems":"البحث حسب الجرد",
+    "Item Id":"معرف العنصر",
+    "Item Name":"اسم العنصر",
+    "Quantity":"كمية",
+    "Store Name":"اسم المتجر",
+    "Project Name":"اسم المشروع",
+    "No Records Found":"لا توجد سجلات",
+    "No Search Results Found":"لم يتم العثور على نتائج عن البحث"
+  }
  }
 }
 

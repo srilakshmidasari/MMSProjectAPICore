@@ -1,8 +1,8 @@
-<app-page-header title="InventoryItems" icon="assignment_ind"></app-page-header>
+<app-page-header title="{{'InventoryItems.Management.InventoryItems'|translate}}" icon="assignment_ind"></app-page-header>
 <div class="page-content">
     <div class="search-box">
         <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Search for Items..">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'InventoryItems.Management.Search By InventoryItems'|translate}}">
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
@@ -13,20 +13,26 @@
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Purchase Reference</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.purchaseReference}} </mat-cell>
             </ng-container> -->
+            <ng-container matColumnDef="itemId">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'InventoryItems.Management.Item Id'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.itemId}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="itemName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Item Name</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'InventoryItems.Management.Item Name'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.itemName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="quantity">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>Quantity</mat-header-cell>
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>{{'InventoryItems.Management.Quantity'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.quantity}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="storeName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Store Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.storeName}} </mat-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'InventoryItems.Management.Store Name'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let 
+                
+                row"> {{row.storeName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="projectName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'InventoryItems.Management.Project Name'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
@@ -34,10 +40,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>{{'project.management.No Records Found'|translate}}</p>
+            <p>{{'InventoryItems.Management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>{{'project.management.No Search Results Found'|translate}}</p>
+            <p>{{'InventoryItems.Management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
