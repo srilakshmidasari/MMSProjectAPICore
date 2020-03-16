@@ -28,7 +28,7 @@
     "Inventory":"المخزون",
     "Item":"بند",
     "Purchase Order":"أمر شراء",
-    "Work Order":"ترتيب العمل",
+    "Work Order":"ترتيب العمل"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
