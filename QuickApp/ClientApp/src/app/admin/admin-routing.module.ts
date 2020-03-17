@@ -40,7 +40,7 @@ const adminRoutes: Routes = [
       { path: 'asset-group', component: AssetGroupComponent, canActivate: [AuthGuard], data: { title: 'Admin | Asset-Group' } },
       { path: 'supplier', component: SupplierComponent, canActivate: [AuthGuard], data: { title: 'Admin | Supplier' } },
       { path: 'item', component: ItemComponent, canActivate: [AuthGuard], data: { title: 'Admin | item' } },
-      { path: 'purchaseorder', component: PurchaseorderComponent, canActivate: [AuthGuard], data: { title: 'Admin | PurchaseorderComponent' } },
+      { path: 'purchaseorder', component: PurchaseorderComponent, canActivate: [AuthGuard], data: { title: 'Admin | Purchase Order' } },
       { path: 'work-order', component: WorkOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | Work Order' } },
       { path: 'inventory-items', component: InventoryItemsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Inventory Items' } },
       { path: 'preventive-maintenance', component: PreventivemaintenanceComponent, canActivate: [AuthGuard], data: { title: 'Admin | Preventive Maintenance' }}
