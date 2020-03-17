@@ -26,9 +26,14 @@
     "Assets": "الأصول",
     "Supplier":"المورد",
     "Inventory":"المخزون",
+    "Inventory-Items":"أصناف المخزون",
     "Item":"بند",
+    "Masters":"سادة",
     "Purchase Order":"أمر شراء",
-    "Work Order":"ترتيب العمل"
+    "MMS":"م م س",
+    "Work Order":"ترتيب العمل",
+    "PM Procedures":"إجراءات PM",
+    "Export":"تصدير"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -48,9 +53,12 @@
     "Assets": "الأصول",
     "Supplier":"المورد",
     "Inventory":"المخزون",
+    "Inventory-Items":"أصناف المخزون",
     "Item":"بند",
     "Purchase Order":"أمر شراء",
-    "Work Order":"ترتيب العمل"
+    "Work Order":"ترتيب العمل",
+    "Preventive Maintenance":"الصيانة الوقائية",
+    "Export":"تصدير"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -482,6 +490,7 @@
    "Edit":"تعديل",
    "Delete":"حذف",
    "Item Type":"نوع العنصر",
+   "Description":"وصف",
    "Item Description":"وصف السلعة",
    "Description is required":"الوصف مطلوب",
    "Please Select ItemType":"يرجى اختيار نوع المادة",
@@ -627,7 +636,43 @@
     "No Records Found":"لا توجد سجلات",
     "No Search Results Found":"لم يتم العثور على نتائج عن البحث"
   }
- }
+ },
+ "Preventive Maintenance":{
+  "Management":{
+   "Search for Preventive Maintenance":"ابحث عن الصيانة الوقائية",
+   "Preventive Reference":"مرجع وقائي",
+   "Type Of Maintainance":"نوع الصيانة",
+   "Start Date":"تاريخ البدء",
+   "Duration In Hours":"المدة بالساعات",
+   "Technician Name":"اسم الفني",
+   "Techinician":"فني",
+   "Duration in Hours":"المدة بالساعات",
+   "Status Type Name":"اسم نوع الحالة",
+   "Details":"تفاصيل",
+   "Add":"أضف",
+   "Edit":"تعديل",
+   "Delete":"حذف",
+   "No Records Found":"لا توجد سجلات",
+   "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
+   "Add Maintainance":"أضف الصيانة",
+   "Edit Maintainance":"تحرير الصيانة",
+   "Select Site":"حدد الموقع",
+   "Please Select Site":"يرجى تحديد الموقع",
+   "Select Project":"حدد المشروع",
+   "Please Select Project":"الرجاء تحديد المشروع",
+   "Select Location":"اختر موقعا",
+   "Please Select Location":"يرجى تحديد الموقع",
+   "Select Asset":"حدد الأصول",
+   "Please Select Asset":"يرجى تحديد الأصول",
+   "Preventive Reference is Required":"المرجع الوقائي مطلوب",
+   "Please Select Type of Maintainance":"يرجى تحديد نوع الصيانة",
+   "Start Date is Required":"تاريخ البدء مطلوب",
+   "Duration is required":"المدة مطلوبة",
+   "Please Select Technician":"يرجى تحديد فني",
+   "Save":"حفظ",
+   "Cancel":"إلغاء"
+  }
+}
 }
 
 

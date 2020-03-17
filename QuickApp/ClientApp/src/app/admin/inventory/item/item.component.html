@@ -154,7 +154,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Description</mat-label>
+                        <mat-label>{{'Item.Management.Description'|translate}}</mat-label>
                         <input matInput formControlName="description" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['description'].valid">
                             {{'Item.Management.Description is required'|translate}}

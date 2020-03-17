@@ -75,7 +75,7 @@
         <mat-expansion-panel #master [class.mat-elevation-z0]="!master.expanded">
           <mat-expansion-panel-header>
             <mat-panel-title>
-              <mat-icon>assessment</mat-icon>Masters
+              <mat-icon>assessment</mat-icon>{{'mainMenu.Masters'| translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -122,7 +122,7 @@
           </a>
 
           <a mat-list-item routerLinkActive="active" routerLink="/admin/inventory-items">
-            <mat-icon>storage</mat-icon>Inventory-Items
+            <mat-icon>storage</mat-icon>{{'mainMenu.Inventory-Items'|translate}}
           </a>
           <!-- <a mat-list-item routerLinkActive="active" routerLink="/admin/work-order">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Work Order'|translate}}
@@ -132,7 +132,7 @@
         <mat-expansion-panel #MMS [class.mat-elevation-z0]="!MMS.expanded">
           <mat-expansion-panel-header>
             <mat-panel-title>
-                <mat-icon>storage</mat-icon>MMS
+                <mat-icon>storage</mat-icon>{{'mainMenu.MMS'|translate}}
             </mat-panel-title>
           </mat-expansion-panel-header>
 
@@ -141,7 +141,7 @@
           </a>
 
           <a mat-list-item routerLinkActive="active" routerLink="/admin/preventive-maintenance">
-            <mat-icon>list_alt</mat-icon>PM Procedures
+            <mat-icon>list_alt</mat-icon>{{'mainMenu.PM Procedures'|translate}}
           </a>
         </mat-expansion-panel>
 
