@@ -3,7 +3,7 @@
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
-                placeholder="Search for Preventive Maintenance..">
+                placeholder="{{'Preventive Maintenance.Management.Search for Preventive Maintenance'|translate}}">
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
@@ -27,31 +27,31 @@
                 <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
             </ng-container> -->
             <ng-container matColumnDef="preventiveRefId">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Preventive Reference</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Preventive Reference'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.preventiveRefId}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="typeOfMaintainanceName">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>Type Of Maintainance</mat-header-cell>
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Type Of Maintainance'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.typeOfMaintainanceName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="startDate">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Start Date</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Start Date'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.startDate| date: 'dd/MM/yyyy '}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="durationInHours">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>Duration In Hours</mat-header-cell>
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Duration In Hours'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.durationInHours}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="technicianName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Technician Name</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Technician Name'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.technicianName}} </mat-cell>
             </ng-container>           
             <ng-container matColumnDef="statusTypeName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Status Type Name</mat-header-cell>
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Status Type Name'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.statusTypeName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="details">
-                    <mat-header-cell *matHeaderCellDef mat-sort-header>Details</mat-header-cell>
+                    <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Preventive Maintenance.Management.Details'|translate}}</mat-header-cell>
                     <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
                 </ng-container>
             <ng-container matColumnDef="isActive">
@@ -64,16 +64,16 @@
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="Add" (click)="editClick()">
+                    <button mat-button color="primary" matTooltip="{{'Preventive Maintenance.Management.Add'|translate}}" (click)="editClick()">
                         <mat-icon class="mat-button-icon">add</mat-icon>
-                        Add Maintainance
+                        {{'Preventive Maintenance.Management.Add Maintainance'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="Edit" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="{{'Preventive Maintenance.Management.Edit'|translate}}" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button class="just-cont-center" mat-icon-button matTooltip="Delete" (click)="confirmDelete(row)">
+                    <button class="just-cont-center" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.Delete'|translate}}" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
@@ -83,10 +83,10 @@
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
-            <p>No Records Found</p>
+            <p>{{'Preventive Maintenance.Management.No Records Found'|translate}}</p>
         </div>
         <div style="text-align: center;" *ngIf="displayNoRecords">
-            <p>No Search Results Found</p>
+            <p>{{'Preventive Maintenance.Management.No Search Results Found'|translate}}</p>
         </div>
         <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
@@ -96,112 +96,112 @@
 <div class="page-content" *ngIf="isAdding">
     <mat-card>
         <mat-card-header>
-            <mat-card-title *ngIf="isNewMaintanance">Add Project</mat-card-title>
-            <mat-card-title *ngIf="!isNewMaintanance">Edit Project</mat-card-title>
+            <mat-card-title *ngIf="isNewMaintanance">{{'Preventive Maintenance.Management.Add Maintainance'|translate}}</mat-card-title>
+            <mat-card-title *ngIf="!isNewMaintanance">{{'Preventive Maintenance.Management.Edit Maintainance'|translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
             <form [formGroup]="maintenanceForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Site<span>*</span></mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Select Site'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['siteId'].valid">
-                            Please Select Site
+                            {{'Preventive Maintenance.Management.Please Select Site'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Project<span>*</span></mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Select Project'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
                             <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['projectId'].valid">
-                            Please Select Project
+                            {{'Preventive Maintenance.Management.Please Select Project'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Location<span>*</span></mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Select Location'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
                             <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
                                 {{location.name1}}(<span>{{location.locationReference}}</span>)
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['locationId'].valid">
-                            Please Select Location
+                            {{'Preventive Maintenance.Management.Please Select Location'|translate}}
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
-                        <mat-label>Select Asset<span>*</span></mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Select Asset'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="assetId" multiple>
                             <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
                                 {{asset.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['assetId'].valid">
-                            Please Select Asset
+                            {{'Preventive Maintenance.Management.Please Select Asset'|translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
 
                     <mat-form-field class="col-md-3">
-                        <mat-label>Preventive Reference</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Preventive Reference'|translate}}</mat-label>
                         <input matInput formControlName="preventiveRefId" required />
                         <mat-error *ngIf="!maintenanceForm.controls['preventiveRefId'].valid">
-                            Preventive Reference is Required
+                            {{'Preventive Maintenance.Management.Preventive Reference is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Type Of Maintainance</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Type Of Maintainance'|translate}}</mat-label>
                         <mat-select formControlName="typeOfMaintainanceId">
                             <mat-option *ngFor="let tech of TypesList" [value]="tech.typeCdDmtId" required>
                                 {{tech.description}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['assetId'].valid">
-                            Please Select Type of Maintainance
+                            {{'Preventive Maintenance.Management.Please Select Type of Maintainance'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
-                        <mat-label>Start Date</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Start Date'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
                             placeholder="Start Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!maintenanceForm.controls['startDate'].valid">
-                            Start Date is Required
+                            {{'Preventive Maintenance.Management.Start Date is Required'|translate}} 
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
-                        <mat-label>Duration in Hours</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Duration in Hours'|translate}}</mat-label>
                         <input matInput formControlName="durationInHours" required />
                         <mat-error *ngIf="!maintenanceForm.controls['durationInHours'].valid">
-                            Duration is required
+                            {{'Preventive Maintenance.Management.Duration is required'|translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>Techinician</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Techinician'|translate}}</mat-label>
                         <mat-select formControlName="technicianId">
                             <mat-option *ngFor="let tech of workTechList" [value]="tech.id" required>
                                 {{tech.name1}}
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['technicianId'].valid">
-                            Please Select Technician
+                            {{'Preventive Maintenance.Management.Please Select Technician'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
-                        <mat-label>Details</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Details'|translate}}</mat-label>
                         <input matInput formControlName="details"  />
                         <!-- <mat-error *ngIf="!maintenanceForm.controls['details'].valid">
                             detailsisrequired
@@ -212,8 +212,8 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" (click)="saveMaintenance()">Save</button>
-                <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+                <button mat-raised-button color="primary" (click)="saveMaintenance()">{{'Preventive Maintenance.Management.Save'|translate}}</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">{{'Preventive Maintenance.Management.Cancel'|translate}}</button>
             </div>
         </mat-card-actions>
         <div class="clearfix"></div>

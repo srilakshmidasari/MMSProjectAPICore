@@ -36,10 +36,13 @@
     "Supplier":"Supplier",
     "Inventory":"Inventory",
     "Item":"Item",
-    "InventoryItems":"InventoryItems",
+    "Masters":"Masters",
+    "Inventory-Items" :"Inventory-Items",
+    "MMS":"MMS",
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
-    "Preventive Maintenance":"Preventive Maintenance"
+    "PM Procedures":"PM Procedures",
+    "Export":"Export"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -62,8 +65,9 @@
     "Item":"Item",
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
-    "InventoryItems" :"InventoryItems",
-    "Preventive Maintenance":"Preventive Maintenance"
+    "Inventory-Items" :"Inventory-Items",
+    "Preventive Maintenance":"Preventive Maintenance",
+    "Export":"Export"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -499,6 +503,7 @@
     "Remove":" Remove",
     "Item Type":"Item Type",
     "Item Description":"Item Description",
+    "Description":"Description",
     "Description is required":"Description is required",
     "Please Select ItemType":"Please Select ItemType",
     "No Records Found":"No Records Found",
@@ -643,5 +648,41 @@
     "No Records Found":"No Records Found",
     "No Search Results Found":"No Search Results Found"
   }
+ },
+ "Preventive Maintenance":{
+   "Management":{
+    "Search for Preventive Maintenance":"Search for Preventive Maintenance",
+    "Preventive Reference":"Preventive Reference",
+    "Type Of Maintainance":"Type Of Maintainance",
+    "Start Date":"Start Date",
+    "Duration In Hours":"Duration In Hours",
+    "Technician Name":"Technician Name",
+    "Techinician":"Techinician",
+    "Duration in Hours":"Duration in Hours",
+    "Status Type Name":"Status Type Name",
+    "Details":"Details",
+    "Add":"Add",
+    "Edit":"Edit",
+    "Delete":"Delete",
+    "No Records Found":"No Records Found",
+    "No Search Results Found":"No Search Results Found",
+    "Add Maintainance":"Add Maintainance",
+    "Edit Maintainance":"Edit Maintainance",
+    "Select Site":"Select Site",
+    "Please Select Site":"Please Select Site",
+    "Select Project":"Select Project",
+    "Please Select Project":"Please Select Project",
+    "Select Location":"Select Location",
+    "Please Select Location":"Please Select Location",
+    "Select Asset":"Select Asset",
+    "Please Select Asset":"Please Select Asset",
+    "Preventive Reference is Required":"Preventive Reference is Required",
+    "Please Select Type of Maintainance":"Please Select Type of Maintainance",
+    "Start Date is Required":"Start Date is Required",
+    "Duration is required":"Duration is required",
+    "Please Select Technician":"Please Select Technician",
+    "Save":"Save",
+    "Cancel":"Cancel"
+   }
  }
 }

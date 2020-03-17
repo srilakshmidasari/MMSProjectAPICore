@@ -3,9 +3,9 @@
     <mat-icon _ngcontent-huc-c14="" aria-hidden="true"
         class="mat-icon-md mat-icon notranslate material-icons mat-icon-no-color d-inline-block" role="img"
         style="display: inline-block;">assignment_ind</mat-icon>
-    <h3 _ngcontent-huc-c14="" class="d-inline-block">Work Order</h3>
+    <h3 _ngcontent-huc-c14="" class="d-inline-block">{{'mainMenu.Work Order'|translate}}</h3>
     <button mat-raised-button color="primary" class="float-right d-inline-block" title="Export" (click)="download()"
-        [disabled]="workOrdersList.length==0">Export</button>
+        [disabled]="workOrdersList.length==0">{{'mainMenu.Export'|translate}}</button>
 </header>
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
     <!-- <div class="row float-right">
@@ -377,17 +377,17 @@
             </form>
             <div class="row">
                 <form [formGroup]="itemFrom" class="col-md-12">
-                    <div formArrayName="credentials"
+                    <div formArrayName="credentials" 
                         *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
                         <ng-container [formGroupName]="i">
                             <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
-                            <div class="row">
-                                <mat-form-field class="col-md-4">
+                            <div class="row" >
+                                <mat-form-field class="col-md-4" *ngIf="showHide" >
                                     <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
                                     </mat-label>
-                                    <mat-select formControlName="itemId">
-                                        <mat-option *ngFor="let item of itemList" [value]="item.id" required>
-                                            {{item.name1}}
+                                    <mat-select formControlName="itemId"  (change)="handleSelectedValue(i.value)" >
+                                        <mat-option *ngFor="let item of itemList" [value]="item.id" >
+                                           {{item.name1}}
                                         </mat-option>
                                     </mat-select>
                                     <mat-error *ngIf="item.controls.itemId.invalid">

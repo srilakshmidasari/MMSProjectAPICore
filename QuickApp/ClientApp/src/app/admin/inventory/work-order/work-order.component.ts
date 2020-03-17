@@ -43,6 +43,8 @@ export class WorkOrderComponent implements OnInit {
   ProjectId: any;
 
   userProjectsList: any[] = [];
+  itemId: string;
+  showHide: boolean;
 
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -54,6 +56,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
   ngOnInit() {
+    debugger
     this.getworkOrderOrders();
     //  this.getSites();
     this.getItem();
@@ -63,6 +66,7 @@ export class WorkOrderComponent implements OnInit {
 
 
   private getworkOrderOrders() {
+    debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getWorkOrder()
@@ -90,7 +94,14 @@ export class WorkOrderComponent implements OnInit {
   }
 
   addItem(i) {
+    debugger
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
+  }
+  handleSelectedValue(){
+    if(this.credentials==this.credentials){
+     this.showHide = true;
+
+    }
   }
 
   createItem(item) {
