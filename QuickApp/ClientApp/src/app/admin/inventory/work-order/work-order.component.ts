@@ -97,12 +97,12 @@ export class WorkOrderComponent implements OnInit {
     debugger
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
   }
-  handleSelectedValue(){
-    if(this.credentials==this.credentials){
-     this.showHide = true;
+  // handleSelectedValue(){
+  //   if(this.credentials==this.credentials){
+  //    this.showHide = true;
 
-    }
-  }
+  //   }
+  // }
 
   createItem(item) {
     return this.formBuilder.group({

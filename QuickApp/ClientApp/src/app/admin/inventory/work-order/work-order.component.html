@@ -382,10 +382,10 @@
                         <ng-container [formGroupName]="i">
                             <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
                             <div class="row" >
-                                <mat-form-field class="col-md-4" *ngIf="showHide" >
+                                <mat-form-field class="col-md-4">
                                     <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
                                     </mat-label>
-                                    <mat-select formControlName="itemId"  (change)="handleSelectedValue(i.value)" >
+                                    <mat-select formControlName="itemId">
                                         <mat-option *ngFor="let item of itemList" [value]="item.id" >
                                            {{item.name1}}
                                         </mat-option>
