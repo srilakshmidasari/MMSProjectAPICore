@@ -24,7 +24,8 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<AssetLocation> UpdateAssetLocation(UpsertAssetLocation asset);
 
         ValueDataResponse<AssetLocation> DeleteAssetLocation(int assetId);
-        ListDataResponse<AssetGroup> GetAssetGroupDetilasById(int assetId);
+
+      // ListDataResponse<AssetGroup> GetAssetGroupDetilasById(int assetId);
 
         ListDataResponse<AssetRepositoryResposnse> GetRepositoryByAsset(int AssetId);
 

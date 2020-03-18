@@ -64,11 +64,11 @@ namespace MMS.Controllers
             return _unitOfWork.Assets.InsertAssetLocation(asset);
         }
 
-        [HttpGet("GetAssetGroupDetilasById")]
-        public ListDataResponse<AssetGroup> Get(int assetId)
-        {
-            return _unitOfWork.Assets.GetAssetGroupDetilasById(assetId);
-        }
+        //[HttpGet("GetAssetGroupDetilasById")]
+        //public ListDataResponse<AssetGroup> Get(int assetId)
+        //{
+        //    return _unitOfWork.Assets.GetAssetGroupDetilasById(assetId);
+        //}
 
         [HttpPut("UpdateAssetLocation")]
         public ValueDataResponse<AssetLocation> UpdateAssetLocation(UpsertAssetLocation asset)

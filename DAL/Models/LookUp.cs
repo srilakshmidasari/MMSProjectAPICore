@@ -78,6 +78,10 @@ namespace DAL.Models
 
         public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_WorkTechinician_Id { get; set; }
 
+        public ICollection<JobPlan> App_JobPlan_Techinician_Id { get; set; }
+
+        public ICollection<JobPlan> App_JobPlan_AssetGroup_Id { get; set; }
+
 
     }
 }

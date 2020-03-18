@@ -49,6 +49,9 @@ namespace DAL
 
         public DbSet<PMStatusHistory> PMStatusHistories { get; set; }
 
+        public DbSet<JobPlan> JobPlans { get; set; }
+
+        public DbSet<JobTask> JobTasks { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }
@@ -88,6 +91,7 @@ namespace DAL
             builder.Entity<Supplier>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<AssetFileRepository>().ToTable("AssetFileRepository");
 
+
             builder.Entity<Item>().ToTable("Item");
             builder.Entity<Item>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<PurchageOrder>().ToTable("PurchageOrder");
@@ -104,7 +108,10 @@ namespace DAL
             builder.Entity<PreventiveMaintenance>().Property(p => p.IsActive).HasDefaultValue(true);
             builder.Entity<PMAssetXref>().ToTable("PMAssetXref");
             builder.Entity<PMStatusHistory>().ToTable("PMStatusHistory");
+            builder.Entity<JobPlan>().ToTable("JobPlan");
+            builder.Entity<JobPlan>().Property(p => p.IsActive).HasDefaultValue(true);
 
+            builder.Entity<JobTask>().ToTable("JobTask");
 
 
 
@@ -625,6 +632,54 @@ namespace DAL
               .OnDelete(DeleteBehavior.ClientSetNull)
               .HasConstraintName("FK_App_PMStatusHistoryr_StatusId");
 
+            builder.Entity<JobPlan>().HasOne(d => d.StatusType_Id)
+               .WithMany(p => p.App_JobPlan_StatusId)
+               .HasForeignKey(d => d.StatusTypeId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_JobPlan_StatusId");
+
+            builder.Entity<JobPlan>().HasOne(d => d.CreatedUser)
+            .WithMany(p => p.App_JobPlan_CreatedUser)
+            .HasForeignKey(d => d.CreatedBy)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+            .HasConstraintName("FK_App_JobPlan_CreatedUser");
+
+            builder.Entity<JobPlan>().HasOne(d => d.UpdatedUser)
+                .WithMany(p => p.App_JobPlan_UpdatedUser)
+                .HasForeignKey(d => d.UpdatedBy)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_JobPlan_UpdatedUser");
+
+            builder.Entity<JobPlan>().HasOne(d => d.Technician_Id)
+             .WithMany(p => p.App_JobPlan_Techinician_Id)
+             .HasForeignKey(d => d.TechnicianId)
+             .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_JobPlan_Techinician_Id");
+
+            builder.Entity<JobPlan>().HasOne(d => d.AssetGroup_Id)
+               .WithMany(p => p.App_JobPlan_AssetGroup_Id)
+             .HasForeignKey(d => d.AssetGroupId)
+            .OnDelete(DeleteBehavior.ClientSetNull)
+           .HasConstraintName("FK_App_JobPlan_AssetGroup_Id");
+
+
+            builder.Entity<JobPlan>().HasOne(d => d.Site_Id)
+               .WithMany(p => p.App_JobPlan_SiteId)
+              .HasForeignKey(d => d.SiteId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+             .HasConstraintName("FK_App_JobPlan_SiteId");
+
+            builder.Entity<JobPlan>().HasOne(d => d.Project_Id)
+           .WithMany(p => p.App_JobPlan_ProjectId)
+           .HasForeignKey(d => d.ProjectId)
+           .OnDelete(DeleteBehavior.ClientSetNull)
+           .HasConstraintName("FK_App_JobPlan_ProjectId");
+
+            builder.Entity<JobTask>().HasOne(d => d.JobPlan_Id)
+          .WithMany(p => p.App_JobTask_JobPlanId)
+          .HasForeignKey(d => d.JobPlanId)
+          .OnDelete(DeleteBehavior.ClientSetNull)
+          .HasConstraintName("FK_App_JobTask_JobPlanId");
 
 
 

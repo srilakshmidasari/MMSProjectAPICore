@@ -120,10 +120,16 @@ namespace DAL.RequestResponseModels
               .ForMember(d => d.StatusType_Id, map => map.Ignore())
               .ForMember(d => d.TypeOfMaintenance_Id, map => map.Ignore())
               .ForMember(d => d.WorkTechnician_Id, map => map.Ignore());
-              
-             
 
-            
+
+            CreateMap<UpsertJobPlan, JobPlan>()
+             .ForMember(d => d.StatusType_Id, map => map.Ignore())
+             .ForMember(d => d.Technician_Id, map => map.Ignore())
+             .ForMember(d => d.Site_Id, map => map.Ignore())
+             .ForMember(d => d.Project_Id, map => map.Ignore())
+             .ForMember(d => d.AssetGroup_Id, map => map.Ignore());
+
+
 
         }
     }

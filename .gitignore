@@ -265,3 +265,4 @@ __pycache__/
 Thumbs.db
 tempkey.rsa
 /QuickApp/Migrations
+/QuickApp/Controllers/Repositories

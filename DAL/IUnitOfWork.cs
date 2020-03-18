@@ -32,6 +32,8 @@ namespace DAL
         IWorkOrderRepository WorkOrders { get; }
 
         IPreventiveMaintenanceRepository PreventiveMaintenances { get; }
+
+        IJobPlanRepository JobPlans { get; }
         int SaveChanges();
     }
 }

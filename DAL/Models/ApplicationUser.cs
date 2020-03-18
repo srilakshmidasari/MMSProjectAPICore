@@ -110,5 +110,8 @@ namespace DAL.Models
 
         public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_CreatedUser { get; set; }
         public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_UpdatedUser { get; set; }
+
+        public ICollection<JobPlan> App_JobPlan_CreatedUser { get; set; }
+        public ICollection<JobPlan> App_JobPlan_UpdatedUser { get; set; }
     }
 }

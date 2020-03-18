@@ -31,6 +31,8 @@ namespace DAL
 
         IWorkOrderRepository _workorders;
         IPreventiveMaintenanceRepository _preventiveMaintenance;
+
+        IJobPlanRepository _jobPlans;
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
             _context = context;
@@ -149,6 +151,18 @@ namespace DAL
                 return _preventiveMaintenance;
             }
         }
+
+        public IJobPlanRepository JobPlans
+        {
+            get
+            {
+                if (_jobPlans == null)
+                    _jobPlans = new JobPlanRepository(_context, _mapper, _configuration);
+
+                return _jobPlans;
+            }
+        }
+
 
 
         public int SaveChanges()

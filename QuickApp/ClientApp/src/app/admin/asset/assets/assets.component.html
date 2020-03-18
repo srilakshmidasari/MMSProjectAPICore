@@ -164,7 +164,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetGroup'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="assetGroup" (ngModelChange)="onSelectAssGroup($event)">
+                        <mat-select formControlName="assetGroup" >
                             <mat-option *ngFor="let assGroup of assetGroupList" [value]="assGroup.id" required>
                                 {{assGroup.name1}}
                             </mat-option>

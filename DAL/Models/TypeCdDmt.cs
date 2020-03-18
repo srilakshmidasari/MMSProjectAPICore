@@ -88,6 +88,7 @@ namespace DAL.Models
 
         public ICollection<PMStatusHistory> App_PMStatusHistoryr_StatusId { get; set; }
 
+        public ICollection<JobPlan> App_JobPlan_StatusId { get; set; }
 
 
     }

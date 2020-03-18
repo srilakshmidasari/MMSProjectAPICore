@@ -582,11 +582,12 @@ namespace DAL.RequestResponseModels
 
         public class GetInventoryItemsResponse
         {
-            public int Id { get; set; }
-            public int PurchaseId { get; set; }
+            //public int Id { get; set; }
+            //public int? PurchaseId { get; set; }
             public int ItemId { get; set; }
             public string ItemName { get; set; }
             public string ItemReference { get; set; }
+            public string Description { get; set; }
             public string PurchaseReference { get; set; }
             public string ProjectName { get; set; }
             public string StoreName { get; set; }
@@ -652,5 +653,55 @@ namespace DAL.RequestResponseModels
             public string LocationName { get; set; }
         }
        
+
+        public class GetJobPlanResponse : AuditableEntity
+        {
+            public int Id { get; set; }
+            public string JobReference { get; set; }
+            public string Name { get; set; }
+            public string JobDescription { get; set; }
+            public int? SiteId { get; set; }
+            public string SiteName { get; set; }
+            public int? ProjectId { get; set; }
+            public string ProjectName { get; set; }
+            public int StatusTypeId { get; set; }   
+            public string StatusName { get; set; }
+            public int? TechnicianId { get; set; }
+            public string TechinicianName { get; set; }
+            public int? AssetGroupId { get; set; }
+            public string AssetGroupName { get; set; }
+            public string Duration { get; set; }
+            public List<JobTask> Tasks { get; set; }
+            public bool IsActive { get; set; }
+
+        }
+
+        public class UpsertJobPlan : AuditableEntity
+        {
+            public int Id { get; set; }
+            public string JobReference { get; set; }
+            public string Name { get; set; }
+            public string JobDescription { get; set; }
+            public int? SiteId { get; set; }
+            public int? ProjectId { get; set; }
+            public int StatusTypeId { get; set; }           
+            public int? TechnicianId { get; set; }
+            public int? AssetGroupId { get; set; }         
+            public string Duration { get; set; }
+            public bool IsActive { get; set; }
+
+            public List<JobPlanTask> JobPlanTasks { get; set; }
+        }
+
+
+        public class JobPlanTask
+        {
+            public int Id { get; set; }
+            public int JobPlanId { get; set; }
+            public string Name { get; set; }
+            public string Duration { get; set; }
+
+        }
+
     }
 }

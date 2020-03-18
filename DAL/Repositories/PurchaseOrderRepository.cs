@@ -421,7 +421,7 @@ namespace DAL.Repositories
                 var res = _appContext.Inventories.GroupBy(n => new { n.PurchaseOrderId, n.ItemId })
                 .Select(g => new
                 {
-                    PurchaseOrderId = g.Key.PurchaseOrderId,   
+                    PurchaseOrderId = g.Key.PurchaseOrderId,
                     ItemId = g.Key.ItemId,
                     ReceivedCost = 0,
                     Quantity = g.Sum(x => x.Quantity)
@@ -436,7 +436,7 @@ namespace DAL.Repositories
                 //    Quantity = g.Key.Quantity
                 //}).Where(x => x.PurchaseOrderId == purchaseId).ToList();
 
-                var result = (from pi in _appContext.PurchageItemXrefs.Include(x=>x.Item_Id).Include(x=>x.Purchage_Id).Where(x=>x.PurchageId== purchaseId).ToList()
+                var result = (from pi in _appContext.PurchageItemXrefs.Include(x => x.Item_Id).Include(x => x.Purchage_Id).Where(x => x.PurchageId == purchaseId).ToList()
                               join iv in res on pi.ItemId equals iv.ItemId into Details
                               from m in Details.DefaultIfEmpty()
                               select new GetItemsResponse
@@ -449,8 +449,8 @@ namespace DAL.Repositories
                                   Quantity = pi.Quantity,
                                   ExpectedCost = pi.ExpectdCost,
                                   Comments = pi.Comments,
-                                  RemainingQuantity = m != null ? pi.Quantity - m.Quantity: 0,
-                                  ReceivedQuantity = m!=null ? m.Quantity : 0,
+                                  RemainingQuantity = m != null ? pi.Quantity - m.Quantity : 0,
+                                  ReceivedQuantity = m != null ? m.Quantity : 0,
                                   ReceivedCost = m != null ? 0.0 : 0.0
 
                               }).Where(x => x.PurchaseId == purchaseId).Distinct().ToList();
@@ -610,6 +610,7 @@ namespace DAL.Repositories
             ListDataResponse<GetInventoryItemsResponse> response = new ListDataResponse<GetInventoryItemsResponse>();
             try
             {
+
                 var result = (from In in _appContext.Inventories
                               join po in _appContext.PurchageOrders on In.PurchaseOrderId equals po.Id
                               join p in _appContext.Projects on po.ProjectId equals p.Id
@@ -617,23 +618,41 @@ namespace DAL.Repositories
                               join i in _appContext.Items on In.ItemId equals i.Id
                               select new GetInventoryItemsResponse
                               {
-                                Id = In.Id,
-                                PurchaseId = In.PurchaseOrderId,
-                                ItemId = In.ItemId,
-                                ItemName = i.Name1,
-                                ItemReference = i.ItemReference,
-                                PurchaseReference = po.PurchaseReference,
-                                ProjectName = p.Name1,
-                                StoreName = l.Name1,
-                                Quantity =In.Quantity
-
+                                  ItemId = In.ItemId,
+                                  ItemName = i.Name1,
+                                  Description = i.Description,
+                                  ItemReference = i.ItemReference,
+                                  PurchaseReference = po.PurchaseReference,
+                                  ProjectName = p.Name1,
+                                  StoreName = l.Name1,
+                                  Quantity = In.Quantity
                               }).ToList();
+                response.ListResult = (from r in result
+                                       group r by new
+                                       {
+                                           r.ItemId,
+                                           r.ItemName,
+                                           r.Description,
+                                           r.ItemReference,
+                                           r.ProjectName,
+                                           r.StoreName
+                                       } into grp
+                                       select new GetInventoryItemsResponse
+                                       {
 
-                if (result != null)
+                                           ItemId = grp.Key.ItemId,
+                                           ItemName = grp.Key.ItemName,
+                                           Description = grp.Key.Description,
+                                           ItemReference = grp.Key.ItemReference,
+                                           ProjectName = grp.Key.ProjectName,
+                                           StoreName = grp.Key.StoreName,
+                                           Quantity = grp.Sum(u => u.Quantity)
+                                       }).ToList();
+                if (response.ListResult != null)
                 {
-                    response.ListResult = result;
+                    // response.ListResult = result;
                     response.IsSuccess = true;
-                    response.AffectedRecords = 1;
+                    response.AffectedRecords = response.ListResult.Count();
                     response.EndUserMessage = "Get All Inventory Details Successfull";
                 }
                 else
@@ -665,9 +684,7 @@ namespace DAL.Repositories
 
             // create  instance for pdf document genaration //
             Document pdfDoc = new Document(PageSize.A4, 35, 10, 25, 10);
-            //  PdfPCell cell1 = null;
-            // PdfPTable table1 = null;
-            // PdfPTable table2 = null;
+
 
             /* Item Table Styles start */
 
