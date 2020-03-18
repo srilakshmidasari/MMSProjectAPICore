@@ -57,8 +57,7 @@ export class WorkOrderComponent implements OnInit {
 
   ngOnInit() {
     debugger
-    this.getworkOrderOrders();
-    //  this.getSites();
+    this.getworkOrderOrders();    
     this.getItem();
     this.buildForm();
   }
@@ -97,6 +96,8 @@ export class WorkOrderComponent implements OnInit {
     debugger
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
   }
+
+  
   // handleSelectedValue(){
   //   if(this.credentials==this.credentials){
   //    this.showHide = true;
@@ -272,6 +273,7 @@ export class WorkOrderComponent implements OnInit {
   }
 
   onEditClick(order) {
+    
     this.isEdit = true;
     this.isAdding = false;
     this.isNewOrder = false;

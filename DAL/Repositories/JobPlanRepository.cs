@@ -185,5 +185,38 @@ namespace DAL.Repositories
             }
             return response;
         }
+
+        public ListDataResponse<JobTask> GetJobTaskByJobPlanId(int JobPlanId)
+        {
+            ListDataResponse<JobTask> response = new ListDataResponse<JobTask>();
+            try
+            {
+                var result = _appContext.JobTasks.Where(x => x.JobPlanId == JobPlanId).ToList();
+                              
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All JobTask Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No JobTask Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

@@ -35,5 +35,17 @@ namespace MMS.Controllers
         {
             return _unitOfWork.JobPlans.AddJobPlan(jobPlans);
         }
+
+        [HttpPut]
+        public ValueDataResponse<JobPlan> UpdateJobPlan(UpsertJobPlan jobPlans)
+        {
+            return _unitOfWork.JobPlans.UpdateJobPlan(jobPlans);
+        }
+
+        [HttpGet("GetJobTaskByJobPlanId/{JobPlanId}")]
+        public ListDataResponse<JobTask> GetStoresByProjectId(int JobPlanId)
+        {
+            return _unitOfWork.JobPlans.GetJobTaskByJobPlanId(JobPlanId);
+        }
     }
 }

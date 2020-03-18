@@ -506,4 +506,22 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.getPMAssetsbyPMIdEndPoint(Id);
   }
   
+
+  // Job Plan 
+
+  getJobPlan(){
+    return this.accountEndpoint.getJobPlanEndPoint();
+  }
+    
+  AddJobPlan(reqObject) {
+    return this.accountEndpoint.AddJobPlanEndPoint(reqObject);
+  }
+
+  UpdateJobPlan(reqObject) {
+    return this.accountEndpoint.UpdateJobPlanEndPoint(reqObject);
+  }
+
+  getJobTaskByJobPlanId(Id) {
+    return this.accountEndpoint.getJobTaskByJobPlanIdEndPoint(Id);
+  }
 }

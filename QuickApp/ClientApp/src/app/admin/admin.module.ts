@@ -42,6 +42,7 @@ import { ReceiveItemComponent } from './inventory/receive-item/receive-item.comp
 import { CloseorderComponent } from './inventory/closeorder/closeorder.component';
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 import { PreventivemaintenanceComponent } from './preventivemaintenance/preventivemaintenance.component';
+import { JobPlanComponent } from './job-plan/job-plan.component';
 
 @NgModule({
   imports: [
@@ -80,7 +81,8 @@ import { PreventivemaintenanceComponent } from './preventivemaintenance/preventi
     ReceiveItemComponent,
     CloseorderComponent,
     InventoryItemsComponent,
-    PreventivemaintenanceComponent
+    PreventivemaintenanceComponent,
+    JobPlanComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

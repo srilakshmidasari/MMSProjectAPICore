@@ -102,7 +102,11 @@ export class AccountEndpoint extends EndpointBase {
   private readonly  _getPreventiveMaintenance: string ='/api/PreventiveMaintenance';
 
   private readonly  _getPMAssetsbyPMIdUrl: string ='/api/PreventiveMaintenance/GetPMAssetsbyPMId';
- 
+
+  private readonly  _getJobPlanUrl: string ='/api/JobPlan';
+
+  private readonly  _getJobTaskByJobPlanIdUrl: string ='/api/JobPlan/GetJobTaskByJobPlanId';
+  
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -192,6 +196,10 @@ export class AccountEndpoint extends EndpointBase {
   get getPreventiveMaintenance() { return this.configurations.baseUrl + this._getPreventiveMaintenance; }
 
   get getPMAssetsbyPMIdUrl() { return this.configurations.baseUrl + this._getPMAssetsbyPMIdUrl; }
+
+  get getJobPlanUrl() { return this.configurations.baseUrl + this._getJobPlanUrl; }
+
+  get getJobTaskByJobPlanIdUrl() { return this.configurations.baseUrl + this._getJobTaskByJobPlanIdUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -1001,6 +1009,42 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  // Job Plan
+
   
+  
+
+  getJobPlanEndPoint<T>():Observable<T>{
+    const endpointUrl = this.getJobPlanUrl;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getJobPlanEndPoint());
+      }));
+  }
+
+  AddJobPlanEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getJobPlanUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.AddJobPlanEndPoint(reqObject));
+      }));
+  }
+
+  UpdateJobPlanEndPoint<T>(reqObject): Observable<T> {
+    const endpointUrl = this.getJobPlanUrl;
+    return this.http.put<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.UpdateJobPlanEndPoint(reqObject));
+      }));
+  }
+
+  getJobTaskByJobPlanIdEndPoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getJobTaskByJobPlanIdUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getJobTaskByJobPlanIdEndPoint(Id));
+      }));
+  }
+
   
 }

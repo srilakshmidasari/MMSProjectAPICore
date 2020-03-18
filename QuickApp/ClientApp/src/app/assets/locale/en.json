@@ -67,7 +67,8 @@
     "Work Order":"Work Order",
     "Inventory-Items" :"Inventory-Items",
     "Preventive Maintenance":"Preventive Maintenance",
-    "Export":"Export"
+    "Export":"Export",
+    "JobPlan":"JobPlan"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",

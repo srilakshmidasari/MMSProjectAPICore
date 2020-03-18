@@ -1,0 +1,402 @@
+<app-page-header title="JobPlan" icon="assignment_ind"></app-page-header>
+<div class="page-content" [hidden]="isAdding || isEdit">
+    <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
+        <div>
+            <p-table #dt [value]="jobPlanList" [paginator]="true" expandableRows="true" [rows]="10" sortField="id"
+                matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
+                sortMode="single" rowExpandMode="single" dataKey="id"
+                [globalFilterFields]="['jobReference','name','jobDescription','siteName','projectName', 'statusName','techinicianName','assetGroupName','duration']">
+                <ng-template pTemplate="caption">
+                    <div style="text-align: right">
+
+                        <input type="text" pInputText size="50" placeholder="Search by Job Plan"
+                            (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3em"></th>
+                        <th [pSortableColumn]="'jobReference'">Job Reference
+                            <p-sortIcon [field]="'jobReference'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'name'">Name
+                            <p-sortIcon [field]="'name'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'jobDescription'">Job Description
+                            <p-sortIcon [field]="'jobDescription'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'siteName'">Site Name
+                            <p-sortIcon [field]="'siteName'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'projectName'">Project Name
+                            <p-sortIcon [field]="'projectName'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'statusName'">Status Name
+                            <p-sortIcon [field]="'statusName'"></p-sortIcon>
+                        </th>
+
+                        <th [pSortableColumn]="'techinicianName'">Techinician Name
+                            <p-sortIcon [field]="'techinicianName'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'assetGroupName'">Asset GroupName
+                            <p-sortIcon [field]="'assetGroupName'"></p-sortIcon>
+                        </th>
+                        <th [pSortableColumn]="'duration'">Duration
+                            <p-sortIcon [field]="'duration'"></p-sortIcon>
+                        </th>
+                        <th>{{'Purchase Order.Management.Is Active'|translate}}
+                        </th>
+                        <th class="just-cont-center">
+                            <button mat-button color="primary"
+                                matTooltip="{{'Work Order.Management.Add Order'| translate}}" (click)="addClick()">
+                                <mat-icon class="mat-button-icon">add</mat-icon>
+                                {{'Work Order.Management.Add Order'|translate}}
+                            </button>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-req let-rowIndex="rowIndex" let-expanded="expanded">
+                    <tr>
+                        <td style="width: 3em">
+                            <a [pRowToggler]="req"
+                                (click)="getJobTaskByJobPlanId(req, expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right')">
+                                <i [ngClass]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></i>
+                            </a>
+                        </td>
+                        <td>{{req.jobReference}}</td>
+                        <td>{{req.name}}</td>
+                        <td>{{req.jobDescription}}</td>
+                        <td>{{req.siteName}}</td>
+                        <td>{{req.projectName}}</td>
+                        <td>{{req.statusName}}</td>
+                        <td>{{req.techinicianName}}</td>
+                        <td>{{req.assetGroupName}}</td>
+                        <td>{{req.duration}}</td>
+                        <td align="center">
+                            <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
+                        </td>
+                        <td>
+                            <button class="just-cont-center" mat-icon-button
+                                matTooltip="{{'Work Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
+                                <mat-icon color="primary">edit</mat-icon>
+                            </button>
+                            <button class="just-cont-center" mat-icon-button
+                                matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
+                    <tr>
+                        <td [attr.colspan]="13">
+                            <p-table #dt1 [responsive]="true" [value]="jobTaskList" [rows]="5" sortField="name"
+                                [paginator]="true" [rowsPerPageOptions]="[5,10,15]">
+                                <ng-template pTemplate="header">
+                    <tr>
+                        <th class="product-id" [pSortableColumn]="'name'">
+                            Task Name
+                            <p-sortIcon [field]="'name'"></p-sortIcon>
+                        </th>
+                        <th class="product-id" [pSortableColumn]="'duration'">
+                            Task Duration
+                            <p-sortIcon [field]="'duration'"></p-sortIcon>
+                        </th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-expanded="expanded" let-rowdata>
+                    <tr>
+                        <td>{{rowdata.name}}</td>
+                        <td>{{rowdata.duration}}</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage" let-columns>
+                    <tr *ngIf="jobTaskList.length == 0">
+                        <td colspan="3" class="ui-datatable-emptymessage text-center">
+                            {{'Work Order.Management.No Records Found'|translate}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </td>
+            </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage" let-columns>
+                <tr>
+                    <td colspan="12" class="ui-datatable-emptymessage text-center">
+                        {{'Work Order.Management.No Records Found'|translate}}
+                    </td>
+                </tr>
+            </ng-template>
+            </p-table>
+        </div>
+    </div>
+</div>
+
+<div class="page-content" *ngIf="isAdding">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Add JobPlan
+            </mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="jobPlanForm">
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Job Reference</mat-label>
+                        <input matInput formControlName="jobReference" required maxlength="30" />
+
+                        <mat-error *ngIf="!jobPlanForm.controls['jobReference'].valid">
+                            Job Reference is Required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Name </mat-label>
+                        <input matInput formControlName="jobName" required maxlength="30" />
+                        <mat-error *ngIf="!jobPlanForm.controls['jobName'].valid">
+                            Name is Required
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>Job Descrption </mat-label>
+                        <input matInput formControlName="jobDescription" required maxlength="30" />
+                        <mat-error *ngIf="!jobPlanForm.controls['jobDescription'].valid">
+                            Job Descrption is Required
+                        </mat-error>
+                    </mat-form-field>
+                    <div class="col-md-2">
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                           Add Task
+                        </button>
+                    </div>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.AssetGroup'|translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="assetGroupId">
+                            <mat-option *ngFor="let assGroup of assetGroupList" [value]="assGroup.id" required>
+                                {{assGroup.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!jobPlanForm.controls['assetGroupId'].valid">
+                            Please Select Asset Group
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Technician <span>*</span>
+                        </mat-label>
+                        <mat-select formControlName="technicianId">
+                            <mat-option *ngFor="let work of technicianList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!jobPlanForm.controls['technicianId'].valid">
+                            Please Select Technician
+                        </mat-error>
+                    </mat-form-field>
+
+
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.SiteName1'|translate}}</mat-label>
+                        <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" >
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                       
+                    </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.ProjectName'|translate}}</mat-label>
+                        <mat-select formControlName="projectId" >
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" >
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                </div>
+            </form>
+            <div class="row">
+                <form [formGroup]="TaskFrom" class="col-md-12">
+                    <div formArrayName="credentials"
+                        *ngFor="let item of TaskFrom.controls['credentials']['controls']; let i = index">
+                        <ng-container [formGroupName]="i">
+                            <h4>Task {{i+1}}</h4>
+                            <div class="row">
+                                <mat-form-field class="col-md-4">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput formControlName="name" required maxlength="30" />
+                                    <mat-error *ngIf="item.controls.name.invalid">
+                                        Task Name is Required
+                                    </mat-error>
+                                </mat-form-field>
+
+                                <mat-form-field class="col-md-4">
+                                    <mat-label>Duration</mat-label>
+                                    <input matInput formControlName="duration" required maxlength="10" />
+                                    <mat-error *ngIf="item.controls.duration.invalid">
+                                        Duration is Required
+                                    </mat-error>
+                                </mat-form-field>
+                                <div class="col-md-4">
+                                    <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel"
+                                        *ngIf="i>0">
+                                        {{'Purchase Order.Management.Remove'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </form>
+            </div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary" (click)="saveJobPlan()">Save</button>
+                <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div>
+
+    </mat-card>
+</div>
+
+<div class="page-content" *ngIf="isEdit">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Add JobPlan
+                </mat-card-title>
+            </mat-card-header>
+            <br>
+            <mat-card-content>
+                <form [formGroup]="jobPlanForm">
+                    <div class="row">
+                        <mat-form-field class="col-md-3">
+                            <mat-label>Job Reference</mat-label>
+                            <input matInput formControlName="jobReference" required maxlength="30" />
+    
+                            <mat-error *ngIf="!jobPlanForm.controls['jobReference'].valid">
+                                Job Reference is Required
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                            <mat-label>Name </mat-label>
+                            <input matInput formControlName="jobName" required maxlength="30" />
+                            <mat-error *ngIf="!jobPlanForm.controls['jobName'].valid">
+                                Name is Required
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-3">
+                            <mat-label>Job Descrption </mat-label>
+                            <input matInput formControlName="jobDescription" required maxlength="30" />
+                            <mat-error *ngIf="!jobPlanForm.controls['jobDescription'].valid">
+                                Job Descrption is Required
+                            </mat-error>
+                        </mat-form-field>
+                        <div class="col-md-2">
+                            <button mat-raised-button color="primary"
+                                matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                                <mat-icon class="mat-button-icon">add</mat-icon>
+                               Add Task
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'Assets.Management.AssetGroup'|translate}} <span>*</span></mat-label>
+                            <mat-select formControlName="assetGroupId">
+                                <mat-option *ngFor="let assGroup of assetGroupList" [value]="assGroup.id" required>
+                                    {{assGroup.name1}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!jobPlanForm.controls['assetGroupId'].valid">
+                                Please Select Asset Group
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <mat-label>Technician <span>*</span>
+                            </mat-label>
+                            <mat-select formControlName="technicianId">
+                                <mat-option *ngFor="let work of technicianList" [value]="work.id" required>
+                                    {{work.name1}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="!jobPlanForm.controls['technicianId'].valid">
+                                Please Select Technician
+                            </mat-error>
+                        </mat-form-field>
+    
+    
+                    </div>
+                    <div class="row">
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'Assets.Management.SiteName1'|translate}}</mat-label>
+                            <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
+                                <mat-option *ngFor="let site of siteList" [value]="site.id" >
+                                    {{site.name1}}(<span>{{site.siteReference}}</span>)
+                                </mat-option>
+                            </mat-select>
+                           
+                        </mat-form-field>
+                        <mat-form-field class="col-md-4">
+                            <mat-label>{{'Assets.Management.ProjectName'|translate}}</mat-label>
+                            <mat-select formControlName="projectId" >
+                                <mat-option *ngFor="let project of userProjectsList" [value]="project.id" >
+                                    {{project.name1}}(<span>{{project.projectReference}}</span>)
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+    
+                    </div>
+                </form>
+                <div class="row">
+                    <form [formGroup]="TaskFrom" class="col-md-12">
+                        <div formArrayName="credentials"
+                            *ngFor="let item of TaskFrom.controls['credentials']['controls']; let i = index">
+                            <ng-container [formGroupName]="i">
+                                <h4>Task {{i+1}}</h4>
+                                <div class="row">
+                                    <mat-form-field class="col-md-4">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput formControlName="name" required maxlength="30" />
+                                        <mat-error *ngIf="item.controls.name.invalid">
+                                            Task Name is Required
+                                        </mat-error>
+                                    </mat-form-field>
+    
+                                    <mat-form-field class="col-md-4">
+                                        <mat-label>Duration</mat-label>
+                                        <input matInput formControlName="duration" required maxlength="10" />
+                                        <mat-error *ngIf="item.controls.duration.invalid">
+                                            Duration is Required
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div class="col-md-4">
+                                        <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel"
+                                            *ngIf="i>0">
+                                            {{'Purchase Order.Management.Remove'|translate}}
+                                        </button>
+                                    </div>
+                                </div>
+                            </ng-container>
+                        </div>
+                    </form>
+                </div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="float-right" style="padding-top: 12px;">
+                    <button mat-raised-button color="primary" (click)="saveJobPlan()">Save</button>
+                    <button mat-raised-button color="warn" (click)="onCancelClick()">Cancel</button>
+                </div>
+            </mat-card-actions>
+            <div class="clearfix"></div>
+    
+        </mat-card>
+    </div>

@@ -14,6 +14,8 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<JobPlan> AddJobPlan(UpsertJobPlan jobPlans);
 
         ValueDataResponse<JobPlan> UpdateJobPlan(UpsertJobPlan jobPlans);
+
+        ListDataResponse<JobTask> GetJobTaskByJobPlanId(int JobPlanId);
     }
 }
 
