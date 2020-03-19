@@ -616,6 +616,8 @@ namespace DAL.RequestResponseModels
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
             public int TypeOfMaintainanceId { get; set; }
+
+            public int? JobPlanId { get; set; }
             public string TypeOfMaintainanceName { get; set; }
             public string Details { get; set; }          
             public int StatusTypeId { get; set; }
@@ -632,6 +634,7 @@ namespace DAL.RequestResponseModels
             public DateTime StartDate { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
+            public int? JobPlanId { get; set; }
             public string Details { get; set; }
             public int StatusTypeId { get; set; }
             public int TypeOfMaintenance { get; set; }          

@@ -21,8 +21,9 @@ export class PreventivemaintenanceComponent implements OnInit {
   maintenanceList: any[] = [];
   loadingIndicator: boolean;
   maintenanceData: any[] = [];
+  jobPlanList: any[] = [];
   siteList: any[] = [];
-  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'startDate', 'durationInHours', 'technicianName',  'statusTypeName', 'details', 'isActive', 'Actions']
+  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'startDate', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'isActive', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -67,6 +68,15 @@ export class PreventivemaintenanceComponent implements OnInit {
       });
   }
 
+
+  private getJobPlans() {
+    this.accountService.getJobPlan()
+      .subscribe((results: any) => {
+        this.jobPlanList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
 
   // Get sites data by UserId
   getSitesByUserId() {
@@ -174,8 +184,8 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       this.assetsPMList.forEach((item) => {
         this.maitananceRefData.projectId = item.projectId,
-        this.maitananceRefData.siteId = item.siteId,
-        this.maitananceRefData.locationId = item.locationId
+          this.maitananceRefData.siteId = item.siteId,
+          this.maitananceRefData.locationId = item.locationId
         this.getProjectsByUserIdandSiteId(item.siteId)
         this.onSelectProjectByLocation(item.projectId)
         this.onSelectLocationByProject(item.locationId)
@@ -206,7 +216,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.buildForm();
       this.resetForm();
     }
-   
+
   }
 
   private getAllmaitenance(): any {

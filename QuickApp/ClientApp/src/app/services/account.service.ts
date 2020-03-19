@@ -524,4 +524,8 @@ deleteAssetRepository(repositoryId) {
   getJobTaskByJobPlanId(Id) {
     return this.accountEndpoint.getJobTaskByJobPlanIdEndPoint(Id);
   }
+
+  deleteJobPlan(Id) {
+    return this.accountEndpoint.deleteJobPlanEndpoint(Id);
+  }
 }

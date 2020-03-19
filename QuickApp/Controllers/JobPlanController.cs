@@ -42,6 +42,12 @@ namespace MMS.Controllers
             return _unitOfWork.JobPlans.UpdateJobPlan(jobPlans);
         }
 
+        [HttpDelete]
+        public ValueDataResponse<JobPlan> DeleteJobPlan(int JobPlanId)
+        {
+            return _unitOfWork.JobPlans.DeleteJobPlan(JobPlanId);
+        }
+
         [HttpGet("GetJobTaskByJobPlanId/{JobPlanId}")]
         public ListDataResponse<JobTask> GetStoresByProjectId(int JobPlanId)
         {

@@ -51,7 +51,7 @@
                             <button mat-button color="primary"
                                 matTooltip="{{'Work Order.Management.Add Order'| translate}}" (click)="addClick()">
                                 <mat-icon class="mat-button-icon">add</mat-icon>
-                                {{'Work Order.Management.Add Order'|translate}}
+                                Add Job Plan
                             </button>
                         </th>
                     </tr>
@@ -82,7 +82,7 @@
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
                             <button class="just-cont-center" mat-icon-button
-                                matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive">
+                                matTooltip="{{'Work Order.Management.Delete'|translate}}"  (click)="confirmDelete(req)" [hidden]="!req.isActive">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
                         </td>
@@ -271,7 +271,7 @@
 <div class="page-content" *ngIf="isEdit">
         <mat-card>
             <mat-card-header>
-                <mat-card-title>Add JobPlan
+                <mat-card-title>Edit Job Plan
                 </mat-card-title>
             </mat-card-header>
             <br>

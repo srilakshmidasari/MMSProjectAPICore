@@ -192,6 +192,7 @@ namespace DAL.Repositories
                 {
                     result.PreventiveRefId = PmOrder.PreventiveRefId;
                     result.StartDate = PmOrder.StartDate;
+                    result.JobPlanId = PmOrder.JobPlanId;
                     result.DurationinHours = PmOrder.DurationInHours;
                     result.StatusTypeId = PmOrder.StatusTypeId;
                     result.WorkTechnicianId = PmOrder.WorkTechnicianId;
