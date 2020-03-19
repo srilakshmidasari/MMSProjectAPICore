@@ -5,9 +5,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { DataFactory } from 'src/app/shared/dataFactory';
-import { Utilities } from 'src/app/services/utilities';
-import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
-import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-job-plan',
@@ -38,6 +35,7 @@ export class JobPlanComponent implements OnInit {
      }
 
   ngOnInit() {
+    debugger
     this.getJobPlans();
     this.buildForm();
   }
@@ -180,7 +178,7 @@ export class JobPlanComponent implements OnInit {
   
 
     saveJobPlan() {
-      
+      debugger
       if (!this.jobPlanForm.valid) {
         this.alertService.showValidationError();
         return;
@@ -230,18 +228,16 @@ export class JobPlanComponent implements OnInit {
     private AddJobPlanData(): any {
       debugger
       var jobTasks = [];
-      this.duration ='';
       for (var i = 0; i < this.TaskFrom.value.credentials.length; i++) {
         var itemReq = {
           "id": 0,
-          "jobPlanId": this.jobPlanData.id,
+          "jobPlanId": 0,
           "name": this.TaskFrom.value.credentials[i].name,
           "duration": this.TaskFrom.value.credentials[i].duration,
         }
         var str = this.TaskFrom.value.credentials[i].duration; 
         var matches = str.match(/\d+/g); 
-        var addstring = this.duration==undefined || this.duration == "" ?  parseInt(matches[0]) :addstring + parseInt(matches[0]);
-        this.duration = String(addstring) +"hrs"
+        this.duration  = this.duration==undefined  ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
         jobTasks.push(itemReq);
       }
       const formModel = this.jobPlanForm.value;
@@ -266,6 +262,7 @@ export class JobPlanComponent implements OnInit {
     }
 
     onEditClick(job) {
+      debugger
       this.isEdit = true;
       this.isAdding = false;
       this.isNewJobPlan = false;
@@ -292,34 +289,6 @@ export class JobPlanComponent implements OnInit {
         technicianId: this.jobPlanData.technicianId || '',
       });
     }
-
-    confirmDelete(job: any) {
-      debugger
-      let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-        data: { title: "Delete" + " " + job.jobReference, msg: "Are you sure you want to delete this Job Plan with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
-        width: 'auto',
-        height: 'auto',
-        disableClose: true,
-      });
-      dialogRef.afterClosed().subscribe(result => {
-        if (result != undefined) {
-          this.accountService.deleteJobPlan(job.id)
-            .subscribe((results: any) => {
-              this.alertService.stopLoadingMessage();
-              this.loadingIndicator = false;
-              this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
-              if (results.isSuccess) {
-                this.getJobPlans();
-              }
-            },
-              error => {
-                this.alertService.stopLoadingMessage();
-                this.loadingIndicator = false;
-                this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-                  MessageSeverity.error, error);
-              });
-        }
-      });
-    }
+  
   
 }
