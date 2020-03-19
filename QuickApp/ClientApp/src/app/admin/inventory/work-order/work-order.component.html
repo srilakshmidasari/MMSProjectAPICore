@@ -28,7 +28,7 @@
                 <ng-template pTemplate="header">
                     <tr>
                         <th style="width: 3em"></th>
-                        <th [pSortableColumn]="'id'">Work Order Id
+                        <th [pSortableColumn]="'id'">{{'Work Order.Management.Work Order Id'| translate}}
                             <p-sortIcon [field]="'id'"></p-sortIcon>
                         </th>
                         <th [pSortableColumn]="'reference1'">{{'Work Order.Management.Reference 1'| translate}}
@@ -46,7 +46,7 @@
                         <th [pSortableColumn]="'locationName'">{{'Work Order.Management.Location Name'| translate}}
                             <p-sortIcon [field]="'locationName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'statusTypeName'">Status Name
+                        <th [pSortableColumn]="'statusTypeName'">{{'Work Order.Management.Status Name'| translate}}
                             <p-sortIcon [field]="'statusTypeName'"></p-sortIcon>
                         </th>
                         <!-- <th [pSortableColumn]="'updatedDate'">{{'Work Order.Management.Updated Date'| translate}}
@@ -125,13 +125,13 @@
                                 (click)="onViewClick(req)">
                                 <mat-icon color="accent">visibility icon</mat-icon>
                             </button>
-                            <button class="z-index" mat-icon-button matTooltip=Accept  *ngIf="req.statusTypeName == 'Open'" (click)="acceptClick(req)">
+                            <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Accept'|translate}}" *ngIf="req.statusTypeName == 'Open'" (click)="acceptClick(req)">
                                 <mat-icon color="primary">thumb_up</mat-icon>
                             </button>
-                            <button class="z-index" mat-icon-button matTooltip=Reject  *ngIf="req.statusTypeName == 'Open'" (click)="rejectClick(req)">
+                            <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Reject'|translate}}"  *ngIf="req.statusTypeName == 'Open'" (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
                             </button>
-                            <button class="z-index" mat-icon-button matTooltip=Close  *ngIf="req.statusTypeName == 'Approved'"
+                            <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Close'|translate}}" *ngIf="req.statusTypeName == 'Approved'"
                                 (click)="CloseWorkOrderClick(req)">
                                 <mat-icon color="warn">close</mat-icon>
                             </button>

@@ -56,7 +56,7 @@
                 </ng-container>
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                    IsActive</mat-header-cell>
+                    {{'Preventive Maintenance.Management.IsActive'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>

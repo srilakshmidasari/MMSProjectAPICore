@@ -42,7 +42,8 @@
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
     "PM Procedures":"PM Procedures",
-    "Export":"Export"
+    "Export":"Export",
+    "JobPlan":"JobPlan"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -570,12 +571,16 @@
     "Billing Address":"Billing Address",
     "Shipping Address":"Shipping Address",
     "Purchase Order Information":"Purchase Order Information",
-    "Close":"Close"
+    "Close":"Close",
+    "View Details":"View Details",
+    "Receive":"Receive"
   }
  },
  "Work Order":{
   "Management":{
     "Search By work Order":"Search By work Order",
+    "Work Order Id":"Work Order Id",
+    "Status Name":"Status Name",
     "Reference 1":"Reference 1",
     "Start Date":"Start Date",
     "End Date":"End Date",
@@ -635,7 +640,9 @@
     "Work Status Name":"Work Status Name",
     "Work Technician Name":"Work Technician Name",
     "Work Fault Name":"Work Fault Name",
-    "Close":"Close"
+    "Close":"Close",
+    "Accept":"Accept",
+    "Reject":"Reject"
   }
  },
  "InventoryItems":{
@@ -665,6 +672,7 @@
     "Add":"Add",
     "Edit":"Edit",
     "Delete":"Delete",
+    "IsActive":"IsActive",
     "No Records Found":"No Records Found",
     "No Search Results Found":"No Search Results Found",
     "Add Maintainance":"Add Maintainance",
@@ -685,5 +693,37 @@
     "Save":"Save",
     "Cancel":"Cancel"
    }
+ },
+ "JobPlan":{
+  "Management":{
+    "Search by Job Plan":"Search by Job Plan",
+    "Job Reference":"Job Reference",
+    "Name":"Name",
+    "Job Description":"Job Description",
+    "Site Name":"Site Name",
+    "Project Name":"Project Name",
+    "Status Name":"Status Name",
+    "Techinician Name":"Techinician Name",
+    "Asset GroupName":"Asset GroupName",
+    "Duration":"Duration",
+    "Is Active":"Is Active",
+    "Add Order":"Add Order",
+    "Task Name":"Task Name",
+    "Task Duration":"Task Duration",
+    "Add JobPlan":"Add JobPlan",
+    "Job Reference is Required":"Job Reference is Required",
+    "Name is Required":"Name is Required",
+    "Job Descrption":"Job Descrption",
+    "Job Descrption is Required":"Job Descrption is Required",
+    "Add Task":"Add Task",
+    "Please Select Asset Group":"Please Select Asset Group",
+    "Technician":"Technician",
+    "Please Select Technician":"Please Select Technician",
+    "Task Name is Required":"Task Name is Required",
+    "Duration is Required":"Duration is Required",
+    "Task":"Task",
+    "Save":"Save",
+    "Cancel":"Cancel"
+  }
  }
 }
