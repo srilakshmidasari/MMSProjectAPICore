@@ -229,6 +229,9 @@ namespace DAL.Repositories
                 if (JobPlanData != null)
                 {
                     var jobTasks = _appContext.JobTasks.Where(x => x.JobPlanId == JobPlanId).ToList();
+
+
+
                     _appContext.JobTasks.RemoveRange(jobTasks);
                     _appContext.JobPlans.Remove(JobPlanData);
 

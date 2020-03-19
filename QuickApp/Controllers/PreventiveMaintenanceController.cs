@@ -49,5 +49,11 @@ namespace MMS.Controllers
         {
             return _unitOfWork.PreventiveMaintenances.UpdatePreventiveMaintenance(PmOrder);
         }
+
+        [HttpDelete]
+        public ValueDataResponse<PreventiveMaintenance> DeletePreventiveMaintenance(int PmId)
+        {
+            return _unitOfWork.PreventiveMaintenances.DeletePreventiveMaintenance(PmId);
+        }
     }
 }

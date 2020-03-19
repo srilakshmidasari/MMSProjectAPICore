@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { Utilities } from 'src/app/services/utilities';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'app-job-plan',
@@ -179,6 +180,7 @@ export class JobPlanComponent implements OnInit {
   
 
     saveJobPlan() {
+      
       if (!this.jobPlanForm.valid) {
         this.alertService.showValidationError();
         return;
@@ -228,16 +230,18 @@ export class JobPlanComponent implements OnInit {
     private AddJobPlanData(): any {
       debugger
       var jobTasks = [];
+      this.duration ='';
       for (var i = 0; i < this.TaskFrom.value.credentials.length; i++) {
         var itemReq = {
           "id": 0,
-          "jobPlanId": 0,
+          "jobPlanId": this.jobPlanData.id,
           "name": this.TaskFrom.value.credentials[i].name,
           "duration": this.TaskFrom.value.credentials[i].duration,
         }
-        this.duration= this.TaskFrom.value.credentials[i].duration; 
-        // var matches = str.match(/\d+/g); 
-        // this.duration  = this.duration==undefined  ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
+        var str = this.TaskFrom.value.credentials[i].duration; 
+        var matches = str.match(/\d+/g); 
+        var addstring = this.duration==undefined || this.duration == "" ?  parseInt(matches[0]) :addstring + parseInt(matches[0]);
+        this.duration = String(addstring) +"hrs"
         jobTasks.push(itemReq);
       }
       const formModel = this.jobPlanForm.value;

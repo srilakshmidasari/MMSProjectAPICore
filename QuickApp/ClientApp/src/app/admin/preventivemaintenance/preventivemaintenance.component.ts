@@ -37,6 +37,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   currenrDate: Date;
   assetsPMList: any[] = [];
   AssetIds: any[] = [];
+  jobTaskList: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -83,6 +84,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
+        this.getJobPlans();
       },
         error => {
         });
@@ -147,6 +149,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       preventiveRefId: ['', Validators.required],
       assetId: ['', Validators.required],
       siteId: ['', Validators.required],
+      jobId: ['', Validators.required],
       projectId: ['', Validators.required],
       locationId: ['', Validators.required],
       startDate: ['', Validators.required],
@@ -167,6 +170,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
       siteId: this.maitananceRefData.siteId || '',
       projectId: this.maitananceRefData.projectId || '',
+      jobId: this.maitananceRefData.jobPlanId || '',
       locationId: this.maitananceRefData.locationId || '',
       preventiveRefId: this.maitananceRefData.preventiveRefId || '',
       startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
@@ -196,16 +200,30 @@ export class PreventivemaintenanceComponent implements OnInit {
       })
   }
 
+  onSelectJob(event) {
+    debugger
+    this.accountService.getJobTaskByJobPlanId(event)
+      .subscribe((results: any) => {
+        this.jobTaskList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+
+        });
+  }
 
   editClick(maintanance?: any) {
+    debugger
     this.AssetIds = [];
+    this.jobTaskList=[];
     this.maitananceRefData = {};
     if (maintanance != undefined) {
       this.isAdding = true;
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
       this.getSitesByUserId();
+      this.getJobPlans();
       this.getPMAssetsbyPMId(this.maitananceRefData.id)
+      this.onSelectJob(this.maitananceRefData.jobPlanId)
       this.maitananceRefData.assetId.forEach(element => {
         this.AssetIds.push(element.assetId)
       });
@@ -217,6 +235,9 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.resetForm();
     }
 
+
+    
+
   }
 
   private getAllmaitenance(): any {
@@ -227,6 +248,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       "startDate": formModel.startDate,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
+      "jobPlanId": formModel.jobId,
       "details": formModel.details,
       "statusTypeId": DataFactory.StatusTypes.Open,
       "typeOfMaintenance": formModel.typeOfMaintainanceId,

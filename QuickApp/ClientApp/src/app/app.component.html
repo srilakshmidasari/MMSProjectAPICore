@@ -99,11 +99,9 @@
         <!-- <a mat-list-item routerLinkActive="active" *ngIf="canViewAssetGroup" routerLink="/admin/asset-group">
             <mat-icon>pets</mat-icon>{{'mainMenu.AssetGroup'|translate}}
          </a> -->
-        <mat-nav-list>
-          <a mat-list-item routerLinkActive="active" *ngIf="canViewAssets" routerLink="/admin/assets">
-            <mat-icon>receipt</mat-icon>{{'mainMenu.Assets'|translate}}
-          </a>
-        </mat-nav-list>
+        <!-- <mat-nav-list>
+         
+        </mat-nav-list> -->
 
         <mat-nav-list>
           <a mat-list-item routerLinkActive="active" routerLink="/admin/supplier">
@@ -136,16 +134,22 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewAssets" routerLink="/admin/assets">
+            <mat-icon>receipt</mat-icon>{{'mainMenu.Assets'|translate}}
+          </a>
+
           <a mat-list-item routerLinkActive="active" routerLink="/admin/work-order">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Work Order'|translate}}
+          </a>
+
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/job-plan">
+            <mat-icon>list_alt</mat-icon>{{'mainMenu.JobPlan'|translate}}
           </a>
 
           <a mat-list-item routerLinkActive="active" routerLink="/admin/preventive-maintenance">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.PM Procedures'|translate}}
           </a>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/job-plan">
-            <mat-icon>list_alt</mat-icon>{{'mainMenu.JobPlan'|translate}}
-          </a>
+         
           
         </mat-expansion-panel>
 
