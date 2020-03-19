@@ -579,6 +579,8 @@
  "Work Order":{
   "Management":{
     "Search By work Order":"Search By work Order",
+    "Work Order Id":"Work Order Id",
+    "Status Name":"Status Name",
     "Reference 1":"Reference 1",
     "Start Date":"Start Date",
     "End Date":"End Date",
@@ -638,7 +640,9 @@
     "Work Status Name":"Work Status Name",
     "Work Technician Name":"Work Technician Name",
     "Work Fault Name":"Work Fault Name",
-    "Close":"Close"
+    "Close":"Close",
+    "Accept":"Accept",
+    "Reject":"Reject"
   }
  },
  "InventoryItems":{

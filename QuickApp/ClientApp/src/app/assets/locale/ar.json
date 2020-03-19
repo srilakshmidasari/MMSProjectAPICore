@@ -567,6 +567,8 @@
  "Work Order":{
   "Management":{
     "Search By work Order":"البحث حسب ترتيب العمل",
+    "Work Order Id":"معرّف أمر العمل",
+    "Status Name":"اسم الحالة",
     "Reference 1":"المرجع 1",
     "Start Date":"تاريخ البدء",
     "End Date":"تاريخ الانتهاء",
@@ -626,7 +628,9 @@
     "Work Status Name":"اسم حالة العمل",
     "Work Technician Name":"اسم فني العمل",
     "Work Fault Name":"اسم خطأ العمل",
-    "Close":"قريب"
+    "Close":"قريب", 
+    "Accept":"قبول",
+    "Reject":"رفض"
   }
  },
  "InventoryItems":{
