@@ -33,7 +33,8 @@
     "MMS":"م م س",
     "Work Order":"ترتيب العمل",
     "PM Procedures":"إجراءات PM",
-    "Export":"تصدير"
+    "Export":"تصدير",
+    "JobPlan":"خطة العمل"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -58,7 +59,8 @@
     "Purchase Order":"أمر شراء",
     "Work Order":"ترتيب العمل",
     "Preventive Maintenance":"الصيانة الوقائية",
-    "Export":"تصدير"
+    "Export":"تصدير",
+    "JobPlan":"خطة العمل"
   },
   "home": {
     "NoWidgets1": "لم يتم عرض أية أدوات. اذهب إلى",
@@ -557,7 +559,9 @@
     "Billing Address":"عنوان وصول الفواتير",
     "Shipping Address":"عنوان الشحن",
     "Purchase Order Information":"معلومات طلب الشراء",
-    "Close":"قريب"
+    "Close":"قريب",
+    "View Details":"عرض التفاصيل",
+    "Receive":"تسلم"
   }
  },
  "Work Order":{
@@ -652,6 +656,7 @@
    "Add":"أضف",
    "Edit":"تعديل",
    "Delete":"حذف",
+   "IsActive":"نشط",
    "No Records Found":"لا توجد سجلات",
    "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
    "Add Maintainance":"أضف الصيانة",
@@ -672,7 +677,39 @@
    "Save":"حفظ",
    "Cancel":"إلغاء"
   }
-}
+},
+"JobPlan":{
+  "Management":{
+    "Search by Job Plan":"البحث حسب خطة العمل",
+    "Job Reference":"مرجع الوظيفة",
+    "Name":"اسم",
+    "Job Description":"المسمى الوظيفي",
+    "Site Name":"اسم الموقع",
+    "Project Name":"اسم المشروع",
+    "Status Name":"اسم الحالة",
+    "Techinician Name":"اسم الفني",
+    "Asset GroupName":"اسم مجموعة الأصول",
+    "Duration":"المدة الزمنية",
+    "Is Active":"نشط",
+    "Add Order":"أضف الطلب",
+    "Task Name":"اسم المهمة",
+    "Task Duration":"مدة المهمة",
+    "Add JobPlan":"أضف خطة عمل",
+    "Job Reference is Required":"مرجع الوظيفة مطلوب",
+    "Name is Required":"مطلوب اسم",
+    "Job Descrption":"المسمى الوظيفي",
+    "Job Descrption is Required":"الوصف الوظيفي مطلوب",
+    "Add Task":"إضافة مهمة",
+    "Please Select Asset Group":"يرجى التحديدمجموعة الأصول",
+    "Technician":"فني",
+    "Please Select Technician":"يرجى تحديد فني",
+    "Task Name is Required":"اسم المهمة مطلوب",
+    "Duration is Required":"المدة مطلوبة",
+    "Task":"مهمة",
+    "Save":"حفظ",
+    "Cancel":"إلغاء"
+  }
+ }
 }
 
 

@@ -114,11 +114,11 @@
                                 (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
                             </button>
-                            <button class="just-cont-center" mat-icon-button matTooltip="View Details"
+                            <button class="just-cont-center" mat-icon-button matTooltip="{{'Purchase Order.Management.View Details'|translate}}"
                                 (click)="onViewdetailsClick(req)">
                                 <mat-icon color="accent">visibility icon</mat-icon>
                             </button>
-                            <button mat-icon-button matTooltip=Receive *ngIf="isAccepted == req.statusTypeId"
+                            <button mat-icon-button matTooltip="{{'Purchase Order.Management.Receive'|translate}}" *ngIf="isAccepted == req.statusTypeId"
                                 (click)="onReceiveClick(req)">
                                 <mat-icon>repeat</mat-icon>
                             </button>
