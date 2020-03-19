@@ -38,6 +38,7 @@ namespace DAL.Repositories
                                   StartDate = pm.StartDate,
                                   DurationInHours = pm.DurationinHours,
                                   Details = pm.Details,
+                                  JobPlanId= pm.JobPlanId,
                                   AssetId = _appContext.PMAssetXrefs.Where(S => S.PreventiveMaintenanceId == pm.Id).ToList(),
                                   TechnicianId = pm.WorkTechnicianId,
                                   TechnicianName = wt.Name1,
@@ -192,6 +193,7 @@ namespace DAL.Repositories
                 {
                     result.PreventiveRefId = PmOrder.PreventiveRefId;
                     result.StartDate = PmOrder.StartDate;
+                    result.JobPlanId = PmOrder.JobPlanId;
                     result.DurationinHours = PmOrder.DurationInHours;
                     result.StatusTypeId = PmOrder.StatusTypeId;
                     result.WorkTechnicianId = PmOrder.WorkTechnicianId;
@@ -230,5 +232,50 @@ namespace DAL.Repositories
             return response;
         }
 
+
+        public ValueDataResponse<PreventiveMaintenance> DeletePreventiveMaintenance(int PmId)
+        {
+            ValueDataResponse<PreventiveMaintenance> response = new ValueDataResponse<PreventiveMaintenance>();
+            try
+            {
+                var LocationData = _appContext.PreventiveMaintenances.Where(x => x.Id == PmId).FirstOrDefault();
+
+                var ast = _appContext.PMAssetXrefs.Where(x => x.PreventiveMaintenanceId == PmId).ToList();
+                if (ast != null)
+                {
+                    var assetRepo = _appContext.PMStatusHistories.Where(x => ast.Select(ar => ar.Id).Contains(x.PreventiveMaintenanceId)).ToList();
+                   
+                    _appContext.PMAssetXrefs.RemoveRange(ast);
+                    _appContext.PMStatusHistories.RemoveRange(assetRepo);
+                    _appContext.PreventiveMaintenances.Remove(LocationData);
+                    _appContext.SaveChanges();
+                }
+                _appContext.SaveChanges();
+
+                if (LocationData != null)
+                {
+
+                    response.Result = LocationData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Preventive Maintenance Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Preventive Maintenance Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

@@ -16,10 +16,13 @@ namespace DAL.Repositories.Interfaces
         ValueDataResponse<PreventiveMaintenance> InsertPreventiveMaintenance(UpsertPreventiveMaintenance PmOrder);
 
         ValueDataResponse<PreventiveMaintenance> UpdatePreventiveMaintenance(UpsertPreventiveMaintenance PmOrder);
-
-      //  ValueDataResponse<WorkOrder> ApprovePreventiveMaintenance(UpsertWorkOrder workorder);
-
         
+        ValueDataResponse<PreventiveMaintenance> DeletePreventiveMaintenance(int PmId);
+
+
+        //  ValueDataResponse<WorkOrder> ApprovePreventiveMaintenance(UpsertWorkOrder workorder);
+
+
 
     }
 }

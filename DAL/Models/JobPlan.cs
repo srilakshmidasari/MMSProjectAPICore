@@ -93,5 +93,9 @@ namespace DAL.Models
         public ICollection<JobTask> App_JobTask_JobPlanId { get; set; }
 
 
+        public ICollection<PreventiveMaintenance> App_PreventiveMaintenance_JobPlan_Id { get; set; }
+
+
+
     }
 }

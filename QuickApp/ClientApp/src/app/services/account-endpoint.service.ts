@@ -1046,5 +1046,11 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
-  
+  deleteJobPlanEndpoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getJobPlanUrl + '?JobPlanId=' + Id;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deleteJobPlanEndpoint(Id));
+      }));
+  }
 }

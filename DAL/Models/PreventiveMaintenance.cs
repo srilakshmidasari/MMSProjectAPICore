@@ -43,6 +43,9 @@ namespace DAL.Models
         [Display(Name = "Status Type Id")]
         public int StatusTypeId { get; set; }
 
+        [Display(Name = "Job Plan Id")]
+        public int? JobPlanId { get; set; }
+
         [Required]
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
@@ -75,6 +78,9 @@ namespace DAL.Models
 
         [JsonIgnore]
         public TypeCdDmt TypeOfMaintenance_Id { get; set; }
+
+        [JsonIgnore]
+        public JobPlan JobPlan_Id { get; set; }
 
 
         public ICollection<PMAssetXref> App_PreventiveMaintenance_AssetXref_Id { get; set; }

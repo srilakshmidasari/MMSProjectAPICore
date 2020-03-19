@@ -218,5 +218,50 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ValueDataResponse<JobPlan> DeleteJobPlan(int JobPlanId)
+        {
+            ValueDataResponse<JobPlan> response = new ValueDataResponse<JobPlan>();
+            try
+            {
+                var JobPlanData = _appContext.JobPlans.Where(x => x.Id == JobPlanId).FirstOrDefault();
+
+                if (JobPlanData != null)
+                {
+                    var jobTasks = _appContext.JobTasks.Where(x => x.JobPlanId == JobPlanId).ToList();
+
+
+
+                    _appContext.JobTasks.RemoveRange(jobTasks);
+                    _appContext.JobPlans.Remove(JobPlanData);
+
+                    _appContext.SaveChanges();
+                }
+
+                if (JobPlanData != null)
+                {
+                    response.Result = JobPlanData;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Job Plan Deleted Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Job Plan Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
+
     }
 }

@@ -202,10 +202,10 @@ namespace DAL.Repositories
                   
                     _appContext.PurchageOrders.RemoveRange(res);
                     _appContext.PurchageItemXrefs.RemoveRange(purchase);
-                  _appContext.WorkOrders.RemoveRange(res1);
+                    _appContext.WorkOrders.RemoveRange(res1);
                    _appContext.WorkOrderItemXrefs.RemoveRange(workOrder);
 
-          _appContext.Remove(ItemData);
+                     _appContext.Remove(ItemData);
                     _appContext.SaveChanges();
                 }
 

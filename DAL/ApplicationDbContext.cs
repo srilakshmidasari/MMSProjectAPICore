@@ -602,10 +602,16 @@ namespace DAL
              .HasConstraintName("FK_AApp_PreventiveMaintenance_MaintenanceId");
 
             builder.Entity<PreventiveMaintenance>().HasOne(d => d.WorkTechnician_Id)
-             .WithMany(p => p.App_PreventiveMaintenance_WorkTechinician_Id)
-             .HasForeignKey(d => d.WorkTechnicianId)
-             .OnDelete(DeleteBehavior.ClientSetNull)
-             .HasConstraintName("FK_App_PreventiveMaintenance_WorkTechinician_Id");
+              .WithMany(p => p.App_PreventiveMaintenance_WorkTechinician_Id)
+              .HasForeignKey(d => d.WorkTechnicianId)
+              .OnDelete(DeleteBehavior.ClientSetNull)
+              .HasConstraintName("FK_App_PreventiveMaintenance_WorkTechinician_Id");
+
+            builder.Entity<PreventiveMaintenance>().HasOne(d => d.JobPlan_Id)
+                .WithMany(p => p.App_PreventiveMaintenance_JobPlan_Id)
+                .HasForeignKey(d => d.JobPlanId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_App_PreventiveMaintenance_JobPlan_Id");
 
             builder.Entity<PMAssetXref>().HasOne(d => d.PreventiveMaintenance_Id)
                  .WithMany(p => p.App_PreventiveMaintenance_AssetXref_Id)

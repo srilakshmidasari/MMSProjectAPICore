@@ -693,7 +693,7 @@
     "Status Name":"اسم الحالة",
     "Techinician Name":"اسم الفني",
     "Asset GroupName":"اسم مجموعة الأصول",
-    "Duration":"المدة الزمنية",
+    "Duration": "المدة بالساعات",
     "Is Active":"نشط",
     "Add Order":"أضف الطلب",
     "Task Name":"اسم المهمة",

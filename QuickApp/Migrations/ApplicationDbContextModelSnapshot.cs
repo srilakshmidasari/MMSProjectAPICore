@@ -585,6 +585,111 @@ namespace MMS.Migrations
                     b.ToTable("Item");
                 });
 
+            modelBuilder.Entity("DAL.Models.JobPlan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("AssetGroupId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(true);
+
+                    b.Property<string>("JobDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("JobReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<int?>("ProjectId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SiteId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("StatusTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TechnicianId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AssetGroupId");
+
+                    b.HasIndex("CreatedBy");
+
+                    b.HasIndex("ProjectId");
+
+                    b.HasIndex("SiteId");
+
+                    b.HasIndex("StatusTypeId");
+
+                    b.HasIndex("TechnicianId");
+
+                    b.HasIndex("UpdatedBy");
+
+                    b.ToTable("JobPlan");
+                });
+
+            modelBuilder.Entity("DAL.Models.JobTask", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("JobPlanId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("JobPlanId");
+
+                    b.ToTable("JobTask");
+                });
+
             modelBuilder.Entity("DAL.Models.Location", b =>
                 {
                     b.Property<int>("Id")
@@ -810,6 +915,9 @@ namespace MMS.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValue(true);
 
+                    b.Property<int?>("JobPlanId")
+                        .HasColumnType("int");
+
                     b.Property<string>("PreventiveRefId")
                         .HasColumnType("nvarchar(max)");
 
@@ -835,6 +943,8 @@ namespace MMS.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedBy");
+
+                    b.HasIndex("JobPlanId");
 
                     b.HasIndex("StatusTypeId");
 
@@ -1747,6 +1857,56 @@ namespace MMS.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("DAL.Models.JobPlan", b =>
+                {
+                    b.HasOne("DAL.Models.LookUp", "AssetGroup_Id")
+                        .WithMany("App_JobPlan_AssetGroup_Id")
+                        .HasForeignKey("AssetGroupId")
+                        .HasConstraintName("FK_App_JobPlan_AssetGroup_Id");
+
+                    b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
+                        .WithMany("App_JobPlan_CreatedUser")
+                        .HasForeignKey("CreatedBy")
+                        .HasConstraintName("FK_App_JobPlan_CreatedUser")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.Project", "Project_Id")
+                        .WithMany("App_JobPlan_ProjectId")
+                        .HasForeignKey("ProjectId")
+                        .HasConstraintName("FK_App_JobPlan_ProjectId");
+
+                    b.HasOne("DAL.Models.SiteInfo", "Site_Id")
+                        .WithMany("App_JobPlan_SiteId")
+                        .HasForeignKey("SiteId")
+                        .HasConstraintName("FK_App_JobPlan_SiteId");
+
+                    b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
+                        .WithMany("App_JobPlan_StatusId")
+                        .HasForeignKey("StatusTypeId")
+                        .HasConstraintName("FK_App_JobPlan_StatusId")
+                        .IsRequired();
+
+                    b.HasOne("DAL.Models.LookUp", "Technician_Id")
+                        .WithMany("App_JobPlan_Techinician_Id")
+                        .HasForeignKey("TechnicianId")
+                        .HasConstraintName("FK_App_JobPlan_Techinician_Id");
+
+                    b.HasOne("DAL.Models.ApplicationUser", "UpdatedUser")
+                        .WithMany("App_JobPlan_UpdatedUser")
+                        .HasForeignKey("UpdatedBy")
+                        .HasConstraintName("FK_App_JobPlan_UpdatedUser")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DAL.Models.JobTask", b =>
+                {
+                    b.HasOne("DAL.Models.JobPlan", "JobPlan_Id")
+                        .WithMany("App_JobTask_JobPlanId")
+                        .HasForeignKey("JobPlanId")
+                        .HasConstraintName("FK_App_JobTask_JobPlanId")
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DAL.Models.Location", b =>
                 {
                     b.HasOne("DAL.Models.ApplicationUser", "CreatedUser")
@@ -1849,6 +2009,11 @@ namespace MMS.Migrations
                         .HasForeignKey("CreatedBy")
                         .HasConstraintName("FK_App_PreventiveMaintenance_CreatedUser")
                         .IsRequired();
+
+                    b.HasOne("DAL.Models.JobPlan", "JobPlan_Id")
+                        .WithMany("App_PreventiveMaintenance_JobPlan_Id")
+                        .HasForeignKey("JobPlanId")
+                        .HasConstraintName("FK_App_PreventiveMaintenance_JobPlan_Id");
 
                     b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
                         .WithMany("App_PreventiveMaintenance_StatusId")

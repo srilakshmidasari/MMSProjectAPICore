@@ -43,7 +43,7 @@
     "Work Order":"Work Order",
     "PM Procedures":"PM Procedures",
     "Export":"Export",
-    "JobPlan":"JobPlan"
+    "JobPlan":"Job Plan"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -69,7 +69,7 @@
     "Inventory-Items" :"Inventory-Items",
     "Preventive Maintenance":"Preventive Maintenance",
     "Export":"Export",
-    "JobPlan":"JobPlan"
+    "JobPlan":"Job Plan"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -705,7 +705,7 @@
     "Status Name":"Status Name",
     "Techinician Name":"Techinician Name",
     "Asset GroupName":"Asset GroupName",
-    "Duration":"Duration",
+    "Duration":"Duration in Hours",
     "Is Active":"Is Active",
     "Add Order":"Add Order",
     "Task Name":"Task Name",
