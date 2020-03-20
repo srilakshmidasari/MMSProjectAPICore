@@ -228,6 +228,7 @@ export class JobPlanComponent implements OnInit {
     private AddJobPlanData(): any {
       debugger
       var jobTasks = [];
+      this.duration="";
       for (var i = 0; i < this.TaskFrom.value.credentials.length; i++) {
         var itemReq = {
           "id": 0,
@@ -237,7 +238,8 @@ export class JobPlanComponent implements OnInit {
         }
         var str = this.TaskFrom.value.credentials[i].duration; 
         var matches = str.match(/\d+/g); 
-        this.duration  = this.duration==undefined  ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
+        var addString =this.duration==undefined|| this.duration == "" ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
+        this.duration  = String(addString) +"hrs"
         jobTasks.push(itemReq);
       }
       const formModel = this.jobPlanForm.value;
