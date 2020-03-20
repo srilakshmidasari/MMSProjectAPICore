@@ -111,11 +111,11 @@
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td>
-                            <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Approved'"
+                            <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Approved' && req.statusTypeName != 'Closed'"
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}"  (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button class="just-cont-center" mat-icon-button
+                            <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
                                 matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -220,7 +220,29 @@
                             {{'Assets.Management.PleaseSelectProject'|translate}}
                         </mat-error>
                     </mat-form-field>
+
                     <mat-form-field class="col-md-3">
+                        <input matInput placeholder="Select Location" [matAutocomplete]="auto1" formControlName="locationId" 
+                            (input)="onSelectProjectByLocationSearch($event.target.value)" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                            <mat-option  *ngFor="let location of locationsList" [value]="location.name1"
+                                (onSelectionChange)='onLocationSelected(location)'>
+                                {{location.name1}}(<span>{{location.locationReference}}</span>)
+                                
+                            </mat-option>
+                            <mat-option *ngIf="searchLength>2 && locationLength == 0"
+                                style="height: 50px!important">
+                                <span> No Record matching "{{searchText}}" was found. </span>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="!orderForm.controls['locationId'].valid">
+                            {{'Assets.Management.PleaseSelectLocation'|translate}}
+                        </mat-error> 
+                    </mat-form-field>
+
+                    
+                    
+                    <!-- <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
                         <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
                             <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
@@ -230,7 +252,7 @@
                         <mat-error *ngIf="!orderForm.controls['locationId'].valid">
                             {{'Assets.Management.PleaseSelectLocation'|translate}}
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <div class="col-md-2">
                         <button mat-raised-button color="primary"
                             matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
@@ -241,6 +263,24 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-3">
+                        <input matInput placeholder="Select Asset " [matAutocomplete]="auto" formControlName="assetId" 
+                            (input)="onSelectLocationByAssetSearch($event.target.value)" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option  *ngFor="let asset of assetsList" [value]="asset.name1"
+                                (onSelectionChange)='onAssetSelected(asset)'>
+                                {{asset.name1}}
+                                
+                            </mat-option>
+                            <mat-option *ngIf="assetLength>2 && assetListLength == 0"
+                                style="height: 50px!important">
+                                <span> No Record matching "{{searchText}}" was found. </span>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="!orderForm.controls['assetId'].valid">
+                            {{'Work Order.Management.Please Select Asset'|translate}}
+                        </mat-error> 
+                    </mat-form-field>
+                    <!-- <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Asset'|translate}}<span>*</span></mat-label>
                         <mat-select formControlName="assetId">
                             <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
@@ -250,7 +290,7 @@
                         <mat-error *ngIf="!orderForm.controls['assetId'].valid">
                             {{'Work Order.Management.Please Select Asset'|translate}}
                         </mat-error>
-                    </mat-form-field>
+                    </mat-form-field> -->
                     <mat-form-field class="col-md-3">
                         <mat-label> {{'Work Order.Management.Start Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
@@ -461,15 +501,22 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
-                        <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
-                        <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
-                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
+                        <input matInput placeholder="Select Location" [matAutocomplete]="auto1" formControlName="locationId" 
+                            (input)="onSelectProjectByLocationSearch($event.target.value)" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                            <mat-option  *ngFor="let location of locationsList" [value]="location.name1"
+                                (onSelectionChange)='onLocationSelected(location)'>
                                 {{location.name1}}(<span>{{location.locationReference}}</span>)
+                                
                             </mat-option>
-                        </mat-select>
+                            <mat-option *ngIf="searchLength>2 && locationLength == 0"
+                                style="height: 50px!important">
+                                <span> No Record matching "{{searchText}}" was found. </span>
+                            </mat-option>
+                        </mat-autocomplete>
                         <mat-error *ngIf="!orderForm.controls['locationId'].valid">
                             {{'Assets.Management.PleaseSelectLocation'|translate}}
-                        </mat-error>
+                        </mat-error> 
                     </mat-form-field>
                     <div class="col-md-2">
                         <button mat-raised-button color="primary"
@@ -482,15 +529,22 @@
 
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Asset'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="assetId">
-                            <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
+                        <input matInput placeholder="Select Asset " [matAutocomplete]="auto" formControlName="assetId" 
+                            (input)="onSelectLocationByAssetSearch($event.target.value)" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option  *ngFor="let asset of assetsList" [value]="asset.name1"
+                                (onSelectionChange)='onAssetSelected(asset)'>
                                 {{asset.name1}}
+                                
                             </mat-option>
-                        </mat-select>
+                            <mat-option *ngIf="assetLength>2 && assetListLength == 0"
+                                style="height: 50px!important">
+                                <span> No Record matching "{{assteText}}" was found. </span>
+                            </mat-option>
+                        </mat-autocomplete>
                         <mat-error *ngIf="!orderForm.controls['assetId'].valid">
                             {{'Work Order.Management.Please Select Asset'|translate}}
-                        </mat-error>
+                        </mat-error> 
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Start Date'|translate}} </mat-label>

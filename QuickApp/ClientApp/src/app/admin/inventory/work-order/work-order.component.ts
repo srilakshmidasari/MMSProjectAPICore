@@ -45,6 +45,16 @@ export class WorkOrderComponent implements OnInit {
   userProjectsList: any[] = [];
   itemId: string;
   showHide: boolean;
+  selectString: any;
+  Project: any;
+  searchText: string;
+  searchLength :number;
+  locationLength: number;
+  assteText: string;
+  assetLength :number;
+  assetListLength: number;
+  selectAsset: any;
+  
 
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -174,6 +184,7 @@ export class WorkOrderComponent implements OnInit {
     this.accountService.getProjectsByUserIdandSiteId(req)
       .subscribe((results: any) => {
         this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        
       },
         error => {
         });
@@ -182,12 +193,60 @@ export class WorkOrderComponent implements OnInit {
 
   onSelectProjectByLocation(event) {
     this.locationsList = [];
-    this.accountService.getLocationsByProject(event).subscribe((res: any) => {
-      this.locationsList = res.listResult == null ? [] : res.listResult;
-      this.getStoresByProject(event)
-    },
-      error => {
-      })
+    this.Project=event;
+    this.getStoresByProject(event)
+    this.orderForm.get('locationId').setValue(null)
+    // this.accountService.getLocationsByProject(event).subscribe((res: any) => {
+    //   this.locationsList = res.listResult == null ? [] : res.listResult;
+    //   this.getStoresByProject(event)
+    // },
+    //   error => {
+    //   })
+  }
+
+  onSelectProjectByLocationSearch(event) {
+    this.searchText =event;
+    if(this.searchText.length >2){
+      this.searchLength =event.length;
+      // this.locationsList = [];
+      var req={
+        "searchValue": this.searchText,
+        "projectId": this.Project
+      }
+      this.accountService.getLocationsBySearch(req).subscribe((res: any) => {
+        this.locationsList = res.listResult == null ? [] : res.listResult;
+        this.locationLength =this.locationsList.length;
+        if (res.listResult == null) {
+          this.locationsList = [];
+        }
+        
+      },
+        error => {
+          this.locationsList = [];
+        })
+    }
+  }
+
+  onSelectLocationByAssetSearch(event) {
+    this.assetsList = [];
+    this.assteText =event
+    if(this.assteText.length>2){
+      this.assetLength =event.length;
+      var req={
+        "searchValue": event,
+        "locationId": this.selectString
+      }
+      this.accountService.getAssetsBySearch(req).subscribe((res: any) => {
+        this.assetsList = res.listResult == null ? [] : res.listResult;
+        this.assetListLength =this.assetsList.length;
+        if (res.listResult == null) {
+          this.assetsList = [];
+        }
+      },
+        error => {
+        })
+    }
+    
   }
 
   onSelectLocationByProject(event) {
@@ -198,6 +257,17 @@ export class WorkOrderComponent implements OnInit {
       error => {
       })
   }
+
+  
+  onLocationSelected( obj) {
+    this.selectString = obj.id;
+    this.orderForm.get('assetId').setValue(null)
+  }
+
+  onAssetSelected( obj) {
+    this.selectAsset = obj.id;
+  }
+
 
 
   getStoresByProject(ProjectId) {
@@ -273,7 +343,6 @@ export class WorkOrderComponent implements OnInit {
   }
 
   onEditClick(order) {
-    
     this.isEdit = true;
     this.isAdding = false;
     this.isNewOrder = false;
@@ -281,6 +350,7 @@ export class WorkOrderComponent implements OnInit {
     this.getItemsByworkOrderId(order, true);
     this.getSitesByUserId();
     this.getProjectsByUserIdandSiteId(order.siteId)
+
     this.onSelectProjectByLocation(order.projectId)
     this.onSelectLocationByProject(order.locationId)
     this.getStoresByProject(order.projectId);
@@ -347,8 +417,8 @@ export class WorkOrderComponent implements OnInit {
     this.orderForm.reset({
       siteId: this.orderData.siteId || '',
       projectId: this.orderData.projectId || '',
-      locationId: this.orderData.locationId || '',
-      assetId: this.orderData.assetId || '',
+      locationId: this.orderData.locationName|| '',
+      assetId: this.orderData.assetName || '',
       storeId: this.orderData.storeId || '',
       reference1: this.orderData.reference1 || '',
       extraDetails: this.orderData.extraDetails || '',
@@ -364,12 +434,14 @@ export class WorkOrderComponent implements OnInit {
   }
 
   saveOrder() {
+    debugger
     if (!this.orderForm.valid) {
       this.alertService.showValidationError();
       return;
     }
     this.alertService.startLoadingMessage('Saving changes...');
     const editeditem = this.AddAllItemData();
+    console.log(editeditem)
     if (this.isNewOrder) {
       this.accountService.AddWorkOrder(editeditem).subscribe(
         (response: any) => {
@@ -435,7 +507,7 @@ export class WorkOrderComponent implements OnInit {
 
     return {
       "id": this.isNewOrder == true ? 0 : this.orderData.id,
-      "assetId": formModel.assetId,
+      "assetId": this.selectAsset ==undefined ?this.orderData.assetId :this.selectAsset ,
       "startDate": formModel.startDate,
       "endDate": formModel.endDate,
       "reference1": formModel.reference1,
@@ -596,6 +668,7 @@ export class WorkOrderComponent implements OnInit {
         data: { row }
       });
     dialogRef.afterClosed().subscribe(siteresponse => {
+      this.getworkOrderOrders();
 
     });
   }

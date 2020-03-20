@@ -19,6 +19,9 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<JobPlan> DeleteJobPlan(int JobPlanId);
 
+        ListDataResponse<GetJobPlanResponse> GetJobPlansByProject(int ProjectId);
+
+
     }
 }
 

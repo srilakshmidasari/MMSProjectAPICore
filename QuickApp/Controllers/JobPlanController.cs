@@ -49,9 +49,15 @@ namespace MMS.Controllers
         }
 
         [HttpGet("GetJobTaskByJobPlanId/{JobPlanId}")]
-        public ListDataResponse<JobTask> GetStoresByProjectId(int JobPlanId)
+        public ListDataResponse<JobTask> GetJobTaskByJobPlanId(int JobPlanId)
         {
             return _unitOfWork.JobPlans.GetJobTaskByJobPlanId(JobPlanId);
+        }
+
+        [HttpGet("GetJobPlansByProject/{ProjectId}")]
+        public ListDataResponse<GetJobPlanResponse> GetJobPlansByProject(int ProjectId)
+        {
+            return _unitOfWork.JobPlans.GetJobPlansByProject(ProjectId);
         }
     }
 }

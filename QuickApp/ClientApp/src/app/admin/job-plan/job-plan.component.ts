@@ -239,7 +239,7 @@ export class JobPlanComponent implements OnInit {
         var str = this.TaskFrom.value.credentials[i].duration; 
         var matches = str.match(/\d+/g); 
         var addString =this.duration==undefined|| this.duration == "" ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
-        this.duration  = String(addString) +"hrs"
+        this.duration  =addString 
         jobTasks.push(itemReq);
       }
       const formModel = this.jobPlanForm.value;
@@ -248,12 +248,12 @@ export class JobPlanComponent implements OnInit {
         "jobReference": formModel.jobReference,
         "name": formModel.jobName,
         "jobDescription": formModel.jobDescription,
-        "siteId": formModel.siteId,
-        "projectId": formModel.projectId,
+        "siteId": formModel.siteId ==""? null : formModel.siteId,
+        "projectId": formModel.projectId == ""? null:formModel.projectId,
         "statusTypeId": 25,
         "technicianId":formModel.technicianId,
         "assetGroupId": formModel.assetGroupId,
-        "duration": this.duration,
+        "duration": String(this.duration) +"hrs",
         "isActive": true,
         "jobPlanTasks": jobTasks,
         "createdBy": this.currentUser.id,

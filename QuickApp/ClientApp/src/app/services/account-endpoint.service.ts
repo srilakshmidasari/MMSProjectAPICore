@@ -106,6 +106,14 @@ export class AccountEndpoint extends EndpointBase {
   private readonly  _getJobPlanUrl: string ='/api/JobPlan';
 
   private readonly  _getJobTaskByJobPlanIdUrl: string ='/api/JobPlan/GetJobTaskByJobPlanId';
+
+  private readonly  _getAssetsBySearch: string ='/api/Asset/GetAssetsBySearch';
+
+  private readonly  _getLocationsBySearch: string ='/api/Location/GetLocationsBySearch';
+
+  private readonly  _getJobPlansByProjectUrl: string ='/api/JobPlan/GetJobPlansByProject';
+
+  
   
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -200,6 +208,12 @@ export class AccountEndpoint extends EndpointBase {
   get getJobPlanUrl() { return this.configurations.baseUrl + this._getJobPlanUrl; }
 
   get getJobTaskByJobPlanIdUrl() { return this.configurations.baseUrl + this._getJobTaskByJobPlanIdUrl; }
+
+  get getAssetsBySearchUrl() { return this.configurations.baseUrl + this._getAssetsBySearch; }
+
+  get getLocationsBySearchUrl() { return this.configurations.baseUrl + this._getLocationsBySearch; }
+
+  get getJobPlansByProjectUrl() { return this.configurations.baseUrl + this._getJobPlansByProjectUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -1011,9 +1025,6 @@ export class AccountEndpoint extends EndpointBase {
 
   // Job Plan
 
-  
-  
-
   getJobPlanEndPoint<T>():Observable<T>{
     const endpointUrl = this.getJobPlanUrl;
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
@@ -1053,4 +1064,31 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.deleteJobPlanEndpoint(Id));
       }));
   }
+
+  getAssetsBySearchEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getAssetsBySearchUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAssetsBySearchEndPoint(reqObject));
+      }));
+  }
+
+  getLocationsBySearchEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getLocationsBySearchUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getLocationsBySearchEndPoint(reqObject));
+      }));
+  }
+
+  
+  getJobPlansByProjectEndpoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getJobPlansByProjectUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getJobPlansByProjectEndpoint(Id));
+      }));
+  }
+  
+  
 }

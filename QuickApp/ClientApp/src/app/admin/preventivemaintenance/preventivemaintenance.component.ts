@@ -38,6 +38,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   assetsPMList: any[] = [];
   AssetIds: any[] = [];
   jobTaskList: any[]=[];
+  projectId: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -70,8 +71,8 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-  private getJobPlans() {
-    this.accountService.getJobPlan()
+  private getJobPlans(Id) {
+    this.accountService.getJobPlansByProject(Id)
       .subscribe((results: any) => {
         this.jobPlanList = results.listResult == null ? [] : results.listResult;
       },
@@ -84,7 +85,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
-        this.getJobPlans();
+        
       },
         error => {
         });
@@ -114,10 +115,12 @@ export class PreventivemaintenanceComponent implements OnInit {
 
 
   onSelectProjectByLocation(event) {
+    debugger
+    this.projectId =event;
     this.locationsList = [];
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
-
+      this.getJobPlans(event);
     },
       error => {
       })
@@ -221,7 +224,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
       this.getSitesByUserId();
-      this.getJobPlans();
+     // this.getJobPlans(this.maitananceRefData.projectId);
       this.getPMAssetsbyPMId(this.maitananceRefData.id)
       this.onSelectJob(this.maitananceRefData.jobPlanId)
       this.maitananceRefData.assetId.forEach(element => {

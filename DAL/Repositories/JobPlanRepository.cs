@@ -29,8 +29,10 @@ namespace DAL.Repositories
             {
 
                 var result = (from jp in _appContext.JobPlans
-                              join p in _appContext.Projects on jp.ProjectId equals p.Id
-                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+                              join p in _appContext.Projects on jp.ProjectId equals p.Id into pr
+                              from ps in pr.DefaultIfEmpty()
+                              join s in _appContext.SiteInfos on ps.SiteId equals s.Id into si
+                              from so in si.DefaultIfEmpty()
                               join t in _appContext.LookUps on jp.TechnicianId equals t.Id
                               join a in _appContext.LookUps on jp.AssetGroupId equals a.Id
                               join st in _appContext.TypeCdDmts on jp.StatusTypeId equals st.TypeCdDmtId
@@ -39,9 +41,9 @@ namespace DAL.Repositories
                               {
                                   Id = jp.Id,
                                   SiteId = jp.SiteId,
-                                  SiteName = s.Name1,
+                                  SiteName = so.Name1,
                                   ProjectId = jp.ProjectId,
-                                  ProjectName = p.Name1,
+                                  ProjectName = ps.Name1,
                                   Name = jp.Name,
                                   JobReference = jp.JobReference,
                                   JobDescription = jp.JobDescription,
@@ -263,5 +265,59 @@ namespace DAL.Repositories
             return response;
         }
 
+
+        public ListDataResponse<GetJobPlanResponse> GetJobPlansByProject(int ProjectId)
+        {
+            ListDataResponse<GetJobPlanResponse> response = new ListDataResponse<GetJobPlanResponse>();
+            try
+            {
+
+                var result = (from jp in _appContext.JobPlans.Where(x => x.ProjectId == ProjectId || x.ProjectId == null).ToList()
+                              
+                              select new GetJobPlanResponse
+                              {
+                                  Id = jp.Id,
+                                  SiteId = jp.SiteId,
+                                  ProjectId = jp.ProjectId,
+                                  Name = jp.Name,
+                                  JobReference = jp.JobReference,
+                                  JobDescription = jp.JobDescription,
+                                  TechnicianId = jp.TechnicianId,
+                                  Tasks = _appContext.JobTasks.Where(x => x.JobPlanId == jp.Id).ToList(),
+                                  Duration = jp.Duration,
+                                  AssetGroupId = jp.AssetGroupId,
+                                  StatusTypeId = jp.StatusTypeId,
+                                  CreatedBy = jp.CreatedBy,
+                                  CreatedDate = jp.CreatedDate,
+                                  UpdatedBy = jp.UpdatedBy,
+                                  UpdatedDate = jp.UpdatedDate,
+                                  IsActive = jp.IsActive,
+
+                              }).ToList();
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All JobPlan Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Job Plan Details Found";
+
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

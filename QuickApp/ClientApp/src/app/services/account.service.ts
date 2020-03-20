@@ -528,4 +528,16 @@ deleteAssetRepository(repositoryId) {
   deleteJobPlan(Id) {
     return this.accountEndpoint.deleteJobPlanEndpoint(Id);
   }
+
+  getAssetsBySearch(reqObject) {
+    return this.accountEndpoint.getAssetsBySearchEndPoint(reqObject);
+  }
+
+  getLocationsBySearch(reqObject) {
+    return this.accountEndpoint.getLocationsBySearchEndPoint(reqObject);
+  }
+  getJobPlansByProject(Id) {
+    return this.accountEndpoint.getJobPlansByProjectEndpoint(Id);
+  }
+  
 }

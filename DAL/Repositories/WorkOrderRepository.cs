@@ -300,6 +300,8 @@ namespace DAL.Repositories
                 var ast = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == WorkOrderId).ToList();
                 if (ast != null)
                 {
+                    var statusData = _appContext.WorkOrderStatusHistories.Where(x => x.WorkOrderId == WorkOrderId).ToList();
+                    _appContext.WorkOrderStatusHistories.RemoveRange(statusData);
                     _appContext.WorkOrderItemXrefs.RemoveRange(ast);
                     _appContext.WorkOrders.Remove(orderData);
                     _appContext.SaveChanges();
