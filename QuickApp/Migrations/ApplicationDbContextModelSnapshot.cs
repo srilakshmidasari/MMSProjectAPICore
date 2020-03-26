@@ -671,6 +671,9 @@ namespace MMS.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("AstTradeId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Duration")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -684,6 +687,8 @@ namespace MMS.Migrations
                         .HasMaxLength(100);
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AstTradeId");
 
                     b.HasIndex("JobPlanId");
 
@@ -1900,6 +1905,11 @@ namespace MMS.Migrations
 
             modelBuilder.Entity("DAL.Models.JobTask", b =>
                 {
+                    b.HasOne("DAL.Models.LookUp", "AstTrade_Id")
+                        .WithMany("App_JobTask_AstTrade_Id")
+                        .HasForeignKey("AstTradeId")
+                        .HasConstraintName("FK_App_JobTask_AstTrade_Id");
+
                     b.HasOne("DAL.Models.JobPlan", "JobPlan_Id")
                         .WithMany("App_JobTask_JobPlanId")
                         .HasForeignKey("JobPlanId")

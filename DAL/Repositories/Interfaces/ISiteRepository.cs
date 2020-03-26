@@ -19,5 +19,8 @@ namespace DAL.Repositories.Interfaces
         coordinates GetLatLngByAddress(string address);
 
         ListDataResponse<SiteInfo> GetUserSites(string UserId);
+
+        
+
     }
 }

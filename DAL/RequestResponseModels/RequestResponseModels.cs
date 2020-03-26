@@ -703,6 +703,17 @@ namespace DAL.RequestResponseModels
             public int JobPlanId { get; set; }
             public string Name { get; set; }
             public string Duration { get; set; }
+            public int AstTradeId { get; set; }
+        }
+
+        public class GetJobTaskResponse
+        {
+            public int Id { get; set; }
+            public int JobPlanId { get; set; }
+            public string Name { get; set; }
+            public string Duration { get; set; }
+            public int? AstTradeId { get; set; }
+            public string AstTradeName { get; set; }
 
         }
 

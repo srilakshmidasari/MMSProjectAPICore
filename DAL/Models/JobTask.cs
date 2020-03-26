@@ -17,6 +17,10 @@ namespace DAL.Models
         [Display(Name = "Job Plan Id")]
         public int JobPlanId { get; set; }
 
+       
+        [Display(Name = "Ast Trade Id")]
+        public int? AstTradeId { get; set; }
+
         [Required]
         [StringLength(100)]
         [Display(Name = "Name")]
@@ -28,5 +32,8 @@ namespace DAL.Models
 
         [JsonIgnore]
         public JobPlan JobPlan_Id { get; set; }
+
+        [JsonIgnore]
+        public LookUp AstTrade_Id { get; set; }
     }
 }

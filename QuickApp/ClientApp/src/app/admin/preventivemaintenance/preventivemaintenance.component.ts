@@ -9,6 +9,7 @@ import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { constants } from 'os';
+import { SelectAssetComponent } from '../select-asset/select-asset.component';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',
@@ -37,8 +38,10 @@ export class PreventivemaintenanceComponent implements OnInit {
   currenrDate: Date;
   assetsPMList: any[] = [];
   AssetIds: any[] = [];
-  jobTaskList: any[]=[];
+  jobTaskList: any[] = [];
   projectId: any;
+  assetList: any[] = [];
+  assetData: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -51,6 +54,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.getMaintenance();
     this.getWorkTech();
     this.getTypeOfMaintainces();
+    this.getAssets();
   }
 
 
@@ -70,6 +74,15 @@ export class PreventivemaintenanceComponent implements OnInit {
       });
   }
 
+  private getAssets() {
+    this.accountService.getAssets()
+      .subscribe((results: any) => {
+        this.assetList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
 
   private getJobPlans(Id) {
     this.accountService.getJobPlansByProject(Id)
@@ -85,7 +98,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
-        
+
       },
         error => {
         });
@@ -115,8 +128,7 @@ export class PreventivemaintenanceComponent implements OnInit {
 
 
   onSelectProjectByLocation(event) {
-    debugger
-    this.projectId =event;
+    this.projectId = event;
     this.locationsList = [];
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
       this.locationsList = res.listResult == null ? [] : res.listResult;
@@ -154,7 +166,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       siteId: ['', Validators.required],
       jobId: ['', Validators.required],
       projectId: ['', Validators.required],
-      locationId: ['', Validators.required],
+      locationId: [''],
       startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
       typeOfMaintainanceId: ['', Validators.required],
@@ -217,14 +229,14 @@ export class PreventivemaintenanceComponent implements OnInit {
   editClick(maintanance?: any) {
     debugger
     this.AssetIds = [];
-    this.jobTaskList=[];
+    this.jobTaskList = [];
     this.maitananceRefData = {};
     if (maintanance != undefined) {
       this.isAdding = true;
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
       this.getSitesByUserId();
-     // this.getJobPlans(this.maitananceRefData.projectId);
+      // this.getJobPlans(this.maitananceRefData.projectId);
       this.getPMAssetsbyPMId(this.maitananceRefData.id)
       this.onSelectJob(this.maitananceRefData.jobPlanId)
       this.maitananceRefData.assetId.forEach(element => {
@@ -239,7 +251,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     }
 
 
-    
+
 
   }
 
@@ -247,7 +259,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
-      "assetIds": formModel.assetId,
+      "assetIds":[ this.assetData.id ],
       "startDate": formModel.startDate,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
@@ -331,8 +343,25 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
   onCancelClick() {
     this.isAdding = false;
+  }
+
+
+  onSelectAssetClick(data) {
+    const dialogRef = this.dialog.open(SelectAssetComponent,
+      {
+        panelClass: 'mat-dialog-md',
+        data: { data }
+      });
+    dialogRef.afterClosed().subscribe(response => {
+       debugger
+       if(response != null){
+        this.maintenanceForm.get('assetId').setValue(response.name1)
+         this.assetData=response;
+       }
+    });
   }
 
 }

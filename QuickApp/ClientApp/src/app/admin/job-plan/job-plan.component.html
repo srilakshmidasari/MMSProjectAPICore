@@ -42,7 +42,7 @@
                         <th [pSortableColumn]="'assetGroupName'">{{'JobPlan.Management.Asset GroupName'| translate}}
                             <p-sortIcon [field]="'assetGroupName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'duration'">{{'JobPlan.Management.Duration'| translate}}
+                        <th [pSortableColumn]="'duration'">{{'JobPlan.Management.DurationinHours'| translate}}
                             <p-sortIcon [field]="'duration'"></p-sortIcon>
                         </th>
                         <th>{{'JobPlan.Management.Is Active'|translate}}
@@ -103,6 +103,10 @@
                             {{'JobPlan.Management.Task Duration'|translate}} 
                             <p-sortIcon [field]="'duration'"></p-sortIcon>
                         </th>
+                        <th class="product-id" [pSortableColumn]="'astTradeName'">
+                            Trade Name
+                            <p-sortIcon [field]="'astTradeName'"></p-sortIcon>
+                        </th>
 
                     </tr>
                 </ng-template>
@@ -110,6 +114,7 @@
                     <tr>
                         <td>{{rowdata.name}}</td>
                         <td>{{rowdata.duration}}</td>
+                        <td>{{rowdata.astTradeName}}</td>
                     </tr>
                 </ng-template>
                 <ng-template pTemplate="emptymessage" let-columns>
@@ -145,7 +150,7 @@
         <mat-card-content>
             <form [formGroup]="jobPlanForm">
                 <div class="row">
-                    <mat-form-field class="col-md-3">
+                    <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Job Reference'|translate}}</mat-label>
                         <input matInput formControlName="jobReference" required maxlength="30" />
 
@@ -153,27 +158,21 @@
                             {{'JobPlan.Management.Job Reference is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
+                    <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Name'|translate}}</mat-label>
                         <input matInput formControlName="jobName" required maxlength="30" />
                         <mat-error *ngIf="!jobPlanForm.controls['jobName'].valid">
                             {{'JobPlan.Management.Name is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
+                    <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Job Descrption'|translate}} </mat-label>
-                        <input matInput formControlName="jobDescription" required maxlength="30" />
+                        <input matInput formControlName="jobDescription" required maxlength="60" />
                         <mat-error *ngIf="!jobPlanForm.controls['jobDescription'].valid">
                             {{'JobPlan.Management.Job Descrption is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <div class="col-md-2">
-                        <button mat-raised-button color="primary"
-                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
-                            <mat-icon class="mat-button-icon">add</mat-icon>
-                            {{'JobPlan.Management.Add Task'|translate}}
-                        </button>
-                    </div>
+                   
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">
@@ -188,19 +187,21 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'JobPlan.Management.Technician'|translate}} <span>*</span>
+                        <mat-label>{{'JobPlan.Management.Technician'|translate}}
                         </mat-label>
                         <mat-select formControlName="technicianId">
-                            <mat-option *ngFor="let work of technicianList" [value]="work.id" required>
+                            <mat-option *ngFor="let work of technicianList" [value]="work.id" >
                                 {{work.name1}}
                             </mat-option>
                         </mat-select>
-                        <mat-error *ngIf="!jobPlanForm.controls['technicianId'].valid">
+                        <!-- <mat-error *ngIf="!jobPlanForm.controls['technicianId'].valid">
                             {{'JobPlan.Management.Please Select Technician'|translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
-
-
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Duration in Hours</mat-label>
+                        <input matInput formControlName="totalDuration"  maxlength="10" />
+                    </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">
@@ -220,7 +221,13 @@
                             </mat-option>
                         </mat-select>
                     </mat-form-field>
-
+                    <div class="col-md-2">
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                            {{'JobPlan.Management.Add Task'|translate}}
+                        </button>
+                    </div>
                 </div>
             </form>
             <div class="row">
@@ -230,7 +237,7 @@
                         <ng-container [formGroupName]="i">
                             <h4>{{'JobPlan.Management.Task'|translate}}{{i+1}}</h4>
                             <div class="row">
-                                <mat-form-field class="col-md-4">
+                                <mat-form-field class="col-md-3">
                                     <mat-label>{{'JobPlan.Management.Name'|translate}}</mat-label>
                                     <input matInput formControlName="name" required maxlength="30" />
                                     <mat-error *ngIf="item.controls.name.invalid">
@@ -238,14 +245,26 @@
                                     </mat-error>
                                 </mat-form-field>
 
-                                <mat-form-field class="col-md-4">
+                                <mat-form-field class="col-md-3">
                                     <mat-label>{{'JobPlan.Management.Duration'|translate}}</mat-label>
                                     <input matInput formControlName="duration" required maxlength="10" />
                                     <mat-error *ngIf="item.controls.duration.invalid">
                                         {{'JobPlan.Management.Duration is Required'|translate}} 
                                     </mat-error>
                                 </mat-form-field>
-                                <div class="col-md-4">
+
+                                <mat-form-field class="col-md-3">
+                                    <mat-label>Select Trade <span>*</span></mat-label>
+                                    <mat-select formControlName="tradeId" >
+                                        <mat-option *ngFor="let trade of tradeList" [value]="trade.id" required>
+                                            {{trade.name1}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="item.controls.tradeId.invalid">
+                                        Please select Asset Trade 
+                                    </mat-error>
+                                </mat-form-field>
+                                <div class="col-md-2">
                                     <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel"
                                         *ngIf="i>0">
                                         {{'Purchase Order.Management.Remove'|translate}}
@@ -362,7 +381,7 @@
                             <ng-container [formGroupName]="i">
                                 <h4>{{'JobPlan.Management.Task'|translate}}{{i+1}}</h4>
                                 <div class="row">
-                                    <mat-form-field class="col-md-4">
+                                    <mat-form-field class="col-md-3">
                                         <mat-label>{{'JobPlan.Management.Name'|translate}}</mat-label>
                                         <input matInput formControlName="name" required maxlength="30" />
                                         <mat-error *ngIf="item.controls.name.invalid">
@@ -370,14 +389,25 @@
                                         </mat-error>
                                     </mat-form-field>
     
-                                    <mat-form-field class="col-md-4">
+                                    <mat-form-field class="col-md-3">
                                         <mat-label>{{'JobPlan.Management.Duration'|translate}}</mat-label>
                                         <input matInput formControlName="duration" required maxlength="10" />
                                         <mat-error *ngIf="item.controls.duration.invalid">
                                             {{'JobPlan.Management.Duration is Required'|translate}}
                                         </mat-error>
                                     </mat-form-field>
-                                    <div class="col-md-4">
+                                    <mat-form-field class="col-md-3">
+                                        <mat-label>Select Trade</mat-label>
+                                        <mat-select formControlName="tradeId" >
+                                            <mat-option *ngFor="let trade of tradeList" [value]="trade.id" >
+                                                {{trade.name1}}
+                                            </mat-option>
+                                        </mat-select>
+                                        <mat-error *ngIf="item.controls.tradeId.invalid">
+                                            Please select Asset Trade 
+                                        </mat-error>
+                                    </mat-form-field>
+                                    <div class="col-md-3">
                                         <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel"
                                             *ngIf="i>0">
                                             {{'Purchase Order.Management.Remove'|translate}}

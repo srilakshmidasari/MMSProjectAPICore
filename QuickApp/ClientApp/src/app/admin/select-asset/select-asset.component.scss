@@ -1,0 +1,35 @@
+
+.table td, .table th {
+    padding: 0.45rem !important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
+
+.pad-left-0{padding-left:0px !important;}
+
+.search-box {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.search-box .mat-form-field {
+    padding: 0 2em;
+}
+
+.space20 {
+    margin-bottom: 20px !important;
+  }
+
+  mat-header-row {
+    min-height: 46px !important;
+}
+
+//   mat-header-row {
+//     box-shadow: 0 4px 16px 0 rgba(167, 175, 183, 0.33);
+//     border: solid 1px #333333 !important;;
+//     border-radius: 0px;
+//     background-color: #333333 !important;
+//     border-bottom: 1px solid #e3e6f0;
+//     border-top: 1px solid #e3e6f0;
+// }

@@ -53,7 +53,7 @@ namespace DAL.Repositories
                                   Duration = jp.Duration,
                                   AssetGroupId = jp.AssetGroupId,
                                   AssetGroupName = a.Name1,
-                                  StatusTypeId =jp.StatusTypeId,
+                                  StatusTypeId = jp.StatusTypeId,
                                   StatusName = st.Description,
                                   CreatedBy = jp.CreatedBy,
                                   CreatedDate = jp.CreatedDate,
@@ -74,7 +74,7 @@ namespace DAL.Repositories
                     response.IsSuccess = true;
                     response.AffectedRecords = 0;
                     response.EndUserMessage = "No Job Plan Details Found";
-                    
+
                 }
             }
             catch (Exception ex)
@@ -100,7 +100,7 @@ namespace DAL.Repositories
 
                 foreach (var jtask in jobPlans.JobPlanTasks)
                 {
-                    _appContext.JobTasks.Add(new JobTask { Id = jtask.Id, JobPlanId = job.Id, Name = jtask.Name, Duration = jtask.Duration });
+                    _appContext.JobTasks.Add(new JobTask { Id = jtask.Id, JobPlanId = job.Id, Name = jtask.Name, Duration = jtask.Duration, AstTradeId = jtask.AstTradeId });
                 }
                 _appContext.SaveChanges();
 
@@ -142,7 +142,7 @@ namespace DAL.Repositories
 
                 foreach (var jtask in jobPlans.JobPlanTasks)
                 {
-                    _appContext.JobTasks.Add(new JobTask { Id = jtask.Id, JobPlanId = job.Id, Name = jtask.Name, Duration = jtask.Duration });
+                    _appContext.JobTasks.Add(new JobTask { Id = jtask.Id, JobPlanId = job.Id, Name = jtask.Name, Duration = jtask.Duration, AstTradeId = jtask.AstTradeId });
                 }
 
                 if (result != null)
@@ -188,13 +188,23 @@ namespace DAL.Repositories
             return response;
         }
 
-        public ListDataResponse<JobTask> GetJobTaskByJobPlanId(int JobPlanId)
+        public ListDataResponse<GetJobTaskResponse> GetJobTaskByJobPlanId(int JobPlanId)
         {
-            ListDataResponse<JobTask> response = new ListDataResponse<JobTask>();
+            ListDataResponse<GetJobTaskResponse> response = new ListDataResponse<GetJobTaskResponse>();
             try
             {
-                var result = _appContext.JobTasks.Where(x => x.JobPlanId == JobPlanId).ToList();
-                              
+                var result = (from jp in _appContext.JobTasks
+                              join l in _appContext.LookUps on jp.AstTradeId equals l.Id
+                              select new GetJobTaskResponse
+                              {
+                                  Id = jp.Id,
+                                  JobPlanId = jp.JobPlanId,
+                                  Name=jp.Name,
+                                  AstTradeName = l.Name1,
+                                  AstTradeId = jp.AstTradeId,
+                                  Duration = jp.Duration,
+                              }).Where(x=>x.JobPlanId== JobPlanId).ToList();
+
 
                 if (result != null)
                 {
@@ -273,7 +283,7 @@ namespace DAL.Repositories
             {
 
                 var result = (from jp in _appContext.JobPlans.Where(x => x.ProjectId == ProjectId || x.ProjectId == null).ToList()
-                              
+
                               select new GetJobPlanResponse
                               {
                                   Id = jp.Id,

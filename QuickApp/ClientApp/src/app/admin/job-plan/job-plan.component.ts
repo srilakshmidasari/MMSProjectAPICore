@@ -27,6 +27,7 @@ export class JobPlanComponent implements OnInit {
   isNewJobPlan: boolean;
   i: any;
   duration: any;
+  tradeList: any[]=[];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder) {
       this.TaskFrom = this.formBuilder.group({
@@ -72,7 +73,7 @@ export class JobPlanComponent implements OnInit {
   getWorkTech() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
       this.technicianList = result.listResult == null ? [] : result.listResult;
-   
+      this.getAssetTrade();
     },
       error => {
       })
@@ -98,13 +99,14 @@ export class JobPlanComponent implements OnInit {
     return this.formBuilder.group({
       name: new FormControl('', [Validators.required]),
       duration: new FormControl('', [Validators.required]),
-
+      tradeId:new FormControl('', [Validators.required] )
     })
   }
 
   buildForm() {
     this.jobPlanForm = this.formBuilder.group({
       jobName: ['', Validators.required],      
+      totalDuration:['', Validators.required],
       jobReference: ['', Validators.required],
       jobDescription: ['', Validators.required],   
       siteId: [''],
@@ -161,6 +163,15 @@ export class JobPlanComponent implements OnInit {
           });
     }
 
+      // Asset Trade List
+  getAssetTrade() {
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.AstTrade).subscribe((result: any) => {
+      this.tradeList = result.listResult == null ? [] : result.listResult;
+    },
+      error => {
+      })
+  }
+
     get currentUser() {
       return this.authService.currentUser;
     }
@@ -171,6 +182,7 @@ export class JobPlanComponent implements OnInit {
         control.push(this.formBuilder.group({
           name: x.name,
           duration: x.duration,
+          tradeId:x.astTradeId
         }))
       })
       this.TaskFrom.setControl('credentials', control);
@@ -235,11 +247,12 @@ export class JobPlanComponent implements OnInit {
           "jobPlanId": 0,
           "name": this.TaskFrom.value.credentials[i].name,
           "duration": this.TaskFrom.value.credentials[i].duration,
+          "astTradeId":this.TaskFrom.value.credentials[i].tradeId
         }
-        var str = this.TaskFrom.value.credentials[i].duration; 
-        var matches = str.match(/\d+/g); 
-        var addString =this.duration==undefined|| this.duration == "" ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
-        this.duration  =addString 
+        // var str = this.TaskFrom.value.credentials[i].duration; 
+        // var matches = str.match(/\d+/g); 
+        // var addString =this.duration==undefined|| this.duration == "" ?  parseInt(matches[0]) :this.duration + parseInt(matches[0]);
+        // this.duration  =addString 
         jobTasks.push(itemReq);
       }
       const formModel = this.jobPlanForm.value;
@@ -253,7 +266,7 @@ export class JobPlanComponent implements OnInit {
         "statusTypeId": 25,
         "technicianId":formModel.technicianId,
         "assetGroupId": formModel.assetGroupId,
-        "duration": String(this.duration) +"hrs",
+        "duration": formModel.totalDuration,
         "isActive": true,
         "jobPlanTasks": jobTasks,
         "createdBy": this.currentUser.id,
@@ -272,6 +285,7 @@ export class JobPlanComponent implements OnInit {
       this.getSitesByUserId();
       this.getProjectsByUserIdandSiteId(job.siteId)
       this.getJobTaskByJobPlanId(job, true);
+      this.getAssetTrade();
       this.resetForm();
     }
 
@@ -282,7 +296,8 @@ export class JobPlanComponent implements OnInit {
         this.buildForm();
       }
       this.jobPlanForm.reset({
-        jobName:  this.jobPlanData.name || '',   
+        jobName:  this.jobPlanData.name || '', 
+        totalDuration:this.jobPlanData.duration || '',
         jobReference: this.jobPlanData.jobReference || '',
         jobDescription: this.jobPlanData.jobDescription || '', 
         siteId: this.jobPlanData.siteId || '',
@@ -290,6 +305,7 @@ export class JobPlanComponent implements OnInit {
         assetGroupId: this.jobPlanData.assetGroupId || '',
         technicianId: this.jobPlanData.technicianId || '',
       });
+      
     }
   
   

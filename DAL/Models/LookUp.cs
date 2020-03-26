@@ -82,6 +82,9 @@ namespace DAL.Models
 
         public ICollection<JobPlan> App_JobPlan_AssetGroup_Id { get; set; }
 
+        public ICollection<JobTask> App_JobTask_AstTrade_Id { get; set; }
+
+
 
     }
 }

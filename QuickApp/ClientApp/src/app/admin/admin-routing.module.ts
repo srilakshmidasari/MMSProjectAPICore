@@ -44,7 +44,7 @@ const adminRoutes: Routes = [
       { path: 'purchaseorder', component: PurchaseorderComponent, canActivate: [AuthGuard], data: { title: 'Admin | Purchase Order' } },
       { path: 'work-order', component: WorkOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | Work Order' } },
       { path: 'inventory-items', component: InventoryItemsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Inventory Items' } },
-      { path: 'preventive-maintenance', component: PreventivemaintenanceComponent, canActivate: [AuthGuard], data: { title: 'Admin | Preventive Maintenance' }},
+      { path: 'pm-procedures', component: PreventivemaintenanceComponent, canActivate: [AuthGuard], data: { title: 'Admin | Preventive Maintenance' }},
       { path: 'job-plan', component: JobPlanComponent, canActivate: [AuthGuard], data: { title: 'Admin | Job Plan' }}
     ]
   }

@@ -687,7 +687,11 @@ namespace DAL
           .OnDelete(DeleteBehavior.ClientSetNull)
           .HasConstraintName("FK_App_JobTask_JobPlanId");
 
-
+            builder.Entity<JobTask>().HasOne(d => d.AstTrade_Id)
+        .WithMany(p => p.App_JobTask_AstTrade_Id)
+        .HasForeignKey(d => d.AstTradeId)
+        .OnDelete(DeleteBehavior.ClientSetNull)
+        .HasConstraintName("FK_App_JobTask_AstTrade_Id");
 
         }
 

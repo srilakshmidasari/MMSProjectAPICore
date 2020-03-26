@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Text;
 using static DAL.RequestResponseModels.RequestResponseModels;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -682,5 +683,53 @@ namespace DAL.Repositories
 
         }
 
+
+        public ListDataResponse<AssetLocation> GetAssetsByProject(int projectId)
+        {
+            ListDataResponse<AssetLocation> response = new ListDataResponse<AssetLocation>();
+            try
+            {
+                var result = (from a in _appContext.AssetLocations.Include(x=>x.Location_Id)
+                              join x in _appContext.Locations on a.LocationId equals x.Id
+                              where x.ProjectId == projectId
+                              select new AssetLocation
+                              {
+                                  Id = a.Id,
+                                  Name1 = a.Name1,
+                                  Name2 = a.Name2,
+                                  AssetSize = a.AssetRef,
+                                  AstCounter= a.AstCounter,
+                                  AstFixedDate=a.AstFixedDate,
+                                  CreatedBy = a.CreatedBy,
+                                  CreatedDate = a.CreatedDate,
+                                  UpdatedBy = a.UpdatedBy,
+                                  UpdatedDate = a.UpdatedDate,
+
+                              }).Distinct().ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Site Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Site Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

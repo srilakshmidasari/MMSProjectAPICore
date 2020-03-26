@@ -49,7 +49,7 @@ namespace MMS.Controllers
         }
 
         [HttpGet("GetJobTaskByJobPlanId/{JobPlanId}")]
-        public ListDataResponse<JobTask> GetJobTaskByJobPlanId(int JobPlanId)
+        public ListDataResponse<GetJobTaskResponse> GetJobTaskByJobPlanId(int JobPlanId)
         {
             return _unitOfWork.JobPlans.GetJobTaskByJobPlanId(JobPlanId);
         }

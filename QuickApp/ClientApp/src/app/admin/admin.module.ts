@@ -43,6 +43,7 @@ import { CloseorderComponent } from './inventory/closeorder/closeorder.component
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 import { PreventivemaintenanceComponent } from './preventivemaintenance/preventivemaintenance.component';
 import { JobPlanComponent } from './job-plan/job-plan.component';
+import { SelectAssetComponent } from './select-asset/select-asset.component';
 
 @NgModule({
   imports: [
@@ -82,7 +83,8 @@ import { JobPlanComponent } from './job-plan/job-plan.component';
     CloseorderComponent,
     InventoryItemsComponent,
     PreventivemaintenanceComponent,
-    JobPlanComponent
+    JobPlanComponent,
+    SelectAssetComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
@@ -93,7 +95,8 @@ import { JobPlanComponent } from './job-plan/job-plan.component';
     LookupDialogComponent,
     DocumentFileComponent,
     ReceiveItemComponent,
-    CloseorderComponent
+    CloseorderComponent,
+    SelectAssetComponent
   ]
 })
 export class AdminModule {
