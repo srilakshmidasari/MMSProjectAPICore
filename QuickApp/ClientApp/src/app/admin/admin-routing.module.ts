@@ -25,6 +25,7 @@ import { WorkOrderComponent } from './inventory/work-order/work-order.component'
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 import { PreventivemaintenanceComponent } from './preventivemaintenance/preventivemaintenance.component';
 import { JobPlanComponent } from './job-plan/job-plan.component';
+import { PmOrderComponent } from './pm-order/pm-order.component';
 const adminRoutes: Routes = [
   {
     path: 'admin',
@@ -45,7 +46,9 @@ const adminRoutes: Routes = [
       { path: 'work-order', component: WorkOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | Work Order' } },
       { path: 'inventory-items', component: InventoryItemsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Inventory Items' } },
       { path: 'pm-procedures', component: PreventivemaintenanceComponent, canActivate: [AuthGuard], data: { title: 'Admin | Preventive Maintenance' }},
-      { path: 'job-plan', component: JobPlanComponent, canActivate: [AuthGuard], data: { title: 'Admin | Job Plan' }}
+      { path: 'job-plan', component: JobPlanComponent, canActivate: [AuthGuard], data: { title: 'Admin | Job Plan' }},
+      { path: 'pm-order', component: PmOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | PM Order' }}
+    
     ]
   }
 ];

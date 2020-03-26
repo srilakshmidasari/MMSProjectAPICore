@@ -79,6 +79,13 @@ namespace MMS.Controllers
             return _unitOfWork.WorkOrders.CloseWorkOrder(request.WorkOrderId, request.StatusTypeId,request.Comments);
         }
 
+
+        [HttpGet("GetPMOrders")]
+        public ListDataResponse<GetWorkOrderReponse> GetPMOrders()
+        {
+            return _unitOfWork.WorkOrders.GetPMOrders();
+        }
+
         [HttpPost("ExportWorkOrders")]
         public IActionResult ExportWorkOrders(List<GetWorkOrderReponse> res)
         {

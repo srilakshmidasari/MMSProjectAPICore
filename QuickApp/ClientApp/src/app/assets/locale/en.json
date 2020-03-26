@@ -43,7 +43,8 @@
     "Work Order":"Work Order",
     "PM Procedures":"PM Procedures",
     "Export":"Export",
-    "JobPlan":"Job Plan"
+    "JobPlan":"Job Plan",
+    "PMOrder": "PM Orders"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -69,7 +70,8 @@
     "Inventory-Items" :"Inventory-Items",
     "PMProcedures":"PM Procedures",
     "Export":"Export",
-    "JobPlan":"Job Plan"
+    "JobPlan":"Job Plan",
+    "PMOrder": "PM Order"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -726,5 +728,26 @@
     "Save":"Save",
     "Cancel":"Cancel"
   }
+ },
+
+ "PMOrder":{
+  "Management":{
+    "SearchbyPMOrder":"Search by PM Order",
+    "PMOrderId" : "Pm Order Id",
+    "SiteName":"Site Name",
+    "Reference":"Reference",
+    "StartDate":"Start Date",
+    "EndDate":"End Date",
+    "Issue":"Issue",
+    "Resolution":"Resolution",
+    "ProjectName":"Project Name",
+    "StatusName":"Status Name",
+    "LocationName":"Location Name",
+    "AssetName":"Asset Name",
+    "Actions":"Actions",  
+    "Save":"Save",
+    "Cancel":"Cancel"
+  }
  }
+ 
 }

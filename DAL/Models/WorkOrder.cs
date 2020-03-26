@@ -37,11 +37,11 @@ namespace DAL.Models
         [Display(Name = "Extra Details")]
         public string ExtraDetails { get; set; }
 
-        [Required]
+        
         [Display(Name = "Issue")]
         public string Issue { get; set; }
 
-        [Required]
+        
         [Display(Name = "Resolution")]
         public string Resolution { get; set; }
 

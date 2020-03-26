@@ -615,6 +615,7 @@ namespace DAL.RequestResponseModels
             public List<PMAssetXref> AssetId { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
+            public string DaysApplicable { get; set; }
             public int TypeOfMaintainanceId { get; set; }
 
             public int? JobPlanId { get; set; }
@@ -634,6 +635,7 @@ namespace DAL.RequestResponseModels
             public DateTime StartDate { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
+            public string DaysApplicable { get; set; }
             public int? JobPlanId { get; set; }
             public string Details { get; set; }
             public int StatusTypeId { get; set; }

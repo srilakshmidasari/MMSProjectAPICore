@@ -12,7 +12,7 @@ export class SelectAssetComponent implements OnInit {
   assetList: any[]=[];
   editAssetList: any[]=[];
   assetIds:any[]=[];
-  displayedColumns = ['isChecked','name1', 'assetLocationRef', 'assetCounter','astFixedDate'];
+  displayedColumns = ['isChecked','name1', 'assetRef', 'assetCounter','astFixedDate'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -20,35 +20,41 @@ export class SelectAssetComponent implements OnInit {
   assetData: any;
   //isChecked: boolean = false;
   constructor(private accountService: AccountService, private alertService: AlertService,
-    public dialogRef: MatDialogRef<SelectAssetComponent>, @Inject(MAT_DIALOG_DATA) public data: { row }) { }
+    public dialogRef: MatDialogRef<SelectAssetComponent>, @Inject(MAT_DIALOG_DATA) public data: { data, assetList}) { }
 
   ngOnInit() {
-    this.getAssets();
+    debugger
+    this.assetList = this.data.assetList;
+    this.dataSource.data = this.assetList;
+    this.editAssetList = this.assetList.map(x => Object.assign({}, x));
+
+   // this.getAssets();
   }
 
   getRecord(row){
     this.assetList.forEach((obj) => {
-      if(obj.id ==row.id)
-       row.isChecked = true;
-      this.assetData =row;
+      if(obj.id ==row.id){
+        row.isChecked = true;
+        this.assetData =row;
+      }else{
+        obj.isChecked = false;
+      }
     })
-    
   }
 
-  private getAssets() {
-    debugger
-    this.accountService.getAssets()
-      .subscribe((results: any) => {
-        results.listResult.map(function (obj) {
-          obj.isChecked = false;
-        })
-        this.assetList = results.listResult == null ? [] : results.listResult;
-        this.dataSource.data = this.assetList;
-        this.editAssetList = this.assetList.map(x => Object.assign({}, x));
-      },
-        error => {
-        });
-  }
+  // private getAssets() {
+  //   debugger
+  //   this.accountService.getAssets()
+  //     .subscribe((results: any) => {
+  //       results.listResult.map(function (obj) {
+  //         obj.isChecked = false;
+  //       })
+  //       this.assetList = results.listResult == null ? [] : results.listResult;
+  //       this.dataSource.data = this.assetList;
+  //     },
+  //       error => {
+  //       });
+  // }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;

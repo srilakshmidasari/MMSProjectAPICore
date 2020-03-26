@@ -45,5 +45,11 @@ export const DataFactory = {
     OrderTypes: {
         NormalWorkOrder: 23,
         PMOrder: 24
+    },
+
+    PMOrderTypes :{
+        WorkType : 81,
+        WorkFault : 60,
+        WorkStatus : 82
     }
 }

@@ -37,6 +37,7 @@ namespace DAL.Repositories
                                   PreventiveRefId =pm.PreventiveRefId,
                                   StartDate = pm.StartDate,
                                   DurationInHours = pm.DurationinHours,
+                                  DaysApplicable =pm.DaysApplicable,
                                   Details = pm.Details,
                                   JobPlanId= pm.JobPlanId,
                                   AssetId = _appContext.PMAssetXrefs.Where(S => S.PreventiveMaintenanceId == pm.Id).ToList(),
@@ -195,6 +196,7 @@ namespace DAL.Repositories
                     result.StartDate = PmOrder.StartDate;
                     result.JobPlanId = PmOrder.JobPlanId;
                     result.DurationinHours = PmOrder.DurationInHours;
+                    result.DaysApplicable = PmOrder.DaysApplicable;
                     result.StatusTypeId = PmOrder.StatusTypeId;
                     result.WorkTechnicianId = PmOrder.WorkTechnicianId;
                     result.TypeOfMaintenance = PmOrder.TypeOfMaintenance;

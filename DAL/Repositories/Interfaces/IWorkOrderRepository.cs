@@ -27,5 +27,8 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<WorkOrder> CloseWorkOrder(int WorkOrderId, int StatusTypeId,string Comments);
 
+        ListDataResponse<GetWorkOrderReponse> GetPMOrders();
+
+
     }
 }

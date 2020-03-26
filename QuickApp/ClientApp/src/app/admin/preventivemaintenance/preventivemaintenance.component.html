@@ -36,6 +36,11 @@
                     {{'Preventive Maintenance.Management.Type Of Maintainance'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.typeOfMaintainanceName}} </mat-cell>
             </ng-container>
+            <ng-container matColumnDef="daysApplicable">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                    Days Applicable</mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.daysApplicable}} </mat-cell>
+            </ng-container>
             <ng-container matColumnDef="startDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.Start Date'|translate}}</mat-header-cell>
@@ -61,13 +66,13 @@
                     {{'Preventive Maintenance.Management.Details'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="isActive">
+            <!-- <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.IsActive'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
                     <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
                 </mat-cell>
-            </ng-container>
+            </ng-container> -->
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
@@ -134,6 +139,17 @@
                             {{'Preventive Maintenance.Management.Please Select Type of Maintainance'|translate}}
                         </mat-error>
                     </mat-form-field>
+
+                    <mat-form-field class="col-md-4">
+                        <mat-label>Days Applicable for this Procedure</mat-label>
+                        <input matInput formControlName="daysApplicable" required />
+                        <mat-error *ngIf="!maintenanceForm.controls['daysApplicable'].valid">
+                            Days Applicable is Required
+                        </mat-error>
+                    </mat-form-field>
+                   
+                </div>
+                <div class="row">
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Select Site'|translate}} <span>*</span>
                         </mat-label>
@@ -146,15 +162,10 @@
                             {{'Preventive Maintenance.Management.Please Select Site'|translate}}
                         </mat-error>
                     </mat-form-field>
-
-
-
-                </div>
-                <div class="row">
-                    <mat-form-field class="col-md-6">
+                    <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Select Project'|translate}} <span>*</span>
                         </mat-label>
-                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
+                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByAssets($event)">
                             <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
                             </mat-option>
@@ -187,7 +198,7 @@
                             {{'Preventive Maintenance.Management.Please Select Asset'|translate}}
                         </mat-error>
                     </mat-form-field> -->
-                    <mat-form-field class="col-md-6">
+                    <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Select Asset'|translate}} 
                         </mat-label>
                         <input matInput formControlName="assetId" required  (click)="onSelectAssetClick($event)"/>

@@ -10,6 +10,22 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="assetLocationRef"
             matSortDirection="asc" matSortDisableClear>
+            <ng-container matColumnDef="assetLocationRef">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Assets.Management.Asset Refrerence'|translate}} </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.assetLocationRef}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Assets.Management.Name1'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="name2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Assets.Management.Name2'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
+            </ng-container>
+            
             <ng-container matColumnDef="siteName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Assets.Management.SiteName'|translate}}
                 </mat-header-cell>
@@ -35,21 +51,7 @@
                     {{'Assets.Management.assetTradeName'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.astTradeName1}} </mat-cell>
             </ng-container>
-            <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.Name1'|translate}}</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.Name2'|translate}}</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="assetLocationRef">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.Asset Refrerence'|translate}} </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.assetLocationRef}} </mat-cell>
-            </ng-container>
+            
             <ng-container matColumnDef="assetCounter">
                 <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header
                     class="just-cont-center">

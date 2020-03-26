@@ -44,6 +44,7 @@ import { InventoryItemsComponent } from './inventory/inventory-items/inventory-i
 import { PreventivemaintenanceComponent } from './preventivemaintenance/preventivemaintenance.component';
 import { JobPlanComponent } from './job-plan/job-plan.component';
 import { SelectAssetComponent } from './select-asset/select-asset.component';
+import { PmOrderComponent } from './pm-order/pm-order.component';
 
 @NgModule({
   imports: [
@@ -84,7 +85,8 @@ import { SelectAssetComponent } from './select-asset/select-asset.component';
     InventoryItemsComponent,
     PreventivemaintenanceComponent,
     JobPlanComponent,
-    SelectAssetComponent
+    SelectAssetComponent,
+    PmOrderComponent
   ],
   entryComponents: [
     EditUserDialogComponent,

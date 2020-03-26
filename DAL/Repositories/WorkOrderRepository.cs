@@ -479,5 +479,82 @@ namespace DAL.Repositories
 
             return response;
         }
+
+        public ListDataResponse<GetWorkOrderReponse> GetPMOrders()
+        {
+            ListDataResponse<GetWorkOrderReponse> response = new ListDataResponse<GetWorkOrderReponse>();
+            try
+            {
+                var result = (from wo in _appContext.WorkOrders.Where(x=>x.OrderTypeId == 24 && x.WorkTypeId == 81)
+                              join a in _appContext.AssetLocations on wo.AssetId equals a.Id
+                              join l in _appContext.Locations on a.LocationId equals l.Id
+                              join p in _appContext.Projects on l.ProjectId equals p.Id
+                              join s in _appContext.SiteInfos on p.SiteId equals s.Id
+                              join st in _appContext.LookUps on wo.StoreId equals st.Id into si
+                              from so in si.DefaultIfEmpty()
+                              join wty in _appContext.LookUps on wo.WorkTypeId equals wty.Id
+                              join ws in _appContext.LookUps on wo.WorkStatusId equals ws.Id
+                              join wf in _appContext.LookUps on wo.WorkFaultId equals wf.Id
+                              join wt in _appContext.LookUps on wo.WorkTechnicianId equals wt.Id
+                              join sta in _appContext.TypeCdDmts on wo.StatusTypeId equals sta.TypeCdDmtId
+                              select new GetWorkOrderReponse
+                              {
+                                  Id = wo.Id,
+                                  StartDate = wo.StartDate,
+                                  EndDate = wo.EndDate,
+                                  Reference1 = wo.Reference1,
+                                  ExtraDetails = wo.ExtraDetails,
+                                  OrderTypeId = wo.OrderTypeId,
+                                  Issue = wo.Issue,
+                                  Resolution = wo.Resolution,
+                                  StatusTypeId = wo.StatusTypeId,
+                                  StatusTypeName = sta.Description,
+                                  AssetId = wo.AssetId,
+                                  AssetName = a.Name1,
+                                  SiteId = s.Id,
+                                  SiteName = s.Name1,
+                                  ProjectId = p.Id,
+                                  ProjectName = p.Name1,
+                                  LocationId = l.Id,
+                                  LocationName = l.Name1,
+                                  WorkStatusId = wo.WorkStatusId,
+                                  WorkStatusName = ws.Name1,
+                                  WorkTypeId = wo.WorkTypeId,
+                                  WorkTypeName = wty.Name1,
+                                  WorkFaultId = wo.WorkFaultId,
+                                  WorkFaultName = wf.Name1,
+                                  WorkTechnicianId = wo.WorkTechnicianId,
+                                  WorkTechnicianName = wt.Name1,
+                                  IsActive = wo.IsActive,
+                                  CreatedBy = wo.CreatedBy,
+                                  CreatedDate = wo.CreatedDate,
+                                  UpdatedBy = wo.UpdatedBy,
+                                  UpdatedDate = wo.UpdatedDate,
+                              }).ToList();
+
+                if (result != null)
+                {
+                    response.ListResult = result;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "Get All Work Order Details Successfull";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "No Work Order Details Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

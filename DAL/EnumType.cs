@@ -6,5 +6,12 @@ namespace DAL
 {
     public class EnumType
     {
+
+        enum PMOrderTYpes
+        {
+            WorkType = 81,
+            OrderType = 24,
+          
+        }
     }
 }

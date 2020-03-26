@@ -908,6 +908,9 @@ namespace MMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("DaysApplicable")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 
@@ -1465,7 +1468,6 @@ namespace MMS.Migrations
                         .HasDefaultValue(true);
 
                     b.Property<string>("Issue")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderTypeId")
@@ -1476,7 +1478,6 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Resolution")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartDate")

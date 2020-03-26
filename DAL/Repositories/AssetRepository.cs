@@ -697,7 +697,7 @@ namespace DAL.Repositories
                                   Id = a.Id,
                                   Name1 = a.Name1,
                                   Name2 = a.Name2,
-                                  AssetSize = a.AssetRef,
+                                  AssetRef = a.AssetRef,
                                   AstCounter= a.AstCounter,
                                   AstFixedDate=a.AstFixedDate,
                                   CreatedBy = a.CreatedBy,

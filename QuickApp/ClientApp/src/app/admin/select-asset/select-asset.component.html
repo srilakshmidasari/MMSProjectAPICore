@@ -7,7 +7,7 @@
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
-        <mat-table [dataSource]="dataSource"  matSort matSortActive="assetLocationRef"
+        <mat-table [dataSource]="dataSource"  matSort matSortActive="assetRef"
         matSortDirection="asc" matSortDisableClear>
         <ng-container matColumnDef="isChecked">
             <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
@@ -21,10 +21,10 @@
             <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
         </ng-container>
         
-        <ng-container matColumnDef="assetLocationRef">
+        <ng-container matColumnDef="assetRef">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
                 {{'Assets.Management.Asset Refrerence'|translate}} </mat-header-cell>
-            <mat-cell *matCellDef="let row"> {{row.assetLocationRef}} </mat-cell>
+            <mat-cell *matCellDef="let row"> {{row.assetRef}} </mat-cell>
         </ng-container>
         <ng-container matColumnDef="assetCounter">
             <mat-header-cell  *matHeaderCellDef mat-sort-header>

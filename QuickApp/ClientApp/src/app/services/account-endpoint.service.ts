@@ -113,7 +113,9 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly  _getJobPlansByProjectUrl: string ='/api/JobPlan/GetJobPlansByProject';
 
+  private readonly  _getAssetsByProjectUrl: string ='/api/Asset/GetAssetsByProject';
   
+  private readonly  _getPmOrderUrl: string ='/api/WorkOrder/GetPMOrders';
   
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -214,6 +216,10 @@ export class AccountEndpoint extends EndpointBase {
   get getLocationsBySearchUrl() { return this.configurations.baseUrl + this._getLocationsBySearch; }
 
   get getJobPlansByProjectUrl() { return this.configurations.baseUrl + this._getJobPlansByProjectUrl; }
+
+  get getAssetsByProjectUrl() { return this.configurations.baseUrl + this._getAssetsByProjectUrl; }
+
+  get getPmOrderUrl() { return this.configurations.baseUrl + this._getPmOrderUrl; }
   
   
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
@@ -1089,6 +1095,22 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.getJobPlansByProjectEndpoint(Id));
       }));
   }
+
+  getAssetsByProjectEndPoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getAssetsByProjectUrl + '/' + Id;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getAssetsByProjectEndPoint(Id));
+      }));
+  }
   
+
+  getPMOrderEndpoint<T>(){
+    const endpointUrl = this.getPmOrderUrl;
+    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getWorkOrderEndpoint());
+      }));
+  }
   
 }

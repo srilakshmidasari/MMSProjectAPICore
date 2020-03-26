@@ -713,6 +713,24 @@
     "Save":"حفظ",
     "Cancel":"إلغاء"
   }
+ },
+ "PMOrder":{
+  "Management":{
+    "SearchbyPMOrder":"البحث بأمر PM",
+    "PMOrderId" : "معرف طلب Pm",
+    "Reference":"مرجع",
+    "StartDate":"تاريخ البدء",
+    "EndDate":"تاريخ الانتهاء",
+    "Issue":"القضية",
+    "Resolution":"الدقة",
+    "ProjectName":"اسم المشروع",
+    "StatusName":"اسم الحالة",
+    "LocationName":"اسم الموقع",
+    "AssetName":"اسم الأصل",
+    "Actions":"أجراءات",  
+    "Save":"حفظ",
+    "Cancel":"إلغاء"    
+  }
  }
 }
 

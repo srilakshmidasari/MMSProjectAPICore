@@ -24,7 +24,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   maintenanceData: any[] = [];
   jobPlanList: any[] = [];
   siteList: any[] = [];
-  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'startDate', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'isActive', 'Actions']
+  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'daysApplicable', 'startDate', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -42,6 +42,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   projectId: any;
   assetList: any[] = [];
   assetData: any;
+  assetId: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -127,25 +128,50 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-  onSelectProjectByLocation(event) {
+  // onSelectProjectByLocation(event) {
+  //   this.projectId = event;
+  //   this.locationsList = [];
+  //   this.accountService.getLocationsByProject(event).subscribe((res: any) => {
+  //     this.locationsList = res.listResult == null ? [] : res.listResult;
+  //     this.getJobPlans(event);
+  //   },
+  //     error => {
+  //     })
+  // }
+
+  onSelectProjectByAssets(event) {
     this.projectId = event;
-    this.locationsList = [];
-    this.accountService.getLocationsByProject(event).subscribe((res: any) => {
-      this.locationsList = res.listResult == null ? [] : res.listResult;
+    this.assetsList = [];
+    this.accountService.getAssetsByProject(event).subscribe((res: any) => {
+      if (this.isNewMaintanance) {
+        res.listResult.map(function (obj) {
+          obj.isChecked = false;
+        })
+      } else {
+        res.listResult.forEach((item) => {
+          if(this.assetId == item.id){
+            item.isChecked = true;
+           this.maintenanceForm.get('assetId').setValue(item.name1);
+
+          }
+
+        })
+      }
+      this.assetsList = res.listResult == null ? [] : res.listResult;
       this.getJobPlans(event);
     },
       error => {
       })
   }
 
-  onSelectLocationByProject(event) {
-    this.assetsList = [];
-    this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
-      this.assetsList = res.listResult == null ? [] : res.listResult;
-    },
-      error => {
-      })
-  }
+  // onSelectLocationByProject(event) {
+  //   this.assetsList = [];
+  //   this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
+  //     this.assetsList = res.listResult == null ? [] : res.listResult;
+  //   },
+  //     error => {
+  //     })
+  // }
 
   private getTypeOfMaintainces() {
     this.accountService.getCddmtData(DataFactory.ClassTypes.TypeOfMaintenance).subscribe((response: any) => {
@@ -169,6 +195,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       locationId: [''],
       startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
+      daysApplicable:['',Validators.required],
       typeOfMaintainanceId: ['', Validators.required],
       technicianId: ['', Validators.required],
       details: ['', Validators.required],
@@ -182,7 +209,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.buildForm();
     }
     this.maintenanceForm.reset({
-      assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
+     // assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
       siteId: this.maitananceRefData.siteId || '',
       projectId: this.maitananceRefData.projectId || '',
       jobId: this.maitananceRefData.jobPlanId || '',
@@ -190,6 +217,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       preventiveRefId: this.maitananceRefData.preventiveRefId || '',
       startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
       durationInHours: this.maitananceRefData.durationInHours || '',
+      daysApplicable:this.maitananceRefData.daysApplicable || '',
       typeOfMaintainanceId: this.maitananceRefData.typeOfMaintainanceId || '',
       technicianId: this.maitananceRefData.technicianId || '',
       details: this.maitananceRefData.details || '',
@@ -203,11 +231,14 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       this.assetsPMList.forEach((item) => {
         this.maitananceRefData.projectId = item.projectId,
+         this.assetId=item.assetId;
           this.maitananceRefData.siteId = item.siteId,
           this.maitananceRefData.locationId = item.locationId
-        this.getProjectsByUserIdandSiteId(item.siteId)
-        this.onSelectProjectByLocation(item.projectId)
-        this.onSelectLocationByProject(item.locationId)
+          this.getProjectsByUserIdandSiteId(item.siteId)
+          this.onSelectProjectByAssets(item.projectId)
+
+        //  this.onSelectProjectByLocation(item.projectId)
+        //this.onSelectLocationByProject(item.locationId)
         this.resetForm();
       });
     },
@@ -216,13 +247,11 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   onSelectJob(event) {
-    debugger
     this.accountService.getJobTaskByJobPlanId(event)
       .subscribe((results: any) => {
         this.jobTaskList = results.listResult == null ? [] : results.listResult;
       },
         error => {
-
         });
   }
 
@@ -235,13 +264,15 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.isAdding = true;
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
-      this.getSitesByUserId();
-      // this.getJobPlans(this.maitananceRefData.projectId);
-      this.getPMAssetsbyPMId(this.maitananceRefData.id)
-      this.onSelectJob(this.maitananceRefData.jobPlanId)
       this.maitananceRefData.assetId.forEach(element => {
         this.AssetIds.push(element.assetId)
       });
+      this.getSitesByUserId();
+      this.getPMAssetsbyPMId(this.maitananceRefData.id)
+
+      // this.getJobPlans(this.maitananceRefData.projectId);
+      this.onSelectJob(this.maitananceRefData.jobPlanId)
+     
     }
     else {
       this.isAdding = true;
@@ -259,10 +290,11 @@ export class PreventivemaintenanceComponent implements OnInit {
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
-      "assetIds":[ this.assetData.id ],
+      "assetIds": this.assetData != null ? [this.assetData.id]:this.AssetIds,
       "startDate": formModel.startDate,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
+      "daysApplicable": formModel.daysApplicable,
       "jobPlanId": formModel.jobId,
       "details": formModel.details,
       "statusTypeId": DataFactory.StatusTypes.Open,
@@ -353,14 +385,14 @@ export class PreventivemaintenanceComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectAssetComponent,
       {
         panelClass: 'mat-dialog-md',
-        data: { data }
+        data: { data, assetList: [...this.assetsList] }
       });
     dialogRef.afterClosed().subscribe(response => {
-       debugger
-       if(response != null){
+      debugger
+      if (response != null) {
         this.maintenanceForm.get('assetId').setValue(response.name1)
-         this.assetData=response;
-       }
+        this.assetData = response;
+      }
     });
   }
 

@@ -427,7 +427,7 @@ deleteAssetRepository(repositoryId) {
   getWorkOrder(){
     return this.accountEndpoint.getWorkOrderEndpoint();
   }
-  
+ 
   AddWorkOrder(reqObject) {
     return this.accountEndpoint.AddWorkOrderEndpoint(reqObject);
   }
@@ -539,5 +539,14 @@ deleteAssetRepository(repositoryId) {
   getJobPlansByProject(Id) {
     return this.accountEndpoint.getJobPlansByProjectEndpoint(Id);
   }
+  
+  getAssetsByProject(Id) {
+    return this.accountEndpoint.getAssetsByProjectEndPoint(Id);
+  }
+
+  getPMOrder(){
+    return this.accountEndpoint.getPMOrderEndpoint();
+  }
+  
   
 }

@@ -17,6 +17,9 @@ namespace DAL.Models
         [Display(Name = "Preventive Ref Id")]
         public string PreventiveRefId { get; set; }
 
+        [Display(Name = "Days Applicable")]
+        public string DaysApplicable { get; set; }
+
         [Required]
         [Display(Name = "Start Date")]
         public DateTime StartDate { get; set; }
