@@ -22,8 +22,15 @@ export class PmOrderComponent implements OnInit {
   isNewOrder: boolean = false;
   currenrDate: Date;
   orderForm: FormGroup;
+  itemFrom: FormGroup;
   constructor(private accountService: AccountService, private alertService: AlertService,
-    private authService: AuthService,private formBuilder: FormBuilder,) { }
+    private authService: AuthService,private formBuilder: FormBuilder,) { 
+      this.itemFrom = this.formBuilder.group({
+        credentials: this.formBuilder.array([]),
+      });
+      this.currenrDate = new Date();
+     
+    }
 
   ngOnInit() {
     this.getPMOrders();
@@ -195,15 +202,15 @@ export class PmOrderComponent implements OnInit {
 
     private AddAllItemData(): any {
       var workOrderItems = [];
-      // for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
-      //   var itemReq = {
-      //     "id": 0,
-      //     "itemId": this.itemFrom.value.credentials[i].itemId,
-      //     "workOrderId": 0,
-      //     "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
-      //   }
-      //   workOrderItems.push(itemReq);
-      // }
+      for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
+        var itemReq = {
+          "id": 0,
+          "itemId": this.itemFrom.value.credentials[i].itemId,
+          "workOrderId": 0,
+          "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
+        }
+        workOrderItems.push(itemReq);
+      }
       const formModel = this.orderForm.value;
       if (this.isNewOrder) {
         formModel.startDate.setDate(formModel.startDate.getDate() + 1);
@@ -236,6 +243,22 @@ export class PmOrderComponent implements OnInit {
     get currentUser() {
       return this.authService.currentUser;
     }
+    
+    addItem(i) {
+      debugger
+      (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
+    }
+
+    createItem(item) {
+      return this.formBuilder.group({
+        itemId: new FormControl('', [Validators.required]),
+        quantity: new FormControl('', [Validators.required]),
+  
+      })
+    }
+  Delete(index) {
+    (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
+  }
   
   }
 

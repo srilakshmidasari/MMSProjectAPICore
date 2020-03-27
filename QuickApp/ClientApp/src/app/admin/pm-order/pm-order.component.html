@@ -210,6 +210,13 @@
                             {{'Work Order.Management.End Date is Required'|translate}}
                         </mat-error> -->
                     </mat-form-field>
+                    <div class="col-md-4">
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                            {{'Purchase Order.Management.Add Item'|translate}}
+                        </button>
+                    </div>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">
@@ -286,7 +293,44 @@
                     </mat-form-field>
                 </div>
             </form>
-                    
+            <div class="row">
+                <form [formGroup]="itemFrom" class="col-md-12">
+                    <div formArrayName="credentials" 
+                        *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
+                        <ng-container [formGroupName]="i">
+                            <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
+                            <div class="row" >
+                                <mat-form-field class="col-md-4">
+                                    <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
+                                    </mat-label>
+                                    <mat-select formControlName="itemId">
+                                        <mat-option *ngFor="let item of itemList" [value]="item.id" >
+                                           {{item.name1}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="item.controls.itemId.invalid">
+                                        {{'Purchase Order.Management.Please Select Item'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-4">
+                                    <mat-label>{{'Purchase Order.Management.Quantity'|translate}}</mat-label>
+                                    <input matInput formControlName="quantity" required maxlength="5"
+                                        (keypress)="numberOnly($event)" />
+                                    <mat-error *ngIf="item.controls.quantity.invalid">
+                                        {{'Purchase Order.Management.Quantity is Required'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                                <div class="col-md-4">
+                                    <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel"
+                                        *ngIf="i>0">
+                                        {{'Purchase Order.Management.Remove'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </form>
+            </div>      
         </mat-card-content>  
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
