@@ -678,6 +678,14 @@
    "Start Date is Required":"تاريخ البدء مطلوب",
    "Duration is required":"المدة مطلوبة",
    "Please Select Technician":"يرجى تحديد فني",
+   "DaysApplicable" : "الأيام المطبقة",
+   "DaysApplicableisRequired" : "الأيام المنطبقة مطلوبة",
+   "DaysApplicableforthisProcedure" : "الأيام المطبقة على هذا الإجراء",
+   "SelectJobPlan":"حدد خطة العمل",
+   "PleaseselectJobPlan":"يرجى تحديد خطة العمل",
+   "JobPlanTasks":"مهام خطة العمل",
+   "TaskName":"اسم المهمة",
+   "TradeName":"اسم تجاري",
    "Save":"حفظ",
    "Cancel":"إلغاء"
   }
@@ -709,6 +717,7 @@
     "Please Select Technician":"يرجى تحديد فني",
     "Task Name is Required":"اسم المهمة مطلوب",
     "Duration is Required":"المدة مطلوبة",
+   
     "Task":"مهمة",
     "Save":"حفظ",
     "Cancel":"إلغاء"

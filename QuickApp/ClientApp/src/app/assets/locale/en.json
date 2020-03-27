@@ -692,6 +692,14 @@
     "Start Date is Required":"Start Date is Required",
     "Duration is required":"Duration is required",
     "Please Select Technician":"Please Select Technician",
+    "DaysApplicable" : "Days Applicable",
+    "DaysApplicableisRequired" : "Days Applicable is Required",
+    "DaysApplicableforthisProcedure":"Days Applicable for this Procedure",
+    "SelectJobPlan":"Select Job Plan",
+    "PleaseselectJobPlan":"Please select Job Plan",
+    "JobPlanTasks":"Job Plan Tasks",
+    "TaskName":"Task Name",
+    "TradeName":"Trade Name",
     "Save":"Save",
     "Cancel":"Cancel"
    }

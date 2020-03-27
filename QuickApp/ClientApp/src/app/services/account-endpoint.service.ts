@@ -116,6 +116,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly  _getAssetsByProjectUrl: string ='/api/Asset/GetAssetsByProject';
   
   private readonly  _getPmOrderUrl: string ='/api/WorkOrder/GetPMOrders';
+
+  private readonly  _addPmOrder: string ='/api/WorkOrder/AddPMOrder';
   
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
@@ -220,8 +222,11 @@ export class AccountEndpoint extends EndpointBase {
   get getAssetsByProjectUrl() { return this.configurations.baseUrl + this._getAssetsByProjectUrl; }
 
   get getPmOrderUrl() { return this.configurations.baseUrl + this._getPmOrderUrl; }
+
+  get addPmOrder() { return this.configurations.baseUrl + this._addPmOrder; }
+
   
-  
+
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -1110,6 +1115,14 @@ export class AccountEndpoint extends EndpointBase {
     return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
       catchError(error => {
         return this.handleError(error, () => this.getWorkOrderEndpoint());
+      }));
+  }
+
+  addPmOrderEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.addPmOrder;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.addPmOrderEndPoint(reqObject));
       }));
   }
   

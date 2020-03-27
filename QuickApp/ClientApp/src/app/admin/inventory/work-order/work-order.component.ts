@@ -140,7 +140,6 @@ export class WorkOrderComponent implements OnInit {
       workStatusId: ['', Validators.required],
       workFaultId: ['', Validators.required],
       workTechId: ['', Validators.required],
-
     })
   }
 

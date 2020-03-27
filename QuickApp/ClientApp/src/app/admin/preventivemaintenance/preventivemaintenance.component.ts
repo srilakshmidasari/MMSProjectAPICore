@@ -10,6 +10,7 @@ import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { constants } from 'os';
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
+import { ApprovePmOrderComponent } from '../approve-pm-order/approve-pm-order.component';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',
@@ -149,9 +150,9 @@ export class PreventivemaintenanceComponent implements OnInit {
         })
       } else {
         res.listResult.forEach((item) => {
-          if(this.assetId == item.id){
+          if (this.assetId == item.id) {
             item.isChecked = true;
-           this.maintenanceForm.get('assetId').setValue(item.name1);
+            this.maintenanceForm.get('assetId').setValue(item.name1);
 
           }
 
@@ -195,7 +196,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       locationId: [''],
       startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
-      daysApplicable:['',Validators.required],
+      daysApplicable: ['', Validators.required],
       typeOfMaintainanceId: ['', Validators.required],
       technicianId: ['', Validators.required],
       details: ['', Validators.required],
@@ -209,7 +210,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.buildForm();
     }
     this.maintenanceForm.reset({
-     // assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
+      // assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
       siteId: this.maitananceRefData.siteId || '',
       projectId: this.maitananceRefData.projectId || '',
       jobId: this.maitananceRefData.jobPlanId || '',
@@ -217,7 +218,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       preventiveRefId: this.maitananceRefData.preventiveRefId || '',
       startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
       durationInHours: this.maitananceRefData.durationInHours || '',
-      daysApplicable:this.maitananceRefData.daysApplicable || '',
+      daysApplicable: this.maitananceRefData.daysApplicable || '',
       typeOfMaintainanceId: this.maitananceRefData.typeOfMaintainanceId || '',
       technicianId: this.maitananceRefData.technicianId || '',
       details: this.maitananceRefData.details || '',
@@ -231,11 +232,11 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       this.assetsPMList.forEach((item) => {
         this.maitananceRefData.projectId = item.projectId,
-         this.assetId=item.assetId;
-          this.maitananceRefData.siteId = item.siteId,
-          this.maitananceRefData.locationId = item.locationId
-          this.getProjectsByUserIdandSiteId(item.siteId)
-          this.onSelectProjectByAssets(item.projectId)
+        this.assetId = item.assetId;
+        this.maitananceRefData.siteId = item.siteId,
+        this.maitananceRefData.locationId = item.locationId
+        this.getProjectsByUserIdandSiteId(item.siteId)
+        this.onSelectProjectByAssets(item.projectId)
 
         //  this.onSelectProjectByLocation(item.projectId)
         //this.onSelectLocationByProject(item.locationId)
@@ -272,7 +273,7 @@ export class PreventivemaintenanceComponent implements OnInit {
 
       // this.getJobPlans(this.maitananceRefData.projectId);
       this.onSelectJob(this.maitananceRefData.jobPlanId)
-     
+
     }
     else {
       this.isAdding = true;
@@ -290,7 +291,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
-      "assetIds": this.assetData != null ? [this.assetData.id]:this.AssetIds,
+      "assetIds": this.assetData != null ? [this.assetData.id] : this.AssetIds,
       "startDate": formModel.startDate,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
@@ -388,12 +389,26 @@ export class PreventivemaintenanceComponent implements OnInit {
         data: { data, assetList: [...this.assetsList] }
       });
     dialogRef.afterClosed().subscribe(response => {
-      debugger
       if (response != null) {
         this.maintenanceForm.get('assetId').setValue(response.name1)
         this.assetData = response;
       }
     });
   }
+
+  OnAcceptPmProcedure(row) {
+    const dialogRef = this.dialog.open(ApprovePmOrderComponent,
+      {
+        data: {row}
+      });
+    dialogRef.afterClosed().subscribe(response => {
+      debugger
+      if (response != null) {
+
+      }
+    });
+  }
+
+  
 
 }

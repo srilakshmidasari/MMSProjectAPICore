@@ -548,5 +548,9 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.getPMOrderEndpoint();
   }
   
+  addPmOrder(reqObject) {
+    return this.accountEndpoint.addPmOrderEndPoint(reqObject);
+  }
+  
   
 }

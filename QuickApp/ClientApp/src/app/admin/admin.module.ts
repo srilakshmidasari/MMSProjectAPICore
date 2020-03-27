@@ -45,6 +45,7 @@ import { PreventivemaintenanceComponent } from './preventivemaintenance/preventi
 import { JobPlanComponent } from './job-plan/job-plan.component';
 import { SelectAssetComponent } from './select-asset/select-asset.component';
 import { PmOrderComponent } from './pm-order/pm-order.component';
+import { ApprovePmOrderComponent } from './approve-pm-order/approve-pm-order.component';
 
 @NgModule({
   imports: [
@@ -86,7 +87,8 @@ import { PmOrderComponent } from './pm-order/pm-order.component';
     PreventivemaintenanceComponent,
     JobPlanComponent,
     SelectAssetComponent,
-    PmOrderComponent
+    PmOrderComponent,
+    ApprovePmOrderComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
@@ -98,7 +100,8 @@ import { PmOrderComponent } from './pm-order/pm-order.component';
     DocumentFileComponent,
     ReceiveItemComponent,
     CloseorderComponent,
-    SelectAssetComponent
+    SelectAssetComponent,
+    ApprovePmOrderComponent
   ]
 })
 export class AdminModule {
