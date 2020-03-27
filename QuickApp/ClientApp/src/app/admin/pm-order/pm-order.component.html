@@ -1,5 +1,5 @@
 <app-page-header title="PMOrder" icon="assignment_ind"></app-page-header>
-<div class="page-content" >
+<div class="page-content" [hidden]="isEdit" >
     
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
@@ -102,11 +102,11 @@
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td> -->
                         <td>
-                            <!-- <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Approved' && req.statusTypeName != 'Closed'"
+                           <button class="just-cont-center" mat-icon-button 
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}"  (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
+                           <!-- <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
                                 matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -178,4 +178,124 @@
             </p-table>
         </div>
     </div>
+</div>
+<div class="page-content" *ngIf="isEdit">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>Edit PM Order
+            </mat-card-title>
+        </mat-card-header>
+        <br>
+        <mat-card-content>
+            <form [formGroup]="orderForm">
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Start Date'|translate}} </mat-label>
+                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
+                            placeholder="Start Date" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                        <!-- <mat-error *ngIf="!orderForm.controls['startDate'].valid">
+                            {{'Work Order.Management.Start Date is Required'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.End Date'|translate}}</mat-label>
+                        <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="endDate"
+                            placeholder="End Date" required>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                        <!-- <mat-error *ngIf="!orderForm.controls['endDate'].valid">
+                            {{'Work Order.Management.End Date is Required'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
+                        <textarea matInput formControlName="issue"></textarea>
+                        <!-- <mat-error *ngIf="!orderForm.controls['issue'].valid">
+                            {{'Work Order.Management.Issue is Required'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-5">
+                        <mat-label>{{'Work Order.Management.Resolution'|translate}}</mat-label>
+                        <textarea matInput formControlName="resolution"></textarea>
+                        <!-- <mat-error *ngIf="!orderForm.controls['resolution'].valid">
+                            {{'Work Order.Management.Resolution is Required'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                    </div>
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
+                        </mat-label>
+                        <mat-select formControlName="workTechId">
+                            <mat-option *ngFor="let work of workTechList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
+                            {{'Work Order.Management.Please Select work Technician'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="workTypeId">
+                            <mat-option *ngFor="let work of workTypeList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <mat-error *ngIf="!orderForm.controls['workTypeId'].valid">
+                            {{'Work Order.Management.Please Select Work Type'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Reference 1'| translate}}</mat-label>
+                        <input matInput formControlName="reference1" required maxlength="50" />
+                        <mat-error *ngIf="!orderForm.controls['reference1'].valid">
+                            {{'Work Order.Management.Reference 1 is Required'| translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                   
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Work Status'|translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="workStatusId">
+                            <mat-option *ngFor="let work of workStatusList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <mat-error *ngIf="!orderForm.controls['workStatusId'].valid">
+                            {{'Work Order.Management.Please Select Work Status'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Work Fault'|translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="workFaultId">
+                            <mat-option *ngFor="let work of workFaultsList" [value]="work.id" required>
+                                {{work.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <!-- <mat-error *ngIf="!orderForm.controls['workFaultId'].valid">
+                            {{'Work Order.Management.Please Select Work Fault'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+            </form>
+                    
+        </mat-card-content>  
+        <mat-card-actions>
+            <div class="float-right" style="padding-top: 12px;">
+                <button mat-raised-button color="primary"
+                    (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
+                <button mat-raised-button color="warn"
+                    (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
+            </div>
+        </mat-card-actions>
+        <div class="clearfix"></div> 
+    </mat-card>
 </div>
