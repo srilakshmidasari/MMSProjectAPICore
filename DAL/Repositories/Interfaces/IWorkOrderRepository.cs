@@ -20,6 +20,11 @@ namespace DAL.Repositories.Interfaces
 
         ValueDataResponse<WorkOrder> DeleteWorkOrder(int WorkOrderId);
 
+        ValueDataResponse<List<UpsertWorkOrder>> InsertPMOrder(List<UpsertWorkOrder> workorder);
+
+
+
+
 
         ValueDataResponse<WorkOrder> AcceptWorkOrder(int WorkOrderId, int StatusTypeId);
 

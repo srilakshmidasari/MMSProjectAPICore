@@ -556,5 +556,45 @@ namespace DAL.Repositories
 
             return response;
         }
+
+
+        public ValueDataResponse<List<UpsertWorkOrder>> InsertPMOrder(List<UpsertWorkOrder> workorder)
+        {
+            ValueDataResponse<List<UpsertWorkOrder>> response = new ValueDataResponse<List<UpsertWorkOrder>>();
+
+            try
+            {
+                foreach (var work in workorder)
+                {
+                    WorkOrder Wro = _mapper.Map<WorkOrder>(work);
+                    var result = _appContext.WorkOrders.Add(Wro);
+                    _appContext.SaveChanges();
+                    
+                }
+                if (workorder != null)
+                {
+                    response.Result = workorder;
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 1;
+                    response.EndUserMessage = "PM Order Added Successfully";
+                }
+                else
+                {
+                    response.IsSuccess = true;
+                    response.AffectedRecords = 0;
+                    response.EndUserMessage = "PM Order Added Failed";
+                }
+
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.AffectedRecords = 0;
+                response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                response.Exception = ex;
+            }
+
+            return response;
+        }
     }
 }

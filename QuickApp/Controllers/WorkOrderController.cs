@@ -86,6 +86,14 @@ namespace MMS.Controllers
             return _unitOfWork.WorkOrders.GetPMOrders();
         }
 
+        [HttpPost("AddPMOrder")]
+        public ValueDataResponse<List<UpsertWorkOrder>> InsertPMOrder(List<UpsertWorkOrder> workorder)
+        {
+            return _unitOfWork.WorkOrders.InsertPMOrder(workorder);
+        }
+
+
+
         [HttpPost("ExportWorkOrders")]
         public IActionResult ExportWorkOrders(List<GetWorkOrderReponse> res)
         {
