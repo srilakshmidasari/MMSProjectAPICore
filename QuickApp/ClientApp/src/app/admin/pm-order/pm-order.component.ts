@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
@@ -137,12 +137,106 @@ export class PmOrderComponent implements OnInit {
     this.orderData = order;
 
   }
-  
+
   onCancelClick() {
     this.isEdit = false;
   }
 
-  saveOrder(){
-
+ saveOrder() {
+    debugger
+    if (!this.orderForm.valid) {
+      this.alertService.showValidationError();
+      return;
+    }
+    this.alertService.startLoadingMessage('Saving changes...');
+    const editeditem = this.AddAllItemData();
+    console.log(editeditem)
+    if (this.isNewOrder) {
+      this.accountService.AddWorkOrder(editeditem).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            this.getPMOrders();
+            //this.isAdding = false;
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.resetForm();
+            // this.onViewPDF(response.result);
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
+    }
+    else {
+      this.accountService.UpdateWorkOrder(editeditem).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            //this.isAdding = false;
+            this.isEdit = false;
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.getPMOrders();
+            //  this.onViewPDF(response.result);
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
+    }
   }
-}
+
+    private AddAllItemData(): any {
+      var workOrderItems = [];
+      // for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
+      //   var itemReq = {
+      //     "id": 0,
+      //     "itemId": this.itemFrom.value.credentials[i].itemId,
+      //     "workOrderId": 0,
+      //     "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
+      //   }
+      //   workOrderItems.push(itemReq);
+      // }
+      const formModel = this.orderForm.value;
+      if (this.isNewOrder) {
+        formModel.startDate.setDate(formModel.startDate.getDate() + 1);
+        formModel.endDate.setDate(formModel.endDate.getDate() + 1);
+      } else {
+  
+      }
+  
+      return {
+        "id": this.isNewOrder == true ? 0 : this.orderData.id,
+       "startDate": formModel.startDate,
+        "endDate": formModel.endDate,
+        "reference1": formModel.reference1,
+        "issue": formModel.issue,
+        "resolution": formModel.resolution,
+        "workTypeId": formModel.workTypeId,
+        "workStatusId": formModel.workStatusId,
+        "workTechnicianId": formModel.workTechId,
+        "workFaultId": formModel.workFaultId,
+        "storeId": formModel.storeId,
+        "orderTypeId": DataFactory.OrderTypes.NormalWorkOrder,
+        "isActive": true,
+        "workOrderItems": workOrderItems,
+        "createdBy": this.currentUser.id,
+        "createdDate": new Date(),
+        "updatedBy": this.currentUser.id,
+        "updatedDate": new Date()
+      }
+    }
+    get currentUser() {
+      return this.authService.currentUser;
+    }
+  
+  }
+
+
