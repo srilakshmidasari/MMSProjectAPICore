@@ -12,6 +12,21 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 export class PmOrderComponent implements OnInit {
   orderData: any = {};
   loadingIndicator: boolean;
+  siteList: any[] = [];
+  userProjectsList: any[] = [];
+  locationsList: any[] = [];
+  Project: any;
+  searchText: string;
+  searchLength :number;
+  locationLength: number;
+  assetsList: any[] = [];
+  assteText: string;
+  assetLength :number;
+  assetListLength: number;
+  selectString: any;
+  selectAsset: any;
+  storesList: any[] = [];
+  itemList: any[] = [];
   pmOrdersList: any[]=[];
   PMOrderItemList: any[]=[];
   isEdit: boolean;
@@ -22,11 +37,20 @@ export class PmOrderComponent implements OnInit {
   isNewOrder: boolean = false;
   currenrDate: Date;
   orderForm: FormGroup;
+  itemFrom: FormGroup;
   constructor(private accountService: AccountService, private alertService: AlertService,
-    private authService: AuthService,private formBuilder: FormBuilder,) { }
+    private authService: AuthService,private formBuilder: FormBuilder,) { 
+      this.itemFrom = this.formBuilder.group({
+        credentials: this.formBuilder.array([]),
+      });
+      this.currenrDate = new Date();
+     
+    }
 
   ngOnInit() {
+    debugger
     this.getPMOrders();
+    this.getItem();
     this.buildForm();
   }
 
@@ -50,6 +74,7 @@ export class PmOrderComponent implements OnInit {
   }
 
   getItemsByworkOrderId(row, val) {
+    debugger
     this.accountService.getItemsByWorkOrderId(row.id)
       .subscribe((results: any) => {
         this.PMOrderItemList = results.listResult == null ? [] : results.listResult;
@@ -59,9 +84,167 @@ export class PmOrderComponent implements OnInit {
         });
   }
 
+  addItem(i) {
+    debugger
+    (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
+  }
+
   
+  createItem(item) {
+    return this.formBuilder.group({
+      itemId: new FormControl('', [Validators.required]),
+      quantity: new FormControl('', [Validators.required]),
+
+    })
+  }
+  private getSites() {
+    debugger
+    this.accountService.getSiteData()
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+
+      },
+        error => {
+        });
+  }
+
+  //Get sites data by UserId
+  getSitesByUserId() {
+    debugger
+    this.accountService.getSitesByUserId(this.currentUser.id)
+      .subscribe((results: any) => {
+        this.siteList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+  }
+
+  getProjectsByUserIdandSiteId(event) {
+    debugger
+    this.userProjectsList = [];
+    var req = {
+      "siteId": event,
+      "userId": this.currentUser.id
+    }
+    this.accountService.getProjectsByUserIdandSiteId(req)
+      .subscribe((results: any) => {
+        this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        
+      },
+        error => {
+        });
+  }
+   onSelectProjectByLocation(event) {
+     debugger
+     this.locationsList = [];
+     this.Project=event;
+     this.getStoresByProject(event)
+     this.orderForm.get('locationId').setValue(null)
+  //   // this.accountService.getLocationsByProject(event).subscribe((res: any) => {
+  //   //   this.locationsList = res.listResult == null ? [] : res.listResult;
+  //   //   this.getStoresByProject(event)
+  //   // },
+  //   //   error => {
+  //   //   })
+   }
+
+  onSelectProjectByLocationSearch(event) {
+    debugger
+    this.searchText =event;
+    if(this.searchText.length >2){
+      this.searchLength =event.length;
+      // this.locationsList = [];
+      var req={
+        "searchValue": this.searchText,
+        "projectId": this.Project
+      }
+      this.accountService.getLocationsBySearch(req).subscribe((res: any) => {
+        this.locationsList = res.listResult == null ? [] : res.listResult;
+        this.locationLength =this.locationsList.length;
+        if (res.listResult == null) {
+          this.locationsList = [];
+        }
+        
+      },
+        error => {
+          this.locationsList = [];
+        })
+    }
+  }
+  onSelectLocationByAssetSearch(event) {
+    debugger
+    this.assetsList = [];
+    this.assteText =event
+    if(this.assteText.length>2){
+      this.assetLength =event.length;
+      var req={
+        "searchValue": event,
+        "locationId": this.selectString
+      }
+      this.accountService.getAssetsBySearch(req).subscribe((res: any) => {
+        this.assetsList = res.listResult == null ? [] : res.listResult;
+        this.assetListLength =this.assetsList.length;
+        if (res.listResult == null) {
+          this.assetsList = [];
+        }
+      },
+        error => {
+        })
+    }
+    
+  }
+
+  onSelectLocationByProject(event) {
+    debugger
+    this.assetsList = [];
+    this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
+      this.assetsList = res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+
+  
+  onLocationSelected( obj) {
+    debugger
+    this.selectString = obj.id;
+    this.orderForm.get('assetId').setValue(null)
+  }
+
+  onAssetSelected( obj) {
+    debugger
+    this.selectAsset = obj.id;
+  }
+
+
+
+  getStoresByProject(ProjectId) {
+    debugger
+    this.storesList = [];
+    //this.orderForm.get('storeId').setValue(null)
+    this.accountService.getStoresByProjectId(ProjectId)
+      .subscribe((results: any) => {
+        this.storesList = results.listResult == null ? [] : results.listResult;
+      },
+        error => {
+        });
+   }
+
+
+ // get items Data
+ private getItem() {
+   debugger
+  this.accountService.getitemdata()
+    .subscribe((results: any) => {
+      this.itemList = results.listResult == null ? [] : results.listResult;
+      this.getWorkType();
+    },
+      error => {
+      });
+}
 
   getWorkType() {
+    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkType).subscribe((result: any) => {
       this.workTypeList = result.listResult == null ? [] : result.listResult;
       this.getWorkStatus();
@@ -71,6 +254,7 @@ export class PmOrderComponent implements OnInit {
   }
 
   getWorkStatus() {
+    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkStatus).subscribe((result: any) => {
       this.workStatusList = result.listResult == null ? [] : result.listResult;
       this.geworkFault();
@@ -80,6 +264,7 @@ export class PmOrderComponent implements OnInit {
   }
 
   geworkFault() {
+    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkFaults).subscribe((result: any) => {
       this.workFaultsList = result.listResult == null ? [] : result.listResult;
       this.getWorkTech();
@@ -89,6 +274,7 @@ export class PmOrderComponent implements OnInit {
   }
 
   getWorkTech() {
+    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
       this.workTechList = result.listResult == null ? [] : result.listResult;
     },
@@ -98,7 +284,15 @@ export class PmOrderComponent implements OnInit {
  
 
   buildForm(){
+    debugger
     this.orderForm = this.formBuilder.group({
+      siteId: ['', Validators.required],
+      projectId: ['', Validators.required],
+      locationId: ['', Validators.required],
+      assetId: ['', Validators.required],
+      storeId: ['', Validators.required],
+      reference1: ['', Validators.required],
+      extraDetails: ['', Validators.required],
       issue: ['', Validators.required],
       resolution: ['', Validators.required],
       startDate: ['', Validators.required],
@@ -107,8 +301,6 @@ export class PmOrderComponent implements OnInit {
       workStatusId: ['', Validators.required],
       workFaultId: ['', Validators.required],
       workTechId: ['', Validators.required],
-      reference1:['',Validators.required]
-
     })
 
   }
@@ -120,6 +312,13 @@ export class PmOrderComponent implements OnInit {
       this.buildForm();
     }
     this.orderForm.reset({
+      siteId: this.orderData.siteId || '',
+      projectId: this.orderData.projectId || '',
+      locationId: this.orderData.locationName|| '',
+      assetId: this.orderData.assetName || '',
+      storeId: this.orderData.storeId || '',
+      reference1: this.orderData.reference1 || '',
+      extraDetails: this.orderData.extraDetails || '',
       issue: this.orderData.issue || '',
       resolution: this.orderData.resolution || '',
       startDate: this.isNewOrder ? this.currenrDate : this.orderData.startDate || '',
@@ -127,18 +326,26 @@ export class PmOrderComponent implements OnInit {
       workTypeId: this.orderData.workTypeId || '',
       workStatusId: this.orderData.workStatusId || '',
       workFaultId: this.orderData.workFaultId || '',
-      workTechId: this.orderData.workTechnicianId || '',
-      reference1:this.orderData.reference1 ||''
+      workTechId: this.orderData.workTechnicianId || ''
     });
   }
 
   onEditClick(order){
+    debugger
     this.isEdit = true;
     this.orderData = order;
+    this.getItemsByworkOrderId(order, true);
+    this.getSitesByUserId();
+    this.getProjectsByUserIdandSiteId(order.siteId)
 
+    this.onSelectProjectByLocation(order.projectId)
+    this.onSelectLocationByProject(order.locationId)
+    this.getStoresByProject(order.projectId);
+    this.resetForm();
   }
 
   onCancelClick() {
+    debugger
     this.isEdit = false;
   }
 
@@ -195,15 +402,15 @@ export class PmOrderComponent implements OnInit {
 
     private AddAllItemData(): any {
       var workOrderItems = [];
-      // for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
-      //   var itemReq = {
-      //     "id": 0,
-      //     "itemId": this.itemFrom.value.credentials[i].itemId,
-      //     "workOrderId": 0,
-      //     "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
-      //   }
-      //   workOrderItems.push(itemReq);
-      // }
+      for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
+        var itemReq = {
+          "id": 0,
+          "itemId": this.itemFrom.value.credentials[i].itemId,
+          "workOrderId": 0,
+          "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
+        }
+        workOrderItems.push(itemReq);
+      }
       const formModel = this.orderForm.value;
       if (this.isNewOrder) {
         formModel.startDate.setDate(formModel.startDate.getDate() + 1);
@@ -214,11 +421,14 @@ export class PmOrderComponent implements OnInit {
   
       return {
         "id": this.isNewOrder == true ? 0 : this.orderData.id,
-       "startDate": formModel.startDate,
+        "assetId": this.selectAsset ==undefined ?this.orderData.assetId :this.selectAsset ,
+        "startDate": formModel.startDate,
         "endDate": formModel.endDate,
         "reference1": formModel.reference1,
+        "extradetails": formModel.extraDetails,
         "issue": formModel.issue,
         "resolution": formModel.resolution,
+        "statusTypeId": DataFactory.StatusTypes.Open,
         "workTypeId": formModel.workTypeId,
         "workStatusId": formModel.workStatusId,
         "workTechnicianId": formModel.workTechId,
@@ -236,7 +446,22 @@ export class PmOrderComponent implements OnInit {
     get currentUser() {
       return this.authService.currentUser;
     }
+    
   
+
+  Delete(index) {
+    (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
+  }
+  
+  
+  // Accepting Only Numbers
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
   }
 
 

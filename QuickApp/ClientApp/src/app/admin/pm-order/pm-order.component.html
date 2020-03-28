@@ -182,7 +182,7 @@
 <div class="page-content" *ngIf="isEdit">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>Edit PM Order
+            <mat-card-title>{{'Work Order.Management.Edit Work Order'|translate}}
             </mat-card-title>
         </mat-card-header>
         <br>
@@ -190,14 +190,84 @@
             <form [formGroup]="orderForm">
                 <div class="row">
                     <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
+                        <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
+                            <mat-option *ngFor="let site of siteList" [value]="site.id" required>
+                                {{site.name1}}(<span>{{site.siteReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['siteId'].valid">
+                            {{'Assets.Management.PleaseSelectSite'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
+                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
+                            <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
+                                {{project.name1}}(<span>{{project.projectReference}}</span>)
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['projectId'].valid">
+                            {{'Assets.Management.PleaseSelectProject'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="col-md-3">
+                        <input matInput placeholder="Select Location" [matAutocomplete]="auto1" formControlName="locationId" 
+                            (input)="onSelectProjectByLocationSearch($event.target.value)" required>
+                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                            <mat-option  *ngFor="let location of locationsList" [value]="location.name1"
+                                (onSelectionChange)='onLocationSelected(location)'>
+                                {{location.name1}}(<span>{{location.locationReference}}</span>)
+                                
+                            </mat-option>
+                            <mat-option *ngIf="searchLength>2 && locationLength == 0"
+                                style="height: 50px!important">
+                                <span> No Record matching "{{searchText}}" was found. </span>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="!orderForm.controls['locationId'].valid">
+                            {{'Assets.Management.PleaseSelectLocation'|translate}}
+                        </mat-error> 
+                    </mat-form-field>
+                    <div class="col-md-2">
+                        <button mat-raised-button color="primary"
+                            matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
+                            <mat-icon class="mat-button-icon">add</mat-icon>
+                            {{'Purchase Order.Management.Add Item'|translate}}
+                        </button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <mat-form-field class="col-md-3">
+                        <input matInput placeholder="Select Asset " [matAutocomplete]="auto" formControlName="assetId" 
+                            (input)="onSelectLocationByAssetSearch($event.target.value)" required>
+                        <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                            <mat-option  *ngFor="let asset of assetsList" [value]="asset.name1"
+                                (onSelectionChange)='onAssetSelected(asset)'>
+                                {{asset.name1}}
+                                
+                            </mat-option>
+                            <mat-option *ngIf="assetLength>2 && assetListLength == 0"
+                                style="height: 50px!important">
+                                <span> No Record matching "{{assteText}}" was found. </span>
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-error *ngIf="!orderForm.controls['assetId'].valid">
+                            {{'Work Order.Management.Please Select Asset'|translate}}
+                        </mat-error> 
+                    </mat-form-field>
+                    <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Start Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
                             placeholder="Start Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
-                        <!-- <mat-error *ngIf="!orderForm.controls['startDate'].valid">
+                        <mat-error *ngIf="!orderForm.controls['startDate'].valid">
                             {{'Work Order.Management.Start Date is Required'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
@@ -206,28 +276,35 @@
                             placeholder="End Date" required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
-                        <!-- <mat-error *ngIf="!orderForm.controls['endDate'].valid">
+                        <mat-error *ngIf="!orderForm.controls['endDate'].valid">
                             {{'Work Order.Management.End Date is Required'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
+                    <!-- <mat-form-field class="col-md-3">
+                        <mat-label>Reference 2</mat-label>
+                        <input matInput formControlName="reference2" required maxlength="50" />
+                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
+                            Reference 2 is Required
+                        </mat-error>
+                    </mat-form-field> -->
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
                         <textarea matInput formControlName="issue"></textarea>
-                        <!-- <mat-error *ngIf="!orderForm.controls['issue'].valid">
+                        <mat-error *ngIf="!orderForm.controls['issue'].valid">
                             {{'Work Order.Management.Issue is Required'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-5">
                         <mat-label>{{'Work Order.Management.Resolution'|translate}}</mat-label>
                         <textarea matInput formControlName="resolution"></textarea>
-                        <!-- <mat-error *ngIf="!orderForm.controls['resolution'].valid">
+                        <mat-error *ngIf="!orderForm.controls['resolution'].valid">
                             {{'Work Order.Management.Resolution is Required'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
-                    </div>
+                </div>
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
@@ -237,9 +314,9 @@
                                 {{work.name1}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
+                        <mat-error *ngIf="!orderForm.controls['workTechId'].valid">
                             {{'Work Order.Management.Please Select work Technician'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
@@ -248,9 +325,9 @@
                                 {{work.name1}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="!orderForm.controls['workTypeId'].valid">
+                        <mat-error *ngIf="!orderForm.controls['workTypeId'].valid">
                             {{'Work Order.Management.Please Select Work Type'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Reference 1'| translate}}</mat-label>
@@ -261,7 +338,17 @@
                     </mat-form-field>
                 </div>
                 <div class="row">
-                   
+                    <mat-form-field class="col-md-3">
+                        <mat-label>{{'Work Order.Management.Select Store'| translate}} <span>*</span></mat-label>
+                        <mat-select formControlName="storeId">
+                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
+                                {{store.name1}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!orderForm.controls['storeId'].valid">
+                            {{'Purchase Order.Management.Please Select Store'| translate}}
+                        </mat-error>
+                    </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Status'|translate}} <span>*</span></mat-label>
                         <mat-select formControlName="workStatusId">
@@ -269,9 +356,9 @@
                                 {{work.name1}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="!orderForm.controls['workStatusId'].valid">
+                        <mat-error *ngIf="!orderForm.controls['workStatusId'].valid">
                             {{'Work Order.Management.Please Select Work Status'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Fault'|translate}} <span>*</span></mat-label>
@@ -280,22 +367,69 @@
                                 {{work.name1}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="!orderForm.controls['workFaultId'].valid">
+                        <mat-error *ngIf="!orderForm.controls['workFaultId'].valid">
                             {{'Work Order.Management.Please Select Work Fault'|translate}}
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="row">
+                    <mat-form-field class="col-md-9">
+                        <mat-label>{{'Work Order.Management.Extra Details'|translate}}</mat-label>
+                        <textarea matInput formControlName="extraDetails"></textarea>
+                        <!-- <mat-error *ngIf="!orderForm.controls['extraDetails'].valid">
+                            {{'Work Order.Management.Extradetails is Required'|translate}}
                         </mat-error> -->
                     </mat-form-field>
                 </div>
             </form>
-                    
-        </mat-card-content>  
-        <mat-card-actions>
-            <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary"
-                    (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
-                <button mat-raised-button color="warn"
-                    (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
+            <div class="row">
+                <form [formGroup]="itemFrom" class="col-md-12">
+                    <div formArrayName="credentials" 
+                        *ngFor="let item of itemFrom.controls['credentials']['controls']; let i = index">
+                        <ng-container [formGroupName]="i">
+                            <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
+                            <div class="row" >
+                                <mat-form-field class="col-md-4">
+                                    <mat-label>{{'Purchase Order.Management.Select Item'|translate}}<span>*</span>
+                                    </mat-label>
+                                    <mat-select formControlName="itemId">
+                                        <mat-option *ngFor="let item of itemList" [value]="item.id" >
+                                           {{item.name1}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="item.controls.itemId.invalid">
+                                        {{'Purchase Order.Management.Please Select Item'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                                <mat-form-field class="col-md-4">
+                                    <mat-label>{{'Purchase Order.Management.Quantity'|translate}}</mat-label>
+                                    <input matInput formControlName="quantity" required maxlength="5"
+                                        (keypress)="numberOnly($event)" />
+                                    <mat-error *ngIf="item.controls.quantity.invalid">
+                                        {{'Purchase Order.Management.Quantity is Required'|translate}}
+                                    </mat-error>
+                                </mat-form-field>
+                                <div class="col-md-4">
+                                    <button mat-raised-button color="warn" (click)="Delete(i)" title="Cancel"
+                                        *ngIf="i>0">
+                                        {{'Purchase Order.Management.Remove'|translate}}
+                                    </button>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </form>
             </div>
-        </mat-card-actions>
-        <div class="clearfix"></div> 
-    </mat-card>
-</div>
+            </mat-card-content>
+            <mat-card-actions>
+                <div class="float-right" style="padding-top: 12px;">
+                    <button mat-raised-button color="primary"
+                        (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
+                    <button mat-raised-button color="warn"
+                        (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
+                </div>
+            </mat-card-actions>
+            <div class="clearfix"></div>
+        </mat-card>
+    </div>
+
