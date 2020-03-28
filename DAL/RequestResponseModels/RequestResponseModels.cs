@@ -478,6 +478,7 @@ namespace DAL.RequestResponseModels
             public int AssetId { get; set; }
             public string AssetName { get; set; }
             public int SiteId { get; set; }
+            
             public string SiteName { get; set; }
             public int ProjectId { get; set; }
             public string ProjectName { get; set; }
@@ -617,7 +618,7 @@ namespace DAL.RequestResponseModels
             public string DurationInHours { get; set; }
             public string DaysApplicable { get; set; }
             public int TypeOfMaintainanceId { get; set; }
-
+            public int? Priority { get; set; }
             public int? JobPlanId { get; set; }
             public string TypeOfMaintainanceName { get; set; }
             public string Details { get; set; }          
@@ -637,6 +638,7 @@ namespace DAL.RequestResponseModels
             public string DurationInHours { get; set; }
             public string DaysApplicable { get; set; }
             public int? JobPlanId { get; set; }
+            public int? Priority { get; set; }
             public string Details { get; set; }
             public int StatusTypeId { get; set; }
             public int TypeOfMaintenance { get; set; }          
@@ -656,6 +658,7 @@ namespace DAL.RequestResponseModels
             public string ProjectName { get; set; }
             public int LocationId { get; set; }
             public string LocationName { get; set; }
+            public DateTime AssetFixedDate { get; set; }
         }
        
 

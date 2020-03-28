@@ -49,6 +49,9 @@ namespace DAL.Models
         [Display(Name = "Job Plan Id")]
         public int? JobPlanId { get; set; }
 
+        [Display(Name = "Priority")]
+        public int? Priority { get; set; }
+
         [Required]
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }
