@@ -98,6 +98,7 @@ export class PmOrderComponent implements OnInit {
     })
   }
   private getSites() {
+    debugger
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
@@ -109,6 +110,7 @@ export class PmOrderComponent implements OnInit {
 
   //Get sites data by UserId
   getSitesByUserId() {
+    debugger
     this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
@@ -118,6 +120,7 @@ export class PmOrderComponent implements OnInit {
   }
 
   getProjectsByUserIdandSiteId(event) {
+    debugger
     this.userProjectsList = [];
     var req = {
       "siteId": event,
@@ -132,6 +135,7 @@ export class PmOrderComponent implements OnInit {
         });
   }
    onSelectProjectByLocation(event) {
+     debugger
      this.locationsList = [];
      this.Project=event;
      this.getStoresByProject(event)
@@ -145,6 +149,7 @@ export class PmOrderComponent implements OnInit {
    }
 
   onSelectProjectByLocationSearch(event) {
+    debugger
     this.searchText =event;
     if(this.searchText.length >2){
       this.searchLength =event.length;
@@ -167,6 +172,7 @@ export class PmOrderComponent implements OnInit {
     }
   }
   onSelectLocationByAssetSearch(event) {
+    debugger
     this.assetsList = [];
     this.assteText =event
     if(this.assteText.length>2){
@@ -189,6 +195,7 @@ export class PmOrderComponent implements OnInit {
   }
 
   onSelectLocationByProject(event) {
+    debugger
     this.assetsList = [];
     this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
       this.assetsList = res.listResult == null ? [] : res.listResult;
@@ -199,17 +206,20 @@ export class PmOrderComponent implements OnInit {
 
   
   onLocationSelected( obj) {
+    debugger
     this.selectString = obj.id;
     this.orderForm.get('assetId').setValue(null)
   }
 
   onAssetSelected( obj) {
+    debugger
     this.selectAsset = obj.id;
   }
 
 
 
   getStoresByProject(ProjectId) {
+    debugger
     this.storesList = [];
     //this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(ProjectId)
@@ -223,6 +233,7 @@ export class PmOrderComponent implements OnInit {
 
  // get items Data
  private getItem() {
+   debugger
   this.accountService.getitemdata()
     .subscribe((results: any) => {
       this.itemList = results.listResult == null ? [] : results.listResult;
@@ -320,12 +331,21 @@ export class PmOrderComponent implements OnInit {
   }
 
   onEditClick(order){
+    debugger
     this.isEdit = true;
     this.orderData = order;
+    this.getItemsByworkOrderId(order, true);
+    this.getSitesByUserId();
+    this.getProjectsByUserIdandSiteId(order.siteId)
 
+    this.onSelectProjectByLocation(order.projectId)
+    this.onSelectLocationByProject(order.locationId)
+    this.getStoresByProject(order.projectId);
+    this.resetForm();
   }
 
   onCancelClick() {
+    debugger
     this.isEdit = false;
   }
 
@@ -433,6 +453,15 @@ export class PmOrderComponent implements OnInit {
     (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
   }
   
+  
+  // Accepting Only Numbers
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
   }
 
 
