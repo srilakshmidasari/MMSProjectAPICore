@@ -340,7 +340,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Store'| translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="storeId" >
+                        <mat-select formControlName="storeId">
                             <mat-option *ngFor="let store of storesList" [value]="store.id" required>
                                 {{store.name1}}
                             </mat-option>
