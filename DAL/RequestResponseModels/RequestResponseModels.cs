@@ -523,6 +523,7 @@ namespace DAL.RequestResponseModels
             public int? WorkTechnicianId { get; set; }
             public int? WorkFaultId { get; set; }
             public int? StoreId { get; set; }
+            public int? PMProcedureId { get; set; }
             public int OrderTypeId { get; set; } 
             public bool IsActive { get; set; }
             public List<WorkOrderItem> WorkOrderItems { get; set; }

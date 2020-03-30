@@ -65,6 +65,9 @@ namespace DAL.Models
         [Display(Name = "Work Fault Id")]
         public int? WorkFaultId { get; set; }
 
+        [Display(Name = "PM Procedure Id")]
+        public int? PMProcedureId { get; set; }
+
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }
 
@@ -115,6 +118,10 @@ namespace DAL.Models
 
         [JsonIgnore]
         public TypeCdDmt OrderType_Id { get; set; }
+
+        [JsonIgnore]
+        public PreventiveMaintenance PMProcedure_Id { get; set; }
+
 
         public ICollection<WorkOrderItemXref> App_WorkOrderItemxref_Id { get; set; }
 

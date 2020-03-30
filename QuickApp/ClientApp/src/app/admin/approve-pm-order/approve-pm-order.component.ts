@@ -61,11 +61,11 @@ export class ApprovePmOrderComponent implements OnInit {
       if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
         var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 30;
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
-       var monthsCount = 4
+       var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 90;
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
-       var monthsCount = 2
+        var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 180;
       } else {
-       var  monthsCount = 1
+        var monthsCount = 1
       }
       for (var i = 0; i < monthsCount; i++) {
         if (i == 0) {
@@ -73,8 +73,16 @@ export class ApprovePmOrderComponent implements OnInit {
         } else {
           this.orderDate = new Date(this.orderDate)
         }
-
-        var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 1);
+        if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
+          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 1);
+        } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
+          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 4);
+        } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
+          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 6);
+        } else {
+          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 11);
+        }
+       
         var req = {
           "id": 0,
           "assetId": item.assetId,
@@ -90,6 +98,7 @@ export class ApprovePmOrderComponent implements OnInit {
           "workTechnicianId": this.pmProcedureData.technicianId,
           "workFaultId": DataFactory.PMOrderTypes.WorkFault,
           "storeId": null,
+          "pmProcedureId": this.pmProcedureData.id,
           "orderTypeId": DataFactory.OrderTypes.PMOrder,
           "isActive": true,
           "workOrderItems": [],

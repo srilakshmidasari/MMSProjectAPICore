@@ -92,5 +92,8 @@ namespace DAL.Models
         public ICollection<PMAssetXref> App_PreventiveMaintenance_AssetXref_Id { get; set; }
 
         public ICollection<PMStatusHistory> App_PMStatusHistory_PMtStatus_Id { get; set; }
+
+        public ICollection<WorkOrder> App_WorkOrder_PMProcedure_Id { get; set; }
+
     }
 }

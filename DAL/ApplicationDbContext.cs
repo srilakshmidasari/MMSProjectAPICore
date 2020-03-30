@@ -688,10 +688,16 @@ namespace DAL
           .HasConstraintName("FK_App_JobTask_JobPlanId");
 
             builder.Entity<JobTask>().HasOne(d => d.AstTrade_Id)
-        .WithMany(p => p.App_JobTask_AstTrade_Id)
-        .HasForeignKey(d => d.AstTradeId)
-        .OnDelete(DeleteBehavior.ClientSetNull)
-        .HasConstraintName("FK_App_JobTask_AstTrade_Id");
+               .WithMany(p => p.App_JobTask_AstTrade_Id)
+               .HasForeignKey(d => d.AstTradeId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_JobTask_AstTrade_Id");
+
+            builder.Entity<WorkOrder>().HasOne(d => d.PMProcedure_Id)
+               .WithMany(p => p.App_WorkOrder_PMProcedure_Id)
+               .HasForeignKey(d => d.PMProcedureId)
+               .OnDelete(DeleteBehavior.ClientSetNull)
+               .HasConstraintName("FK_App_WorkOrder_PMProcedure_Id");
 
         }
 

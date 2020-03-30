@@ -1476,6 +1476,9 @@ namespace MMS.Migrations
                     b.Property<int>("OrderTypeId")
                         .HasColumnType("int");
 
+                    b.Property<int?>("PMProcedureId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Reference1")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -1518,6 +1521,8 @@ namespace MMS.Migrations
                     b.HasIndex("CreatedBy");
 
                     b.HasIndex("OrderTypeId");
+
+                    b.HasIndex("PMProcedureId");
 
                     b.HasIndex("StatusTypeId");
 
@@ -2240,6 +2245,11 @@ namespace MMS.Migrations
                         .HasForeignKey("OrderTypeId")
                         .HasConstraintName("FK_App_WorkOrder_OrderTypeId")
                         .IsRequired();
+
+                    b.HasOne("DAL.Models.PreventiveMaintenance", "PMProcedure_Id")
+                        .WithMany("App_WorkOrder_PMProcedure_Id")
+                        .HasForeignKey("PMProcedureId")
+                        .HasConstraintName("FK_App_WorkOrder_PMProcedure_Id");
 
                     b.HasOne("DAL.Models.TypeCdDmt", "StatusType_Id")
                         .WithMany("WorkOrder_StatusTypeId")

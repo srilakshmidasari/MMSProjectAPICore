@@ -149,6 +149,11 @@ namespace DAL.Repositories
                 }
                 _appContext.SaveChanges();
 
+              //  var pmres =_appContext.PreventiveMaintenances.Where(x =>x.Id)
+
+              //  var userress = _appContext.PMAssetXrefs.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
+
+
                 if (PmOrders != null)
                 {
                     response.Result = PM;

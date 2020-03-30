@@ -12,6 +12,7 @@ using System.IO;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
+using Microsoft.EntityFrameworkCore;
 
 namespace DAL.Repositories
 {
@@ -193,6 +194,7 @@ namespace DAL.Repositories
                     {
                         result.AssetId = workorders.AssetId;
                         result.OrderTypeId = workorders.OrderTypeId;
+                        result.PMProcedureId = workorders.PMProcedureId;
                         result.StartDate = workorders.StartDate;
                         result.EndDate = workorders.EndDate;
                         result.WorkTypeId = workorders.WorkTypeId;
@@ -561,18 +563,48 @@ namespace DAL.Repositories
         public ValueDataResponse<List<UpsertWorkOrder>> InsertPMOrder(List<UpsertWorkOrder> workorder)
         {
             ValueDataResponse<List<UpsertWorkOrder>> response = new ValueDataResponse<List<UpsertWorkOrder>>();
-
             try
             {
+              
                 foreach (var work in workorder)
                 {
-                    WorkOrder Wro = _mapper.Map<WorkOrder>(work);
-                    var result = _appContext.WorkOrders.Add(Wro);
+                    var isPMNew = _appContext.PreventiveMaintenances.Where(x => x.Id == work.PMProcedureId).FirstOrDefault();
+                   
+                    var isOrderExits = _appContext.WorkOrders.Where(x => x.AssetId == work.AssetId && x.StartDate == work.StartDate).FirstOrDefault();
+
+                    if (isOrderExits != null)
+                    {
+                        var isPMOld = _appContext.PreventiveMaintenances.Where(x => x.Id == isOrderExits.PMProcedureId).FirstOrDefault();
+                      
+                        if(isPMNew.Priority == isPMOld.Priority)
+                        {
+                        }else if(isPMNew.Priority == 1)
+                        {
+                            isOrderExits.PMProcedureId = isPMNew.Id;
+                            _appContext.SaveChanges();
+                        }
+                        else if(isPMOld.Priority == 1)
+                        {
+                        }
+                        else
+                        {
+                            WorkOrder Wro = _mapper.Map<WorkOrder>(work);
+                            var result = _appContext.WorkOrders.Add(Wro);
+                            _appContext.SaveChanges();
+                        }
+                    }
+                    else
+                    {
+                        WorkOrder Wro = _mapper.Map<WorkOrder>(work);
+                        var result = _appContext.WorkOrders.Add(Wro);
+                        _appContext.SaveChanges();
+                    }
+                    isPMNew.StatusTypeId = 15;
                     _appContext.SaveChanges();
-                    
                 }
                 if (workorder != null)
                 {
+                    
                     response.Result = workorder;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
