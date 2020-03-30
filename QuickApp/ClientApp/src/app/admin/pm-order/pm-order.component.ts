@@ -38,6 +38,8 @@ export class PmOrderComponent implements OnInit {
   currenrDate: Date;
   orderForm: FormGroup;
   itemFrom: FormGroup;
+    
+  
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService,private formBuilder: FormBuilder,) { 
       this.itemFrom = this.formBuilder.group({
@@ -307,7 +309,7 @@ export class PmOrderComponent implements OnInit {
   
   public resetForm(stopEditing: boolean = false) {
     if (!this.orderData) {
-     // this.isNewOrder = true;
+      this.isNewOrder = true;
     } else {
       this.buildForm();
     }
@@ -333,6 +335,7 @@ export class PmOrderComponent implements OnInit {
   onEditClick(order){
     debugger
     this.isEdit = true;
+    this.isNewOrder = false;
     this.orderData = order;
     this.getItemsByworkOrderId(order, true);
     this.getSitesByUserId();
