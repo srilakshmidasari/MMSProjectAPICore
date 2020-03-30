@@ -51,5 +51,12 @@ export const DataFactory = {
         WorkType : 81,
         WorkFault : 60,
         WorkStatus : 82
+    },
+
+    TypeofMaintenance :{
+        Monthly : 19,
+        Quarterly : 20,
+        HalfYearly : 21,
+        Yearly : 22
     }
 }

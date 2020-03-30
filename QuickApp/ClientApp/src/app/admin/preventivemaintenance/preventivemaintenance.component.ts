@@ -184,6 +184,15 @@ export class PreventivemaintenanceComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+    // Accepting Only Numbers
+    numberOnly(event: any) {
+      const numberpattern = /[0-9\+\-.\ ]/;
+      let inputChar = String.fromCharCode(event.charCode);
+      if (!numberpattern.test(inputChar)) {
+        event.preventDefault();
+      }
+    }
+
 
   // Form Building
   private buildForm() {
@@ -194,6 +203,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       jobId: ['', Validators.required],
       projectId: ['', Validators.required],
       locationId: [''],
+      priority:['', Validators.required],
       startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
       daysApplicable: ['', Validators.required],
@@ -215,6 +225,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       projectId: this.maitananceRefData.projectId || '',
       jobId: this.maitananceRefData.jobPlanId || '',
       locationId: this.maitananceRefData.locationId || '',
+      priority:this.maitananceRefData.priority || '',
       preventiveRefId: this.maitananceRefData.preventiveRefId || '',
       startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
       durationInHours: this.maitananceRefData.durationInHours || '',
@@ -297,6 +308,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       "durationInHours": formModel.durationInHours,
       "daysApplicable": formModel.daysApplicable,
       "jobPlanId": formModel.jobId,
+      "priority": parseInt(formModel.priority),
       "details": formModel.details,
       "statusTypeId": DataFactory.StatusTypes.Open,
       "typeOfMaintenance": formModel.typeOfMaintainanceId,
@@ -402,10 +414,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         data: {row}
       });
     dialogRef.afterClosed().subscribe(response => {
-      debugger
-      if (response != null) {
-
-      }
+       this.getAllmaitenance();
     });
   }
 

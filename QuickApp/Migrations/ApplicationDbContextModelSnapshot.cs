@@ -929,6 +929,9 @@ namespace MMS.Migrations
                     b.Property<string>("PreventiveRefId")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("Priority")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
