@@ -182,7 +182,7 @@
 <div class="page-content" *ngIf="isEdit">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>{{'Work Order.Management.Edit Work Order'|translate}}
+            <mat-card-title>Edit PM Order
             </mat-card-title>
         </mat-card-header>
         <br>
@@ -309,7 +309,7 @@
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Technician'|translate}} <span>*</span>
                         </mat-label>
-                        <mat-select formControlName="workTechId" [disabled]="!isNewOrder ? true :false">
+                        <mat-select formControlName="workTechId" >
                             <mat-option *ngFor="let work of workTechList" [value]="work.id" required>
                                 {{work.name1}}
                             </mat-option>
@@ -320,7 +320,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="workTypeId" [disabled]="!isNewOrder ? true :false">
+                        <mat-select formControlName="workTypeId" >
                             <mat-option *ngFor="let work of workTypeList"  [value]="work.id"   required>
                                 {{work.name1}}
                             </mat-option>
@@ -339,9 +339,9 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Store'| translate}} <span>*</span></mat-label>
+                        <mat-label>{{'Work Order.Management.Select Store'| translate}} </mat-label>
                         <mat-select formControlName="storeId">
-                            <mat-option *ngFor="let store of storesList" [value]="store.id" required>
+                            <mat-option *ngFor="let store of storesList" [value]="store.id" >
                                 {{store.name1}}
                             </mat-option>
                         </mat-select>
@@ -351,7 +351,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Status'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="workStatusId" [disabled]="!isNewOrder ? true :false">
+                        <mat-select formControlName="workStatusId" >
                             <mat-option *ngFor="let work of workStatusList" [value]="work.id" required>
                                 {{work.name1}}
                             </mat-option>
@@ -362,7 +362,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Fault'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="workFaultId" [disabled]="!isNewOrder ? true :false">
+                        <mat-select formControlName="workFaultId" >
                             <mat-option *ngFor="let work of workFaultsList" [value]="work.id" required>
                                 {{work.name1}}
                             </mat-option>

@@ -49,8 +49,8 @@ export const DataFactory = {
 
     PMOrderTypes :{
         WorkType : 81,
-        WorkFault : 60,
-        WorkStatus : 82
+        WorkFault : 82,
+        WorkStatus : 60
     },
 
     TypeofMaintenance :{

@@ -32,7 +32,7 @@ namespace DAL.Repositories
             ListDataResponse<GetWorkOrderReponse> response = new ListDataResponse<GetWorkOrderReponse>();
             try
             {
-                var result = (from wo in _appContext.WorkOrders
+                var result = (from wo in _appContext.WorkOrders.Where(x => x.OrderTypeId ==23)
                               join a in _appContext.AssetLocations on wo.AssetId equals a.Id
                               join l in _appContext.Locations on a.LocationId equals l.Id
                               join p in _appContext.Projects on l.ProjectId equals p.Id
@@ -509,6 +509,7 @@ namespace DAL.Repositories
                                   OrderTypeId = wo.OrderTypeId,
                                   Issue = wo.Issue,
                                   Resolution = wo.Resolution,
+                                  PMProcedureId=wo.PMProcedureId,
                                   StatusTypeId = wo.StatusTypeId,
                                   StatusTypeName = sta.Description,
                                   AssetId = wo.AssetId,

@@ -478,7 +478,7 @@ namespace DAL.RequestResponseModels
             public int AssetId { get; set; }
             public string AssetName { get; set; }
             public int SiteId { get; set; }
-            
+            public int? PMProcedureId { get; set; }
             public string SiteName { get; set; }
             public int ProjectId { get; set; }
             public string ProjectName { get; set; }

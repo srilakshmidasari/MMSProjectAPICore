@@ -111,22 +111,22 @@ export class ApprovePmOrderComponent implements OnInit {
 
       }
       console.log(this.pmOrderData);
-      // this.alertService.startLoadingMessage('Saving changes...');
-      // this.accountService.addPmOrder(this.pmOrderData).subscribe(
-      //   (response: any) => {
-      //     this.alertService.stopLoadingMessage();
-      //     if (response.isSuccess) {
-      //       this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-      //       this.Cancel();
-      //     } else {
-      //       this.alertService.stopLoadingMessage();
-      //       this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
-      //     }
-      //   }, error => {
-      //     this.alertService.stopLoadingMessage();
-      //     this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-      //   }
-      // );
+      this.alertService.startLoadingMessage('Saving changes...');
+      this.accountService.addPmOrder(this.pmOrderData).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.Cancel();
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
 
     })
 
