@@ -8,7 +8,7 @@
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table [dataSource]="dataSource" class="table-lg" matSort matSortActive="assetLocationRef"
+        <mat-table [dataSource]="dataSource" class="table-xl" matSort matSortActive="assetLocationRef"
             matSortDirection="asc" matSortDisableClear>
             <ng-container matColumnDef="assetLocationRef">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -27,9 +27,9 @@
             </ng-container>
             
             <ng-container matColumnDef="siteName1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Assets.Management.SiteName'|translate}}
+                <mat-header-cell class="small-cell1" *matHeaderCellDef mat-sort-header>{{'Assets.Management.SiteName'|translate}}
                 </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
+                <mat-cell *matCellDef="let row" class="small-cell1"> {{row.siteName1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="projectName1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Assets.Management.ProjectName'|translate}}
@@ -122,7 +122,7 @@
         <div style="text-align: center;" *ngIf="displayNoRecords">
             <p>{{'Assets.Management.No Search Results Found'|translate}}</p>
         </div>
-        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+        <mat-paginator class="table-xl" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </div>
