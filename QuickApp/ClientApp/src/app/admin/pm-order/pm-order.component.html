@@ -7,7 +7,7 @@
             <p-table #dt [value]="pmOrdersList" [paginator]="true" expandableRows="true" [rows]="10" sortField="reference1"
                 matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
                 sortMode="single" rowExpandMode="single" dataKey="id"
-                [globalFilterFields]="['id','reference1','startDate','endDate','assetName','locationName', 'updatedDate','issue','resolution']">
+                [globalFilterFields]="['id','reference1','startDate','endDate','assetName','statusTypeName','issue','resolution']">
                 <ng-template pTemplate="caption">
                     <div style="text-align: right">
 
@@ -191,7 +191,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.SiteName1'|translate}}*</mat-label>
-                        <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)">
+                        <mat-select formControlName="siteId" (ngModelChange)="getProjectsByUserIdandSiteId($event)" [disabled]="!isNewOrder ? true :false">
                             <mat-option *ngFor="let site of siteList" [value]="site.id" required>
                                 {{site.name1}}(<span>{{site.siteReference}}</span>)
                             </mat-option>
@@ -203,7 +203,7 @@
 
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Assets.Management.ProjectName'|translate}}*</mat-label>
-                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)">
+                        <mat-select formControlName="projectId" (ngModelChange)="onSelectProjectByLocation($event)" [disabled]="!isNewOrder ? true :false">
                             <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
                                 {{project.name1}}(<span>{{project.projectReference}}</span>)
                             </mat-option>
@@ -215,18 +215,21 @@
 
                     <mat-form-field class="col-md-3">
                         <input matInput placeholder="Select Location" [matAutocomplete]="auto1" formControlName="locationId" 
-                            (input)="onSelectProjectByLocationSearch($event.target.value)" required>
-                        <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
+                            (input)="onSelectProjectByLocationSearch($event)"  readonly required>
+                            <mat-option  *ngFor="let location of locationsList" [value]="location.name1"
+                            (onSelectionChange)='onLocationSelected(location)'>
+                            {{location.name1}}(<span>{{location.locationReference}}</span>)
+                           </mat-option>
+                        <!-- <mat-autocomplete autoActiveFirstOption #auto1="matAutocomplete">
                             <mat-option  *ngFor="let location of locationsList" [value]="location.name1"
                                 (onSelectionChange)='onLocationSelected(location)'>
                                 {{location.name1}}(<span>{{location.locationReference}}</span>)
-                                
                             </mat-option>
                             <mat-option *ngIf="searchLength>2 && locationLength == 0"
                                 style="height: 50px!important">
                                 <span> No Record matching "{{searchText}}" was found. </span>
                             </mat-option>
-                        </mat-autocomplete>
+                        </mat-autocomplete> -->
                         <mat-error *ngIf="!orderForm.controls['locationId'].valid">
                             {{'Assets.Management.PleaseSelectLocation'|translate}}
                         </mat-error> 
@@ -243,7 +246,7 @@
                 <div class="row">
                     <mat-form-field class="col-md-3">
                         <input matInput placeholder="Select Asset " [matAutocomplete]="auto" formControlName="assetId" 
-                            (input)="onSelectLocationByAssetSearch($event.target.value)"  required >
+                            (input)="onSelectLocationByAssetSearch($event.target.value)" readonly required >
                         <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
                             <mat-option  *ngFor="let asset of assetsList" [value]="asset.name1"
                                 (onSelectionChange)='onAssetSelected(asset)'>
@@ -262,7 +265,7 @@
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Start Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
-                            placeholder="Start Date" required>
+                            placeholder="Start Date"  readonly required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!orderForm.controls['startDate'].valid">
@@ -273,7 +276,7 @@
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.End Date'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="endDate"
-                            placeholder="End Date" required>
+                            placeholder="End Date" readonly required>
                         <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                         <mat-datepicker #picker1></mat-datepicker>
                         <mat-error *ngIf="!orderForm.controls['endDate'].valid">
@@ -320,7 +323,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="workTypeId" >
+                        <mat-select formControlName="workTypeId" [disabled]="!isNewOrder ? true :false"  >
                             <mat-option *ngFor="let work of workTypeList"  [value]="work.id"   required>
                                 {{work.name1}}
                             </mat-option>
@@ -351,7 +354,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Status'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="workStatusId" >
+                        <mat-select formControlName="workStatusId" [disabled]="!isNewOrder ? true :false" >
                             <mat-option *ngFor="let work of workStatusList" [value]="work.id" required>
                                 {{work.name1}}
                             </mat-option>
@@ -362,7 +365,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Work Order.Management.Select Work Fault'|translate}} <span>*</span></mat-label>
-                        <mat-select formControlName="workFaultId" >
+                        <mat-select formControlName="workFaultId"  [disabled]="!isNewOrder ? true :false" >
                             <mat-option *ngFor="let work of workFaultsList" [value]="work.id" required>
                                 {{work.name1}}
                             </mat-option>
