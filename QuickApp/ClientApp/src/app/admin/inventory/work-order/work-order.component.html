@@ -10,9 +10,9 @@
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
     <!-- <div class="row float-right">
     < /div> -->
-    <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
+    <div class="example-container mat-elevation-z8 mt-2">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <div>
+        <div class="table-responsive prng-table pb-70">
             <p-table #dt [value]="workOrdersList" [paginator]="true" expandableRows="true" [rows]="10" sortField="id"
                 matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
                 sortMode="single" rowExpandMode="single" dataKey="id"
@@ -46,7 +46,7 @@
                         <th [pSortableColumn]="'locationName'">{{'Work Order.Management.Location Name'| translate}}
                             <p-sortIcon [field]="'locationName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'statusTypeName'">{{'Work Order.Management.Status Name'| translate}}
+                        <th [pSortableColumn]="'statusTypeName'" class="small-cell">{{'Work Order.Management.Status Name'| translate}}
                             <p-sortIcon [field]="'statusTypeName'"></p-sortIcon>
                         </th>
                         <!-- <th [pSortableColumn]="'updatedDate'">{{'Work Order.Management.Updated Date'| translate}}
@@ -98,7 +98,7 @@
                         <td>{{req.endDate  | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.assetName}}</td>
                         <td>{{req.locationName}}</td>
-                        <td>{{req.statusTypeName}}</td>
+                        <td style="width: 100px;">{{req.statusTypeName}}</td>
                         <!-- <td>{{req.updatedDate | date: 'dd/MM/yyyy '}}</td> -->
                         <td>{{req.issue}}</td>
                         <td>{{req.resolution}}</td>
