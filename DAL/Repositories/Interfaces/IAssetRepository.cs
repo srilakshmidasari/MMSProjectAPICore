@@ -35,6 +35,6 @@ namespace DAL.Repositories.Interfaces
 
         ListDataResponse<AssetLocation> GetAssetsBySearch(SearchAsset search);
 
-        ListDataResponse<AssetLocation> GetAssetsByProject(int projectId);
+        ListDataResponse<AssetLocation> GetAssetsByProject(int projectId, int astGroupId);
     }
 }

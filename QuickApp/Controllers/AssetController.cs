@@ -108,10 +108,10 @@ namespace MMS.Controllers
             return _unitOfWork.Assets.GetAssetsBySearch(search);
         }
 
-        [HttpGet("GetAssetsByProject/{projectId}")]
-        public ListDataResponse<AssetLocation> GetAssetsByProject(int projectId)
+        [HttpPost("GetAssetsByProject")]
+        public ListDataResponse<AssetLocation> GetAssetsByProject(AssetProjectReq req)
         {
-            return _unitOfWork.Assets.GetAssetsByProject(projectId);
+            return _unitOfWork.Assets.GetAssetsByProject(req.ProjectId, req.AstGroupId);
         }
     }
 }

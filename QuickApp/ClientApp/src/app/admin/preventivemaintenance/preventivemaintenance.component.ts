@@ -25,7 +25,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   maintenanceData: any[] = [];
   jobPlanList: any[] = [];
   siteList: any[] = [];
-  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'daysApplicable', 'startDate', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'Actions']
+  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'daysApplicable', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -44,6 +44,9 @@ export class PreventivemaintenanceComponent implements OnInit {
   assetList: any[] = [];
   assetData: any;
   assetId: any;
+  TypeId: any;
+  JobPlanData: any;
+  names: any[] = [];
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -85,11 +88,46 @@ export class PreventivemaintenanceComponent implements OnInit {
         });
   }
 
+  getAssetsByProjects() {
+    this.names = [];
+    var req = {
+      "projectId": this.projectId,
+      "astGroupId": this.JobPlanData.assetGroupId
+    }
+    this.accountService.getAssetsByProject(req).subscribe((res: any) => {
+      if (this.isNewMaintanance) {
+        res.listResult.map(function (obj) {
+          obj.isChecked = false;
+        })
+      } else {
+        res.listResult.forEach((item) => {
+          this.maitananceRefData.assetId.forEach(element => {
+            if (element.assetId == item.id) {
+              this.names.push(item.name1);
+              item.isChecked = true;
+            }
+          });
+          this.maintenanceForm.get('assetId').setValue(this.names.join());
+        })
+      }
+      this.assetsList = res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
 
   private getJobPlans(Id) {
     this.accountService.getJobPlansByProject(Id)
       .subscribe((results: any) => {
         this.jobPlanList = results.listResult == null ? [] : results.listResult;
+        if (!this.isNewMaintanance) {
+          this.JobPlanData = this.jobPlanList.filter(job => job.id === this.maitananceRefData.jobPlanId)[0];
+          this.getAssetsByProjects();
+
+          this.onSelectJob(this.maitananceRefData.jobPlanId)
+
+        }
+
       },
         error => {
         });
@@ -115,6 +153,10 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.accountService.getProjectsByUserIdandSiteId(req)
       .subscribe((results: any) => {
         this.userProjectsList = results.listResult == null ? [] : results.listResult;
+        if (this.isNewMaintanance == false) {
+          this.onSelectProjectByAssets(this.maitananceRefData.projectId)
+
+        }
       },
         error => {
         });
@@ -129,50 +171,15 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-  // onSelectProjectByLocation(event) {
-  //   this.projectId = event;
-  //   this.locationsList = [];
-  //   this.accountService.getLocationsByProject(event).subscribe((res: any) => {
-  //     this.locationsList = res.listResult == null ? [] : res.listResult;
-  //     this.getJobPlans(event);
-  //   },
-  //     error => {
-  //     })
-  // }
+
 
   onSelectProjectByAssets(event) {
     this.projectId = event;
     this.assetsList = [];
-    this.accountService.getAssetsByProject(event).subscribe((res: any) => {
-      if (this.isNewMaintanance) {
-        res.listResult.map(function (obj) {
-          obj.isChecked = false;
-        })
-      } else {
-        res.listResult.forEach((item) => {
-          if (this.assetId == item.id) {
-            item.isChecked = true;
-            this.maintenanceForm.get('assetId').setValue(item.name1);
-
-          }
-
-        })
-      }
-      this.assetsList = res.listResult == null ? [] : res.listResult;
-      this.getJobPlans(event);
-    },
-      error => {
-      })
+    this.getJobPlans(event);
   }
 
-  // onSelectLocationByProject(event) {
-  //   this.assetsList = [];
-  //   this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
-  //     this.assetsList = res.listResult == null ? [] : res.listResult;
-  //   },
-  //     error => {
-  //     })
-  // }
+
 
   private getTypeOfMaintainces() {
     this.accountService.getCddmtData(DataFactory.ClassTypes.TypeOfMaintenance).subscribe((response: any) => {
@@ -184,14 +191,14 @@ export class PreventivemaintenanceComponent implements OnInit {
     return this.authService.currentUser;
   }
 
-    // Accepting Only Numbers
-    numberOnly(event: any) {
-      const numberpattern = /[0-9\+\-.\ ]/;
-      let inputChar = String.fromCharCode(event.charCode);
-      if (!numberpattern.test(inputChar)) {
-        event.preventDefault();
-      }
+  // Accepting Only Numbers
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
     }
+  }
 
 
   // Form Building
@@ -203,13 +210,13 @@ export class PreventivemaintenanceComponent implements OnInit {
       jobId: ['', Validators.required],
       projectId: ['', Validators.required],
       locationId: [''],
-      priority:['', Validators.required],
-      startDate: ['', Validators.required],
+      priority: ['', Validators.required],
+      // startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
       daysApplicable: ['', Validators.required],
       typeOfMaintainanceId: ['', Validators.required],
       technicianId: ['', Validators.required],
-      details: ['', Validators.required],
+      details: [''],
       isActive: [true]
     })
   }
@@ -225,9 +232,9 @@ export class PreventivemaintenanceComponent implements OnInit {
       projectId: this.maitananceRefData.projectId || '',
       jobId: this.maitananceRefData.jobPlanId || '',
       locationId: this.maitananceRefData.locationId || '',
-      priority:this.maitananceRefData.priority || '',
+      priority: this.maitananceRefData.priority || '',
       preventiveRefId: this.maitananceRefData.preventiveRefId || '',
-      startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
+      // startDate: this.isNewMaintanance ? this.currenrDate : this.maitananceRefData.startDate || '',
       durationInHours: this.maitananceRefData.durationInHours || '',
       daysApplicable: this.maitananceRefData.daysApplicable || '',
       typeOfMaintainanceId: this.maitananceRefData.typeOfMaintainanceId || '',
@@ -243,14 +250,12 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       this.assetsPMList.forEach((item) => {
         this.maitananceRefData.projectId = item.projectId,
-        this.assetId = item.assetId;
+          this.assetId = item.assetId;
         this.maitananceRefData.siteId = item.siteId,
-        this.maitananceRefData.locationId = item.locationId
+          this.maitananceRefData.locationId = item.locationId
         this.getProjectsByUserIdandSiteId(item.siteId)
-        this.onSelectProjectByAssets(item.projectId)
 
-        //  this.onSelectProjectByLocation(item.projectId)
-        //this.onSelectLocationByProject(item.locationId)
+
         this.resetForm();
       });
     },
@@ -258,28 +263,47 @@ export class PreventivemaintenanceComponent implements OnInit {
       })
   }
 
-  onTypeChange(event){
-    if(event == DataFactory.TypeofMaintenance.Monthly){
-      this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
-    
-    }else if(event == DataFactory.TypeofMaintenance.Quarterly){
-    
-      this.alertService.showStickyMessage('Please Enter 90 Days above for this Quarterly Procedure', null, MessageSeverity.error);
-    
-      
-    }else if(event == DataFactory.TypeofMaintenance.HalfYearly){
-      this.alertService.showStickyMessage('Please Enter 180 Days above for this HalfYearly Procedure', null, MessageSeverity.error);
+  onTypeChange(event) {
+    this.TypeId = event;
+    this.maintenanceForm.get('daysApplicable').setValue(null)
 
-    }else{
-      this.alertService.showStickyMessage('Please Enter 365 Days  for this Yearly Procedure', null, MessageSeverity.error);
-
-    }
   }
+
+  onDaysEnter(enterText) {
+    debugger
+    if (this.TypeId == DataFactory.TypeofMaintenance.Monthly) {
+      if (enterText < 30) {
+        this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
+      }
+    } else if (this.TypeId == DataFactory.TypeofMaintenance.Quarterly) {
+      if (enterText < 90) {
+        this.alertService.showStickyMessage('Please Enter 90 Days above for this Quarterly Procedure', null, MessageSeverity.error);
+      }
+    } else if (this.TypeId == DataFactory.TypeofMaintenance.HalfYearly) {
+      if (enterText < 180) {
+        this.alertService.showStickyMessage('Please Enter 180 Days above for this HalfYearly Procedure', null, MessageSeverity.error);
+      }
+    } else if (this.TypeId == DataFactory.TypeofMaintenance.Yearly) {
+      if (enterText < 365) {
+        this.alertService.showStickyMessage('Please Enter 365 Days  for this Yearly Procedure', null, MessageSeverity.error);
+      }
+    }
+
+
+  }
+
+
 
   onSelectJob(event) {
     this.accountService.getJobTaskByJobPlanId(event)
       .subscribe((results: any) => {
         this.jobTaskList = results.listResult == null ? [] : results.listResult;
+        if (this.isNewMaintanance) {
+          this.JobPlanData = this.jobPlanList.filter(job => job.id === event)[0];
+          this.maintenanceForm.get('technicianId').setValue(this.JobPlanData.technicianId);
+          this.maintenanceForm.get('durationInHours').setValue(this.JobPlanData.duration);
+          this.getAssetsByProjects();
+        }
       },
         error => {
         });
@@ -294,14 +318,13 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.isAdding = true;
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
+      this.TypeId = this.maitananceRefData.typeOfMaintainanceId;
       this.maitananceRefData.assetId.forEach(element => {
         this.AssetIds.push(element.assetId)
       });
       this.getSitesByUserId();
-      this.getPMAssetsbyPMId(this.maitananceRefData.id)
+      this.getPMAssetsbyPMId(this.maitananceRefData.id);
 
-      // this.getJobPlans(this.maitananceRefData.projectId);
-      this.onSelectJob(this.maitananceRefData.jobPlanId)
 
     }
     else {
@@ -320,8 +343,8 @@ export class PreventivemaintenanceComponent implements OnInit {
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
-      "assetIds": this.assetData != null ? [this.assetData.id] : this.AssetIds,
-      "startDate": formModel.startDate,
+      "assetIds": this.AssetIds,
+      "startDate": null,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
       "daysApplicable": formModel.daysApplicable,
@@ -340,7 +363,6 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   saveMaintenance() {
-    debugger
     if (!this.maintenanceForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -420,7 +442,12 @@ export class PreventivemaintenanceComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe(response => {
       if (response != null) {
-        this.maintenanceForm.get('assetId').setValue(response.name1)
+        debugger
+        response.forEach(element => {
+          this.names.push(element.assetName);
+          this.AssetIds.push(element.Id);
+        });
+        this.maintenanceForm.get('assetId').setValue(this.names.join());
         this.assetData = response;
       }
     });
@@ -429,13 +456,14 @@ export class PreventivemaintenanceComponent implements OnInit {
   OnAcceptPmProcedure(row) {
     const dialogRef = this.dialog.open(ApprovePmOrderComponent,
       {
-        data: {row}
+        data: { row }
       });
     dialogRef.afterClosed().subscribe(response => {
-       this.getAllmaitenance();
+      debugger
+      this.getMaintenance();
     });
   }
 
-  
+
 
 }

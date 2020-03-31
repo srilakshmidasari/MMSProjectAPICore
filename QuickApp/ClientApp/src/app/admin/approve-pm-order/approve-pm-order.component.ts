@@ -57,7 +57,7 @@ export class ApprovePmOrderComponent implements OnInit {
       var dt = new Date();
       var year = dt.getFullYear();
       var month = dt.getMonth();
-      this.astFixDate = new Date(year, month, astday);
+      this.astFixDate = new Date(year, month, astday+1);
       if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
         var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 30;
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
@@ -110,14 +110,15 @@ export class ApprovePmOrderComponent implements OnInit {
         this.pmOrderData.push(req);
 
       }
-      console.log(this.pmOrderData);
+     // console.log(this.pmOrderData);
       this.alertService.startLoadingMessage('Saving changes...');
       this.accountService.addPmOrder(this.pmOrderData).subscribe(
         (response: any) => {
           this.alertService.stopLoadingMessage();
           if (response.isSuccess) {
+            this.dialogRef.close();
             this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-            this.Cancel();
+            
           } else {
             this.alertService.stopLoadingMessage();
             this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);

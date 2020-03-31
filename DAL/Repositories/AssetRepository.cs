@@ -684,14 +684,14 @@ namespace DAL.Repositories
         }
 
 
-        public ListDataResponse<AssetLocation> GetAssetsByProject(int projectId)
+        public ListDataResponse<AssetLocation> GetAssetsByProject(int projectId, int AstGroupId)
         {
             ListDataResponse<AssetLocation> response = new ListDataResponse<AssetLocation>();
             try
             {
                 var result = (from a in _appContext.AssetLocations.Include(x=>x.Location_Id)
                               join x in _appContext.Locations on a.LocationId equals x.Id
-                              where x.ProjectId == projectId
+                              where x.ProjectId == projectId && a.AstGroupId == AstGroupId
                               select new AssetLocation
                               {
                                   Id = a.Id,

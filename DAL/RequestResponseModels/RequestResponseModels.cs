@@ -479,6 +479,7 @@ namespace DAL.RequestResponseModels
             public string AssetName { get; set; }
             public int SiteId { get; set; }
             public int? PMProcedureId { get; set; }
+            public string PMProcedureName { get; set; }
             public string SiteName { get; set; }
             public int ProjectId { get; set; }
             public string ProjectName { get; set; }
@@ -613,7 +614,7 @@ namespace DAL.RequestResponseModels
         public class GetPreventiveMaintenanceResponse : AuditableEntity
         {
             public int Id { get; set; }
-            public DateTime StartDate { get; set; }
+            public DateTime? StartDate { get; set; }
             public List<PMAssetXref> AssetId { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
@@ -634,7 +635,7 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public int[] AssetIds { get; set; }
-            public DateTime StartDate { get; set; }
+            public DateTime? StartDate { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
             public string DaysApplicable { get; set; }
@@ -720,6 +721,13 @@ namespace DAL.RequestResponseModels
             public string Duration { get; set; }
             public int? AstTradeId { get; set; }
             public string AstTradeName { get; set; }
+
+        }
+
+        public class AssetProjectReq
+        {
+            public int ProjectId { get; set; }
+            public int AstGroupId { get; set; }
 
         }
 

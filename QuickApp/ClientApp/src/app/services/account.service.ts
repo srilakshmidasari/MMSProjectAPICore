@@ -540,8 +540,8 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.getJobPlansByProjectEndpoint(Id);
   }
   
-  getAssetsByProject(Id) {
-    return this.accountEndpoint.getAssetsByProjectEndPoint(Id);
+  getAssetsByProject(req) {
+    return this.accountEndpoint.getAssetsByProjectEndPoint(req);
   }
 
   getPMOrder(){

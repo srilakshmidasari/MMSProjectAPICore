@@ -19,10 +19,9 @@ namespace DAL.Models
 
         [Display(Name = "Days Applicable")]
         public string DaysApplicable { get; set; }
-
-        [Required]
+       
         [Display(Name = "Start Date")]
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
 
         [Required]
         [Display(Name = "Duration In Hours")]

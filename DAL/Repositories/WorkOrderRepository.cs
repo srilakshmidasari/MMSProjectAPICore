@@ -486,7 +486,7 @@ namespace DAL.Repositories
             ListDataResponse<GetWorkOrderReponse> response = new ListDataResponse<GetWorkOrderReponse>();
             try
             {
-                var result = (from wo in _appContext.WorkOrders.Where(x=>x.OrderTypeId == 24 && x.WorkTypeId == 81)
+                var result = (from wo in _appContext.WorkOrders.Where(x=>x.OrderTypeId == 24)
                               join a in _appContext.AssetLocations on wo.AssetId equals a.Id
                               join l in _appContext.Locations on a.LocationId equals l.Id
                               join p in _appContext.Projects on l.ProjectId equals p.Id
@@ -498,6 +498,7 @@ namespace DAL.Repositories
                               join wf in _appContext.LookUps on wo.WorkFaultId equals wf.Id
                               join wt in _appContext.LookUps on wo.WorkTechnicianId equals wt.Id
                               join sta in _appContext.TypeCdDmts on wo.StatusTypeId equals sta.TypeCdDmtId
+                              join  pm in _appContext.PreventiveMaintenances on wo.PMProcedureId equals pm.Id
                               select new GetWorkOrderReponse
                               {
                                   Id = wo.Id,
@@ -509,6 +510,7 @@ namespace DAL.Repositories
                                   Issue = wo.Issue,
                                   Resolution = wo.Resolution,
                                   PMProcedureId=wo.PMProcedureId,
+                                  PMProcedureName = pm.PreventiveRefId,
                                   StatusTypeId = wo.StatusTypeId,
                                   StatusTypeName = sta.Description,
                                   AssetId = wo.AssetId,
@@ -581,6 +583,7 @@ namespace DAL.Repositories
                         }else if(isPMNew.Priority == 1)
                         {
                             isOrderExits.PMProcedureId = isPMNew.Id;
+                            isOrderExits.Reference1 = work.Reference1;
                             _appContext.SaveChanges();
                         }
                         else if(isPMOld.Priority == 1)
@@ -608,13 +611,13 @@ namespace DAL.Repositories
                     response.Result = workorder;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
-                    response.EndUserMessage = "PM Order Added Successfully";
+                    response.EndUserMessage = "PM Order Approved Successfully";
                 }
                 else
                 {
                     response.IsSuccess = true;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "PM Order Added Failed";
+                    response.EndUserMessage = "PM Order Approved Failed";
                 }
 
             }

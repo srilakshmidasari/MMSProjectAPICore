@@ -17,7 +17,7 @@ export class SelectAssetComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
-  assetData: any;
+  assetData: any[]=[];
   //isChecked: boolean = false;
   constructor(private accountService: AccountService, private alertService: AlertService,
     public dialogRef: MatDialogRef<SelectAssetComponent>, @Inject(MAT_DIALOG_DATA) public data: { data, assetList}) { }
@@ -41,6 +41,20 @@ export class SelectAssetComponent implements OnInit {
       }
     })
   }
+  onCheckBoxChecked(){
+    
+  }
+
+  // getRecord(row){
+  //   this.assetList.forEach((obj) => {
+  //     if(obj.id ==row.id){
+  //       row.isChecked = true;
+  //       this.assetData =row;
+  //     }else{
+  //       obj.isChecked = false;
+  //     }
+  //   })
+ // }
 
   // private getAssets() {
   //   debugger
@@ -73,14 +87,15 @@ export class SelectAssetComponent implements OnInit {
 
     // To Check Single Assets 
     onAssetChecked(ev, obj) {
-      if (ev.target.checked) {
-        // this.assetIds.push({
-        //   "invoiceIds": obj.invoiceNumber,
-        //   "amount": obj.balanceAmount
-        // });      
+      debugger
+      if (ev.checked) {
+        this.assetData.push({
+          "Id": obj.id,
+          "assetName": obj.name1
+        });      
       } else {
-        // let index = this.invoices.indexOf(obj);
-        // this.invoices.splice(index, 1);
+         let index = this.assetData.indexOf(obj);
+         this.assetData.splice(index, 1);
       
       }
     }

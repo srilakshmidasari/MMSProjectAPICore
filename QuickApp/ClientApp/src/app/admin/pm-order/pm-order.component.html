@@ -31,6 +31,9 @@
                         <th [pSortableColumn]="'endDate'">{{'PMOrder.Management.EndDate'| translate}}
                             <p-sortIcon [field]="'endDate'"></p-sortIcon>
                         </th>
+                         <th [pSortableColumn]="'pmProcedureName'">PM Procedure Name
+                            <p-sortIcon [field]="'pmProcedureName'"></p-sortIcon>
+                        </th>
                         <th [pSortableColumn]="'assetName'">{{'PMOrder.Management.AssetName'| translate}}
                             <p-sortIcon [field]="'assetName'"></p-sortIcon>
                         </th>
@@ -49,23 +52,7 @@
                         <th [pSortableColumn]="'resolution'">{{'PMOrder.Management.Resolution'| translate}}
                             <p-sortIcon [field]="'resolution'"></p-sortIcon>
                         </th>
-                        <!-- <th [pSortableColumn]="'storeName'">Store Name
-                            <p-sortIcon [field]="'storeName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workTypeName'">Work Type
-                            <p-sortIcon [field]="'workTypeName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workStatusName'">Work Status
-                            <p-sortIcon [field]="'workStatusName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workTechnicianName'">Work Teach
-                            <p-sortIcon [field]="'workTechnicianName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workFaultName'">Work Fault
-                            <p-sortIcon [field]="'workFaultName'"></p-sortIcon>
-                        </th> -->
-                        <!-- <th>{{'Purchase Order.Management.Is Active'|translate}}
-                        </th> -->
+                       
                         <th class="just-cont-center">{{'PMOrder.Management.Actions'| translate}}
                             <!-- <button mat-button color="primary"
                                 matTooltip="{{'Work Order.Management.Add Order'| translate}}" (click)="addClick()">
@@ -87,20 +74,14 @@
                         <td>{{req.reference1}}</td>
                         <td>{{req.startDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.endDate  | date: 'dd/MM/yyyy '}}</td>
+                        <td>{{req.pmProcedureName}}</td>
                         <td>{{req.assetName}}</td>
                         <!-- <td>{{req.locationName}}</td> -->
                         <td>{{req.statusTypeName}}</td>
                         <!-- <td>{{req.updatedDate | date: 'dd/MM/yyyy '}}</td> -->
                         <td>{{req.issue}}</td>
                         <td>{{req.resolution}}</td>
-                        <!-- <td>{{req.storeName}}</td>
-                        <td>{{req.workTypeName}}</td>
-                        <td>{{req.workStatusName}}</td>
-                        <td>{{req.workTechnicianName}}</td>
-                        <td>{{req.workFaultName}}</td>  -->
-                        <!-- <td align="center">
-                            <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
-                        </td> -->
+                        
                         <td>
                            <button class="just-cont-center" mat-icon-button 
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}"  (click)="onEditClick(req)">

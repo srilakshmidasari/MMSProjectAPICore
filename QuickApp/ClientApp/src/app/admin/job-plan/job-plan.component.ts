@@ -187,7 +187,16 @@ export class JobPlanComponent implements OnInit {
       })
       this.TaskFrom.setControl('credentials', control);
     }
-  
+
+    
+   // Accepting Only Numbers
+   numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
 
     saveJobPlan() {
       debugger

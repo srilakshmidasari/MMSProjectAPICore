@@ -705,7 +705,7 @@
     "Is Active":"نشط",
     "Add Order":"أضف الطلب",
     "Task Name":"اسم المهمة",
-    "Task Duration":"مدة المهمة",
+    "Task Duration":"مدة المهمة بالدقائق",
     "Add JobPlan":"أضف خطة عمل",
     "Job Reference is Required":"مرجع الوظيفة مطلوب",
     "Name is Required":"مطلوب اسم",

@@ -1101,11 +1101,11 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
-  getAssetsByProjectEndPoint<T>(Id: any): Observable<T> {
-    const endpointUrl = this.getAssetsByProjectUrl + '/' + Id;
-    return this.http.get<T>(endpointUrl, this.requestHeaders).pipe<T>(
+  getAssetsByProjectEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getAssetsByProjectUrl;
+    return this.http.post<T>(endpointUrl,JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
       catchError(error => {
-        return this.handleError(error, () => this.getAssetsByProjectEndPoint(Id));
+        return this.handleError(error, () => this.getAssetsByProjectEndPoint(reqObject));
       }));
   }
   
