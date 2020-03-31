@@ -258,6 +258,24 @@ export class PreventivemaintenanceComponent implements OnInit {
       })
   }
 
+  onTypeChange(event){
+    if(event == DataFactory.TypeofMaintenance.Monthly){
+      this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
+    
+    }else if(event == DataFactory.TypeofMaintenance.Quarterly){
+    
+      this.alertService.showStickyMessage('Please Enter 90 Days above for this Quarterly Procedure', null, MessageSeverity.error);
+    
+      
+    }else if(event == DataFactory.TypeofMaintenance.HalfYearly){
+      this.alertService.showStickyMessage('Please Enter 180 Days above for this HalfYearly Procedure', null, MessageSeverity.error);
+
+    }else{
+      this.alertService.showStickyMessage('Please Enter 365 Days  for this Yearly Procedure', null, MessageSeverity.error);
+
+    }
+  }
+
   onSelectJob(event) {
     this.accountService.getJobTaskByJobPlanId(event)
       .subscribe((results: any) => {

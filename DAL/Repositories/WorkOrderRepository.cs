@@ -173,7 +173,6 @@ namespace DAL.Repositories
                 var orderExists = _appContext.WorkOrders.Where(x => x.Id != workorders.Id && x.Reference1 == workorders.Reference1).FirstOrDefault();
                 if (orderExists == null)
                 {
-
                     WorkOrder Wro = _mapper.Map<WorkOrder>(workorders);
                     var result = _appContext.WorkOrders.Where(x => x.Id == workorders.Id).FirstOrDefault();
                     var workOrderItemList = _appContext.WorkOrderItemXrefs.Where(x => x.WorkOrderId == workorders.Id).ToList();

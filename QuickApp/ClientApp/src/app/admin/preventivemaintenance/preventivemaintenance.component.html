@@ -139,7 +139,7 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Type Of Maintainance'|translate}} <span>*</span>
                         </mat-label>
-                        <mat-select formControlName="typeOfMaintainanceId">
+                        <mat-select formControlName="typeOfMaintainanceId"  (ngModelChange)="onTypeChange($event)">
                             <mat-option *ngFor="let tech of TypesList" [value]="tech.typeCdDmtId" required>
                                 {{tech.description}}
                             </mat-option>
