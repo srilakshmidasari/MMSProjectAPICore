@@ -52,6 +52,7 @@ export class ApprovePmOrderComponent implements OnInit {
     debugger
     this.pmOrderData = [];
     this.assetsPMList.forEach((item) => {
+     // this.pmOrderData = [];
       var d = new Date(item.assetFixedDate);
       var astday = d.getDate();
       var dt = new Date();
@@ -111,25 +112,24 @@ export class ApprovePmOrderComponent implements OnInit {
 
       }
      // console.log(this.pmOrderData);
-      this.alertService.startLoadingMessage('Saving changes...');
-      this.accountService.addPmOrder(this.pmOrderData).subscribe(
-        (response: any) => {
-          this.alertService.stopLoadingMessage();
-          if (response.isSuccess) {
-            this.dialogRef.close();
-            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-            
-          } else {
-            this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
-          }
-        }, error => {
-          this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-        }
-      );
-
     })
+    this.alertService.startLoadingMessage('Saving changes...');
+    this.accountService.addPmOrder(this.pmOrderData).subscribe(
+      (response: any) => {
+        this.alertService.stopLoadingMessage();
+        if (response.isSuccess) {
+          this.dialogRef.close();
+          this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+          
+        } else {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+        }
+      }, error => {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    );
 
 
   }

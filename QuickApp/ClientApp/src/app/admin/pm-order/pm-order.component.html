@@ -195,7 +195,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">
-                        <input matInput placeholder="Select Location" [matAutocomplete]="auto1" formControlName="locationId" 
+                        <input matInput placeholder="Select Location"  formControlName="locationId" 
                             (input)="onSelectProjectByLocationSearch($event)"  readonly required>
                             <mat-option  *ngFor="let location of locationsList" [value]="location.name1"
                             (onSelectionChange)='onLocationSelected(location)'>

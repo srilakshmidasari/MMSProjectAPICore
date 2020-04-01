@@ -32,14 +32,14 @@
                 <mat-cell *matCellDef="let row"> {{row.preventiveRefId}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="typeOfMaintainanceName">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="just-cont-center small-cell1"*matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.Type Of Maintainance'|translate}}</mat-header-cell>
-                <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.typeOfMaintainanceName}} </mat-cell>
+                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.typeOfMaintainanceName}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="daysApplicable">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.DaysApplicable'|translate}}</mat-header-cell>
-                <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.daysApplicable}} </mat-cell>
+                <mat-cell class="just-cont-center small-cell" *matCellDef="let row"> {{row.daysApplicable}} </mat-cell>
             </ng-container>
             <!-- <ng-container matColumnDef="startDate">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -47,9 +47,9 @@
                 <mat-cell *matCellDef="let row"> {{row.startDate| date: 'dd/MM/yyyy '}} </mat-cell>
             </ng-container> -->
             <ng-container matColumnDef="durationInHours">
-                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.Duration In Hours'|translate}}</mat-header-cell>
-                <mat-cell class="just-cont-center" *matCellDef="let row"> {{row.durationInHours}} </mat-cell>
+                <mat-cell class="just-cont-center small-cell" *matCellDef="let row"> {{row.durationInHours}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="technicianName">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>

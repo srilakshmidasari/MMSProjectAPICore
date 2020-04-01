@@ -6,7 +6,7 @@
                 placeholder="{{'Asset.Management.Search' | translate}}">
         </mat-form-field>
     </div>
-    <div class="example-container mat-elevation-z8 table-responsive">
+    <div class="example-container mat-elevation-z8">
         <mat-table [dataSource]="dataSource"  matSort matSortActive="assetRef"
         matSortDirection="asc" matSortDisableClear>
         <ng-container matColumnDef="isChecked">
@@ -50,7 +50,7 @@
     <div style="text-align: center;" *ngIf="displayNoRecords">
         <p>{{'Assets.Management.No Search Results Found'|translate}}</p>
     </div>
-    <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="5"
+    <mat-paginator  [length]="dataSource.data.length" [pageSize]="5"
         [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
         <!-- <table class="table table-bordered">
