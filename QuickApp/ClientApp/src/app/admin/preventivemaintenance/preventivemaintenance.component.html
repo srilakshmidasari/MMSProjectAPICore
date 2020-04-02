@@ -1,5 +1,5 @@
 <app-page-header title="PMProcedures" icon="assignment_ind"></app-page-header>
-<div class="page-content" [hidden]="isAdding">
+<div class="page-content" [hidden]="isAdding||isView">
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -87,6 +87,11 @@
                         (click)="editClick(row)" *ngIf="row.statusTypeName != 'Approved' && row.statusTypeName != 'Closed'">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
+                    <button class="just-cont-center" mat-icon-button
+                    matTooltip="View PMOrder"
+                    (click)="onViewClick(row)">
+                    <mat-icon color="accent">visibility icon</mat-icon>
+                </button>
                     <button class="z-index" mat-icon-button *ngIf="row.statusTypeName == 'Open'" matTooltip="{{'Work Order.Management.Accept'|translate}}"
                         (click)="OnAcceptPmProcedure(row)">
                         <mat-icon color="primary">thumb_up</mat-icon>
@@ -312,6 +317,89 @@
                     (click)="onCancelClick()">{{'Preventive Maintenance.Management.Cancel'|translate}}</button>
             </div>
         </mat-card-actions>
+        <div class="clearfix"></div>
+    </mat-card>
+</div>
+<div class="page-content" *ngIf="isView">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>PM Procedure Information</mat-card-title>
+        </mat-card-header>
+        <br>
+      <mat-card-content> 
+            <div class="row">
+                <div class="col-xs-12 col-md-12">
+                    <div class="clearfix space20"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                           Preventive Reference
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.preventiveRefId}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            Type Of Maintainance
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.typeOfMaintainanceName}}</b>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="clearfix space20"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            DaysApplicable
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.daysApplicable}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            Duration In Hours
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.durationInHours}}</b>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="clearfix space20"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            Technician Name
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.technicianName}}</b>&nbsp;&nbsp;
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            Status Type Name
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.statusTypeName}}</b>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                    <div class="clearfix space20"></div>
+                    <div class="row">
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            Details
+                            <b class="pull-right">:</b>
+                        </div>
+                        <div class="col-xs-6 col-sm-6 col-md-3">
+                            <b>{{PMProcedure.details}}</b>&nbsp;&nbsp;
+                        </div>
+                    </div>
+                  
+                </div>
+            </div>
+            <mat-card-actions>
+                <div class="float-right" style="padding-top: 12px;padding-right: 15px;">
+                    <button mat-raised-button (click)="closeViewWorkOrder()"
+                        color="warn">{{'Work Order.Management.Close'|translate}}</button>
+                </div>
+            </mat-card-actions>
+        </mat-card-content> 
         <div class="clearfix"></div>
     </mat-card>
 </div>
