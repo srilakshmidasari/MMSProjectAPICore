@@ -25,6 +25,8 @@ export class PreventivemaintenanceComponent implements OnInit {
   maintenanceData: any[] = [];
   jobPlanList: any[] = [];
   siteList: any[] = [];
+  PMProcedure: any = {};
+  isView: boolean = false;
   displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'daysApplicable', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
@@ -333,11 +335,17 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.buildForm();
       this.resetForm();
     }
-
-
-
-
   }
+
+    onViewClick(row) {
+      this.PMProcedure = row;
+      this.isView = true;
+    }
+  
+    closeViewWorkOrder() {
+      this.isView = false;
+  
+    }
 
   private getAllmaitenance(): any {
     const formModel = this.maintenanceForm.value
