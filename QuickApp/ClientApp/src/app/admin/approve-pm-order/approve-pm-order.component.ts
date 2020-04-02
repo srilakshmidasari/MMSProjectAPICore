@@ -61,14 +61,21 @@ export class ApprovePmOrderComponent implements OnInit {
       this.astFixDate = new Date(year, month, astday+1);
       if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
         var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 30;
+        var monthCount = parseInt(monthsCount.toFixed(0));
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
        var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 90;
+       var monthCount = parseInt(monthsCount.toFixed(0));
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
         var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 180;
+        var monthCount = parseInt(monthsCount.toFixed(0));
+
       } else {
-        var monthsCount = 1
+        var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 365;
+        var monthCount = parseInt(monthsCount.toFixed(0));
+       // var monthsCount = 1
       }
-      for (var i = 0; i < monthsCount; i++) {
+      
+      for (var i = 0; i < monthCount; i++) {
         if (i == 0) {
           this.orderDate = new Date(this.astFixDate)
         } else {
@@ -77,7 +84,7 @@ export class ApprovePmOrderComponent implements OnInit {
         if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
           var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 1);
         } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
-          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 4);
+          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 3);
         } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
           var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 6);
         } else {
