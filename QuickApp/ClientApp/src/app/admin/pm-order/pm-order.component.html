@@ -87,6 +87,11 @@
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}"  (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
+                            <button class="just-cont-center" mat-icon-button 
+                                matTooltip="{{'Work Order.Management.Delete'|translate}}" 
+                                (click)="confirmDelete(req)">
+                                <mat-icon color="warn">delete</mat-icon>
+                            </button>
                            <!-- <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
                                 matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
@@ -103,10 +108,10 @@
                             <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Reject'|translate}}"  *ngIf="req.statusTypeName == 'Open'" (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
                             </button> -->
-                            <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Close'|translate}}" 
+                            <!-- <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Close'|translate}}" 
                                 >
                                 <mat-icon color="warn">cancel</mat-icon>
-                            </button>
+                            </button> -->
                         </td>
                     </tr>
                 </ng-template>
