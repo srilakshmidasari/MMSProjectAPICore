@@ -252,12 +252,10 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       this.assetsPMList.forEach((item) => {
         this.maitananceRefData.projectId = item.projectId,
-          this.assetId = item.assetId;
+        this.assetId = item.assetId;
         this.maitananceRefData.siteId = item.siteId,
-          this.maitananceRefData.locationId = item.locationId
-        this.getProjectsByUserIdandSiteId(item.siteId)
-
-
+        this.maitananceRefData.locationId = item.locationId
+        this.getProjectsByUserIdandSiteId(item.siteId);
         this.resetForm();
       });
     },
@@ -326,8 +324,6 @@ export class PreventivemaintenanceComponent implements OnInit {
       });
       this.getSitesByUserId();
       this.getPMAssetsbyPMId(this.maitananceRefData.id);
-
-
     }
     else {
       this.isAdding = true;
@@ -340,6 +336,11 @@ export class PreventivemaintenanceComponent implements OnInit {
     onViewClick(row) {
       this.PMProcedure = row;
       this.isView = true;
+      this.accountService.getPMAssetsbyPMId(this.PMProcedure.id).subscribe((res: any) => {
+        this.assetsPMList = res.listResult == null ? [] : res.listResult;
+      },
+        error => {
+        })
     }
   
     closeViewWorkOrder() {
@@ -451,6 +452,8 @@ export class PreventivemaintenanceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(response => {
       if (response != null) {
         debugger
+        this.names =[];
+        this.AssetIds=[];
         response.forEach(element => {
           this.names.push(element.assetName);
           this.AssetIds.push(element.Id);
@@ -467,7 +470,6 @@ export class PreventivemaintenanceComponent implements OnInit {
         data: { row }
       });
     dialogRef.afterClosed().subscribe(response => {
-      debugger
       this.getMaintenance();
     });
   }

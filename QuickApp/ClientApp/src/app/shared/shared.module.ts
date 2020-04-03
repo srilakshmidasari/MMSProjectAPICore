@@ -19,6 +19,9 @@ import { AppDialogComponent } from './app-dialog/app-dialog.component';
 import { GroupByPipe } from '../pipes/group-by.pipe';
 import { TitleCaseDirective } from './validators/titleCaseDirective';
 import { UserEditorComponent } from '../admin/security/user-editor/user-editor.component';
+import { providers } from 'ngx-toasta';
+import { DateAdapter, MAT_DATE_FORMATS } from '@angular/material';
+import { AppDateAdapter, APP_DATE_FORMATS } from './validators/date.adapter';
 
 @NgModule({
   imports: [
@@ -49,7 +52,17 @@ import { UserEditorComponent } from '../admin/security/user-editor/user-editor.c
   ],
   entryComponents: [
     AppDialogComponent
-  ]
+  ],
+  providers: [
+    {
+        provide: DateAdapter, useClass: AppDateAdapter
+    },
+    {
+        provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
+    }
+    ]
+ 
+  
 })
 export class SharedModule {
 

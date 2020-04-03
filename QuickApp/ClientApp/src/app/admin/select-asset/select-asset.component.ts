@@ -9,40 +9,49 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSort, MatPaginato
   styleUrls: ['./select-asset.component.scss']
 })
 export class SelectAssetComponent implements OnInit {
-  assetList: any[]=[];
-  editAssetList: any[]=[];
-  assetIds:any[]=[];
-  displayedColumns = ['isChecked','name1', 'assetRef', 'assetCounter','astFixedDate'];
+  assetList: any[] = [];
+  editAssetList: any[] = [];
+  assetIds: any[] = [];
+  displayedColumns = ['isChecked', 'name1', 'assetRef', 'assetCounter', 'astFixedDate'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
-  assetData: any[]=[];
+  assetData: any[] = [];
   //isChecked: boolean = false;
   constructor(private accountService: AccountService, private alertService: AlertService,
-    public dialogRef: MatDialogRef<SelectAssetComponent>, @Inject(MAT_DIALOG_DATA) public data: { data, assetList}) { }
+    public dialogRef: MatDialogRef<SelectAssetComponent>, @Inject(MAT_DIALOG_DATA) public data: { data, assetList }) { }
 
   ngOnInit() {
     debugger
     this.assetList = this.data.assetList;
+    this.assetList.forEach((obj) => {
+      if(obj.isChecked){
+        this.assetData.push({
+          "Id": obj.id,
+          "assetName": obj.name1
+        });
+      }
+    })
+
     this.dataSource.data = this.assetList;
     this.editAssetList = this.assetList.map(x => Object.assign({}, x));
 
-   // this.getAssets();
+    // this.getAssets();
   }
 
-  getRecord(row){
+  getRecord(row) {
     this.assetList.forEach((obj) => {
-      if(obj.id ==row.id){
+      if (obj.id == row.id) {
         row.isChecked = true;
-        this.assetData =row;
-      }else{
+        this.assetData = row;
+      } else {
         obj.isChecked = false;
       }
     })
   }
-  onCheckBoxChecked(){
-    
+  onCheckBoxChecked() {
+
   }
 
   // getRecord(row){
@@ -54,7 +63,7 @@ export class SelectAssetComponent implements OnInit {
   //       obj.isChecked = false;
   //     }
   //   })
- // }
+  // }
 
   // private getAssets() {
   //   debugger
@@ -85,40 +94,45 @@ export class SelectAssetComponent implements OnInit {
     }
   }
 
-    // To Check Single Assets 
-    onAssetChecked(ev, obj) {
-      debugger
-      if (ev.checked) {
-        this.assetData.push({
-          "Id": obj.id,
-          "assetName": obj.name1
-        });      
-      } else {
-         let index = this.assetData.indexOf(obj);
-         this.assetData.splice(index, 1);
-      
-      }
-    }
-  
-    //To Check All Assets
-    checkAllAssets(ev) {
-      if (ev.target.checked) {
-        this.assetList.forEach((obj) => {
-          obj.isChecked = true;
-            // this.invoices.push({
-            //   "invoiceIds": obj.invoiceNumber,
-            //   "amount": obj.balanceAmount
-            // });
-        })
-      } else {
-        this.assetList.forEach((obj) => {
-          obj.isChecked = false;
-         // this.invoices = [];
-        })
-      }
-    }
+  // To Check Single Assets 
+  onAssetChecked(ev, obj) {
+    debugger
+    if (ev.checked) {
+      this.assetData.push({
+        "Id": obj.id,
+        "assetName": obj.name1
+      });
+    } else {
+      this.assetData.forEach((item) => {
+        if(item.Id ==obj.id){
+          let index = this.assetData.indexOf(item);
+          this.assetData.splice(index, 1);
+        }
+      })
+     
 
-  
+    }
+  }
+
+  //To Check All Assets
+  checkAllAssets(ev) {
+    if (ev.target.checked) {
+      this.assetList.forEach((obj) => {
+        obj.isChecked = true;
+        // this.invoices.push({
+        //   "invoiceIds": obj.invoiceNumber,
+        //   "amount": obj.balanceAmount
+        // });
+      })
+    } else {
+      this.assetList.forEach((obj) => {
+        obj.isChecked = false;
+        // this.invoices = [];
+      })
+    }
+  }
+
+
   Cancel() {
     this.dialogRef.close();
   }
