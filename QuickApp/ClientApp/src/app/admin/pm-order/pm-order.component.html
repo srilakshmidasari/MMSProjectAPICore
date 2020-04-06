@@ -4,7 +4,7 @@
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
-            <p-table #dt [value]="pmOrdersList" [paginator]="true" expandableRows="true" [rows]="10" sortField="reference1"
+            <p-table #dt [value]="pmOrdersList" [paginator]="true" expandableRows="true" [rows]="12" sortField="startDate"
                 matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
                 sortMode="single" rowExpandMode="single" dataKey="id"
                 [globalFilterFields]="['id','reference1','startDate','endDate','assetName','statusTypeName','issue','resolution']">

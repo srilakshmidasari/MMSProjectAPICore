@@ -298,6 +298,12 @@ export class AssetsComponent implements OnInit {
   // forming Request Object
   private getEditedAsset(): any {
     const formModel = this.assetLocationForm.value;
+    if (this.isNewAsset) {
+      formModel.assetFixDate.setDate(formModel.assetFixDate.getDate() + 1);
+     
+    } else {
+
+    }
     return {
       "id": this.isNewAsset ? 0 : this.assetRefData.id,
       "siteId": formModel.siteId,

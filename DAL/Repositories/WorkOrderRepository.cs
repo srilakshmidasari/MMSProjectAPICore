@@ -605,7 +605,7 @@ namespace DAL.Repositories
                     isPMNew.StatusTypeId = 15;
                     _appContext.SaveChanges();
                 }
-                if (workorder != null)
+                if (workorder.Count() >0)
                 {
                     
                     response.Result = workorder;

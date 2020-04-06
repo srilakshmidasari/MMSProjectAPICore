@@ -88,7 +88,7 @@ export class ApprovePmOrderComponent implements OnInit {
         } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
           var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 6);
         } else {
-          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 11);
+          var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 12);
         }
        
         var req = {
@@ -118,9 +118,9 @@ export class ApprovePmOrderComponent implements OnInit {
         this.pmOrderData.push(req);
 
       }
-     // console.log(this.pmOrderData);
+      console.log(this.pmOrderData);
     })
-    this.alertService.startLoadingMessage('Saving changes...');
+   this.alertService.startLoadingMessage('Saving changes...');
     this.accountService.addPmOrder(this.pmOrderData).subscribe(
       (response: any) => {
         this.alertService.stopLoadingMessage();
