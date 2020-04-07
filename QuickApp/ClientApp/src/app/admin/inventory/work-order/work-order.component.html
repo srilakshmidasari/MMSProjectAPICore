@@ -18,11 +18,11 @@
                 sortMode="single" rowExpandMode="single" dataKey="id"
                 [globalFilterFields]="['id','reference1','startDate','endDate','assetName','locationName', 'updatedDate','issue','resolution']">
                 <ng-template pTemplate="caption">
-                    <div style="text-align: right">
+                    <div style="text-align: left">
 
-                        <input type="text" pInputText size="50"
+                        <input type="text" pInputText size="150"
                             placeholder="{{'Work Order.Management.Search By work Order'|translate}}"
-                            (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
+                            (input)="dt.filterGlobal($event.target.value, 'contains')">
                     </div>
                 </ng-template>
                 <ng-template pTemplate="header">

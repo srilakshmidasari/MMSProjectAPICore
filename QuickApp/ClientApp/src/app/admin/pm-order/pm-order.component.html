@@ -9,9 +9,8 @@
                 sortMode="single" rowExpandMode="single" dataKey="id"
                 [globalFilterFields]="['id','reference1','startDate','endDate','assetName','statusTypeName','issue','resolution']">
                 <ng-template pTemplate="caption">
-                    <div style="text-align: right">
-
-                        <input type="text" pInputText size="50"
+                    <div style="text-align: left">
+                        <input type="text" pInputText size="150"
                             placeholder="{{'PMOrder.Management.SearchbyPMOrder'| translate}}"
                             (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
                     </div>
