@@ -1,0 +1,81 @@
+<h1 mat-dialog-title>Add Asset</h1>
+<div mat-dialog-content>
+    <div class="search-box">
+        <mat-form-field>
+            <input matInput (keyup)="applyFilter($event.target.value)"
+                placeholder="{{'Asset.Management.Search' | translate}}">
+        </mat-form-field>
+    </div>
+    <div class="example-container mat-elevation-z8">
+        <mat-table [dataSource]="dataSource" matSort matSortActive="assetRef" matSortDirection="asc"
+            matSortDisableClear>
+
+            <ng-container matColumnDef="name1">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Assets.Management.Name1'|translate}}</mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="assetRef">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>
+                    {{'Assets.Management.Asset Refrerence'|translate}} </mat-header-cell>
+                <mat-cell *matCellDef="let row"> {{row.assetRef}} </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="daysApplicable">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                    {{'Preventive Maintenance.Management.DaysApplicable'|translate}}</mat-header-cell>      
+                    <mat-cell class="text-center" *matCellDef="let row; let i = index;">
+                        <span *ngIf="!isEditAsset"> {{row.daysApplicable}}</span>
+                        <span *ngIf="isEditAsset">
+                            <mat-form-field class="w-75 text-wid">
+                                <input matInput [(ngModel)]="row.daysApplicable"  maxlength="10"/>
+                            </mat-form-field>
+                        </span>
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="astFixedDate">
+                <mat-header-cell  *matHeaderCellDef mat-sort-header>
+                    {{'Assets.Management.assetFixedDate'|translate}} </mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    {{row.astFixedDate | date: 'dd/MM/yyyy' }} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                    Actions</mat-header-cell>
+                <mat-cell class="just-cont-center" *matCellDef="let row; let i = index;">
+                  
+                    <button mat-icon-button matTooltip="Edit" (click)="onEditAsset(row, i)" *ngIf="!isEditAsset">
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button> &nbsp;
+                    <button mat-icon-button matTooltip="Save" *ngIf="isEditAsset" (click)="onSaveAsset(row)">
+                        <mat-icon color="primary">offline_pin</mat-icon>
+                    </button> &nbsp;
+                    <button mat-icon-button matTooltip="Cancel" (click)="onCancelAsset(row)" *ngIf="isEditAsset">
+                        <mat-icon color="warn">cancel</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row;  columns: displayedColumns;let i = index;">
+            </mat-row>
+        </mat-table>
+        <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
+            <p>{{'Assets.Management.No Records Found'|translate}}</p>
+        </div>
+        <div style="text-align: center;" *ngIf="displayNoRecords">
+            <p>{{'Assets.Management.No Search Results Found'|translate}}</p>
+        </div>
+        <mat-paginator [length]="dataSource.data.length" [pageSize]="5" [pageSizeOptions]="[5, 10, 25, 100]">
+        </mat-paginator>
+
+
+    </div>
+    <div class="clearfix"></div>
+</div>
+<div mat-dialog-actions class="float-right" style="padding-top: 12px;">
+    <button mat-raised-button color="primary" [mat-dialog-close]="assetData">Save</button>
+    <button mat-raised-button (click)="Cancel()" color="warn">Cancel</button>
+</div>

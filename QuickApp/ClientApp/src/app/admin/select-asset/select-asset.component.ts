@@ -29,7 +29,9 @@ export class SelectAssetComponent implements OnInit {
       if(obj.isChecked){
         this.assetData.push({
           "Id": obj.id,
-          "assetName": obj.name1
+          "assetName": obj.name1,
+          "assetRef":obj.assetRef,
+          "astFixedDate":obj.astFixedDate
         });
       }
     })
@@ -100,7 +102,9 @@ export class SelectAssetComponent implements OnInit {
     if (ev.checked) {
       this.assetData.push({
         "Id": obj.id,
-        "assetName": obj.name1
+        "assetName": obj.name1,
+        "assetRef":obj.assetRef,
+        "astFixedDate":obj.astFixedDate
       });
     } else {
       this.assetData.forEach((item) => {
@@ -119,15 +123,12 @@ export class SelectAssetComponent implements OnInit {
     if (ev.target.checked) {
       this.assetList.forEach((obj) => {
         obj.isChecked = true;
-        // this.invoices.push({
-        //   "invoiceIds": obj.invoiceNumber,
-        //   "amount": obj.balanceAmount
-        // });
+        
       })
     } else {
       this.assetList.forEach((obj) => {
         obj.isChecked = false;
-        // this.invoices = [];
+       
       })
     }
   }

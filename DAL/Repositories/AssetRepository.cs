@@ -704,6 +704,7 @@ namespace DAL.Repositories
                                   CreatedDate = a.CreatedDate,
                                   UpdatedBy = a.UpdatedBy,
                                   UpdatedDate = a.UpdatedDate,
+                                  DaysApplicable=a.DaysApplicable
 
                               }).Distinct().ToList();
 

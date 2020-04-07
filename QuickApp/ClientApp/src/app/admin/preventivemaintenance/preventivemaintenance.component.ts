@@ -11,6 +11,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 import { constants } from 'os';
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { ApprovePmOrderComponent } from '../approve-pm-order/approve-pm-order.component';
+import { AddAssetPmComponent } from './add-asset-pm/add-asset-pm.component';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',
@@ -49,6 +50,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   TypeId: any;
   JobPlanData: any;
   names: any[] = [];
+  rowId: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -102,11 +104,18 @@ export class PreventivemaintenanceComponent implements OnInit {
           obj.isChecked = false;
         })
       } else {
+        this.assetData = [];
         res.listResult.forEach((item) => {
           this.maitananceRefData.assetId.forEach(element => {
             if (element.assetId == item.id) {
               this.names.push(item.name1);
               item.isChecked = true;
+              this.assetData.push({
+                "Id": item.id,
+                "assetName": item.name1,
+                "assetRef": item.assetRef,
+                "astFixedDate": item.astFixedDate
+              });
             }
           });
           this.maintenanceForm.get('assetId').setValue(this.names.join());
@@ -125,11 +134,8 @@ export class PreventivemaintenanceComponent implements OnInit {
         if (!this.isNewMaintanance) {
           this.JobPlanData = this.jobPlanList.filter(job => job.id === this.maitananceRefData.jobPlanId)[0];
           this.getAssetsByProjects();
-
-          this.onSelectJob(this.maitananceRefData.jobPlanId)
-
+          this.onSelectJob(this.maitananceRefData.jobPlanId);
         }
-
       },
         error => {
         });
@@ -252,9 +258,9 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       this.assetsPMList.forEach((item) => {
         this.maitananceRefData.projectId = item.projectId,
-        this.assetId = item.assetId;
+          this.assetId = item.assetId;
         this.maitananceRefData.siteId = item.siteId,
-        this.maitananceRefData.locationId = item.locationId
+          this.maitananceRefData.locationId = item.locationId
         this.getProjectsByUserIdandSiteId(item.siteId);
         this.resetForm();
       });
@@ -333,20 +339,20 @@ export class PreventivemaintenanceComponent implements OnInit {
     }
   }
 
-    onViewClick(row) {
-      this.PMProcedure = row;
-      this.isView = true;
-      this.accountService.getPMAssetsbyPMId(this.PMProcedure.id).subscribe((res: any) => {
-        this.assetsPMList = res.listResult == null ? [] : res.listResult;
-      },
-        error => {
-        })
-    }
-  
-    closeViewWorkOrder() {
-      this.isView = false;
-  
-    }
+  onViewClick(row) {
+    this.PMProcedure = row;
+    this.isView = true;
+    this.accountService.getPMAssetsbyPMId(this.PMProcedure.id).subscribe((res: any) => {
+      this.assetsPMList = res.listResult == null ? [] : res.listResult;
+    },
+      error => {
+      })
+  }
+
+  closeViewWorkOrder() {
+    this.isView = false;
+
+  }
 
   private getAllmaitenance(): any {
     const formModel = this.maintenanceForm.value
@@ -452,8 +458,8 @@ export class PreventivemaintenanceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(response => {
       if (response != null) {
         debugger
-        this.names =[];
-        this.AssetIds=[];
+        this.names = [];
+        this.AssetIds = [];
         response.forEach(element => {
           this.names.push(element.assetName);
           this.AssetIds.push(element.Id);
@@ -472,6 +478,27 @@ export class PreventivemaintenanceComponent implements OnInit {
     dialogRef.afterClosed().subscribe(response => {
       this.getMaintenance();
     });
+  }
+
+  onSelectAsset(req) {
+    debugger
+    this.accountService.getPMAssetsbyPMId(req.id).subscribe((res: any) => {
+      this.assetsPMList = res.listResult == null ? [] : res.listResult;
+      if (this.assetsPMList != null)
+        this.assetsPMList.forEach((item) => {
+          this.rowId = item.projectId;
+        });
+      const dialogRef = this.dialog.open(AddAssetPmComponent,
+        {
+          panelClass: 'mat-dialog-md',
+          data: { ProjectId: this.rowId, PmData: req}
+        });
+      dialogRef.afterClosed().subscribe(response => {
+        // this.getMaintenance();
+      });
+    },
+      error => {
+      })
   }
 
 

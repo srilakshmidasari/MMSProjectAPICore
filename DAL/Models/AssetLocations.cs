@@ -74,6 +74,9 @@ namespace DAL.Models
         [Display(Name = "AstFixed Date")]
         public DateTime AstFixedDate { get; set; }
 
+        [Display(Name = "Days Applicable")]
+        public int? DaysApplicable { get; set; }
+
         [Required]
         [Display(Name = "Created By")]
         public string CreatedBy { get; set; }

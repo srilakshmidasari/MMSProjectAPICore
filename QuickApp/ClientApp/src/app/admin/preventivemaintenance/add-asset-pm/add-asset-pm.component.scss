@@ -1,0 +1,19 @@
+.pad-left-0{padding-left:0px !important;}
+
+.search-box {
+    flex-direction: column;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.search-box .mat-form-field {
+    padding: 0 2em;
+}
+
+.space20 {
+    margin-bottom: 20px !important;
+  }
+
+  mat-header-row {
+    min-height: 46px !important;
+}

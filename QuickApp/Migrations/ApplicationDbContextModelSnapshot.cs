@@ -347,6 +347,9 @@ namespace MMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("DaysApplicable")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsActive")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
@@ -830,6 +833,12 @@ namespace MMS.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("AssetId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("AstFixedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("DaysApplicable")
                         .HasColumnType("int");
 
                     b.Property<int>("PreventiveMaintenanceId")

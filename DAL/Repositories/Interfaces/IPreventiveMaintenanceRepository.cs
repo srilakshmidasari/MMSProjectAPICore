@@ -19,6 +19,8 @@ namespace DAL.Repositories.Interfaces
         
         ValueDataResponse<PreventiveMaintenance> DeletePreventiveMaintenance(int PmId);
 
+       // ListDataResponse<GetPMAssetResponse> getAssetsByPM(int PmId);
+
 
         //  ValueDataResponse<WorkOrder> ApprovePreventiveMaintenance(UpsertWorkOrder workorder);
 

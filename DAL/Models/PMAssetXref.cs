@@ -21,6 +21,13 @@ namespace DAL.Models
         [Display(Name = "Preventive Maintenance Id")]
         public int PreventiveMaintenanceId { get; set; }
 
+        
+        [Display(Name = "AstFixed Date")]
+        public DateTime? AstFixedDate { get; set; }
+
+        [Display(Name = "Days Applicable")]
+        public int? DaysApplicable { get; set; }
+
         [JsonIgnore]
         public PreventiveMaintenance PreventiveMaintenance_Id { get; set; }
 

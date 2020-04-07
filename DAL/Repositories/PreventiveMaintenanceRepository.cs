@@ -145,7 +145,7 @@ namespace DAL.Repositories
 
                 foreach (var sId in PmOrders.AssetIds)
                 {
-                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId , PreventiveMaintenanceId = PM.Id });
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId , PreventiveMaintenanceId = PM.Id , DaysApplicable = Convert.ToInt32(PM.DaysApplicable), AstFixedDate= null});
                 }
                 _appContext.SaveChanges();
 
@@ -188,7 +188,7 @@ namespace DAL.Repositories
                 _appContext.SaveChanges();
                 foreach (var sId in PmOrder.AssetIds)
                 {
-                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId, PreventiveMaintenanceId = PM.Id });
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId, PreventiveMaintenanceId = PM.Id, DaysApplicable = Convert.ToInt32(PM.DaysApplicable), AstFixedDate = null });
                 }
                 _appContext.SaveChanges();
 
@@ -282,5 +282,57 @@ namespace DAL.Repositories
 
             return response;
         }
+        //public ListDataResponse<GetPMAssetResponse> getAssetsByPM(int PmId)
+        //{
+        //    ListDataResponse<GetPMAssetResponse> response = new ListDataResponse<GetPMAssetResponse>();
+        //    try
+        //    {
+        //        var result = (from pma in _appContext.PMAssetXrefs.Where(x => x.PreventiveMaintenanceId == PmId).ToList()
+        //                      join a in _appContext.AssetLocations on pma.AssetId equals a.Id
+                              
+        //                      join l in _appContext.Locations on a.LocationId equals l.Id
+        //                      join p in _appContext.Projects on l.ProjectId equals p.Id
+                             
+
+        //                      select new GetPMAssetResponse
+        //                      {
+        //                          AssetId = pma.AssetId,
+        //                          AssetReference = a.AssetRef,
+        //                          AssetFixedDate = a.AstFixedDate,
+        //                          AssetName = a.Name1,
+        //                          LocationId = a.LocationId,
+        //                          LocationName = l.Name1,
+        //                          ProjectId = l.ProjectId,
+        //                          ProjectName = p.Name1,
+                                 
+
+        //                      }).ToList();
+
+        //        if (result != null)
+        //        {
+        //            response.ListResult = result;
+        //            response.IsSuccess = true;
+        //            response.AffectedRecords = 1;
+        //            response.EndUserMessage = "Get All Assets Details Successfull";
+        //        }
+        //        else
+        //        {
+        //            response.IsSuccess = true;
+        //            response.AffectedRecords = 0;
+        //            response.EndUserMessage = "No Assets Found";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        response.IsSuccess = false;
+        //        response.AffectedRecords = 0;
+        //        response.EndUserMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+        //        response.Exception = ex;
+        //    }
+
+        //    return response;
+        //}
+
+
     }
 }
