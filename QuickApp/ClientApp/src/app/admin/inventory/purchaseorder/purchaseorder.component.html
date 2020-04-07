@@ -14,8 +14,8 @@
                 [rowsPerPageOptions]="[10,20,50]" sortMode="single" rowExp andMode="single" dataKey="id"
                 [globalFilterFields]="['purchaseReference','supplierName','supplierAddress','projectName','storeName', 'arrivingDate','statusName','remarks']">
                 <ng-template pTemplate="caption">
-                    <div style="text-align: right">
-                        <input type="text" pInputText size="50"
+                    <div style="text-align: left">
+                        <input type="text" pInputText size="150"
                             placeholder="{{'Purchase Order.Management.Search By Purchase Order'|translate}}"
                             (input)="dt.filterGlobal($event.target.value, 'contains')" style="width:auto">
                     </div>
