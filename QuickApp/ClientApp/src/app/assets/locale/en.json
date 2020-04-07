@@ -741,12 +741,13 @@
  "PMOrder":{
   "Management":{
     "SearchbyPMOrder":"Search by PM Order",
-    "PMOrderId" : "Pm Order Id",
+    "PMOrderId" :"Pm Order Id",
     "SiteName":"Site Name",
     "Reference":"Reference",
     "StartDate":"Start Date",
     "EndDate":"End Date",
     "Issue":"Issue",
+    "Edit PM Order":"Edit PM Order",
     "Resolution":"Resolution",
     "ProjectName":"Project Name",
     "StatusName":"Status Name",

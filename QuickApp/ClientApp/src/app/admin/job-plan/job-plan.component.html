@@ -3,8 +3,8 @@
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
-            <p-table #dt [value]="jobPlanList" [paginator]="true" expandableRows="true" [rows]="10" sortField="id"
-                matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
+            <p-table #dt [value]="jobPlanList" [paginator]="true" expandableRows="true" [rows]="10" sortField="jobReference"
+            matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
                 sortMode="single" rowExpandMode="single" dataKey="id"
                 [globalFilterFields]="['jobReference','name','jobDescription','siteName','projectName', 'statusName','techinicianName','assetGroupName','duration']">
                 <ng-template pTemplate="caption">
@@ -49,7 +49,7 @@
                         </th>
                         <th class="just-cont-center">
                             <button mat-button color="primary"
-                                matTooltip="{{'Work Order.Management.Add JobPlan'| translate}}" (click)="addClick()">
+                                matTooltip="{{'JobPlan.Management.Add JobPlan'| translate}}" (click)="addClick()">
                                 <mat-icon class="mat-button-icon">add</mat-icon>
                                 {{'JobPlan.Management.Add JobPlan'|translate}}
                             </button>

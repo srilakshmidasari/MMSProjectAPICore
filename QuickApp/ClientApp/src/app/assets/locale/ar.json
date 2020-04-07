@@ -727,6 +727,7 @@
   "Management":{
     "SearchbyPMOrder":"البحث بأمر PM",
     "PMOrderId" : "معرف طلب Pm",
+    "Edit PM Order":"تحرير ترتيب PM",
     "Reference":"مرجع",
     "StartDate":"تاريخ البدء",
     "EndDate":"تاريخ الانتهاء",
