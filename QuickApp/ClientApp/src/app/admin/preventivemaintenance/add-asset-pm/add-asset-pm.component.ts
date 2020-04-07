@@ -11,6 +11,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatSort, MatPaginato
 export class AddAssetPmComponent implements OnInit {
   projectId: any;
   astGroupId: any;
+  selectedRow: Number;
   assetList: any[] = [];
   displayedColumns = ['name1', 'assetRef', 'daysApplicable', 'astFixedDate', 'actions'];
   dataSource = new MatTableDataSource<any>();
@@ -52,6 +53,10 @@ export class AddAssetPmComponent implements OnInit {
       })
   }
 
+  rowClick(rowId) {
+    this.selectedRow = rowId;
+  }
+
   private getJobPlanbyPm() {
     this.accountService.getJobPlansByProject(this.projectId)
       .subscribe((results: any) => {
@@ -87,6 +92,7 @@ export class AddAssetPmComponent implements OnInit {
   
   //on edit asset click
   onEditAsset(row ,i) {
+    row.edited = true;
     this.assetList.forEach((item) => {
       if(item.id == row.id){
         
