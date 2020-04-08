@@ -391,7 +391,7 @@
     
                                     <mat-form-field class="col-md-3">
                                         <mat-label>{{'JobPlan.Management.Duration'|translate}}</mat-label>
-                                        <input matInput formControlName="duration" required maxlength="10" />
+                                        <input matInput formControlName="duration"  (keypress)="numberOnly($event)" required maxlength="10" />
                                         <mat-error *ngIf="item.controls.duration.invalid">
                                             {{'JobPlan.Management.Duration is Required'|translate}}
                                         </mat-error>
