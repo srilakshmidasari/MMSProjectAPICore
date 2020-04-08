@@ -358,7 +358,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
-      "assetIds": this.AssetIds,
+      "pmAssets": this.AssetIds,
       "startDate": null,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
@@ -462,7 +462,14 @@ export class PreventivemaintenanceComponent implements OnInit {
         this.AssetIds = [];
         response.forEach(element => {
           this.names.push(element.assetName);
-          this.AssetIds.push(element.Id);
+          this.AssetIds.push({
+            "id": 0,
+            "assetId": element.Id,
+            "preventiveMaintenanceId": 0,
+            "astFixedDate": element.astFixedDate,
+            "daysApplicable": parseInt(this.maintenanceForm.value.daysApplicable)
+          }
+          );
         });
         this.maintenanceForm.get('assetId').setValue(this.names.join());
         this.assetData = response;
@@ -481,7 +488,6 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   onSelectAsset(req) {
-    debugger
     this.accountService.getPMAssetsbyPMId(req.id).subscribe((res: any) => {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       if (this.assetsPMList != null)
@@ -491,7 +497,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       const dialogRef = this.dialog.open(AddAssetPmComponent,
         {
           panelClass: 'mat-dialog-md',
-          data: { ProjectId: this.rowId, PmData: req}
+          data: { ProjectId: this.rowId, PmData: req }
         });
       dialogRef.afterClosed().subscribe(response => {
         // this.getMaintenance();

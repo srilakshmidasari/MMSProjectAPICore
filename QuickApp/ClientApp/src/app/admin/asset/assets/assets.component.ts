@@ -316,7 +316,7 @@ export class AssetsComponent implements OnInit {
       "assetRef": formModel.assetRef,
       "assetRef2": formModel.assetCapacity,
       "astCounter": parseInt(formModel.assetCounter),
-      "astFixedDate": formModel.assetFixDate,
+      "astFixedDate": formModel.assetFixDate,      
       "assetMake": formModel.assetMake,
       "assetModel": formModel.assetModel,
       "assetSize": formModel.assetSize,
@@ -327,6 +327,7 @@ export class AssetsComponent implements OnInit {
       "createdDate": new Date(),
       "updatedBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.updatedBy,
       "updatedDate": new Date(),
+      "daysApplicable": 0,
       "assetRepositories": this.assetRepositories
     };
   }

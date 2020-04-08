@@ -105,6 +105,7 @@ namespace DAL.Repositories
                                   ProjectName = p.Name1,
                                   SiteId = p.SiteId,
                                   SiteName = s.Name1,
+                                  Daysapplicable = pma.DaysApplicable,
 
                               }).ToList();
 
@@ -143,9 +144,9 @@ namespace DAL.Repositories
                 var result = _appContext.PreventiveMaintenances.Add(PM);
                 _appContext.SaveChanges();
 
-                foreach (var sId in PmOrders.AssetIds)
+                foreach (var sId in PmOrders.pmAssets)
                 {
-                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId , PreventiveMaintenanceId = PM.Id , DaysApplicable = Convert.ToInt32(PM.DaysApplicable), AstFixedDate= null});
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId.AssetId, PreventiveMaintenanceId = PM.Id , DaysApplicable = sId.DaysApplicable, AstFixedDate= sId.AstFixedDate});
                 }
                 _appContext.SaveChanges();
 
@@ -186,9 +187,9 @@ namespace DAL.Repositories
                 var List = _appContext.PMAssetXrefs.Where(x => x.PreventiveMaintenanceId == result.Id).ToList();
                 _appContext.PMAssetXrefs.RemoveRange(List);
                 _appContext.SaveChanges();
-                foreach (var sId in PmOrder.AssetIds)
+                foreach (var sId in PmOrder.pmAssets)
                 {
-                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId, PreventiveMaintenanceId = PM.Id, DaysApplicable = Convert.ToInt32(PM.DaysApplicable), AstFixedDate = null });
+                    _appContext.PMAssetXrefs.Add(new PMAssetXref { AssetId = sId.AssetId, PreventiveMaintenanceId = PM.Id, DaysApplicable = sId.DaysApplicable, AstFixedDate = sId.AstFixedDate });
                 }
                 _appContext.SaveChanges();
 
