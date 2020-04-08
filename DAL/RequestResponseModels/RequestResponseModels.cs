@@ -276,7 +276,7 @@ namespace DAL.RequestResponseModels
             public string Name1 { get; set; }
             public string Name2 { get; set; }
             public string AssetLocationRef { get; set; }
-            public int AstCounter { get; set; }
+            public int? AstCounter { get; set; }
             public DateTime AstFixedDate { get; set; }
             //public string FileName { get; set; }
             //public string FileLocation { get; set; }
@@ -300,7 +300,7 @@ namespace DAL.RequestResponseModels
             public string Name2 { get; set; }
             public string AssetRef { get; set; }
             public string AssetSize { get; set; }
-            public int AstCounter { get; set; }
+            public int? AstCounter { get; set; }
             public DateTime AstFixedDate { get; set; }
             public string AssetMake { get; set; }
             public string AssetModel { get; set; }
@@ -636,7 +636,8 @@ namespace DAL.RequestResponseModels
         public class UpsertPreventiveMaintenance : AuditableEntity
         {
             public int Id { get; set; }
-            public int[] AssetIds { get; set; }
+            public List<UpsertPmAsset> pmAssets { get; set; }
+          //  public int[] AssetIds { get; set; }
             public DateTime? StartDate { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
@@ -651,6 +652,14 @@ namespace DAL.RequestResponseModels
 
         }
 
+        public class UpsertPmAsset
+        {
+            public int Id { get; set; }
+            public int AssetId { get; set; }
+            public int PreventiveMaintenanceId { get; set; }
+            public DateTime? AstFixedDate { get; set; }
+            public int? DaysApplicable { get; set; }
+        }
         public class GetPMAssetResponse
         {
             public int AssetId { get; set; }

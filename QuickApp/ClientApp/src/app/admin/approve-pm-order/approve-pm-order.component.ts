@@ -15,8 +15,6 @@ export class ApprovePmOrderComponent implements OnInit {
   pmOrderForm: FormGroup;
   pmProcedureData: any;
   pmOrderData: any[] = [];
-  send_date = new Date();
-  formattedDate: any;
   assetsPMList: any[] = [];
   astFixDate: any;
   orderDate: any;

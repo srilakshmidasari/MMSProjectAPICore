@@ -7,6 +7,7 @@
         </mat-form-field>
     </div>
     <div class="example-container mat-elevation-z8">
+        <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table [dataSource]="dataSource" matSort matSortActive="assetRef" matSortDirection="asc"
             matSortDisableClear>
 
@@ -25,10 +26,10 @@
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.DaysApplicable'|translate}}</mat-header-cell>      
                     <mat-cell class="text-center" *matCellDef="let row; let i = index;">
-                        <span *ngIf="!isEditAsset"> {{row.daysApplicable}}</span>
-                        <span *ngIf="isEditAsset">
+                        <span *ngIf="!row.isEditable"> {{row.daysApplicable}}</span>
+                        <span  *ngIf="row.isEditable">
                             <mat-form-field class="w-75 text-wid">
-                                <input matInput [(ngModel)]="row.daysApplicable"  maxlength="10"/>
+                                <input matInput [(ngModel)]="row.daysApplicable"   maxlength="10"/>
                             </mat-form-field>
                         </span>
                     </mat-cell>
@@ -46,20 +47,21 @@
                     Actions</mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row; let i = index;">
                   
-                    <button mat-icon-button matTooltip="Edit" (click)="onEditAsset(row, i)" *ngIf="!isEditAsset">
+                    <button mat-icon-button matTooltip="Edit" (click)="onEditAsset(row, i)" *ngIf="!row.isEditable">
                         <mat-icon color="primary">edit</mat-icon>
                     </button> &nbsp;
-                    <button mat-icon-button matTooltip="Save" *ngIf="isEditAsset" (click)="onSaveAsset(row)">
+                    <button mat-icon-button matTooltip="Save" (click)="saveMaintenance(row)" *ngIf="row.isEditable">
                         <mat-icon color="primary">offline_pin</mat-icon>
                     </button> &nbsp;
-                    <button mat-icon-button matTooltip="Cancel" (click)="onCancelAsset(row)" *ngIf="isEditAsset">
+                    <button mat-icon-button matTooltip="Cancel"  *ngIf="row.isEditable" 
+                    (click)="onCancelAsset(row)" >
                         <mat-icon color="warn">cancel</mat-icon>
                     </button>
                 </mat-cell>
             </ng-container>
 
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row;  columns: displayedColumns;let i = index;" (click)="rowClick(row.id)">
+            <mat-row *matRowDef="let row; columns: displayedColumns;let i = index;" >
             </mat-row>
         </mat-table>
         <div style="text-align: center;" [hidden]="!(dataSource.data.length==0)">
@@ -76,6 +78,6 @@
     <div class="clearfix"></div>
 </div>
 <div mat-dialog-actions class="float-right" style="padding-top: 12px;">
-    <button mat-raised-button color="primary" [mat-dialog-close]="assetData">Save</button>
+    <!-- <button mat-raised-button color="primary" [mat-dialog-close]="assetData">Save</button> -->
     <button mat-raised-button (click)="Cancel()" color="warn">Cancel</button>
 </div>

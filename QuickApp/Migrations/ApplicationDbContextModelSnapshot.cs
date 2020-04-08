@@ -328,7 +328,7 @@ namespace MMS.Migrations
                         .HasColumnType("nvarchar(100)")
                         .HasMaxLength(100);
 
-                    b.Property<int>("AstCounter")
+                    b.Property<int?>("AstCounter")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("AstFixedDate")

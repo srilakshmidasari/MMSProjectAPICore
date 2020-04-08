@@ -66,9 +66,9 @@ namespace DAL.Models
         [Display(Name = "IsActive")]
         public bool IsActive { get; set; }
 
-        [Required]
+        
         [Display(Name = "Ast Counter")]
-        public int AstCounter { get; set; }
+        public int? AstCounter { get; set; }
 
         [Required]
         [Display(Name = "AstFixed Date")]
