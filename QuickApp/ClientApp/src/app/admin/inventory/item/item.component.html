@@ -173,7 +173,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Average Cost'|translate}}</mat-label>
-                        <input matInput formControlName="averageCost" required maxlength="50" />
+                        <input matInput formControlName="averageCost" (keypress)="numberOnly($event)" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['averageCost'].valid">
                             {{'Item.Management.Average Cost is required'|translate}}
                         </mat-error>
