@@ -119,10 +119,11 @@ export class AddAssetPmComponent implements OnInit {
       row.isEditable = true;
       this.pmData.assetId.forEach((obj) => {
         if (obj.assetId == row.id) {
-         // row.isEditable = false;
           this.alertService.showStickyMessage('This asset is already assigned to this procedure', null, MessageSeverity.error);
         } 
       })
+    }else{
+      
     }
     
   }
@@ -132,11 +133,7 @@ export class AddAssetPmComponent implements OnInit {
     row.isEditable = false;
   }
 
-  onSaveAsset(row) {
-    row.isEditable = false;
 
-
-  }
 
   private getAllmaitenance(row): any {
     this.AssetIds = [];
@@ -184,12 +181,10 @@ export class AddAssetPmComponent implements OnInit {
   saveMaintenance() {
     this.alertService.startLoadingMessage('Saving changes...');
     const editedSupplier = this.getAllmaitenance(this.row);
-  
     this.accountService.UpdateMaintenance(editedSupplier).subscribe(
       (result: any) => {
         this.alertService.stopLoadingMessage();
         if (result.isSuccess) {
-         // row.isEditable = false;
          this.dialogRef.close();
           this.onOrderCofirmation();
         }
