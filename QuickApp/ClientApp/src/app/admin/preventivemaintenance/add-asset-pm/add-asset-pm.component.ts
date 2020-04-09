@@ -17,7 +17,7 @@ export class AddAssetPmComponent implements OnInit {
   selectedRow: Number;
   loadingIndicator: boolean = false;
   assetList: any[] = [];
-  displayedColumns = ['name1', 'assetRef', 'daysApplicable', 'astFixedDate', 'actions'];
+  displayedColumns = ['isChecked','name1', 'assetRef', 'daysApplicable', 'astFixedDate'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -30,7 +30,8 @@ export class AddAssetPmComponent implements OnInit {
   isEditAsset: boolean = false;
   enableEditIndex = null;
   AssetIds: any[] = [];
-  pmOrderData: any[]=[];
+  pmOrderData: any[] = [];
+  row: any;
 
   constructor(private accountService: AccountService, private dialog: MatDialog, private authService: AuthService, private alertService: AlertService,
     public dialogRef: MatDialogRef<AddAssetPmComponent>, @Inject(MAT_DIALOG_DATA) public data: { ProjectId, PmData }) {
@@ -46,7 +47,6 @@ export class AddAssetPmComponent implements OnInit {
 
 
   getAssetsByProjects() {
-    this.loadingIndicator = true;
     var req = {
       "projectId": this.projectId,
       "astGroupId": this.JobPlanData.assetGroupId
@@ -57,6 +57,7 @@ export class AddAssetPmComponent implements OnInit {
       this.assetList.map(row => {
         row.isEditable = false;
       });
+      debugger
       this.assetList.forEach((item) => {
         this.pmData.assetId.forEach((obj) => {
           if (obj.assetId == item.id) {
@@ -77,6 +78,7 @@ export class AddAssetPmComponent implements OnInit {
 
 
   private getJobPlanbyPm() {
+    this.loadingIndicator = true;
     this.accountService.getJobPlansByProject(this.projectId)
       .subscribe((results: any) => {
         this.jobPlanList = results.listResult == null ? [] : results.listResult;
@@ -110,11 +112,19 @@ export class AddAssetPmComponent implements OnInit {
 
 
   //on edit asset click
-  onEditAsset(row, i) {
-    this.enableEditIndex = i;
-    this.assetList.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
-    row.isEditable = true;
-
+  onEditAsset(event, row) {
+    this.row =row;
+    if(event.checked){
+      this.assetList.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
+      row.isEditable = true;
+      this.pmData.assetId.forEach((obj) => {
+        if (obj.assetId == row.id) {
+         // row.isEditable = false;
+          this.alertService.showStickyMessage('This asset is already assigned to this procedure', null, MessageSeverity.error);
+        } 
+      })
+    }
+    
   }
 
 
@@ -129,21 +139,21 @@ export class AddAssetPmComponent implements OnInit {
   }
 
   private getAllmaitenance(row): any {
-     this.AssetIds=[];
-    this.pmData.assetId.forEach((item) =>{
-     this.AssetIds.push({
-      "id": 0,
-      "assetId": item.assetId,
-      "preventiveMaintenanceId": this.pmData.id,
-      "astFixedDate":item.astFixedDate,
-      "daysApplicable": item.daysApplicable
-     })
+    this.AssetIds = [];
+    this.pmData.assetId.forEach((item) => {
+      this.AssetIds.push({
+        "id": 0,
+        "assetId": item.assetId,
+        "preventiveMaintenanceId": this.pmData.id,
+        "astFixedDate": item.astFixedDate,
+        "daysApplicable": item.daysApplicable
+      })
     })
     this.AssetIds.push({
       "id": 0,
       "assetId": row.id,
       "preventiveMaintenanceId": this.pmData.id,
-      "astFixedDate":row.astFixedDate,
+      "astFixedDate": row.astFixedDate,
       "daysApplicable": parseInt(row.daysApplicable)
     })
     return {
@@ -171,15 +181,16 @@ export class AddAssetPmComponent implements OnInit {
   }
 
 
-  saveMaintenance(row) {
-   this.alertService.startLoadingMessage('Saving changes...');
-    const editedSupplier = this.getAllmaitenance(row);
-    
+  saveMaintenance() {
+    this.alertService.startLoadingMessage('Saving changes...');
+    const editedSupplier = this.getAllmaitenance(this.row);
+  
     this.accountService.UpdateMaintenance(editedSupplier).subscribe(
       (result: any) => {
         this.alertService.stopLoadingMessage();
         if (result.isSuccess) {
-          row.isEditable = false;
+         // row.isEditable = false;
+         this.dialogRef.close();
           this.onOrderCofirmation();
         }
       }, error => {
@@ -187,14 +198,12 @@ export class AddAssetPmComponent implements OnInit {
         this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
       }
     );
-    
-
   }
 
   onOrderCofirmation() {
     debugger
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Pm Order Generation" + " " , msg: "Are you sure you want to generate this Order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "PM Order Generation" + " ", msg: "Are you sure you want to generate the PM Order for this procedure to this asset " + this.row.name1 + "?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
     });
@@ -204,33 +213,33 @@ export class AddAssetPmComponent implements OnInit {
       }
     });
   }
- 
 
-  onOrderGenerate(){
+
+  onOrderGenerate() {
     this.pmOrderData = [];
     this.AssetIds.forEach((item) => {
-     // this.pmOrderData = [];
+      // this.pmOrderData = [];
       var d = new Date(item.astFixedDate);
       var astday = d.getDate();
       var dt = new Date();
       var year = dt.getFullYear();
       var month = dt.getMonth();
-      this.astFixDate = new Date(year, month, astday+1);
+      this.astFixDate = new Date(year, month, astday + 1);
       if (this.pmData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
         var monthsCount = parseInt(item.daysApplicable) / 30;
         var monthCount = parseInt(monthsCount.toFixed(0));
       } else if (this.pmData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
-       var monthsCount = parseInt(item.daysApplicable) / 90;
-       var monthCount = parseInt(monthsCount.toFixed(0));
+        var monthsCount = parseInt(item.daysApplicable) / 90;
+        var monthCount = parseInt(monthsCount.toFixed(0));
       } else if (this.pmData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
         var monthsCount = parseInt(item.daysApplicable) / 180;
         var monthCount = parseInt(monthsCount.toFixed(0));
       } else {
         var monthsCount = parseInt(item.daysApplicable) / 365;
         var monthCount = parseInt(monthsCount.toFixed(0));
-       // var monthsCount = 1
+        // var monthsCount = 1
       }
-      
+
       for (var i = 0; i < monthCount; i++) {
         if (i == 0) {
           this.orderDate = new Date(this.astFixDate)
@@ -246,7 +255,7 @@ export class AddAssetPmComponent implements OnInit {
         } else {
           var astDt = this.orderDate.setMonth(this.orderDate.getMonth() + 12);
         }
-       
+
         var req = {
           "id": 0,
           "assetId": item.assetId,
@@ -272,18 +281,16 @@ export class AddAssetPmComponent implements OnInit {
           "updatedDate": new Date()
         }
         this.pmOrderData.push(req);
-
       }
-      console.log(this.pmOrderData);
     })
-   this.alertService.startLoadingMessage('Saving changes...');
+    this.alertService.startLoadingMessage('Saving changes...');
     this.accountService.addPmOrder(this.pmOrderData).subscribe(
       (response: any) => {
         this.alertService.stopLoadingMessage();
         if (response.isSuccess) {
           this.dialogRef.close();
-         // this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-          
+          this.alertService.showMessage('Success', "PM Order Generated Successfully", MessageSeverity.success)
+
         } else {
           this.alertService.stopLoadingMessage();
           this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
