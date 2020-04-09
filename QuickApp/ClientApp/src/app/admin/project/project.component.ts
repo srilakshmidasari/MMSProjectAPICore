@@ -33,7 +33,7 @@ export class ProjectComponent implements OnInit {
   storeDataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) storeSort: MatSort;
-  storeColumns = ['storeName1', 'storeName2', 'remarks', 'isActive', 'updatedDate'];
+  storeColumns = ['storeName1', 'storeName2', 'remarks', 'isActive'];
   baseIndex: 'data:image/jpg;base64'
   projectForm: FormGroup;
   isAddingProject: boolean = false;
