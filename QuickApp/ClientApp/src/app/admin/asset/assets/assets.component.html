@@ -284,7 +284,7 @@
 
                 <div class="row" *ngIf="isNewAsset">
                     <div class="form-group col-md-6" *ngFor="let doc of documentList;let index=i">
-                        <label for="file"> Upload Asset {{doc.description}}
+                        <label for="file">{{'Assets.Management.Upload Asset'|translate}} {{doc.description}}
                             <span></span></label>
                         <input #fileInput type="file" class="form-control" id="file" (change)="uploadFile(doc, $event)">
                     </div>

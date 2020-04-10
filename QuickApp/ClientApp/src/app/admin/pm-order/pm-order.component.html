@@ -4,7 +4,7 @@
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
-            <p-table #dt [value]="pmOrdersList" [paginator]="true" expandableRows="true" [rows]="12" sortField="startDate"
+            <p-table #dt [value]="pmOrdersList" [paginator]="true" expandableRows="true" [rows]="13" sortField="startDate"
                 matSortDirection="desc" [tableStyle]="{'table-layout':'auto'}" [rowsPerPageOptions]="[10,20,50]"
                 sortMode="single" rowExpandMode="single" dataKey="id"
                 [globalFilterFields]="['id','reference1','startDate','endDate','assetName','statusTypeName','issue','resolution']">
@@ -116,7 +116,7 @@
                 </ng-template>
                 <ng-template pTemplate="rowexpansion" let-rowData let-columns="columns">
                     <tr>
-                        <td [attr.colspan]="10">
+                        <td [attr.colspan]="12">
                             <p-table #dt1 [responsive]="true" [value]="PMOrderItemList" [rows]="5"
                                 sortField="itemName" [paginator]="true" [rowsPerPageOptions]="[5,10,15]">
                                 <ng-template pTemplate="header">
@@ -155,7 +155,7 @@
             </ng-template>
             <ng-template pTemplate="emptymessage" let-columns>
                 <tr>
-                    <td colspan="10" class="ui-datatable-emptymessage text-center">
+                    <td colspan="11" class="ui-datatable-emptymessage text-center">
                         {{'Work Order.Management.No Records Found'|translate}}
                     </td>
                 </tr>
