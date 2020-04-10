@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
    }
 
   ngOnInit() {
+    debugger
     this.data.msg=this.data.msg.replace(new RegExp('\n', 'g'), "<br />");
     this.data = this.data;
   }

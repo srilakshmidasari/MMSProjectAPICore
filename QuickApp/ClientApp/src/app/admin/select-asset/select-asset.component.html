@@ -1,5 +1,5 @@
-<h1 mat-dialog-title>Select Asset</h1>
-<div mat-dialog-content>
+<h1 [dir]="textDir"  mat-dialog-title>Select Asset</h1>
+<div [dir]="textDir" mat-dialog-content>
     <div class="search-box">
         <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)"
@@ -26,12 +26,24 @@
                 {{'Assets.Management.Asset Refrerence'|translate}} </mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.assetRef}} </mat-cell>
         </ng-container>
-        <ng-container matColumnDef="assetCounter">
-            <mat-header-cell  *matHeaderCellDef mat-sort-header>
-                {{'Assets.Management.Asset Counter'|translate}} </mat-header-cell>
-            <mat-cell  *matCellDef="let row" class="just-cont-center">
-                {{row.astCounter}} </mat-cell>
+        <ng-container matColumnDef="daysApplicable">
+            <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
+                {{'Assets.Management.DaysApplicable'|translate}}</mat-header-cell>      
+                <mat-cell class="text-center" *matCellDef="let row; let i = index;">
+                    <span *ngIf="!row.isChecked"> {{row.daysApplicable}}</span>
+                    <span  *ngIf="row.isChecked">
+                        <mat-form-field class="w-75 text-wid">
+                            <input matInput [(ngModel)]="row.daysApplicable" (blur)="onDaysEnter($event.target.value)"  maxlength="10"/>
+                        </mat-form-field>
+                    </span>
+                </mat-cell>
         </ng-container>
+        <!-- <ng-container matColumnDef="daysApplicable">
+            <mat-header-cell  *matHeaderCellDef mat-sort-header>
+                {{'Assets.Management.DaysApplicable'|translate}} </mat-header-cell>
+            <mat-cell  *matCellDef="let row" class="just-cont-center">
+                {{row.daysApplicable}} </mat-cell>
+        </ng-container> -->
         
         <ng-container matColumnDef="astFixedDate">
             <mat-header-cell *matHeaderCellDef mat-sort-header >
@@ -53,47 +65,11 @@
     <mat-paginator  [length]="dataSource.data.length" [pageSize]="5"
         [pageSizeOptions]="[5, 10, 25, 100]">
     </mat-paginator>
-        <!-- <table class="table table-bordered">
-            <thead>
-                <tr>
-                     <th style="width:50px;">
-                        <div class="form-check pad-left-0 check-ui">
-                            <label > 
-                                <input  type="checkbox" name="check" (change)="checkAllAssets($event)" />
-                                <span class="label-text" style="margin-right: 5px;" ></span>
-                            </label>
-                        </div>
-                    </th> 
-                    <th>Asset Name</th>
-                    <th>Asset Reference</th>
-                    <th>Asset Counter</th>
-                    <th>Asset Fixed Date</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let asset of assetList;let i = index">
-                     <td>
-                        <div class="form-check pad-left-0">
-                            <label>
-                                <input type="checkbox" name="check" [(ngModel)]="asset.isChecked" (change)="onAssetChecked($event,asset)">
-                                <span class="label-text"></span>
-                            </label>
-                        </div>
-                    </td> 
-                    <td>{{asset.name1}} </td>
-                    <td>{{asset.assetLocationRef}}</td>
-                    <td class="text-center">{{asset.astCounter}}</td>
-                    <td>{{asset.astFixedDate | date: 'dd/MM/yyyy '}}</td>
-                    
-                </tr>
-            </tbody>
-            
-        </table> -->
+       
     </div>
     <div class="clearfix"></div>
 </div>
 <div mat-dialog-actions class="float-right" style="padding-top: 12px;">
-    <button mat-raised-button color="primary" [mat-dialog-close]="assetData">Save</button>
-    <button mat-raised-button (click)="Cancel()" color="warn">Cancel</button>
+    <button [dir]="textDir"  mat-raised-button color="primary" [mat-dialog-close]="assetData">Save</button>
+    <button [dir]="textDir"  mat-raised-button (click)="Cancel()" color="warn">Cancel</button>
 </div>

@@ -32,11 +32,14 @@ export class AddAssetPmComponent implements OnInit {
   AssetIds: any[] = [];
   pmOrderData: any[] = [];
   row: any;
+  editAssetList: any[]=[];
+  textDir: any;
 
   constructor(private accountService: AccountService, private dialog: MatDialog, private authService: AuthService, private alertService: AlertService,
     public dialogRef: MatDialogRef<AddAssetPmComponent>, @Inject(MAT_DIALOG_DATA) public data: { ProjectId, PmData }) {
     this.pmData = this.data.PmData;
     this.projectId = this.data.ProjectId;
+    this.textDir = localStorage.getItem('textdir')
     console.log(this.pmData)
   }
 
@@ -70,6 +73,7 @@ export class AddAssetPmComponent implements OnInit {
         })
       })
       this.dataSource.data = this.assetList;
+      this.editAssetList = this.assetList.map(x => Object.assign({}, x));
     },
       error => {
         this.loadingIndicator = false;
@@ -113,7 +117,7 @@ export class AddAssetPmComponent implements OnInit {
 
   //on edit asset click
   onEditAsset(event, row) {
-    this.row =row;
+    this.row = row;
     if(event.checked){
       this.assetList.filter(row => row.isEditable).map(r => { r.isEditable = false; return r })
       row.isEditable = true;
@@ -125,12 +129,37 @@ export class AddAssetPmComponent implements OnInit {
     }else{
       
     }
-    
+  }
+
+
+  onDaysEnter(enterText) {
+    debugger
+    if (this.pmData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
+      if (enterText < 30) {
+        this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
+      }
+    } else if (this.pmData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
+      if (enterText < 90) {
+        this.alertService.showStickyMessage('Please Enter 90 Days above for this Quarterly Procedure', null, MessageSeverity.error);
+      }
+    } else if (this.pmData.typeOfMaintainanceId== DataFactory.TypeofMaintenance.HalfYearly) {
+      if (enterText < 180) {
+        this.alertService.showStickyMessage('Please Enter 180 Days above for this HalfYearly Procedure', null, MessageSeverity.error);
+      }
+    } else if (this.pmData.typeOfMaintainanceId== DataFactory.TypeofMaintenance.Yearly) {
+      if (enterText < 365) {
+        this.alertService.showStickyMessage('Please Enter 365 Days  for this Yearly Procedure', null, MessageSeverity.error);
+      }
+    }
+
+
   }
 
 
   onCancelAsset(row) {
     row.isEditable = false;
+    this.assetList = this.editAssetList.map(x => Object.assign({}, x));
+
   }
 
 

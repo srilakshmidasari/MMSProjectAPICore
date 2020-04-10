@@ -374,6 +374,7 @@ namespace DAL.Repositories
                         result.CreatedDate = asset.CreatedDate;
                         result.UpdatedBy = asset.UpdatedBy;
                         result.UpdatedDate = asset.UpdatedDate;
+                        result.DaysApplicable = asset.DaysApplicable;
                         foreach (var req in asset.AssetRepositories)
                         {
                             if (req.FileName != null)

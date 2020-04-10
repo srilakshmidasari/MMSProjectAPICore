@@ -200,7 +200,8 @@ export class AssetsComponent implements OnInit {
       assetSize: [''],
       assetRef2: [''],
       assetTrade: ['', Validators.required],
-      assetCounter: ['', Validators.required],
+      assetCounter: [''],
+      daysApplicable: ['', Validators.required],
       assetFixDate: ['', Validators.required],
       isActive: []
     })
@@ -262,6 +263,7 @@ export class AssetsComponent implements OnInit {
       assetRef2: this.assetRefData.assetCapacity || '',
       assetTrade: this.assetRefData.astTradeId || '',
       assetCounter: this.assetRefData.astCounter || '',
+      daysApplicable:this.assetRefData.daysApplicable || '',
       assetFixDate: this.assetRefData.astFixedDate || '',
       isActive: this.assetRefData.isActive || '',
     })
@@ -327,7 +329,7 @@ export class AssetsComponent implements OnInit {
       "createdDate": new Date(),
       "updatedBy": this.isNewAsset ? this.currentUser.id : this.assetRefData.updatedBy,
       "updatedDate": new Date(),
-      "daysApplicable": 0,
+      "daysApplicable": parseInt(formModel.daysApplicable),
       "assetRepositories": this.assetRepositories
     };
   }

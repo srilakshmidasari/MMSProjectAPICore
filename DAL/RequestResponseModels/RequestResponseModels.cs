@@ -665,7 +665,7 @@ namespace DAL.RequestResponseModels
             public int AssetId { get; set; }
             public string AssetName { get; set; }
             public string AssetReference { get; set; }
-            public int? Daysapplicable { get; set; }
+            public int? DaysApplicable { get; set; }
             public int SiteId { get; set; }
             public string SiteName { get; set; }
             public int ProjectId { get; set; }
