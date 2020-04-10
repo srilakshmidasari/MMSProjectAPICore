@@ -33,7 +33,7 @@
             </ng-container>
             <ng-container matColumnDef="typeOfMaintainanceName">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                    {{'Preventive Maintenance.Management.Type Of Maintainance'|translate}}</mat-header-cell>
+                    {{'Preventive Maintenance.Management.Type Of Maintenance'|translate}}</mat-header-cell>
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.typeOfMaintainanceName}}
                 </mat-cell>
             </ng-container>
@@ -80,7 +80,7 @@
                     <button mat-button color="primary"
                         matTooltip="{{'Preventive Maintenance.Management.Add'|translate}}" (click)="editClick()">
                         <mat-icon class="mat-button-icon">add</mat-icon>
-                        {{'Preventive Maintenance.Management.Add Maintainance'|translate}}
+                        {{'Preventive Maintenance.Management.Add Maintenance'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
@@ -130,10 +130,10 @@
 <div class="page-content" *ngIf="isAdding">
     <mat-card>
         <mat-card-header>
-            <mat-card-title *ngIf="isNewMaintanance">{{'Preventive Maintenance.Management.Add Maintainance'|translate}}
+            <mat-card-title *ngIf="isNewMaintanance">{{'Preventive Maintenance.Management.Add Maintenance'|translate}}
             </mat-card-title>
             <mat-card-title *ngIf="!isNewMaintanance">
-                {{'Preventive Maintenance.Management.Edit Maintainance'|translate}}</mat-card-title>
+                {{'Preventive Maintenance.Management.Edit Maintenance'|translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
@@ -147,7 +147,7 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Preventive Maintenance.Management.Type Of Maintainance'|translate}} <span>*</span>
+                        <mat-label>{{'Preventive Maintenance.Management.Type Of Maintenance'|translate}} <span>*</span>
                         </mat-label>
                         <mat-select formControlName="typeOfMaintainanceId" (ngModelChange)="onTypeChange($event)">
                             <mat-option *ngFor="let tech of TypesList" [value]="tech.typeCdDmtId" required>
@@ -155,7 +155,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!maintenanceForm.controls['assetId'].valid">
-                            {{'Preventive Maintenance.Management.Please Select Type of Maintainance'|translate}}
+                            {{'Preventive Maintenance.Management.Please Select Type of Maintenance'|translate}}
                         </mat-error>
                     </mat-form-field>
 
@@ -173,7 +173,7 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">
-                        <mat-label>Priority</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Select Site'|translate}}</mat-label>
                         <input matInput formControlName="priority" required />
                         <mat-error *ngIf="!maintenanceForm.controls['priority'].valid">
                             Priority is Required
@@ -362,7 +362,7 @@
                             <b>{{PMProcedure.preventiveRefId}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Type Of Maintainance
+                            Type Of Maintenance
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">

@@ -58,7 +58,7 @@
     "Item":"بند",
     "Purchase Order":"أمر شراء",
     "Work Order":"ترتيب العمل",
-    "Preventive Maintenance":"الصيانة الوقائية",
+    "PM Procedures":"إجراءات PM",
     "Export":"تصدير",
     "JobPlan":"خطة العمل"
   },
@@ -409,7 +409,7 @@
       "AssetTrade": "تجارة الأصول",
       "AssetConter": "الأصول كونتر",
       "AssetFixedDate": "تاريخ الأصول الثابتة",
-      "UploadImage": "تحميل الصور",
+      "Upload Asset": "تحميل الأصول",
       "save": "حفظ",
       "cancel": "إلغاء",
       "PleaseSelectSite": "يرجى اختيار الموقع",
@@ -564,6 +564,19 @@
     "Receive":"تسلم"
   }
  },
+ "Receive Item":{
+  "Management":{
+  "Receive Item":"تلقي البند",
+  "Item Name":"اسم العنصر",
+  "Quantity":"كمية",
+  "Unit Price":"سعر الوحده",
+  "Remaining Quantity":"الكمية المتبقية",
+  "Received Quantity":"الكمية المستلمة",
+  "Received Price":"السعر المستلم",
+  "Save":"حفظ",
+  "Cancel":"إلغاء"
+  }
+},
  "Work Order":{
   "Management":{
     "Search By work Order":"البحث حسب ترتيب العمل",
@@ -649,7 +662,7 @@
   "Management":{
    "Search for Preventive Maintenance":"ابحث عن الصيانة الوقائية",
    "Preventive Reference":"مرجع وقائي",
-   "Type Of Maintainance":"نوع الصيانة",
+   "Type Of Maintenance":"نوع الصيانة",
    "Start Date":"تاريخ البدء",
    "Duration In Hours":"المدة بالساعات",
    "Technician Name":"اسم الفني",
@@ -663,8 +676,8 @@
    "IsActive":"نشط",
    "No Records Found":"لا توجد سجلات",
    "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
-   "Add Maintainance":"أضف الصيانة",
-   "Edit Maintainance":"تحرير الصيانة",
+   "Add Maintenance":"أضف الصيانة",
+   "Edit Maintenance":"تحرير الصيانة",
    "Select Site":"حدد الموقع",
    "Please Select Site":"يرجى تحديد الموقع",
    "Select Project":"حدد المشروع",
@@ -674,7 +687,7 @@
    "Select Asset":"حدد الأصول",
    "Please Select Asset":"يرجى تحديد الأصول",
    "Preventive Reference is Required":"المرجع الوقائي مطلوب",
-   "Please Select Type of Maintainance":"يرجى تحديد نوع الصيانة",
+   "Please Select Type of Maintenance":"يرجى تحديد نوع الصيانة",
    "Start Date is Required":"تاريخ البدء مطلوب",
    "Duration is required":"المدة مطلوبة",
    "Please Select Technician":"يرجى تحديد فني",
@@ -687,7 +700,8 @@
    "TaskName":"اسم المهمة",
    "TradeName":"اسم تجاري",
    "Save":"حفظ",
-   "Cancel":"إلغاء"
+   "Cancel":"إلغاء",
+   "Priority":"أفضلية"
   }
 },
 "JobPlan":{

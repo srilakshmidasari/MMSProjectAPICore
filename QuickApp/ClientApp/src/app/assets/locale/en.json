@@ -68,7 +68,8 @@
     "Purchase Order":"Purchase Order",
     "Work Order":"Work Order",
     "Inventory-Items" :"Inventory-Items",
-    "PMProcedures":"PM Procedures",
+    "PM Procedures":"PM Procedures",
+    "Preventive Maintenance":"Preventive Maintenance",
     "Export":"Export",
     "JobPlan":"Job Plan",
     "PMOrder": "PM Order"
@@ -256,7 +257,7 @@
       "Address": "Address",
       "UpdatedDate": "Updated Date",
       "IsActive": "Is Active",
-      "AddSite": "Add Site",
+      "AddSite": "AddSite",
       "Add":"Add",
       "Edit": "Edit",
       "Delete": "Delete",
@@ -418,8 +419,7 @@
       "AssetTrade": "Asset Trade",
       "AssetConter": "Asset Conter",
       "AssetFixedDate": "Asset Fixed Date",
-      "UploadImage": "Upload Image",
-      "UploadDocumnt":"Upload Documnt",
+      "Upload Asset": "Upload Asset",
       "save": "Save",
       "cancel": "Cancel",
       "projectName": "projectName",
@@ -578,6 +578,20 @@
     "Receive":"Receive"
   }
  },
+ "Receive Item":{
+   "Management":{
+   "Receive Item":"Receive Item",
+   "Item Name":"Item Name",
+   "Quantity":"Quantity",
+   "Unit Price":"Unit Price",
+   "Remaining Quantity":"Remaining Quantity",
+   "Received Quantity":"Received Quantity",
+   "Received Price":"Received Price",
+   "Save":"Save",
+   "Cancel":"Cancel"
+   
+   }
+ },
  "Work Order":{
   "Management":{
     "Search By work Order":"Search By work Order",
@@ -663,7 +677,7 @@
    "Management":{
     "Search for Preventive Maintenance":"Search for PM Procedure",
     "Preventive Reference":"Preventive Reference",
-    "Type Of Maintainance":"Type of Maintainance",
+    "Type Of Maintenance":"Type of Maintenance",
     "Start Date":"Start Date",
     "Duration In Hours":"Duration in Hours",
     "Technician Name":"Technician Name",
@@ -677,8 +691,8 @@
     "IsActive":"IsActive",
     "No Records Found":"No Records Found",
     "No Search Results Found":"No Search Results Found",
-    "Add Maintainance":"Add PM Procedure",
-    "Edit Maintainance":"Edit Maintainance",
+    "Add Maintenance":"Add PM Procedure",
+    "Edit Maintenance":"Edit Maintenance",
     "Select Site":"Select Site",
     "Please Select Site":"Please Select Site",
     "Select Project":"Select Project",
@@ -688,7 +702,7 @@
     "Select Asset":"Select Asset",
     "Please Select Asset":"Please Select Asset",
     "Preventive Reference is Required":"Preventive Reference is Required",
-    "Please Select Type of Maintainance":"Please Select Type of Maintainance",
+    "Please Select Type of Maintenance":"Please Select Type of Maintenance",
     "Start Date is Required":"Start Date is Required",
     "Duration is required":"Duration is required",
     "Please Select Technician":"Please Select Technician",
@@ -756,6 +770,7 @@
     "Actions":"Actions",  
     "Save":"Save",
     "Cancel":"Cancel"
+
   }
  }
  

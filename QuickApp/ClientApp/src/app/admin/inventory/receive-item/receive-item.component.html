@@ -1,4 +1,4 @@
-<h1 mat-dialog-title>Receive Item</h1>
+<h1 mat-dialog-title>{{'Receive Item.Management.Receive Item'|translate}}</h1>
 <div mat-dialog-content>
     <div class="row" [hidden]="isViewRecipt">
         <form [formGroup]="itemFrom" class="col-md-12">
@@ -8,28 +8,28 @@
                     <h4>{{'Purchase Order.Management.Item'|translate}}{{i+1}}</h4>
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <mat-label>Item Name</mat-label>
+                            <mat-label>{{'Receive Item.Management.Item Name'|translate}}</mat-label>
                             <input matInput formControlName="itemName" placeholder="Item Name" readonly />
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
-                            <mat-label>Quantity</mat-label>
+                            <mat-label>{{'Receive Item.Management.Quantity'|translate}}</mat-label>
                             <input matInput formControlName="qty" placeholder="Quantity" readonly />
                         </mat-form-field>
 
                         <mat-form-field class="col-md-4">
-                            <mat-label>Unit Price</mat-label>
+                            <mat-label>{{'Receive Item.Management.Unit Price'|translate}}</mat-label>
                             <input matInput formControlName="unitPrice" placeholder="Unit Price" readonly />
                         </mat-form-field>
                     </div>
 
                     <div class="row">
                         <mat-form-field class="col-md-4">
-                            <mat-label>Remaining Quantity</mat-label>
+                            <mat-label>{{'Receive Item.Management.Remaining Quantity'|translate}}</mat-label>
                             <input matInput formControlName="remainQty" 
                                 placeholder="Remaining Quantity"  (keypress)="numberOnly($event)" maxlength="10" readonly/>
                         </mat-form-field>
                         <mat-form-field class="col-md-4">
-                            <mat-label>Received Quantity</mat-label>
+                            <mat-label>{{'Receive Item.Management.Received Quantity'|translate}}</mat-label>
                             <input matInput formControlName="receiveQty" 
                                 placeholder="Received Quantity" (keypress)="numberOnly($event)" maxlength="10"   />
                         </mat-form-field>
@@ -39,7 +39,7 @@
                                     placeholder="Received Quantity" (keypress)="numberOnly($event)" maxlength="10"   />
                             </mat-form-field> -->
                         <mat-form-field class="col-md-4">
-                            <mat-label>Received Price</mat-label>
+                            <mat-label>{{'Receive Item.Management.Received Price'|translate}}</mat-label>
                             <input matInput formControlName="receivePrice" 
                                 placeholder="Received Price" (keypress)="numberOnly($event)" maxlength="10" />
                         </mat-form-field>
@@ -90,7 +90,7 @@
                             <!-- <div class="email"><a href="mailto:john@example.com">john@example.com</a></div> -->
                         </div>
                         <div class="ins-no">
-                            <h1>INVOICE# {{purchaseData.purchaseReference}}</h1>
+                            <h1>INVOICE#   {{purchaseData.purchaseReference}}</h1>
                             <div class="date">Date of Invoice: {{purchaseData.createdDate | date: 'dd/MM/yyyy '}}</div>
                             <div class="date">Arriving Date: {{purchaseData.arrivingDate | date: 'dd/MM/yyyy '}}</div>
                         </div>
@@ -147,9 +147,9 @@
         </div>
     </div>
     <div mat-dialog-actions class="float-right" style="padding-top: 12px;">
-        <button mat-raised-button color="primary" [hidden]="isViewRecipt" (click)="save()">Save</button>
+        <button mat-raised-button color="primary" [hidden]="isViewRecipt" (click)="save()">{{'Receive Item.Management.Save'|translate}}</button>
         <button mat-raised-button color="primary" [hidden]="!isViewRecipt"
             (click)="onPrintClick('print-container')">Print</button>
-        <button mat-raised-button (click)="cancel()" color="warn">Cancel</button>
+        <button mat-raised-button (click)="cancel()" color="warn">{{'Receive Item.Management.Cancel'|translate}}</button>
     </div>
     <div class="clearfix space20"></div>
