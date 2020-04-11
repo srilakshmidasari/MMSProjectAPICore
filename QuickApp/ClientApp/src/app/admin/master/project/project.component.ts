@@ -9,10 +9,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { DataFactory } from 'src/app/shared/dataFactory';
-import { DeleteFileComponent } from '../delete-file/delete-file.component';
+
 import { Utilities } from 'src/app/services/utilities';
 import { Permission } from 'src/app/models/permission.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { DeleteFileComponent } from '../../delete-file/delete-file.component';
 
 @Component({
   selector: 'app-project',

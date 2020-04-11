@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder, NgForm, FormControl } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { AlertService, MessageSeverity } from '../../services/alert.service';
-import { AccountService } from '../../services/account.service';
+
 import { Subject } from 'rxjs';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
+import { AccountService } from 'src/app/services/account.service';
 @Component({
   selector: 'app-site-editor',
   templateUrl: './site-editor.component.html',

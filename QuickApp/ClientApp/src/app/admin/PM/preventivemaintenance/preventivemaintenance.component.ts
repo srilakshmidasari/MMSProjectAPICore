@@ -11,8 +11,9 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 import { constants } from 'os';
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { ApprovePmOrderComponent } from '../approve-pm-order/approve-pm-order.component';
-import { AddAssetPmComponent } from './add-asset-pm/add-asset-pm.component';
+
 import { timingSafeEqual } from 'crypto';
+import { AddAssetPmComponent } from '../add-asset-pm/add-asset-pm.component';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',

@@ -11,15 +11,11 @@ import { AdminRoutingModule } from './admin-routing.module';
 
 import { AdminComponent } from './admin.component';
 
-import { SiteListComponent } from './site-list/site-list.component';
-import { SiteEditorComponent } from './site-editor/site-editor.component';
-import { SiteDialogComponent } from './site-dialog/site-dialog.component';
-import { SiteLocationComponent } from './site-location/site-location.component';
+
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ProfileComponent } from './profile/profile.component';
 import { DeleteFileComponent } from './delete-file/delete-file.component';
-import { ProjectComponent } from './project/project.component';
-import { LocationComponent } from './location/location.component';
+
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
 import { SupplierComponent } from './supplier/supplier.component';
@@ -41,12 +37,19 @@ import { WorkOrderComponent } from './inventory/work-order/work-order.component'
 import { ReceiveItemComponent } from './inventory/receive-item/receive-item.component';
 import { CloseorderComponent } from './inventory/closeorder/closeorder.component';
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
-import { PreventivemaintenanceComponent } from './preventivemaintenance/preventivemaintenance.component';
-import { JobPlanComponent } from './job-plan/job-plan.component';
-import { SelectAssetComponent } from './select-asset/select-asset.component';
-import { PmOrderComponent } from './pm-order/pm-order.component';
-import { ApprovePmOrderComponent } from './approve-pm-order/approve-pm-order.component';
-import { AddAssetPmComponent } from './preventivemaintenance/add-asset-pm/add-asset-pm.component';
+import { SiteListComponent } from './master/site-list/site-list.component';
+import { SiteEditorComponent } from './master/site-editor/site-editor.component';
+import { SiteDialogComponent } from './master/site-dialog/site-dialog.component';
+import { SiteLocationComponent } from './master/site-location/site-location.component';
+import { ProjectComponent } from './master/project/project.component';
+import { LocationComponent } from './master/location/location.component';
+import { PreventivemaintenanceComponent } from './PM/preventivemaintenance/preventivemaintenance.component';
+import { JobPlanComponent } from './PM/job-plan/job-plan.component';
+import { SelectAssetComponent } from './PM/select-asset/select-asset.component';
+import { PmOrderComponent } from './PM/pm-order/pm-order.component';
+import { ApprovePmOrderComponent } from './PM/approve-pm-order/approve-pm-order.component';
+import { AddAssetPmComponent } from './PM/add-asset-pm/add-asset-pm.component';
+
 
 @NgModule({
   imports: [

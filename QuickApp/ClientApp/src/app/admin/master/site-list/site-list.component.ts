@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatSort } from '@angular/material/sort';
 import { MatPaginator } from '@angular/material/paginator';
-import { AccountService } from '../../services/account.service';
+
 import { MatDialog } from '@angular/material/dialog';
 import { SiteDialogComponent } from '../site-dialog/site-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -11,6 +11,7 @@ import { SiteLocationComponent } from '../site-location/site-location.component'
 import { Utilities } from 'src/app/services/utilities';
 import { Permission } from 'src/app/models/permission.model';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-site-list',
