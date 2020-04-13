@@ -199,7 +199,7 @@
                         </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>Duration in Hours</mat-label>
+                        <mat-label>{{'JobPlan.Management.Duration in Hours'|translate}}</mat-label>
                         <input matInput formControlName="totalDuration" maxlength="10" (keypress)="numberOnly($event)"/>
                     </mat-form-field>
                 </div>
@@ -397,14 +397,14 @@
                                         </mat-error>
                                     </mat-form-field>
                                     <mat-form-field class="col-md-3">
-                                        <mat-label>Select Trade</mat-label>
+                                        <mat-label>{{'JobPlan.Management.Select Trade'|translate}}</mat-label>
                                         <mat-select formControlName="tradeId" >
                                             <mat-option *ngFor="let trade of tradeList" [value]="trade.id" >
                                                 {{trade.name1}}
                                             </mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="item.controls.tradeId.invalid">
-                                            Please select Asset Trade 
+                                            {{'JobPlan.Management.Please select Asset Trade'|translate}} 
                                         </mat-error>
                                     </mat-form-field>
                                     <div class="col-md-3">

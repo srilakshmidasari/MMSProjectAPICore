@@ -1,4 +1,4 @@
-<app-page-header title="PMProcedures" icon="assignment_ind"></app-page-header>
+<app-page-header title="PM Procedures" icon="assignment_ind"></app-page-header>
 <div class="page-content" [hidden]="isAdding||isView">
     <div class="search-box">
         <mat-form-field>
@@ -89,7 +89,7 @@
                         *ngIf="row.statusTypeName != 'Approved' && row.statusTypeName != 'Closed'">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button class="just-cont-center" mat-icon-button matTooltip="View PMOrder"
+                    <button class="just-cont-center" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.View PM Order'|translate}}"
                         (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
@@ -101,7 +101,7 @@
                         *ngIf="row.statusTypeName == 'Approved'">
                         <mat-icon color="warn">cancel</mat-icon>
                     </button>
-                    <button class="z-index" mat-icon-button matTooltip="Select Asset"
+                    <button class="z-index" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.Select Asset'|translate}}"
                         *ngIf="row.statusTypeName == 'Approved'" (click)="onSelectAsset(row)">
                         <mat-icon> forum</mat-icon>
                     </button>
@@ -346,7 +346,7 @@
 <div class="page-content" *ngIf="isView">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>PM Procedure Information</mat-card-title>
+            <mat-card-title>{{'Preventive Maintenance.Management.PM Procedure Information'|translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
@@ -355,14 +355,14 @@
                     <div class="clearfix space20"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Preventive Reference
+                            {{'Preventive Maintenance.Management.Preventive Reference'|translate}} 
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
                             <b>{{PMProcedure.preventiveRefId}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Type Of Maintenance
+                            {{'Preventive Maintenance.Management.Type Of Maintenance'|translate}} 
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
@@ -372,14 +372,14 @@
                     <div class="clearfix space20"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            DaysApplicable
+                            {{'Preventive Maintenance.Management.DaysApplicable'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
                             <b>{{PMProcedure.daysApplicable}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Duration In Hours
+                            {{'Preventive Maintenance.Management.Duration In Hours'|translate}} 
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
@@ -389,14 +389,14 @@
                     <div class="clearfix space20"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Technician Name
+                            {{'Preventive Maintenance.Management.Technician Name'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
                             <b>{{PMProcedure.technicianName}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Status Type Name
+                            {{'Preventive Maintenance.Management.Status Type Name'|translate}} 
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
@@ -406,7 +406,7 @@
                     <div class="clearfix space20"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Details
+                            {{'Preventive Maintenance.Management.Details'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">

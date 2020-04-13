@@ -701,7 +701,9 @@
    "TradeName":"اسم تجاري",
    "Save":"حفظ",
    "Cancel":"إلغاء",
-   "Priority":"أفضلية"
+   "Priority":"أفضلية",
+   "PM Procedure Information":"معلومات الإجراءات PM",
+   "View PM Order":"عرض أمر PM"
   }
 },
 "JobPlan":{
@@ -731,10 +733,12 @@
     "Please Select Technician":"يرجى تحديد فني",
     "Task Name is Required":"اسم المهمة مطلوب",
     "Duration is Required":"المدة مطلوبة",
-   
+    "Duration in Hours":"المدة بالساعات",
     "Task":"مهمة",
     "Save":"حفظ",
-    "Cancel":"إلغاء"
+    "Cancel":"إلغاء",
+    "Select Trade":"حدد التجارة",
+    "Please select Asset Trade":"يرجى التحديد تجارة الأصول"
   }
  },
  "PMOrder":{

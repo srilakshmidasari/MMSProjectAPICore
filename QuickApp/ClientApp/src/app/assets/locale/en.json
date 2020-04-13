@@ -69,7 +69,6 @@
     "Work Order":"Work Order",
     "Inventory-Items" :"Inventory-Items",
     "PM Procedures":"PM Procedures",
-    "Preventive Maintenance":"Preventive Maintenance",
     "Export":"Export",
     "JobPlan":"Job Plan",
     "PMOrder": "PM Order"
@@ -715,7 +714,9 @@
     "TaskName":"Task Name",
     "TradeName":"Trade Name",
     "Save":"Save",
-    "Cancel":"Cancel"
+    "Cancel":"Cancel",
+    "PM Procedure Information":"PM Procedure Information",
+    "View PM Order":"View PMOrder"
    }
  },
  "JobPlan":{
@@ -748,7 +749,10 @@
     "Duration is Required":"Duration is Required",
     "Task":"Task",
     "Save":"Save",
-    "Cancel":"Cancel"
+    "Cancel":"Cancel",
+    "Duration in Hours":"Duration in Hours",
+    "Select Trade":"Select Trade",
+    "Please select Asset Trade":"Please select Asset Trade"
   }
  },
 
