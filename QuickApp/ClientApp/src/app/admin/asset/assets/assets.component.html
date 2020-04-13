@@ -217,18 +217,6 @@
                             {{'Assets.Management.PleaseSelectAssetTrade'|translate}}
                         </mat-error>
                     </mat-form-field>
-
-                    <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.Asset Counter'|translate}}<span>*</span></mat-label>
-                        <mat-select formControlName="assetCounter">
-                            <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
-                                {{counter.value}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetLocationForm.controls['assetCounter'].valid">
-                            {{'Assets.Management.PleaseSelectAssetCounter'|translate}}
-                        </mat-error>
-                    </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetFixedDate'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker" formControlName="assetFixDate"
@@ -239,6 +227,23 @@
                             {{'Assets.Management.AssetFixedDateisRequired'|translate}}
                         </mat-error>
                     </mat-form-field>
+                    <mat-form-field class="col-md-4">
+                        <mat-label>{{'Assets.Management.DaysApplicable'|translate}}<span>*</span></mat-label>
+                            <input matInput formControlName="daysApplicable"  required/>
+                       
+                            <mat-error *ngIf="!assetLocationForm.controls['daysApplicable'].valid">
+                                Days Applicable is Required
+                            </mat-error> 
+                        <!-- <mat-select formControlName="assetCounter">
+                            <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
+                                {{counter.value}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error *ngIf="!assetLocationForm.controls['assetCounter'].valid">
+                            {{'Assets.Management.PleaseSelectAssetCounter'|translate}}
+                        </mat-error> -->
+                    </mat-form-field>
+                   
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">

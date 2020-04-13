@@ -58,17 +58,17 @@ export class ApprovePmOrderComponent implements OnInit {
       var month = dt.getMonth();
       this.astFixDate = new Date(year, month, astday+1);
       if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
-        var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 30;
+        var monthsCount = parseInt(item.daysApplicable) / 30;
         var monthCount = parseInt(monthsCount.toFixed(0));
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Quarterly) {
-       var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 90;
+       var monthsCount = parseInt(item.daysApplicable) / 90;
        var monthCount = parseInt(monthsCount.toFixed(0));
       } else if (this.pmProcedureData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.HalfYearly) {
-        var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 180;
+        var monthsCount = parseInt(item.daysApplicable) / 180;
         var monthCount = parseInt(monthsCount.toFixed(0));
 
       } else {
-        var monthsCount = parseInt(this.pmProcedureData.daysApplicable) / 365;
+        var monthsCount = parseInt(item.daysApplicable) / 365;
         var monthCount = parseInt(monthsCount.toFixed(0));
        // var monthsCount = 1
       }

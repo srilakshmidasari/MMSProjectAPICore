@@ -1,3 +1,13 @@
 /* .mat-dialog-title {
     color:red;
 } */
+
+.space20 {
+    margin-bottom: 20px !important;
+}
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}

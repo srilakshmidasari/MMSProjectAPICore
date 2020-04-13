@@ -11,7 +11,9 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 import { constants } from 'os';
 import { SelectAssetComponent } from '../select-asset/select-asset.component';
 import { ApprovePmOrderComponent } from '../approve-pm-order/approve-pm-order.component';
-import { AddAssetPmComponent } from './add-asset-pm/add-asset-pm.component';
+
+import { timingSafeEqual } from 'crypto';
+import { AddAssetPmComponent } from '../add-asset-pm/add-asset-pm.component';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',
@@ -28,7 +30,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   siteList: any[] = [];
   PMProcedure: any = {};
   isView: boolean = false;
-  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'daysApplicable', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'Actions']
+  displayedColumns = ['preventiveRefId', 'typeOfMaintainanceName', 'durationInHours', 'technicianName', 'statusTypeName', 'details', 'Actions']
   displayNoRecords: boolean;
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -51,6 +53,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   JobPlanData: any;
   names: any[] = [];
   rowId: any;
+  assetDataLength: any;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -104,6 +107,7 @@ export class PreventivemaintenanceComponent implements OnInit {
           obj.isChecked = false;
         })
       } else {
+        debugger
         this.assetData = [];
         res.listResult.forEach((item) => {
           this.maitananceRefData.assetId.forEach(element => {
@@ -112,11 +116,14 @@ export class PreventivemaintenanceComponent implements OnInit {
               item.isChecked = true;
               this.assetData.push({
                 "Id": item.id,
-                "assetName": item.name1,
+                "name1": item.name1,
                 "assetRef": item.assetRef,
+                "daysApplicable":item.daysApplicable,
                 "astFixedDate": item.astFixedDate
               });
+              this.assetDataLength= this.assetData.length;
             }
+
           });
           this.maintenanceForm.get('assetId').setValue(this.names.join());
         })
@@ -221,7 +228,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       priority: ['', Validators.required],
       // startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
-      daysApplicable: ['', Validators.required],
+      daysApplicable: [''],
       typeOfMaintainanceId: ['', Validators.required],
       technicianId: ['', Validators.required],
       details: [''],
@@ -319,6 +326,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     debugger
     this.AssetIds = [];
     this.jobTaskList = [];
+    this.assetData =[];
     this.maitananceRefData = {};
     if (maintanance != undefined) {
       this.isAdding = true;
@@ -362,7 +370,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       "startDate": null,
       "preventiveRefId": formModel.preventiveRefId,
       "durationInHours": formModel.durationInHours,
-      "daysApplicable": formModel.daysApplicable,
+      "daysApplicable": null,
       "jobPlanId": formModel.jobId,
       "priority": parseInt(formModel.priority),
       "details": formModel.details,
@@ -453,7 +461,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectAssetComponent,
       {
         panelClass: 'mat-dialog-md',
-        data: { data, assetList: [...this.assetsList] }
+        data: { data, assetList: [...this.assetsList], typeId :this.maintenanceForm.value.typeOfMaintainanceId }
       });
     dialogRef.afterClosed().subscribe(response => {
       if (response != null) {
@@ -461,18 +469,20 @@ export class PreventivemaintenanceComponent implements OnInit {
         this.names = [];
         this.AssetIds = [];
         response.forEach(element => {
-          this.names.push(element.assetName);
+          this.names.push(element.name1);
           this.AssetIds.push({
             "id": 0,
-            "assetId": element.Id,
+            "assetId": element.id,
             "preventiveMaintenanceId": 0,
             "astFixedDate": element.astFixedDate,
-            "daysApplicable": parseInt(this.maintenanceForm.value.daysApplicable)
+            "daysApplicable": parseInt(element.daysApplicable)
           }
           );
         });
+
         this.maintenanceForm.get('assetId').setValue(this.names.join());
         this.assetData = response;
+        this.assetDataLength= this.assetData.length;
       }
     });
   }

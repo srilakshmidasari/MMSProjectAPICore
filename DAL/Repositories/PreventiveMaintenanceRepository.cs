@@ -105,7 +105,7 @@ namespace DAL.Repositories
                                   ProjectName = p.Name1,
                                   SiteId = p.SiteId,
                                   SiteName = s.Name1,
-                                  Daysapplicable = pma.DaysApplicable,
+                                  DaysApplicable = pma.DaysApplicable,
 
                               }).ToList();
 
