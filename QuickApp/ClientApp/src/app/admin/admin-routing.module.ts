@@ -28,6 +28,7 @@ import { LocationComponent } from './master/location/location.component';
 import { PreventivemaintenanceComponent } from './PM/preventivemaintenance/preventivemaintenance.component';
 import { JobPlanComponent } from './PM/job-plan/job-plan.component';
 import { PmOrderComponent } from './PM/pm-order/pm-order.component';
+import { ChartsComponent } from './charts/charts.component';
 
 const adminRoutes: Routes = [
   {
@@ -50,7 +51,8 @@ const adminRoutes: Routes = [
       { path: 'inventory-items', component: InventoryItemsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Inventory Items' } },
       { path: 'pm-procedures', component: PreventivemaintenanceComponent, canActivate: [AuthGuard], data: { title: 'Admin | Preventive Maintenance' }},
       { path: 'job-plan', component: JobPlanComponent, canActivate: [AuthGuard], data: { title: 'Admin | Job Plan' }},
-      { path: 'pm-order', component: PmOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | PM Order' }}
+      { path: 'pm-order', component: PmOrderComponent, canActivate: [AuthGuard], data: { title: 'Admin | PM Order' }},
+      { path: 'charts', component: ChartsComponent, canActivate: [AuthGuard], data: { title: 'Admin | Charts' }}
     
     ]
   }
