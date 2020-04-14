@@ -7,11 +7,26 @@ namespace DAL
     public class EnumType
     {
 
-        enum PMOrderTYpes
+       public enum PMOrderTypes
         {
-            WorkType = 81,
+            WorkType = 23,
             OrderType = 24,
           
+        }
+
+        public enum WorkStatus
+        {
+            Planned = 60,
+            Completed = 71,
+            InProgrss = 77,
+        }
+
+        public enum StatusTypes
+        {
+            Open= 14,
+            Approved= 15,
+            Rejected= 16,
+            Closed= 17 
         }
     }
 }

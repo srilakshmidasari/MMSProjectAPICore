@@ -1,16 +1,16 @@
 <div class="dialog-header dh-back dh-htxt">
-  <h2 [dir]="textDir" [translate]="'data.title'" mat-dialog-title>
+  <h2 [dir]="textDir"  mat-dialog-title>{{data.title}}
   </h2>
 </div>
 <mat-dialog-content [dir]="textDir">
     <div [dir]="textDir">
-        <p translate >{{data.msg}}</p> 
+        <p  >{{data.msg}}</p> 
   </div>
   <div  *ngIf="data.isCheckbox">
     <div class="form-check pad-left-0">
       <label>
         <input type="checkbox" name="check" [(ngModel)]="data.isChecked" #check="ngModel">
-        <span class="label-text">{{'data.chkMsg'|translate}}</span> 
+        <span class="label-text">{{data.chkMsg}}</span> 
       </label>
     </div>
   </div>
@@ -18,13 +18,13 @@
 <div class="clearfix space20"></div>
 <mat-dialog-actions class="float-right">
   <button  [dir]="textDir" mat-raised-button color="primary" type="submit" [mat-dialog-close]="data">
-    <span [translate]= "'data.ok'">
-      
+    <span >
+      {{data.ok}}
     </span>
   </button>&nbsp;
   <button [dir]="textDir" mat-raised-button color="warn" type="reset()" (click)="onCancelClick()">
-    <span [translate]= "'data.cancel'">
-   
+    <span >
+   {{data.cancel}}
     </span>
   </button>
 </mat-dialog-actions>

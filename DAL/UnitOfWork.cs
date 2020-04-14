@@ -33,6 +33,8 @@ namespace DAL
         IPreventiveMaintenanceRepository _preventiveMaintenance;
 
         IJobPlanRepository _jobPlans;
+
+        IDashboardRepository _dashboard;
         public UnitOfWork(ApplicationDbContext context, IMapper mapper, IOptions<AppSettings> configuration)
         {
             _context = context;
@@ -162,6 +164,17 @@ namespace DAL
                 return _jobPlans;
             }
         }
+        public IDashboardRepository Dashboard
+        {
+            get
+            {
+                if (_dashboard == null)
+                    _dashboard = new DashboardRepository(_context, _mapper, _configuration);
+
+                return _dashboard;
+            }
+        }
+
 
 
 

@@ -34,6 +34,9 @@ namespace DAL
         IPreventiveMaintenanceRepository PreventiveMaintenances { get; }
 
         IJobPlanRepository JobPlans { get; }
+
+        IDashboardRepository Dashboard { get; }
+
         int SaveChanges();
     }
 }

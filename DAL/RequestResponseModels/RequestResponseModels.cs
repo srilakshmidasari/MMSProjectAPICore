@@ -527,7 +527,7 @@ namespace DAL.RequestResponseModels
             public int? WorkFaultId { get; set; }
             public int? StoreId { get; set; }
             public int? PMProcedureId { get; set; }
-            public int OrderTypeId { get; set; } 
+            public int OrderTypeId { get; set; }
             public bool IsActive { get; set; }
             public List<WorkOrderItem> WorkOrderItems { get; set; }
 
@@ -570,10 +570,10 @@ namespace DAL.RequestResponseModels
 
         }
 
-        public class AcceptWorkOrderRequest 
+        public class AcceptWorkOrderRequest
         {
             public int WorkOrderId { get; set; }
-            public int  StatusTypeId { get; set; }
+            public int StatusTypeId { get; set; }
 
         }
 
@@ -625,7 +625,7 @@ namespace DAL.RequestResponseModels
             public int? Priority { get; set; }
             public int? JobPlanId { get; set; }
             public string TypeOfMaintainanceName { get; set; }
-            public string Details { get; set; }          
+            public string Details { get; set; }
             public int StatusTypeId { get; set; }
             public string StatusTypeName { get; set; }
             public int TechnicianId { get; set; }
@@ -637,7 +637,7 @@ namespace DAL.RequestResponseModels
         {
             public int Id { get; set; }
             public List<UpsertPmAsset> pmAssets { get; set; }
-          //  public int[] AssetIds { get; set; }
+            //  public int[] AssetIds { get; set; }
             public DateTime? StartDate { get; set; }
             public string PreventiveRefId { get; set; }
             public string DurationInHours { get; set; }
@@ -646,7 +646,7 @@ namespace DAL.RequestResponseModels
             public int? Priority { get; set; }
             public string Details { get; set; }
             public int StatusTypeId { get; set; }
-            public int TypeOfMaintenance { get; set; }          
+            public int TypeOfMaintenance { get; set; }
             public int WorkTechnicianId { get; set; }
             public bool IsActive { get; set; }
 
@@ -674,7 +674,7 @@ namespace DAL.RequestResponseModels
             public string LocationName { get; set; }
             public DateTime AssetFixedDate { get; set; }
         }
-       
+
 
         public class GetJobPlanResponse : AuditableEntity
         {
@@ -686,7 +686,7 @@ namespace DAL.RequestResponseModels
             public string SiteName { get; set; }
             public int? ProjectId { get; set; }
             public string ProjectName { get; set; }
-            public int StatusTypeId { get; set; }   
+            public int StatusTypeId { get; set; }
             public string StatusName { get; set; }
             public int? TechnicianId { get; set; }
             public string TechinicianName { get; set; }
@@ -706,9 +706,9 @@ namespace DAL.RequestResponseModels
             public string JobDescription { get; set; }
             public int? SiteId { get; set; }
             public int? ProjectId { get; set; }
-            public int StatusTypeId { get; set; }           
+            public int StatusTypeId { get; set; }
             public int? TechnicianId { get; set; }
-            public int? AssetGroupId { get; set; }         
+            public int? AssetGroupId { get; set; }
             public string Duration { get; set; }
             public bool IsActive { get; set; }
 
@@ -742,6 +742,55 @@ namespace DAL.RequestResponseModels
             public int AstGroupId { get; set; }
 
         }
+
+        public class OrdersTypeCount
+        {
+            public int OrderPlannedCount { get; set; }
+            public int OrderCompletedCount { get; set; }
+            public int OrderInProgressCount { get; set; }
+        }
+
+        public class TradeOrdersCount
+        {
+            public int ApprovedCount { get; set; }
+            public int OpenCount { get; set; }
+            public int ClosedCount { get; set; }
+            public int RejectedCount { get; set; }
+        }
+
+        public class Dashboardreq
+        {
+            public int ProjectId { get; set; }
+            public DateTime FromDate { get; set; }
+            public DateTime ToDate { get; set; }
+            public int WorkTypeId { get; set; }
+        }
+
+        public class TradeOrderreq
+        {
+            public int ProjectId { get; set; }
+            public DateTime FromDate { get; set; }
+            public DateTime ToDate { get; set; }
+            public int WorkTypeId { get; set; }
+            public int StatusTypeId { get; set; }
+
+        }
+
+        public class OrdersCount
+        {
+            public int PMOrdersCount { get; set; }
+            public int NormalrdersCount { get; set; }
+
+        }
+
+        public class OrderReq
+        {
+            public int ProjectId { get; set; }
+            public DateTime FromDate { get; set; }
+            public DateTime ToDate { get; set; }
+            
+        }
+
 
     }
 }
