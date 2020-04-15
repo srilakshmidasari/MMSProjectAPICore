@@ -123,15 +123,7 @@ export class AssetsComponent implements OnInit {
   }
 
 
-  // Site Data
-  private getSites() {
-    this.accountService.getSiteData()
-      .subscribe((results: any) => {
-        this.siteList = results.listResult == null ? [] : results.listResult;
-      },
-        error => {
-        });
-  }
+  
 
   // Asset Group List
   // getAllAssetGroups() {

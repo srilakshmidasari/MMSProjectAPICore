@@ -119,6 +119,11 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly  _addPmOrder: string ='/api/WorkOrder/AddPMOrder';
   
+  private readonly  _getWorkOrderDashboardCountUrl:string = '/api/Dashboard/GetWorkOrderDashboardCount'
+
+  private readonly  _getWorkOrderStatusCountUrl:string = '/api/Dashboard/GetWorkOrderStatusCount'
+
+  private readonly  _getWorkOrdersByTradeCountUrl:string = '/api/Dashboard/GetWorkOrdersByTradeCount'
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -225,8 +230,15 @@ export class AccountEndpoint extends EndpointBase {
 
   get addPmOrder() { return this.configurations.baseUrl + this._addPmOrder; }
 
-  
+  get getWorkOrderDashboardCountUrl() { return this.configurations.baseUrl + this._getWorkOrderDashboardCountUrl; }
 
+  get getWorkOrderStatusCountUrl() { return this.configurations.baseUrl + this._getWorkOrderStatusCountUrl; }
+
+  get getWorkOrdersByTradeCountUrl() { return this.configurations.baseUrl + this._getWorkOrdersByTradeCountUrl; }
+ 
+  
+  
+  
   constructor(private configurations: ConfigurationService, http: HttpClient, authService: AuthService) {
     super(http, authService);
   }
@@ -1125,5 +1137,30 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.addPmOrderEndPoint(reqObject));
       }));
   }
+  
+  getWorkOrdersDashboardEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getWorkOrderDashboardCountUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getWorkOrdersDashboardEndpoint(reqObject));
+      }));
+  }
+
+  getWorkOrderStatusCountEndpoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getWorkOrderStatusCountUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getWorkOrderStatusCountEndpoint(reqObject));
+      }));
+  }
+
+  getWorkOrdersByTradeCountEndPoint<T>(reqObject: any): Observable<T> {
+    const endpointUrl = this.getWorkOrdersByTradeCountUrl;
+    return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.getWorkOrdersByTradeCountEndPoint(reqObject));
+      }));
+  }
+
   
 }

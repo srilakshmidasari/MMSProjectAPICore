@@ -53,7 +53,7 @@
       [fixedInViewport]="mobileQuery.matches" fixedTopGap="56" [opened]="!mobileQuery.matches">
       <mat-nav-list *ngIf="isUserLoggedIn">
         <a mat-list-item routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" routerLink="">
-          <mat-icon>dashboard</mat-icon>{{'mainMenu.Home' | translate}}
+          <mat-icon>dashboard</mat-icon>{{'mainMenu.Dashboard' | translate}}
         </a>
         <!--<a mat-list-item routerLinkActive="active" *ngIf="canViewCustomers" routerLink="/customers"><mat-icon>contacts</mat-icon>{{'mainMenu.Customers' | translate}}</a>
         <a mat-list-item routerLinkActive="active" *ngIf="canViewProducts" routerLink="/products"><mat-icon>local_shipping</mat-icon>{{'mainMenu.Products' | translate}}</a>

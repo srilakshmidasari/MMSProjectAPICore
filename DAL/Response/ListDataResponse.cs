@@ -8,6 +8,6 @@ namespace DAL.Response
     public class ListDataResponse<T> : DataResponse
     {
         public IEnumerable<T> ListResult { get; set; }
-        public AssetGroup Result { get; internal set; }
+        //public AssetGroup Result { get; internal set; }
     }
 }

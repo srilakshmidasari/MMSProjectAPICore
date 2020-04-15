@@ -24,22 +24,22 @@ namespace MMS.Controllers
         }
 
 
-        [HttpPost("GetWorkOrdersCount")]
-        public ValueDataResponse<OrdersCount> GetWorkOrdersCount(OrderReq req)
+        [HttpPost("GetWorkOrderStatusCount")]
+        public ListDataResponse<dynamic> GetWorkOrderStatusCount(Dashboardreq req)
         {
-            return _unitOfWork.Dashboard.GetWorkOrdersCount(req.ProjectId, req.FromDate, req.ToDate);
+            return _unitOfWork.Dashboard.GetWorkOrderStatusCount(req.ProjectId, req.FromDate, req.ToDate, req.WorkTypeId);
         }
 
         [HttpPost("GetWorkOrderDashboardCount")]
-        public ValueDataResponse<OrdersTypeCount> GetWorkOrderDashboardCount(Dashboardreq req)
+        public ListDataResponse<dynamic> GetWorkOrderDashboardCount(Dashboardreq req)
         {
             return _unitOfWork.Dashboard.GetWorkOrderDashboardCount(req.ProjectId, req.FromDate, req.ToDate, req.WorkTypeId);
         }
 
         [HttpPost("GetWorkOrdersByTradeCount")]
-        public ValueDataResponse<TradeOrdersCount> GetWorkOrdersByTradeCount(TradeOrderreq req)
+        public ListDataResponse<dynamic> GetWorkOrderByTradesCount(TradeOrderreq req)
         {
-            return _unitOfWork.Dashboard.GetWorkOrdersByTradeCount(req.ProjectId, req.FromDate, req.ToDate, req.WorkTypeId, req.StatusTypeId);
+            return _unitOfWork.Dashboard.GetWorkOrderByTradesCount(req.ProjectId, req.FromDate, req.ToDate, req.WorkTypeId, req.StatusTypeId);
         }
     }
 }
