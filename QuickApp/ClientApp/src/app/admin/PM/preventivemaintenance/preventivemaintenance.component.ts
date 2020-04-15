@@ -70,7 +70,8 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-  private getMaintenance() {
+  private getMaintenance() { 
+    debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getpreventive().subscribe((results: any) => {
@@ -386,6 +387,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   saveMaintenance() {
+    debugger
     if (!this.maintenanceForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -488,16 +490,18 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   OnAcceptPmProcedure(row) {
+    debugger
     const dialogRef = this.dialog.open(ApprovePmOrderComponent,
       {
         data: { row }
       });
     dialogRef.afterClosed().subscribe(response => {
-      this.getMaintenance();
+      this.getMaintenance();  
     });
   }
 
   onSelectAsset(req) {
+    debugger
     this.accountService.getPMAssetsbyPMId(req.id).subscribe((res: any) => {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       if (this.assetsPMList != null)

@@ -172,7 +172,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!assetLocationForm.controls['assetGroup'].valid">
-                            {{'Assets.Management.PleaseSelectAssetGroup'| translate}}
+                            {{'Assets.Management.Please Select AssetGroup'| translate}}
                         </mat-error>
                     </mat-form-field>
 
@@ -228,11 +228,11 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.DaysApplicable'|translate}}<span>*</span></mat-label>
+                        <mat-label>{{'Assets.Management.Days Applicable'|translate}}</mat-label>
                             <input matInput formControlName="daysApplicable"  required/>
                        
                             <mat-error *ngIf="!assetLocationForm.controls['daysApplicable'].valid">
-                                Days Applicable is Required
+                                {{'Assets.Management.Days Applicable is Required'|translate}} 
                             </mat-error> 
                         <!-- <mat-select formControlName="assetCounter">
                             <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
@@ -254,7 +254,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!assetLocationForm.controls['siteId'].valid">
-                            {{'Assets.Management.PleaseSelectSite'|translate}}
+                            {{'Assets.Management.Please Select Site Name'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
@@ -265,7 +265,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!assetLocationForm.controls['projectId'].valid">
-                            {{'Assets.Management.PleaseSelectProject'|translate}}
+                            {{'Assets.Management.Please Select Project Name'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
@@ -276,7 +276,7 @@
                             </mat-option>
                         </mat-select>
                         <mat-error *ngIf="!assetLocationForm.controls['locationId'].valid">
-                            {{'Assets.Management.PleaseSelectLocation'|translate}}
+                            {{'Assets.Management.Please Select Location Name'|translate}}
                         </mat-error>
                     </mat-form-field>
 

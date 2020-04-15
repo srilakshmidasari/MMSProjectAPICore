@@ -247,7 +247,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         newPassword: '',
         confirmPassword: ''
       },
-      roles: this.user.roles || [],
+      roles: this.user.roles ||  [],
       projectId: this.isNewUser ? this.user.projectId : this.projectIds || '',
       //fullName: this.user.fullName || '',
       phoneNumber: this.user.phoneNumber || '',

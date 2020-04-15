@@ -148,15 +148,15 @@
       "PasswordHint": "كلمة المرور مطلوبة عند تغيير اسم المستخدم",
       "CurrentPasswordRequired": "كلمة المرور الحالية مطلوبة",
       "Email": "البريد الإلكتروني:",
-      "EmailRequired": "(عنوان البريد الإلكتروني مطلوب (بحد أقصى 200 حرف",
+      "Email is Required":"البريد الالكتروني مطلوب200 حرف كحد أقصى",
       "InvalidEmail": "البريد الإلكتروني المحدد غير صالح",
       "ChangePassword": "غير كلمة المرور",
       "CurrentPassword": "كلمة المرور الحالية:",
       "NewPassword": "كلمة مرور جديدة:",
       "NewPasswordRules": "يجب أن يحتوي على كلمة المرور الجديدة على الأقل: واحد الأحرف الكبيرة إلكتروني، رسالة صغيرة واحدة، رقم واحد، والحد الأدنى 8 أحرف وأي حرف خاص",
       "NewPasswordRequired": "الحد الأدنى من 6 أحرف) مطلوب كلمة مرور)",
-      "ConfirmPassword": "تأكيد كلمة المرور:",
-      "ConfirmationPasswordRequired": "مطلوب كلمة مرور التأكيد",
+      "Conform Password": "تأكيد كلمة المرور:",
+      "Conform Password is Required": "مطلوب كلمة مرور التأكيد",
       "PasswordMismatch": "لا تتطابق كلمة المرور الجديدة وكلمة مرور التأكيد",
       "Roles": "الأدوار:",
       "FullName": " الإسم الكامل:",
@@ -179,7 +179,8 @@
       "PhoneNumberMinLength": "أدخل 10 أرقام لرقم الهاتف",
       "Update": "تحديث",
       "Select Project":"اختر المشروع",
-      "Please Select Project":"يرجى اختيار المشروع"
+      "Please Select Project":"يرجى اختيار المشروع",
+      "User Name is Required":"اسم المستخدم مطلوب"
     }
   },
   "roles": {
@@ -197,9 +198,9 @@
       "Reporting Role": "دور التقارير"
     },
     "editor": {
-      "Name": "اسم:",
+      "Role Name": "اسم الدور",
       "Description": "وصف:",
-      "RoleNameRequired": "(اسم الدور مطلوب (بحد أدنى 2 و 200 حرف كحد أقصى",
+      "Role Name is Required": "(اسم الدور مطلوب (بحد أدنى 2 و 200 حرف كحد أقصى",
       "SelectAll": "اختر الكل",
       "SelectNone": "لا تختر شيء",
       "Close": "إغلاق",
@@ -294,7 +295,7 @@
       "Name 2 is Required": "الاسم 2 مطلوب",
       "Project Details": "تفاصيل المشروع",
       "Project Details is Required": "تفاصيل المشروع مطلوبة",
-      "Store": "متجر",
+      "Select Store":"حدد المتجر",
       "Please Select Store": "يرجى اختيار المتجر",
       "Upload Project": "تحميل المشروع",
       "Note": "ملحوظة",
@@ -412,16 +413,18 @@
       "Upload Asset": "تحميل الأصول",
       "save": "حفظ",
       "cancel": "إلغاء",
-      "PleaseSelectSite": "يرجى اختيار الموقع",
-      "PleaseSelectProject": "يرجى اختيار المشروع",
-      "PleaseSelectLocation": "يرجى اختيار الموقع",
+      "Please Select Site Name":"يرجى تحديد اسم الموقع",
+      "Please Select Project Name": "يرجى تحديد اسم المشروع",
+      "Please Select Location Name": "يرجى تحديد اسم الموقع",
       "AssetReferenceisRequired":"مرجع الأصول هو المطلوب",
       "NameisRequired" : "الاسم 1 مطلوب",
       "Name2isRequired" : "الاسم 2 مطلوب",
-      "PleaseSelectAssetGroup": "يرجى اختيار مجموعة الأصول",
+      "Please Select AssetGroup": "يرجى اختيار مجموعة الأصول",
       "PleaseSelectAssetTrade" : "يرجى اختيار تجارة الأصول",
       "PleaseSelectAssetCounter" :"يرجى اختيار عداد الأصول",
-      "AssetFixedDateisRequired":"تاريخ الأصول الثابتة مطلوب"
+      "AssetFixedDateisRequired":"تاريخ الأصول الثابتة مطلوب",
+      "Days Applicable":"الأيام المطبقة",
+      "Days Applicable is Required":"الأيام المنطبقة مطلوبة"
     }
   },
   "AssetGroup":{
@@ -509,7 +512,8 @@
    "Units of Conversion is required":"وحدات التحويل مطلوبة",
    "Item Category":"العنصر فئة",
    "Save":"حفظ",
-   "Cancel":"إلغاء"
+   "Cancel":"إلغاء",
+   "Please Select Item Category":"يرجى تحديد فئة العنصر"
   }
 },
 "Purchase Order":{
@@ -717,7 +721,7 @@
     "Status Name":"اسم الحالة",
     "Techinician Name":"اسم الفني",
     "Asset GroupName":"اسم مجموعة الأصول",
-    "Duration": "المدة بالدقائق",
+    "Duration In Minutes": "المدة بالدقائق",
     "Is Active":"نشط",
     "Add Order":"أضف الطلب",
     "Task Name":"اسم المهمة",
@@ -732,12 +736,12 @@
     "Technician":"فني",
     "Please Select Technician":"يرجى تحديد فني",
     "Task Name is Required":"اسم المهمة مطلوب",
-    "Duration is Required":"المدة مطلوبة",
+    "Duration In Minutes is Required":"المدة بالدقائق مطلوبة",
     "Duration in Hours":"المدة بالساعات",
     "Task":"مهمة",
     "Save":"حفظ",
     "Cancel":"إلغاء",
-    "Select Trade":"حدد التجارة",
+    "Select Asset Trade":"حدد تجارة الأصول",
     "Please select Asset Trade":"يرجى التحديد تجارة الأصول"
   }
  },

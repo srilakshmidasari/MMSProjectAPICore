@@ -238,7 +238,7 @@
                             <h4>{{'JobPlan.Management.Task'|translate}}{{i+1}}</h4>
                             <div class="row">
                                 <mat-form-field class="col-md-3">
-                                    <mat-label>{{'JobPlan.Management.Name'|translate}}</mat-label>
+                                    <mat-label>{{'JobPlan.Management.Task Name'|translate}}</mat-label>
                                     <input matInput formControlName="name" required maxlength="30" />
                                     <mat-error *ngIf="item.controls.name.invalid">
                                         {{'JobPlan.Management.Task Name is Required'|translate}} 
@@ -246,15 +246,15 @@
                                 </mat-form-field>
 
                                 <mat-form-field class="col-md-3">
-                                    <mat-label>{{'JobPlan.Management.Duration'|translate}}</mat-label>
+                                    <mat-label>{{'JobPlan.Management.Duration In Minutes'|translate}}</mat-label>
                                     <input matInput formControlName="duration" (keypress)="numberOnly($event)" required maxlength="10" />
                                     <mat-error *ngIf="item.controls.duration.invalid">
-                                        {{'JobPlan.Management.Duration is Required'|translate}} 
+                                        {{'JobPlan.Management.Duration In Minutes is Required'|translate}} 
                                     </mat-error>
                                 </mat-form-field>
 
                                 <mat-form-field class="col-md-3">
-                                    <mat-label>Select Trade <span>*</span></mat-label>
+                                    <mat-label>Select Asset Trade <span>*</span></mat-label>
                                     <mat-select formControlName="tradeId" >
                                         <mat-option *ngFor="let trade of tradeList" [value]="trade.id" required>
                                             {{trade.name1}}

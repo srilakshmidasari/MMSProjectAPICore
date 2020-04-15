@@ -56,7 +56,7 @@
         [{{'users.editor.SendVerificationEmail' | translate}}]
       </button>
       <mat-error *ngIf="email.hasError('required')">
-        {{'users.editor.EmailRequired' | translate}}
+        {{'users.editor.Email is Required' | translate}}
       </mat-error>
       <mat-error *ngIf="!email.hasError('required') && email.hasError('email')">
         {{'users.editor.InvalidEmail' | translate}}
@@ -82,7 +82,7 @@
       <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
       <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off" maxlength="30" required />
       <mat-error *ngIf="userName.hasError('required')">
-        {{'users.editor.UserNameRequired' | translate}}
+        {{'users.editor.User Name is Required' | translate}}
       </mat-error>
     </mat-form-field>
 
@@ -132,10 +132,10 @@
       </mat-form-field>
 
       <mat-form-field [floatLabel]="floatLabels" fxFlex>
-        <mat-label>{{'users.editor.ConfirmPassword' | translate}}</mat-label>
+        <mat-label>{{'users.editor.Conform Password' | translate}}</mat-label>
         <input matInput type="password" formControlName="confirmPassword" maxlength="30" required />
         <mat-error *ngIf="confirmPassword.hasError('required')">
-          {{'users.editor.ConfirmationPasswordRequired' | translate}}
+          {{'users.editor.Conform Password is Required' | translate}}
         </mat-error>
         <mat-error *ngIf="!confirmPassword.hasError('required') && confirmPassword.hasError('notEqual')">
           {{'users.editor.PasswordMismatch' | translate}}

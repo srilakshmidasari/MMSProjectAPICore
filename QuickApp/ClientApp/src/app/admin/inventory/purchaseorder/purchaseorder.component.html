@@ -92,7 +92,7 @@
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center">
-                            <button class="z-index" mat-icon-button *ngIf="isAccepted != req.statusTypeId"
+                            <button class="z-index" mat-icon-button *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId"
                                 matTooltip="{{'Purchase Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
@@ -101,7 +101,7 @@
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button>
-                            <button class="z-index" mat-icon-button (click)="onViewDoc(req)">
+                            <button class="z-index" mat-icon-button matTooltip="View Document" (click)="onViewDoc(req)">
                                 <mat-icon>file_copy</mat-icon>
                             </button>
                             <button class="z-index" mat-icon-button matTooltip=Accept
