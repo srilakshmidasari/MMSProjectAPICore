@@ -9,11 +9,15 @@ namespace DAL.Repositories.Interfaces
     public interface IDashboardRepository
     {
        
-        ValueDataResponse<OrdersCount> GetWorkOrdersCount(int projectId, DateTime fromDate, DateTime toDate);
+      //  ValueDataResponse<OrdersCount> GetWorkOrdersCount(int projectId, DateTime fromDate, DateTime toDate);
 
-        ValueDataResponse<OrdersTypeCount> GetWorkOrderDashboardCount(int projectId, DateTime fromDate, DateTime toDate, int WorkType );
+        ListDataResponse<dynamic> GetWorkOrderDashboardCount(int projectId, DateTime fromDate, DateTime toDate, int WorkType);
 
-        ValueDataResponse<TradeOrdersCount> GetWorkOrdersByTradeCount(int projectId, DateTime fromDate, DateTime toDate, int WorkType , int StatusTypeId);
+        ListDataResponse<dynamic> GetWorkOrderStatusCount(int projectId, DateTime fromDate, DateTime toDate, int WorkType);
+
+        ListDataResponse<dynamic> GetWorkOrderByTradesCount(int projectId, DateTime fromDate, DateTime toDate, int WorkType, int StatusTypeId);
+
+      //  ValueDataResponse<TradeOrdersCount> GetWorkOrdersByTradeCount(int projectId, DateTime fromDate, DateTime toDate, int WorkType , int StatusTypeId);
 
 
     }

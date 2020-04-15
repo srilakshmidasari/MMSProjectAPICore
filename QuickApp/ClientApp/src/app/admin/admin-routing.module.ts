@@ -35,6 +35,7 @@ const adminRoutes: Routes = [
     path: 'admin',
     component: AdminComponent,
     children: [
+      
       { path: 'users', component: UserListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Users' } },
       { path: 'roles', component: RoleListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Roles' } },
       { path: 'site', component: SiteListComponent, canActivate: [AuthGuard], data: { title: 'Admin | Site' } },

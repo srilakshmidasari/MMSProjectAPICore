@@ -551,6 +551,18 @@ deleteAssetRepository(repositoryId) {
   addPmOrder(reqObject) {
     return this.accountEndpoint.addPmOrderEndPoint(reqObject);
   }
+
+  getWorkOrdersDashboard(reqObject) {
+    return this.accountEndpoint.getWorkOrdersDashboardEndpoint(reqObject);
+  }
+
+  getWorkOrderStatusCount(reqObject) {
+    return this.accountEndpoint.getWorkOrderStatusCountEndpoint(reqObject);
+  }
+
+  getWorkOrdersByTradeCount(reqObject) {
+    return this.accountEndpoint.getWorkOrdersByTradeCountEndPoint(reqObject);
+  }
   
   
 }

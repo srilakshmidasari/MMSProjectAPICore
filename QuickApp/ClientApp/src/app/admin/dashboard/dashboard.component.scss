@@ -1,0 +1,10 @@
+.space20 {
+    margin-bottom: 20px !important;
+}
+
+
+.clearfix:after {
+    content: "";
+    display: table;
+    clear: both;
+}

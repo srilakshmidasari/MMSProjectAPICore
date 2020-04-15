@@ -51,6 +51,7 @@ import { ApprovePmOrderComponent } from './PM/approve-pm-order/approve-pm-order.
 import { AddAssetPmComponent } from './PM/add-asset-pm/add-asset-pm.component';
 import { ChartsComponent } from './charts/charts.component';
 import { ChartsModule } from 'ng2-charts';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @NgModule({
   imports: [
@@ -96,7 +97,8 @@ import { ChartsModule } from 'ng2-charts';
     PmOrderComponent,
     ApprovePmOrderComponent,
     AddAssetPmComponent,
-    ChartsComponent
+    ChartsComponent,
+    DashboardComponent
   ],
   entryComponents: [
     EditUserDialogComponent,
