@@ -79,7 +79,7 @@
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
-      <mat-label>{{'users.editor.UserName' | translate}}</mat-label>
+      <mat-label>{{'users.editor.User Name' | translate}}</mat-label>
       <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off" maxlength="30" required />
       <mat-error *ngIf="userName.hasError('required')">
         {{'users.editor.User Name is Required' | translate}}
