@@ -18,12 +18,12 @@ export class DashboardComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  isChanged:boolean=false;
+  isChanged: boolean = false;
   public barChartLabels = [];
   public barChartType = 'bar';
   public barChartLegend = true;
   public barChartData = [
-    {data: [],backgroundColor:"", label: ''},
+    { data: [], backgroundColor: "", label: '' },
   ];
   //public barChartData: any[] = [];
   public barChartList: any[] = [];
@@ -31,9 +31,9 @@ export class DashboardComponent implements OnInit {
   public secondbarChartLabels = [];
   public secondbarChartType = 'bar';
   public secondbarChartLegend = true;
- // public secondbarChartData: any[] = [];
+  // public secondbarChartData: any[] = [];
   public secondbarChartData = [
-    {data: [], backgroundColor:"", label: ''},
+    { data: [], backgroundColor: "", label: '' },
   ];
   public secondbarChartList: any[] = [];
 
@@ -41,9 +41,9 @@ export class DashboardComponent implements OnInit {
   public thirdbarChartType = 'bar';
   public thirdbarChartLegend = true;
   public thirdbarChartData = [
-    {data: [], backgroundColor:"", label: ''},
+    { data: [], backgroundColor: "", label: '' },
   ];
- // public thirdbarChartData: any[] = [];
+  // public thirdbarChartData: any[] = [];
   public thirdbarChartList: any[] = [];
 
 
@@ -95,7 +95,7 @@ export class DashboardComponent implements OnInit {
       ]
     }
   ]
- 
+
   selectedType: any;
   constructor(private accountService: AccountService, private authService: AuthService, private fb: FormBuilder) {
     this.buildForm();
@@ -117,7 +117,7 @@ export class DashboardComponent implements OnInit {
         this.siteList = results.listResult == null ? [] : results.listResult;
         if (this.siteList.length > 0) {
           this.selectedSite = this.siteList[0].id;
-        //  this.searchForm.get('siteId').setValue(this.selectedSite);
+          //  this.searchForm.get('siteId').setValue(this.selectedSite);
         }
       },
         error => {
@@ -127,7 +127,7 @@ export class DashboardComponent implements OnInit {
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
-      "siteId": event == undefined?this.selectedSite:event,
+      "siteId": event == undefined ? this.selectedSite : event,
       "userId": this.currentUser.id
     }
     this.accountService.getProjectsByUserIdandSiteId(req)
@@ -135,7 +135,7 @@ export class DashboardComponent implements OnInit {
         this.userProjectsList = results.listResult == null ? [] : results.listResult;
         if (this.userProjectsList.length > 0) {
           this.selectedProject = this.userProjectsList[0].id;
-         // this.searchForm.get('projectId').setValue(this.selectedProject);
+          // this.searchForm.get('projectId').setValue(this.selectedProject);
         }
         this.getWorkType();
       },
@@ -148,7 +148,7 @@ export class DashboardComponent implements OnInit {
     return this.authService.currentUser;
   }
 
-  onChangeClick(){
+  onChangeClick() {
     this.isChanged = true;
   }
 
@@ -167,11 +167,11 @@ export class DashboardComponent implements OnInit {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkType).subscribe((result: any) => {
       this.workTypeList = result.listResult == null ? [] : result.listResult;
       if (this.workTypeList.length > 0) {
-        this.selectedType =this.workTypeList[0].id
+        this.selectedType = this.workTypeList[0].id
       }
-        if(!this.isChanged){
-          this.onWorkOrdersCount();
-        }
+      if (!this.isChanged) {
+        this.onWorkOrdersCount();
+      }
     },
       error => {
       })
@@ -205,7 +205,7 @@ export class DashboardComponent implements OnInit {
       })
   }
 
-  onSearchClick(){
+  onSearchClick() {
     debugger
     this.onWorkOrdersCount();
   }
@@ -223,7 +223,7 @@ export class DashboardComponent implements OnInit {
       this.barChartData = [];
       this.barChartLabels = [];
       this.barChartList = [];
-      var bardata=[];
+      var bardata = [];
 
       this.barChartList = result.listResult == null ? [] : result.listResult;
       for (var char of this.barChartList) {
@@ -231,31 +231,10 @@ export class DashboardComponent implements OnInit {
         bardata.push(char.ordersCount);
       }
       this.barChartData.push({
-        data:bardata,
+        data: bardata,
         backgroundColor: "rgb(65, 123, 189)",
-        label :""
+        label: ""
       })
-      // var ctx = $("#barChart").get(0).getContext('2d');
-
-      // var original = Chart.defaults.global.legend.onClick;
-      // Chart.defaults.global.legend.onClick = function (e, legendItem) {
-
-      //   original.call(this, e, legendItem);
-      // };
-
-      // var myChart = new Chart(ctx, {
-      //   type: 'bar',
-      //   data: {
-      //     labels: this.barChartLabels,
-      //     datasets: [
-      //       {
-      //         label: "",
-      //         backgroundColor: "rgb(65, 123, 189)",
-      //         data: this.barChartData
-      //       }
-      //     ]
-      //   }
-      // });
       this.onWorkOrdersTradesCount();
     },
       error => {
@@ -275,35 +254,17 @@ export class DashboardComponent implements OnInit {
       this.secondbarChartData = [];
       this.secondbarChartLabels = [];
       this.secondbarChartList = [];
-      let secondData =[]
+      let secondData = []
       this.secondbarChartList = result.listResult == null ? [] : result.listResult;
       for (var char of this.secondbarChartList) {
         this.secondbarChartLabels.push(char.description);
         secondData.push(char.ordersCount);
       }
       this.secondbarChartData.push({
-        data:secondData,
+        data: secondData,
         backgroundColor: "rgb(65, 123, 189)",
-        label:""
+        label: ""
       })
-      // var ctx = $("#secondbarChart").get(0).getContext('2d');
-      // var original = Chart.defaults.global.legend.onClick;
-      // Chart.defaults.global.legend.onClick = function (e, legendItem) {
-      //   original.call(this, e, legendItem);
-      // };
-      // var myChart = new Chart(ctx, {
-      //   type: 'bar',
-      //   data: {
-      //     labels: this.secondbarChartLabels,
-      //     datasets: [
-      //       {
-      //         label: "",
-      //         backgroundColor: "rgb(65, 123, 189)",
-      //         data: this.secondbarChartData
-      //       }
-      //     ]
-      //   }
-      // });
 
       this.onWorkOrdersCompletedbyTrade();
 
@@ -325,21 +286,21 @@ export class DashboardComponent implements OnInit {
       this.lineChartData = [];
       this.lineChartLabels = [];
       this.lineChartList = [];
-      let data=[];
+      let data = [];
       this.lineChartList = result.listResult == null ? [] : result.listResult;
       for (var char of this.lineChartList) {
         this.lineChartLabels.push(char.description);
         data.push(char.ordersCount);
       }
       this.lineChartData.push({
-        data :data,
-        label:''
+        data: data,
+        label: ''
       });
     },
       error => {
       })
   }
-   onWorkOrdersCompletedbyTrade() {
+  onWorkOrdersCompletedbyTrade() {
     const formModel = this.searchForm.value;
     var req = {
       "projectId": formModel.projectId,
@@ -352,39 +313,17 @@ export class DashboardComponent implements OnInit {
       this.thirdbarChartData = [];
       this.thirdbarChartLabels = [];
       this.thirdbarChartList = [];
-      let thirddata=[];
+      let thirddata = [];
       this.thirdbarChartList = result.listResult == null ? [] : result.listResult;
       for (var char of this.thirdbarChartList) {
         this.thirdbarChartLabels.push(char.description);
         thirddata.push(char.ordersCount);
       }
       this.thirdbarChartData.push({
-        data:thirddata,
+        data: thirddata,
         backgroundColor: "rgb(65, 123, 189)",
-        label:""
+        label: ""
       })
-
-      // var ctx = $("#thirdbarChart").get(0).getContext('2d');
-
-      // var original = Chart.defaults.global.legend.onClick;
-      // Chart.defaults.global.legend.onClick = function (e, legendItem) {
-
-      //   original.call(this, e, legendItem);
-      // };
-
-      // var myChart = new Chart(ctx, {
-      //   type: 'bar',
-      //   data: {
-      //     labels: this.thirdbarChartLabels,
-      //     datasets: [
-      //       {
-      //         label: "No of Work Orders Completed by Trade",
-      //         backgroundColor: "rgb(65, 123, 189)",
-      //         data: this.thirdbarChartData
-      //       }
-      //     ]
-      //   }
-      // });
       this.onWorkOrdersBacklogCount();
     },
       error => {
