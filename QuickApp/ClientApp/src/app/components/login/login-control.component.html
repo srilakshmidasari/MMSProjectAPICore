@@ -2,7 +2,7 @@
   <mat-form-field class="app-validate">
     <input matInput formControlName="userName" placeholder="Username" autocomplete="username" (keydown.enter)="enterKeyDown()">
     <mat-error *ngIf="userName.hasError('required')">
-      User name is <strong>required</strong>
+      Username is <strong>required</strong>
     </mat-error>
   </mat-form-field>
 

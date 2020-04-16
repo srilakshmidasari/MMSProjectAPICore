@@ -3,10 +3,10 @@
 
   <div fxLayout="row">
     <mat-form-field class="col-md-4">
-      <mat-label>{{'roles.editor.Name' | translate}}</mat-label>
+      <mat-label>{{'roles.editor.Role Name' | translate}}<span>*</span></mat-label>
       <input matInput formControlName="name" [readonly]="!canAddRoles" />
       <mat-error *ngIf="name.hasError('required')">
-        {{'roles.editor.RoleNameRequired' | translate}}
+        {{'roles.editor.Role Name is Required' | translate}}
       </mat-error>
     </mat-form-field>
 

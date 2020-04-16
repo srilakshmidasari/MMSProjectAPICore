@@ -162,8 +162,8 @@
       "NewPassword": "New Password",
       "NewPasswordRequired": "New password is required",
       "NewPasswordRules": "The new password must contain at least: one uppercase letter, one lowercase letter, one digit, minimum 8 characters and any special character",
-      "ConfirmPassword": "Confirm Password",
-      "ConfirmationPasswordRequired": "Confirmation password is required",
+      "Conform Password": "Conform Password",
+      "Conform Password is Required": "Conform Password is Required",
       "PasswordMismatch": "New password and confirmation password do not match",
       "Roles": "Roles",
       "FullName": " Full Name",
@@ -204,9 +204,9 @@
       "Reporting Role": "Reportnig Role"
     },
     "editor": {
-      "Name": "Name:",
+      "Role Name": "Role Name:",
       "Description": "Description:",
-      "RoleNameRequired": "Role name is required (minimum of 2 and maximum of 200 characters)",
+      "Role Name is Required": "Role Name is required (minimum of 2 and maximum of 200 characters)",
       "SelectAll": "Select all",
       "SelectNone": "Select none",
       "Close": "Close",
@@ -309,7 +309,7 @@
       "Name 2 is Required": "Name 2 is Required",
       "Project Details": "Project Details",
       "Project Details is Required": "Project Details is Required",
-      "Store": "Store",
+      "Select Store": "Select Store",
       "Please Select Store": "Please Select Store",
       "Upload Project": "Upload Project",
       "Note": "Note",
@@ -423,16 +423,18 @@
       "save": "Save",
       "cancel": "Cancel",
       "projectName": "projectName",
-      "PleaseSelectSite": "Please Select Site",
-      "PleaseSelectProject": "Please Select Project",
-      "PleaseSelectLocation": "Please Select Location",
+      "Please Select Site Name": "Please Select Site Name",
+      "Please Select Project Name": "Please Select Project Name",
+      "Please Select Location Name": "Please Select Location Name",
       "AssetReferenceisRequired":"Asset Reference is Required",
       "NameisRequired" : "Name 1 is Required",
       "Name2isRequired" : "Name 2 is Required",
-      "PleaseSelectAssetGroup": "PleaseSelectAssetGroup",
+      "Please Select AssetGroup": "Please Select AssetGroup",
       "PleaseSelectAssetTrade" : "Please Select Asset Trade",
       "PleaseSelectAssetCounter" :"Please Select Asset Counter",
-      "AssetFixedDateisRequired":"Asset Fixed Date is Required"
+      "AssetFixedDateisRequired":"Asset Fixed Date is Required",
+      "Days Applicable":"Days Applicable",
+      "Days Applicable is Required":"Days Applicable is Required"
      
       
     }
@@ -523,7 +525,8 @@
     "Units of Conversion is required":"Units of Conversion is required",
     "Item Category":"Item Category",
     "Save":"Save",
-    "Cancel":"Cancel"
+    "Cancel":"Cancel",
+    "Please Select Item Category":"Please Select Item Category"
    }
  },
  "Purchase Order":{
@@ -731,7 +734,7 @@
     "Status Name":"Status Name",
     "Techinician Name":"Techinician Name",
     "Asset GroupName":"Asset Group Name",
-    "Duration":"Duration in Minutes",
+    "Duration In Minutes":"Duration In Minutes",
     "DurationinHours":"Duration in Hours",
     "Is Active":"Is Active",
     "Add Order":"Add Order",
@@ -747,12 +750,12 @@
     "Technician":"Technician",
     "Please Select Technician":"Please Select Technician",
     "Task Name is Required":"Task Name is Required",
-    "Duration is Required":"Duration is Required",
+    "Duration In Minutes is Required":"Duration In Minutes is Required",
     "Task":"Task",
     "Save":"Save",
     "Cancel":"Cancel",
     "Duration in Hours":"Duration in Hours",
-    "Select Trade":"Select Trade",
+    "Select Asset Trade":"Select Asset Trade",
     "Please select Asset Trade":"Please select Asset Trade"
   }
  },
