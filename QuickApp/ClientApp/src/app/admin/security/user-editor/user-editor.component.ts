@@ -212,6 +212,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   //  Restting  userProfileForm
   public resetForm(stopEditing: boolean = false) {
+    debugger
     //  this.projectIds =[];
     // this.getProjects();
     if (stopEditing) {
@@ -247,7 +248,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
         newPassword: '',
         confirmPassword: ''
       },
-      roles: this.user.roles ||  [],
+      roles: this.user.roles == undefined ? this.user.roles : this.user.roles[0]|| [],
       projectId: this.isNewUser ? this.user.projectId : this.projectIds || '',
       //fullName: this.user.fullName || '',
       phoneNumber: this.user.phoneNumber || '',
@@ -419,6 +420,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   // On save Click
   public save() {
+    debugger
     if (!this.form.submitted) {
       // Causes validation to update.
       this.form.onSubmit(null);

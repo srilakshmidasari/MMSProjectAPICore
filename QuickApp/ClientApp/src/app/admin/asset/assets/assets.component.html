@@ -52,12 +52,12 @@
                 <mat-cell *matCellDef="let row"> {{row.astTradeName1}} </mat-cell>
             </ng-container>
             
-            <ng-container matColumnDef="assetCounter">
+            <ng-container matColumnDef="daysApplicable">
                 <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header
                     class="just-cont-center">
-                    {{'Assets.Management.Asset Counter'|translate}} </mat-header-cell>
+                    {{'Assets.Management.DaysApplicable'|translate}} </mat-header-cell>
                 <mat-cell class="just-cont-center small-cell" *matCellDef="let row" class="just-cont-center">
-                    {{row.astCounter}} </mat-cell>
+                    {{row.daysApplicable}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="assetSize">
                 <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header
