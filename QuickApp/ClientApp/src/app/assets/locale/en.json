@@ -662,7 +662,8 @@
     "Work Fault Name":"Work Fault Name",
     "Close":"Close",
     "Accept":"Accept",
-    "Reject":"Reject"
+    "Reject":"Reject",
+    "Accept Work Order":"Accept Work Order"
   }
  },
  "InventoryItems":{

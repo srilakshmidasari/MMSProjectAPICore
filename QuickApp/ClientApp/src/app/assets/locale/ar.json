@@ -647,7 +647,8 @@
     "Work Fault Name":"اسم خطأ العمل",
     "Close":"قريب", 
     "Accept":"قبول",
-    "Reject":"رفض"
+    "Reject":"رفض",
+    "Accept Work Order":"قبول أمر العمل"
   }
  },
  "InventoryItems":{

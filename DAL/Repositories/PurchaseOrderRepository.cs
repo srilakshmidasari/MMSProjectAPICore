@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DAL.Repositories.Interfaces;
 using DAL.Response;
 using Microsoft.Extensions.Options;
@@ -341,13 +341,13 @@ namespace DAL.Repositories
                             response.Result = string.Format("{0}/{1}/{2}{3}", FileRepoBaseUrl, result.FileLocation, result.FileName, result.FileExtention); ;
                             response.IsSuccess = true;
                             response.AffectedRecords = 1;
-                            response.EndUserMessage = "Purchage Order Updated Successfully";
+                            response.EndUserMessage = "Purchase Order Updated Successfully";
                         }
                         else
                         {
                             response.IsSuccess = true;
                             response.AffectedRecords = 0;
-                            response.EndUserMessage = "Purchage Order Updation Failed";
+                            response.EndUserMessage = "Purchase Order Updation Failed";
                         }
                     }
                 }
@@ -355,7 +355,7 @@ namespace DAL.Repositories
                 {
                     response.IsSuccess = false;
                     response.AffectedRecords = 0;
-                    response.EndUserMessage = "Purchage Order Reference Already Exists";
+                    response.EndUserMessage = "Purchase Order Reference Already Exists";
                 }
 
             }
