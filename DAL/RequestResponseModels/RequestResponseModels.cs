@@ -277,6 +277,7 @@ namespace DAL.RequestResponseModels
             public string Name2 { get; set; }
             public string AssetLocationRef { get; set; }
             public int? AstCounter { get; set; }
+            public int? DaysApplicable { get; set; }
             public DateTime AstFixedDate { get; set; }
             //public string FileName { get; set; }
             //public string FileLocation { get; set; }
@@ -311,7 +312,6 @@ namespace DAL.RequestResponseModels
             public DateTime CreatedDate { get; set; }
             public string UpdatedBy { get; set; }
             public DateTime UpdatedDate { get; set; }
-
             public int? DaysApplicable { get; set; }
             public List<UpsertAssetRepository> AssetRepositories { get; set; }
         }

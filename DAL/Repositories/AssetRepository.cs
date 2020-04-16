@@ -220,6 +220,7 @@ namespace DAL.Repositories
                                   AssetSize = al.AssetSize,
                                   AssetType = al.AssetType,
                                   AstCounter = al.AstCounter,
+                                  DaysApplicable = al.DaysApplicable,
                                   AstFixedDate = al.AstFixedDate,
                                   IsActive = al.IsActive,
                                   CreatedBy = al.CreatedBy,

@@ -415,6 +415,7 @@
       "AssetMake": "Asset Make",
       "AssetModel": "Asset Model",
       "AssetSize": "Asset Size",
+      "DaysApplicable":"Days Applicable",
       "AssetReference": "Asset Reference",
       "AssetReference2": "Asset Group Reference",
       "AssetTrade": "Asset Trade",
