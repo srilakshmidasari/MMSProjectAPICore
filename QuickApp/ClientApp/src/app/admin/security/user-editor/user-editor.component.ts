@@ -402,7 +402,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
     this.roleName = event;
     this.accountService.getRoleByRoleName(this.roleName)
       .subscribe((results: any) => { 
-        if(results.permissions != null){
+        if(results.permissions.length >0){
           this.premissionData=results.permissions;
           this.premissionData.forEach(element => {
             if(element.value == 'all.projects'){
@@ -410,8 +410,14 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
                 this.allProjectIds.push(element.id)
               });
               this.userProfileForm.get('projectId').setValue(this.allProjectIds);
+            }else{
+              if(!this.isNewUser){
+                this.userProfileForm.get('projectId').setValue(this.projectIds); 
+              }
             }
           });
+        }else{
+          this.userProfileForm.get('projectId').setValue(this.projectIds);
         }
       },
         error => {

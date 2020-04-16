@@ -139,7 +139,7 @@
       "Delete": "Delete User",
       "EditUser": "Edit User \"{{name}}\"",
       "Title": "Title",
-      "User Name": "User Name",
+      "UserName": "User Name",
       "FullName": "Full Name",
       "Email": "Email",
       "Roles": "Roles",
@@ -199,7 +199,7 @@
       "Delete": "Delete",
       "RoleDetails": "Role Details \"{{name}}\"",
       "EditRole": "Edit Role \"{{name}}\"",
-      "Name": "Name",
+      "Name": "Role Name",
       "Description": "Description",
       "Users": "Users",
       "Reporting Role": "Reportnig Role"
