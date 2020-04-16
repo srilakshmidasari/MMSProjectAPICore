@@ -139,7 +139,7 @@
       "Delete": "Delete User",
       "EditUser": "Edit User \"{{name}}\"",
       "Title": "Title",
-      "UserName": "User Name",
+      "User Name": "User Name",
       "FullName": "Full Name",
       "Email": "Email",
       "Roles": "Roles",
@@ -148,7 +148,7 @@
     },
     "editor": {
       "JobTitle": "Job Title",
-      "UserName": "User Name",
+      "User Name": "User Name",
       "UserNameRequired": "User name is required (minimum of 2 and maximum of 200 characters)",
       "Password": "Password",
       "PasswordHint": "Your password is required when changing user name",
@@ -186,7 +186,8 @@
       "PhoneNumberMinLength": "Enter 10 digits for Phone Number",
       "Update": "Update",
       "Select Project":"Select Project",
-      "Please Select Project":"Please Select Project"
+      "Please Select Project":"Please Select Project",
+      "User Name is Required":"User Name is Required"
     }
   },
   "roles": {

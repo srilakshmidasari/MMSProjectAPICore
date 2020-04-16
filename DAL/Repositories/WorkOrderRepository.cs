@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using DAL.Repositories.Interfaces;
 using DAL.Response;
 using Microsoft.Extensions.Options;
@@ -409,7 +409,7 @@ namespace DAL.Repositories
                     response.Result = orderData;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
-                    response.EndUserMessage = "Work Order Accepted Successfully";
+                    response.EndUserMessage = "Work Order Rejected Successfully";
                 }
 
                 
