@@ -470,6 +470,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         debugger
         this.names = [];
         this.AssetIds = [];
+        this.assetData =[];
         response.forEach(element => {
           this.names.push(element.name1);
           this.AssetIds.push({

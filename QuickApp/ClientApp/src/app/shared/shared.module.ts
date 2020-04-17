@@ -53,6 +53,8 @@ import { AppDateAdapter, APP_DATE_FORMATS } from './validators/date.adapter';
   entryComponents: [
     AppDialogComponent
   ],
+
+
   providers: [
     {
         provide: DateAdapter, useClass: AppDateAdapter
@@ -60,7 +62,7 @@ import { AppDateAdapter, APP_DATE_FORMATS } from './validators/date.adapter';
     {
         provide: MAT_DATE_FORMATS, useValue: APP_DATE_FORMATS
     }
-    ]
+    ],
  
   
 })
