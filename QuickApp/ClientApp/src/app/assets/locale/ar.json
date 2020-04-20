@@ -6,6 +6,7 @@
     "New": "جديد"
   },
   "mainMenu": {
+    "Dashboard": "لوحة القيادة",
     "Home": "الصفحة الرئيسية",
     "Admin": "مشرف",
     "Security": "الأمان",
@@ -125,6 +126,18 @@
     "ResetDefault": "اعادة تشغيل الأصل",
     "SetDefault": "تعيين الأصل"
   },
+  "Dashboard":{
+    "Management":{
+  "From Date":"من التاريخ",
+  "To Date":"حتى الآن",
+  "Search":"بحث",
+  "No of Work Orders":"عدد أوامر العمل",
+  "No of Work Orders Planned by Trade":"عدد أوامر العمل المخططة حسب التجارة",
+  "No of Work Orders Completed by Trade":"عدد أوامر العمل المكتملة بالتجارة",
+  "No of Orders by Work Status":"عدد الأوامر حسب حالة العمل",
+  "Work Order Backlog Trend (Orders pending)":"اتجاه العمل المتراكم(أوامر معلقة)"
+      }
+    },
   "users": {
     "management": {
       "Search": "البحث عن المستخدم...",
@@ -565,7 +578,8 @@
     "Purchase Order Information":"معلومات طلب الشراء",
     "Close":"قريب",
     "View Details":"عرض التفاصيل",
-    "Receive":"تسلم"
+    "Receive":"تسلم",
+    "View Document":"عرض المستند"
   }
  },
  "Receive Item":{

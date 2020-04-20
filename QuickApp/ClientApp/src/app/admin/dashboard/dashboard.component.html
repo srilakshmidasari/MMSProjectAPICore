@@ -21,7 +21,7 @@
                 </mat-select>
             </mat-form-field>
             <mat-form-field class="col-md-2">
-                <mat-label>From Date </mat-label>
+                <mat-label>{{'Dashboard.Management.From Date'|translate}} </mat-label>
                 <input matInput [matDatepicker]="picker"  formControlName="fromDate"
                     placeholder="Start Date" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
@@ -29,7 +29,7 @@
 
             </mat-form-field>
             <mat-form-field class="col-md-2">
-                <mat-label>To Date </mat-label>
+                <mat-label>{{'Dashboard.Management.To Date'|translate}} </mat-label>
                 <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="toDate"
                     placeholder="End Date" required>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
@@ -45,7 +45,7 @@
             </mat-form-field>
 
             <div class="col-md-1">
-                <button mat-raised-button (click)="onSearchClick()" color="primary">Search</button>
+                <button mat-raised-button (click)="onSearchClick()" color="primary">{{'Dashboard.Management.Search'|translate}}</button>
             </div>
         </div>
     </form>
@@ -54,7 +54,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="d-block box-shadow1">
-                <b style="font-size: 15px;">No of Work Orders</b>
+                <b style="font-size: 15px;">{{'Dashboard.Management.No of Work Orders'|translate}}</b>
                 <hr class="bg-blue" />
                 <!-- <canvas id="barChart"></canvas> -->
                 <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" 
@@ -66,7 +66,7 @@
         <div class="clearfix"></div>
         <div class="col-md-4">
             <div class="d-block box-shadow1">
-                <b style="font-size: 15px;">No of Work Orders Planned by Trade</b>
+                <b style="font-size: 15px;">{{'Dashboard.Management.No of Work Orders Planned by Trade'|translate}}</b>
                 <hr class="bg-blue" />
                 <canvas baseChart [datasets]="secondbarChartData" [labels]="secondbarChartLabels" 
                      [legend]="secondbarChartLegend" [chartType]="secondbarChartType">
@@ -77,7 +77,7 @@
 
         <div class="col-md-4">
             <div class="d-block box-shadow1">
-                <b style="font-size: 15px;">No of Work Orders Completed by Trade</b>
+                <b style="font-size: 15px;">{{'Dashboard.Management.No of Work Orders Completed by Trade'|translate}}</b>
                 <hr class="bg-blue" />
                 <canvas baseChart [datasets]="thirdbarChartData" [labels]="thirdbarChartLabels" 
                      [legend]="thirdbarChartLegend" [chartType]="thirdbarChartType">
@@ -91,7 +91,7 @@
     <div class="row">
         <div class="chart-wrapper col-md-6">
             <div class="d-block box-shadow1">
-                <b style="font-size: 15px;">No of Orders by Work Status </b>
+                <b style="font-size: 15px;">{{'Dashboard.Management.No of Orders by Work Status'|translate}} </b>
                 <hr class="bg-blue" />
                 <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
                     [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColor"
@@ -101,7 +101,7 @@
         </div>
         <div class="col-md-6">
             <div class="d-block box-shadow1">
-                <b style="font-size: 15px;">Work Order Backlog Trend (Orders pending)</b>
+                <b style="font-size: 15px;">{{'Dashboard.Management.Work Order Backlog Trend (Orders pending)'|translate}}</b>
                 <hr class="bg-blue" />
                 <div class="chart-wrapper">
                     <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
