@@ -1,13 +1,13 @@
 
 
-<h1 [dir]="textDir" mat-dialog-title>{{roleName ? ('roles.management.EditRole' | translate:roleName) : ('roles.management.NewRole' | translate)}}</h1>
-<!-- <h1 *ngIf="!canAddRoles" [dir]="textDir" mat-dialog-title>{{'roles.management.RoleDetails' | translate:roleName}}</h1> -->
-<div mat-dialog-content [dir]="textDir">
+<h1 mat-dialog-title>{{roleName ? ('roles.management.EditRole' | translate:roleName) : ('roles.management.NewRole' | translate)}}</h1>
+<!-- <h1 *ngIf="!canAddRoles" mat-dialog-title>{{'roles.management.RoleDetails' | translate:roleName}}</h1> -->
+<div mat-dialog-content >
     <role-editor #roleEditor [role]="data.role" [allPermissions]="data.allPermissions"></role-editor>
 </div>
 <div mat-dialog-actions >
-    <button [dir]="textDir"  mat-raised-button (click)="roleEditor.save();" color="primary">{{'roles.editor.Save'|translate}}</button>
-    <button [dir]="textDir"  mat-raised-button (click)="cancel()" color="warn">{{'roles.editor.Cancel'|translate}}</button>
-    <!-- <button  [dir]="textDir"  *ngIf="!canAddRoles" mat-raised-button (click)="cancel()">Close</button> -->
+    <button  mat-raised-button (click)="roleEditor.save();" color="primary">{{'roles.editor.Save'|translate}}</button>
+    <button  mat-raised-button (click)="cancel()" color="warn">{{'roles.editor.Cancel'|translate}}</button>
+    <!-- <button   *ngIf="!canAddRoles" mat-raised-button (click)="cancel()">Close</button> -->
 </div>
 
