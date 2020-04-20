@@ -3,7 +3,7 @@
 // www.ebenmonney.com/templates
 // =============================
 
-import { Component, ChangeDetectorRef, ViewChild, OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, ViewChild, OnInit, Renderer2 } from '@angular/core';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { Router, NavigationStart } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -23,6 +23,8 @@ import { LoginDialogComponent } from './components/login/login-dialog.component'
 import { AppDialogComponent } from './shared/app-dialog/app-dialog.component';
 import { LanguagePreference } from './settings/user-preferences/user-preferences.component';
 import { TranslateService } from '@ngx-translate/core';
+import * as $ from 'jquery';
+declare const $: any;
 
 @Component({
   selector: 'app-root',
@@ -72,6 +74,7 @@ export class AppComponent implements OnInit {
     public configurations: ConfigurationService,
     public router: Router,
     public dialog: MatDialog,
+    private renderer: Renderer2,
     changeDetectorRef: ChangeDetectorRef,
     media: MediaMatcher) {
 
@@ -89,17 +92,21 @@ export class AppComponent implements OnInit {
 
     this.appTitleService.appName = this.appTitle;
 
-   
-  //  language translate settings
-   this.translate.setDefaultLang('en');
+
+    //  language translate settings
+    this.translate.setDefaultLang('en');
     var lang = localStorage.getItem('language');
     if (lang != undefined) {
-      if(lang == 'en'){
+      if (lang == 'en') {
         this.textDir = 'ltr';
-        this.translate.use(lang); 
-      }else{
+        this.translate.use(lang);
+        this.renderer.removeClass(document.body, 'dir-rtl');
+      document.body.setAttribute('dir', 'ltr');
+      } else {
         this.textDir = 'rtl';
-        this.translate.use(lang); 
+        this.translate.use(lang);
+        this.renderer.addClass(document.body, 'dir-rtl');
+      document.body.setAttribute('dir', 'rtl');
       }
     }
     else {
@@ -108,14 +115,30 @@ export class AppComponent implements OnInit {
 
   }
 
+  // changeLang(language: string, changeView: boolean) {
+  //   if (changeView) {
+  //     this.renderer.addClass(document.body, 'toggle-rtl');
+  //     this.isArabic = true;
+  //   } else {
+  //     this.renderer.removeClass(document.body, 'toggle-ltr');
+  //     this.isArabic = false;
+  //   }
+  //   this.translate.use(language);
+  // }
+
   //on language change click
   changeLang(language: string) {
+    debugger
     if (language == 'en') {
       this.language = 'English';
+      this.renderer.removeClass(document.body, 'dir-rtl');
+      document.body.setAttribute('dir', 'ltr')
       this.textDir = 'ltr';
     }
     else if (language == 'ar') {
       this.language = 'Arabic';
+      this.renderer.addClass(document.body, 'dir-rtl');
+      document.body.setAttribute('dir', 'rtl')
       this.textDir = 'rtl';
     }
     this.translate.use(language);
@@ -124,7 +147,6 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.isUserLoggedIn = this.authService.isLoggedIn;
 
     // 0.5 extra sec to display preboot/loader information. Preboot screen is removed 0.5 sec later
@@ -150,9 +172,9 @@ export class AppComponent implements OnInit {
     this.authService.getLoginStatusEvent().subscribe(isLoggedIn => {
       this.isUserLoggedIn = isLoggedIn;
       if (this.isUserLoggedIn) {
-       
+
       } else {
-        
+
       }
 
       setTimeout(() => {
@@ -173,10 +195,9 @@ export class AppComponent implements OnInit {
 
   ngOnDestroy() {
     this.mobileQuery.removeListener(this._mobileQueryListener);
-  
   }
 
- 
+
 
   private refreshAdminExpanderState(currentUrl: string) {
     debugger

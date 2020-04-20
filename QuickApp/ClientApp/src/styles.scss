@@ -404,3 +404,35 @@ mat-cell:first-of-type, mat-footer-cell:first-of-type, mat-header-cell:first-of-
     padding: 10px 15px;
     box-shadow:0 1px 6px 0 rgba(32, 33, 36, .28);
   }
+  .dir-rtl{
+    direction: rtl !important;
+  }
+  @page:left
+{
+     direction: ltr;
+}
+@page:right
+{
+     direction: rtl;
+}
+.dir-rtl .mat-dialog-container{
+  direction: rtl !important;
+  *{
+    direction: rtl !important;
+  }
+}
+.dir-rtl .mat-dialog-title{
+  direction: rtl !important;
+}
+.dir-rtl .mat-dialog-content{
+  direction: rtl !important;
+}
+.dir-rtl .mat-dialog-actions{
+  direction: rtl !important;
+}
+body[dir='rtl']{
+  direction: rtl !important;
+}
+body[dir='ltr']{
+  direction: ltr !important;
+}
