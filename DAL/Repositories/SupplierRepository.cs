@@ -212,7 +212,9 @@ namespace DAL.Repositories
                 if (purchase != null)
                 {
                     var res = _appContext.PurchageItemXrefs.Where(x => purchase.Select(p => p.Id).Contains(x.PurchageId)).ToList();
+                    var inv =_appContext.Inventories.Where(x => purchase.Select(p => p.Id).Contains(x.PurchaseOrderId)).ToList();
                     _appContext.PurchageItemXrefs.RemoveRange(res);
+                    _appContext.Inventories.RemoveRange(inv);
                     _appContext.PurchageOrders.RemoveRange(purchase);
                     _appContext.Suppliers.Remove(SupplierData);
                     _appContext.SaveChanges();

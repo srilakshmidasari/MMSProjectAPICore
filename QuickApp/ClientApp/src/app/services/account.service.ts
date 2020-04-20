@@ -563,6 +563,13 @@ deleteAssetRepository(repositoryId) {
   getWorkOrdersByTradeCount(reqObject) {
     return this.accountEndpoint.getWorkOrdersByTradeCountEndPoint(reqObject);
   }
+
+  
+  deletePMProcedure(Id) {
+    return this.accountEndpoint.deletePMProcedureEndpoint(Id);
+  }
+
+  
   
   
 }

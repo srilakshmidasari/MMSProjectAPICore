@@ -14,6 +14,8 @@ import { ApprovePmOrderComponent } from '../approve-pm-order/approve-pm-order.co
 
 import { timingSafeEqual } from 'crypto';
 import { AddAssetPmComponent } from '../add-asset-pm/add-asset-pm.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Utilities } from 'src/app/services/utilities';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',
@@ -435,8 +437,32 @@ export class PreventivemaintenanceComponent implements OnInit {
     }
   }
 
-  confirmDelete() {
-
+  confirmDelete(row) {
+    let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      data: { title: "Delete" + " " + row.preventiveRefId, msg: "Are you sure you want to delete this Location with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      width: 'auto',
+      height: 'auto',
+      disableClose: true,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result != undefined) {
+        this.accountService.deletePMProcedure(row.id)
+          .subscribe((results: any) => {
+            this.alertService.stopLoadingMessage();
+            this.loadingIndicator = false;
+            this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success)
+            if (results.isSuccess) {
+              this.getMaintenance();
+            }
+          },
+            error => {
+              this.alertService.stopLoadingMessage();
+              this.loadingIndicator = false;
+              this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
+                MessageSeverity.error, error);
+            });
+      }
+    });
   }
 
   // On Search
@@ -470,6 +496,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         debugger
         this.names = [];
         this.AssetIds = [];
+        this.assetData =[];
         response.forEach(element => {
           this.names.push(element.name1);
           this.AssetIds.push({

@@ -35,7 +35,7 @@ export class SelectAssetComponent implements OnInit {
       if(obj.isChecked){
         this.assetData.push({
           "Id": obj.id,
-          "assetName": obj.name1,
+          "name1": obj.name1,
           "daysApplicable":obj.daysApplicable,
           "assetRef":obj.assetRef,
           "astFixedDate":obj.astFixedDate

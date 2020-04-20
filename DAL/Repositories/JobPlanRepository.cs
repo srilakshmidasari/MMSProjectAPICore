@@ -242,8 +242,24 @@ namespace DAL.Repositories
                 {
                     var jobTasks = _appContext.JobTasks.Where(x => x.JobPlanId == JobPlanId).ToList();
 
+                    var pmPro = _appContext.PreventiveMaintenances.Where(x => x.JobPlanId == JobPlanId).ToList();
 
+                    var res = _appContext.PMAssetXrefs.Where(x => pmPro.Select(p => p.Id).Contains(x.PreventiveMaintenanceId)).ToList();
 
+                    var stspm =_appContext.PMStatusHistories.Where(x=> pmPro.Select(p => p.Id).Contains(x.PreventiveMaintenanceId)).ToList();
+
+                    var work = _appContext.WorkOrders.Where(x=> pmPro.Select(p => p.Id).Contains(x.PMProcedureId.Value)).ToList();
+
+                    var statusData = _appContext.WorkOrderStatusHistories.Where(x => work.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+                  
+                    var ast = _appContext.WorkOrderItemXrefs.Where(x => work.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
+                    _appContext.WorkOrderStatusHistories.RemoveRange(statusData);
+                    _appContext.WorkOrderItemXrefs.RemoveRange(ast);
+                    _appContext.WorkOrders.RemoveRange(work);
+                    _appContext.PMStatusHistories.RemoveRange(stspm);
+                    _appContext.PMAssetXrefs.RemoveRange(res);
+                    _appContext.PreventiveMaintenances.RemoveRange(pmPro);
                     _appContext.JobTasks.RemoveRange(jobTasks);
                     _appContext.JobPlans.Remove(JobPlanData);
 

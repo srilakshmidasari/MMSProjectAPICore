@@ -76,15 +76,15 @@
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
-                        <td  >
+                        <td>
                             <button class="just-cont-center" mat-icon-button
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <!-- <button class="just-cont-center" mat-icon-button
-                                matTooltip="{{'Work Order.Management.Delete'|translate}}" (click)="confirmDelete(req)" [hidden]="!req.isActive">
+                             <button class="just-cont-center" mat-icon-button
+                                matTooltip="{{'Work Order.Management.Delete'|translate}}" (click)="onDeleteJob(req)" [hidden]="!req.isActive">
                                 <mat-icon color="warn">delete</mat-icon>
-                            </button> -->
+                            </button> 
                         </td>
                     </tr>
                 </ng-template>

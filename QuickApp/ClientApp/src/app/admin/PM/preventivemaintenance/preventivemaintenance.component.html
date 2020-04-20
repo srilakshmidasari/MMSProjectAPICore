@@ -105,11 +105,11 @@
                         *ngIf="row.statusTypeName == 'Approved'" (click)="onSelectAsset(row)">
                         <mat-icon> forum</mat-icon>
                     </button>
-                    <!-- <button class="just-cont-center" mat-icon-button
+                    <button class="just-cont-center" mat-icon-button
                         matTooltip="{{'Preventive Maintenance.Management.Delete'|translate}}"
                         (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
-                    </button> -->
+                    </button>
                 </mat-cell>
             </ng-container>
             <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

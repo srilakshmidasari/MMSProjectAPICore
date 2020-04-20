@@ -193,6 +193,7 @@ namespace DAL.Repositories
                               join s in _appContext.SiteInfos on p.SiteId equals s.Id
                               join ag in _appContext.LookUps on al.AstGroupId equals ag.Id
                               join at in _appContext.LookUps on al.AstTradeId equals at.Id
+                              
                               select new GetAssetLocationResponse
                               {
                                   Id = al.Id,
@@ -462,8 +463,12 @@ namespace DAL.Repositories
 
                     var assetFiles = _appContext.AssetFileRepositories.Where(x => x.AssetId == assetId).ToList();
                     var resss = _appContext.WorkOrderItemXrefs.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
-
+                    var sts = _appContext.WorkOrderStatusHistories.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+                    var stc = _appContext.PMAssetXrefs.Where(x => x.AssetId == assetId).ToList();
+                   
+                    _appContext.PMAssetXrefs.RemoveRange(stc);
                     _appContext.AssetFileRepositories.RemoveRange(assetFiles);
+                    _appContext.WorkOrderStatusHistories.RemoveRange(sts);
                     _appContext.WorkOrderItemXrefs.RemoveRange(resss);
                     _appContext.WorkOrders.RemoveRange(workOrders);
                     _appContext.AssetLocations.Remove(assetData);

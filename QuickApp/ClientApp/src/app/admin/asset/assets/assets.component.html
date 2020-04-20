@@ -344,7 +344,7 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary"
+                <button mat-raised-button color="primary" [disabled]="!assetLocationForm.valid || !assetLocationForm.dirty"
                     (click)="saveAssets()">{{'Assets.Management.save'|translate}}</button>
                 <button mat-raised-button color="warn"
                     (click)="onAssetCancel()">{{'Assets.Management.cancel'|translate}}</button>

@@ -46,6 +46,7 @@ import { AboutComponent } from './components/about/about.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -70,7 +71,8 @@ import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confir
     ToastaModule.forRoot(),
     LeafletModule.forRoot(),
     ChartsModule,
-    NguCarouselModule
+    NguCarouselModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,

@@ -65,7 +65,7 @@
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'project.management.Edit' | translate}}" (click)="editClick(row)" *ngIf="canEditProjects">
+                    <button class="z-index"  mat-icon-button matTooltip="{{'project.management.Edit' | translate}}" (click)="editClick(row)" *ngIf="canEditProjects">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="{{'project.management.View Store'|translate}}"
@@ -73,7 +73,7 @@
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="{{'project.management.Delete' | translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)"
+                    <button class="z-index"  mat-icon-button matTooltip="{{'project.management.Delete' | translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)"
                         *ngIf="canDeleteProjects">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
