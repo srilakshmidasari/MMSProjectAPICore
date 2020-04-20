@@ -29,8 +29,12 @@ export class SiteListComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
+  language: string;
   constructor(private accountService: AccountService, private snackBar: MatSnackBar, private alertService: AlertService,
-    private dialog: MatDialog) { }
+    private dialog: MatDialog) { 
+   
+
+    }
 
   ngOnInit() {
     this.getSites();
@@ -153,9 +157,14 @@ export class SiteListComponent implements OnInit {
 
   //Delete Site 
   confirmDelete(site: any) {
-    debugger
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this site with relevant Information ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا الموقع بالمعلومات ذات الصلة؟"
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + site.siteReference,  msg: "Are you sure you want to delete this site with relevant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + site.siteReference,  msg: msg , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

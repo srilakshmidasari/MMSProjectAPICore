@@ -187,20 +187,23 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'JobPlan.Management.Technician'|translate}}
+                        <mat-label>{{'JobPlan.Management.Technician'|translate}} *
                         </mat-label>
-                        <mat-select formControlName="technicianId">
+                        <mat-select formControlName="technicianId" >
                             <mat-option *ngFor="let work of technicianList" [value]="work.id" >
                                 {{work.name1}}
                             </mat-option>
                         </mat-select>
-                        <!-- <mat-error *ngIf="!jobPlanForm.controls['technicianId'].valid">
+                        <mat-error *ngIf="!jobPlanForm.controls['technicianId'].valid">
                             {{'JobPlan.Management.Please Select Technician'|translate}}
-                        </mat-error> -->
+                        </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Duration in Hours'|translate}}</mat-label>
-                        <input matInput formControlName="totalDuration" maxlength="10" (keypress)="numberOnly($event)"/>
+                        <input matInput formControlName="totalDuration" maxlength="10" (keypress)="numberOnly($event)" required/>
+                        <mat-error *ngIf="!jobPlanForm.controls['totalDuration'].valid">
+                            {{'JobPlan.Management.totalDurationisRequired'|translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">

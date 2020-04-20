@@ -35,6 +35,7 @@ export class ItemComponent implements OnInit {
   isitem: boolean;
   public isSaving = false;
   itemTypes: any[]=[];
+  language: string;
 
   constructor(private accountService: AccountService,
     private alertService: AlertService,
@@ -247,9 +248,14 @@ export class ItemComponent implements OnInit {
   }
 
   confirmDelete(item:any) {
-    debugger;
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this item ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا البند ؟"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + item.itemReference,  msg: "Are you sure you want to delete this item ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
+      data: { title: "Delete" + " " + item.itemReference,  msg: msg , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
       width: 'auto',
       height: 'auto',
       disableClose: true,

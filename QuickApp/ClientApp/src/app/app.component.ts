@@ -101,12 +101,12 @@ export class AppComponent implements OnInit {
         this.textDir = 'ltr';
         this.translate.use(lang);
         this.renderer.removeClass(document.body, 'dir-rtl');
-      document.body.setAttribute('dir', 'ltr');
+        document.body.setAttribute('dir', 'ltr');
       } else {
         this.textDir = 'rtl';
         this.translate.use(lang);
         this.renderer.addClass(document.body, 'dir-rtl');
-      document.body.setAttribute('dir', 'rtl');
+        document.body.setAttribute('dir', 'rtl');
       }
     }
     else {
@@ -133,7 +133,7 @@ export class AppComponent implements OnInit {
       this.language = 'English';
       this.renderer.removeClass(document.body, 'dir-rtl');
       document.body.setAttribute('dir', 'ltr')
-      this.textDir = 'ltr';
+     this.textDir = 'ltr';
     }
     else if (language == 'ar') {
       this.language = 'Arabic';

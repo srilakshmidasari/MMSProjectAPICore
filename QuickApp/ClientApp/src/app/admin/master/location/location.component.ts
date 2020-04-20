@@ -35,6 +35,7 @@ export class LocationComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   sitesList: any[] = [];
   userProjectsList: any[] = [];
+  language: string;
 
   constructor(private fb: FormBuilder,
     private accountService: AccountService,
@@ -286,9 +287,14 @@ export class LocationComponent implements OnInit {
 
   //Delete Location 
   onDeleteLocation(location: any) {
-    debugger
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this Location with relevant Information ?"
+    }else{
+      var msg=" هل أنت متأكد أنك تريد حذف هذا الموقع بالمعلومات ذات الصلة؟ " 
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + location.locationReference, msg: "Are you sure you want to delete this Location with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + location.locationReference, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

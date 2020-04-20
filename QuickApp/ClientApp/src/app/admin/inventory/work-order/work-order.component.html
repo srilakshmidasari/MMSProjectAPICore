@@ -110,12 +110,12 @@
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
-                        <td>
-                            <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Approved' && req.statusTypeName != 'Closed'"
+                        <td class="just-cont-center " >
+                            <button class="z-index" mat-icon-button *ngIf="req.statusTypeName != 'Approved' && req.statusTypeName != 'Closed'"
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}"  (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button class="just-cont-center" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
+                            <button  class="z-index" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
                                 matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>

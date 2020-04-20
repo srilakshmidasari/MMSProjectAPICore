@@ -41,6 +41,7 @@ export class PmOrderComponent implements OnInit {
   currenrDate: Date;
   orderForm: FormGroup;
   itemFrom: FormGroup;
+  language: string;
 
 
   constructor(private accountService: AccountService, private alertService: AlertService,
@@ -472,8 +473,14 @@ export class PmOrderComponent implements OnInit {
   }
 
   confirmDelete(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+      var msg="Are you sure you want to delete this order ?"
+     }else{
+       var msg="هل أنت متأكد أنك تريد حذف هذا الطلب؟"
+      }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete", msg: "Are you sure you want to delete this PM order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete", msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

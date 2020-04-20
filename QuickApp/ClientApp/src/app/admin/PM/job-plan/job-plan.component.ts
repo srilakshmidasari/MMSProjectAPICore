@@ -30,6 +30,7 @@ export class JobPlanComponent implements OnInit {
   i: any;
   duration: any;
   tradeList: any[]=[];
+  language: string;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder) {
       this.TaskFrom = this.formBuilder.group({
@@ -38,7 +39,6 @@ export class JobPlanComponent implements OnInit {
      }
 
   ngOnInit() {
-    debugger
     this.getJobPlans();
     this.buildForm();
   }
@@ -46,7 +46,7 @@ export class JobPlanComponent implements OnInit {
 
 
   private getJobPlans() {
-    debugger
+  
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getJobPlan()
@@ -322,8 +322,14 @@ export class JobPlanComponent implements OnInit {
      //Delete Job
   onDeleteJob(job: any) {
     debugger
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this Location with relevant Information ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا الموقع بالمعلومات ذات الصلة؟"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + job.jobReference, msg: "Are you sure you want to delete this Location with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + job.jobReference, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

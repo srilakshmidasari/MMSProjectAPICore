@@ -325,7 +325,7 @@
                             <div class="row">
                                 <mat-form-field class="col-md-9">
                                     <mat-label>{{'Purchase Order.Management.Comments'|translate}}</mat-label>
-                                    <input matInput formControlName="comments" required maxlength="100" />
+                                    <input matInput formControlName="comments"  maxlength="100" />
                                 </mat-form-field>
                             </div>
                         </ng-container>
@@ -336,7 +336,7 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" [disabled]="!orderForm.valid || !orderForm.dirty"
+                <button mat-raised-button color="primary" 
                     (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
                 <button mat-raised-button color="warn"
                     (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>
@@ -490,7 +490,7 @@
         </mat-card-content>
         <mat-card-actions>
             <div class="float-right" style="padding-top: 12px;">
-                <button mat-raised-button color="primary" [disabled]="!orderForm.valid || !orderForm.dirty"
+                <button mat-raised-button color="primary" 
                     (click)="saveOrder()">{{'Purchase Order.Management.Save'|translate}}</button>
                 <button mat-raised-button color="warn"
                     (click)="onCancelClick()">{{'Purchase Order.Management.Cancel'|translate}}</button>

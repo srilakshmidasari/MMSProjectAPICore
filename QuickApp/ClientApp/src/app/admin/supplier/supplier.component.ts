@@ -42,6 +42,7 @@ export class SupplierComponent implements OnInit {
   @Input() allowedImageExtension: string = "jpeg , jpg , png";
   @ViewChild("fileInput", { static: false }) myInputVariable: ElementRef;
   maxSize: number;
+  language: string;
 
   constructor(private accountService: AccountService,
     private authService: AuthService,
@@ -293,8 +294,14 @@ export class SupplierComponent implements OnInit {
   //Delete Assets Groups
   confirmDelete(supplier: any) {
     debugger
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this Supplier ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا المورد؟"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + supplier.supplierReference, msg: "Are you sure you want to delete this Supplier ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + supplier.supplierReference, msg:msg , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

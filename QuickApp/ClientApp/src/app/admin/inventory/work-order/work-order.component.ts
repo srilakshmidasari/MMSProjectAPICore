@@ -54,6 +54,7 @@ export class WorkOrderComponent implements OnInit {
   assetLength :number;
   assetListLength: number;
   selectAsset: any;
+  language: string;
   
 
   constructor(private accountService: AccountService, private alertService: AlertService,
@@ -367,8 +368,14 @@ export class WorkOrderComponent implements OnInit {
   }
 
   confirmDelete(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this order ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا الطلب؟"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete", msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -596,8 +603,16 @@ export class WorkOrderComponent implements OnInit {
   };
 
   acceptClick(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to Accept this order ?"
+     var title = "Accept Work Order"
+    }else{
+      var msg="هل أنت متأكد أنك تريد قبول هذا الطلب؟";
+      var title = "قبول أمر العمل"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Accept Work Order", msg: "Are you sure you want to Accept this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
+      data: { title: title, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -629,8 +644,16 @@ export class WorkOrderComponent implements OnInit {
   }
 
   rejectClick(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to Reject this order ?"
+     var title = "Reject Work Order"
+    }else{
+      var msg="هل أنت متأكد أنك تريد رفض هذا الطلب؟"
+      var title = "رفض أمر العمل"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Reject Work Order", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
+      data: { title: title, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'OK', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -669,7 +692,6 @@ export class WorkOrderComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe(siteresponse => {
       this.getworkOrderOrders();
-
     });
   }
 

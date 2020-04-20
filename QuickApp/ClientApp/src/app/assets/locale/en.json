@@ -140,7 +140,7 @@
 "No of Work Orders Planned by Trade":"No of Work Orders Planned by Trade",
 "No of Work Orders Completed by Trade":"No of Work Orders Completed by Trade",
 "No of Orders by Work Status":"No of Orders by Work Status",
-"Work Order Backlog Trend (Orders pending)":">Work Order Backlog Trend (Orders pending)"
+"Work Order Backlog Trend (Orders pending)":"Work Order Backlog Trend (Orders pending)"
     }
   },
   "users": {
@@ -767,12 +767,13 @@
     "Please Select Technician":"Please Select Technician",
     "Task Name is Required":"Task Name is Required",
     "Duration In Minutes is Required":"Duration In Minutes is Required",
+    "totalDurationisRequired": "Total Duration is Required",
     "Task":"Task",
     "Save":"Save",
     "Cancel":"Cancel",
     "Duration in Hours":"Duration in Hours",
     "Select Asset Trade":"Select Asset Trade",
-    "Please select Asset Trade":"Please select Asset Trade"
+    "Please select Asset Trade":"Please Select Asset Trade"
   }
  },
 
@@ -796,6 +797,11 @@
     "Cancel":"Cancel"
 
   }
+ }, 
+ "data":{
+   "ok":"Ok",
+   "cancel":"Cancel"
  }
  
+
 }

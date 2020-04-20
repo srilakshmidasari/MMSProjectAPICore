@@ -60,6 +60,7 @@ export class ProjectComponent implements OnInit {
   editDocumentsList: any[] = [];
   isAllow: boolean = false;
   textDir: string;
+  language: string;
   constructor(private accountService: AccountService, private authService: AuthService, private formBuilder: FormBuilder, private snackBar: MatSnackBar, private alertService: AlertService,
     private dialog: MatDialog) {
     this.isImage = DataFactory.docType.Image;
@@ -431,34 +432,6 @@ export class ProjectComponent implements OnInit {
     })
 
   }
-
-  // public confirmDelete(project: any) {
-  //   this.snackBar.open(`Delete ${project.name1}?`, 'DELETE', { duration: 5000 })
-  //     .onAction().subscribe(() => {
-  //       this.alertService.startLoadingMessage('Deleting...');
-  //       this.loadingIndicator = true;
-  //       this.accountService.deleteProject(project.id)
-  //         .subscribe((results: any) => {
-  //           this.alertService.stopLoadingMessage();
-  //           this.loadingIndicator = false;
-  //           if (results.isSuccess) {
-  //             this.getProjects();
-  //           }
-  //         },
-  //           error => {
-  //             this.alertService.stopLoadingMessage();
-  //             this.loadingIndicator = false;
-  //             this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-  //               MessageSeverity.error, error);
-  //           });
-  //     });
-  // }
-
-  // get canManageProjects() {
-  //   return this.accountService.userHasPermission(Permission.manageProjectsPermission);
-  // }
-
-
   
   get canAddProjects() {
     return this.accountService.userHasPermission(Permission.addProjectsPermission);
@@ -475,9 +448,15 @@ export class ProjectComponent implements OnInit {
 
   //Delete Project 
   confirmDelete(project: any) {
-    debugger
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this Project with relevant Information ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا المشروع بالمعلومات ذات الصلة؟"
+    }
+
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + project.projectReference,  msg: "Are you sure you want to delete this Project with relevant Information ?" , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + project.projectReference,  msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

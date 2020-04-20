@@ -18,13 +18,13 @@
 <div class="clearfix space20"></div>
 <mat-dialog-actions class="float-right">
   <button  mat-raised-button color="primary" type="submit" [mat-dialog-close]="data">
-    <span >
-      {{data.ok}}
+    <span [translate]="'data.ok'">
+      
     </span>
   </button>&nbsp;
   <button mat-raised-button color="warn" type="reset()" (click)="onCancelClick()">
-    <span >
-   {{data.cancel}}
+    <span [translate]="'data.cancel'">
+   
     </span>
   </button>
 </mat-dialog-actions>

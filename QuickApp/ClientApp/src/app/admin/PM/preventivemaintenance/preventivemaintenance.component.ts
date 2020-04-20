@@ -56,6 +56,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   names: any[] = [];
   rowId: any;
   assetDataLength: any;
+  language: string;
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder,
@@ -438,8 +439,14 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   confirmDelete(row) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this PM Procedure with relevant Information ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف إجراء PM هذا مع المعلومات ذات الصلة؟"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + row.preventiveRefId, msg: "Are you sure you want to delete this Location with relevant Information ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + row.preventiveRefId, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

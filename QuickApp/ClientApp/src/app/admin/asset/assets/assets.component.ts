@@ -65,6 +65,7 @@ export class AssetsComponent implements OnInit {
   fileData: any = {};
   userProjectsList: any[] = [];
   projectId: any;
+  language: string;
   constructor(private accountService: AccountService, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private alertService: AlertService, private fb: FormBuilder) {
     this.buildForm();
     this.currenrDate = new Date();
@@ -543,9 +544,14 @@ export class AssetsComponent implements OnInit {
 
   //Delete Assets 
   confirmDelete(asset: any) {
-    debugger
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to delete this Asset with relevant Information(PM Orders) ?"
+    }else{
+      var msg="هل أنت متأكد أنك تريد حذف هذا الأصل مع المعلومات ذات الصلة (أوامر PM)؟"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + asset.assetLocationRef, msg: "Are you sure you want to delete this Asset with relevant Information(PM Orders) ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete" + " " + asset.assetLocationRef, msg:msg,  isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

@@ -45,6 +45,7 @@ export class PurchaseorderComponent implements OnInit {
   itemData: any[]=[];
   purchase: any={};
   isRejected: number;
+  language: string;
 
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -365,8 +366,14 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   confirmDelete(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+      var msg="Are you sure you want to delete this order ?"
+     }else{
+       var msg="هل أنت متأكد أنك تريد حذف هذا الطلب؟"
+      }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete", msg: "Are you sure you want to delete this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
+      data: { title: "Delete", msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -394,8 +401,16 @@ export class PurchaseorderComponent implements OnInit {
 
 
   acceptClick(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to Accept this order ?"
+     var title = "Accept"
+    }else{
+      var msg="هل أنت متأكد أنك تريد قبول هذا الطلب؟";
+      var title = "قبول"
+     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Accept", msg: "Are you sure you want to Accept this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
+      data: { title: title, msg:msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -422,8 +437,16 @@ export class PurchaseorderComponent implements OnInit {
   }
 
   rejectClick(order: any) {
+    this.language = localStorage.getItem('language');
+    if(this.language == 'en'){
+     var msg="Are you sure you want to Reject this order ?"
+     var title = "Reject"
+    }else{
+      var msg="هل أنت متأكد أنك تريد رفض هذا الطلب؟"
+      var title = "رفض"
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Reject", msg: "Are you sure you want to Reject this order ?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
+      data: { title: title, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Reject', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,

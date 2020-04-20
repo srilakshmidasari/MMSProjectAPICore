@@ -752,6 +752,7 @@
     "Please Select Technician":"يرجى تحديد فني",
     "Task Name is Required":"اسم المهمة مطلوب",
     "Duration In Minutes is Required":"المدة بالدقائق مطلوبة",
+    "totalDurationisRequired": "إجمالي المدة مطلوب",
     "Duration in Hours":"المدة بالساعات",
     "Task":"مهمة",
     "Save":"حفظ",
@@ -778,7 +779,11 @@
     "Save":"حفظ",
     "Cancel":"إلغاء"    
   }
- }
+ },
+ "data":{
+  "ok":"حسنا",
+  "cancel":"إلغاء"
+}
 }
 
 
