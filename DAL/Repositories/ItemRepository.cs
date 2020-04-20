@@ -199,7 +199,9 @@ namespace DAL.Repositories
                  var workOrder = _appContext.WorkOrderItemXrefs.Where(x => x.ItemId == ItemId).ToList();
                  var res = _appContext.PurchageOrders.Where(x => purchase.Select(p => p.Id).Contains(x.Id)).ToList();
                  var res1 = _appContext.WorkOrders.Where(x => workOrder.Select(p => p.Id).Contains(x.Id)).ToList();
-                  
+                 var inv = _appContext.Inventories.Where(x => x.ItemId == ItemId).ToList();
+                   
+                    _appContext.Inventories.RemoveRange(inv);
                     _appContext.PurchageOrders.RemoveRange(res);
                     _appContext.PurchageItemXrefs.RemoveRange(purchase);
                     _appContext.WorkOrders.RemoveRange(res1);

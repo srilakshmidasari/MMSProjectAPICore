@@ -1088,6 +1088,14 @@ export class AccountEndpoint extends EndpointBase {
       }));
   }
 
+  deletePMProcedureEndpoint<T>(Id: any): Observable<T> {
+    const endpointUrl = this.getPreventiveMaintenance + '?PmId=' + Id;
+    return this.http.delete<T>(endpointUrl, this.requestHeaders).pipe<T>(
+      catchError(error => {
+        return this.handleError(error, () => this.deletePMProcedureEndpoint(Id));
+      }));
+  }
+
   getAssetsBySearchEndPoint<T>(reqObject: any): Observable<T> {
     const endpointUrl = this.getAssetsBySearchUrl;
     return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(

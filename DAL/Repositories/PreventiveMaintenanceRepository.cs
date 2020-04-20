@@ -244,24 +244,33 @@ namespace DAL.Repositories
             ValueDataResponse<PreventiveMaintenance> response = new ValueDataResponse<PreventiveMaintenance>();
             try
             {
-                var LocationData = _appContext.PreventiveMaintenances.Where(x => x.Id == PmId).FirstOrDefault();
+                var pmData = _appContext.PreventiveMaintenances.Where(x => x.Id == PmId).FirstOrDefault();
 
                 var ast = _appContext.PMAssetXrefs.Where(x => x.PreventiveMaintenanceId == PmId).ToList();
                 if (ast != null)
                 {
                     var assetRepo = _appContext.PMStatusHistories.Where(x => ast.Select(ar => ar.Id).Contains(x.PreventiveMaintenanceId)).ToList();
-                   
+                    var work = _appContext.WorkOrders.Where(x =>x.PMProcedureId == PmId).ToList();
+
+                    var statusData = _appContext.WorkOrderStatusHistories.Where(x => work.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
+                    var asts = _appContext.WorkOrderItemXrefs.Where(x => work.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
+                    _appContext.WorkOrderStatusHistories.RemoveRange(statusData);
+                    _appContext.WorkOrderItemXrefs.RemoveRange(asts);
+                    _appContext.WorkOrders.RemoveRange(work);
+
                     _appContext.PMAssetXrefs.RemoveRange(ast);
                     _appContext.PMStatusHistories.RemoveRange(assetRepo);
-                    _appContext.PreventiveMaintenances.Remove(LocationData);
+                    _appContext.PreventiveMaintenances.Remove(pmData);
                     _appContext.SaveChanges();
                 }
                 _appContext.SaveChanges();
 
-                if (LocationData != null)
+                if (pmData != null)
                 {
 
-                    response.Result = LocationData;
+                    response.Result = pmData;
                     response.IsSuccess = true;
                     response.AffectedRecords = 1;
                     response.EndUserMessage = "Preventive Maintenance Deleted Successfull";

@@ -463,8 +463,12 @@ namespace DAL.Repositories
 
                     var assetFiles = _appContext.AssetFileRepositories.Where(x => x.AssetId == assetId).ToList();
                     var resss = _appContext.WorkOrderItemXrefs.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
-
+                    var sts = _appContext.WorkOrderStatusHistories.Where(x => workOrders.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+                    var stc = _appContext.PMAssetXrefs.Where(x => x.AssetId == assetId).ToList();
+                   
+                    _appContext.PMAssetXrefs.RemoveRange(stc);
                     _appContext.AssetFileRepositories.RemoveRange(assetFiles);
+                    _appContext.WorkOrderStatusHistories.RemoveRange(sts);
                     _appContext.WorkOrderItemXrefs.RemoveRange(resss);
                     _appContext.WorkOrders.RemoveRange(workOrders);
                     _appContext.AssetLocations.Remove(assetData);
