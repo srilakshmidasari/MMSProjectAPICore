@@ -414,7 +414,7 @@
                         <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
                             {{'Purchase Order.Management.Arriving Date is Required'|translate}}
                         </mat-error>
-                        <mat-error *ngIf="input.hasError('matDatepickerMax')">Date should be inferior</mat-error>
+                        <!-- <mat-error *ngIf="input.hasError('matDatepickerMax')">Date should be inferior</mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
