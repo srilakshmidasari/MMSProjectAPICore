@@ -114,7 +114,7 @@ export class AppComponent implements OnInit {
     }
     else {
       localStorage.setItem('textdir', 'ltr')
-       var lang ='en'
+      var lang ='en'
       localStorage.setItem('language', lang);
 
     }

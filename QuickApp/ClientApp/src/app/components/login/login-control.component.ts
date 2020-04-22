@@ -114,6 +114,8 @@ export class LoginControlComponent implements OnInit, OnDestroy {
             this.alertService.stopLoadingMessage();
             this.isLoading = false;
             this.loginForm.reset();
+            var lang ='en'
+            localStorage.setItem('language', lang);  
 
             if (!this.isModal) {
               this.alertService.showMessage('Login', `Welcome ${user.userName}!`, MessageSeverity.success);

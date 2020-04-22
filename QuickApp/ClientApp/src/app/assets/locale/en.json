@@ -449,7 +449,7 @@
       "Asset Reference is Required(Asset Reference must be at least 3 characters)":"Asset Reference is Required(Asset Reference must be at least 3 characters)",
       "Name 1 is Required(Name must be at least 3 characters)" : "Name 1 is Required(Name must be at least 3 characters)",
       "Name 2 is Required(Name must be at least 3 characters)" : "Name 2 is Required(Name must be at least 3 characters)",
-      "Please Select AssetGroup": "Please Select AssetGroup",
+      "Please Select AssetGroup": "Please Select Asset Group",
       "PleaseSelectAssetTrade" : "Please Select Asset Trade",
       "PleaseSelectAssetCounter" :"Please Select Asset Counter",
       "AssetFixedDateisRequired":"Asset Fixed Date is Required",
@@ -742,7 +742,10 @@
     "Save":"Save",
     "Cancel":"Cancel",
     "PM Procedure Information":"PM Procedure Information",
-    "View PM Order":"View PMOrder"
+    "View PM Order":"View PMOrder",
+    "Are you sure you want to Approve this Procedure ?": "Are you sure you want to Approve this Procedure ?",
+    "AcceptPMProcedure":"Accept PM Procedure",
+    "Accept":"Accept"
    }
  },
  "JobPlan":{
@@ -780,6 +783,7 @@
     "Duration in Hours":"Duration in Hours",
     "Select Asset Trade":"Select Asset Trade",
     "Please select Asset Trade":"Please Select Asset Trade"
+    
   }
  },
 

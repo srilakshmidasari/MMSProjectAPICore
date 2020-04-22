@@ -2,9 +2,16 @@
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.siteRef' | translate}}</mat-label>
     <input matInput formControlName="siteref" appTitleCase required minlength="3" maxlength="30" />
-    <mat-error *ngIf="!siteForm.controls['siteref'].valid">
+    <mat-error *ngIf="siteForm.get('siteref').hasError('required')">
       {{'site.management.Site Reference is required(minimum of 3 and maximum of 30 Characters)' | translate}}
-    </mat-error>
+  </mat-error>
+    <!-- <mat-error *ngIf="!siteForm.controls['siteref'].valid">
+      {{'site.management.Site Reference is required(minimum of 3 and maximum of 30 Characters)' | translate}}
+    </mat-error> -->
+    
+    <mat-error *ngIf="siteForm.get('siteref').hasError('minlength')">
+      Minimum of 2 Characters
+  </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.Name 1' | translate}}</mat-label>
