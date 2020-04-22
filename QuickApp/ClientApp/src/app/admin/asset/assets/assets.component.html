@@ -17,12 +17,12 @@
             </ng-container>
             <ng-container matColumnDef="name1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.Name1'|translate}}</mat-header-cell>
+                    {{'Assets.Management.Name 1'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.Name2'|translate}}</mat-header-cell>
+                    {{'Assets.Management.Name 2'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
             
@@ -141,25 +141,25 @@
 
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.AssetReference'|translate}} </mat-label>
-                        <input appTitleCase matInput formControlName="assetRef" required maxlength="50" />
+                        <input appTitleCase matInput formControlName="assetRef" required minlength="3"  maxlength="50" />
                         <mat-error *ngIf="!assetLocationForm.controls['assetRef'].valid">
-                            {{'Assets.Management.AssetReferenceisRequired'|translate}}
+                            {{'Assets.Management.Asset Reference is Required(Asset Reference must be at least 3 characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.Name1'|translate}} </mat-label>
-                        <input matInput formControlName="name1" required maxlength="50" />
+                        <mat-label>{{'Assets.Management.Name 1'|translate}} </mat-label>
+                        <input matInput formControlName="name1" required minlength="3"  maxlength="50" />
                         <mat-error *ngIf="!assetLocationForm.controls['name1'].valid">
-                            {{'Assets.Management.NameisRequired'|translate}}
+                            {{'Assets.Management.Name 1 is Required(Name must be at least 3 characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'Assets.Management.Name2'|translate}}</mat-label>
-                        <input matInput formControlName="name2" required maxlength="50" />
+                        <mat-label>{{'Assets.Management.Name 2'|translate}}</mat-label>
+                        <input matInput formControlName="name2" required minlength="3" maxlength="50" />
                         <mat-error *ngIf="!assetLocationForm.controls['name2'].valid">
-                            {{'Assets.Management.Name2isRequired'|translate}}
+                            {{'Assets.Management.Name 2 is Required(Name must be at least 3 characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
