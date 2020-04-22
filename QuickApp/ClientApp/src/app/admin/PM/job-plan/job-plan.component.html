@@ -153,23 +153,22 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Job Reference'|translate}}</mat-label>
                         <input matInput formControlName="jobReference" required maxlength="30" />
-
                         <mat-error *ngIf="!jobPlanForm.controls['jobReference'].valid">
-                            {{'JobPlan.Management.Job Reference is Required'|translate}}
+                           Job Reference is Required(Job Reference  must be at least 3 characters
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Name'|translate}}</mat-label>
-                        <input matInput formControlName="jobName" required maxlength="30" />
+                        <input matInput formControlName="jobName" required minlength="3" maxlength="30" />
                         <mat-error *ngIf="!jobPlanForm.controls['jobName'].valid">
-                            {{'JobPlan.Management.Name is Required'|translate}}
+                            {{'JobPlan.Management.Name is Required(minimum of 3 and maximum of 30 Characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'JobPlan.Management.Job Descrption'|translate}} </mat-label>
                         <input matInput formControlName="jobDescription" required maxlength="60" />
                         <mat-error *ngIf="!jobPlanForm.controls['jobDescription'].valid">
-                            {{'JobPlan.Management.Job Descrption is Required'|translate}}
+                           Job Descrption is Required(Job Reference  must be at least 3 characters
                         </mat-error>
                     </mat-form-field>
                    
@@ -304,21 +303,21 @@
                             <mat-label>{{'JobPlan.Management.Job Reference'|translate}}</mat-label>
                             <input matInput formControlName="jobReference" required maxlength="30" />
                             <mat-error *ngIf="!jobPlanForm.controls['jobReference'].valid">
-                                {{'JobPlan.Management.Job Reference is Required'|translate}}
+                                Job Reference is Required(Job Reference  must be at least 3 characters
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                             <mat-label>{{'JobPlan.Management.Name'|translate}}</mat-label>
                             <input matInput formControlName="jobName" required maxlength="30" />
                             <mat-error *ngIf="!jobPlanForm.controls['jobName'].valid">
-                                {{'JobPlan.Management. Name is Required'|translate}}
+                                {{'JobPlan.Management.Name is Required(minimum of 3 and maximum of 30 Characters)'|translate}}
                             </mat-error>
                         </mat-form-field>
                         <mat-form-field class="col-md-3">
                             <mat-label>{{'JobPlan.Management.Job Descrption'|translate}} </mat-label>
                             <input matInput formControlName="jobDescription" required maxlength="30" />
                             <mat-error *ngIf="!jobPlanForm.controls['jobDescription'].valid">
-                                {{'JobPlan.Management.Job Descrption is Required'|translate}}
+                                Job Descrption is Required(Job Reference  must be at least 3 characters
                             </mat-error>
                         </mat-form-field>
                         <div class="col-md-2">

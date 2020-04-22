@@ -12,19 +12,19 @@
             </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6">
-            <mat-label>{{'LookUp.editor.Name1'|translate}}</mat-label>
+            <mat-label>{{'LookUp.editor.Name 1'|translate}}</mat-label>
             <input matInput formControlName="name1" required />
             <mat-error *ngIf="!LookUpForm.controls['name1'].valid">
-                {{'LookUp.editor.Name1 is required'|translate}}
+                {{'LookUp.editor.Name 1 is required(Name must be at least 3 characters)'|translate}}
             </mat-error>
         </mat-form-field>
     </div>
     <div class="row">
         <mat-form-field class="col-md-6">
-            <mat-label>{{'LookUp.editor.Name2'|translate}}</mat-label>
+            <mat-label>{{'LookUp.editor.Name 2'|translate}}</mat-label>
             <input matInput formControlName="name2" required />
             <mat-error *ngIf="!LookUpForm.controls['name2'].valid">
-                {{'LookUp.editor.Name2 is required'|translate}}
+                {{'LookUp.editor.Name 2 is required(Name must be at least 3 characters)'|translate}}
             </mat-error>
         </mat-form-field>
         <mat-form-field class="col-md-6">

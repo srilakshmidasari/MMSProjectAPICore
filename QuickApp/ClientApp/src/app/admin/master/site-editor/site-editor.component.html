@@ -1,37 +1,37 @@
 <form #form="ngForm" [formGroup]="siteForm" (ngSubmit)="save()">
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.siteRef' | translate}}</mat-label>
-    <input matInput formControlName="siteref" appTitleCase required maxlength="30" />
+    <input matInput formControlName="siteref" appTitleCase required minlength="3" maxlength="30" />
     <mat-error *ngIf="!siteForm.controls['siteref'].valid">
-      {{'site.management.SiteReferenceisrequired' | translate}}
+      {{'site.management.Site Reference is required(minimum of 3 and maximum of 30 Characters)' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label>{{'site.management.Name1' | translate}}</mat-label>
-    <input matInput formControlName="sname1" required maxlength="50" />
+    <mat-label>{{'site.management.Name 1' | translate}}</mat-label>
+    <input matInput formControlName="sname1" required  minlength="3"  maxlength="50" />
     <mat-error *ngIf="!siteForm.controls['sname1'].valid">
-      {{'site.management.Name1isrequired' | translate}}
+      {{'site.management.Name 1 is required(minimum of 3 and maximum of 50 Characters)' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label> {{'site.management.Name2' | translate}}</mat-label>
-    <input matInput formControlName="sname2" required maxlength="50" />
+    <mat-label> {{'site.management.Name 2' | translate}}</mat-label>
+    <input matInput formControlName="sname2" required  minlength="3" maxlength="50" />
     <mat-error *ngIf="!siteForm.controls['sname2'].valid">
-      {{'site.management.Name2isrequired' | translate}}
+      {{'site.management.Name 2 is required(minimum of 3 and maximum of 50 Characters)' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.SiteManager' | translate}}</mat-label>
-    <input matInput formControlName="siteManager" required maxlength="30" onkeypress='return (event.charCode !=60 ) &&(event.charCode !=62 ) && (event.charCode !=47 ) &&  (event.charCode !=92)' />
+    <input matInput formControlName="siteManager" required  minlength="3"  maxlength="30" onkeypress='return (event.charCode !=60 ) &&(event.charCode !=62 ) && (event.charCode !=47 ) &&  (event.charCode !=92)' />
     <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
-      {{'site.management.SiteManagerRequired' | translate}}
+      {{'site.management.Site Manager is Required(minimum of 3 and maximum of 250 Characters)' | translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.Address' | translate}} </mat-label>
-    <input matInput formControlName="address" required maxlength="250" />
+    <input matInput formControlName="address" required   minlength="3" maxlength="250" />
     <mat-error *ngIf="!siteForm.controls['address'].valid">
-      {{'site.management.SiteAddressRequired' | translate}}
+      {{'site.management.Site Address is Required(minimum of 3 and maximum of 250 Characters)' | translate}}
     </mat-error>
   </mat-form-field>
   <div class="row">
