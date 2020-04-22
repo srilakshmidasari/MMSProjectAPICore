@@ -113,7 +113,7 @@
                         <mat-label>{{'Item.Management.Item Reference'|translate}}</mat-label>
                         <input matInput formControlName="itemReference" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['itemReference'].valid">
-                            {{'Item.Management.Item Reference is required'|translate}}
+                            {{'Item.Management.Item Reference is required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
@@ -143,14 +143,14 @@
                         <mat-label>{{'Item.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name1'].valid">
-                            {{'Item.Management.Name1 is required'|translate}}
+                            {{'Item.Management.Name 1 is required(Name must be at least 3 characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Name 2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
                         <mat-error *ngIf="!itemForm.controls['name2'].valid">
-                            {{'Item.Management.Name2 is required'|translate}} 
+                            {{'Item.Management.Name 2 is required(Name must be at least 3 characters)'|translate}} 
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">

@@ -12,17 +12,17 @@
         <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="projectReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="projectReference">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.ProjectRef' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Project Refrerence' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.projectReference}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name1">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name1' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name 1' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="name2">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name2' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Name 2' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name2}} </mat-cell>
             </ng-container>
@@ -32,7 +32,7 @@
                 <mat-cell *matCellDef="let row"> {{row.siteName1}} </mat-cell>
             </ng-container>
             <ng-container matColumnDef="projectDetails">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.projectDetails' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Project Details' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.projectDetails}} </mat-cell>
             </ng-container>
@@ -108,9 +108,9 @@
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Project Refrerence'|translate}}</mat-label>
-                        <input matInput formControlName="projectReference" appTitleCase  required maxlength="50" />
+                        <input matInput formControlName="projectReference" appTitleCase  required  minlength="3" maxlength="50" />
                         <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
-                            {{'project.management.Project Reference is Required'|translate}}
+                            {{'project.management.Project Reference is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
@@ -128,26 +128,26 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Name1'|translate}}</mat-label>
-                        <input matInput formControlName="name1" required maxlength="50" />
+                        <mat-label>{{'project.management.Name 1'|translate}}</mat-label>
+                        <input matInput formControlName="name1" required  minlength="3" maxlength="50" />
                         <mat-error *ngIf="!projectForm.controls['name1'].valid">
-                            {{'project.management.Name 1 is Required'|translate}}
+                            {{'project.management.Name 1 is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Name 2'|translate}}</mat-label>
-                        <input matInput formControlName="name2" required maxlength="50" />
+                        <input matInput formControlName="name2" required minlength="3" maxlength="50" />
                         <mat-error *ngIf="!projectForm.controls['name2'].valid">
-                            {{'project.management.Name 2 is Required'|translate}}
+                            {{'project.management.Name 2 is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label> {{'project.management.Project Details'|translate}}</mat-label>
-                        <input matInput formControlName="projectDetails" required maxlength="200" />
+                        <input matInput formControlName="projectDetails" required minlength="3" maxlength="200" />
                         <mat-error *ngIf="!projectForm.controls['projectDetails'].valid">
-                            {{'project.management.Project Details is Required'|translate}}
+                            {{'project.management.Project Details is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
