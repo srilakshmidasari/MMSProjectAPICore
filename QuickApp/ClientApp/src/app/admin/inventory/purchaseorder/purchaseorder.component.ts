@@ -9,6 +9,7 @@ import { Utilities } from 'src/app/services/utilities';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { DocumentFileComponent } from '../document-file/document-file.component';
 import { ReceiveItemComponent } from '../receive-item/receive-item.component';
+import { Calendar } from 'primeng/calendar/calendar';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -46,6 +47,7 @@ export class PurchaseorderComponent implements OnInit {
   purchase: any={};
   isRejected: number;
   language: string;
+  entryDate: Date;
 
   constructor(private accountService: AccountService, private alertService: AlertService,
     private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
@@ -246,6 +248,7 @@ export class PurchaseorderComponent implements OnInit {
     this.isAdding = false;
     this.isNewPurchase = false;
     this.purchaseData = purchase;
+    this.entryDate =new Date(this.purchaseData.arrivingDate)
     this.getItemsByPurchaseId(purchase, true);
     this.getStoresByProject(purchase.projectId)
     this.resetForm();
@@ -266,7 +269,7 @@ export class PurchaseorderComponent implements OnInit {
       remarks: this.purchaseData.remarks || '',
       billindAddress: this.purchaseData.billingAddress || '',
       shippingAddress: this.purchaseData.shippingAddress || '',
-      arrivingDate: this.purchaseData.arrivingDate || '',
+      arrivingDate: new Date(this.purchaseData.arrivingDate) || '',
       purchaseReference: this.purchaseData.purchaseReference || ''
     });
   }

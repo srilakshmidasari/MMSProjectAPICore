@@ -448,6 +448,8 @@ export class ProjectComponent implements OnInit {
 
   //Delete Project 
   confirmDelete(project: any) {
+    
+    debugger
     this.language = localStorage.getItem('language');
     if(this.language == 'en'){
      var msg="Are you sure you want to delete this Project with relevant Information ?"
