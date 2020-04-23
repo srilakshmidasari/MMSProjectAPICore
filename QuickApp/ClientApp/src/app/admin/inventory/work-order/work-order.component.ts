@@ -132,7 +132,7 @@ export class WorkOrderComponent implements OnInit {
       assetId: ['', Validators.required],
       storeId: ['', Validators.required],
       reference1: ['', Validators.required],
-      extraDetails: ['', Validators.required],
+      extraDetails: [''],
       issue: ['', Validators.required],
       resolution: ['', Validators.required],
       startDate: ['', Validators.required],

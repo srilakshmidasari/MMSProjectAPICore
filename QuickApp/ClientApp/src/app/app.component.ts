@@ -100,6 +100,8 @@ export class AppComponent implements OnInit {
       if (lang == 'en') {
         this.textDir = 'ltr';
         this.translate.use(lang);
+       localStorage.setItem('language', lang);
+
         this.renderer.removeClass(document.body, 'dir-rtl');
         document.body.setAttribute('dir', 'ltr');
       } else {
@@ -107,10 +109,14 @@ export class AppComponent implements OnInit {
         this.translate.use(lang);
         this.renderer.addClass(document.body, 'dir-rtl');
         document.body.setAttribute('dir', 'rtl');
+       localStorage.setItem('language', lang);
       }
     }
     else {
       localStorage.setItem('textdir', 'ltr')
+      var lang ='en'
+      localStorage.setItem('language', lang);
+
     }
 
   }

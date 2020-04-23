@@ -35,7 +35,8 @@
     "Work Order":"ترتيب العمل",
     "PM Procedures":"إجراءات PM",
     "Export":"تصدير",
-    "JobPlan":"خطة العمل"
+    "JobPlan":"خطة العمل",
+    "PMOrder": "أوامر PM"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -731,7 +732,10 @@
    "Cancel":"إلغاء",
    "Priority":"أفضلية",
    "PM Procedure Information":"معلومات الإجراءات PM",
-   "View PM Order":"عرض أمر PM"
+   "View PM Order":"عرض أمر PM",
+   "Are you sure you want to Approve this Procedure ?": "هل أنت متأكد أنك تريد الموافقة على هذا الإجراء؟",
+    "AcceptPMProcedure":"قبول إجراء PM",
+    "Accept":"قبول"
   }
 },
 "JobPlan":{
@@ -768,6 +772,8 @@
     "Cancel":"إلغاء",
     "Select Asset Trade":"حدد تجارة الأصول",
     "Please select Asset Trade":"يرجى التحديد تجارة الأصول"
+    
+
   }
  },
  "PMOrder":{

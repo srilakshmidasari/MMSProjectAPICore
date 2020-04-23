@@ -262,10 +262,7 @@
                     </mat-form-field>
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
-                        <input matInput formControlName="remarks" required maxlength="100" />
-                        <mat-error *ngIf="!orderForm.controls['remarks'].valid">
-                            {{'Purchase Order.Management.Remarks is required'|translate}}
-                        </mat-error>
+                        <input matInput formControlName="remarks"  maxlength="100" />
                     </mat-form-field>
                 </div>
 
@@ -408,7 +405,14 @@
                             {{'Purchase Order.Management.Please Select Store'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
+                    <div class="col-md-3 cstm-date">
+                        <label>{{'Purchase Order.Management.Arriving Date'|translate}} <span>*</span></label>
+                        <p-calendar [showIcon]="true" name="calendar" [minDate]="currenrDate" dateFormat="dd/mm/yy"
+                        [(ngModel)]="entryDate" formControlName="arrivingDate" ></p-calendar>
+                    </div>
+                   
+
+                    <!-- <mat-form-field   >
                         <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}}</mat-label>
                         <input matInput [matDatepicker]="picker"   [min]="currenrDate" formControlName="arrivingDate"
                             placeholder="Arriving Date" required>
@@ -417,11 +421,11 @@
                         <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
                             {{'Purchase Order.Management.Arriving Date is Required'|translate}}
                         </mat-error>
-                        <!-- <mat-error *ngIf="input.hasError('matDatepickerMax')">Date should be inferior</mat-error> -->
-                    </mat-form-field>
+                     
+                    </mat-form-field> -->
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
-                        <input matInput formControlName="remarks" required maxlength="100" />
+                        <input matInput formControlName="remarks"  maxlength="100" />
                     </mat-form-field>
                 </div>
                 <div class="row">

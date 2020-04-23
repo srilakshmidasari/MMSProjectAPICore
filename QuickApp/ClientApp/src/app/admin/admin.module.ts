@@ -52,6 +52,7 @@ import { AddAssetPmComponent } from './PM/add-asset-pm/add-asset-pm.component';
 import { ChartsComponent } from './charts/charts.component';
 import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import {CalendarModule} from 'primeng/calendar';
 
 @NgModule({
   imports: [
@@ -61,6 +62,7 @@ import { DashboardComponent } from './dashboard/dashboard.component';
     CheckboxModule,
     InputTextModule,
     ChartsModule,
+    CalendarModule,
     LeafletModule.forRoot()
   ],
   declarations: [

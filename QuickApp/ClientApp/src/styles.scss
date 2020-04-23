@@ -436,3 +436,39 @@ body[dir='rtl']{
 body[dir='ltr']{
   direction: ltr !important;
 }
+.cstm-date{
+  margin-top: 0.8rem;
+}
+.cstm-date .ui-calendar{
+  width: 100% !important;
+}
+.cstm-date .ui-calendar.ui-calendar-w-btn input, .cstm-date .ui-calendar.ui-calendar-w-btn input:hover,.cstm-date .ui-calendar.ui-calendar-w-btn input:visited{
+  border: none;
+  border-bottom: 0.15em solid #bebebe !important;
+  border-radius: 0px;
+  width: 88% !important;
+}
+.cstm-date .ui-button.ui-button-icon-only{
+  background: transparent;
+  border: none;
+  border-bottom: 0.15em solid #bebebe !important;
+  border-radius: 0px;
+  color: #bebebe !important;
+  padding: 1px;
+}
+.cstm-date label{
+  color: rgba(0, 0, 0, 0.54);
+  transform: translateY(-1.28125em) scale(0.75) perspective(100px) translateZ(0.001px);
+    -ms-transform: translateY(-1.28125em) scale(0.75);
+    width: 133.3333333333%;
+    position: absolute;
+    left: 15px;
+    font: inherit;
+    pointer-events: none;
+    width: 100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    transform-origin: 0 0;
+    margin-top: 6px;
+}

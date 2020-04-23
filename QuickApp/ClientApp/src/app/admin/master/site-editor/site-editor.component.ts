@@ -34,7 +34,7 @@ export class SiteEditorComponent implements OnInit {
   }
   private buildForm() {
     this.siteForm = this.fb.group({
-      siteref: ['', Validators.required],
+      siteref: ['', Validators.compose([Validators.required,Validators.minLength(2)])],
       sname1: ['', Validators.required],
       sname2: ['', Validators.required],
       address: ['', Validators.required],
