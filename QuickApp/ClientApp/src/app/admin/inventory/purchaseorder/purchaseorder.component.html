@@ -263,6 +263,9 @@
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
                         <input matInput formControlName="remarks" required maxlength="100" />
+                        <mat-error *ngIf="!orderForm.controls['remarks'].valid">
+                            {{'Purchase Order.Management.Remarks is required'|translate}}
+                        </mat-error>
                     </mat-form-field>
                 </div>
 

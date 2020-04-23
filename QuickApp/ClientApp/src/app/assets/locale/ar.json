@@ -587,7 +587,8 @@
     "Close":"قريب",
     "View Details":"عرض التفاصيل",
     "Receive":"تسلم",
-    "View Document":"عرض المستند"
+    "View Document":"عرض المستند",
+    "Remarks is required":"الملاحظات مطلوبة"
   }
  },
  "Receive Item":{
