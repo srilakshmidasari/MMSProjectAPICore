@@ -42,8 +42,6 @@ namespace DAL.Repositories
                                   CategoryName = l.Name1,
                                   ItemTypeId = It.ItemType,
                                   ItemTypeName =t.Description,
-                                  UnitOfConversion = It.UnitOfConversion,
-                                  Units = It.Units,
                                   UOMId = p.Id,
                                   UOMName = p.Name1,
                                   AverageCost = It.AverageCost,
@@ -144,8 +142,6 @@ namespace DAL.Repositories
                         result.Description = items.Description;
                         result.AverageCost = items.AverageCost;
                         result.UOMId = items.UOMId;
-                        result.UnitOfConversion = items.UnitOfConversion;
-                        result.Units = items.Units;
                         result.IsActive = items.IsActive;
                         result.CreatedBy = items.CreatedBy;
                         result.CreatedDate = items.CreatedDate;

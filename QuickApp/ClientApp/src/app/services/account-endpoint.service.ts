@@ -144,6 +144,10 @@ export class AccountEndpoint extends EndpointBase {
   private readonly  _getWorkOrderStatusCountUrl:string = '/api/Dashboard/GetWorkOrderStatusCount'
 
   private readonly  _getWorkOrdersByTradeCountUrl:string = '/api/Dashboard/GetWorkOrdersByTradeCount'
+
+  private readonly  _exportPMOrders:string = '/api/WorkOrder/ExportPMOrders'
+  
+
   
   get usersUrl() { return this.configurations.baseUrl + this._usersUrl; }
   get updateUserUrl() { return this.configurations.baseUrl + this._updateUsersUrl; }
@@ -285,6 +289,9 @@ export class AccountEndpoint extends EndpointBase {
 
   get getWorkOrdersByTradeCountUrl() { return this.configurations.baseUrl + this._getWorkOrdersByTradeCountUrl; }
  
+  get exportPMOrders() { return this.configurations.baseUrl + this._exportPMOrders; }
+
+
   
   
   
@@ -1303,12 +1310,20 @@ getExportJobPlanEndPoint<T>(reqObject: any): Observable<T> {
     }));
 }
 
-
 getExportPMProcedureEndPoint<T>(reqObject: any): Observable<T> {
   const endpointUrl = this.expoerPMProcedure;
   return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
     catchError(error => {
       return this.handleError(error, () => this.getExportPMProcedureEndPoint(reqObject));
+    }));
+}
+
+getExportPMOrdersEndPoint<T>(reqObject: any): Observable<T> {
+  debugger
+  const endpointUrl = this.exportPMOrders;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportPMOrdersEndPoint(reqObject));
     }));
 }
   

@@ -381,8 +381,7 @@ namespace DAL.RequestResponseModels
             public int AverageCost { get; set; }
             public int UOMId { get; set; }
             public string UOMName { get; set; }
-            public string UnitOfConversion { get; set; }
-            public string Units { get; set; }
+           
             public bool IsActive { get; set; }
 
         }

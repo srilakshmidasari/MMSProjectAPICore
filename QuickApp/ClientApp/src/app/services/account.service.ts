@@ -609,6 +609,9 @@ deleteAssetRepository(repositoryId) {
   ExportPMProcedure(reqObject) {
     return this.accountEndpoint.getExportPMProcedureEndPoint(reqObject);
   }
-  
+ 
+  ExportPMOrders(reqObject) {
+    return this.accountEndpoint.getExportPMOrdersEndPoint(reqObject);
+  } 
   
 }

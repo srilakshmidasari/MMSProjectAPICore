@@ -227,8 +227,6 @@ export class ItemComponent implements OnInit {
       "description": formModel.description,
       "averageCost": parseInt(formModel.averageCost),
       "uomId": formModel.uomId,
-      "unitOfConversion": null,
-      "units": null,
       "isActive": formModel.isActive,
       "createdBy": this.currentUser.id,
       "createdDate": new Date(),

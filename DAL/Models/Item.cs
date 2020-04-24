@@ -46,14 +46,7 @@ namespace DAL.Models
         public int UOMId { get; set; }
 
 
-        [Display(Name = "UnitOfConversion")]
-        [StringLength(100)]
-        public string UnitOfConversion { get; set; }
-
-
-        [Display(Name = "Units")]
-        [StringLength(100)]
-        public string Units { get; set; }
+        
 
         [Display(Name = "Is Active")]
         public bool IsActive { get; set; }

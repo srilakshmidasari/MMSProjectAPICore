@@ -558,14 +558,6 @@ namespace MMS.Migrations
                     b.Property<int>("UOMId")
                         .HasColumnType("int");
 
-                    b.Property<string>("UnitOfConversion")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
-                    b.Property<string>("Units")
-                        .HasColumnType("nvarchar(100)")
-                        .HasMaxLength(100);
-
                     b.Property<string>("UpdatedBy")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
