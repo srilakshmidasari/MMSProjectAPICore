@@ -73,7 +73,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-  private getMaintenance() { 
+  private getMaintenance() {
     debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -122,10 +122,10 @@ export class PreventivemaintenanceComponent implements OnInit {
                 "Id": item.id,
                 "name1": item.name1,
                 "assetRef": item.assetRef,
-                "daysApplicable":item.daysApplicable,
+                "daysApplicable": item.daysApplicable,
                 "astFixedDate": item.astFixedDate
               });
-              this.assetDataLength= this.assetData.length;
+              this.assetDataLength = this.assetData.length;
             }
 
           });
@@ -223,7 +223,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   // Form Building
   private buildForm() {
     this.maintenanceForm = this.formBuilder.group({
-      preventiveRefId: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      preventiveRefId: ['', Validators.compose([Validators.required, Validators.minLength(3)])],
       assetId: ['', Validators.required],
       siteId: ['', Validators.required],
       jobId: ['', Validators.required],
@@ -232,7 +232,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       priority: ['', Validators.required],
       // startDate: ['', Validators.required],
       durationInHours: ['', Validators.required],
-     // daysApplicable: [''],
+      // daysApplicable: [''],
       typeOfMaintainanceId: ['', Validators.required],
       technicianId: ['', Validators.required],
       details: [''],
@@ -330,15 +330,21 @@ export class PreventivemaintenanceComponent implements OnInit {
     debugger
     this.AssetIds = [];
     this.jobTaskList = [];
-    this.assetData =[];
+    this.assetData = [];
     this.maitananceRefData = {};
     if (maintanance != undefined) {
       this.isAdding = true;
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
       this.TypeId = this.maitananceRefData.typeOfMaintainanceId;
-      this.maitananceRefData.assetId.forEach(element => {
-        this.AssetIds.push(element.assetId)
+      this.maitananceRefData.assetId.forEach(element => {       
+        this.AssetIds.push({
+          "id": 0,
+          "assetId": element.assetId,
+          "preventiveMaintenanceId": element.preventiveMaintenanceId,
+          "astFixedDate": element.astFixedDate,
+          "daysApplicable": element.daysApplicable
+        });
       });
       this.getSitesByUserId();
       this.getPMAssetsbyPMId(this.maitananceRefData.id);
@@ -367,6 +373,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   private getAllmaitenance(): any {
+    debugger
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
@@ -439,11 +446,11 @@ export class PreventivemaintenanceComponent implements OnInit {
 
   confirmDelete(row) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-     var msg="Are you sure you want to delete this PM Procedure with relevant Information ?"
-    }else{
-      var msg="هل أنت متأكد أنك تريد حذف إجراء PM هذا مع المعلومات ذات الصلة؟"
-     }
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to delete this PM Procedure with relevant Information ?"
+    } else {
+      var msg = "هل أنت متأكد أنك تريد حذف إجراء PM هذا مع المعلومات ذات الصلة؟"
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Delete" + " " + row.preventiveRefId, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
@@ -495,29 +502,29 @@ export class PreventivemaintenanceComponent implements OnInit {
     const dialogRef = this.dialog.open(SelectAssetComponent,
       {
         panelClass: 'mat-dialog-md',
-        data: { data, assetList: [...this.assetsList], typeId :this.maintenanceForm.value.typeOfMaintainanceId }
+        data: { data, assetList: [...this.assetsList], typeId: this.maintenanceForm.value.typeOfMaintainanceId }
       });
     dialogRef.afterClosed().subscribe(response => {
       if (response != null) {
         debugger
         this.names = [];
         this.AssetIds = [];
-        this.assetData =[];
+        this.assetData = [];
         response.forEach(element => {
           this.names.push(element.name1);
           this.AssetIds.push({
             "id": 0,
-            "assetId": element.id,
+            "assetId": element.Id,
             "preventiveMaintenanceId": 0,
             "astFixedDate": element.astFixedDate,
             "daysApplicable": parseInt(element.daysApplicable)
-          }
-          );
+          });
+
         });
 
         this.maintenanceForm.get('assetId').setValue(this.names.join());
-        this.assetData = response;
-        this.assetDataLength= this.assetData.length;
+        this.assetData = JSON.parse(JSON.stringify(response));
+        this.assetDataLength = this.assetData.length;
       }
     });
   }
@@ -529,7 +536,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         data: { row }
       });
     dialogRef.afterClosed().subscribe(response => {
-      this.getMaintenance();  
+      this.getMaintenance();
     });
   }
 
