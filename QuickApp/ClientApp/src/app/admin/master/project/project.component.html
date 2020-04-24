@@ -117,9 +117,15 @@
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Project Refrerence'|translate}}</mat-label>
                         <input matInput formControlName="projectReference" appTitleCase  required  minlength="3" maxlength="50" />
-                        <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
+                        <mat-error *ngIf="projectForm.get('projectReference').hasError('required')">
                             {{'project.management.Project Reference is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="projectForm.get('projectReference').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!projectForm.controls['projectReference'].valid">
+                            {{'project.management.Project Reference is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Select Site'|translate}}<span>*</span></mat-label>
@@ -138,25 +144,43 @@
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required  minlength="3" maxlength="50" />
-                        <mat-error *ngIf="!projectForm.controls['name1'].valid">
+                        <mat-error *ngIf="projectForm.get('name1').hasError('required')">
                             {{'project.management.Name 1 is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
+                          <mat-error *ngIf="projectForm.get('name1').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!projectForm.controls['name1'].valid">
+                            {{'project.management.Name 1 is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Name 2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required minlength="3" maxlength="50" />
-                        <mat-error *ngIf="!projectForm.controls['name2'].valid">
+                        <mat-error *ngIf="projectForm.get('name2').hasError('required')">
                             {{'project.management.Name 2 is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
                         </mat-error>
+                          <mat-error *ngIf="projectForm.get('name2').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!projectForm.controls['name2'].valid">
+                            {{'project.management.Name 2 is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label> {{'project.management.Project Details'|translate}}</mat-label>
                         <input matInput formControlName="projectDetails" required minlength="3" maxlength="200" />
-                        <mat-error *ngIf="!projectForm.controls['projectDetails'].valid">
-                            {{'project.management.Project Details is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        <mat-error *ngIf="projectForm.get('projectDetails').hasError('required')">
+                            {{'project.management.Project Details is Required(minimum of 3 and maximum of 200 Characters)'|translate}}
                         </mat-error>
+                          <mat-error *ngIf="projectForm.get('projectDetails').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!projectForm.controls['projectDetails'].valid">
+                            {{'project.management.Project Details is Required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'project.management.Select Store'|translate}} <span>*</span></mat-label>

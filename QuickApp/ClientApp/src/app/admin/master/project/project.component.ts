@@ -134,7 +134,7 @@ export class ProjectComponent implements OnInit {
 
   private buildForm() {
     this.projectForm = this.formBuilder.group({
-      projectReference: [Validators.required],
+      projectReference: ['',Validators.compose([Validators.required,Validators.minLength(2)])],
       siteId: ['', Validators.required],
       storeId: ['', Validators.required],
       name1: ['', Validators.required],

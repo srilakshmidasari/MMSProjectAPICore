@@ -101,37 +101,67 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Supplier.Management.Supplier Reference'|translate}}</mat-label>
                         <input matInput formControlName="supplierReference" required maxlength="50" />
-                        <mat-error *ngIf="!supplierForm.controls['supplierReference'].valid">
+                          <mat-error *ngIf="supplierForm.get('supplierReference').hasError('required')">
                             {{'Supplier.Management.Supplier Reference is required(minimum of 3 and maximum of 50 Characters)'|translate}} 
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="supplierForm.get('supplierReference').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!supplierForm.controls['supplierReference'].valid">
+                            {{'Supplier.Management.Supplier Reference is required(minimum of 3 and maximum of 50 Characters)'|translate}} 
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Supplier.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
-                        <mat-error *ngIf="!supplierForm.controls['name1'].valid">
+                        <mat-error *ngIf="supplierForm.get('name1').hasError('required')">
+                            {{'Supplier.Management.Name 1 is required(Name must be at least 3 characters)'|translate}}
+                          </mat-error>
+                          <mat-error *ngIf="supplierForm.get('name1').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!supplierForm.controls['name1'].valid">
                             {{'Supplier.Management.Name 1 is required(Name must be at least 3 characters)'|translate}} 
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Supplier.Management.Name 2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
-                        <mat-error *ngIf="!supplierForm.controls['name2'].valid">
+                        <mat-error *ngIf="supplierForm.get('name2').hasError('required')">
+                            {{'Supplier.Management.Name 2 is required(Name must be at least 3 characters)'|translate}}
+                          </mat-error>
+                          <mat-error *ngIf="supplierForm.get('name2').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!supplierForm.controls['name2'].valid">
                             {{'Supplier.Management.Name 2 is required(Name must be at least 3 characters)'|translate}} 
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Supplier.Management.Address'|translate}}</mat-label>
                         <input matInput formControlName="address" required maxlength="100" />
-                        <mat-error *ngIf="!supplierForm.controls['address'].valid">
+                        <mat-error *ngIf="supplierForm.get('address').hasError('required')">
+                            {{'Supplier.Management.Address is required(minimum of 3 and maximum of 100 Characters)'|translate}}
+                          </mat-error>
+                          <mat-error *ngIf="supplierForm.get('address').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!supplierForm.controls['address'].valid">
                             {{'Supplier.Management.Address is required(minimum of 3 and maximum of 100 Characters)'|translate}} 
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Supplier.Management.Email'|translate}}</mat-label>
                         <input matInput formControlName="email" required maxlength="50" />
-                        <mat-error *ngIf="supplierForm.controls['email'].hasError('required')">
+                        <mat-error *ngIf="supplierForm.get('email').hasError('required')">
                             {{'Supplier.Management.Email is required(minimum of 3 and maximum of 50 Characters)'|translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="supplierForm.get('email').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="supplierForm.controls['email'].hasError('required')">
+                            {{'Supplier.Management.Email is required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        </mat-error> -->
                         <mat-error *ngIf="supplierForm.controls['email'].hasError('pattern')">
                             {{'Supplier.Management.Invalid Email'|translate}}
                         </mat-error>
@@ -139,9 +169,15 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Supplier.Management.Contact Number'|translate}}</mat-label>
                         <input matInput formControlName="contactNumber"   (keypress)="numberOnly($event)"  maxlength="12" minlength="10" required />
-                        <mat-error *ngIf="!supplierForm.controls['contactNumber'].valid">
+                        <mat-error *ngIf="supplierForm.get('contactNumber').hasError('required')">
+                            {{'Supplier.Management.Contact Number is required(minimum of 10 and maximum of 12 Characters)'|translate}}
+                          </mat-error>
+                          <mat-error *ngIf="supplierForm.get('contactNumber').hasError('minlength')">
+                            {{'Location.Management.Minimum of 10 Numbers'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!supplierForm.controls['contactNumber'].valid">
                             {{'Supplier.Management.Contact Number is required(minimum of 10 and maximum of 12 Characters)'|translate}} 
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
 
                     <mat-form-field class="col-md-4">

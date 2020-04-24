@@ -223,7 +223,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   // Form Building
   private buildForm() {
     this.maintenanceForm = this.formBuilder.group({
-      preventiveRefId: ['', Validators.required],
+      preventiveRefId: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       assetId: ['', Validators.required],
       siteId: ['', Validators.required],
       jobId: ['', Validators.required],

@@ -87,12 +87,12 @@ export class ItemComponent implements OnInit {
   private buildForm() {
     debugger
     this.itemForm = this.formBuilder.group({
-      itemReference: ['', Validators.required],
+      itemReference: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       selectCategory: ['', Validators.required],
       itemTypeName: ['', Validators.required],
-      name1: ['', Validators.required],
-      name2: ['', Validators.required],
-      description: ['', Validators.required],
+      name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      name2: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      description: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       uomId: ['', Validators.required],
       averageCost: ['', Validators.required],
       unit: [''],
