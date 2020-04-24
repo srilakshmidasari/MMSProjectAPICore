@@ -4,41 +4,56 @@
     <input matInput formControlName="siteref" appTitleCase required minlength="3" maxlength="30" />
     <mat-error *ngIf="siteForm.get('siteref').hasError('required')">
       {{'site.management.Site Reference is required(minimum of 3 and maximum of 30 Characters)' | translate}}
-  </mat-error>
+    </mat-error>
     <!-- <mat-error *ngIf="!siteForm.controls['siteref'].valid">
       {{'site.management.Site Reference is required(minimum of 3 and maximum of 30 Characters)' | translate}}
     </mat-error> -->
     
     <mat-error *ngIf="siteForm.get('siteref').hasError('minlength')">
-      Minimum of 2 Characters
-  </mat-error>
+      {{'Location.Management.Minimum of 3 Characters'|translate}}
+    </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.Name 1' | translate}}</mat-label>
     <input matInput formControlName="sname1" required  minlength="3"  maxlength="50" />
-    <mat-error *ngIf="!siteForm.controls['sname1'].valid">
+    <mat-error *ngIf="siteForm.get('sname1').hasError('required')">
       {{'site.management.Name 1 is required(minimum of 3 and maximum of 50 Characters)' | translate}}
     </mat-error>
+    <mat-error *ngIf="siteForm.get('sname1').hasError('minlength')">
+      {{'Location.Management.Minimum of 3 Characters'|translate}}
+    </mat-error>
+    <!-- <mat-error *ngIf="!siteForm.controls['sname1'].valid">
+      {{'site.management.Name 1 is required(minimum of 3 and maximum of 50 Characters)' | translate}}
+    </mat-error> -->
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label> {{'site.management.Name 2' | translate}}</mat-label>
     <input matInput formControlName="sname2" required  minlength="3" maxlength="50" />
-    <mat-error *ngIf="!siteForm.controls['sname2'].valid">
+    <mat-error *ngIf="siteForm.get('sname2').hasError('required')">
       {{'site.management.Name 2 is required(minimum of 3 and maximum of 50 Characters)' | translate}}
+    </mat-error>
+    <mat-error *ngIf="siteForm.get('sname2').hasError('minlength')">
+      {{'Location.Management.Minimum of 3 Characters'|translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.SiteManager' | translate}}</mat-label>
     <input matInput formControlName="siteManager" required  minlength="3"  maxlength="30" onkeypress='return (event.charCode !=60 ) &&(event.charCode !=62 ) && (event.charCode !=47 ) &&  (event.charCode !=92)' />
-    <mat-error *ngIf="!siteForm.controls['siteManager'].valid">
-      {{'site.management.Site Manager is Required(minimum of 3 and maximum of 250 Characters)' | translate}}
+    <mat-error *ngIf="siteForm.get('siteManager').hasError('required')">
+      {{'site.management.SiteManager is required(minimum of 3 and maximum of 30 Characters)' | translate}}
+    </mat-error>
+    <mat-error *ngIf="siteForm.get('siteManager').hasError('minlength')">
+      {{'Location.Management.Minimum of 3 Characters'|translate}}
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
     <mat-label>{{'site.management.Address' | translate}} </mat-label>
     <input matInput formControlName="address" required   minlength="3" maxlength="250" />
-    <mat-error *ngIf="!siteForm.controls['address'].valid">
-      {{'site.management.Site Address is Required(minimum of 3 and maximum of 250 Characters)' | translate}}
+    <mat-error *ngIf="siteForm.get('address').hasError('required')">
+      {{'site.management.Site Address is required(minimum of 3 and maximum of 250 Characters)' | translate}}
+    </mat-error>
+    <mat-error *ngIf="siteForm.get('address').hasError('minlength')">
+      {{'Location.Management.Minimum of 3 Characters'|translate}}
     </mat-error>
   </mat-form-field>
   <div class="row">

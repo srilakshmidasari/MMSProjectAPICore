@@ -151,9 +151,15 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Preventive Reference'|translate}}</mat-label>
                         <input matInput formControlName="preventiveRefId" required minlength="3" />
-                        <mat-error *ngIf="!maintenanceForm.controls['preventiveRefId'].valid">
+                        <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('required')">
                             Preventive Reference is Required(Preventive Reference  must be at least 3 characters)
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!maintenanceForm.controls['preventiveRefId'].valid">
+                            Preventive Reference is Required(Preventive Reference  must be at least 3 characters)
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Type Of Maintenance'|translate}} <span>*</span>

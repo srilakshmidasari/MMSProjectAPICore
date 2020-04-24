@@ -35,8 +35,8 @@ export class LookupEditorComponent implements OnInit {
 
   private buildForm() {
     this.LookUpForm = this.fb.group({
-      name1: ['', Validators.required],
-      name2: ['', Validators.required],
+      name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      name2: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       remarks: [''],
       selectCategory:['', Validators.required],
       isActive: [true],

@@ -212,9 +212,15 @@
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Purchase Reference'|translate}}</mat-label>
                         <input matInput formControlName="purchaseReference" minlength="3" maxlength="30" required />
-                        <mat-error *ngIf="!orderForm.controls['purchaseReference'].valid">
+                        <mat-error *ngIf="orderForm.get('purchaseReference').hasError('required')">
                             {{'Purchase Order.Management.Purchase Reference is Required(Purchase Reference must be at least 3 characters)'|translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="orderForm.get('purchaseReference').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!orderForm.controls['purchaseReference'].valid">
+                            {{'Purchase Order.Management.Purchase Reference is Required(Purchase Reference must be at least 3 characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
 
                     <mat-form-field class="col-md-3">

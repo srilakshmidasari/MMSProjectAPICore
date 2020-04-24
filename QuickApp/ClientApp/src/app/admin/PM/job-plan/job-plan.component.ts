@@ -106,10 +106,10 @@ export class JobPlanComponent implements OnInit {
 
   buildForm() {
     this.jobPlanForm = this.formBuilder.group({
-      jobName: ['', Validators.required],      
+      jobName: ['', Validators.compose([Validators.required,Validators.minLength(3)])],      
       totalDuration:['', Validators.required],
-      jobReference: ['', Validators.required],
-      jobDescription: ['', Validators.required],   
+      jobReference: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      jobDescription: ['', Validators.compose([Validators.required,Validators.minLength(3)])],   
       siteId: [''],
       projectId: [''],  
       assetGroupId: ['', Validators.required],

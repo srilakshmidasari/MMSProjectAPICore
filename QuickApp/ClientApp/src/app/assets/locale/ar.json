@@ -366,7 +366,9 @@
       "Name 1":"الاسم 1",
       "Name 1 is required(Name must be at least 3 characters)":"الاسم 1 مطلوب (يجب ألا يقل الاسم عن 3 أحرف)",
       "Name 2":"الاسم 2",
-      "Name 2 is required(Name must be at least 3 characters)":"الاسم 2 مطلوب (يجب ألا يقل الاسم عن 3 أحرف)"
+      "Name 2 is required(Name must be at least 3 characters)":"الاسم 2 مطلوب (يجب ألا يقل الاسم عن 3 أحرف)",
+      "Minimum of 3 Characters":"3 أحرف على الأقل",
+      "Minimum of 10 Numbers":"10 أرقام على الأقل"
     },
     "editor": {
       "sNameisrequired": "اسم الموقع مطلوب",

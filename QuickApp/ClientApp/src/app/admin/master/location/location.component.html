@@ -129,32 +129,48 @@
                             {{'Location.editor.pNameisrequired' | translate}}
                         </mat-error>
                     </mat-form-field>
-
-
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Location.Management.location Reference' | translate}}</mat-label>
                         <input matInput formControlName="locationRef"  appTitleCase required  minlength="3" />
-                        <mat-error *ngIf="!locationForm.controls['locationRef'].valid">
+                          <mat-error *ngIf="locationForm.get('locationRef').hasError('required')">
                             {{'Location.Management.location Reference is required(location Reference must be at least 3 characters)' | translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="locationForm.get('locationRef').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!locationForm.controls['locationRef'].valid">
+                            {{'Location.Management.location Reference is required(location Reference must be at least 3 characters)' | translate}}
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-6">
                         <mat-label> {{'Location.Management.Name 1' | translate}}</mat-label>
                         <input matInput formControlName="lName1" required minlength="3" />
-                        <mat-error *ngIf="!locationForm.controls['lName1'].valid">
+                        <mat-error *ngIf="locationForm.get('lName1').hasError('required')">
                             {{'Location.Management.Name 1 is required(Name must be at least 3 characters)' | translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="locationForm.get('lName1').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!locationForm.controls['lName1'].valid">
+                            {{'Location.Management.Name 1 is required(Name must be at least 3 characters)' | translate}}
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Location.Management.Name 2' | translate}}</mat-label>
                         <input matInput formControlName="lname2" required minlength="3" />
-                        <mat-error *ngIf="!locationForm.controls['lname2'].valid">
+                        <mat-error *ngIf="locationForm.get('lname2').hasError('required')">
                             {{'Location.Management.Name 2 is required(Name must be at least 3 characters)' | translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="locationForm.get('lname2').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!locationForm.controls['lname2'].valid">
+                            {{'Location.Management.Name 2 is required(Name must be at least 3 characters)' | translate}}
+                        </mat-error> -->
                     </mat-form-field>
                 </div>
                 <div class="row">

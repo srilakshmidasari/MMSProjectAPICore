@@ -121,9 +121,15 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Item Reference'|translate}}</mat-label>
                         <input matInput formControlName="itemReference" required maxlength="50" />
-                        <mat-error *ngIf="!itemForm.controls['itemReference'].valid">
+                          <mat-error *ngIf="itemForm.get('itemReference').hasError('required')">
                             {{'Item.Management.Item Reference is required(minimum of 3 and maximum of 50 Characters)'|translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="itemForm.get('itemReference').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!itemForm.controls['itemReference'].valid">
+                            {{'Item.Management.Item Reference is required(minimum of 3 and maximum of 50 Characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Item Type'|translate}}</mat-label>
@@ -151,23 +157,41 @@
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Name 1'|translate}}</mat-label>
                         <input matInput formControlName="name1" required maxlength="50" />
-                        <mat-error *ngIf="!itemForm.controls['name1'].valid">
+                        <mat-error *ngIf="itemForm.get('name1').hasError('required')">
                             {{'Item.Management.Name 1 is required(Name must be at least 3 characters)'|translate}}
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="itemForm.get('name1').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!itemForm.controls['name1'].valid">
+                            {{'Item.Management.Name 1 is required(Name must be at least 3 characters)'|translate}}
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Name 2'|translate}}</mat-label>
                         <input matInput formControlName="name2" required maxlength="50" />
-                        <mat-error *ngIf="!itemForm.controls['name2'].valid">
+                        <mat-error *ngIf="itemForm.get('name2').hasError('required')">
                             {{'Item.Management.Name 2 is required(Name must be at least 3 characters)'|translate}} 
-                        </mat-error>
+                          </mat-error>
+                          <mat-error *ngIf="itemForm.get('name2').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!itemForm.controls['name2'].valid">
+                            {{'Item.Management.Name 2 is required(Name must be at least 3 characters)'|translate}} 
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Description'|translate}}</mat-label>
                         <input matInput formControlName="description" required maxlength="50" />
-                        <mat-error *ngIf="!itemForm.controls['description'].valid">
+                        <mat-error *ngIf="itemForm.get('description').hasError('required')">
+                            {{'Item.Management.Description is required(Name must be at least 3 characters)'|translate}} 
+                          </mat-error>
+                          <mat-error *ngIf="itemForm.get('description').hasError('minlength')">
+                            {{'Location.Management.Minimum of 3 Characters'|translate}}
+                          </mat-error>
+                        <!-- <mat-error *ngIf="!itemForm.controls['description'].valid">
                             {{'Item.Management.Description is required'|translate}}
-                        </mat-error>
+                        </mat-error> -->
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Item.Management.Unit of Measure'|translate}}</mat-label>

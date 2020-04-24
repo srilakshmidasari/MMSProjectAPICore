@@ -134,7 +134,7 @@ export class PurchaseorderComponent implements OnInit {
 
   buildForm() {
     this.orderForm = this.formBuilder.group({
-      supplierId: ['', Validators.required],
+      supplierId: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       projectId: ['', Validators.required],
       storeId: ['', Validators.required],
       purchaseReference: ['', Validators.required],

@@ -59,10 +59,10 @@ export class SupplierComponent implements OnInit {
   private buildForm() {
     debugger;
     this.supplierForm = this.formBuilder.group({
-      supplierReference: ['', Validators.required],
-      name1: ['', Validators.required],
-      name2: ['', Validators.required],
-      address: ['', Validators.required],
+      supplierReference: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      name2: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      address: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       email: ['', Validators.compose([Validators.required, Validators.pattern('^[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}')])],
       contactNumber: ['', Validators.required],
       isActive: [true],
