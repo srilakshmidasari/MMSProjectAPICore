@@ -18,7 +18,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 export class ItemComponent implements OnInit {
   loadingIndicator: boolean;
   sourceitem: any;
-  displayedColumns = ['itemReference', 'categoryName','itemTypeName', 'name1', 'name2', 'description', 'averageCost', 'uomName', 'isActive', 'Actions'];
+  displayedColumns = ['itemReference', 'categoryName', 'itemTypeName', 'name1', 'name2', 'description', 'averageCost', 'uomName', 'isActive', 'Actions'];
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -29,17 +29,17 @@ export class ItemComponent implements OnInit {
   isNewitem: boolean = false;
   isAddingitem: boolean = false;
   itemlist: any[] = [];
-  itemCategory: any[]=[];
-  UOMData:any[]=[];
+  itemCategory: any[] = [];
+  UOMData: any[] = [];
   form: any;
   isitem: boolean;
   public isSaving = false;
-  itemTypes: any[]=[];
+  itemTypes: any[] = [];
   language: string;
 
   constructor(private accountService: AccountService,
     private alertService: AlertService,
-    private authService: AuthService,private dialog: MatDialog,
+    private authService: AuthService, private dialog: MatDialog,
     private formBuilder: FormBuilder, ) { }
 
   ngOnInit() {
@@ -48,7 +48,7 @@ export class ItemComponent implements OnInit {
     this.getUOMIdData();
     this.buildForm();
     this.getItem();
-   
+
   }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -88,11 +88,11 @@ export class ItemComponent implements OnInit {
     debugger
     this.itemForm = this.formBuilder.group({
       itemReference: ['', Validators.required],
-      selectCategory: ['',Validators.required],
-      itemTypeName:['', Validators.required],
+      selectCategory: ['', Validators.required],
+      itemTypeName: ['', Validators.required],
       name1: ['', Validators.required],
       name2: ['', Validators.required],
-      description:['',Validators.required],
+      description: ['', Validators.required],
       uomId: ['', Validators.required],
       averageCost: ['', Validators.required],
       unit: [''],
@@ -113,20 +113,20 @@ export class ItemComponent implements OnInit {
     debugger
     var lookUpTypeId = 10
     this.accountService.getLookUpDetailsByTypeId(lookUpTypeId).subscribe((response: any) => {
-    this.UOMData = response.listResult;
+      this.UOMData = response.listResult;
 
     })
   }
 
-    // Get ItemsTypes List
-    private getItemTypes() {
-      this.accountService.getCddmtData(DataFactory.ClassTypes.ItemType).subscribe((response: any) => {
-        this.itemTypes = response.listResult;   
-        console.log( this.itemTypes)    
-      }, error => {
-        this.alertService.stopLoadingMessage();
-      });
-    }
+  // Get ItemsTypes List
+  private getItemTypes() {
+    this.accountService.getCddmtData(DataFactory.ClassTypes.ItemType).subscribe((response: any) => {
+      this.itemTypes = response.listResult;
+      console.log(this.itemTypes)
+    }, error => {
+      this.alertService.stopLoadingMessage();
+    });
+  }
 
   editClick(item?: any) {
     debugger;
@@ -154,11 +154,11 @@ export class ItemComponent implements OnInit {
     this.itemForm.reset({
       itemReference: this.itemData.itemReference || '',
       selectCategory: this.itemData.itemCategory || '',
-      itemTypeName:this.itemData.itemTypeId || '',
+      itemTypeName: this.itemData.itemTypeId || '',
       uomId: this.itemData.uomId || '',
       name1: this.itemData.name1 || '',
       name2: this.itemData.name2 || '',
-      description:this.itemData.description || '',
+      description: this.itemData.description || '',
       averageCost: this.itemData.averageCost || '',
       unit: this.itemData.units || '',
       unitconversion: this.itemData.unitOfConversion || '',
@@ -168,20 +168,19 @@ export class ItemComponent implements OnInit {
 
   saveitem() {
     debugger
-    if(!this.itemForm.valid){
+    if (!this.itemForm.valid) {
       this.alertService.showValidationError();
       return;
     }
     this.alertService.startLoadingMessage('Saving changes...');
     const editeditem = this.AddAllItemData();
-    if(this.isNewitem)
-    {
+    if (this.isNewitem) {
       this.accountService.AddAllItems(editeditem).subscribe(
         (result: any) => {
           this.alertService.stopLoadingMessage();
           if (result.isSuccess) {
             this.getItem();
-             this.isAddingitem = false;
+            this.isAddingitem = false;
             this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
             this.resetForm();
           } else {
@@ -202,7 +201,7 @@ export class ItemComponent implements OnInit {
             this.isAddingitem = false;
             this.alertService.showMessage('Success', result.endUserMessage, MessageSeverity.success)
             this.getItem();
-           
+
           } else {
             this.alertService.stopLoadingMessage();
             this.alertService.showStickyMessage(result.endUserMessage, null, MessageSeverity.error);
@@ -215,47 +214,47 @@ export class ItemComponent implements OnInit {
     }
   }
 
- private AddAllItemData():any{
-   debugger
-  const formModel = this.itemForm.value;
-   return {
-    "id":this.isNewitem == true ? 0 :this.itemData.id ,
-    "itemReference":formModel.itemReference,
-    "itemCategory":formModel.selectCategory,
-    "itemType":formModel.itemTypeName,
-    "name1": formModel.name1,
-    "name2": formModel.name2,
-    "description":formModel.description,
-    "averageCost":parseInt(formModel.averageCost),
-    "uomId":formModel.uomId,
-    "unitOfConversion":null,
-    "units": null,
-    "isActive":formModel.isActive,
-    "createdBy": this.currentUser.id,
-    "createdDate": new Date(),
-    "updatedBy": this.currentUser.id,
-    "updatedDate":  new Date()
+  private AddAllItemData(): any {
+    debugger
+    const formModel = this.itemForm.value;
+    return {
+      "id": this.isNewitem == true ? 0 : this.itemData.id,
+      "itemReference": formModel.itemReference,
+      "itemCategory": formModel.selectCategory,
+      "itemType": formModel.itemTypeName,
+      "name1": formModel.name1,
+      "name2": formModel.name2,
+      "description": formModel.description,
+      "averageCost": parseInt(formModel.averageCost),
+      "uomId": formModel.uomId,
+      "unitOfConversion": null,
+      "units": null,
+      "isActive": formModel.isActive,
+      "createdBy": this.currentUser.id,
+      "createdDate": new Date(),
+      "updatedBy": this.currentUser.id,
+      "updatedDate": new Date()
     }
-   
- }
 
- get currentUser() {
-  return this.authService.currentUser;
-}
+  }
+
+  get currentUser() {
+    return this.authService.currentUser;
+  }
 
   onCancelClick() {
     this.isAddingitem = false;
   }
 
-  confirmDelete(item:any) {
+  confirmDelete(item: any) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-     var msg="Are you sure you want to delete this item ?"
-    }else{
-      var msg="هل أنت متأكد أنك تريد حذف هذا البند ؟"
-     }
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to delete this item ?"
+    } else {
+      var msg = "هل أنت متأكد أنك تريد حذف هذا البند ؟"
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: "Delete" + " " + item.itemReference,  msg: msg , isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel'},
+      data: { title: "Delete" + " " + item.itemReference, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -277,10 +276,10 @@ export class ItemComponent implements OnInit {
               this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
                 MessageSeverity.error, error);
             });
-          }
-      });
-   }
-   // Accepting Only Numbers
+      }
+    });
+  }
+  // Accepting Only Numbers
   numberOnly(event: any) {
     const numberpattern = /[0-9\+\-.\ ]/;
     let inputChar = String.fromCharCode(event.charCode);
@@ -288,6 +287,55 @@ export class ItemComponent implements OnInit {
       event.preventDefault();
     }
   }
+
+  //ExportToExcel
+  download = function () {
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportItem(this.itemlist).subscribe((result) => {
+      this.alertService.stopLoadingMessage();
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "ItemDetails.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+      error => {
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
   }
+
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+}
 
 

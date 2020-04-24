@@ -31,6 +31,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _roleByRoleNameUrl: string = '/api/account/roles/name';
   private readonly _permissionsUrl: string = '/api/account/permissions';
   private readonly _siteUrl: string = '/api/Site';
+  private readonly _exportsiteUrl: string = '/api/Site/ExportSite';
+
   private readonly _getUserFilesUrl: string = '/api/Account/GetFilesByUserId';
   private readonly _getTypecddmtDetails: string = '/api/Masters/GetTypecddmtDetails';
   private readonly _deleteUserFile: string = '/api/Masters/DeleteFileRepository';
@@ -39,6 +41,8 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _AddLookUpData: string = '/api/Masters/AddLookUpData';
   private readonly _UpdateLookUpData: string = '/api/Masters/UpdateLookUpData';
   private readonly _deleteLookUpData: string = '/api/Masters/DeleteLooKUp';
+  private readonly _exportLookUpData: string = '/api/Masters/ExportMaster';
+
 
   private readonly _projectUrl: string = '/api/Project';
   private readonly _getStoresByProjectIdUrl: string = '/api/Project/GetStoresByProjectId';
@@ -46,10 +50,13 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _getRepositoryByProjectUrl: string = '/api/Project/GetRepositoryByProject';
   private readonly _deleteProjectFileUrl: string = '/api/Project/DeleteProjectRepository';
   private readonly _getProjectsBySiteUrl: string = '/api/Project/GetProjectsBySiteId';
+  private readonly _exportProject: string = '/api/Project/ExportProject';
 
 
   private readonly _locationUrl: string = '/api/Location';
   private readonly _getLocationsByProjectUrl: string = '/api/Location/GetLocationsByProjectId';
+  private readonly _exportLocation: string = '/api/Location/ExportLocation';
+
 
   private readonly _getAssetGroupUrl: string = '/api/Asset/GetAllAssetGroup';
   private readonly _addAssetGroupUrl: string = '/api/Asset/AddAssetGroup';
@@ -60,27 +67,36 @@ export class AccountEndpoint extends EndpointBase {
   private readonly _addAssetLocationUrl: string = '/api/Asset/AddAssetLocation';
   private readonly _updateAssetLocationUrl: string = '/api/Asset/UpdateAssetLocation';
   private readonly _deleteAssetLocationUrl: string = '/api/Asset/DeleteAssetLocation';
+  private readonly _deleteAssetRepositoryUrl: string = '/api/Asset/DeleteProjectRepository';
+  private readonly _getAssetRepositoryUrl: string = '/api/Asset/GetRepositoryByAsset';
+  private readonly _exportAssetLocationUrl: string = '/api/Asset/ExportAsset';
+
+  
   private readonly _getAllSupplier: string = '/api/Supplier/GetAllSupplier';
   private readonly _AddSupplierDetials: string = '/api/Supplier/AddSupplierDetials';
   private readonly _UpdateSupplierDetials: string = '/api/Supplier/UpdateSupplierDetials';
   private readonly _DeleteSupplierByID: string = '/api/Supplier/DeleteSupplierByID';
+  private readonly _exportSupplier: string = '/api/Supplier/ExportSupplier';
 
-  private readonly _deleteAssetRepositoryUrl: string = '/api/Asset/DeleteProjectRepository';
-  private readonly _getAssetRepositoryUrl: string = '/api/Asset/GetRepositoryByAsset';
+
+
   private readonly _getAllitem: string = '/api/Item/GetAllItems';
   private readonly _AddAllitem: string ='/api/Item/AddItemDetials';
   private readonly _updateitem: string ='/api/Item/UpdateItem';
   private readonly _deleteitem: string ='/api/Item/DeleteItem';
+  private readonly _exportItem: string ='/api/Item/ExportItem';
+
 
   private readonly _getPurchaseOrderUrl: string ='/api/PurchaseOrder';
-
   private readonly _getItemsByPurchaseId: string ='/api/PurchaseOrder/GetItemsByPurchaseId';
   private readonly _AddAcceptOrder: string ='/api/PurchaseOrder/AcceptOrder';
   private readonly _RejectOrder: string ='/api/PurchaseOrder/RejectOrder';
+  private readonly _exportPurchaseOrder: string ='/api/PurchaseOrder/ExportPurchaseOrders';
+  private readonly _exportInventory: string ='/api/PurchaseOrder/ExportInventory';
+
 
   private readonly _getWorkOrderUrl: string ='/api/WorkOrder';
   private readonly _getItemsByWorkOrderId: string ='/api/WorkOrder/GetItemsByWorkOrderId';
-
   private readonly _getAssetsByLocationIdUrl: string ='/api/Asset/GetAssetsByLocationId';
   private readonly _deleteWorkOrder: string ='/api/WorkOrder';
   private readonly _AddAcceptWorkOrder: string ='/api/WorkOrder/AcceptWorkOrder';
@@ -100,10 +116,14 @@ export class AccountEndpoint extends EndpointBase {
 
   private readonly  _getAllInventoryUrl: string ='/api/PurchaseOrder/GetAllInventories';
   private readonly  _getPreventiveMaintenance: string ='/api/PreventiveMaintenance';
+  private readonly  _expoerPMProcedure: string ='/api/PreventiveMaintenance/ExportPMProcedure';
+
 
   private readonly  _getPMAssetsbyPMIdUrl: string ='/api/PreventiveMaintenance/GetPMAssetsbyPMId';
 
   private readonly  _getJobPlanUrl: string ='/api/JobPlan';
+  private readonly  _exportJobPlan: string ='/api/JobPlan/ExportJob';
+
 
   private readonly  _getJobTaskByJobPlanIdUrl: string ='/api/JobPlan/GetJobTaskByJobPlanId';
 
@@ -139,21 +159,36 @@ export class AccountEndpoint extends EndpointBase {
   get rolesUrl() { return this.configurations.baseUrl + this._rolesUrl; }
   get roleByRoleNameUrl() { return this.configurations.baseUrl + this._roleByRoleNameUrl; }
   get permissionsUrl() { return this.configurations.baseUrl + this._permissionsUrl; }
+
   get sitesUrl() { return this.configurations.baseUrl + this._siteUrl; }
+  get exportsiteUrl() { return this.configurations.baseUrl + this._exportsiteUrl; }
+
+  
   get UserFilesUrl() { return this.configurations.baseUrl + this._getUserFilesUrl; }
   get typeCddmtData() { return this.configurations.baseUrl + this._getTypecddmtDetails; }
   get deleteUserFileData() { return this.configurations.baseUrl + this._deleteUserFile; }
   get userDataById() { return this.configurations.baseUrl + this._getUserById; }
+
   get projectUrl() { return this.configurations.baseUrl + this._projectUrl; }
-  get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
   get getStoresByProjectIdUrl() { return this.configurations.baseUrl + this._getStoresByProjectIdUrl; }
+  get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
+  get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
+  get getProjectsBySiteUrl() { return this.configurations.baseUrl + this. _getProjectsBySiteUrl; }
+
+  get exportProject() { return this.configurations.baseUrl + this. _exportProject; }
+
+  get lookUpData() { return this.configurations.baseUrl + this._getLookUpData; }
   get getLookUpDetailsByTypeIdUrl() { return this.configurations.baseUrl + this._getLookUpDetailsByTypeIdUrl; }
   get AddlookUpData() { return this.configurations.baseUrl + this._AddLookUpData; }
   get UpdateLookUpData() { return this.configurations.baseUrl + this._UpdateLookUpData; }
   get deleteLookUpData() { return this.configurations.baseUrl + this._deleteLookUpData; }
-  get getRepositoryByProjectUrl() { return this.configurations.baseUrl + this._getRepositoryByProjectUrl; }
+  get exportLookUpData() { return this.configurations.baseUrl + this._exportLookUpData; }
+
+ 
   get locationUrlData() { return this.configurations.baseUrl + this._locationUrl; }
-  get deleteProjectFileUrl() { return this.configurations.baseUrl + this._deleteProjectFileUrl; }
+  get exportLocation() { return this.configurations.baseUrl + this._exportLocation; }
+ 
+ 
   get getAssetGroup() { return this.configurations.baseUrl + this._getAssetGroupUrl; }
   get addAssetGroup() { return this.configurations.baseUrl + this._addAssetGroupUrl; }
   get upDateAssetGroup() { return this.configurations.baseUrl + this._upDateAssetGroupUrl; }
@@ -163,22 +198,32 @@ export class AccountEndpoint extends EndpointBase {
   get addAssetLocationUrl() { return this.configurations.baseUrl + this._addAssetLocationUrl; }
   get updateAssetLocationUrl() { return this.configurations.baseUrl + this._updateAssetLocationUrl; }
   get deleteAssetLocationUrl() { return this.configurations.baseUrl + this._deleteAssetLocationUrl; }
- 
-  get getProjectsBySiteUrl() { return this.configurations.baseUrl + this. _getProjectsBySiteUrl; }
-  get getLocationsByProjectUrl() { return this.configurations.baseUrl + this._getLocationsByProjectUrl; }
   get getAssetRepositoryUrl() { return this.configurations.baseUrl + this. _getAssetRepositoryUrl; }
   get deleteAssetRepositoryUrl() { return this.configurations.baseUrl + this._deleteAssetRepositoryUrl; }
+  get exportAssetLocation() { return this.configurations.baseUrl + this._exportAssetLocationUrl; }
+
+ 
+  get getLocationsByProjectUrl() { return this.configurations.baseUrl + this._getLocationsByProjectUrl; }
+ 
 
   get getAllSupplier() { return this.configurations.baseUrl + this._getAllSupplier; }
   get AddSupplierDetials() { return this.configurations.baseUrl + this._AddSupplierDetials; }
   get UpdateSupplierDetials() { return this.configurations.baseUrl + this._UpdateSupplierDetials; }
   get DeleteSupplierByID() { return this.configurations.baseUrl + this._DeleteSupplierByID; }
+  get exportSupplier() { return this.configurations.baseUrl + this._exportSupplier; }
+
+
   get getAllitem() { return this.configurations.baseUrl + this._getAllitem; }
   get AddAllitemdata() { return this.configurations.baseUrl + this._AddAllitem; }
   get updateitem() { return this.configurations.baseUrl + this._updateitem; }
   get deleteitem() { return this.configurations.baseUrl + this._deleteitem; }
+  get exportItem() { return this.configurations.baseUrl + this._exportItem; }
+
 
   get purchaseOrderUrl() { return this.configurations.baseUrl + this._getPurchaseOrderUrl; }
+  get exportPurchaseOrder() { return this.configurations.baseUrl + this._exportPurchaseOrder; }
+  get exportInventory() { return this.configurations.baseUrl + this._exportInventory; }
+
 
   get getItemsByPurchaseIdUrl() { return this.configurations.baseUrl + this._getItemsByPurchaseId; }
   get AddAcceptOrder() { return this.configurations.baseUrl + this._AddAcceptOrder; }
@@ -211,10 +256,14 @@ export class AccountEndpoint extends EndpointBase {
 
   get getAllInventoryUrl() { return this.configurations.baseUrl + this._getAllInventoryUrl; }
   get getPreventiveMaintenance() { return this.configurations.baseUrl + this._getPreventiveMaintenance; }
+  get expoerPMProcedure() { return this.configurations.baseUrl + this._expoerPMProcedure; }
+
 
   get getPMAssetsbyPMIdUrl() { return this.configurations.baseUrl + this._getPMAssetsbyPMIdUrl; }
 
   get getJobPlanUrl() { return this.configurations.baseUrl + this._getJobPlanUrl; }
+  get exportJobPlan() { return this.configurations.baseUrl + this._exportJobPlan; }
+
 
   get getJobTaskByJobPlanIdUrl() { return this.configurations.baseUrl + this._getJobTaskByJobPlanIdUrl; }
 
@@ -1169,6 +1218,98 @@ export class AccountEndpoint extends EndpointBase {
         return this.handleError(error, () => this.getWorkOrdersByTradeCountEndPoint(reqObject));
       }));
   }
+ // 
 
+ 
+ getExportSiteEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportsiteUrl;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportSiteEndPoint(reqObject));
+    }));
+}
+
+getExportProjectEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportProject;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportProjectEndPoint(reqObject));
+    }));
+}
+
+getExportLocationEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportLocation;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportLocationEndPoint(reqObject));
+    }));
+}
+
+getExportMasterEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportLookUpData;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportMasterEndPoint(reqObject));
+    }));
+}
+
+
+
+getExportItemEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportItem;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportItemEndPoint(reqObject));
+    }));
+}
+
+getExportSupplierEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportSupplier;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportSupplierEndPoint(reqObject));
+    }));
+}
+
+getExportAssetEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportAssetLocation;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportAssetEndPoint(reqObject));
+    }));
+}
+
+getExportPurchaseOrderEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportPurchaseOrder;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportPurchaseOrderEndPoint(reqObject));
+    }));
+}
+
+getExportInventoryEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportInventory;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportInventoryEndPoint(reqObject));
+    }));
+}
+
+getExportJobPlanEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.exportJobPlan;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportJobPlanEndPoint(reqObject));
+    }));
+}
+
+
+getExportPMProcedureEndPoint<T>(reqObject: any): Observable<T> {
+  const endpointUrl = this.expoerPMProcedure;
+  return this.http.post<T>(endpointUrl, JSON.stringify(reqObject), this.requestHeaders).pipe<T>(
+    catchError(error => {
+      return this.handleError(error, () => this.getExportPMProcedureEndPoint(reqObject));
+    }));
+}
   
 }

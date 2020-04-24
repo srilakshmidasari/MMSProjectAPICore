@@ -577,4 +577,53 @@ export class AssetsComponent implements OnInit {
     });
   }
 
+   //ExportToExcel
+   download = function () {
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportAsset(this.assetLocationList).subscribe((result) => {
+      this.alertService.stopLoadingMessage();
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "AssetDetails.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+      error => {
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
+  }
+
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+
 }

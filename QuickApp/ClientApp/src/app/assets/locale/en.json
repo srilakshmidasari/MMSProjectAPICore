@@ -356,7 +356,7 @@
       "Name 1": "Name 1",
       "Name 1 is required(Name must be at least 3 characters)": "Name 1 is required(Name must be at least 3 characters)",
       "Name 2": "Name 2",
-      "Name 2 is required(Name must be at least 3 characters)": "Nam 2 is required(Name must be at least 3 characters)",
+      "Name 2 is required(Name must be at least 3 characters)": "Name 2 is required(Name must be at least 3 characters)",
       "Remarks": "Remarks",
       "isActive": "Is Active"
     }

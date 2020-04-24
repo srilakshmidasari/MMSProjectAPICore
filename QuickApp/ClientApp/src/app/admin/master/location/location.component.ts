@@ -288,11 +288,11 @@ export class LocationComponent implements OnInit {
   //Delete Location 
   onDeleteLocation(location: any) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-     var msg="Are you sure you want to delete this Location with relevant Information ?"
-    }else{
-      var msg=" هل أنت متأكد أنك تريد حذف هذا الموقع بالمعلومات ذات الصلة؟ " 
-     }
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to delete this Location with relevant Information ?"
+    } else {
+      var msg = " هل أنت متأكد أنك تريد حذف هذا الموقع بالمعلومات ذات الصلة؟ "
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Delete" + " " + location.locationReference, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
@@ -319,6 +319,56 @@ export class LocationComponent implements OnInit {
       }
     });
   }
+
+  //ExportToExcel
+  download = function () {
+    debugger
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportLocation(this.locationsData).subscribe((result) => {
+      this.alertService.stopLoadingMessage();
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "LocationDetails.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+      error => {
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
+  }
+
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
 
 }
 

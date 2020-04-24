@@ -917,9 +917,6 @@ namespace MMS.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("DaysApplicable")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Details")
                         .HasColumnType("nvarchar(max)");
 

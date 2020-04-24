@@ -30,8 +30,8 @@
         <mat-form-field class="col-md-6">
             <mat-label>{{'LookUp.editor.Remarks'|translate}}</mat-label>
             <input matInput formControlName="remarks"  />
-            <mat-error *ngIf="!LookUpForm.controls['remarks'].valid">
-            </mat-error>
+            <!-- <mat-error *ngIf="!LookUpForm.controls['remarks'].valid">
+            </mat-error> -->
         </mat-form-field>
         <div class="col-md-12">
             <mat-checkbox formControlName="isActive">{{'LookUp.editor.isActive'|translate}}</mat-checkbox>

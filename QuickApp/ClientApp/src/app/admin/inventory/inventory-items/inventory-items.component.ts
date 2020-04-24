@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
-import { AlertService } from 'src/app/services/alert.service';
+import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 
 @Component({
@@ -56,5 +56,55 @@ export class InventoryItemsComponent implements OnInit {
     // Causes the filter to refresh there by updating with recently added data.
     this.applyFilter(this.dataSource.filter);
   }
+
+  //ExportToExcel
+  download = function () {
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportInventory(this.inventoryList).subscribe((result) => {
+      this.alertService.stopLoadingMessage();
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "InventoryItemDetails.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+      error => {
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
+  }
+
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+
 
 }

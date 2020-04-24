@@ -37,7 +37,6 @@ namespace DAL.Repositories
                                   PreventiveRefId =pm.PreventiveRefId,
                                   StartDate = pm.StartDate,
                                   DurationInHours = pm.DurationinHours,
-                                  DaysApplicable =pm.DaysApplicable,
                                   Details = pm.Details,
                                   JobPlanId= pm.JobPlanId,
                                   Priority=pm.Priority,
@@ -200,7 +199,7 @@ namespace DAL.Repositories
                     result.JobPlanId = PmOrder.JobPlanId;
                     result.Priority = PmOrder.Priority;
                     result.DurationinHours = PmOrder.DurationInHours;
-                    result.DaysApplicable = PmOrder.DaysApplicable;
+                    
                     result.StatusTypeId = PmOrder.StatusTypeId;
                     result.WorkTechnicianId = PmOrder.WorkTechnicianId;
                     result.TypeOfMaintenance = PmOrder.TypeOfMaintenance;

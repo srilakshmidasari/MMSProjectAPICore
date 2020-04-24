@@ -569,7 +569,46 @@ deleteAssetRepository(repositoryId) {
     return this.accountEndpoint.deletePMProcedureEndpoint(Id);
   }
 
-  
+  //Export Services
+
+  ExportSite(reqObject) {
+    return this.accountEndpoint.getExportSiteEndPoint(reqObject);
+  }
+  ExportProject(reqObject) {
+    return this.accountEndpoint.getExportProjectEndPoint(reqObject);
+  }
+  ExportLocation(reqObject) {
+    return this.accountEndpoint.getExportLocationEndPoint(reqObject);
+  }
+  ExportLookUp(reqObject) {
+    return this.accountEndpoint.getExportMasterEndPoint(reqObject);
+  }
+
+  ExportItem(reqObject) {
+    return this.accountEndpoint.getExportItemEndPoint(reqObject);
+  }
+  ExportSupplier(reqObject) {
+    return this.accountEndpoint.getExportSupplierEndPoint(reqObject);
+  }
+
+  ExportAsset(reqObject) {
+    return this.accountEndpoint.getExportAssetEndPoint(reqObject);
+  }
+
+  ExportPurchaseOrder(reqObject) {
+    return this.accountEndpoint.getExportPurchaseOrderEndPoint(reqObject);
+  }
+
+  ExportInventory(reqObject) {
+    return this.accountEndpoint.getExportInventoryEndPoint(reqObject);
+  }
+  ExportJobPlan(reqObject) {
+    return this.accountEndpoint.getExportJobPlanEndPoint(reqObject);
+  }
+
+  ExportPMProcedure(reqObject) {
+    return this.accountEndpoint.getExportPMProcedureEndPoint(reqObject);
+  }
   
   
 }

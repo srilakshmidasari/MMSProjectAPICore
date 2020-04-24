@@ -43,8 +43,8 @@ export class PurchaseorderComponent implements OnInit {
   isAccepted: number;
   selectItem: any;
   duplicateItemList: any[] = [];
-  itemData: any[]=[];
-  purchase: any={};
+  itemData: any[] = [];
+  purchase: any = {};
   isRejected: number;
   language: string;
   entryDate: Date;
@@ -248,13 +248,13 @@ export class PurchaseorderComponent implements OnInit {
     this.isAdding = false;
     this.isNewPurchase = false;
     this.purchaseData = purchase;
-    this.entryDate =new Date(this.purchaseData.arrivingDate)
+    this.entryDate = new Date(this.purchaseData.arrivingDate)
     this.getItemsByPurchaseId(purchase, true);
     this.getStoresByProject(purchase.projectId)
     this.resetForm();
   }
 
-  
+
 
   public resetForm(stopEditing: boolean = false) {
     if (!this.purchaseData) {
@@ -370,11 +370,11 @@ export class PurchaseorderComponent implements OnInit {
 
   confirmDelete(order: any) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-      var msg="Are you sure you want to delete this order ?"
-     }else{
-       var msg="هل أنت متأكد أنك تريد حذف هذا الطلب؟"
-      }
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to delete this order ?"
+    } else {
+      var msg = "هل أنت متأكد أنك تريد حذف هذا الطلب؟"
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Delete", msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
@@ -405,15 +405,15 @@ export class PurchaseorderComponent implements OnInit {
 
   acceptClick(order: any) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-     var msg="Are you sure you want to Accept this order ?"
-     var title = "Accept"
-    }else{
-      var msg="هل أنت متأكد أنك تريد قبول هذا الطلب؟";
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to Accept this order ?"
+      var title = "Accept"
+    } else {
+      var msg = "هل أنت متأكد أنك تريد قبول هذا الطلب؟";
       var title = "قبول"
-     }
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      data: { title: title, msg:msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
+      data: { title: title, msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Accept', cancel: 'Cancel' },
       width: 'auto',
       height: 'auto',
       disableClose: true,
@@ -441,11 +441,11 @@ export class PurchaseorderComponent implements OnInit {
 
   rejectClick(order: any) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-     var msg="Are you sure you want to Reject this order ?"
-     var title = "Reject"
-    }else{
-      var msg="هل أنت متأكد أنك تريد رفض هذا الطلب؟"
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to Reject this order ?"
+      var title = "Reject"
+    } else {
+      var msg = "هل أنت متأكد أنك تريد رفض هذا الطلب؟"
       var title = "رفض"
     }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -506,15 +506,64 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
-  onViewdetailsClick(row){
-    this.purchase=row;
-    this.isView=true;  
-    this.isEdit=false;
+  onViewdetailsClick(row) {
+    this.purchase = row;
+    this.isView = true;
+    this.isEdit = false;
+  }
+
+  closeViewpurchaseOrder() {
+    this.isView = false;
+  }
+
+  //ExportToExcel
+  download = function () {
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportPurchaseOrder(this.purchasesList).subscribe((result) => {
+      this.alertService.stopLoadingMessage();
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "PurchaseOrderDetails.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+      error => {
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
+  }
+
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
     }
 
-    closeViewpurchaseOrder(){
-      this.isView = false;
-    }
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
 
 }
 
