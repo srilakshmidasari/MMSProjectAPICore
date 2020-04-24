@@ -599,7 +599,8 @@
     "Close":"Close",
     "View Details":"View Details",
     "Receive":"Receive",
-    "View Document":"View Document"
+    "View Document":"View Document",
+    "Remarks is required":"Remarks is required"
   }
  },
  "Receive Item":{

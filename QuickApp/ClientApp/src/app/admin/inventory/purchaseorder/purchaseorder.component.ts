@@ -139,7 +139,7 @@ export class PurchaseorderComponent implements OnInit {
       storeId: ['', Validators.required],
       purchaseReference: ['', Validators.required],
       arrivingDate: ['', Validators.required],
-      remarks: [],
+      remarks: ['',Validators.required],
       billindAddress: [''],
       shippingAddress: ['']
     })
