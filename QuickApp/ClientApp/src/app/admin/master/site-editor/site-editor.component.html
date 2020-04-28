@@ -37,7 +37,7 @@
     </mat-error>
   </mat-form-field>
   <mat-form-field class="col-md-12">
-    <mat-label>{{'site.management.SiteManager' | translate}}</mat-label>
+    <mat-label>{{'site.management.SiteManager'|translate}}</mat-label>
     <input matInput formControlName="siteManager" required  minlength="3"  maxlength="30" onkeypress='return (event.charCode !=60 ) &&(event.charCode !=62 ) && (event.charCode !=47 ) &&  (event.charCode !=92)' />
     <mat-error *ngIf="siteForm.get('siteManager').hasError('required')">
       {{'site.management.SiteManager is required(minimum of 3 and maximum of 30 Characters)' | translate}}

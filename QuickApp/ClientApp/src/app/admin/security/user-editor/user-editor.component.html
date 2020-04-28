@@ -30,19 +30,31 @@
   <div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="1em">
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
-      <mat-label>{{'users.editor.Name1' | translate}}</mat-label>
-      <input matInput formControlName="name1" required maxlength="50" />
-      <mat-error *ngIf="!userProfileForm.controls['name1'].valid">
-        {{'users.editor.Name1Required' | translate}}
+      <mat-label>{{'users.editor.Name 1' | translate}}</mat-label>
+      <input matInput formControlName="name1" required  minlength="3" maxlength="50" />
+      <mat-error *ngIf="userProfileForm.get('name1').hasError('required')">
+        {{'users.editor.Name 1 is Required(minimum of 3 and maximum of 50 Characters)' | translate}}
       </mat-error>
+      <mat-error *ngIf="userProfileForm.get('name1').hasError('minlength')">
+        {{'Location.Management.Minimum of 3 Characters'|translate}}
+      </mat-error>
+      <!-- <mat-error *ngIf="!userProfileForm.controls['name1'].valid">
+        {{'users.editor.Name1Required' | translate}}
+      </mat-error> -->
     </mat-form-field>
 
     <mat-form-field [floatLabel]="floatLabels" fxFlex>
-      <mat-label>{{'users.editor.Name2' | translate}}</mat-label>
+      <mat-label>{{'users.editor.Name 2' | translate}}</mat-label>
       <input matInput formControlName="name2" required maxlength="50" />
-      <mat-error *ngIf="!userProfileForm.controls['name2'].valid">
-        {{'users.editor.Name2Required' | translate}}
+      <mat-error *ngIf="userProfileForm.get('name2').hasError('required')">
+        {{'users.editor.Name 2 is Required(minimum of 3 and maximum of 50 Characters)' | translate}}
       </mat-error>
+      <mat-error *ngIf="userProfileForm.get('name2').hasError('minlength')">
+        {{'Location.Management.Minimum of 3 Characters'|translate}}
+      </mat-error>
+      <!-- <mat-error *ngIf="!userProfileForm.controls['name2'].valid">
+        {{'users.editor.Name2Required' | translate}}
+      </mat-error> -->
     </mat-form-field>
   </div>
 
@@ -81,9 +93,15 @@
     <mat-form-field [floatLabel]="floatLabels" fxFlex.gt-sm="0 1 calc(50% - 0.5em)">
       <mat-label>{{'users.editor.User Name' | translate}}</mat-label>
       <input matInput formControlName="userName" [readonly]="!isNewUser" autocomplete="off" maxlength="30" required />
-      <mat-error *ngIf="userName.hasError('required')">
-        {{'users.editor.User Name is Required' | translate}}
+      <mat-error *ngIf="userProfileForm.get('userName').hasError('required')">
+        {{'users.editor.User Name is Required(minimum of 3 and maximum of 50 Characters)' | translate}}
       </mat-error>
+      <mat-error *ngIf="userProfileForm.get('userName').hasError('minlength')">
+        {{'Location.Management.Minimum of 3 Characters'|translate}}
+      </mat-error>
+      <!-- <mat-error *ngIf="userName.hasError('required')">
+        {{'users.editor.User Name is Required' | translate}}
+      </mat-error> -->
     </mat-form-field>
 
     <mat-form-field fxFlex.gt-sm="0 1 calc(50% - 0.5em)">

@@ -162,7 +162,7 @@ export class RoleEditorComponent {
 
   private buildForm() {
     this.roleForm = this.formBuilder.group({
-      name: ['', Validators.required],
+      name: ['', Validators.compose([Validators.required,Validators.minLength(2)])],
       description: '',
       repRole:['']
     });

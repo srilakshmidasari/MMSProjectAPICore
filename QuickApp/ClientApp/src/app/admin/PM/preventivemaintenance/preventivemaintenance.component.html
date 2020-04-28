@@ -98,7 +98,7 @@
                         *ngIf="row.statusTypeName != 'Approved' && row.statusTypeName != 'Closed'">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button class="just-cont-center" mat-icon-button matTooltip="View PM Procedure"
+                    <button class="just-cont-center" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.View PM Procedure'|translate}}"
                         (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
@@ -110,7 +110,7 @@
                         *ngIf="row.statusTypeName == 'Approved'">
                         <mat-icon color="warn">cancel</mat-icon>
                     </button> -->
-                    <button class="z-index" mat-icon-button matTooltip="Add Asset to Procedure"
+                    <button class="z-index" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.Add Asset to Procedure'|translate}}"
                         *ngIf="row.statusTypeName == 'Approved'" (click)="onSelectAsset(row)">
                         <mat-icon> forum</mat-icon>
                     </button>
@@ -152,7 +152,7 @@
                         <mat-label>{{'Preventive Maintenance.Management.Preventive Reference'|translate}}</mat-label>
                         <input matInput formControlName="preventiveRefId" required minlength="3" />
                         <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('required')">
-                            Preventive Reference is Required(Preventive Reference  must be at least 3 characters)
+                  {{'Preventive Maintenance.Management.Preventive Reference is Required(Preventive Reference  must be at least 3 characters)'|translate}}
                           </mat-error>
                           <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('minlength')">
                             {{'Location.Management.Minimum of 3 Characters'|translate}}
@@ -188,7 +188,7 @@
                         <mat-label>Priority</mat-label>
                         <input matInput formControlName="priority" required />
                         <mat-error *ngIf="!maintenanceForm.controls['priority'].valid">
-                            Priority is Required
+                            {{'Preventive Maintenance.Management.Priority is Required'|translate}}    
                         </mat-error>
                     </mat-form-field>
 
