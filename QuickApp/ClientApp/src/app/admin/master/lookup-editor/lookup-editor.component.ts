@@ -32,7 +32,7 @@ export class LookupEditorComponent implements OnInit {
        this.getlookUpData();
   }
 
-
+  //Form creation
   private buildForm() {
     this.LookUpForm = this.fb.group({
       name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
@@ -56,7 +56,7 @@ export class LookupEditorComponent implements OnInit {
   }
 
 
-  //Add and Update LookUp Details
+  //Save Click Add and Update LookUp Details
   save() {
     debugger;
     if (!this.form.submitted) {

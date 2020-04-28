@@ -51,7 +51,7 @@ export class LookupListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
-  //apply Filters
+  // Based on search value to get LookUp Details
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
