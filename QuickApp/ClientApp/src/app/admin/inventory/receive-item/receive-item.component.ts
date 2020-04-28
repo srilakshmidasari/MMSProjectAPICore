@@ -33,23 +33,7 @@ export class ReceiveItemComponent implements OnInit {
     });
   }
 
-  addItem(i) {
-    (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
-  }
-
-  createItem(item) {
-    return this.formBuilder.group({
-      itemName: new FormControl(''),
-      qty: new FormControl(''),
-      unitPrice: new FormControl(''),
-      remainQty: new FormControl(''),
-      receiveQty: new FormControl(''),
-      receivePrice: new FormControl(''),
-      itemId:new FormControl(''),
-      isReadOnly:'',
-    })
-  }
-
+//To  get items by PurchaseId
   getItemsByPurchase(Id) {
     this.sumTotal = 0;
     this.accountService.getItemsByPurchaseId(Id)
@@ -69,8 +53,29 @@ export class ReceiveItemComponent implements OnInit {
         });
   }
 
+// Items add to form
+  addItem(i) {
+    (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
+  }
+
+
+// Form Array Items Creation
+  createItem(item) {
+    return this.formBuilder.group({
+      itemName: new FormControl(''),
+      qty: new FormControl(''),
+      unitPrice: new FormControl(''),
+      remainQty: new FormControl(''),
+      receiveQty: new FormControl(''),
+      receivePrice: new FormControl(''),
+      itemId:new FormControl(''),
+      isReadOnly:'',
+    })
+  }
+
+
+// set items to formarray
   setItems(itemsArray: any[]) {
-   
     let control = this.formBuilder.array([]);
     itemsArray.forEach(x => {
       control.push(this.formBuilder.group({
@@ -100,6 +105,8 @@ export class ReceiveItemComponent implements OnInit {
     }
   }
 
+
+  // on save click
   save() {
     debugger
     this. inventoryItems = [];
@@ -136,6 +143,8 @@ export class ReceiveItemComponent implements OnInit {
         });
   }
 
+
+// on print click
   onPrintClick(el) {
     // this.spinner.show();
     document.getElementById("print-container")

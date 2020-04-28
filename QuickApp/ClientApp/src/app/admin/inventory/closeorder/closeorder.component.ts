@@ -26,15 +26,13 @@ export class CloseorderComponent implements OnInit {
 
   }
 
-
+// on close Work order click
   CloseWorkOrderClick() {
-    debugger
     var req = {
       "workOrderId": this.orderData.id,
       "statusTypeId": DataFactory.StatusTypes.Closed,
       "comments": this.comments
     }
-
     this.accountService.CloseWorkOrder(req)
       .subscribe((results: any) => {
         this.alertService.stopLoadingMessage();
