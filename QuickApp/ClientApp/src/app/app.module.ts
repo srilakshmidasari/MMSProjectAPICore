@@ -47,6 +47,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { LeafletModule } from '@asymmetrik/ngx-leaflet';
 import { ConfirmationDialogComponent } from './shared/confirmation-dialog/confirmation-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { PrintingService } from './services/printing-service';
 
 
 
@@ -97,7 +98,8 @@ import { FormsModule } from '@angular/forms';
     NotificationEndpoint,
     AccountService,
     AccountEndpoint,
-    LocalStoreManager
+    LocalStoreManager,
+    PrintingService
   ],
   entryComponents: [
     LoginDialogComponent,ConfirmationDialogComponent

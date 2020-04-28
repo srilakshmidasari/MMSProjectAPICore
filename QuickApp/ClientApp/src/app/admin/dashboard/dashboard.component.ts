@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { AccountService } from 'src/app/services/account.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -7,6 +7,8 @@ import { ChartDataSets, ChartOptions, ChartType } from 'chart.js';
 import { Label, Color, SingleDataSet } from 'ng2-charts';
 import { Chart } from 'chart.js';
 declare var $: any;
+import * as jsPDF from 'jspdf'
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +20,7 @@ export class DashboardComponent implements OnInit {
     scaleShowVerticalLines: false,
     responsive: true
   };
+  isPdf:boolean = false;
   isChanged: boolean = false;
   public barChartLabels = [];
   public barChartType = 'bar';
@@ -96,6 +99,7 @@ export class DashboardComponent implements OnInit {
     }
   ]
 
+
   selectedType: any;
   constructor(private accountService: AccountService, private authService: AuthService, private fb: FormBuilder) {
     this.buildForm();
@@ -108,7 +112,21 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getSitesByUserId();
+   debugger
+    $("#downloadPdf").click(function(){
+      $('.col-md-1').hide();
+      html2canvas(document.querySelector("#print-container")).then(canvas => {  
+        var dataURL = canvas.toDataURL();
+        var pdf = new jsPDF();
+        pdf.text("MMS Dashboard", pdf.internal.pageSize.getWidth()/2, 10,{ align: "center" });
+        pdf.addImage(dataURL, 'JPEG', 20, 20, 170, 120); //addImage(image, format, x-coordinate, y-coordinate, width, height)  
+        pdf.save("dashboard.pdf");
+        $('.col-md-1').show();
+      });
+      
+    });
   }
+
 
   // Get sites data by UserId
   getSitesByUserId() {
@@ -330,4 +348,14 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+
+
+
+  download() {
+  //  this.isPdf= true;
+  }
+
+    
+
+  
 }
