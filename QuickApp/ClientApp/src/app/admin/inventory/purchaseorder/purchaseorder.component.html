@@ -9,12 +9,7 @@
 </header>
 
 <div class="page-content" [hidden]="isAdding || isEdit || isView">
-    <!-- <div class="search-box">
-        <mat-form-field>
-            <input matInput (keyup)="applyFilter($event.target.value)"
-                placeholder="{{'Purchase Order.Management.Search' | translate}}">
-        </mat-form-field>
-    </div> -->
+   
     <div class="example-container mat-elevation-z8 mt-2 table-responsive prng-table">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <div>
@@ -55,15 +50,7 @@
                         <th [pSortableColumn]="'statusName'">{{'Purchase Order.Management.Status Name'|translate}}
                             <p-sortIcon [field]="'statusName'"></p-sortIcon>
                         </th>
-                        <!-- <th [pSortableColumn]="'updatedDate'">{{'Purchase Order.Management.Updated Date'|translate}}
-                            <p-sortIcon [field]="'updatedDate'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'billingAddress'">{{'Purchase Order.Management.Billing Address'|translate}}
-                            <p-sortIcon [field]="'billingAddress'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'shippingAddress'">{{'Purchase Order.Management.Shipping Address'|translate}}
-                            <p-sortIcon [field]="'shippingAddress'"></p-sortIcon>
-                        </th> -->
+                        
                         <th [pSortableColumn]="'remarks'">{{'Purchase Order.Management.Remarks'|translate}}
                             <p-sortIcon [field]="'remarks'"></p-sortIcon>
                         </th>
@@ -93,9 +80,7 @@
                         <td>{{req.storeName}}</td>
                         <td>{{req.arrivingDate | date: 'dd/MM/yyyy '}}</td>
                         <td>{{req.statusName}}</td>
-                        <!-- <td>{{req.updatedDate | date: 'dd/MM/yyyy'}}</td>
-                        <td>{{req.billingAddress}}</td>
-                        <td>{{req.shippingAddress}}</td> -->
+                        
                         <td>{{req.remarks}}</td>
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
@@ -425,19 +410,7 @@
                         <p-calendar [showIcon]="true" name="calendar" [minDate]="currenrDate" dateFormat="dd/mm/yy"
                         [(ngModel)]="entryDate" formControlName="arrivingDate" ></p-calendar>
                     </div>
-                   
-
-                    <!-- <mat-form-field   >
-                        <mat-label> {{'Purchase Order.Management.Arriving Date'|translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker"   [min]="currenrDate" formControlName="arrivingDate"
-                            placeholder="Arriving Date" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="!orderForm.controls['arrivingDate'].valid">
-                            {{'Purchase Order.Management.Arriving Date is Required'|translate}}
-                        </mat-error>
-                     
-                    </mat-form-field> -->
+                  
                     <mat-form-field class="col-md-3">
                         <mat-label>{{'Purchase Order.Management.Remarks'|translate}}</mat-label>
                         <input matInput formControlName="remarks"  maxlength="100" />
@@ -448,8 +421,6 @@
                         <mat-label>{{'Purchase Order.Management.Billing Address'|translate}}</mat-label>
                         <textarea matInput formControlName="billindAddress"></textarea>
                     </mat-form-field>
-
-
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Purchase Order.Management.Shipping Address'|translate}}</mat-label>
                         <textarea matInput formControlName="shippingAddress"></textarea>

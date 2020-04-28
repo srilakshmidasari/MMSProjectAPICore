@@ -240,19 +240,6 @@
                         </mat-error> 
                     </mat-form-field>
 
-                    
-                    
-                    <!-- <mat-form-field class="col-md-3">
-                        <mat-label>{{'Assets.Management.LocationName'|translate}}*</mat-label>
-                        <mat-select formControlName="locationId" (ngModelChange)="onSelectLocationByProject($event)">
-                            <mat-option *ngFor="let location of locationsList" [value]="location.id" required>
-                                {{location.name1}}(<span>{{location.locationReference}}</span>)
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['locationId'].valid">
-                            {{'Assets.Management.PleaseSelectLocation'|translate}}
-                        </mat-error>
-                    </mat-form-field> -->
                     <div class="col-md-2">
                         <button mat-raised-button color="primary"
                             matTooltip="{{'Purchase Order.Management.Add'|translate}}" (click)="addItem($event)">
@@ -280,17 +267,7 @@
                             {{'Work Order.Management.Please Select Asset'|translate}}
                         </mat-error> 
                     </mat-form-field>
-                    <!-- <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Select Asset'|translate}}<span>*</span></mat-label>
-                        <mat-select formControlName="assetId">
-                            <mat-option *ngFor="let asset of assetsList" [value]="asset.id" required>
-                                {{asset.name1}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!orderForm.controls['assetId'].valid">
-                            {{'Work Order.Management.Please Select Asset'|translate}}
-                        </mat-error>
-                    </mat-form-field> -->
+                 
                     <mat-form-field class="col-md-3">
                         <mat-label> {{'Work Order.Management.Start Date'|translate}} </mat-label>
                         <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
@@ -396,22 +373,11 @@
                         </mat-error>
                     </mat-form-field>
                 </div>
-                <div class="row">
-                    <!-- <mat-form-field class="col-md-3">
-                        <mat-label>Reference 2</mat-label>
-                        <input matInput formControlName="reference2" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
-                            Reference 2 is Required
-                        </mat-error>
-                    </mat-form-field> -->
-                </div>
+                
                 <div class="row">
                     <mat-form-field class="col-md-9">
                         <mat-label>{{'Work Order.Management.Extra Details'|translate}}</mat-label>
                         <textarea matInput formControlName="extraDetails"></textarea>
-                        <!-- <mat-error *ngIf="!orderForm.controls['extraDetails'].valid">
-                            {{'Work Order.Management.Extradetails is Required'|translate}}
-                        </mat-error> -->
                     </mat-form-field>
                 </div>
             </form>
@@ -546,36 +512,25 @@
                             {{'Work Order.Management.Please Select Asset'|translate}}
                         </mat-error> 
                     </mat-form-field>
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.Start Date'|translate}} </mat-label>
-                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
-                            placeholder="Start Date" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
+                   
+                    <div class="col-md-3 cstm-date">
+                        <label>{{'Work Order.Management.Start Date'|translate}} <span>*</span></label>
+                        <p-calendar [showIcon]="true" name="calendar" [minDate]="currenrDate" dateFormat="dd/mm/yy"
+                        [(ngModel)]="startDate" formControlName="startDate" ></p-calendar>
                         <mat-error *ngIf="!orderForm.controls['startDate'].valid">
                             {{'Work Order.Management.Start Date is Required'|translate}}
                         </mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="col-md-3">
-                        <mat-label>{{'Work Order.Management.End Date'|translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="endDate"
-                            placeholder="End Date" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                        <mat-datepicker #picker1></mat-datepicker>
+                    </div>
+                    <div class="col-md-3 cstm-date">
+                        <label> {{'Work Order.Management.End Date'|translate}} <span>*</span></label>
+                        <p-calendar [showIcon]="true" name="calendar" [minDate]="currenrDate" dateFormat="dd/mm/yy"
+                        [(ngModel)]="endDate" formControlName="endDate" ></p-calendar>
                         <mat-error *ngIf="!orderForm.controls['endDate'].valid">
                             {{'Work Order.Management.End Date is Required'|translate}}
                         </mat-error>
-                    </mat-form-field>
+                    </div>
                 </div>
                 <div class="row">
-                    <!-- <mat-form-field class="col-md-3">
-                        <mat-label>Reference 2</mat-label>
-                        <input matInput formControlName="reference2" required maxlength="50" />
-                        <mat-error *ngIf="!orderForm.controls['reference2'].valid">
-                            Reference 2 is Required
-                        </mat-error>
-                    </mat-form-field> -->
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Work Order.Management.Issue'|translate}} </mat-label>
                         <textarea matInput formControlName="issue"></textarea>

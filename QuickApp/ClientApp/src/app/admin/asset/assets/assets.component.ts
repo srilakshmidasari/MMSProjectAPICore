@@ -66,6 +66,7 @@ export class AssetsComponent implements OnInit {
   userProjectsList: any[] = [];
   projectId: any;
   language: string;
+  astFixedDate: Date;
   constructor(private accountService: AccountService, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, private alertService: AlertService, private fb: FormBuilder) {
     this.buildForm();
     this.currenrDate = new Date();
@@ -109,6 +110,7 @@ export class AssetsComponent implements OnInit {
         });
   }
 
+  // To get all projects by userId and Site
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -123,50 +125,25 @@ export class AssetsComponent implements OnInit {
         });
   }
 
-
-  
-
-  // Asset Group List
-  // getAllAssetGroups() {
-  //   this.accountService.getAssetGroupData().subscribe((result: any) => {
-  //     this.assetGroupList1 = result.listResult == null ? [] : result.listResult;
-  //     this.assetGroupList = this.assetGroupList1.filter(x => x.isActive == true);
-  //   },
-  //     error => {
-  //     }
-  //   )
-  // }
-
-
   // Asset Trade List
   getAssetTrade() {
-    const typeCddId = 5;
-    this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.AstTrade).subscribe((result: any) => {
       this.assetTradeList = result.listResult == null ? [] : result.listResult;
     },
       error => {
       })
   }
 
-  // Asset Trade List
+  // Asset Group List
   getAssetGroup() {
-    const typeCddId = 4;
-    this.accountService.getLookUpDetailsByTypeId(typeCddId).subscribe((result: any) => {
+    this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Group).subscribe((result: any) => {
       this.assetGroupList = result.listResult == null ? [] : result.listResult;
     },
       error => {
       })
   }
 
-  onSelectSiteByProject(event) {
-    this.projectsList = [];
-    this.accountService.getProjectsBySite(event).subscribe((res: any) => {
-      this.projectsList = res.listResult == null ? [] : res.listResult;
-    },
-      error => {
-      })
-  }
-
+// Based on project to get locations
   onSelectProjectByLocation(event) {
     this.locationsList = [];
     this.accountService.getLocationsByProject(event).subscribe((res: any) => {
@@ -213,7 +190,7 @@ export class AssetsComponent implements OnInit {
       this.displayNoRecords = false;
     }
   }
-  // On Edit Asset Click
+  // On Add and Edit Asset Click
   onEditAsset(asset?: any) {
     this.document = null;
     this.assetRefData = {};
@@ -226,6 +203,7 @@ export class AssetsComponent implements OnInit {
       this.isAdding = true;
       this.isNewAsset = false;
       this.assetRefData = asset;
+      this.astFixedDate= new Date(this.assetRefData.astFixedDate);
       this.resetForm();
       this.getAssetRepository();
     }
@@ -257,7 +235,7 @@ export class AssetsComponent implements OnInit {
       assetTrade: this.assetRefData.astTradeId || '',
       assetCounter: this.assetRefData.astCounter || '',
       daysApplicable:this.assetRefData.daysApplicable || '',
-      assetFixDate: this.assetRefData.astFixedDate || '',
+      assetFixDate:  this.astFixedDate || '',
       isActive: this.assetRefData.isActive || '',
     })
 
@@ -422,7 +400,7 @@ export class AssetsComponent implements OnInit {
   }
 
 
-
+// on Save asset Click
   saveAssets() {
     if (!this.assetLocationForm.valid) {
       this.alertService.showValidationError();
@@ -469,29 +447,7 @@ export class AssetsComponent implements OnInit {
     }
   }
 
-
-  // public confirmDelete(asset: any) {
-  //   this.snackBar.open(`Delete ${asset.name1}?`, 'DELETE', { duration: 5000 })
-  //     .onAction().subscribe(() => {
-  //       this.alertService.startLoadingMessage('Deleting...');
-  //       this.loadingIndicator = true;
-  //       this.accountService.deleteAsset(asset.id)
-  //         .subscribe((results: any) => {
-  //           this.alertService.stopLoadingMessage();
-  //           this.loadingIndicator = false;
-  //           if (results.isSuccess) {
-  //             this.getAssets();
-  //           }
-  //         },
-  //           error => {
-  //             this.alertService.stopLoadingMessage();
-  //             this.loadingIndicator = false;
-  //             this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-  //               MessageSeverity.error, error);
-  //           });
-  //     });
-  // }
-
+  // premissions
   get canAddAssets() {
     return this.accountService.userHasPermission(Permission.addAssetsPermission);
   }
@@ -505,6 +461,7 @@ export class AssetsComponent implements OnInit {
   }
 
 
+  // To get asset Files
   getAssetRepository() {
     this.alertService.startLoadingMessage();
     this.accountService.getAssetRepository(this.assetRefData.id).subscribe((res: any) => {
