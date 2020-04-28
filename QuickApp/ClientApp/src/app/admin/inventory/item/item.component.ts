@@ -43,17 +43,18 @@ export class ItemComponent implements OnInit {
     private formBuilder: FormBuilder, ) { }
 
   ngOnInit() {
-    debugger;
     this.getlookUpData();
     this.getUOMIdData();
     this.buildForm();
     this.getItem();
-
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
+   }
+
+  // Based on search value to get Items
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -62,12 +63,14 @@ export class ItemComponent implements OnInit {
       this.displayNoRecords = false;
     }
   }
+
   private refresh() {
     // Causes the filter to refresh there by updating with recently added data.
     this.applyFilter(this.dataSource.filter);
   }
 
-  //get data
+
+  //get Itemsdata
   private getItem() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -84,8 +87,8 @@ export class ItemComponent implements OnInit {
         });
   }
 
+  //Form creation
   private buildForm() {
-    debugger
     this.itemForm = this.formBuilder.group({
       itemReference: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       selectCategory: ['', Validators.required],
@@ -101,6 +104,7 @@ export class ItemComponent implements OnInit {
     })
   }
 
+  //get LookUpdata
   private getlookUpData() {
     var lookUpTypeId = 9
     this.accountService.getLookUpDetailsByTypeId(lookUpTypeId).subscribe((response: any) => {
@@ -109,12 +113,11 @@ export class ItemComponent implements OnInit {
     })
   }
 
+ //get UOMID Data
   private getUOMIdData() {
-    debugger
     var lookUpTypeId = 10
     this.accountService.getLookUpDetailsByTypeId(lookUpTypeId).subscribe((response: any) => {
       this.UOMData = response.listResult;
-
     })
   }
 
@@ -128,8 +131,8 @@ export class ItemComponent implements OnInit {
     });
   }
 
+  //On Edit Click
   editClick(item?: any) {
-    debugger;
     this.itemData = {};
     if (item != undefined) {
       this.isAddingitem = true;
@@ -144,8 +147,8 @@ export class ItemComponent implements OnInit {
     }
   }
 
+ //  to set form values
   public resetForm(stopEditing: boolean = false) {
-    debugger
     if (!this.itemData) {
       this.isNewitem = true;
     } else {
@@ -166,8 +169,8 @@ export class ItemComponent implements OnInit {
     });
   }
 
+ //On Save Click Add and Update Item Details
   saveitem() {
-    debugger
     if (!this.itemForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -214,8 +217,8 @@ export class ItemComponent implements OnInit {
     }
   }
 
+ //request Object
   private AddAllItemData(): any {
-    debugger
     const formModel = this.itemForm.value;
     return {
       "id": this.isNewitem == true ? 0 : this.itemData.id,
@@ -233,17 +236,18 @@ export class ItemComponent implements OnInit {
       "updatedBy": this.currentUser.id,
       "updatedDate": new Date()
     }
-
   }
 
   get currentUser() {
     return this.authService.currentUser;
   }
 
+  //On Cancel Click
   onCancelClick() {
     this.isAddingitem = false;
   }
 
+  //Conform Delete Item
   confirmDelete(item: any) {
     this.language = localStorage.getItem('language');
     if (this.language == 'en') {
@@ -277,6 +281,7 @@ export class ItemComponent implements OnInit {
       }
     });
   }
+
   // Accepting Only Numbers
   numberOnly(event: any) {
     const numberpattern = /[0-9\+\-.\ ]/;
@@ -311,26 +316,21 @@ export class ItemComponent implements OnInit {
       })
   }
 
+  //base 64 converstion
   b64toBlob(b64Data, contentType, sliceSize) {
     contentType = contentType || '';
     sliceSize = sliceSize || 512;
-
     var byteCharacters = atob(b64Data);
     var byteArrays = [];
-
     for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
       var slice = byteCharacters.slice(offset, offset + sliceSize);
-
       var byteNumbers = new Array(slice.length);
       for (var i = 0; i < slice.length; i++) {
         byteNumbers[i] = slice.charCodeAt(i);
       }
-
       var byteArray = new Uint8Array(byteNumbers);
-
       byteArrays.push(byteArray);
     }
-
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   };

@@ -34,7 +34,7 @@ export class LookupListComponent implements OnInit {
     this.getLookUp();
   }
 
-  // Look Up Data
+  //get LookUp Details
   getLookUp() {
     this.accountService.getLookUPData().subscribe((result: any) => {
       this.lookUpData = result.listResult;
@@ -51,6 +51,7 @@ export class LookupListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  // Based on search value to get LookUp Details
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -82,6 +83,7 @@ export class LookupListComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
+  //Update LookUp Details
   private updateLookUp(response: any) {
     if (this.sourcelookup) {
       this.getLookUp();
@@ -92,7 +94,8 @@ export class LookupListComponent implements OnInit {
       this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
     }
   }
-
+ 
+  //Edit LookUp Details
   editlookup(lookUp?: any) {
     this.sourcelookup = lookUp;
     const dialogRef = this.dialog.open(LookupDialogComponent,
@@ -106,6 +109,8 @@ export class LookupListComponent implements OnInit {
       }
     });
   }
+
+  //Confrom Delete
   public confirmDelete(lookUp: any) {
     debugger;
     this.snackBar.open(`Delete ${lookUp.name1}?`, 'DELETE', { duration: 5000 })

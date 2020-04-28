@@ -51,13 +51,12 @@ export class SupplierComponent implements OnInit {
     private alertService: AlertService, ) { }
 
   ngOnInit() {
-    debugger;
     this.buildForm();
     this.getsuppliers();
   }
 
+   //Form creation
   private buildForm() {
-    debugger;
     this.supplierForm = this.formBuilder.group({
       supplierReference: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
@@ -70,10 +69,13 @@ export class SupplierComponent implements OnInit {
       note: ['']
     })
   }
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
   }
+
+   // Based on search value to get Suppliers
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -82,14 +84,14 @@ export class SupplierComponent implements OnInit {
       this.displayNoRecords = false;
     }
   }
+
   private refresh() {
     // Causes the filter to refresh there by updating with recently added data.
     this.applyFilter(this.dataSource.filter);
   }
 
-  //get data
+  //get Suppliers data
   private getsuppliers() {
-    debugger;
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getsupplierdata()
@@ -105,9 +107,8 @@ export class SupplierComponent implements OnInit {
         });
   }
 
-  //saveing the data
+  //On Save Click Add and Update Suppliers data
   savesupplier() {
-    debugger;
     if (!this.supplierForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -159,7 +160,6 @@ export class SupplierComponent implements OnInit {
 
   // forming Request Object
   private getAlldatasuppliers(): any {
-    debugger;
     const formModel = this.supplierForm.value;
     return {
       "id": (this.isNewsupplier == true) ? 0 : this.supplierData.id,
@@ -185,6 +185,8 @@ export class SupplierComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+
+   // to set form values
   public resetForm(stopEditing: boolean = false) {
     if (!this.supplierData) {
       this.isNewsupplier = true;
@@ -203,6 +205,7 @@ export class SupplierComponent implements OnInit {
     });
   }
 
+ //On Edit Click
   editClick(supplier?: any) {
     this.supplierData = {};
     this.image ="";
@@ -218,6 +221,7 @@ export class SupplierComponent implements OnInit {
       this.buildForm();
     }
   }
+
   // //Deleteing Record
   // confirmDelete(supplier:any){
   //   debugger;
@@ -242,7 +246,9 @@ export class SupplierComponent implements OnInit {
   //     });
   //   });
   // }
+ 
 
+  //On Cancel Click
   onCancelClick() {
     this.isAddingsupplier = false;
   }

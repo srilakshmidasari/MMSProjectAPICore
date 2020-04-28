@@ -32,7 +32,7 @@ export class LookupEditorComponent implements OnInit {
        this.getlookUpData();
   }
 
-
+  //Form creation
   private buildForm() {
     this.LookUpForm = this.fb.group({
       name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
@@ -43,15 +43,20 @@ export class LookupEditorComponent implements OnInit {
     })
   }
 
+  //get LookUp Details
   private getlookUpData() {
     this.accountService.getCddmtData(DataFactory.ClassTypes.LookUp).subscribe((response: any) => {
       this.lookUplist = response.listResult;
     })
   }
 
+  //get CurrentUser
   get currentUser() {
     return this.authService.currentUser;
   }
+
+
+  //Save Click Add and Update LookUp Details
   save() {
     debugger;
     if (!this.form.submitted) {
@@ -97,6 +102,7 @@ export class LookupEditorComponent implements OnInit {
 
   }
 
+//request Object
   AddLookupData(): any {   
     const FormModel = this.LookUpForm.value;
     return {
@@ -112,14 +118,16 @@ export class LookupEditorComponent implements OnInit {
       "updatedDate": new Date(),
     }
   }
+
+//SaveCompleted
   private saveCompleted(res) {    
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
     this.resetForm(true);   
     this.onLookUpSaved.next(res);
-   
   }
 
+//SaveFailed
   private saveFailed(error: any) {
     this.isSaving = false;
     this.alertService.stopLoadingMessage();
@@ -138,6 +146,7 @@ export class LookupEditorComponent implements OnInit {
     this.buildForm();
     this.resetForm();
   }
+
   public resetForm(stopEditing: boolean = false) { 
      this.LookUpForm.reset({
       name1: this.lookUp.name1 || '',
