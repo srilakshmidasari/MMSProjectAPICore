@@ -243,16 +243,24 @@
                             {{'Assets.Management.PleaseSelectAssetTrade'|translate}}
                         </mat-error>
                     </mat-form-field>
-                    <mat-form-field class="col-md-4">
+                    <mat-form-field class="col-md-4" *ngIf="isNewAsset">
                         <mat-label>{{'Assets.Management.AssetFixedDate'|translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" formControlName="assetFixDate"
-                            placeholder="Asset Fixed Date" required>
+                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="assetFixDate"
+                            placeholder="Asset Fixed Date"  required>
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>
                         <mat-error *ngIf="!assetLocationForm.controls['assetFixDate'].valid">
                             {{'Assets.Management.AssetFixedDateisRequired'|translate}}
                         </mat-error>
                     </mat-form-field>
+                    <div class="col-md-4 cstm-date" *ngIf="!isNewAsset">
+                        <label>{{'Assets.Management.AssetFixedDate'|translate}} <span>*</span></label>
+                        <p-calendar [showIcon]="true" name="calendar" [minDate]="currenrDate" dateFormat="dd/mm/yy"
+                        [(ngModel)]="astFixedDate" formControlName="assetFixDate" ></p-calendar>
+                        <mat-error *ngIf="!assetLocationForm.controls['assetFixDate'].valid">
+                            {{'Assets.Management.AssetFixedDateisRequired'|translate}}
+                        </mat-error>
+                    </div>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Assets.Management.Days Applicable'|translate}}</mat-label>
                             <input matInput formControlName="daysApplicable"  required/>
@@ -260,16 +268,7 @@
                             <mat-error *ngIf="!assetLocationForm.controls['daysApplicable'].valid">
                                 {{'Assets.Management.Days Applicable is Required'|translate}} 
                             </mat-error> 
-                        <!-- <mat-select formControlName="assetCounter">
-                            <mat-option *ngFor="let counter of counterList" [value]="counter.id" required>
-                                {{counter.value}}
-                            </mat-option>
-                        </mat-select>
-                        <mat-error *ngIf="!assetLocationForm.controls['assetCounter'].valid">
-                            {{'Assets.Management.PleaseSelectAssetCounter'|translate}}
-                        </mat-error> -->
                     </mat-form-field>
-                   
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-4">

@@ -55,6 +55,8 @@ export class WorkOrderComponent implements OnInit {
   assetListLength: number;
   selectAsset: any;
   language: string;
+  startDate: Date;
+  endDate: Date;
   
 
   constructor(private accountService: AccountService, private alertService: AlertService,
@@ -67,16 +69,14 @@ export class WorkOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.getworkOrderOrders();    
     this.getItem();
     this.buildForm();
   }
 
 
-
+// Get all work orders
   private getworkOrderOrders() {
-    debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getWorkOrder()
@@ -92,7 +92,7 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
-
+// get items based on work order
   getItemsByworkOrderId(row, val) {
     this.accountService.getItemsByWorkOrderId(row.id)
       .subscribe((results: any) => {
@@ -103,19 +103,13 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
+  //  to add multiple items to form
   addItem(i) {
-    debugger
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
   }
 
-  
-  // handleSelectedValue(){
-  //   if(this.credentials==this.credentials){
-  //    this.showHide = true;
 
-  //   }
-  // }
-
+  // Formarray item creation
   createItem(item) {
     return this.formBuilder.group({
       itemId: new FormControl('', [Validators.required]),
@@ -124,6 +118,7 @@ export class WorkOrderComponent implements OnInit {
     })
   }
 
+  // to initialize the form
   buildForm() {
     this.orderForm = this.formBuilder.group({
       siteId: ['', Validators.required],
@@ -144,25 +139,17 @@ export class WorkOrderComponent implements OnInit {
     })
   }
 
+  // to delete item from form
   Delete(index) {
     (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
   }
 
 
+  // on cancel click  
   onCancelClick() {
     this.isAdding = false;
     this.isEdit = false;
     this.itemFrom.setControl('credentials', this.formBuilder.array([]));
-  }
-
-  private getSites() {
-    this.accountService.getSiteData()
-      .subscribe((results: any) => {
-        this.siteList = results.listResult == null ? [] : results.listResult;
-
-      },
-        error => {
-        });
   }
 
   // Get sites data by UserId
@@ -175,6 +162,7 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
+  // to get projects by based on sites and user
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -190,20 +178,17 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
-
+// on select location
   onSelectProjectByLocation(event) {
     this.locationsList = [];
     this.Project=event;
     this.getStoresByProject(event)
     this.orderForm.get('locationId').setValue(null)
-    // this.accountService.getLocationsByProject(event).subscribe((res: any) => {
-    //   this.locationsList = res.listResult == null ? [] : res.listResult;
-    //   this.getStoresByProject(event)
-    // },
-    //   error => {
-    //   })
+    
   }
 
+
+  // based on project to get locations by search
   onSelectProjectByLocationSearch(event) {
     this.searchText =event;
     if(this.searchText.length >2){
@@ -227,6 +212,8 @@ export class WorkOrderComponent implements OnInit {
     }
   }
 
+
+  // based on location to get assets by search
   onSelectLocationByAssetSearch(event) {
     this.assetsList = [];
     this.assteText =event
@@ -259,20 +246,21 @@ export class WorkOrderComponent implements OnInit {
   }
 
   
+  // get locationId to seleced location 
   onLocationSelected( obj) {
     this.selectString = obj.id;
     this.orderForm.get('assetId').setValue(null)
   }
 
+  // get assetId of seleced asset 
   onAssetSelected( obj) {
     this.selectAsset = obj.id;
   }
 
 
-
+  // Based on project to get stores
   getStoresByProject(ProjectId) {
     this.storesList = [];
-    //this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(ProjectId)
       .subscribe((results: any) => {
         this.storesList = results.listResult == null ? [] : results.listResult;
@@ -283,7 +271,7 @@ export class WorkOrderComponent implements OnInit {
 
 
 
-  // get items Data
+  //To get items Data
   private getItem() {
     this.accountService.getitemdata()
       .subscribe((results: any) => {
@@ -294,7 +282,7 @@ export class WorkOrderComponent implements OnInit {
         });
   }
 
-
+// To  get work types
   getWorkType() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkType).subscribe((result: any) => {
       this.workTypeList = result.listResult == null ? [] : result.listResult;
@@ -304,6 +292,7 @@ export class WorkOrderComponent implements OnInit {
       })
   }
 
+  // To get work status
   getWorkStatus() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkStatus).subscribe((result: any) => {
       this.workStatusList = result.listResult == null ? [] : result.listResult;
@@ -313,6 +302,7 @@ export class WorkOrderComponent implements OnInit {
       })
   }
 
+  // To get work faults
   geworkFault() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkFaults).subscribe((result: any) => {
       this.workFaultsList = result.listResult == null ? [] : result.listResult;
@@ -322,6 +312,7 @@ export class WorkOrderComponent implements OnInit {
       })
   }
 
+  // To get work technicians
   getWorkTech() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
       this.workTechList = result.listResult == null ? [] : result.listResult;
@@ -330,6 +321,8 @@ export class WorkOrderComponent implements OnInit {
       })
   }
 
+
+  // on add  work order click 
   addClick(purchase?: any) {
     this.orderData = {};
     this.isAdding = true;
@@ -341,8 +334,9 @@ export class WorkOrderComponent implements OnInit {
     this.resetForm();
 
   }
-
+  //on edit work order clickS
   onEditClick(order) {
+    debugger
     this.isEdit = true;
     this.isAdding = false;
     this.isNewOrder = false;
@@ -350,23 +344,176 @@ export class WorkOrderComponent implements OnInit {
     this.getItemsByworkOrderId(order, true);
     this.getSitesByUserId();
     this.getProjectsByUserIdandSiteId(order.siteId)
-
+    this.startDate =new Date(this.orderData.startDate);
+    this.endDate= new Date(this.orderData.endDate);
     this.onSelectProjectByLocation(order.projectId)
     this.onSelectLocationByProject(order.locationId)
     this.getStoresByProject(order.projectId);
     this.resetForm();
   }
 
+  // on view work order details
   onViewClick(row) {
     this.workorder = row;
     this.isView = true;
   }
 
+  // on close view order
   closeViewWorkOrder() {
     this.isView = false;
 
   }
 
+  // Accepting Only Numbers
+  numberOnly(event: any) {
+    const numberpattern = /[0-9\+\-.\ ]/;
+    let inputChar = String.fromCharCode(event.charCode);
+    if (!numberpattern.test(inputChar)) {
+      event.preventDefault();
+    }
+  }
+
+  // on edit click items setting
+  setItems(itemsArray: any[]) {
+    let control = this.formBuilder.array([]);
+    itemsArray.forEach(x => {
+      control.push(this.formBuilder.group({
+        itemId: x.itemId,
+        quantity: x.quantity,
+      }))
+    })
+    this.itemFrom.setControl('credentials', control);
+  }
+
+
+
+  // to set form values
+  public resetForm(stopEditing: boolean = false) {
+    if (!this.orderData) {
+      this.isNewOrder = true;
+    } else {
+      this.buildForm();
+    }
+    this.orderForm.reset({
+      siteId: this.orderData.siteId || '',
+      projectId: this.orderData.projectId || '',
+      locationId: this.orderData.locationName|| '',
+      assetId: this.orderData.assetName || '',
+      storeId: this.orderData.storeId || '',
+      reference1: this.orderData.reference1 || '',
+      extraDetails: this.orderData.extraDetails || '',
+      issue: this.orderData.issue || '',
+      resolution: this.orderData.resolution || '',
+      startDate: this.isNewOrder ? this.currenrDate :  this.startDate || '',
+      endDate: this.isNewOrder ? this.currenrDate : this.endDate || '',
+      workTypeId: this.orderData.workTypeId || '',
+      workStatusId: this.orderData.workStatusId || '',
+      workFaultId: this.orderData.workFaultId || '',
+      workTechId: this.orderData.workTechnicianId || ''
+    });
+  }
+
+
+// to save work order click
+  saveOrder() {
+    if (!this.orderForm.valid) {
+      this.alertService.showValidationError();
+      return;
+    }
+    this.alertService.startLoadingMessage('Saving changes...');
+    const editeditem = this.AddAllItemData();
+    console.log(editeditem)
+    if (this.isNewOrder) {
+      this.accountService.AddWorkOrder(editeditem).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            this.getworkOrderOrders();
+            this.isAdding = false;
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.resetForm();
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
+    }
+    else {
+      this.accountService.UpdateWorkOrder(editeditem).subscribe(
+        (response: any) => {
+          this.alertService.stopLoadingMessage();
+          if (response.isSuccess) {
+            this.isAdding = false;
+            this.isEdit = false;
+            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+            this.getworkOrderOrders();
+          } else {
+            this.alertService.stopLoadingMessage();
+            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
+          }
+        }, error => {
+          this.alertService.stopLoadingMessage();
+          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+        }
+      );
+    }
+  }
+
+
+// setting request object to save click
+  private AddAllItemData(): any {
+    var workOrderItems = [];
+    for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
+      var itemReq = {
+        "id": 0,
+        "itemId": this.itemFrom.value.credentials[i].itemId,
+        "workOrderId": 0,
+        "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
+      }
+      workOrderItems.push(itemReq);
+    }
+    const formModel = this.orderForm.value;
+    if (this.isNewOrder) {
+      formModel.startDate.setDate(formModel.startDate.getDate() + 1);
+      formModel.endDate.setDate(formModel.endDate.getDate() + 1);
+    } else {
+
+    }
+    return {
+      "id": this.isNewOrder == true ? 0 : this.orderData.id,
+      "assetId": this.selectAsset ==undefined ?this.orderData.assetId :this.selectAsset ,
+      "startDate": formModel.startDate,
+      "endDate": formModel.endDate,
+      "reference1": formModel.reference1,
+      "extradetails": formModel.extraDetails,
+      "issue": formModel.issue,
+      "resolution": formModel.resolution,
+      "statusTypeId": DataFactory.StatusTypes.Open,
+      "workTypeId": formModel.workTypeId,
+      "workStatusId": formModel.workStatusId,
+      "workTechnicianId": formModel.workTechId,
+      "workFaultId": formModel.workFaultId,
+      "storeId": formModel.storeId,
+      "pmProcedureId": null,
+      "orderTypeId": DataFactory.OrderTypes.NormalWorkOrder,
+      "isActive": true,
+      "workOrderItems": workOrderItems,
+      "createdBy": this.currentUser.id,
+      "createdDate": new Date(),
+      "updatedBy": this.currentUser.id,
+      "updatedDate": new Date()
+    }
+  }
+
+  get currentUser() {
+    return this.authService.currentUser;
+  }
+
+  // on delete work order click
   confirmDelete(order: any) {
     this.language = localStorage.getItem('language');
     if(this.language == 'en'){
@@ -401,157 +548,6 @@ export class WorkOrderComponent implements OnInit {
     });
   }
 
-
-
-
-  // Accepting Only Numbers
-  numberOnly(event: any) {
-    const numberpattern = /[0-9\+\-.\ ]/;
-    let inputChar = String.fromCharCode(event.charCode);
-    if (!numberpattern.test(inputChar)) {
-      event.preventDefault();
-    }
-  }
-
-
-  public resetForm(stopEditing: boolean = false) {
-    if (!this.orderData) {
-      this.isNewOrder = true;
-    } else {
-      this.buildForm();
-    }
-    this.orderForm.reset({
-      siteId: this.orderData.siteId || '',
-      projectId: this.orderData.projectId || '',
-      locationId: this.orderData.locationName|| '',
-      assetId: this.orderData.assetName || '',
-      storeId: this.orderData.storeId || '',
-      reference1: this.orderData.reference1 || '',
-      extraDetails: this.orderData.extraDetails || '',
-      issue: this.orderData.issue || '',
-      resolution: this.orderData.resolution || '',
-      startDate: this.isNewOrder ? this.currenrDate : this.orderData.startDate || '',
-      endDate: this.isNewOrder ? this.currenrDate : this.orderData.endDate || '',
-      workTypeId: this.orderData.workTypeId || '',
-      workStatusId: this.orderData.workStatusId || '',
-      workFaultId: this.orderData.workFaultId || '',
-      workTechId: this.orderData.workTechnicianId || ''
-    });
-  }
-
-  saveOrder() {
-    debugger
-    if (!this.orderForm.valid) {
-      this.alertService.showValidationError();
-      return;
-    }
-    this.alertService.startLoadingMessage('Saving changes...');
-    const editeditem = this.AddAllItemData();
-    console.log(editeditem)
-    if (this.isNewOrder) {
-      this.accountService.AddWorkOrder(editeditem).subscribe(
-        (response: any) => {
-          this.alertService.stopLoadingMessage();
-          if (response.isSuccess) {
-            this.getworkOrderOrders();
-            this.isAdding = false;
-            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-            this.resetForm();
-            // this.onViewPDF(response.result);
-          } else {
-            this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
-          }
-        }, error => {
-          this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-        }
-      );
-    }
-    else {
-      this.accountService.UpdateWorkOrder(editeditem).subscribe(
-        (response: any) => {
-          this.alertService.stopLoadingMessage();
-          if (response.isSuccess) {
-            this.isAdding = false;
-            this.isEdit = false;
-            this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
-            this.getworkOrderOrders();
-            //  this.onViewPDF(response.result);
-          } else {
-            this.alertService.stopLoadingMessage();
-            this.alertService.showStickyMessage(response.endUserMessage, null, MessageSeverity.error);
-          }
-        }, error => {
-          this.alertService.stopLoadingMessage();
-          this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-        }
-      );
-    }
-  }
-
-
-
-  private AddAllItemData(): any {
-    var workOrderItems = [];
-    for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
-      var itemReq = {
-        "id": 0,
-        "itemId": this.itemFrom.value.credentials[i].itemId,
-        "workOrderId": 0,
-        "quantity": parseInt(this.itemFrom.value.credentials[i].quantity),
-      }
-      workOrderItems.push(itemReq);
-    }
-    const formModel = this.orderForm.value;
-    if (this.isNewOrder) {
-      formModel.startDate.setDate(formModel.startDate.getDate() + 1);
-      formModel.endDate.setDate(formModel.endDate.getDate() + 1);
-    } else {
-
-    }
-
-    return {
-      "id": this.isNewOrder == true ? 0 : this.orderData.id,
-      "assetId": this.selectAsset ==undefined ?this.orderData.assetId :this.selectAsset ,
-      "startDate": formModel.startDate,
-      "endDate": formModel.endDate,
-      "reference1": formModel.reference1,
-      "extradetails": formModel.extraDetails,
-      "issue": formModel.issue,
-      "resolution": formModel.resolution,
-      "statusTypeId": DataFactory.StatusTypes.Open,
-      "workTypeId": formModel.workTypeId,
-      "workStatusId": formModel.workStatusId,
-      "workTechnicianId": formModel.workTechId,
-      "workFaultId": formModel.workFaultId,
-      "storeId": formModel.storeId,
-      "pmProcedureId": null,
-      "orderTypeId": DataFactory.OrderTypes.NormalWorkOrder,
-      "isActive": true,
-      "workOrderItems": workOrderItems,
-      "createdBy": this.currentUser.id,
-      "createdDate": new Date(),
-      "updatedBy": this.currentUser.id,
-      "updatedDate": new Date()
-    }
-  }
-
-  get currentUser() {
-    return this.authService.currentUser;
-  }
-
-
-  setItems(itemsArray: any[]) {
-    let control = this.formBuilder.array([]);
-    itemsArray.forEach(x => {
-      control.push(this.formBuilder.group({
-        itemId: x.itemId,
-        quantity: x.quantity,
-      }))
-    })
-    this.itemFrom.setControl('credentials', control);
-  }
 
   //ExportToExcel
   download = function () {
@@ -602,6 +598,8 @@ export class WorkOrderComponent implements OnInit {
     return blob;
   };
 
+
+  // on accept work order click
   acceptClick(order: any) {
     this.language = localStorage.getItem('language');
     if(this.language == 'en'){
@@ -643,6 +641,8 @@ export class WorkOrderComponent implements OnInit {
     });
   }
 
+
+  // on reject work order click
   rejectClick(order: any) {
     this.language = localStorage.getItem('language');
     if(this.language == 'en'){
@@ -683,7 +683,7 @@ export class WorkOrderComponent implements OnInit {
     });
   }
 
-
+  // On close work order click
   CloseWorkOrderClick(row) {
     const dialogRef = this.dialog.open(CloseorderComponent,
       {

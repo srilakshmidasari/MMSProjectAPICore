@@ -63,10 +63,10 @@ export class PurchaseorderComponent implements OnInit {
     this.getPurchaseOrders();
     this.buildForm();
     this.getProjects();
-    // this.addItem(this.i);
+    
   }
 
-
+ // To get all work orders
   private getPurchaseOrders() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -90,6 +90,7 @@ export class PurchaseorderComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  // Based on search value to get orders
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -98,31 +99,19 @@ export class PurchaseorderComponent implements OnInit {
       this.displayNoRecords = false;
     }
   }
+
   private refresh() {
     // Causes the filter to refresh there by updating with recently added data.
     this.applyFilter(this.dataSource.filter);
   }
 
+  // To add items to form
   addItem(i) {
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
-    // this.itemList.forEach((item) => {
-    //   this.selectItemList.forEach((item1) => {
-    //     if (item.id == item1.Id) {
-    //       this.itemList.splice(item, 1);
-    //     }
-    //   });
-    // });
   }
 
-  // onSelectItem(event) {
-  //   debugger
-  //   this.selectItem = event;
-  //   this.selectItemList.push({
-  //     "Id": event
-  //   })
-  // }
 
-
+  // To create item form click
   createItem(item) {
     return this.formBuilder.group({
       itemId: new FormControl('', [Validators.required]),
@@ -132,6 +121,7 @@ export class PurchaseorderComponent implements OnInit {
     })
   }
 
+  //Form creation
   buildForm() {
     this.orderForm = this.formBuilder.group({
       supplierId: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
@@ -154,6 +144,7 @@ export class PurchaseorderComponent implements OnInit {
     }
   }
 
+// on cancel click
   onCancelClick() {
     this.isAdding = false;
     this.isEdit = false;
@@ -171,8 +162,9 @@ export class PurchaseorderComponent implements OnInit {
         });
   }
 
+// To get projects by user
   private getProjects() {
-    this.accountService.getProject()
+    this.accountService.getProjectsByUserId(this.currentUser.id)
       .subscribe((results: any) => {
         this.projectsList = results.listResult == null ? [] : results.listResult;
       },
@@ -190,9 +182,8 @@ export class PurchaseorderComponent implements OnInit {
         error => {
         });
   }
-
+// Based on project Id to get stores
   getStoresByProject(event) {
-    debugger
     this.storesList = [];
     this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(event)
@@ -215,6 +206,7 @@ export class PurchaseorderComponent implements OnInit {
         });
   }
 
+  // to set Items binding to form
   setItems(itemsArray: any[]) {
     let control = this.formBuilder.array([]);
     itemsArray.forEach(x => {
@@ -228,10 +220,13 @@ export class PurchaseorderComponent implements OnInit {
     this.itemFrom.setControl('credentials', control);
   }
 
+  // Delete item 
   Delete(index) {
     (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
   }
 
+
+// add Purchase order click
   addClick(purchase?: any) {
     this.purchaseData = {};
     this.isAdding = true;
@@ -243,6 +238,8 @@ export class PurchaseorderComponent implements OnInit {
 
   }
 
+
+  // on edit purchase order click
   onEditClick(purchase) {
     this.isEdit = true;
     this.isAdding = false;
@@ -255,7 +252,7 @@ export class PurchaseorderComponent implements OnInit {
   }
 
 
-
+//  to set form values
   public resetForm(stopEditing: boolean = false) {
     if (!this.purchaseData) {
       this.isNewPurchase = true;
@@ -276,7 +273,7 @@ export class PurchaseorderComponent implements OnInit {
 
 
 
-
+// On purchase order save click
   saveOrder() {
     if (!this.orderForm.valid) {
       this.alertService.showValidationError();
@@ -326,6 +323,8 @@ export class PurchaseorderComponent implements OnInit {
     }
   }
 
+
+  // to set save click request object
   private AddAllItemData(): any {
     var purchaseItems = [];
     for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
@@ -368,6 +367,7 @@ export class PurchaseorderComponent implements OnInit {
     return this.authService.currentUser;
   }
 
+  // on delete purchase order click
   confirmDelete(order: any) {
     this.language = localStorage.getItem('language');
     if (this.language == 'en') {
@@ -402,7 +402,7 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
-
+  // on accept order click
   acceptClick(order: any) {
     this.language = localStorage.getItem('language');
     if (this.language == 'en') {
@@ -439,6 +439,8 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
+
+  // reject Work Order click
   rejectClick(order: any) {
     this.language = localStorage.getItem('language');
     if (this.language == 'en') {
@@ -475,26 +477,17 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
-  onPdfDocument(result) {
-    const dialogRef = this.dialog.open(DocumentFileComponent,
-      {
-        panelClass: 'mat-dialog-md',
-        data: { result }
-      });
-    dialogRef.afterClosed().subscribe(siteresponse => {
-    });
-  }
-
-  onViewDoc(row) {
+// To  view Purchase Order document
+   onViewDoc(row) {
     window.open(row.pdfUrl);
   }
 
-  onViewPDF(doc) {
+onViewPDF(doc) {
     window.open(doc);
   }
 
 
-
+// on receive item click
   onReceiveClick(row) {
     const dialogRef = this.dialog.open(ReceiveItemComponent,
       {
@@ -506,6 +499,7 @@ export class PurchaseorderComponent implements OnInit {
     });
   }
 
+  // on view purchase order click
   onViewdetailsClick(row) {
     this.purchase = row;
     this.isView = true;
@@ -516,7 +510,7 @@ export class PurchaseorderComponent implements OnInit {
     this.isView = false;
   }
 
-  //ExportToExcel
+  //Export To Excel to purchase orders
   download = function () {
     this.alertService.startLoadingMessage();
     this.accountService.ExportPurchaseOrder(this.purchasesList).subscribe((result) => {
