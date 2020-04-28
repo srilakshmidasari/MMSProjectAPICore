@@ -188,14 +188,14 @@
       "EmployeeIdRequired": "هوية الموظف مطلوبة (بحد أقصى 15 حرفًا)",
       "Name1": "1اسم",
       "Name2": "2 اسم",
-      "Name1Required": "الاسم 1 مطلوب",
-      "Name2Required": "الاسم 2 مطلوب",
+      "Name 1 is Required(minimum of 3 and maximum of 50 Characters)": "الاسم 1 مطلوب (3 أحرف بحد أقصى و 50 حرفًا كحد أقصى)",
+      "Name 2 is Required(minimum of 3 and maximum of 50 Characters)":"الاسم 2 مطلوب (الحد الأدنى 3 والحد الأقصى 50 حرفًا)",
       "PhoneNumberRequired": "رقم الهاتف مطلوب",
       "PhoneNumberMinLength": "أدخل 10 أرقام لرقم الهاتف",
       "Update": "تحديث",
       "Select Project":"اختر المشروع",
       "Please Select Project":"يرجى اختيار المشروع",
-      "User Name is Required":"اسم المستخدم مطلوب"
+      "User Name is Required(minimum of 3 and maximum of 50 Characters)":"اسم المستخدم مطلوب (3 أحرف بحد أقصى و 50 حرفًا كحد أقصى)"
     }
   },
   "roles": {
@@ -258,7 +258,7 @@
       "Address": "لقب",
       "UpdatedDate": "تاريخ التحديث",
       "IsActive": "نشط",
-      "AddSite": "نشط",
+      "Add Site": "نشط",
       "Add":"إضافة",
       "Edit":"تعديل",
       "Delete": "حذف",
@@ -268,8 +268,8 @@
       "Site Reference is required(minimum of 3 and maximum of 30 Characters)":"مرجع الموقع مطلوب (بحد أدنى 3 والحد الأقصى 30 مشاركة)",
       "Name 1 is required(minimum of 3 and maximum of 50 Characters)": "الاسم 1 مطلوب(الحد الأدنى 3 والحد الأقصى 50 مشاركة)",
       "Name 2 is required(minimum of 3 and maximum of 50 Characters)": "الاسم 2 مطلوب(الحد الأدنى 3 والحد الأقصى 50 مشاركة)",
-      "Site Manager is Required(minimum of 3 and maximum of 250 Characters)": "مدير الموقع مطلوب(الحد الأدنى 3 والحد الأقصى 250 مشاركة)",
-      "Site Address is Required(minimum of 3 and maximum of 250 Characters)": "العنوان مطلوب(الحد الأدنى 3 والحد الأقصى 250 مشاركة)",
+      "SiteManager is required(minimum of 3 and maximum of 30 Characters)": "مطلوب SiteManager (بحد أدنى 3 أحرف بحد أقصى 30 حرفًا)",
+      "Site Address is required(minimum of 3 and maximum of 250 Characters)": "العنوان مطلوب(الحد الأدنى 3 والحد الأقصى 250 مشاركة)",
       "Upload Document": "تحميل المستند",
       "UploadLocationMapImage": "تحميل صورة خريطة الموقع",
       "Site Document": "وثيقة الموقع",
@@ -300,7 +300,7 @@
       "No Search Results Found": "لم يتم العثور على نتائج عن البحث",
       "Add Project": "إضافة مشروع",
       "Edit Project": "تحرير المشروع",
-      "Project Refrerence": "مرجع المشروع",
+      "Project Reference": "مرجع المشروع",
       "Select Site": "اختر الموقع",
       "Project Reference is Required(minimum of 3 and maximum of 50 Characters)": "مرجع المشروع مطلوب (بحد أدنى 3 والحد الأقصى 50 مشاركة)",
       "Please Select Site": "يرجى اختيار الموقع",
@@ -308,7 +308,7 @@
       "Name 2": "الاسم 2",
       "Name 2 is Required(minimum of 3 and maximum of 50 Characters)": "الاسم 2 مطلوب(الحد الأدنى 3 والحد الأقصى 50 مشاركة)",
       "Project Details": "تفاصيل المشروع",
-      "Project Details is Required(minimum of 3 and maximum of 50 Characters)": "تفاصيل المشروع مطلوبة(الحد الأدنى 3 والحد الأقصى 50 مشاركة)",
+      "Project Details is Required(minimum of 3 and maximum of 200 Characters)": "تفاصيل المشروع مطلوبة(الحد الأدنى 3 والحد الأقصى 200 مشاركة)",
       "Select Store":"حدد المتجر",
       "Please Select Store": "يرجى اختيار المتجر",
       "Upload Project": "تحميل المشروع",
@@ -368,7 +368,8 @@
       "Name 2":"الاسم 2",
       "Name 2 is required(Name must be at least 3 characters)":"الاسم 2 مطلوب (يجب ألا يقل الاسم عن 3 أحرف)",
       "Minimum of 3 Characters":"3 أحرف على الأقل",
-      "Minimum of 10 Numbers":"10 أرقام على الأقل"
+      "Minimum of 10 Numbers":"10 أرقام على الأقل",
+      "Minimum of 2 Characters":"2 أحرف على الأقل"
     },
     "editor": {
       "sNameisrequired": "اسم الموقع مطلوب",
@@ -439,7 +440,7 @@
       "Please Select Site Name":"يرجى تحديد اسم الموقع",
       "Please Select Project Name": "يرجى تحديد اسم المشروع",
       "Please Select Location Name": "يرجى تحديد اسم الموقع",
-      "AssetReferenceisRequired":"مرجع الأصول هو المطلوب",
+      "Asset Reference is Required(Asset Reference must be at least 3 characters)":"مرجع الأصول مطلوب (يجب أن يكون مرجع الأصول 3 أحرف على الأقل)",
       "Name 1 is Required(Name must be at least 3 characters)" : "الاسم 1 مطلوبطلوب (يجب ألا يقل الاسم عن 3 أحرف)",
       "Name 2 is Required(Name must be at least 3 characters)" : "الاسم 2 مطلوبطلوب (يجب ألا يقل الاسم عن 3 أحرف)",
       "Please Select AssetGroup": "يرجى اختيار مجموعة الأصول",
@@ -447,7 +448,8 @@
       "PleaseSelectAssetCounter" :"يرجى اختيار عداد الأصول",
       "AssetFixedDateisRequired":"تاريخ الأصول الثابتة مطلوب",
       "Days Applicable":"الأيام المطبقة",
-      "Days Applicable is Required":"الأيام المنطبقة مطلوبة"
+      "Days Applicable is Required":"الأيام المنطبقة مطلوبة",
+      "Please Select Location":"يرجى تحديد الموقع"
     }
   },
   "AssetGroup":{
@@ -495,7 +497,7 @@
    "Email is required(minimum of 3 and maximum of 50 Characters)":"البريد الالكتروني مطلوب(الحد الأدنى 3 والحد الأقصى 50 حرفًا)",
    "Invalid Email":"بريد إلكتروني خاطئ",
    "Contact Number is required(minimum of 10 and maximum of 12 Characters)":"رقم الاتصال مطلوب(بحد أدنى 10 أحرف بحد أقصى 12 حرفًا)",
-   "Supplier Reference is required":"مرجع المورد مطلوب",
+   "Supplier Reference is required(minimum of 3 and maximum of 50 Characters)":"مرجع المورد مطلوب (3 أحرف بحد أقصى و 50 حرفًا كحد أقصى)",
    "save":"حفظ",
    "cancel":"إلغاء",
    "UploadImage":"تحميل الصور"
@@ -521,7 +523,7 @@
    "Item Type":"نوع العنصر",
    "Description":"وصف",
    "Item Description":"وصف السلعة",
-   "Description is required":"الوصف مطلوب",
+   "Description is required(Name must be at least 3 characters)":"الوصف مطلوب (يجب ألا يقل الاسم عن 3 أحرف)",
    "Please Select ItemType":"يرجى اختيار نوع المادة",
    "No Records Found":"لا توجد سجلات",
    "No Search Results Found":"لم يتم العثور على نتائج عن البحث",
@@ -538,7 +540,7 @@
    "Save":"حفظ",
    "Cancel":"إلغاء",
    "Please Select Item Category":"يرجى تحديد فئة العنصر"
-  }
+   }
 },
 "Purchase Order":{
   "Management":{
@@ -737,7 +739,10 @@
    "View PM Order":"عرض أمر PM",
    "Are you sure you want to Approve this Procedure ?": "هل أنت متأكد أنك تريد الموافقة على هذا الإجراء؟",
     "AcceptPMProcedure":"قبول إجراء PM",
-    "Accept":"قبول"
+    "Accept":"قبول",
+    "Priority is Required":"الأولوية مطلوبة",
+    "View PM Procedure":"عرض إجراء PM",
+    "Add Asset to Procedure":"أضف الأصول إلى الإجراء"
   }
 },
 "JobPlan":{

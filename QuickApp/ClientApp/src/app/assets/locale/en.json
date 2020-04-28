@@ -193,14 +193,14 @@
       "EmployeeIdRequired": "Employee Id  is required (maximum of 15 characters) ",
       "Name1": "Name 1",
       "Name2": "Name 2",
-      "Name1Required": "Name 1 is required",
-      "Name2Required": "Name 2 is required",
+      "Name 1 is Required(minimum of 3 and maximum of 50 Characters)": "Name 1 is Required(minimum of 3 and maximum of 50 Characters)",
+      "Name 2 is Required(minimum of 3 and maximum of 50 Characters)": "Name 2 is Required(minimum of 3 and maximum of 50 Characters)",
       "PhoneNumberRequired": "Phone Number is required",
       "PhoneNumberMinLength": "Enter 10 digits for Phone Number",
       "Update": "Update",
       "Select Project":"Select Project",
       "Please Select Project":"Please Select Project",
-      "User Name is Required":"User Name is Required"
+      "User Name is Required(minimum of 3 and maximum of 50 Characters)":"User Name is Required(minimum of 3 and maximum of 50 Characters)"
     }
   },
   "roles": {
@@ -271,13 +271,13 @@
       "Address": "Address",
       "UpdatedDate": "Updated Date",
       "IsActive": "Is Active",
-      "AddSite": "AddSite",
+      "Add Site": "Add Site",
       "Add":"Add",
       "Edit": "Edit",
       "Delete": "Delete",
       "Site Location":"Site Location",
       "Actions": "Actions",
-      "SiteManager": "Site Manager",
+      "SiteManager": "SiteManager",
       "Upload Document": "Upload Document",
       "UploadLocationMapImage": "Upload Site Address Map Image",
       "Site Document": "Site Document",
@@ -285,8 +285,8 @@
       "Site Reference is required(minimum of 3 and maximum of 30 Characters)": "Site Reference is required(minimum of 3 and maximum of 30 Characters)",
       "Name 1 is required(minimum of 3 and maximum of 50 Characters)": "Name 1 is required(minimum of 3 and maximum of 50 Characters)",
       "Name 2 is required(minimum of 3 and maximum of 50 Characters)": "Name 2 is required(minimum of 3 and maximum of 50 Characters)",
-      "Site Manager is Required(minimum of 3 and maximum of 250 Characters)": "Site Manager is  Required(minimum of 3 and maximum of 250 Characters)",
-      "Site Address is Required(minimum of 3 and maximum of 250 Characters)": "Site Address is Required(minimum of 3 and maximum of 250 Characters)",
+      "SiteManager is required(minimum of 3 and maximum of 30 Characters)": "(SiteManager is required(minimum of 3 and maximum of 30 Characters)",
+      "Site Address is required(minimum of 3 and maximum of 250 Characters)": "Site Address is required(minimum of 3 and maximum of 250 Characters)",
       "SiteImageRequired": "Site Image is Required",
       "save": "Save",
       "cancel": "Cancel"
@@ -315,13 +315,13 @@
       "Add Project": "Add Project",
       "Edit Project": "Edit Project",
       "Select Site": "Select Site",
-      "Project Refrerence": "Project Refrerence",
+      "Project Reference": "Project Reference",
       "Project Reference is Required": "Project Reference is Required",
       "Please Select Site": "Please Select Site",
       "Name 1 is Required(minimum of 3 and maximum of 50 Characters)": " Name 1 is Required(minimum of 3 and maximum of 50 Characters)",
       "Name 2 is Required(minimum of 3 and maximum of 50 Characters)": "Name 2 is Required(minimum of 3 and maximum of 50 Characters)",
       "Project Details": "Project Details",
-      "Project Details is Required(minimum of 3 and maximum of 50 Characters)": "Project Details is Required(minimum of 3 and maximum of 50 Characters)",
+      "Project Details is Required(minimum of 3 and maximum of 200 Characters)": "Project Details is Required(minimum of 3 and maximum of 200 Characters)",
       "Select Store": "Select Store",
       "Please Select Store": "Please Select Store",
       "Upload Project": "Upload Project",
@@ -380,7 +380,8 @@
       "Name 2":"Name 2",
       "Name 2 is required(Name must be at least 3 characters)":"Name 2 is required(Name must be at least 3 characters)",
       "Minimum of 3 Characters":"Minimum of 3 Characters",
-      "Minimum of 10 Numbers":"Minimum of 10 Numbers"
+      "Minimum of 10 Numbers":"Minimum of 10 Numbers",
+      "Minimum of 2 Characters":"Minimum of 2 Characters"
     },
     "editor": {
       "sNameisrequired": "Site Name is Required",
@@ -435,7 +436,7 @@
       "AssetMake": "Asset Make",
       "AssetModel": "Asset Model",
       "AssetSize": "Asset Size",
-      "DaysApplicable":"Days Applicable",
+      "Days Applicable":"Days Applicable",
       "AssetReference": "Asset Reference",
       "AssetReference2": "Asset Group Reference",
       "AssetTrade": "Asset Trade",
@@ -455,8 +456,8 @@
       "PleaseSelectAssetTrade" : "Please Select Asset Trade",
       "PleaseSelectAssetCounter" :"Please Select Asset Counter",
       "AssetFixedDateisRequired":"Asset Fixed Date is Required",
-      "Days Applicable":"Days Applicable",
-      "Days Applicable is Required":"Days Applicable is Required"
+      "Days Applicable is Required":"Days Applicable is Required",
+      "Please Select Location":"Please Select Location"
      
       
     }
@@ -532,7 +533,7 @@
     "Item Type":"Item Type",
     "Item Description":"Item Description",
     "Description":"Description",
-    "Description is required":"Description is required",
+    "Description is required(Name must be at least 3 characters)":"Description is required(Name must be at least 3 characters)",
     "Please Select ItemType":"Please Select ItemType",
     "No Records Found":"No Records Found",
     "No Search Results Found":"No Search Results Found",
@@ -549,6 +550,7 @@
     "Save":"Save",
     "Cancel":"Cancel",
     "Please Select Item Category":"Please Select Item Category"
+    
    }
  },
  "Purchase Order":{
@@ -748,7 +750,10 @@
     "View PM Order":"View PMOrder",
     "Are you sure you want to Approve this Procedure ?": "Are you sure you want to Approve this Procedure ?",
     "AcceptPMProcedure":"Accept PM Procedure",
-    "Accept":"Accept"
+    "Accept":"Accept",
+    "Priority is Required":"Priority is Required",
+    "View PM Procedure":"View PM Procedure",
+    "Add Asset to Procedure":"Add Asset to Procedure"
    }
  },
  "JobPlan":{

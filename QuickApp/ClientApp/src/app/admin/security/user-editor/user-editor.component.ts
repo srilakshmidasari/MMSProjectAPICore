@@ -189,10 +189,10 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   private buildForm() {
     this.userProfileForm = this.formBuilder.group({
       empId: ['', Validators.required],
-      name1: ['', Validators.required],
-      name2: ['', Validators.required],
+      name1: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
+      name2: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       jobTitle: '',
-      userName: ['', Validators.required],
+      userName: ['', Validators.compose([Validators.required,Validators.minLength(3)])],
       email: ['', [Validators.required, Validators.email]],
       password: this.formBuilder.group({
         currentPassword: ['', Validators.required],

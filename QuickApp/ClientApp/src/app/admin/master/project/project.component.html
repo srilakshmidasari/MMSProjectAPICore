@@ -20,7 +20,7 @@
         <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="projectReference" matSortDirection="asc"
             matSortDisableClear>
             <ng-container matColumnDef="projectReference">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Project Refrerence' | translate}}
+                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'project.management.Project Reference' | translate}}
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.projectReference}} </mat-cell>
             </ng-container>
@@ -115,7 +115,7 @@
             <form [formGroup]="projectForm">
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>{{'project.management.Project Refrerence'|translate}}</mat-label>
+                        <mat-label>{{'project.management.Project Reference'|translate}}</mat-label>
                         <input matInput formControlName="projectReference" appTitleCase  required  minlength="3" maxlength="50" />
                         <mat-error *ngIf="projectForm.get('projectReference').hasError('required')">
                             {{'project.management.Project Reference is Required(minimum of 3 and maximum of 50 Characters)'|translate}}

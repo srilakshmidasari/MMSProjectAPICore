@@ -8,6 +8,9 @@
       <mat-error *ngIf="name.hasError('required')">
         {{'roles.editor.Role Name is Required' | translate}}
       </mat-error>
+      <mat-error *ngIf="roleForm.get('name').hasError('minlength')">
+        {{'Location.Management.Minimum of 2 Characters'|translate}}
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field class="col-md-4">
