@@ -132,10 +132,10 @@
                 </div>
                 <div class="row">
                     <mat-form-field class="col-md-6">
-                        <mat-label>{{'Location.Management.location Reference' | translate}}</mat-label>
+                        <mat-label>{{'Location.Management.Location Reference' | translate}}</mat-label>
                         <input matInput formControlName="locationRef"  appTitleCase required  minlength="3" />
                           <mat-error *ngIf="locationForm.get('locationRef').hasError('required')">
-                            {{'Location.Management.location Reference is required(location Reference must be at least 3 characters)' | translate}}
+                            {{'Location.Management.Location Reference is required(Location Reference must be at least 3 characters)' | translate}}
                           </mat-error>
                           <mat-error *ngIf="locationForm.get('locationRef').hasError('minlength')">
                             {{'Location.Management.Minimum of 3 Characters'|translate}}
