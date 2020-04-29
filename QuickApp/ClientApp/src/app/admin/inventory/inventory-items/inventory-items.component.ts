@@ -22,6 +22,7 @@ export class InventoryItemsComponent implements OnInit {
     this.getAllInventory();
   }
 
+// get all inventory items
   getAllInventory() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -44,6 +45,7 @@ export class InventoryItemsComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  // on search click
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -57,7 +59,7 @@ export class InventoryItemsComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
-  //ExportToExcel
+  //Export  To Excel toinventory items
   download = function () {
     this.alertService.startLoadingMessage();
     this.accountService.ExportInventory(this.inventoryList).subscribe((result) => {
