@@ -54,16 +54,14 @@ export class PmOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.getPMOrders();
     this.getItem();
     this.buildForm();
   }
 
 
-
+ //get PMOrders data
   private getPMOrders() {
-    debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getPMOrder()
@@ -79,8 +77,8 @@ export class PmOrderComponent implements OnInit {
         });
   }
 
+  //get items by WorkOrder
   getItemsByworkOrderId(row, val) {
-    debugger
     this.accountService.getItemsByWorkOrderId(row.id)
       .subscribe((results: any) => {
         this.PMOrderItemList = results.listResult == null ? [] : results.listResult;
@@ -89,9 +87,8 @@ export class PmOrderComponent implements OnInit {
         error => {
         });
   }
-
+//Add Items
   addItem(i) {
-    debugger
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
   }
 
@@ -103,8 +100,8 @@ export class PmOrderComponent implements OnInit {
 
     })
   }
+  //get Sites data
   private getSites() {
-    debugger
     this.accountService.getSiteData()
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
@@ -116,7 +113,6 @@ export class PmOrderComponent implements OnInit {
 
   //Get sites data by UserId
   getSitesByUserId() {
-    debugger
     this.accountService.getSitesByUserId(this.currentUser.id)
       .subscribe((results: any) => {
         this.siteList = results.listResult == null ? [] : results.listResult;
@@ -125,8 +121,8 @@ export class PmOrderComponent implements OnInit {
         });
   }
 
+ //Get Projects data b UserId
   getProjectsByUserIdandSiteId(event) {
-    debugger
     this.userProjectsList = [];
     var req = {
       "siteId": event,
@@ -140,8 +136,9 @@ export class PmOrderComponent implements OnInit {
         error => {
         });
   }
+
+  //On Select click Event ProjectByLocation 
   onSelectProjectByLocation(event) {
-    debugger
     this.locationsList = [];
     this.Project = event;
     this.getStoresByProject(event)
@@ -154,8 +151,8 @@ export class PmOrderComponent implements OnInit {
     //   //   })
   }
 
+  //On Select ProjectByLocation Serach Event
   onSelectProjectByLocationSearch(event) {
-    debugger
     this.searchText = event;
     if (this.searchText.length > 2) {
       this.searchLength = event.length;
@@ -177,8 +174,9 @@ export class PmOrderComponent implements OnInit {
         })
     }
   }
+
+  //On Select LocationByAssets search Event
   onSelectLocationByAssetSearch(event) {
-    debugger
     this.assetsList = [];
     this.assteText = event
     if (this.assteText.length > 2) {
@@ -200,8 +198,8 @@ export class PmOrderComponent implements OnInit {
 
   }
 
+  //On Select click Event LocationByProject
   onSelectLocationByProject(event) {
-    debugger
     this.assetsList = [];
     this.accountService.getAssetsByLocationId(event).subscribe((res: any) => {
       this.assetsList = res.listResult == null ? [] : res.listResult;
@@ -211,21 +209,20 @@ export class PmOrderComponent implements OnInit {
   }
 
 
+  //On Select Location
   onLocationSelected(obj) {
-    debugger
     this.selectString = obj.id;
     this.orderForm.get('assetId').setValue(null)
   }
 
+  //On Select Assets
   onAssetSelected(obj) {
-    debugger
     this.selectAsset = obj.id;
   }
 
 
-
+ //get Stores By Project
   getStoresByProject(ProjectId) {
-    debugger
     this.storesList = [];
     //this.orderForm.get('storeId').setValue(null)
     this.accountService.getStoresByProjectId(ProjectId)
@@ -239,7 +236,6 @@ export class PmOrderComponent implements OnInit {
 
   // get items Data
   private getItem() {
-    debugger
     this.accountService.getitemdata()
       .subscribe((results: any) => {
         this.itemList = results.listResult == null ? [] : results.listResult;
@@ -249,8 +245,8 @@ export class PmOrderComponent implements OnInit {
         });
   }
 
+  //get WorkType
   getWorkType() {
-    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkType).subscribe((result: any) => {
       this.workTypeList = result.listResult == null ? [] : result.listResult;
       this.getWorkStatus();
@@ -259,8 +255,8 @@ export class PmOrderComponent implements OnInit {
       })
   }
 
+  //get WorkStatus
   getWorkStatus() {
-    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkStatus).subscribe((result: any) => {
       this.workStatusList = result.listResult == null ? [] : result.listResult;
       this.geworkFault();
@@ -269,8 +265,8 @@ export class PmOrderComponent implements OnInit {
       })
   }
 
+  //getWorkFault
   geworkFault() {
-    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkFaults).subscribe((result: any) => {
       this.workFaultsList = result.listResult == null ? [] : result.listResult;
       this.getWorkTech();
@@ -279,8 +275,8 @@ export class PmOrderComponent implements OnInit {
       })
   }
 
+  //getWorkTech
   getWorkTech() {
-    debugger
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
       this.workTechList = result.listResult == null ? [] : result.listResult;
     },
@@ -288,9 +284,8 @@ export class PmOrderComponent implements OnInit {
       })
   }
 
-
+ //Form creation
   buildForm() {
-    debugger
     this.orderForm = this.formBuilder.group({
       siteId: ['', Validators.required],
       projectId: ['', Validators.required],
@@ -308,9 +303,9 @@ export class PmOrderComponent implements OnInit {
       workFaultId: ['', Validators.required],
       workTechId: ['', Validators.required],
     })
-
   }
 
+  //  to set form values
   public resetForm(stopEditing: boolean = false) {
     if (!this.orderData) {
       this.isNewOrder = true;
@@ -336,8 +331,8 @@ export class PmOrderComponent implements OnInit {
     });
   }
 
+  //On Edit Click Event
   onEditClick(order) {
-    debugger
     this.isEdit = true;
     this.isNewOrder = false;
     this.orderData = order;
@@ -351,13 +346,14 @@ export class PmOrderComponent implements OnInit {
     this.resetForm();
   }
 
+  //On Cancel Click Event
   onCancelClick() {
-    debugger
     this.isEdit = false;
   }
 
+
+  //On Save Click Event Add and Update PmOrder data
   saveOrder() {
-    debugger
     if (!this.orderForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -407,6 +403,7 @@ export class PmOrderComponent implements OnInit {
     }
   }
 
+  //Add All ItemsData and request Object
   private AddAllItemData(): any {
     var workOrderItems = [];
     for (var i = 0; i < this.itemFrom.value.credentials.length; i++) {
@@ -425,7 +422,6 @@ export class PmOrderComponent implements OnInit {
     } else {
 
     }
-
     return {
       "id": this.isNewOrder == true ? 0 : this.orderData.id,
       "assetId": this.selectAsset == undefined ? this.orderData.assetId : this.selectAsset,
@@ -457,7 +453,7 @@ export class PmOrderComponent implements OnInit {
 
 
 
-
+ //On Delete Click Event Remove Data
   Delete(index) {
     (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
   }
@@ -508,7 +504,6 @@ export class PmOrderComponent implements OnInit {
 
   //ExportToExcel
 download = function () {
-  debugger
   this.alertService.startLoadingMessage();
   this.accountService.ExportPMOrders(this.pmOrdersList).subscribe((result) => {
     this.alertService.stopLoadingMessage();
@@ -533,6 +528,7 @@ download = function () {
     })
 }
 
+//base 64 Covnerstion
 b64toBlob(b64Data, contentType, sliceSize) {
   contentType = contentType || '';
   sliceSize = sliceSize || 512;
