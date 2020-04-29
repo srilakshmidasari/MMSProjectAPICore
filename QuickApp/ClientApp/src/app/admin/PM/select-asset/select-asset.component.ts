@@ -26,11 +26,11 @@ export class SelectAssetComponent implements OnInit {
     public dialogRef: MatDialogRef<SelectAssetComponent>, @Inject(MAT_DIALOG_DATA) public data: { data, assetList,typeId }) { 
       this.textDir = localStorage.getItem('textdir')
       this.TypeId =this.data.typeId;
+      this.assetList = this.data.assetList;
+  
     }
 
   ngOnInit() {
-    debugger
-    this.assetList = this.data.assetList;
     this.assetList.forEach((obj) => {
       if(obj.isChecked){
         this.assetData.push({
@@ -47,19 +47,9 @@ export class SelectAssetComponent implements OnInit {
     this.editAssetList = this.assetList.map(x => Object.assign({}, x));
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    // this.getAssets();
+   
   }
 
-  getRecord(row) {
-    this.assetList.forEach((obj) => {
-      if (obj.id == row.id) {
-        row.isChecked = true;
-        this.assetData = row;
-      } else {
-        obj.isChecked = false;
-      }
-    })
-  }
   
   
   // For search
@@ -72,17 +62,10 @@ export class SelectAssetComponent implements OnInit {
     }
   }
 
-  // To Check Single Assets 
+  // To Check  Asset  click
   onAssetChecked(ev, obj) {
-    debugger
     if (ev.checked) {
-      this.assetData.push(obj
-        // "Id": obj.id,
-        // "assetName": obj.name1,
-        // "daysApplicable":obj.daysApplicable,
-        // "assetRef":obj.assetRef,
-        // "astFixedDate":obj.astFixedDate
-      );
+      this.assetData.push(obj);     
     } else {
       this.assetData.forEach((item) => {
         if(item.Id ==obj.id){
@@ -93,9 +76,8 @@ export class SelectAssetComponent implements OnInit {
     }
   }
 
-
+// Days validation
   onDaysEnter(enterText) {
-    debugger
     if (this.TypeId == DataFactory.TypeofMaintenance.Monthly) {
       if (enterText < 30) {
         this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
@@ -116,22 +98,7 @@ export class SelectAssetComponent implements OnInit {
   }
 
 
-  //To Check All Assets
-  checkAllAssets(ev) {
-    if (ev.target.checked) {
-      this.assetList.forEach((obj) => {
-        obj.isChecked = true;
-        
-      })
-    } else {
-      this.assetList.forEach((obj) => {
-        obj.isChecked = false;
-       
-      })
-    }
-  }
-
-
+  // on cancel click
   Cancel() {
     this.dialogRef.close();
   }

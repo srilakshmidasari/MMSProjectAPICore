@@ -35,22 +35,22 @@ export class ApprovePmOrderComponent implements OnInit {
     this.getPMAssetsbyPMId();
   }
 
+  // To get Assets by PmProcedureId
   getPMAssetsbyPMId() {
-    debugger
     this.assetsPMList = [];
     this.accountService.getPMAssetsbyPMId(this.pmProcedureData.id).subscribe((res: any) => {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
-      //  console.log(this.assetsPMList)
+      
     },
       error => {
       })
   }
 
+
+  // on Accept click(Pm Order generation)
   onAceptClick() {
-    debugger
     this.pmOrderData = [];
     this.assetsPMList.forEach((item) => {
-     // this.pmOrderData = [];
       var d = new Date(item.assetFixedDate);
       var astday = d.getDate();
       var dt = new Date();
@@ -135,10 +135,9 @@ export class ApprovePmOrderComponent implements OnInit {
         this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
       }
     );
-
-
   }
 
+  // on cancel click
   Cancel() {
     this.dialogRef.close();
   }

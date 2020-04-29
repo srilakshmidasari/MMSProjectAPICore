@@ -53,36 +53,7 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     this.loadData();
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
-  public applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue;
-    if (this.dataSource.filteredData.length == 0) {
-      this.displayNoRecords = true;
-    } else {
-      this.displayNoRecords = false;
-    }
-  }
-
-  private refresh() {
-    // Causes the filter to refresh there by updating with recently added data.
-    this.applyFilter(this.dataSource.filter);
-  }
-
-  private updateRoles(role: Role) {
-    if (this.sourceRole) {
-      Object.assign(this.sourceRole, role);
-      this.sourceRole = null;
-    } else {
-      this.dataSource.data.push(role);
-    }
-    this.loadData();
-    this.refresh();
-  }
-
+  // To get all roles
   private loadData() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -104,6 +75,42 @@ export class RoleListComponent implements OnInit, AfterViewInit {
         });
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+
+  // Based search to get roles
+  public applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue;
+    if (this.dataSource.filteredData.length == 0) {
+      this.displayNoRecords = true;
+    } else {
+      this.displayNoRecords = false;
+    }
+  }
+
+  private refresh() {
+    // Causes the filter to refresh there by updating with recently added data.
+    this.applyFilter(this.dataSource.filter);
+  }
+
+
+  // To update roles grid 
+  private updateRoles(role: Role) {
+    if (this.sourceRole) {
+      Object.assign(this.sourceRole, role);
+      this.sourceRole = null;
+    } else {
+      this.dataSource.data.push(role);
+    }
+    this.loadData();
+    this.refresh();
+  }
+
+ 
+// Add and edit role Click event
   public editRole(role?: Role) {
     this.sourceRole = role;
 
@@ -119,6 +126,8 @@ export class RoleListComponent implements OnInit, AfterViewInit {
     });
   }
 
+
+  // Delete role 
   public confirmDelete(role: Role) {
     this.snackBar.open(`Delete ${role.name} role?`, 'DELETE', { duration: 5000 })
       .onAction().subscribe(() => {

@@ -70,7 +70,7 @@ export class ItemComponent implements OnInit {
   }
 
 
-  //get Itemsdata
+  //get Items data
   private getItem() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;

@@ -58,6 +58,8 @@ export class RoleEditorComponent {
     this.resetForm();
   }
 
+
+  // on save user Click
   public save() {
     if (!this.form.submitted) {
       this.form.onSubmit(null);
@@ -85,6 +87,7 @@ export class RoleEditorComponent {
     }
   }
 
+  // set Request object
   private getEditedRole() {
     const formModel = this.roleForm.value;
 
@@ -98,6 +101,8 @@ export class RoleEditorComponent {
     };
   }
 
+
+  
   private saveSuccessHelper(role?: Role) {
     this.alertService.stopLoadingMessage();
 
@@ -160,6 +165,8 @@ export class RoleEditorComponent {
     }
   }
 
+
+  // form creation
   private buildForm() {
     this.roleForm = this.formBuilder.group({
       name: ['', Validators.compose([Validators.required,Validators.minLength(2)])],
@@ -168,6 +175,8 @@ export class RoleEditorComponent {
     });
   }
 
+
+  // To set form values
   private resetForm(replace = false) {
     this.roleForm.reset({
       name: this.role.name || '',
@@ -189,11 +198,12 @@ export class RoleEditorComponent {
   get canAddRoles() {
     return this.accountService.userHasPermission(Permission.addRolesPermission);
   }
+
+// to get roles
   private getRoles() {
-    
     this.accountService.getRolesAndPermissions()
       .subscribe(results => {    
-               this.roleData = results[0];       
+          this.roleData = results[0];       
       },
         error => {
           this.alertService.stopLoadingMessage();       

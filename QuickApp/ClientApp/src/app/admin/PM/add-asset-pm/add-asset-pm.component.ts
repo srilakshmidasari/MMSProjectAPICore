@@ -44,11 +44,10 @@ export class AddAssetPmComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.getJobPlanbyPm();
   }
 
-
+// Based on Project and astgroup to get all assets
   getAssetsByProjects() {
     var req = {
       "projectId": this.projectId,
@@ -80,7 +79,7 @@ export class AddAssetPmComponent implements OnInit {
       })
   }
 
-
+// To get all jobplans 
   private getJobPlanbyPm() {
     this.loadingIndicator = true;
     this.accountService.getJobPlansByProject(this.projectId)
@@ -131,9 +130,9 @@ export class AddAssetPmComponent implements OnInit {
     }
   }
 
-
+// based on type of typeOfMaintainance to check days validation
   onDaysEnter(enterText) {
-    debugger
+   
     if (this.pmData.typeOfMaintainanceId == DataFactory.TypeofMaintenance.Monthly) {
       if (enterText < 30) {
         this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
@@ -159,11 +158,10 @@ export class AddAssetPmComponent implements OnInit {
   onCancelAsset(row) {
     row.isEditable = false;
     this.assetList = this.editAssetList.map(x => Object.assign({}, x));
-
   }
 
 
-
+// To set request object form
   private getAllmaitenance(row): any {
     this.AssetIds = [];
     this.pmData.assetId.forEach((item) => {
@@ -206,7 +204,7 @@ export class AddAssetPmComponent implements OnInit {
     return this.authService.currentUser;
   }
 
-
+// To add assets to PM 
   saveMaintenance() {
     this.alertService.startLoadingMessage('Saving changes...');
     const editedSupplier = this.getAllmaitenance(this.row);
@@ -224,8 +222,9 @@ export class AddAssetPmComponent implements OnInit {
     );
   }
 
+  // Pm Order Confiemation
   onOrderCofirmation() {
-    debugger
+   
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "PM Order Generation" + " ", msg: "Are you sure you want to generate the PM Order for this procedure to this asset " + this.row.name1 + "?", isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
@@ -238,7 +237,7 @@ export class AddAssetPmComponent implements OnInit {
     });
   }
 
-
+//  Confirm order generation
   onOrderGenerate() {
     this.pmOrderData = [];
     this.AssetIds.forEach((item) => {
