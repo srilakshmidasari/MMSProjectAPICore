@@ -10,6 +10,7 @@
     "ErrorMessage": "You have entered invalid or incomplete information. Please correct any errors and try again."
   },
   "mainMenu": {
+    "Caliber Tech Maintenance Management System":"Caliber Tech Maintenance Management System",
     "Home": "Home",
     "Dashboard":"Dashboard",
     "Security": "Security",
@@ -136,11 +137,11 @@
 "From Date":"From Date",
 "To Date":"To Date",
 "Search":"Search",
-"No of Work Orders":"No of Work Orders",
-"No of Work Orders Planned by Trade":"No of Work Orders Planned by Trade",
-"No of Work Orders Completed by Trade":"No of Work Orders Completed by Trade",
-"No of Orders by Work Status":"No of Orders by Work Status",
-"Work Order Backlog Trend (Orders pending)":"Work Order Backlog Trend (Orders pending)"
+"No Of Work Orders":"No Of Work Orders",
+"No Of Work Orders Planned By Trade":"No Of Work Orders Planned By Trade",
+"No Of Work Orders Completed By Trade":"No Of Work Orders Completed By Trade",
+"No Of Orders By Work Status":"No Of Orders By Work Status",
+"Work Order Backlog Trend (Orders Pending)":"Work Order Backlog Trend (Orders Pending)"
     }
   },
   "users": {

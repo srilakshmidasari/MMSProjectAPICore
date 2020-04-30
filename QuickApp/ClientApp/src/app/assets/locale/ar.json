@@ -6,6 +6,7 @@
     "New": "جديد"
   },
   "mainMenu": {
+    "Caliber Tech Maintenance Management System":"نظام إدارة صيانة العيار الفني",
     "Dashboard": "لوحة القيادة",
     "Home": "الصفحة الرئيسية",
     "Admin": "مشرف",
@@ -132,11 +133,11 @@
   "From Date":"من التاريخ",
   "To Date":"حتى الآن",
   "Search":"بحث",
-  "No of Work Orders":"عدد أوامر العمل",
-  "No of Work Orders Planned by Trade":"عدد أوامر العمل المخططة حسب التجارة",
-  "No of Work Orders Completed by Trade":"عدد أوامر العمل المكتملة بالتجارة",
-  "No of Orders by Work Status":"عدد الأوامر حسب حالة العمل",
-  "Work Order Backlog Trend (Orders pending)":"اتجاه العمل المتراكم(أوامر معلقة)"
+  "No Of Work Orders":"عدد أوامر العمل",
+  "No Of Work Orders Planned By Trade":"عدد أوامر العمل المخططة حسب التجارة",
+  "No Of Work Orders Completed By Trade":"عدد أوامر العمل المكتملة بالتجارة",
+  "No Of Orders By Work Status":"عدد الأوامر حسب حالة العمل",
+  "Work Order Backlog Trend (Orders Pending)":"اتجاه العمل المتراكم(أوامر معلقة)"
       }
     },
   "users": {
