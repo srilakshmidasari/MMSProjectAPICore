@@ -48,7 +48,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   AssetIds: any[] = [];
   jobTaskList: any[] = [];
   projectId: any;
-  assetList: any[] = [];
+  
   assetData: any;
   assetId: any;
   TypeId: any;
@@ -65,16 +65,14 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
   ngOnInit() {
-    debugger
     this.getMaintenance();
     this.getWorkTech();
     this.getTypeOfMaintainces();
-    this.getAssets();
+   
   }
 
-
+// To get all  Pm Procedures
   private getMaintenance() {
-    debugger
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
     this.accountService.getpreventive().subscribe((results: any) => {
@@ -90,15 +88,9 @@ export class PreventivemaintenanceComponent implements OnInit {
       });
   }
 
-  private getAssets() {
-    this.accountService.getAssets()
-      .subscribe((results: any) => {
-        this.assetList = results.listResult == null ? [] : results.listResult;
-      },
-        error => {
-        });
-  }
 
+ 
+// To get assets by Project and astGroup
   getAssetsByProjects() {
     this.names = [];
     var req = {
@@ -138,6 +130,8 @@ export class PreventivemaintenanceComponent implements OnInit {
       })
   }
 
+
+  // To get all Job Plas
   private getJobPlans(Id) {
     this.accountService.getJobPlansByProject(Id)
       .subscribe((results: any) => {
@@ -162,7 +156,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         error => {
         });
   }
-
+// To get all projects  by site and user
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -181,6 +175,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         });
   }
 
+  //To  get all Work technicians
   getWorkTech() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Technician).subscribe((result: any) => {
       this.workTechList = result.listResult == null ? [] : result.listResult;
@@ -191,7 +186,7 @@ export class PreventivemaintenanceComponent implements OnInit {
 
 
 
-
+// On Project change event
   onSelectProjectByAssets(event) {
     this.projectId = event;
     this.assetsList = [];
@@ -199,7 +194,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-
+// To get all Type Of Maintainces
   private getTypeOfMaintainces() {
     this.accountService.getCddmtData(DataFactory.ClassTypes.TypeOfMaintenance).subscribe((response: any) => {
       this.TypesList = response.listResult;
@@ -239,6 +234,8 @@ export class PreventivemaintenanceComponent implements OnInit {
       isActive: [true]
     })
   }
+
+  // Setting form values
   private resetForm(stopEditing: boolean = false) {
     if (!this.maitananceRefData) {
       this.isNewMaintanance = true;
@@ -246,7 +243,6 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.buildForm();
     }
     this.maintenanceForm.reset({
-      // assetId: this.isNewMaintanance ? this.maitananceRefData.assetId : this.AssetIds || '',
       siteId: this.maitananceRefData.siteId || '',
       projectId: this.maitananceRefData.projectId || '',
       jobId: this.maitananceRefData.jobPlanId || '',
@@ -280,37 +276,14 @@ export class PreventivemaintenanceComponent implements OnInit {
       })
   }
 
+  // TYpe changes event
   onTypeChange(event) {
     this.TypeId = event;
     this.maintenanceForm.get('daysApplicable').setValue(null)
-
-  }
-
-  onDaysEnter(enterText) {
-    debugger
-    if (this.TypeId == DataFactory.TypeofMaintenance.Monthly) {
-      if (enterText < 30) {
-        this.alertService.showStickyMessage('Please Enter 30 Days above for this Monthly Procedure', null, MessageSeverity.error);
-      }
-    } else if (this.TypeId == DataFactory.TypeofMaintenance.Quarterly) {
-      if (enterText < 90) {
-        this.alertService.showStickyMessage('Please Enter 90 Days above for this Quarterly Procedure', null, MessageSeverity.error);
-      }
-    } else if (this.TypeId == DataFactory.TypeofMaintenance.HalfYearly) {
-      if (enterText < 180) {
-        this.alertService.showStickyMessage('Please Enter 180 Days above for this HalfYearly Procedure', null, MessageSeverity.error);
-      }
-    } else if (this.TypeId == DataFactory.TypeofMaintenance.Yearly) {
-      if (enterText < 365) {
-        this.alertService.showStickyMessage('Please Enter 365 Days  for this Yearly Procedure', null, MessageSeverity.error);
-      }
-    }
-
-
   }
 
 
-
+  //To get Job Details by JobplanId
   onSelectJob(event) {
     this.accountService.getJobTaskByJobPlanId(event)
       .subscribe((results: any) => {
@@ -326,8 +299,8 @@ export class PreventivemaintenanceComponent implements OnInit {
         });
   }
 
+  // Add and Edit Jobplan Click
   editClick(maintanance?: any) {
-    debugger
     this.AssetIds = [];
     this.jobTaskList = [];
     this.assetData = [];
@@ -357,6 +330,8 @@ export class PreventivemaintenanceComponent implements OnInit {
     }
   }
 
+
+  // On View Pm Procedure Click
   onViewClick(row) {
     this.PMProcedure = row;
     this.isView = true;
@@ -372,8 +347,9 @@ export class PreventivemaintenanceComponent implements OnInit {
 
   }
 
+  // Set Request object form
   private getAllmaitenance(): any {
-    debugger
+   
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
@@ -395,8 +371,8 @@ export class PreventivemaintenanceComponent implements OnInit {
     }
   }
 
+  // on Save Pm Procedure
   saveMaintenance() {
-    debugger
     if (!this.maintenanceForm.valid) {
       this.alertService.showValidationError();
       return;
@@ -444,6 +420,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     }
   }
 
+  // on Delete Pm Procedure
   confirmDelete(row) {
     this.language = localStorage.getItem('language');
     if (this.language == 'en') {
@@ -497,7 +474,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.isAdding = false;
   }
 
-
+// On select asset 
   onSelectAssetClick(data) {
     const dialogRef = this.dialog.open(SelectAssetComponent,
       {
@@ -506,7 +483,6 @@ export class PreventivemaintenanceComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe(response => {
       if (response != null) {
-        debugger
         this.names = [];
         this.AssetIds = [];
         this.assetData = [];
@@ -529,8 +505,8 @@ export class PreventivemaintenanceComponent implements OnInit {
     });
   }
 
+
   OnAcceptPmProcedure(row) {
-    debugger
     const dialogRef = this.dialog.open(ApprovePmOrderComponent,
       {
         data: { row }
@@ -540,8 +516,9 @@ export class PreventivemaintenanceComponent implements OnInit {
     });
   }
 
+
+  // To add Asset to Pm Procedure
   onSelectAsset(req) {
-    debugger
     this.accountService.getPMAssetsbyPMId(req.id).subscribe((res: any) => {
       this.assetsPMList = res.listResult == null ? [] : res.listResult;
       if (this.assetsPMList != null)
@@ -560,6 +537,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       error => {
       })
   }
+  
   //ExportToExcel
   download = function () {
     this.alertService.startLoadingMessage();

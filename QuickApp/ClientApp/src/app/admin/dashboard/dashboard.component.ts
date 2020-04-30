@@ -112,7 +112,7 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.getSitesByUserId();
-   debugger
+   
     $("#downloadPdf").click(function(){
       $('.col-md-1').hide();
       html2canvas(document.querySelector("#print-container")).then(canvas => {  
@@ -142,6 +142,7 @@ export class DashboardComponent implements OnInit {
         });
   }
 
+  // get projects by site and user
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -170,7 +171,7 @@ export class DashboardComponent implements OnInit {
     this.isChanged = true;
   }
 
-
+// form creation
   private buildForm() {
     this.searchForm = this.fb.group({
       siteId: ['', Validators.required],
@@ -181,6 +182,8 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+
+  // get all work types
   getWorkType() {
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.WorkType).subscribe((result: any) => {
       this.workTypeList = result.listResult == null ? [] : result.listResult;
@@ -196,7 +199,7 @@ export class DashboardComponent implements OnInit {
   }
 
 
-
+//To get no of work orders 
   onWorkOrdersCount() {
     const formModel = this.searchForm.value;
     this.pieChartData = [];
@@ -223,12 +226,12 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+  // onsearch click
   onSearchClick() {
-    debugger
     this.onWorkOrdersCount();
   }
 
-
+// To get no of work status 
   onWorkOrdersStatusCount() {
     const formModel = this.searchForm.value;
     var req = {
@@ -259,6 +262,8 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+
+  // To get No of Work Orders Planned by Trade
   onWorkOrdersTradesCount() {
     const formModel = this.searchForm.value;
     var req = {
@@ -291,6 +296,8 @@ export class DashboardComponent implements OnInit {
       })
   }
 
+
+ // To get No of Work Order Backlog Trend (Orders pending) 
   onWorkOrdersBacklogCount() {
     const formModel = this.searchForm.value;
     var req = {
@@ -318,6 +325,8 @@ export class DashboardComponent implements OnInit {
       error => {
       })
   }
+
+  //To get No of Work Orders Completed by Trade
   onWorkOrdersCompletedbyTrade() {
     const formModel = this.searchForm.value;
     var req = {
@@ -347,15 +356,6 @@ export class DashboardComponent implements OnInit {
       error => {
       })
   }
-
-
-
-
-  download() {
-  //  this.isPdf= true;
-  }
-
-    
 
   
 }

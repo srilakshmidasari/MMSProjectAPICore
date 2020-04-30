@@ -53,7 +53,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    debugger
+   
     this.loadData();
   }
 
@@ -62,7 +62,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-
+// Based on search value to get users
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -77,6 +77,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     this.applyFilter(this.dataSource.filter);
   }
 
+
+  // to Update users
   private updateUsers(user: User) {
     if (this.sourceUser) {
       Object.assign(this.sourceUser, user);
@@ -89,6 +91,7 @@ export class UserListComponent implements OnInit, AfterViewInit {
     }
   }
 
+  // to get all users
   private loadData() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -121,6 +124,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
       MessageSeverity.error, error);
   }
 
+
+  // To load add and edit Pop up screen click
   public editUser(user?: User) {
     this.sourceUser = user;
 
@@ -136,6 +141,8 @@ export class UserListComponent implements OnInit, AfterViewInit {
     });
   }
 
+
+  // delete user
   public confirmDelete(user: User) {
     this.snackBar.open(`Delete ${user.userName}?`, 'DELETE', { duration: 5000 })
       .onAction().subscribe(() => {

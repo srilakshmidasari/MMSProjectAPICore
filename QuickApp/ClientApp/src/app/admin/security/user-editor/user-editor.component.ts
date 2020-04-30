@@ -395,6 +395,7 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
   }
 
 
+  // Based on roles select to add projects
   onRoleSelectToAddProjects(event) {
     debugger
     this.allProjectIds =[];
@@ -649,6 +650,8 @@ export class UserEditorComponent implements OnChanges, OnDestroy {
 
   }
 
+
+  // on delete user file click
   getfileRepositoryDelete(UserId, file) {
     if (this.editUserFilesList.length > 0) {
     } else {
