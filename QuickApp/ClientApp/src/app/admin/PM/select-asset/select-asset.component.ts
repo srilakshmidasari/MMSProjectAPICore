@@ -34,7 +34,7 @@ export class SelectAssetComponent implements OnInit {
     this.assetList.forEach((obj) => {
       if(obj.isChecked){
         this.assetData.push({
-          "Id": obj.id,
+          "id": obj.id,
           "name1": obj.name1,
           "daysApplicable":obj.daysApplicable,
           "assetRef":obj.assetRef,
@@ -68,7 +68,7 @@ export class SelectAssetComponent implements OnInit {
       this.assetData.push(obj);     
     } else {
       this.assetData.forEach((item) => {
-        if(item.Id ==obj.id){
+        if(item.id ==obj.id){
           let index = this.assetData.indexOf(item);
           this.assetData.splice(index, 1);
         }

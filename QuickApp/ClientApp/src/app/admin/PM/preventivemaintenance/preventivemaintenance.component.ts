@@ -115,9 +115,10 @@ export class PreventivemaintenanceComponent implements OnInit {
                 "Id": item.id,
                 "name1": item.name1,
                 "assetRef": item.assetRef,
-                "daysApplicable": item.daysApplicable,
+                "daysApplicable": element.daysApplicable,
                 "astFixedDate": item.astFixedDate
               });
+              item.daysApplicable =element.daysApplicable;
               this.assetDataLength = this.assetData.length;
             }
 
@@ -491,7 +492,7 @@ export class PreventivemaintenanceComponent implements OnInit {
           this.names.push(element.name1);
           this.AssetIds.push({
             "id": 0,
-            "assetId": element.Id,
+            "assetId": element.id,
             "preventiveMaintenanceId": 0,
             "astFixedDate": element.astFixedDate,
             "daysApplicable": parseInt(element.daysApplicable)

@@ -202,7 +202,8 @@ namespace DAL.Core
                 ViewPMProcedures,
                 AddPMProcedures,
                 EditPMProcedures,
-                DeletePMProcedures
+                DeletePMProcedures,
+                ApprovePMProcedure
 
 
 

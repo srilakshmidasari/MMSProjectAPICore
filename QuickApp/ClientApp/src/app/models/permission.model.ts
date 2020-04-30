@@ -34,7 +34,7 @@ export type PermissionNames =
     'View Purchase Order' |'Add Purchase Order'|'Edit Purchase Order'|'Delete Purchase Order'|'Approve Purchase Order'|'Reject Purchase Order'|
     'View Orders' |'Add Orders'|'Edit Orders'|'Delete Orders'|
     'View JobPlans' |'Add JobPlans'|'Edit JobPlans'|'Delete JobPlans'|
-    'View PMProcedures' |'Add PMProcedures'|'Edit PMProcedures'|'Delete PMProcedures';
+    'View PMProcedures' |'Add PMProcedures'|'Edit PMProcedures'|'Delete PMProcedures'|'Approve PM Procedure';
 
 
 

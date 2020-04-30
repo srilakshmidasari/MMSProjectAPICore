@@ -17,7 +17,7 @@
       </ng-container>
         <ng-container matColumnDef="name1">
             <mat-header-cell *matHeaderCellDef mat-sort-header>
-                {{'Assets.Management.Name1'|translate}}</mat-header-cell>
+                {{'Assets.Management.Name'|translate}}</mat-header-cell>
             <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
         </ng-container>
         
@@ -28,7 +28,7 @@
         </ng-container>
         <ng-container matColumnDef="daysApplicable">
             <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
-                {{'Assets.Management.DaysApplicable'|translate}}</mat-header-cell>      
+                {{'Assets.Management.Days Applicable'|translate}}</mat-header-cell>      
                 <mat-cell class="text-center" *matCellDef="let row; let i = index;">
                     <span *ngIf="!row.isChecked"> {{row.daysApplicable}}</span>
                     <span  *ngIf="row.isChecked">
