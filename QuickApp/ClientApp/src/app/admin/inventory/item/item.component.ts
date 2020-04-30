@@ -10,6 +10,7 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 import { Utilities } from 'src/app/services/utilities';
 import { MatDialog } from '@angular/material';
 import { DataFactory } from 'src/app/shared/dataFactory';
+import { Permission } from 'src/app/models/permission.model';
 @Component({
   selector: 'app-item',
   templateUrl: './item.component.html',
@@ -334,6 +335,19 @@ export class ItemComponent implements OnInit {
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   };
+
+  // permissions
+  get canAddItems() {
+    return this.accountService.userHasPermission(Permission.addItemsPermission);
+  }
+
+  get canEditItems() {
+    return this.accountService.userHasPermission(Permission.editItemsPermission);
+  }
+
+  get canDeleteItems() {
+    return this.accountService.userHasPermission(Permission.deleteItemsPermission);
+  }
 }
 
 

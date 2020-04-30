@@ -10,6 +10,7 @@ import { AlertService, MessageSeverity } from 'src/app/services/alert.service';
 import { Utilities } from 'src/app/services/utilities';
 import { MatDialog } from '@angular/material';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Permission } from 'src/app/models/permission.model';
 @Component({
   selector: 'app-supplier',
   templateUrl: './supplier.component.html',
@@ -355,6 +356,21 @@ export class SupplierComponent implements OnInit {
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   };
+
+  // permissions
+
+  get canAddSuppliers() {
+    return this.accountService.userHasPermission(Permission.addSuppliersPermission);
+  }
+
+  get canEditSuppliers() {
+    return this.accountService.userHasPermission(Permission.editSuppliersPermission);
+  }
+
+  get canDeleteSuppliers() {
+    return this.accountService.userHasPermission(Permission.deleteSuppliersPermission);
+  }
+
   
 }
 

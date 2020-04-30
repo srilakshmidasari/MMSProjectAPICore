@@ -16,6 +16,7 @@ import { timingSafeEqual } from 'crypto';
 import { AddAssetPmComponent } from '../add-asset-pm/add-asset-pm.component';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 @Component({
   selector: 'app-preventivemaintenance',
   templateUrl: './preventivemaintenance.component.html',
@@ -48,7 +49,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   AssetIds: any[] = [];
   jobTaskList: any[] = [];
   projectId: any;
-  
+
   assetData: any;
   assetId: any;
   TypeId: any;
@@ -68,10 +69,10 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.getMaintenance();
     this.getWorkTech();
     this.getTypeOfMaintainces();
-   
+
   }
 
-// To get all  Pm Procedures
+  // To get all  Pm Procedures
   private getMaintenance() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -89,8 +90,8 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
- 
-// To get assets by Project and astGroup
+
+  // To get assets by Project and astGroup
   getAssetsByProjects() {
     this.names = [];
     var req = {
@@ -156,7 +157,7 @@ export class PreventivemaintenanceComponent implements OnInit {
         error => {
         });
   }
-// To get all projects  by site and user
+  // To get all projects  by site and user
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -186,7 +187,7 @@ export class PreventivemaintenanceComponent implements OnInit {
 
 
 
-// On Project change event
+  // On Project change event
   onSelectProjectByAssets(event) {
     this.projectId = event;
     this.assetsList = [];
@@ -194,7 +195,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   }
 
 
-// To get all Type Of Maintainces
+  // To get all Type Of Maintainces
   private getTypeOfMaintainces() {
     this.accountService.getCddmtData(DataFactory.ClassTypes.TypeOfMaintenance).subscribe((response: any) => {
       this.TypesList = response.listResult;
@@ -310,7 +311,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       this.isNewMaintanance = false;
       this.maitananceRefData = maintanance;
       this.TypeId = this.maitananceRefData.typeOfMaintainanceId;
-      this.maitananceRefData.assetId.forEach(element => {       
+      this.maitananceRefData.assetId.forEach(element => {
         this.AssetIds.push({
           "id": 0,
           "assetId": element.assetId,
@@ -349,7 +350,7 @@ export class PreventivemaintenanceComponent implements OnInit {
 
   // Set Request object form
   private getAllmaitenance(): any {
-   
+
     const formModel = this.maintenanceForm.value
     return {
       "id": (this.isNewMaintanance == true) ? 0 : this.maitananceRefData.id,
@@ -474,7 +475,7 @@ export class PreventivemaintenanceComponent implements OnInit {
     this.isAdding = false;
   }
 
-// On select asset 
+  // On select asset 
   onSelectAssetClick(data) {
     const dialogRef = this.dialog.open(SelectAssetComponent,
       {
@@ -537,7 +538,7 @@ export class PreventivemaintenanceComponent implements OnInit {
       error => {
       })
   }
-  
+
   //ExportToExcel
   download = function () {
     this.alertService.startLoadingMessage();
@@ -587,6 +588,21 @@ export class PreventivemaintenanceComponent implements OnInit {
     return blob;
   };
 
+  // permissions
+  get canAddPMProcedure() {
+    return this.accountService.userHasPermission(Permission.addPMProceduresPermission);
+  }
 
+  get canEditPMProcedure() {
+    return this.accountService.userHasPermission(Permission.editPMProceduresPermission);
+  }
+
+  get canDeletePMProcedure() {
+    return this.accountService.userHasPermission(Permission.deletePMProceduresPermission);
+  }
+
+  get canApprovePMProcedure() {
+    return this.accountService.userHasPermission(Permission.approvePMProceduresPermission);
+  }
 
 }

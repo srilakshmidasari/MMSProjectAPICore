@@ -326,4 +326,30 @@ export class AppComponent implements OnInit {
   get canViewAssetGroup() {
     return this.accountService.userHasPermission(Permission.viewAssetGroupsPermission);
   }
+
+  
+  get canViewSuppliers() {
+    return this.accountService.userHasPermission(Permission.viewSupplierPermission);
+  }
+
+  get canViewWorkOrders() {
+    return this.accountService.userHasPermission(Permission.viewOrderPermission);
+  }
+
+  get canViewJobPlans() {
+    return this.accountService.userHasPermission(Permission.viewJobPlansPermission);
+  }
+
+  get canViewItems() {
+    return this.accountService.userHasPermission(Permission.viewItemsPermission);
+  }
+
+  get canViewPurchaseOrder() {
+    return this.accountService.userHasPermission(Permission.viewPurchaseOrderPermission);
+  }
+
+  get canViewPMProcedure() {
+    return this.accountService.userHasPermission(Permission.viewPMProceduresPermission);
+  }
+
 }

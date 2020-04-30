@@ -92,7 +92,7 @@
           <a mat-list-item routerLinkActive="active" *ngIf="canViewStores" routerLink="/admin/lookup">
             <mat-icon>find_replace</mat-icon>{{'mainMenu.LookUp'| translate}}
           </a>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/item">
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewItems" routerLink="/admin/item">
             <mat-icon>format_list_bulleted</mat-icon>{{'mainMenu.Item'|translate}}
           </a>
         </mat-expansion-panel>
@@ -104,7 +104,7 @@
         </mat-nav-list> -->
 
         <mat-nav-list>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/supplier">
+          <a mat-list-item routerLinkActive="active" routerLink="/admin/supplier" *ngIf="canViewSuppliers">
             <mat-icon>list_alt</mat-icon>{{'mainMenu.Supplier'|translate}}
           </a>
         </mat-nav-list>
@@ -115,7 +115,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/purchaseorder">
+          <a mat-list-item routerLinkActive="active"  *ngIf="canViewPurchaseOrder" routerLink="/admin/purchaseorder">
             <mat-icon>supervised_user_circle</mat-icon>{{'mainMenu.Purchase Order'|translate}}
           </a>
 
@@ -138,18 +138,18 @@
             <mat-icon>receipt</mat-icon>{{'mainMenu.Assets'|translate}}
           </a>
 
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/work-order">
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewWorkOrders" routerLink="/admin/work-order">
             <mat-icon>work_order</mat-icon>{{'mainMenu.Work Order'|translate}}
           </a>
 
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/job-plan">
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewJobPlans" routerLink="/admin/job-plan" >
             <mat-icon>receipt</mat-icon>{{'mainMenu.JobPlan'|translate}}
           </a>
 
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/pm-procedures">
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewPMProcedure" routerLink="/admin/pm-procedures">
             <mat-icon>report_problem</mat-icon>{{'mainMenu.PM Procedures'|translate}}
           </a>
-          <a mat-list-item routerLinkActive="active" routerLink="/admin/pm-order">
+          <a mat-list-item routerLinkActive="active" *ngIf="canViewWorkOrders" routerLink="/admin/pm-order">
             <mat-icon>work_order</mat-icon>{{'mainMenu.PMOrder'|translate}}
           </a>
           

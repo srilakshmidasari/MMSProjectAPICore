@@ -58,7 +58,7 @@
                         </th>
                         <th class="just-cont-center">
                             <button mat-button color="primary"
-                                matTooltip="{{'Purchase Order.Management.Create'|translate}}" (click)="addClick()">
+                                matTooltip="{{'Purchase Order.Management.Create'|translate}}" *ngIf="canAddPurchaseOrders" (click)="addClick()">
                                 <mat-icon class="mat-button-icon">add</mat-icon>
                                 {{'Purchase Order.Management.Add Order'|translate}}
                             </button>
@@ -86,11 +86,11 @@
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center">
-                            <button class="z-index" mat-icon-button *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId"
+                            <button class="z-index" mat-icon-button *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId && canEditPurchaseOrders"
                                 matTooltip="{{'Purchase Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button class="z-index" mat-icon-button 
+                            <button class="z-index" mat-icon-button *ngIf="canDeletePurchaseOrders"
                                 matTooltip="{{'Purchase Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>
@@ -99,12 +99,12 @@
                                 <mat-icon>file_copy</mat-icon>
                             </button>
                             <button class="z-index" mat-icon-button matTooltip=Accept
-                                *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId"
+                                *ngIf="isAccepted != req.statusTypeId && isRejected != req.statusTypeId && canApprovePurchaseOrders"
                                 (click)="acceptClick(req)">
                                 <mat-icon color="primary">thumb_up</mat-icon>
                             </button>
                             <button class="z-index" mat-icon-button matTooltip=Reject
-                                *ngIf="isAccepted!= req.statusTypeId && isRejected != req.statusTypeId"
+                                *ngIf="isAccepted!= req.statusTypeId && isRejected != req.statusTypeId && canRejectPurchaseOrders"
                                 (click)="rejectClick(req)">
                                 <mat-icon color="warn">thumb_down</mat-icon>
                             </button>

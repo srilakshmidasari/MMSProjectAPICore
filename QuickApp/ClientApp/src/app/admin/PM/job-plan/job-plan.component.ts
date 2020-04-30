@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { Utilities } from 'src/app/services/utilities';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-job-plan',
@@ -410,5 +411,17 @@ export class JobPlanComponent implements OnInit {
     return blob;
   };
 
+    // permissions
+    get canAddJobPlans() {
+      return this.accountService.userHasPermission(Permission.addJobPlansPermission);
+    }
+  
+    get canEditJobPlans() {
+      return this.accountService.userHasPermission(Permission.editJobPlansPermission);
+    }
+  
+    get canDeleteJobPlans() {
+      return this.accountService.userHasPermission(Permission.deleteJobPlansPermission);
+    }
 
 }

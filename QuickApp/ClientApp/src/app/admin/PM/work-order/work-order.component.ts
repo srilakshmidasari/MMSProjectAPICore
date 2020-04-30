@@ -8,6 +8,7 @@ import { DataFactory } from 'src/app/shared/dataFactory';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
 import { CloseorderComponent } from '../../inventory/closeorder/closeorder.component';
+import { Permission } from 'src/app/models/permission.model';
 
 
 @Component({
@@ -695,5 +696,21 @@ export class WorkOrderComponent implements OnInit {
       this.getworkOrderOrders();
     });
   }
+
+      // permissions
+      get canAddOrders() {
+        return this.accountService.userHasPermission(Permission.addOrderPermission);
+      }
+    
+      get canEditOrders() {
+        return this.accountService.userHasPermission(Permission.editOrderPermission);
+      }
+    
+      get canDeleteOrders() {
+        return this.accountService.userHasPermission(Permission.deleteOrderPermission);
+      }
+
+     
+
 
 }

@@ -58,26 +58,12 @@
                         <th [pSortableColumn]="'resolution'">{{'Work Order.Management.Resolution'| translate}}
                             <p-sortIcon [field]="'resolution'"></p-sortIcon>
                         </th>
-                        <!-- <th [pSortableColumn]="'storeName'">Store Name
-                            <p-sortIcon [field]="'storeName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workTypeName'">Work Type
-                            <p-sortIcon [field]="'workTypeName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workStatusName'">Work Status
-                            <p-sortIcon [field]="'workStatusName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workTechnicianName'">Work Teach
-                            <p-sortIcon [field]="'workTechnicianName'"></p-sortIcon>
-                        </th>
-                        <th [pSortableColumn]="'workFaultName'">Work Fault
-                            <p-sortIcon [field]="'workFaultName'"></p-sortIcon>
-                        </th> -->
+                        
                         <th>{{'Purchase Order.Management.Is Active'|translate}}
                         </th>
                         <th class="just-cont-center">
                             <button mat-button color="primary"
-                                matTooltip="{{'Work Order.Management.Add Order'| translate}}" (click)="addClick()">
+                                matTooltip="{{'Work Order.Management.Add Order'| translate}}" *ngIf="canAddOrders" (click)="addClick()">
                                 <mat-icon class="mat-button-icon">add</mat-icon>
                                 {{'Work Order.Management.Add Order'|translate}}
                             </button>
@@ -99,23 +85,18 @@
                         <td>{{req.assetName}}</td>
                         <td>{{req.locationName}}</td>
                         <td style="width: 100px;">{{req.statusTypeName}}</td>
-                        <!-- <td>{{req.updatedDate | date: 'dd/MM/yyyy '}}</td> -->
                         <td>{{req.issue}}</td>
                         <td>{{req.resolution}}</td>
-                        <!-- <td>{{req.storeName}}</td>
-                        <td>{{req.workTypeName}}</td>
-                        <td>{{req.workStatusName}}</td>
-                        <td>{{req.workTechnicianName}}</td>
-                        <td>{{req.workFaultName}}</td>  -->
+                        
                         <td align="center">
                             <mat-checkbox [(ngModel)]="req.isActive" disabled="true"> </mat-checkbox>
                         </td>
                         <td class="just-cont-center " >
-                            <button class="z-index" mat-icon-button *ngIf="req.statusTypeName != 'Approved' && req.statusTypeName != 'Closed'"
+                            <button class="z-index" mat-icon-button *ngIf="req.statusTypeName != 'Approved' && req.statusTypeName != 'Closed' && canEditOrders"
                                 matTooltip="{{'Work Order.Management.Edit'|translate}}"  (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
-                            <button  class="z-index" mat-icon-button *ngIf="req.statusTypeName != 'Closed'"
+                            <button  class="z-index" mat-icon-button *ngIf="req.statusTypeName != 'Closed' && canDeleteOrders"
                                 matTooltip="{{'Work Order.Management.Delete'|translate}}" [hidden]="!req.isActive"
                                 (click)="confirmDelete(req)">
                                 <mat-icon color="warn">delete</mat-icon>

@@ -63,16 +63,16 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="{{'Supplier.Management.Add'|translate}}" (click)="editClick()">
+                    <button mat-button color="primary" matTooltip="{{'Supplier.Management.Add'|translate}}" (click)="editClick()" *ngIf="canAddSuppliers">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'Supplier.Management.Add Supplier'| translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'Supplier.Management.Edit'|translate}}" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="{{'Supplier.Management.Edit'|translate}}" (click)="editClick(row)" *ngIf="canEditSuppliers">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="{{'Supplier.Management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'Supplier.Management.Delete'|translate}}" [hidden]="!row.isActive" *ngIf="canDeleteSuppliers" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>

@@ -9,6 +9,7 @@ import { Utilities } from 'src/app/services/utilities';
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { ReceiveItemComponent } from '../receive-item/receive-item.component';
 import { Calendar } from 'primeng/calendar/calendar';
+import { Permission } from 'src/app/models/permission.model';
 
 @Component({
   selector: 'app-purchaseorder',
@@ -557,6 +558,29 @@ onViewPDF(doc) {
     var blob = new Blob(byteArrays, { type: contentType });
     return blob;
   };
+
+    // permissions
+    get canAddPurchaseOrders() {
+      return this.accountService.userHasPermission(Permission.addPurchaseOrderPermission);
+    }
+  
+    get canEditPurchaseOrders() {
+      return this.accountService.userHasPermission(Permission.editPurchaseOrderPermission);
+    }
+  
+    get canDeletePurchaseOrders() {
+      return this.accountService.userHasPermission(Permission.deletePurchaseOrderPermission);
+    }
+
+    get canApprovePurchaseOrders() {
+      return this.accountService.userHasPermission(Permission.deletePurchaseOrderPermission);
+    }
+    get canRejectPurchaseOrders() {
+      return this.accountService.userHasPermission(Permission.deletePurchaseOrderPermission);
+    }
+
+
+
 
 }
 

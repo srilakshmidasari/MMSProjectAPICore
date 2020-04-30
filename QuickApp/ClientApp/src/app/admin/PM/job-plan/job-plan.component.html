@@ -58,7 +58,7 @@
                         </th>
                         <th class="just-cont-center">
                             <button mat-button color="primary"
-                                matTooltip="{{'JobPlan.Management.Add JobPlan'| translate}}" (click)="addClick()">
+                                matTooltip="{{'JobPlan.Management.Add JobPlan'| translate}}" *ngIf="canAddJobPlans" (click)="addClick()">
                                 <mat-icon class="mat-button-icon">add</mat-icon>
                                 {{'JobPlan.Management.Add JobPlan'|translate}}
                             </button>
@@ -87,11 +87,11 @@
                         </td>
                         <td>
                             <button class="just-cont-center" mat-icon-button
-                                matTooltip="{{'Work Order.Management.Edit'|translate}}" (click)="onEditClick(req)">
+                                matTooltip="{{'Work Order.Management.Edit'|translate}}" *ngIf="canEditJobPlans" (click)="onEditClick(req)">
                                 <mat-icon color="primary">edit</mat-icon>
                             </button>
                              <button class="just-cont-center" mat-icon-button
-                                matTooltip="{{'Work Order.Management.Delete'|translate}}" (click)="onDeleteJob(req)" [hidden]="!req.isActive">
+                                matTooltip="{{'Work Order.Management.Delete'|translate}}" *ngIf="canDeleteJobPlans" (click)="onDeleteJob(req)" [hidden]="!req.isActive">
                                 <mat-icon color="warn">delete</mat-icon>
                             </button> 
                         </td>
@@ -361,9 +361,7 @@
                               <mat-error *ngIf="jobPlanForm.get('jobDescription').hasError('minlength')">
                                 {{'Location.Management.Minimum of 3 Characters'|translate}}
                               </mat-error>
-                            <!-- <mat-error *ngIf="!jobPlanForm.controls['jobDescription'].valid">
-                                Job Descrption is Required(Job Reference  must be at least 3 characters)
-                            </mat-error> -->
+                           
                         </mat-form-field>
                         <div class="col-md-2">
                             <button mat-raised-button color="primary"

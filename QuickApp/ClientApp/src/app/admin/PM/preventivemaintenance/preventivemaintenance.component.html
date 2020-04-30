@@ -19,22 +19,7 @@
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
         <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="preventiveRefId"
             matSortDirection="asc" matSortDisableClear>
-            <!-- <ng-container matColumnDef="assetName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Asset Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.assetName}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="siteName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Site Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.siteName}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="projectName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Project Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.projectName}} </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="locationName">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>Location Name</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.locationName}} </mat-cell>
-            </ng-container> -->
+
             <ng-container matColumnDef="preventiveRefId">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.Preventive Reference'|translate}}</mat-header-cell>
@@ -46,16 +31,7 @@
                 <mat-cell class="just-cont-center small-cell1" *matCellDef="let row"> {{row.typeOfMaintainanceName}}
                 </mat-cell>
             </ng-container>
-            <!-- <ng-container matColumnDef="daysApplicable">
-                <mat-header-cell class="just-cont-center small-cell" *matHeaderCellDef mat-sort-header>
-                    {{'Preventive Maintenance.Management.DaysApplicable'|translate}}</mat-header-cell>
-                <mat-cell class="just-cont-center small-cell" *matCellDef="let row"> {{row.daysApplicable}} </mat-cell>
-            </ng-container> -->
-            <!-- <ng-container matColumnDef="startDate">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Preventive Maintenance.Management.Start Date'|translate}}</mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.startDate| date: 'dd/MM/yyyy '}} </mat-cell>
-            </ng-container> -->
+
             <ng-container matColumnDef="durationInHours">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef mat-sort-header>
                     {{'Preventive Maintenance.Management.Duration In Hours'|translate}}</mat-header-cell>
@@ -76,45 +52,37 @@
                     {{'Preventive Maintenance.Management.Details'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.details}} </mat-cell>
             </ng-container>
-            <!-- <ng-container matColumnDef="isActive">
-                <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
-                    {{'Preventive Maintenance.Management.IsActive'|translate}}</mat-header-cell>
-                <mat-cell class="just-cont-center small-cell1" *matCellDef="let row">
-                    <mat-checkbox [(ngModel)]="row.isActive" disabled="true"> </mat-checkbox>
-                </mat-cell>
-            </ng-container> -->
 
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
                     <button mat-button color="primary"
-                        matTooltip="{{'Preventive Maintenance.Management.Add'|translate}}" (click)="editClick()">
+                        matTooltip="{{'Preventive Maintenance.Management.Add'|translate}}" *ngIf="canAddPMProcedure" (click)="editClick()">
                         <mat-icon class="mat-button-icon">add</mat-icon>
                         {{'Preventive Maintenance.Management.Add Maintenance'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button  class="z-index" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.Edit'|translate}}"
-                        (click)="editClick(row)"
-                        *ngIf="row.statusTypeName != 'Approved' && row.statusTypeName != 'Closed'">
+                    <button class="z-index" mat-icon-button
+                        matTooltip="{{'Preventive Maintenance.Management.Edit'|translate}}" (click)="editClick(row)"
+                        *ngIf="row.statusTypeName != 'Approved' && row.statusTypeName != 'Closed' && canEditPMProcedure">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button class="just-cont-center" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.View PM Procedure'|translate}}"
+                    <button class="just-cont-center" mat-icon-button
+                        matTooltip="{{'Preventive Maintenance.Management.View PM Procedure'|translate}}"
                         (click)="onViewClick(row)">
                         <mat-icon color="accent">visibility icon</mat-icon>
                     </button>
-                    <button class="z-index" mat-icon-button *ngIf="row.statusTypeName == 'Open'"
+                    <button class="z-index" mat-icon-button *ngIf="row.statusTypeName == 'Open' && canApprovePMProcedure"
                         matTooltip="{{'Work Order.Management.Accept'|translate}}" (click)="OnAcceptPmProcedure(row)">
                         <mat-icon color="primary">thumb_up</mat-icon>
                     </button>
-                    <!-- <button class="z-index" mat-icon-button matTooltip="{{'Work Order.Management.Close'|translate}}"
-                        *ngIf="row.statusTypeName == 'Approved'">
-                        <mat-icon color="warn">cancel</mat-icon>
-                    </button> -->
-                    <button class="z-index" mat-icon-button matTooltip="{{'Preventive Maintenance.Management.Add Asset to Procedure'|translate}}"
+
+                    <button class="z-index" mat-icon-button
+                        matTooltip="{{'Preventive Maintenance.Management.Add Asset to Procedure'|translate}}"
                         *ngIf="row.statusTypeName == 'Approved'" (click)="onSelectAsset(row)">
                         <mat-icon> forum</mat-icon>
                     </button>
-                    <button class="just-cont-center" mat-icon-button
+                    <button class="just-cont-center" mat-icon-button *ngIf="canDeletePMProcedure"
                         matTooltip="{{'Preventive Maintenance.Management.Delete'|translate}}"
                         (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
@@ -152,14 +120,12 @@
                         <mat-label>{{'Preventive Maintenance.Management.Preventive Reference'|translate}}</mat-label>
                         <input matInput formControlName="preventiveRefId" required minlength="3" />
                         <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('required')">
-                  {{'Preventive Maintenance.Management.Preventive Reference is Required(Preventive Reference  must be at least 3 characters)'|translate}}
-                          </mat-error>
-                          <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('minlength')">
+                            {{'Preventive Maintenance.Management.Preventive Reference is Required(Preventive Reference  must be at least 3 characters)'|translate}}
+                        </mat-error>
+                        <mat-error *ngIf="maintenanceForm.get('preventiveRefId').hasError('minlength')">
                             {{'Location.Management.Minimum of 3 Characters'|translate}}
-                          </mat-error>
-                        <!-- <mat-error *ngIf="!maintenanceForm.controls['preventiveRefId'].valid">
-                            Preventive Reference is Required(Preventive Reference  must be at least 3 characters)
-                        </mat-error> -->
+                        </mat-error>
+
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
                         <mat-label>{{'Preventive Maintenance.Management.Type Of Maintenance'|translate}} <span>*</span>
@@ -174,21 +140,12 @@
                         </mat-error>
                     </mat-form-field>
 
-                    <!-- <mat-form-field class="col-md-4">
-                        <mat-label> {{'Preventive Maintenance.Management.DaysApplicableforthisProcedure'|translate}}
-                        </mat-label>
-                        <input matInput formControlName="daysApplicable" required
-                            (blur)="onDaysEnter($event.target.value)" (keypress)="numberOnly($event)" />
-                        <mat-error *ngIf="!maintenanceForm.controls['daysApplicable'].valid">
-                            {{'Preventive Maintenance.Management.DaysApplicableisRequired'|translate}}
-
-                        </mat-error>
-                    </mat-form-field> -->
+                   
                     <mat-form-field class="col-md-4">
                         <mat-label>Priority</mat-label>
                         <input matInput formControlName="priority" required />
                         <mat-error *ngIf="!maintenanceForm.controls['priority'].valid">
-                            {{'Preventive Maintenance.Management.Priority is Required'|translate}}    
+                            {{'Preventive Maintenance.Management.Priority is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
 
@@ -232,34 +189,15 @@
                     </mat-form-field>
 
                 </div>
-                <div class="row">
-                    <!-- <mat-form-field class="col-md-4">
-                        <mat-label>{{'Preventive Maintenance.Management.Start Date'|translate}}</mat-label>
-                        <input matInput [matDatepicker]="picker" [min]="currenrDate" formControlName="startDate"
-                            placeholder="Start Date" required>
-                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                        <mat-datepicker #picker></mat-datepicker>
-                        <mat-error *ngIf="!maintenanceForm.controls['startDate'].valid">
-                            {{'Preventive Maintenance.Management.Start Date is Required'|translate}}
-                        </mat-error>
-                    </mat-form-field> -->
-
+                <div class="row">         
                     <mat-form-field class="col-md-6">
                         <mat-label>{{'Preventive Maintenance.Management.Duration in Hours'|translate}}</mat-label>
                         <input matInput formControlName="durationInHours" readonly (keypress)="numberOnly($event)" />
-                        <!-- <mat-error *ngIf="!maintenanceForm.controls['durationInHours'].valid">
-                            {{'Preventive Maintenance.Management.Duration is required'|translate}}
-                        </mat-error> -->
                     </mat-form-field>
-                    <!-- <mat-form-field class="col-md-4">
-                        <mat-label>{{'Preventive Maintenance.Management.Techinician'|translate}}</mat-label>
-                        <input matInput formControlName="technicianId" readonly  />
-                        <mat-error *ngIf="!maintenanceForm.controls['durationInHours'].valid">
-                            {{'Preventive Maintenance.Management.Duration is required'|translate}}
-                        </mat-error>
-                    </mat-form-field> -->
+                   
                     <mat-form-field class="col-md-6">
-                        <mat-label>{{'Preventive Maintenance.Management.Techinician'|translate}} <span>*</span></mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Techinician'|translate}} <span>*</span>
+                        </mat-label>
                         <mat-select formControlName="technicianId">
                             <mat-option *ngFor="let tech of workTechList" [value]="tech.id" required>
                                 {{tech.name1}}
@@ -315,7 +253,7 @@
                     </tbody>
 
                 </table>
-               
+
             </div>
             <div>
                 <h5> {{'Preventive Maintenance.Management.JobPlanTasks'|translate}}</h5>

@@ -7,6 +7,7 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog } from '@angular/material';
 import { Utilities } from 'src/app/services/utilities';
+import { Permission } from 'src/app/models/permission.model';
 @Component({
   selector: 'app-pm-order',
   templateUrl: './pm-order.component.html',
@@ -45,7 +46,7 @@ export class PmOrderComponent implements OnInit {
 
 
   constructor(private accountService: AccountService, private alertService: AlertService,
-    private authService: AuthService, private dialog: MatDialog,  private formBuilder: FormBuilder, ) {
+    private authService: AuthService, private dialog: MatDialog, private formBuilder: FormBuilder, ) {
     this.itemFrom = this.formBuilder.group({
       credentials: this.formBuilder.array([]),
     });
@@ -60,7 +61,7 @@ export class PmOrderComponent implements OnInit {
   }
 
 
- //get PMOrders data
+  //get PMOrders data
   private getPMOrders() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -87,7 +88,7 @@ export class PmOrderComponent implements OnInit {
         error => {
         });
   }
-//Add Items
+  //Add Items
   addItem(i) {
     (this.itemFrom.controls['credentials'] as FormArray).push(this.createItem(i));
   }
@@ -121,7 +122,7 @@ export class PmOrderComponent implements OnInit {
         });
   }
 
- //Get Projects data b UserId
+  //Get Projects data b UserId
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -221,7 +222,7 @@ export class PmOrderComponent implements OnInit {
   }
 
 
- //get Stores By Project
+  //get Stores By Project
   getStoresByProject(ProjectId) {
     this.storesList = [];
     //this.orderForm.get('storeId').setValue(null)
@@ -284,7 +285,7 @@ export class PmOrderComponent implements OnInit {
       })
   }
 
- //Form creation
+  //Form creation
   buildForm() {
     this.orderForm = this.formBuilder.group({
       siteId: ['', Validators.required],
@@ -453,7 +454,7 @@ export class PmOrderComponent implements OnInit {
 
 
 
- //On Delete Click Event Remove Data
+  //On Delete Click Event Remove Data
   Delete(index) {
     (this.itemFrom.controls['credentials'] as FormArray).removeAt(index);
   }
@@ -470,11 +471,11 @@ export class PmOrderComponent implements OnInit {
 
   confirmDelete(order: any) {
     this.language = localStorage.getItem('language');
-    if(this.language == 'en'){
-      var msg="Are you sure you want to delete this order ?"
-     }else{
-       var msg="هل أنت متأكد أنك تريد حذف هذا الطلب؟"
-      }
+    if (this.language == 'en') {
+      var msg = "Are you sure you want to delete this order ?"
+    } else {
+      var msg = "هل أنت متأكد أنك تريد حذف هذا الطلب؟"
+    }
     let dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       data: { title: "Delete", msg: msg, isCheckbox: false, isChecked: false, chkMsg: null, ok: 'Ok', cancel: 'Cancel' },
       width: 'auto',
@@ -503,55 +504,69 @@ export class PmOrderComponent implements OnInit {
   }
 
   //ExportToExcel
-download = function () {
-  this.alertService.startLoadingMessage();
-  this.accountService.ExportPMOrders(this.pmOrdersList).subscribe((result) => {
-    this.alertService.stopLoadingMessage();
-    if (result != null && result != undefined && result != '') {
-      var data = result;
-      var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-      var a = window.document.createElement('a');
-      a.href = window.URL.createObjectURL(blob);
-      a.download = "PmOrdersDetails.xlsx";
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-    }
-    else {
+  download = function () {
+    this.alertService.startLoadingMessage();
+    this.accountService.ExportPMOrders(this.pmOrdersList).subscribe((result) => {
       this.alertService.stopLoadingMessage();
-      this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-    }
-  },
-    error => {
-      this.alertService.stopLoadingMessage();
-      this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
-    })
-}
-
-//base 64 Covnerstion
-b64toBlob(b64Data, contentType, sliceSize) {
-  contentType = contentType || '';
-  sliceSize = sliceSize || 512;
-
-  var byteCharacters = atob(b64Data);
-  var byteArrays = [];
-
-  for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-    var slice = byteCharacters.slice(offset, offset + sliceSize);
-
-    var byteNumbers = new Array(slice.length);
-    for (var i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    var byteArray = new Uint8Array(byteNumbers);
-
-    byteArrays.push(byteArray);
+      if (result != null && result != undefined && result != '') {
+        var data = result;
+        var blob = this.b64toBlob(data, 'vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        var a = window.document.createElement('a');
+        a.href = window.URL.createObjectURL(blob);
+        a.download = "PmOrdersDetails.xlsx";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      }
+      else {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      }
+    },
+      error => {
+        this.alertService.stopLoadingMessage();
+        this.alertService.showStickyMessage('An error Occured', null, MessageSeverity.error);
+      })
   }
 
-  var blob = new Blob(byteArrays, { type: contentType });
-  return blob;
-};
+  //base 64 Covnerstion
+  b64toBlob(b64Data, contentType, sliceSize) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
+  };
+
+
+  // permissions
+  get canAddOrders() {
+    return this.accountService.userHasPermission(Permission.addOrderPermission);
+  }
+
+  get canEditOrders() {
+    return this.accountService.userHasPermission(Permission.editOrderPermission);
+  }
+
+  get canDeleteOrders() {
+    return this.accountService.userHasPermission(Permission.deleteOrderPermission);
+  }
 
 }
 

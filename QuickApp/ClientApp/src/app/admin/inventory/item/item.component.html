@@ -59,21 +59,6 @@
                 </mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.uomName}} </mat-cell>
             </ng-container>
-            <!-- <ng-container matColumnDef="description">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Item Description'|translate}}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.description}} </mat-cell>
-            </ng-container> -->
-            <!-- <ng-container matColumnDef="units">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units'|translate}}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.units}} </mat-cell>
-            </ng-container> -->
-            <!-- <ng-container matColumnDef="unitOfConversion">
-                <mat-header-cell *matHeaderCellDef mat-sort-header>{{'Item.Management.Units of Conversion'|translate}}
-                </mat-header-cell>
-                <mat-cell *matCellDef="let row"> {{row.unitOfConversion}} </mat-cell>
-            </ng-container> -->
             <ng-container matColumnDef="isActive">
                 <mat-header-cell class="just-cont-center small-cell1" *matHeaderCellDef mat-sort-header>
                     {{'Item.Management.Is Active'|translate}} </mat-header-cell>
@@ -83,16 +68,16 @@
             </ng-container>
             <ng-container matColumnDef="Actions">
                 <mat-header-cell class="just-cont-center" *matHeaderCellDef>
-                    <button mat-button color="primary" matTooltip="{{'Item.Management.Add'|translate}}" (click)="editClick()">
+                    <button mat-button color="primary" matTooltip="{{'Item.Management.Add'|translate}}" *ngIf="canAddItems" (click)="editClick()">
                         <mat-icon class="mat-button-icon">add</mat-icon>{{'Item.Management.Add Item'|translate}}
                     </button>
                 </mat-header-cell>
                 <mat-cell class="just-cont-center" *matCellDef="let row">
-                    <button mat-icon-button matTooltip="{{'Item.Management.Edit'|translate}}" (click)="editClick(row)">
+                    <button mat-icon-button matTooltip="{{'Item.Management.Edit'|translate}}" *ngIf="canEditItems" (click)="editClick(row)">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
 
-                    <button mat-icon-button matTooltip="{{'Item.Management.Delete'|translate}}" [hidden]="!row.isActive" (click)="confirmDelete(row)">
+                    <button mat-icon-button matTooltip="{{'Item.Management.Delete'|translate}}" *ngIf="canDeleteItems" [hidden]="!row.isActive" (click)="confirmDelete(row)">
                         <mat-icon color="warn">delete</mat-icon>
                     </button>
                 </mat-cell>
