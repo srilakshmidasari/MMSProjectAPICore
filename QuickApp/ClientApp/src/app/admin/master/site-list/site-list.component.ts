@@ -65,6 +65,7 @@ export class SiteListComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  // For Search
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -79,6 +80,7 @@ export class SiteListComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
+  // To update site
   private updateSite(response: any) {
     if (this.sourceSite) {
       this.getSites();
@@ -86,10 +88,13 @@ export class SiteListComponent implements OnInit {
       this.sourceSite = null;
     } else {
       this.alertService.showMessage('Success', response.endUserMessage, MessageSeverity.success)
+
       this.getSites();
     }
   }
 
+
+  //on Add and Edit Site
   public onEditSite(site?) {
     this.sourceSite = site;
     const dialogRef = this.dialog.open(SiteDialogComponent,
@@ -99,12 +104,13 @@ export class SiteListComponent implements OnInit {
       });
     dialogRef.afterClosed().subscribe(siteresponse => {
       if (siteresponse) {
-        debugger
         this.updateSite(siteresponse);
       }
     });
   }
-  onSiteLocaction(site) {
+
+  // Site Location view
+  onViewSiteLocaction(site) {
     this.sourceSite = site;
     const dialogRef = this.dialog.open(SiteLocationComponent,
       {
@@ -116,6 +122,7 @@ export class SiteListComponent implements OnInit {
     });
   }
 
+  // Delete site
   public confirmDeletes(site: any) {
     this.snackBar.open(`Delete ${site.name1}?`, 'DELETE', { duration: 5000 })
       .onAction().subscribe(() => {
@@ -139,10 +146,8 @@ export class SiteListComponent implements OnInit {
       });
   }
 
-  // get canManageSites() {
-  //   return this.accountService.userHasPermission(Permission.manageSitesPermission);
-  // }
-
+ 
+// permissions
   get canAddSites() {
     return this.accountService.userHasPermission(Permission.addSitesPermission);
   }

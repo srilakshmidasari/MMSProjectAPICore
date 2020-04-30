@@ -43,6 +43,7 @@ export class ConfirmEmailComponent implements OnInit {
     });
   }
 
+  // Email confirmation
   confirmEmail(userId: string, code: string) {
     this.isLoading = true;
     this.alertService.startLoadingMessage('', 'Confirming account email...');

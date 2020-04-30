@@ -87,24 +87,45 @@ namespace DAL.Core
         public static ApplicationPermission EditAssets = new ApplicationPermission("Edit Assets", "assets.edit", AssetsPermissionGroupName, "Permission to update other assetlocations  details");
         public static ApplicationPermission DeleteAssets= new ApplicationPermission("Delete Assets", "assets.delete", AssetsPermissionGroupName, "Permission to delete other assetlocations  details");
 
-        //public const string SupplierPermissionGroupName = "Supplier Permissions";
-        //public static ApplicationPermission ViewSuppliers = new ApplicationPermission("View Suppliers", "suppliers.view", SupplierPermissionGroupName, "Permission to view other Supplier details");      
-        //public static ApplicationPermission AddSuppliers = new ApplicationPermission("Add Suppliers", "suppliers.add", SupplierPermissionGroupName, "Permission to create  other Supplier  details");
-        //public static ApplicationPermission EditSuppliers = new ApplicationPermission("Edit Suppliers", "suppliers.edit", SupplierPermissionGroupName, "Permission to update other Supplier  details");
-        //public static ApplicationPermission DeleteSuppliers = new ApplicationPermission("Delete Suppliers", "suppliers.delete", SupplierPermissionGroupName, "Permission to delete other Supplier  details");
+        public const string SupplierPermissionGroupName = "Supplier Permissions";
+        public static ApplicationPermission ViewSuppliers = new ApplicationPermission("View Suppliers", "suppliers.view", SupplierPermissionGroupName, "Permission to view other Supplier details");
+        public static ApplicationPermission AddSuppliers = new ApplicationPermission("Add Suppliers", "suppliers.add", SupplierPermissionGroupName, "Permission to create  other Supplier  details");
+        public static ApplicationPermission EditSuppliers = new ApplicationPermission("Edit Suppliers", "suppliers.edit", SupplierPermissionGroupName, "Permission to update other Supplier  details");
+        public static ApplicationPermission DeleteSuppliers = new ApplicationPermission("Delete Suppliers", "suppliers.delete", SupplierPermissionGroupName, "Permission to delete other Supplier  details");
 
-        //public const string ItemPermissionGroupName = "Item Permissions";
-        //public static ApplicationPermission ViewItems = new ApplicationPermission("View Items", "items.view", ItemPermissionGroupName, "Permission to view other Items details");
-        //public static ApplicationPermission AddItems = new ApplicationPermission("Add Items", "items.add", ItemPermissionGroupName, "Permission to create  other Items  details");
-        //public static ApplicationPermission EditItemss = new ApplicationPermission("Edit Items", "items.edit", ItemPermissionGroupName, "Permission to update other Items  details");
-        //public static ApplicationPermission DeleteItems = new ApplicationPermission("Delete Items", "items.delete", ItemPermissionGroupName, "Permission to delete other Items  details");
+        public const string ItemPermissionGroupName = "Item Permissions";
+        public static ApplicationPermission ViewItems = new ApplicationPermission("View Items", "items.view", ItemPermissionGroupName, "Permission to view other Items details");
+        public static ApplicationPermission AddItems = new ApplicationPermission("Add Items", "items.add", ItemPermissionGroupName, "Permission to create  other Items  details");
+        public static ApplicationPermission EditItems = new ApplicationPermission("Edit Items", "items.edit", ItemPermissionGroupName, "Permission to update other Items  details");
+        public static ApplicationPermission DeleteItems = new ApplicationPermission("Delete Items", "items.delete", ItemPermissionGroupName, "Permission to delete other Items  details");
 
-        //public const string PurchasePermissionGroupName = "Purchases Permissions";
-        //public static ApplicationPermission ViewPurchases = new ApplicationPermission("View Purchases", "purchases.view", PurchasePermissionGroupName, "Permission to view other Purchases details");
-        //public static ApplicationPermission AddPurchases = new ApplicationPermission("Add Purchases", "purchases.add", PurchasePermissionGroupName, "Permission to create  other Purchases  details");
-        //public static ApplicationPermission EditPurchases = new ApplicationPermission("Edit Purchases", "purchases.edit", PurchasePermissionGroupName, "Permission to update other Purchases  details");
-        //public static ApplicationPermission DeletePurchases = new ApplicationPermission("Delete Purchases", "purchases.delete", PurchasePermissionGroupName, "Permission to delete other Purchases  details");
+        public const string PurchasePermissionGroupName = "Purchase Order Permissions";
+        public static ApplicationPermission ViewPurchases = new ApplicationPermission("View Purchase Order", "purchases.view", PurchasePermissionGroupName, "Permission to view other Purchase Order  details");
+        public static ApplicationPermission AddPurchases = new ApplicationPermission("Add Purchase Order", "purchases.add", PurchasePermissionGroupName, "Permission to create  other Purchase Order  details");
+        public static ApplicationPermission EditPurchases = new ApplicationPermission("Edit Purchase Order", "purchases.edit", PurchasePermissionGroupName, "Permission to update other Purchase Order  details");
+        public static ApplicationPermission DeletePurchases = new ApplicationPermission("Delete Purchase Order", "purchases.delete", PurchasePermissionGroupName, "Permission to delete other Purchase Order  details");
+        public static ApplicationPermission ApprovePurchases = new ApplicationPermission("Approve Purchase Order", "purchases.approve", PurchasePermissionGroupName, "Permission to approve other Purchase Order  details");
+        public static ApplicationPermission RejectPurchases = new ApplicationPermission("Reject Purchase Order", "purchases.reject", PurchasePermissionGroupName, "Permission to reject other Purchase Order  details");
 
+        public const string OrderPermissionGroupName = "Order Permissions";
+        public static ApplicationPermission ViewOrders = new ApplicationPermission("View Orders", "orders.view", OrderPermissionGroupName, "Permission to view other Order details");
+        public static ApplicationPermission AddOrders = new ApplicationPermission("Add Orders", "orders.add", OrderPermissionGroupName, "Permission to create  other Order  details");
+        public static ApplicationPermission EditOrders = new ApplicationPermission("Edit Orders", "orders.edit", OrderPermissionGroupName, "Permission to update other Order details");
+        public static ApplicationPermission DeleteOrders = new ApplicationPermission("Delete Orders", "orders.delete", OrderPermissionGroupName, "Permission to delete Order details");
+
+        public const string JobPlanPermissionGroupName = "JobPlan Permissions";
+        public static ApplicationPermission ViewJobPlans = new ApplicationPermission("View JobPlans", "jobplans.view", JobPlanPermissionGroupName, "Permission to view other JobPlan details");
+        public static ApplicationPermission AddJobPlans = new ApplicationPermission("Add JobPlans", "jobplans.add", JobPlanPermissionGroupName, "Permission to create  other JobPlan  details");
+        public static ApplicationPermission EditJobPlans = new ApplicationPermission("Edit JobPlans", "jobplans.edit", JobPlanPermissionGroupName, "Permission to update other JobPlan  details");
+        public static ApplicationPermission DeleteJobPlans = new ApplicationPermission("Delete JobPlans", "jobplans.delete", JobPlanPermissionGroupName, "Permission to delete other JobPlan  details");
+
+        public const string PMProcedurePermissionGroupName = "PM Procedure Permissions";
+        public static ApplicationPermission ViewPMProcedures= new ApplicationPermission("View PMProcedures", "pmprocedures.view", PMProcedurePermissionGroupName, "Permission to view other PM Procedure details");
+        public static ApplicationPermission AddPMProcedures = new ApplicationPermission("Add PMProcedures", "pmprocedures.add", PMProcedurePermissionGroupName, "Permission to create  other PM Procedure  details");
+        public static ApplicationPermission EditPMProcedures = new ApplicationPermission("Edit PMProcedures", "pmprocedures.edit", PMProcedurePermissionGroupName, "Permission to update other PM Procedure  details");
+        public static ApplicationPermission DeletePMProcedures= new ApplicationPermission("Delete PMProcedures", "pmprocedures.delete", PMProcedurePermissionGroupName, "Permission to delete other PM Procedure  details");
+       
+        public static ApplicationPermission ApprovePMProcedure = new ApplicationPermission("Approve PM Procedure", "pmprocedures.approve", PMProcedurePermissionGroupName, "Permission to Approve the PM Procedure  details");
         static ApplicationPermissions()
         {
             List<ApplicationPermission> allPermissions = new List<ApplicationPermission>()
@@ -150,6 +171,41 @@ namespace DAL.Core
                 AddAssets,
                 EditAssets,
                 DeleteAssets,
+
+                ViewItems,
+                AddItems,
+                EditItems,
+                DeleteItems,
+
+                ViewSuppliers,
+                AddSuppliers,
+                EditSuppliers,
+                DeleteSuppliers,
+
+                ViewPurchases,
+                AddPurchases,
+                EditPurchases,
+                DeletePurchases,
+                ApprovePurchases,
+                RejectPurchases,
+
+                ViewOrders,
+                AddOrders,
+                EditOrders,
+                DeleteOrders,
+
+                ViewJobPlans,
+                AddJobPlans,
+                EditJobPlans,
+                DeleteJobPlans,
+
+                ViewPMProcedures,
+                AddPMProcedures,
+                EditPMProcedures,
+                DeletePMProcedures
+
+
+
             };
 
             AllPermissions = allPermissions.AsReadOnly();

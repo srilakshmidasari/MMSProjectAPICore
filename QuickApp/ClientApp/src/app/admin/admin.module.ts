@@ -18,7 +18,7 @@ import { DeleteFileComponent } from './delete-file/delete-file.component';
 
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
-import { SupplierComponent } from './supplier/supplier.component';
+
 import { ItemComponent } from './inventory/item/item.component';
 import { RoleListComponent } from './security/role-list/role-list.component';
 import { EditRoleDialogComponent } from './security/edit-role-dialog/edit-role-dialog.component';
@@ -33,7 +33,7 @@ import {TableModule} from 'primeng/table';
 import {InputTextModule} from 'primeng/inputtext';
 import {CheckboxModule} from 'primeng/checkbox';
 
-import { WorkOrderComponent } from './inventory/work-order/work-order.component';
+
 import { ReceiveItemComponent } from './inventory/receive-item/receive-item.component';
 import { CloseorderComponent } from './inventory/closeorder/closeorder.component';
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
@@ -53,6 +53,8 @@ import { AddAssetPmComponent } from './PM/add-asset-pm/add-asset-pm.component';
 import { ChartsModule } from 'ng2-charts';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import {CalendarModule} from 'primeng/calendar';
+import { SupplierComponent } from './inventory/supplier/supplier.component';
+import { WorkOrderComponent } from './PM/work-order/work-order.component';
 
 @NgModule({
   imports: [

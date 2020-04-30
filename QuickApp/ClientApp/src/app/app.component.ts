@@ -121,16 +121,6 @@ export class AppComponent implements OnInit {
 
   }
 
-  // changeLang(language: string, changeView: boolean) {
-  //   if (changeView) {
-  //     this.renderer.addClass(document.body, 'toggle-rtl');
-  //     this.isArabic = true;
-  //   } else {
-  //     this.renderer.removeClass(document.body, 'toggle-ltr');
-  //     this.isArabic = false;
-  //   }
-  //   this.translate.use(language);
-  // }
 
   //on language change click
   changeLang(language: string) {
@@ -294,6 +284,7 @@ export class AppComponent implements OnInit {
     return this.authService.currentUser ? this.authService.currentUser.fullName : '';
   }
 
+  // permissions
   get canViewCustomers() {
     return this.accountService.userHasPermission(Permission.viewUsersPermission);
   }

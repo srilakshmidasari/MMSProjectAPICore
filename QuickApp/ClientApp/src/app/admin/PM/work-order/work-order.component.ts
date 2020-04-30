@@ -7,7 +7,8 @@ import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@ang
 import { DataFactory } from 'src/app/shared/dataFactory';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { Utilities } from 'src/app/services/utilities';
-import { CloseorderComponent } from '../closeorder/closeorder.component';
+import { CloseorderComponent } from '../../inventory/closeorder/closeorder.component';
+
 
 @Component({
   selector: 'app-work-order',

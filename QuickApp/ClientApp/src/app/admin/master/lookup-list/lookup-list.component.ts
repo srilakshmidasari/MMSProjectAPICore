@@ -61,14 +61,10 @@ export class LookupListComponent implements OnInit {
     }
   }
 
+  // premissions
   get canAddStores() {
     return this.accountService.userHasPermission(Permission.addStoresPermission);
   }
-
-  // get canManageStores() {
-  //   return this.accountService.userHasPermission(Permission.manageStoresPermission);
-  // }
-
 
   get canEditStores() {
     return this.accountService.userHasPermission(Permission.editStoresPermission);

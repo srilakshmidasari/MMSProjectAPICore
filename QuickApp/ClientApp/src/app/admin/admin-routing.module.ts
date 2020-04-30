@@ -14,13 +14,11 @@ import { ProfileComponent } from './profile/profile.component';
 
 import { AssetGroupComponent } from './asset/asset-group/asset-group.component';
 import { AssetsComponent } from './asset/assets/assets.component';
-import { SupplierComponent } from './supplier/supplier.component';
 import { UserListComponent } from './security/user-list/user-list.component';
 import { RoleListComponent } from './security/role-list/role-list.component';
 import { LookupListComponent } from './master/lookup-list/lookup-list.component';
 import { ItemComponent } from './inventory/item/item.component';
 import { PurchaseorderComponent } from './inventory/purchaseorder/purchaseorder.component';
-import { WorkOrderComponent } from './inventory/work-order/work-order.component';
 import { InventoryItemsComponent } from './inventory/inventory-items/inventory-items.component';
 import { SiteListComponent } from './master/site-list/site-list.component';
 import { ProjectComponent } from './master/project/project.component';
@@ -28,6 +26,8 @@ import { LocationComponent } from './master/location/location.component';
 import { PreventivemaintenanceComponent } from './PM/preventivemaintenance/preventivemaintenance.component';
 import { JobPlanComponent } from './PM/job-plan/job-plan.component';
 import { PmOrderComponent } from './PM/pm-order/pm-order.component';
+import { SupplierComponent } from './inventory/supplier/supplier.component';
+import { WorkOrderComponent } from './PM/work-order/work-order.component';
 
 
 const adminRoutes: Routes = [

@@ -28,7 +28,15 @@ export type PermissionNames =
     'View Stores' |'Add Stores'|'Edit Stores'|'Delete Stores'|'Manage Stores'|
     'View Locations' |'Add Locations'|'Edit Locations'|'Delete Locations'|
     'View AssetGroups' |'Add AssetGroups'|'Edit AssetGroups'|'Delete AssetGroups'|
-    'View Assets' |'Add Assets'|'Edit Assets'|'Delete Assets';
+    'View Assets' |'Add Assets'|'Edit Assets'|'Delete Assets'|
+    'View Suppliers' |'Add Suppliers'|'Edit Suppliers'|'Delete Suppliers'|
+    'View Items' |'Add Items'|'Edit Items'|'Delete Items'|
+    'View Purchase Order' |'Add Purchase Order'|'Edit Purchase Order'|'Delete Purchase Order'|'Approve Purchase Order'|'Reject Purchase Order'|
+    'View Orders' |'Add Orders'|'Edit Orders'|'Delete Orders'|
+    'View JobPlans' |'Add JobPlans'|'Edit JobPlans'|'Delete JobPlans'|
+    'View PMProcedures' |'Add PMProcedures'|'Edit PMProcedures'|'Delete PMProcedures';
+
+
 
 export type PermissionValues =
     'users.view' | 'users.add'|'users.edit'|'users.delete'|'all.projects'|
@@ -38,22 +46,27 @@ export type PermissionValues =
     'stores.view' |'stores.add'| 'stores.edit'| 'stores.delete'|
     'locations.view' | 'locations.add'| 'locations.edit'| 'locations.delete'|
     'assetgroups.view' | 'assetgroups.add'| 'assetgroups.edit'| 'assetgroups.delete'|
-    'assets.view' | 'assets.add'| 'assets.edit'| 'assets.delete';
+    'assets.view' | 'assets.add'| 'assets.edit'| 'assets.delete'|
+    'suppliers.view' | 'suppliers.add'| 'suppliers.edit'| 'suppliers.delete'|
+    'items.view' | 'items.add'| 'items.edit'| 'items.delete'|
+    'purchases.view' | 'purchases.add'| 'purchases.edit'| 'purchases.delete'|'purchases.approve'|'purchases.reject'|
+    'orders.view' | 'orders.add'| 'orders.edit'| 'orders.delete'|
+    'jobplans.view' | 'jobplans.add'| 'jobplans.edit'| 'jobplans.delete'|
+    'pmprocedures.view' | 'pmprocedures.add'| 'pmprocedures.edit'| 'pmprocedures.delete'|'pmprocedures.approve';
+
 
 
 
 export class Permission {
 
     public static readonly viewUsersPermission: PermissionValues = 'users.view';
-  //  public static readonly manageUsersPermission: PermissionValues = 'users.manage';
-   //public static readonly addUpdateUserPermission: PermissionValues = 'users.addupdate';
    public static readonly addUsersPermission: PermissionValues = 'users.add';
    public static readonly editUsersPermission: PermissionValues = 'users.edit';
    public static readonly deleteUsersPermission: PermissionValues = 'users.delete';
    public static readonly addAllProjects: PermissionValues = 'all.projects';
 
    
-   // public static readonly manageRolesPermission: PermissionValues = 'roles.manage';
+   
     public static readonly viewRolesPermission: PermissionValues = 'roles.view';
     public static readonly assignRolesPermission: PermissionValues = 'roles.assign';
     public static readonly addRolesPermission: PermissionValues = 'roles.add';
@@ -104,6 +117,40 @@ export class Permission {
     public static readonly addAssetsPermission: PermissionValues = 'assets.add';
     public static readonly editAssetsPermission: PermissionValues = 'assets.edit';
     public static readonly deleteAssetsPermission: PermissionValues = 'assets.delete';
+
+    public static readonly viewSupplierPermission: PermissionValues = 'suppliers.view';
+    public static readonly addSuppliersPermission: PermissionValues = 'suppliers.add';
+    public static readonly editSuppliersPermission: PermissionValues = 'suppliers.edit';
+    public static readonly deleteSuppliersPermission: PermissionValues = 'suppliers.delete';
+
+    public static readonly viewItemsPermission: PermissionValues = 'items.view';
+    public static readonly addItemsPermission: PermissionValues = 'items.add';
+    public static readonly editItemsPermission: PermissionValues = 'items.edit';
+    public static readonly deleteItemsPermission: PermissionValues = 'items.delete';
+
+    public static readonly viewPurchaseOrderPermission: PermissionValues = 'purchases.view';
+    public static readonly addPurchaseOrderPermission: PermissionValues = 'purchases.add';
+    public static readonly editPurchaseOrderPermission: PermissionValues = 'purchases.edit';
+    public static readonly deletePurchaseOrderPermission: PermissionValues = 'purchases.delete';
+    public static readonly approvePurchaseOrderPermission: PermissionValues = 'purchases.approve';
+    public static readonly rejectPurchaseOrderPermission: PermissionValues = 'purchases.reject';
+
+    public static readonly viewOrderPermission: PermissionValues = 'orders.view';
+    public static readonly addOrderPermission: PermissionValues = 'orders.add';
+    public static readonly editOrderPermission: PermissionValues = 'orders.edit';
+    public static readonly deleteOrderPermission: PermissionValues = 'orders.delete';
+
+    public static readonly viewJobPlansPermission: PermissionValues = 'jobplans.view';
+    public static readonly addJobPlansPermission: PermissionValues = 'jobplans.add';
+    public static readonly editJobPlansPermission: PermissionValues = 'jobplans.edit';
+    public static readonly deleteJobPlansPermission: PermissionValues = 'jobplans.delete';
+
+    public static readonly viewPMProceduresPermission: PermissionValues = 'pmprocedures.view';
+    public static readonly addPMProceduresPermission: PermissionValues = 'pmprocedures.add';
+    public static readonly editPMProceduresPermission: PermissionValues = 'pmprocedures.edit';
+    public static readonly deletePMProceduresPermission: PermissionValues = 'pmprocedures.delete';
+    public static readonly approvePMProceduresPermission: PermissionValues = 'pmprocedures.approve';
+
 
     constructor(name?: PermissionNames, value?: PermissionValues, groupName?: string, description?: string) {
         this.name = name;

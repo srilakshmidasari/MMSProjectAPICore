@@ -65,6 +65,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Form building
   buildForm() {
     this.registerForm = this.formBuilder.group({
       userName: ['', Validators.required],
@@ -96,6 +97,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     return newUser;
   }
 
+
+  // on Register Click
   register() {
     if (!this.form.submitted) {
       // Causes validation to update.
@@ -131,7 +134,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.alertService.showStickyMessage(error, null, MessageSeverity.error);
   }
 
-
+// Login Click
   login(username: string, password: string) {
     this.isLoading = true;
     this.alertService.startLoadingMessage('', 'Attempting login...');

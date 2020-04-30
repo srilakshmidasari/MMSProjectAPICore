@@ -61,6 +61,7 @@ export class LocationComponent implements OnInit {
         });
   }
 
+  // To get Projects by site and userId
   getProjectsByUserIdandSiteId(event) {
     this.userProjectsList = [];
     var req = {
@@ -78,20 +79,8 @@ export class LocationComponent implements OnInit {
 
 
 
-  // Site Data
-  // private getSites() {
-  //   this.accountService.getSiteData()
-  //     .subscribe((results: any) => {
-  //       this.siteList = results.listResult == null ? [] : results.listResult;
-  //     },
-  //       error => {
-  //       });
-  // }
 
-
-
-
-  // Location Data
+  //To get all  Location Data
   getLocation() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -149,6 +138,7 @@ export class LocationComponent implements OnInit {
       this.displayNoRecords = false;
     }
   }
+
   // On Add Or Edit  Click
   onEditLocation(location?: any) {
     this.locationRefData = {};
@@ -167,45 +157,15 @@ export class LocationComponent implements OnInit {
   }
 
 
-  onSelectSite(event) {
-    this.projectsList = [];
-    this.accountService.getProjectsBySite(event).subscribe((res: any) => {
-      this.projectsList = res.listResult == null ? [] : res.listResult;
-    },
-      error => {
-      })
-  }
-
   get currentUser() {
     return this.authService.currentUser;
   }
+
   // On Cancel Click
   onLocationCancel() {
     this.isAdding = false;
   }
-  // //  On Delete Location
-  // onDeleteLocation(location) {
-  //   this.snackBar.open(`Delete ${location.name1}?`, 'DELETE', { duration: 5000 }).onAction().subscribe(() => {
-  //     this.alertService.startLoadingMessage('Deleting...');
-  //     this.loadingIndicator = true;
-  //     this.accountService.deleteLocation(location.id).subscribe((res: any) => {
-  //       this.alertService.stopLoadingMessage();
-  //       this.loadingIndicator = false;
-  //       if (res.isSuccess) {
-  //         this.alertService.showMessage('Success', res.endUserMessage, MessageSeverity.success);
-  //         this.getLocation();
-  //       }
-  //     },
-  //       error => {
-  //         this.alertService.stopLoadingMessage();
-  //         this.loadingIndicator = false;
-  //         this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the Location.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-  //           MessageSeverity.error, error);
-  //       },
-  //     )
-  //   })
-
-  // }
+  
   //Request Object  For Location
   getLocationObject() {
     const formModel = this.locationForm.value;
@@ -260,6 +220,8 @@ export class LocationComponent implements OnInit {
         });
     }
   }
+
+
   // On Save Completed
   saveCompleted(result) {
     this.alertService.stopLoadingMessage();
@@ -267,12 +229,15 @@ export class LocationComponent implements OnInit {
     this.isAdding = false;
     this.getLocation();
   }
+
+
   // On save Failed
   saveFailed(result) {
     this.alertService.stopLoadingMessage();
     this.alertService.showMessage('error', result.endUserMessage, MessageSeverity.error);
   }
 
+  // permissions
   get canAddLocation() {
     return this.accountService.userHasPermission(Permission.addLocationsPermission);
   }

@@ -32,6 +32,7 @@ export class SiteEditorComponent implements OnInit {
       this.buildForm();
     }
   }
+  // Form Building
   private buildForm() {
     this.siteForm = this.fb.group({
       siteref: ['', Validators.compose([Validators.required,Validators.minLength(2)])],
@@ -43,6 +44,7 @@ export class SiteEditorComponent implements OnInit {
       file: ['']
     })
   }
+
   ngOnChanges() {
     if (this.site) {
       this.isNewSite = false;
@@ -50,10 +52,11 @@ export class SiteEditorComponent implements OnInit {
       this.isNewSite = true;
       this.site = {};
       this.site.isActive = true; 
-
     }
     this.resetForm();
   }
+
+  // Set form values
   public resetForm(stopEditing: boolean = false) {
     if (!this.site) {
       this.isNewSite = true;
@@ -75,8 +78,8 @@ export class SiteEditorComponent implements OnInit {
     return this.authService.currentUser;
   }
   
+  // On Save click
   save() {
-    debugger
     if (!this.form.submitted) {
       this.form.onSubmit(null);
       return;
@@ -116,6 +119,7 @@ export class SiteEditorComponent implements OnInit {
     }
   }
 
+  // set Request object form
   private getEditedSite(): any {
     const formModel = this.siteForm.value;
     return {
@@ -136,6 +140,7 @@ export class SiteEditorComponent implements OnInit {
     };
   }
 
+  
   private saveCompleted(res) {
     if (res) {
       this.site = res.result;

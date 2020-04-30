@@ -37,6 +37,7 @@ export class RecoverPasswordComponent implements OnInit {
     });
   }
 
+  // Form Building
   buildForm() {
     this.recoverPasswordForm = this.formBuilder.group({
       usernameOrEmail: ['', Validators.required]
@@ -50,6 +51,7 @@ export class RecoverPasswordComponent implements OnInit {
     return formModel.usernameOrEmail;
   }
 
+  // on recover password
   recover() {
     if (!this.form.submitted) {
       // Causes validation to update.

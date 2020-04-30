@@ -66,6 +66,7 @@ export class LoginControlComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Form Building
   buildForm() {
     this.loginForm = this.formBuilder.group({
       userName: ['', Validators.required],
@@ -93,6 +94,7 @@ export class LoginControlComponent implements OnInit, OnDestroy {
     return new UserLogin(formModel.userName, formModel.password, formModel.rememberMe);
   }
 
+  // on Login Click
   login() {
     if (!this.form.submitted) {
       this.form.onSubmit(null);

@@ -65,7 +65,7 @@ export class ProjectComponent implements OnInit {
     private dialog: MatDialog) {
     this.isImage = DataFactory.docType.Image;
     this.isDocument = DataFactory.docType.Document;
-    //this.textDir = localStorage.getItem('textdir')
+   
   }
 
   ngOnInit() {
@@ -76,6 +76,7 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+ // To get all Projects
   private getProjects() {
     this.alertService.startLoadingMessage();
     this.loadingIndicator = true;
@@ -94,7 +95,7 @@ export class ProjectComponent implements OnInit {
   }
 
 
-
+// To get all sites
   private getSites() {
     this.alertService.startLoadingMessage();
     this.accountService.getSiteData()
@@ -119,7 +120,7 @@ export class ProjectComponent implements OnInit {
     });
   }
 
-
+// To get Store Details
   private getLookUpDetailsByTypeId() {
     this.alertService.startLoadingMessage();
     this.accountService.getLookUpDetailsByTypeId(DataFactory.LookUp.Store)
@@ -132,6 +133,7 @@ export class ProjectComponent implements OnInit {
         });
   }
 
+  // form building
   private buildForm() {
     this.projectForm = this.formBuilder.group({
       projectReference: ['',Validators.compose([Validators.required,Validators.minLength(2)])],
@@ -150,6 +152,7 @@ export class ProjectComponent implements OnInit {
     this.dataSource.sort = this.sort;
   }
 
+  // For Search
   public applyFilter(filterValue: string) {
     this.dataSource.filter = filterValue;
     if (this.dataSource.filteredData.length == 0) {
@@ -164,6 +167,8 @@ export class ProjectComponent implements OnInit {
     this.applyFilter(this.dataSource.filter);
   }
 
+
+  // on Add and edit project click
   editClick(project?: any) {
     this.storeIds = [];
     this.isAllow = false;
@@ -278,6 +283,7 @@ export class ProjectComponent implements OnInit {
   }
 
 
+  // Setting form values
   public resetForm(stopEditing: boolean = false) {
     if (!this.projectData) {
       this.isNewProject = true;

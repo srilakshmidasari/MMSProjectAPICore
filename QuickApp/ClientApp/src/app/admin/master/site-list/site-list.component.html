@@ -56,7 +56,7 @@
                     <button mat-icon-button matTooltip="{{'site.management.Edit' | translate}}" (click)="onEditSite(row)" *ngIf="canEditSites">
                         <mat-icon color="primary">edit</mat-icon>
                     </button>
-                    <button mat-button color="primary" class="slocation"  matTooltip="{{'site.management.Site Location' | translate}}" (click)="onSiteLocaction(row)">
+                    <button mat-button color="primary" class="slocation"  matTooltip="{{'site.management.Site Location' | translate}}" (click)="onViewSiteLocaction(row)">
                         <mat-icon class="mat-button-icon">add_location</mat-icon>
                     </button>
                     <button mat-icon-button matTooltip="{{'site.management.Delete' | translate}}" [hidden]="!row.isActive" *ngIf="canDeleteSites" (click)="confirmDelete(row)">

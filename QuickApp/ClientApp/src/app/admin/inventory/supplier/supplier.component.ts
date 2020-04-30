@@ -23,8 +23,7 @@ export class SupplierComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   displayNoRecords: boolean;
-  //  @ViewChild(MatPaginator, { static: true }) storePaginator: MatPaginator;
-  //   @ViewChild(MatSort, { static: true }) storeSort: MatSort;
+
   @Input() supplier: any = {}
   supplierIds: any[] = [];
   isAllow: boolean = false;
@@ -222,31 +221,6 @@ export class SupplierComponent implements OnInit {
     }
   }
 
-  // //Deleteing Record
-  // confirmDelete(supplier:any){
-  //   debugger;
-  //   this.snackBar.open(`Delete ${supplier.name1}?`, 'DELETE', { duration: 5000 })
-  //   .onAction().subscribe(() => {
-  //     this.alertService.startLoadingMessage('Deleting...');
-  //     this.loadingIndicator = true;
-  //     this.accountService.deletesupplier(supplier.id)
-  //     .subscribe((results: any) => {
-  //       this.alertService.stopLoadingMessage();
-  //       this.loadingIndicator = false;
-  //       if (results.isSuccess) {
-  //         this.alertService.showMessage('Success', results.endUserMessage, MessageSeverity.success);
-  //         this.getsuppliers();
-  //       }
-  //     },
-  //     error => {
-  //       this.alertService.stopLoadingMessage();
-  //       this.loadingIndicator = false;
-  //       this.alertService.showStickyMessage('Delete Error', `An error occured whilst deleting the user.\r\nError: "${Utilities.getHttpResponseMessages(error)}"`,
-  //         MessageSeverity.error, error);
-  //     });
-  //   });
-  // }
- 
 
   //On Cancel Click
   onCancelClick() {
