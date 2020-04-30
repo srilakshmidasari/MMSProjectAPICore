@@ -758,7 +758,8 @@
     "Accept":"قبول",
     "Priority is Required":"الأولوية مطلوبة",
     "View PM Procedure":"عرض إجراء PM",
-    "Add Asset to Procedure":"أضف الأصول إلى الإجراء"
+    "Add Asset to Procedure":"أضف الأصول إلى الإجراء",
+    "Add Asset to the PM Procedure":"إضافة الأصول إلى إجراء PM"
   }
 },
 "JobPlan":{
@@ -788,14 +789,15 @@
     "Please Select Technician":"يرجى تحديد فني",
     "Task Name is Required":"اسم المهمة مطلوب",
     "Duration In Minutes is Required":"المدة بالدقائق مطلوبة",
-    "totalDurationisRequired": "إجمالي المدة مطلوب",
-    "Duration in Hours":"المدة بالساعات",
+    "Total Duration is Required": "إجمالي المدة مطلوب",
+    "Duration In Hours":"المدة بالساعات",
     "Task":"مهمة",
     "Save":"حفظ",
     "Cancel":"إلغاء",
     "Select Asset Trade":"حدد تجارة الأصول",
-    "Please select Asset Trade":"يرجى التحديد تجارة الأصول"
-    
+    "Please select Asset Trade":"يرجى التحديد تجارة الأصول",
+    "Edit Job Plan":"تحرير خطة العمل",
+    "Trade Name":"اسم تجاري"
 
   }
  },
@@ -815,7 +817,8 @@
     "AssetName":"اسم الأصل",
     "Actions":"أجراءات",  
     "Save":"حفظ",
-    "Cancel":"إلغاء"    
+    "Cancel":"إلغاء",
+    "PM Procedure Name":"اسم إجراء PM"
   }
  },
  "data":{

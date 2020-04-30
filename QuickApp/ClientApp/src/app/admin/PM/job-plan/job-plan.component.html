@@ -51,7 +51,7 @@
                         <th [pSortableColumn]="'assetGroupName'">{{'JobPlan.Management.Asset GroupName'| translate}}
                             <p-sortIcon [field]="'assetGroupName'"></p-sortIcon>
                         </th>
-                        <th [pSortableColumn]="'duration'">{{'JobPlan.Management.DurationinHours'| translate}}
+                        <th [pSortableColumn]="'duration'">{{'JobPlan.Management.Duration In Hours'| translate}}
                             <p-sortIcon [field]="'duration'"></p-sortIcon>
                         </th>
                         <th>{{'JobPlan.Management.Is Active'|translate}}
@@ -113,7 +113,7 @@
                             <p-sortIcon [field]="'duration'"></p-sortIcon>
                         </th>
                         <th class="product-id" [pSortableColumn]="'astTradeName'">
-                            Trade Name
+                            {{'JobPlan.Management.Trade Name'|translate}} 
                             <p-sortIcon [field]="'astTradeName'"></p-sortIcon>
                         </th>
 
@@ -189,7 +189,7 @@
                         <mat-label>{{'JobPlan.Management.Job Descrption'|translate}} </mat-label>
                         <input matInput formControlName="jobDescription" required maxlength="60" />
                         <mat-error *ngIf="jobPlanForm.get('jobDescription').hasError('required')">
-                            Job Descrption is Required(Job Reference  must be at least 3 characters
+                           {{'JobPlan.Management.Job Descrption is Required(Job Reference  must be at least 3 characters)'|translate}}
                           </mat-error>
                           <mat-error *ngIf="jobPlanForm.get('jobDescription').hasError('minlength')">
                             {{'Location.Management.Minimum of 3 Characters'|translate}}
@@ -225,10 +225,10 @@
                         </mat-error>
                     </mat-form-field>
                     <mat-form-field class="col-md-4">
-                        <mat-label>{{'JobPlan.Management.Duration in Hours'|translate}}</mat-label>
+                        <mat-label>{{'JobPlan.Management.Duration In Hours'|translate}}</mat-label>
                         <input matInput formControlName="totalDuration" maxlength="10" (keypress)="numberOnly($event)" required/>
                         <mat-error *ngIf="!jobPlanForm.controls['totalDuration'].valid">
-                            {{'JobPlan.Management.totalDurationisRequired'|translate}}
+                            {{'JobPlan.Management.Total Duration is Required'|translate}}
                         </mat-error>
                     </mat-form-field>
                 </div>
@@ -319,7 +319,7 @@
 <div class="page-content" *ngIf="isEdit">
         <mat-card>
             <mat-card-header>
-                <mat-card-title>Edit Job Plan
+                <mat-card-title>{{'JobPlan.Management.Edit Job Plan'|translate}}
                 </mat-card-title>
             </mat-card-header>
             <br>
@@ -369,7 +369,7 @@
                                 <mat-icon class="mat-button-icon">add</mat-icon>
                                 {{'JobPlan.Management.Add Task'|translate}}
                             </button>
-                        </div>addTask
+                        </div>
                     </div>
                     <div class="row">
                         <mat-form-field class="col-md-4">
