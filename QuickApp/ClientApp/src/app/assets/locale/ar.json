@@ -37,7 +37,21 @@
     "PM Procedures":"إجراءات PM",
     "Export":"تصدير",
     "JobPlan":"خطة العمل",
-    "PMOrder": "أوامر PM"
+    "PMOrder": "أوامر PM",
+    "Username is":"اسم المستخدم هو",
+    "required":"مطلوب",
+    "Password is":"كلمة السر هي",
+    "Remember me!":"تذكرنى!",
+    "Username":"اسم المستخدم",
+    "Password":"كلمه السر",
+    "FORGOT PASSWORD":"هل نسيت كلمة المرور",
+    "Recover Password":"إستعادة كلمة المرور",
+    "Please check your email to reset your password.":"يرجى التحقق من بريدك الإلكتروني لإعادة تعيين كلمة المرور الخاصة بك.",
+    "User name or Email address is":"اسم المستخدم أو عنوان البريد الإلكتروني هو",
+    "Username Or Email":"اسم المستخدم أو البريد الالكتروني",
+    "CANCEL":"إلغاء",
+    "FINISH":"إنهاء",
+    "RECOVER":"استعادة"
   },
   "pageHeader": {
     "Dashboard": "لوحة القيادة",
@@ -133,6 +147,7 @@
   "From Date":"من التاريخ",
   "To Date":"حتى الآن",
   "Search":"بحث",
+  "Print":"طباعة",
   "No Of Work Orders":"عدد أوامر العمل",
   "No Of Work Orders Planned By Trade":"عدد أوامر العمل المخططة حسب التجارة",
   "No Of Work Orders Completed By Trade":"عدد أوامر العمل المكتملة بالتجارة",
@@ -148,7 +163,7 @@
       "Delete": "حذف",
       "EditUser": "تحرير العضو \"{{name}}\"",
       "Title": "عنوان",
-      "User Name": "اسم المستخدم",
+      "UserName": "اسم المستخدم",
       "FullName": "الإسم الكامل",
       "Email": "البريد الإلكتروني",
       "Roles": "الأدوار",
@@ -744,7 +759,8 @@
     "Accept":"قبول",
     "Priority is Required":"الأولوية مطلوبة",
     "View PM Procedure":"عرض إجراء PM",
-    "Add Asset to Procedure":"أضف الأصول إلى الإجراء"
+    "Add Asset to Procedure":"أضف الأصول إلى الإجراء",
+    "Add Asset to the PM Procedure":"إضافة الأصول إلى إجراء PM"
   }
 },
 "JobPlan":{
@@ -774,14 +790,15 @@
     "Please Select Technician":"يرجى تحديد فني",
     "Task Name is Required":"اسم المهمة مطلوب",
     "Duration In Minutes is Required":"المدة بالدقائق مطلوبة",
-    "totalDurationisRequired": "إجمالي المدة مطلوب",
-    "Duration in Hours":"المدة بالساعات",
+    "Total Duration is Required": "إجمالي المدة مطلوب",
+    "Duration In Hours":"المدة بالساعات",
     "Task":"مهمة",
     "Save":"حفظ",
     "Cancel":"إلغاء",
     "Select Asset Trade":"حدد تجارة الأصول",
-    "Please select Asset Trade":"يرجى التحديد تجارة الأصول"
-    
+    "Please select Asset Trade":"يرجى التحديد تجارة الأصول",
+    "Edit Job Plan":"تحرير خطة العمل",
+    "Trade Name":"اسم تجاري"
 
   }
  },
@@ -801,7 +818,8 @@
     "AssetName":"اسم الأصل",
     "Actions":"أجراءات",  
     "Save":"حفظ",
-    "Cancel":"إلغاء"    
+    "Cancel":"إلغاء",
+    "PM Procedure Name":"اسم إجراء PM"
   }
  },
  "data":{

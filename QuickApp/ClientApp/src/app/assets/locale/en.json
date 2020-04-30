@@ -46,7 +46,21 @@
     "PM Procedures":"PM Procedures",
     "Export":"Export",
     "JobPlan":"Job Plan",
-    "PMOrder": "PM Orders"
+    "PMOrder": "PM Orders",
+    "Username is":"Username is",
+    "required":"required",
+    "Password is":"Password is",
+    "Remember me!":"Remember me!",
+    "Username":"Username",
+    "Password":"Password",
+    "FORGOT PASSWORD":"FORGOT PASSWORD",
+    "Recover Password":"Recover Password",
+    "Please check your email to reset your password.":"Please check your email to reset your password.",
+    "User name or Email address is":"User name or Email address is",
+    "Username Or Email":"Username Or Email",
+    "CANCEL":"CANCEL",
+    "FINISH":"FINISH",
+    "RECOVER":"RECOVER"
   },
   "pageHeader": {
     "Dashboard": "Dashboard",
@@ -73,7 +87,8 @@
     "PMProcedures":"PM Procedures",
     "Export":"Export",
     "JobPlan":"Job Plan",
-    "PMOrder": "PM Order"
+    "PMOrder": "PM Order",
+    "loginControl":"loginControl"
   },
   "home": {
     "NoWidgets1": "You have no widgets displayed. Goto",
@@ -132,11 +147,13 @@
     "DashboardBanner": "Dashboard Banner",
     "DashboardBannerHint": "Show demo information banner widget on the dashboard"
   },
+
   "Dashboard":{
   "Management":{
 "From Date":"From Date",
 "To Date":"To Date",
 "Search":"Search",
+"Print":"Print",
 "No Of Work Orders":"No Of Work Orders",
 "No Of Work Orders Planned By Trade":"No Of Work Orders Planned By Trade",
 "No Of Work Orders Completed By Trade":"No Of Work Orders Completed By Trade",
@@ -152,7 +169,7 @@
       "Delete": "Delete User",
       "EditUser": "Edit User \"{{name}}\"",
       "Title": "Title",
-      "UserName": "User Name",
+      "UserName": "UserName",
       "FullName": "Full Name",
       "Email": "Email",
       "Roles": "Roles",
@@ -753,9 +770,11 @@
     "Are you sure you want to Approve this Procedure ?": "Are you sure you want to Approve this Procedure ?",
     "AcceptPMProcedure":"Accept PM Procedure",
     "Accept":"Accept",
+    "Priority":"Priority",
     "Priority is Required":"Priority is Required",
     "View PM Procedure":"View PM Procedure",
-    "Add Asset to Procedure":"Add Asset to Procedure"
+    "Add Asset to Procedure":"Add Asset to Procedure",
+    "Add Asset to the PM Procedure":"Add Asset to the PM Procedure"
    }
  },
  "JobPlan":{
@@ -786,13 +805,15 @@
     "Please Select Technician":"Please Select Technician",
     "Task Name is Required":"Task Name is Required",
     "Duration In Minutes is Required":"Duration In Minutes is Required",
-    "totalDurationisRequired": "Total Duration is Required",
+    "Total Duration is Required": "Total Duration is Required",
     "Task":"Task",
     "Save":"Save",
     "Cancel":"Cancel",
-    "Duration in Hours":"Duration in Hours",
+    "Duration In Hours":"Duration In Hours",
     "Select Asset Trade":"Select Asset Trade",
-    "Please select Asset Trade":"Please Select Asset Trade"
+    "Please select Asset Trade":"Please Select Asset Trade",
+    "Edit Job Plan":"Edit Job Plan",
+    "Trade Name":"Trade Name"
     
   }
  },
@@ -814,7 +835,8 @@
     "AssetName":"Asset Name",
     "Actions":"Actions",  
     "Save":"Save",
-    "Cancel":"Cancel"
+    "Cancel":"Cancel",
+    "PM Procedure Name":"PM Procedure Name"
 
   }
  }, 

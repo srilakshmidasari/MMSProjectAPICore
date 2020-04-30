@@ -142,7 +142,7 @@
 
                    
                     <mat-form-field class="col-md-4">
-                        <mat-label>Priority</mat-label>
+                        <mat-label>{{'Preventive Maintenance.Management.Priority'|translate}}</mat-label>
                         <input matInput formControlName="priority" required />
                         <mat-error *ngIf="!maintenanceForm.controls['priority'].valid">
                             {{'Preventive Maintenance.Management.Priority is Required'|translate}}
@@ -287,7 +287,7 @@
 <div class="page-content" *ngIf="isView">
     <mat-card>
         <mat-card-header>
-            <mat-card-title>PM Procedure Information</mat-card-title>
+            <mat-card-title>{{'Preventive Maintenance.Management.PM Procedure Information'|translate}}</mat-card-title>
         </mat-card-header>
         <br>
         <mat-card-content>
@@ -296,14 +296,14 @@
                     <div class="clearfix space20"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Preventive Reference
+                            {{'Preventive Maintenance.Management.Preventive Reference'|translate}} 
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
                             <b>{{PMProcedure.preventiveRefId}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Type Of Maintenance
+                            {{'Preventive Maintenance.Management.Type Of Maintenance'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
@@ -320,14 +320,14 @@
                             <b>{{PMProcedure.daysApplicable}}</b>&nbsp;&nbsp;
                         </div> -->
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Technician Name
+                            {{'Preventive Maintenance.Management.Technician Name'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
                             <b>{{PMProcedure.technicianName}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Duration In Hours
+                            {{'Preventive Maintenance.Management.Duration In Hours'|translate}} 
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
@@ -337,14 +337,14 @@
                     <div class="clearfix space20"></div>
                     <div class="row">
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Status Type Name
+                            {{'Preventive Maintenance.Management.Status Type Name'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
                             <b>{{PMProcedure.statusTypeName}}</b>&nbsp;&nbsp;
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">
-                            Details
+                            {{'Preventive Maintenance.Management.Details'|translate}}
                             <b class="pull-right">:</b>
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3">

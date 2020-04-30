@@ -1,4 +1,4 @@
-<h1 [dir]="textDir"  mat-dialog-title>Add Asset to the PM Procedure</h1>
+<h1 [dir]="textDir"  mat-dialog-title>{{'Preventive Maintenance.Management.Add Asset to the PM Procedure'|translate}}</h1>
 <div [dir]="textDir"  mat-dialog-content>
     <div class="search-box">
         <mat-form-field>
@@ -18,7 +18,7 @@
           </ng-container>
             <ng-container matColumnDef="name1">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>
-                    {{'Assets.Management.Name1'|translate}}</mat-header-cell>
+                    {{'Assets.Management.Name 1'|translate}}</mat-header-cell>
                 <mat-cell *matCellDef="let row"> {{row.name1}} </mat-cell>
             </ng-container>
 
@@ -83,6 +83,6 @@
     <div class="clearfix"></div>
 </div>
 <div mat-dialog-actions class="float-right" style="padding-top: 12px;">
-    <button mat-raised-button [dir]="textDir"  color="primary" (click)="saveMaintenance()">Save</button>
-    <button mat-raised-button [dir]="textDir"  (click)="Cancel()" color="warn">Cancel</button>
+    <button mat-raised-button [dir]="textDir"  color="primary" (click)="saveMaintenance()">{{'Preventive Maintenance.Management.Save'|translate}}</button>
+    <button mat-raised-button [dir]="textDir"  (click)="Cancel()" color="warn">{{'Preventive Maintenance.Management.Cancel'|translate}}</button>
 </div>
