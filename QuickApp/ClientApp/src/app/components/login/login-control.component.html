@@ -2,7 +2,7 @@
   <mat-form-field class="app-validate">
     <input matInput formControlName="userName" placeholder="{{'mainMenu.Username'|translate}}" autocomplete="username" (keydown.enter)="enterKeyDown()">
     <mat-error *ngIf="userName.hasError('required')">
-      {{'mainMenu.Username is'|translate}}<strong>{{'mainMenu.required'|translate}}</strong>
+      {{'mainMenu.Username is'|translate}} <strong>{{'mainMenu.required'|translate}}</strong>
     </mat-error>
   </mat-form-field>
 
