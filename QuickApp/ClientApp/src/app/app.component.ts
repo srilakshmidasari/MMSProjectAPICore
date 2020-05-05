@@ -95,13 +95,13 @@ export class AppComponent implements OnInit {
 
     //  language translate settings
     this.translate.setDefaultLang('en');
+   
     var lang = localStorage.getItem('language');
     if (lang != undefined) {
       if (lang == 'en') {
         this.textDir = 'ltr';
         this.translate.use(lang);
-       localStorage.setItem('language', lang);
-
+        localStorage.setItem('language', lang);
         this.renderer.removeClass(document.body, 'dir-rtl');
         document.body.setAttribute('dir', 'ltr');
       } else {
@@ -126,19 +126,19 @@ export class AppComponent implements OnInit {
   changeLang(language: string) {
     debugger
     if (language == 'en') {
-      this.language = 'English';
       this.renderer.removeClass(document.body, 'dir-rtl');
       document.body.setAttribute('dir', 'ltr')
-     this.textDir = 'ltr';
+      localStorage.setItem('language', language);
+      this.textDir = 'ltr';
     }
     else if (language == 'ar') {
-      this.language = 'Arabic';
       this.renderer.addClass(document.body, 'dir-rtl');
       document.body.setAttribute('dir', 'rtl')
       this.textDir = 'rtl';
+      localStorage.setItem('language', language);
     }
     this.translate.use(language);
-    localStorage.setItem('language', language);
+   
     localStorage.setItem('textdir', this.textDir);
   }
 
@@ -272,6 +272,9 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
+   
+    var lag = localStorage.getItem('language')
+    this.translate.use(lag);
     this.authService.logout();
     this.authService.redirectLogoutUser();
   }

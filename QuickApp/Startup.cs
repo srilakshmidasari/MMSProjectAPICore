@@ -132,8 +132,12 @@ namespace MMS
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
                var endURL = "http://localhost:5050/connect/token";
-               // var endURL = "http://183.82.111.111/MMSAPI/connect/token";
-              //  var endURL = "http://183.82.111.111/MMSTestAPI/connect/token";
+                // var endURL = "http://183.82.111.111/MMSAPI/connect/token";
+                //  var endURL = "http://183.82.111.111/MMSTestAPI/connect/token";
+
+
+              //  var endURL = "http://94.129.91.241/MMSAPI/connect/token";
+
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
                     Type = SecuritySchemeType.OAuth2,

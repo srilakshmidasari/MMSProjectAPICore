@@ -11,6 +11,8 @@ import { AuthService } from '../../services/auth.service';
 import { ConfigurationService } from '../../services/configuration.service';
 import { Utilities } from '../../services/utilities';
 import { UserLogin } from '../../models/user-login.model';
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-login-control',
@@ -35,7 +37,7 @@ export class LoginControlComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private authService: AuthService,
+    private authService: AuthService,private translate: TranslateService,
     private configurations: ConfigurationService,
     private formBuilder: FormBuilder) {
     this.buildForm();
@@ -108,6 +110,7 @@ export class LoginControlComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     this.alertService.startLoadingMessage('', 'Attempting login...');
+    var  lag = localStorage.getItem('language'); 
 
     this.authService.login(this.getUserLogin())
       .subscribe(
@@ -116,9 +119,15 @@ export class LoginControlComponent implements OnInit, OnDestroy {
             this.alertService.stopLoadingMessage();
             this.isLoading = false;
             this.loginForm.reset();
-            var lang ='en'
-            localStorage.setItem('language', lang);  
+            if(lag =='ar') {
+              localStorage.setItem('language', lag);
+              this.translate.use(lag);
 
+            }else{
+              var lang ='en'
+              localStorage.setItem('language', lang);
+              this.translate.use(lang);
+            }
             if (!this.isModal) {
               this.alertService.showMessage('Login', `Welcome ${user.userName}!`, MessageSeverity.success);
             } else {
