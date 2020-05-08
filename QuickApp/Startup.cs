@@ -136,7 +136,7 @@ namespace MMS
                 //  var endURL = "http://183.82.111.111/MMSTestAPI/connect/token";
 
 
-              //  var endURL = "http://94.129.91.241/MMSAPI/connect/token";
+                //  var endURL = "http://localhost/MMSAPI/connect/token";
 
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -224,6 +224,7 @@ namespace MMS
             app.UseSwaggerUI(c =>
             {
                 c.DocumentTitle = "Swagger UI - MMS";
+                
                 // c.SwaggerEndpoint("/swagger/v1/swagger.json", $"{IdentityServerConfig.ApiFriendlyName} V1");
                 c.SwaggerEndpoint(Configuration["SwaggerUrl"].ToString() + "/swagger/v1/swagger.json", $"{IdentityServerConfig.ApiFriendlyName} V1");
                 c.OAuthClientId(IdentityServerConfig.SwaggerClientID);

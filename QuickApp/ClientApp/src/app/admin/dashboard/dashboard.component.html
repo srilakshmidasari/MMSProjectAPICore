@@ -4,7 +4,7 @@
 
     <form [formGroup]="searchForm">
         <div class="row">
-            <mat-form-field class="col-md-2">
+            <mat-form-field class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
                 <mat-label>{{'Assets.Management.SiteName1'|translate}} *</mat-label>
                 <mat-select formControlName="siteId" [(ngModel)]="selectedSite"
                     (ngModelChange)="getProjectsByUserIdandSiteId($event)" (click)="onChangeClick()">
@@ -13,7 +13,7 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-md-2">
+            <mat-form-field class="col-xl-2 col-lg-3 col-md-4 col-sm-6 col-12">
                 <mat-label>{{'Assets.Management.ProjectName'|translate}} *</mat-label>
                 <mat-select formControlName="projectId" [(ngModel)]="selectedProject">
                     <mat-option *ngFor="let project of userProjectsList" [value]="project.id" required>
@@ -21,47 +21,42 @@
                     </mat-option>
                 </mat-select>
             </mat-form-field>
-            <mat-form-field class="col-md-2">
+            <mat-form-field class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-12">
                 <mat-label>{{'Dashboard.Management.From Date'|translate}} </mat-label>
                 <input matInput [matDatepicker]="picker" formControlName="fromDate" placeholder="Start Date" required>
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
 
             </mat-form-field>
-            <mat-form-field class="col-md-2">
+            <mat-form-field class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-12">
                 <mat-label>{{'Dashboard.Management.To Date'|translate}} </mat-label>
                 <input matInput [matDatepicker]="picker1" [min]="currenrDate" formControlName="toDate"
                     placeholder="End Date" required>
                 <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
                 <mat-datepicker #picker1></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="col-md-2">
+            <mat-form-field class="col-xl-2 col-lg-2 col-md-4 col-sm-6 col-12">
                 <mat-label>{{'Work Order.Management.Select Work Type'|translate}} <span>*</span></mat-label>
                 <mat-select formControlName="workTypeId" [(ngModel)]="selectedType">
                     <mat-option *ngFor="let work of workTypeList" [value]="work.id" required>
                         {{work.name1}}
                     </mat-option>
                 </mat-select>
-            </mat-form-field>
+            </mat-form-field> 
 
-            <div class="col-md-1">
+            <div class="col-xl-2 col-lg-4 col-12 sta">
                 <button mat-raised-button (click)="onSearchClick()"
                     color="primary">{{'Dashboard.Management.Search'|translate}}</button>
+                    <button mat-raised-button color="primary" id="downloadPdf">{{'Dashboard.Management.Print'|translate}}</button>
             </div>
-
-            <div class="col-md-1">
-                <button mat-raised-button color="primary" id="downloadPdf">{{'Dashboard.Management.Print'|translate}}</button>
-            </div>
-
-
         </div>
     </form>
     <div class="clearfix space20"></div>
     <!-- </div> -->
     <div id='print-container'>
         <div class="row">
-            <div class="col-md-4">
-                <div class="d-block box-shadow1">
+            <div class="col-md-12 col-xl-4 col-lg-6 col-sm-6 col-12 mb-3">
+                <div class="d-block box-shadow1 h-100">
                     <b style="font-size: 15px;">{{'Dashboard.Management.No Of Work Orders'|translate}}</b>
                     <hr class="bg-blue" />
                     <!-- <canvas id="barChart"></canvas> -->
@@ -72,8 +67,8 @@
             </div>
 
             <div class="clearfix"></div>
-            <div class="col-md-4">
-                <div class="d-block box-shadow1">
+            <div class="col-md-12 col-xl-4 col-lg-6 col-sm-6 col-12 mb-3">
+                <div class="d-block box-shadow1 h-100">
                     <b
                         style="font-size: 15px;">{{'Dashboard.Management.No Of Work Orders Planned By Trade'|translate}}</b>
                     <hr class="bg-blue" />
@@ -84,8 +79,8 @@
                 </div>
             </div>
 
-            <div class="col-md-4">
-                <div class="d-block box-shadow1">
+            <div class="col-md-12 col-xl-4 col-lg-12 col-sm-6 col-12 mb-3">
+                <div class="d-block box-shadow1 h-100">
                     <b
                         style="font-size: 15px;">{{'Dashboard.Management.No Of Work Orders Completed By Trade'|translate}}</b>
                     <hr class="bg-blue" />
@@ -99,18 +94,20 @@
         </div>
         <div class="clearfix space20"></div>
         <div class="row">
-            <div class="chart-wrapper col-md-6">
-                <div class="d-block box-shadow1">
+            <div class="col-md-12 col-lg-6 col-xl-6 col-12 mb-3">
+                <div class="d-block box-shadow1 h-100">
                     <b style="font-size: 15px;">{{'Dashboard.Management.No Of Orders By Work Status'|translate}} </b>
                     <hr class="bg-blue" />
+                    <div class="chart-wrapper">
                     <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
                         [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColor"
                         [legend]="pieChartLegend">
                     </canvas>
                 </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <div class="d-block box-shadow1">
+            <div class="col-md-12 col-lg-6 col-xl-6 col-12 mb-3">
+                <div class="d-block box-shadow1 h-100">
                     <b style="font-size: 15px;">{{'Dashboard.Management.Work Order Backlog Trend (Orders Pending)'|translate}}</b>
                     <hr class="bg-blue" />
                     <div class="chart-wrapper">

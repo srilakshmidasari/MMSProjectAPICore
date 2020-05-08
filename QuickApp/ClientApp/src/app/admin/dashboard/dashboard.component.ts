@@ -114,14 +114,14 @@ export class DashboardComponent implements OnInit {
     this.getSitesByUserId();
    
     $("#downloadPdf").click(function(){
-      $('.col-md-1').hide();
+      $('.sta').hide();
       html2canvas(document.querySelector("#print-container")).then(canvas => {  
         var dataURL = canvas.toDataURL();
         var pdf = new jsPDF();
         pdf.text("MMS Dashboard", pdf.internal.pageSize.getWidth()/2, 10,{ align: "center" });
         pdf.addImage(dataURL, 'JPEG', 20, 20, 170, 120); //addImage(image, format, x-coordinate, y-coordinate, width, height)  
         pdf.save("dashboard.pdf");
-        $('.col-md-1').show();
+        $('.sta').show();
       });
       
     });

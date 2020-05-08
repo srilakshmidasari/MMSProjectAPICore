@@ -93,7 +93,9 @@ namespace DAL.Repositories
                         string FolderLocation = "FileRepository";
                         string ServerRootPath = _config.Value.ServerRootPath;
 
-                        string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                       string Location = ServerRootPath + @"\" + FolderLocation + @"\" + yearName + @"\" + monthName + @"\" + dayName + @"\" + ModuleName;
+                     
+                       // string Location = Path.Combine(ServerRootPath, FolderLocation, yearName, monthName, dayName, ModuleName);
 
                         byte[] FileBytes = Convert.FromBase64String(sites.FileName);
 

@@ -128,7 +128,8 @@ export class AuthService {
   private configureOauthService(rememberMe?: boolean) {
   // this.oauthService.issuer = 'http://183.82.111.111/mmsapi' ;
   // this.oauthService.issuer = 'http://183.82.111.111/mmstestapi' ;
-
+  // this.oauthService.issuer = 'http://localhost/mmsapi';
+ 
     this.oauthService.issuer = this.baseUrl;
     this.oauthService.clientId = 'mms_spa';
     this.oauthService.scope = 'openid email phone profile offline_access roles mms_api';
@@ -141,7 +142,7 @@ export class AuthService {
 
 
   private processLoginResponse(accessToken: string, rememberMe: boolean) {
-
+debugger
     if (accessToken == null) {
       throw new Error('accessToken cannot be null');
     }

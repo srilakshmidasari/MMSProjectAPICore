@@ -196,7 +196,7 @@ export class AppComponent implements OnInit {
 
 
   private refreshAdminExpanderState(currentUrl: string) {
-    debugger
+
     setTimeout(() => {
       if (this.adminExpander && currentUrl.toLowerCase().indexOf('admin') > 0) {
         this.adminExpander.open();
@@ -272,9 +272,6 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-   
-    var lag = localStorage.getItem('language')
-    this.translate.use(lag);
     this.authService.logout();
     this.authService.redirectLogoutUser();
   }

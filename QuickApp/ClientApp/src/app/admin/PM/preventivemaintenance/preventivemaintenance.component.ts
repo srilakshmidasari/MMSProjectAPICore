@@ -281,7 +281,7 @@ export class PreventivemaintenanceComponent implements OnInit {
   // TYpe changes event
   onTypeChange(event) {
     this.TypeId = event;
-    this.maintenanceForm.get('daysApplicable').setValue(null)
+    
   }
 
 
