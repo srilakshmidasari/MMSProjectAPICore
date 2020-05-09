@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
   removePrebootScreen: boolean;
   newNotificationCount = 0;
   appTitle = 'Caliber Maintenance Management System';
+  mobTitle = 'CMMS';
   appLogo = require('./assets/images/logo-white.png');
 
   mobileQuery: MediaQueryList;

@@ -1,10 +1,10 @@
 <div class="page-content" fxLayout="column" fxLayoutAlign="center center" fxFlexFill>
   <div>
-    <mat-card class="mat-elevation-z6">
-      <mat-card-header>
+    <mat-card class="mat-elevation-z6 m-auto">
+      <div class="text-center">
         <!-- <mat-card-title>{{'mainMenu.Login' | translate}}</mat-card-title> -->
-        <img style="margin-left: 145px;margin-right: 145px;"  src="assets/images/arkaan-logo-orange.png" >
-      </mat-card-header>
+        <img class="img-fluid m-auto" src="assets/images/arkaan-logo-orange.png" >
+      </div>
       <mat-card-content>
         <app-login-control [isModal]="false" (enterKeyPress)="loginControl.login()"></app-login-control>
       </mat-card-content>
