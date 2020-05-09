@@ -5,7 +5,7 @@
       <mat-icon>menu</mat-icon>
     </button>
     <img style="height: 56px;" src="assets/images/arkana-logo-white.png">
-    <h1 class="app-name"><a routerLink="/" class="appTitle">{{'appTitle' | translate}}</a></h1>
+    <h1 class="app-name"><a routerLink="/" class="appTitle"><span fxHide.lt-sm>{{'appTitle' | translate}}</span><span fxShow.sm="false" fxShow.gt-md="false" fxShow="true">CMMS</span></a></h1>
     <span class="app-toolbar-spacer"></span>
     <button mat-button [matMenuTriggerFor]="languageMenu" matTooltip="{{'Choose Language'|translate}}">
       <mat-icon>language</mat-icon>
@@ -18,7 +18,7 @@
         <span>{{'Arabic' | translate}}</span>
       </button>
     </mat-menu>
-    <app-theme-picker tooltip="{{'mainMenu.Theme' | translate}}"></app-theme-picker>
+    <!-- <app-theme-picker tooltip="{{'mainMenu.Theme' | translate}}"></app-theme-picker> -->
 
 
     <button *ngIf="!isUserLoggedIn" mat-button (click)="router.navigateByUrl('/login')">

@@ -149,7 +149,13 @@ mat-header-row {
   align-items: center !important;
 }
 .page-content {
-  padding: 0 2em;
+  padding: 0 1em;
+  margin-top: .5rem;
+}
+@media screen and (min-width:768px){
+  .page-content {
+    padding: 0 2em;
+  }
 }
 .mat-card-content, .mat-card-header .mat-card-title, .mat-expansion-panel-content {
   font-size: 16px;
