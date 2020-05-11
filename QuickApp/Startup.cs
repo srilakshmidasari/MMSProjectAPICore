@@ -131,12 +131,13 @@ namespace MMS
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = IdentityServerConfig.ApiFriendlyName, Version = "v1" });
                 c.OperationFilter<AuthorizeCheckOperationFilter>();
-               var endURL = "http://localhost:5050/connect/token";
+                 var endURL = "http://localhost:5050/connect/token";
                 // var endURL = "http://183.82.111.111/MMSAPI/connect/token";
                 //  var endURL = "http://183.82.111.111/MMSTestAPI/connect/token";
 
+              //  var endURL = "http://192.168.129.173/MMSAPI/connect/token";
 
-                //  var endURL = "http://localhost/MMSAPI/connect/token";
+               // var endURL = "http://192.168.43.109/MMSAPI/connect/token";
 
                 c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
                 {
@@ -203,6 +204,7 @@ namespace MMS
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+           
 
             //app.UseHttpsRedirection();
             app.UseStaticFiles();
