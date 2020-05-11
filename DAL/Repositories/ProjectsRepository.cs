@@ -385,9 +385,9 @@ namespace DAL.Repositories
 
                     var work1 = _appContext.WorkOrders.Where(x => pmPro.Select(p => p.Id).Contains(x.PMProcedureId.Value)).ToList();
 
-                    var statusData1 = _appContext.WorkOrderStatusHistories.Where(x => work.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+                    var statusData1 = _appContext.WorkOrderStatusHistories.Where(x => work1.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
 
-                    var ast1 = _appContext.WorkOrderItemXrefs.Where(x => work.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+                    var ast1 = _appContext.WorkOrderItemXrefs.Where(x => work1.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
 
                     _appContext.PurchageItemXrefs.RemoveRange(orderItems);
 

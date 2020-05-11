@@ -282,22 +282,55 @@ namespace DAL.Repositories
 
                     var workOrders = _appContext.WorkOrders.Where(x => alocs.Select(ar => ar.Id).Contains(x.AssetId)).ToList();
 
-                    var workItems = _appContext.WorkOrderItemXrefs.Where(x => alocs.Select(ar => ar.Id).Contains(x.WorkOrderId)).ToList();
+                    var workItems = _appContext.WorkOrderItemXrefs.Where(x => workOrders.Select(ar => ar.Id).Contains(x.WorkOrderId)).ToList();
 
+                    var workstatus= _appContext.WorkOrderStatusHistories.Where(x => workOrders.Select(ar => ar.Id).Contains(x.WorkOrderId)).ToList();
+                    
                     var orderProjects = _appContext.PurchageOrders.Where(x => projects.Select(p => p.Id).Contains(x.ProjectId)).ToList();
 
                     var orderItems = _appContext.PurchageItemXrefs.Where(x => orderProjects.Select(al => al.Id).Contains(x.PurchageId)).ToList();
 
                     var inventoryItems = _appContext.Inventories.Where(x => orderProjects.Select(al => al.Id).Contains(x.PurchaseOrderId)).ToList();
+                   
+                    var pmAssets =_appContext.PMAssetXrefs.Where(x => alocs.Select(al => al.Id).Contains(x.AssetId)).ToList();
+                    
+                     var jobs = _appContext.JobPlans.Where(x => projects.Select(al => al.Id).Contains(x.ProjectId.Value)).ToList();
+
+                    var jobTasks = _appContext.JobTasks.Where(x => jobs.Select(p => p.Id).Contains(x.JobPlanId)).ToList();
+
+                    var pmPro = _appContext.PreventiveMaintenances.Where(x => jobs.Select(p => p.Id).Contains(x.JobPlanId.Value)).ToList();
+
+                    var pmres = _appContext.PMAssetXrefs.Where(x => pmPro.Select(p => p.Id).Contains(x.PreventiveMaintenanceId)).ToList();
+
+                    var stspm = _appContext.PMStatusHistories.Where(x => pmPro.Select(p => p.Id).Contains(x.PreventiveMaintenanceId)).ToList();
+
+                    var work1 = _appContext.WorkOrders.Where(x => pmPro.Select(p => p.Id).Contains(x.PMProcedureId.Value)).ToList();
+
+                    var statusData1 = _appContext.WorkOrderStatusHistories.Where(x => work1.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
+                    var ast1 = _appContext.WorkOrderItemXrefs.Where(x => work1.Select(p => p.Id).Contains(x.WorkOrderId)).ToList();
+
 
                     _appContext.PurchageItemXrefs.RemoveRange(orderItems);
-
                     _appContext.Inventories.RemoveRange(inventoryItems);
-
                     _appContext.PurchageOrders.RemoveRange(orderProjects);
+
+                    _appContext.WorkOrderStatusHistories.RemoveRange(workstatus);
                     _appContext.WorkOrderItemXrefs.RemoveRange(workItems);
                     _appContext.WorkOrders.RemoveRange(workOrders);
-                  
+                    _appContext.PMStatusHistories.RemoveRange(stspm);
+                    _appContext.PMAssetXrefs.RemoveRange(pmres);
+                    _appContext.PreventiveMaintenances.RemoveRange(pmPro);
+
+                    _appContext.WorkOrderStatusHistories.RemoveRange(statusData1);
+                    _appContext.WorkOrderItemXrefs.RemoveRange(ast1);
+                    _appContext.WorkOrders.RemoveRange(work1);
+                    _appContext.JobTasks.RemoveRange(jobTasks);
+                    _appContext.JobPlans.RemoveRange(jobs);
+
+
+                    _appContext.PMAssetXrefs.RemoveRange(pmAssets);
+
                     _appContext.AssetFileRepositories.RemoveRange(assetRepo);
                     _appContext.AssetLocations.RemoveRange(alocs);
                     _appContext.Locations.RemoveRange(resss);
