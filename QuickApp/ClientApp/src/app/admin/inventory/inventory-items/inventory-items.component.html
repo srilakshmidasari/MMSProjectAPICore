@@ -8,7 +8,6 @@
         [disabled]="inventoryList.length==0">{{'mainMenu.Export'|translate}}</button>
 </header>
 
-
 <div class="page-content">
     <div class="search-box">
         <mat-form-field>
@@ -17,7 +16,7 @@
     </div>
     <div class="example-container mat-elevation-z8 table-responsive">
         <mat-progress-bar *ngIf="loadingIndicator" mode="query"></mat-progress-bar>
-        <mat-table class="table-lg" [dataSource]="dataSource" matSort matSortActive="itemName" matSortDirection="asc"
+        <mat-table class="table-md" [dataSource]="dataSource" matSort matSortActive="itemName" matSortDirection="asc"
             matSortDisableClear>
             <!-- <ng-container matColumnDef="purchaseReference">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Purchase Reference</mat-header-cell>
@@ -55,7 +54,7 @@
         <div style="text-align: center;" *ngIf="displayNoRecords">
             <p>{{'InventoryItems.Management.No Search Results Found'|translate}}</p>
         </div>
-        <mat-paginator class="table-lg" [length]="dataSource.data.length" [pageSize]="10"
+        <mat-paginator class="table-md" [length]="dataSource.data.length" [pageSize]="10"
             [pageSizeOptions]="[5, 10, 25, 100]">
         </mat-paginator>
     </div>

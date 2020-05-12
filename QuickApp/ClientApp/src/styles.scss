@@ -235,7 +235,7 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
 }
 
 @media screen and (min-width: 1300px) {
-  .table-xl, .prng-table .ui-table {
+  .table-xl, .prng-table .ui-table, .table-xl .ui-table {
      min-width: 1680px; 
   }
   .prng-table {
@@ -247,7 +247,7 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
 @media screen and (min-width: 1300px) {
   .table-lg {
     min-width: 1440px;
-    .ui-table{
+    .ui-table table{
       min-width: 1440px;
     }
   }
@@ -255,11 +255,11 @@ body .ui-table .ui-sortable-column:not(.ui-state-highlight):hover {
 @media screen and (max-width: 1300px) {
   .tab-responsive, .table-lg {
     min-width: 1440px;
-    .ui-table{
+    .ui-table table{
       min-width: 1440px;
     }
   }
-  .table-xl {
+  .table-xl, .table-xl .table-xl {
     min-width: 1620px; 
  }
   .table-md {
